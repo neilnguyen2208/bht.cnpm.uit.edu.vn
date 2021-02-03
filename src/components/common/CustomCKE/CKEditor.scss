@@ -1,0 +1,133 @@
+//for editor
+
+.cke-dummy-text-input {
+    width: 0px;
+    height: 0px;
+    box-sizing: border-box;
+    padding: 0px;
+    border: none;
+    background: green;
+    display: none;
+}
+
+.cke-wrapper {
+    border: 1px var(--gray) solid;
+    border-radius: 5px;
+    box-shadow: 0px 0px 1px 0px var(--grayish);
+    overflow: hidden;
+
+
+}
+
+
+.cke-wrapper.invalid {
+    border: 1px var(--red) solid !important;
+    box-shadow: 0px 0px 2px var(--light-red);
+
+}
+
+.cke-wrapper.focus {
+    border: 1px var(--blue) solid !important;
+    box-shadow: 0px 0px 2px 0px var(--light-blue);
+}
+
+.cke_reset {}
+
+.cke_top {
+    //style cho top cua CKEditor
+    border-bottom: 2px solid var(--gray) !important;
+    background: none !important;
+
+}
+
+.cke_bottom {
+    //style cho bottom cua CKEditor
+    border-top: 1px solid var(--gray) !important;
+    background: none !important;
+}
+
+.cke_chrome {
+    //style cho toan bo cke
+    border: 0px var(--gray) solid !important;
+    box-shadow: 0px 0px 1px 0px var(--grayish) !important;
+
+}
+
+.cke_reset_all,
+.cke_reset_all *,
+.cke_reset_all a,
+.cke_reset_all textarea {
+    color: var(--black) !important;
+    font-family: "BarlowCondensed-Regular" !important;
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+}
+
+.cke_editable {
+    font-family: "BarlowCondensed-Regular" !important;
+    font-size: 15px !important;
+}
+
+.a.cke_path_item,
+span.cke_path_empty {
+    font-weight: normal !important;
+}
+
+.cke_combo_button {
+    cursor: pointer !important;
+    border-radius: 5px !important;
+
+}
+
+.cke_combo_button:hover {
+    box-shadow: 0px 0px 1px 0px var(--blue);
+    background: none !important;
+
+}
+
+.cke_combo_on {
+    // border: 1px var(--blue) solid !important;
+    box-shadow: 0px 0px 1px 0px var(--blue);
+    background: none !important;
+    border-radius: 5px !important;
+
+}
+
+a.cke_dialog_ui_button.cke_dialog_ui_button_ok {
+
+    border-radius: 5px !important;
+    box-sizing: border-box !important;
+    width: fit-content;
+    height: 25px;
+    vertical-align: auto;
+    text-align: center;
+    border-radius: 5px;
+    background: white;
+    font-family: "BarlowCondensed-SemiBold" !important;
+    font-size: 18px !important;
+    line-height: 22px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    color: var(--light-black);
+    border: var(--blue) 1px solid !important;
+    background: var(--blue);
+}
+
+.fake-cke {
+    width: 0px !important;
+    height: 0px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    border: 0px;
+    position: absolute;
+}
+
+//for content
+.cke-output {
+    padding: 10px;
+}
+
+.cke-output p {
+    font-family: 'Sarabun-Regular';
+    font-size: 14px;
+}

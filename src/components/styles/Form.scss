@@ -1,0 +1,272 @@
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    outline: none;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.form-input {
+    box-shadow: 0px 0px 2px 0px var(--grayish);
+    padding: 2px;
+    padding-left: 10px;
+    height: fit-content;
+    text-align: left;
+    background: white;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    line-height: 20px;
+    color: var(--black);
+    border: var(--gray) 1px solid;
+    user-select: none;
+    min-width: 200px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 5px;
+    outline: none;
+    position: relative;
+    margin: auto;
+}
+
+.form-input::placeholder {
+    font-family: "BarlowCondensed-Regular";
+    font-size: 15px;
+}
+
+.form-input:hover,
+.form-input:focus {
+    border: var(--blue) 1px solid;
+    cursor: text;
+    opacity: 90%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px 0px var(--light-blue);
+}
+
+.form-input:disabled {
+    background: var(--gray);
+    color: var(--black);
+    cursor: text;
+    opacity: 90%;
+}
+
+.form-group.invalid .form-input {
+    border-color: var(--red);
+    box-shadow: 0px 0px 2px 0px var(--light-red);
+
+}
+
+.form-label {
+    width: fit-content;
+    height: fit-content;
+    min-width: 80px;
+    vertical-align: middle;
+    line-height: 22px;
+    padding-top: 3px;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    color: var(--black);
+    user-select: none;
+    margin-bottom: 5px;
+    padding-right: 5px;
+}
+
+.form-error-label-container {
+    position: relative;
+}
+
+.form-error-label {
+    padding-top: 0.1rem;
+    position: absolute;
+    padding-left: 0.5rem;
+    height: fit-content;
+    font-family: 'Roboto-Medium', sans-serif;
+    font-size: 0.7rem;
+    color: var(--red);
+    user-select: none;
+    min-width: 80px;
+    width: 100%;
+}
+
+.form-tip-label {
+    @extend .form-error-label;
+    color: var(--black);
+    padding-left: 0px;
+    position: relative;
+
+}
+
+.form-label-required {
+    @extend .form-label;
+}
+
+.form-label-required:after {
+    content: "*";
+    margin-left: 2px;
+    color: var(--red);
+}
+
+.form-dropdown-container {
+    position: relative;
+}
+
+.form-dropdown {
+    position: absolute;
+    display: none;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form-dropdown-item {
+    background: white;
+    border-bottom: 1px solid var(--gray);
+}
+
+.form-text-area {
+    width: 100%;
+    height: 100px;
+    min-height: 100px;
+    resize: none;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--black);
+    border: var(--gray) 1px solid;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    line-height: 20px;
+    color: var(--black);
+}
+
+.form-text-area:hover,
+.form-text-area:focus {
+    border: var(--blue) 1px solid;
+    cursor: text;
+    border-radius: 5px;
+    outline: none;
+}
+
+.form-text-area::placeholder {
+    font-family: "BarlowCondensed-Regular";
+    font-size: 15px;
+}
+
+.form-group.invalid .form-error-label {
+    color: var(--red);
+}
+
+.form-input.invalid {
+    border-color: var(--red);
+    box-shadow: 0px 0px 2px 0px var(--light-red);
+}
+
+.form-group.invalid .form-file-input {
+    border-color: var(--red);
+    box-shadow: 0px 0px 2px 0px var(--light-red);
+}
+
+.form-line {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    height: 1px;
+    width: 100%;
+    background: var(--gray);
+}
+
+.form-input-dropdown-container {
+    position: relative;
+    width: 100%;
+    height: 0px;
+    max-height: fit-content;
+}
+
+.form-input-dropdown-container.hidden {
+    display: none;
+}
+
+.form-input-dropdown-container.show {
+    display: block;
+}
+
+.form-input-dropdown {
+    margin-top: 2px;
+    z-index: 1;
+    position: absolute;
+    background: white;
+    width: 100%;
+    border: 1px var(--gray) solid;
+    padding: 5px;
+    border-radius: 5px;
+
+}
+
+.validation {
+    // class này không được dùng để làm gì cả,
+    // nếu một element có 2 class là validation và form-group 
+    // khi nút submit được bấm thì form sẽ duyệt hết tất cả các element chứa 2 class này,
+    // nếu valid thì element không có thêm class nào, nếu không valid thì element có class form-group có thêm class class invalid
+    // 
+}
+
+.form-ckeditor {
+    //tich hop vao wrraper
+
+}
+
+.form-combobox {
+    //tich hop vao wrraper luon
+
+}
+
+.form-file-input {
+    //tu no giong file input nhung khong duoc extend vi trong code co su dung styleSelector
+    box-shadow: 0px 0px 2px 0px var(--grayish);
+    padding: 2px;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    line-height: 18px;
+    color: var(--black);
+    border: var(--gray) 1px solid;
+    user-select: none;
+    min-width: 200px;
+    width: 100%;
+    min-height: 100px;
+    border-radius: 5px;
+    outline: none;
+    position: relative;
+    margin: auto;
+}
+
+.form-file-input-wrapper {
+    border: var(--gray) 1px solid;
+    border-radius: 5px;
+    display: flex;
+    height: 110px;
+    justify-content: space-around;
+}
+
+.form-group.invalid .form-file-input-wrapper {
+    border-color: var(--red);
+    box-shadow: 0px 0px 2px 0px var(--light-red);
+}
+
+.form-file-input {
+    display: none;
+}
+
+.form-file-input-image {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin: auto;
+}
+
+.form-file-input.focus {}
+
+.form-radio {}
+
+.form-check-box {}

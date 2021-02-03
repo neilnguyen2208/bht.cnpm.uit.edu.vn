@@ -1,0 +1,105 @@
+
+.User_Item {
+    position: relative;
+    height: fit-content;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    background-repeat: no-repeat;
+    border: 1px var(--gray) solid;
+    border-top: 3pxvar(--grayish) solid;
+    border-radius: 5px;
+    display: flex;
+    user-select: none;
+}
+
+.User_Item:hover,
+.User_ItemL:active {
+    border: 1px white solid;
+    border-top: 3px var(--blue) solid;
+    box-shadow: 0px 0px 5px 1px var(--gray);
+}
+
+.User_Item_Name {
+    width: fit-content;
+    height: 25px;
+    font-family: "RobotoSlab-Bold";
+    font-size: 20px;
+    line-height: 26px;
+    display: flex;
+    color: var(--black);
+    padding-right: 20px;
+}
+
+.User_Item_Edit_Btn {
+    width: 140px;
+    display: flex;
+    background: #dddddd;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.User_Item_Edit_Btn_Element {
+    position: relative;
+    padding-top: 2px;
+    padding-left: 2px;
+    width: 25px;
+    height: 25px;
+}
+
+.User_Item_Edit_Btn:hover {
+    opacity: 90%;
+    cursor: pointer;
+}
+
+.User_Item_Edit_Btn:active {
+    opacity: 80%;
+}
+
+.User_Item_Email {
+    height: 20px;
+    font-family: "Rosario";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.user-item-element {
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+}
+
+.User_Item_Score {
+    position: relative;
+    width: 150px;
+    height: 30px;
+    align-items: center;
+}
+
+.User_Item_Post_Count {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    padding-left: 5px;
+}
+
+.User_Item_Doc_Count {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    padding-left: 5px;
+}
+
+.User_Item_Statusbar {
+    display: flex;
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 5px;
+    justify-content: space-between;
+}

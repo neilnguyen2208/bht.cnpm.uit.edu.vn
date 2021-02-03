@@ -1,0 +1,19 @@
+/* Menu bar */
+.title-bar {
+    display: flex;
+    border-bottom: 5px var(--blue) solid;
+    width: 100%;
+    user-select: none;
+}
+
+.main-title {
+    font-family: Cambria;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 23px;
+    line-height: 35px;
+    width: 100%;
+    text-align: center;
+    color: var(--blue);
+}
+

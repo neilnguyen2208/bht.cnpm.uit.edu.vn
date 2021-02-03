@@ -1,0 +1,381 @@
+@font-face {
+    font-family: "BarlowCondensed-Bold";
+    src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-Bold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "BarlowCondensed-SemiBold";
+    src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "BarlowCondensed-Medium";
+    src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-Medium.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: "BarlowCondensed-MediumItalic";
+    src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-MediumItalic.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "BarlowCondensed-Regular";
+    src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "RobotoSlab-Regular";
+    src: local("RobotoSlab"), url(./assets/fonts/RobotoSlab-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "RobotoSlab-Medium";
+    src: local("RobotoSlab"), url(./assets/fonts/RobotoSlab-Medium.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Rosario-Bold";
+    src: local("Rosario"), url(./assets/fonts/Rosario-Bold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto-Regular";
+    src: local("Roboto"), url(./assets/fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto-Medium";
+    src: local("Roboto"), url(./assets/fonts/Roboto-Medium.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Barlow-SemiBold";
+    src: local("Barlow"), url(./assets/fonts/Barlow-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "BarlowSemiCondensed-BoldItalic";
+    src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-BoldItalic.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: "BarlowSemiCondensed-MediumItalic";
+    src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-MediumItalic.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: "BarlowSemiCondensed-Medium";
+    src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-Medium.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "BarlowSemiCondensed-Bold";
+    src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-Bold.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: "BarlowSemiCondensed-SemiBold";
+    src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Sarabun-Regular";
+    src: local("Sarabun"), url(./assets/fonts/Sarabun-Regular.ttf) format("truetype");
+}
+
+:root {
+    --blue: #5279db;
+    --light-blue: #48bfff;
+    --red: #fe3a3a;
+    --light-red: #fd5959;
+    --black: #363636;
+    --gray: #c4c4c4;
+    --green: #00fe3a;
+    --yellow: #fefe3a;
+    --grayish: #eeeeee;
+    --light-gray: #fafafa;
+    --light-black: #6b6b6b;
+}
+
+body {
+    line-height: 1rem;
+    color: var(--black) !important;
+    font-family: "BarlowSemiCondensed-Medium";
+}
+
+img {
+    color: var(--light-black);
+    font: 14px "BarlowSemiCondensed-Medium";
+    text-align: center;
+}
+
+.title {
+    font-weight: 400;
+}
+
+.j-c-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.j-c-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.d-flex {
+    display: flex;
+}
+
+
+.d-flex-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.d-flex-center {
+    display: flex;
+    margin: auto;
+}
+
+.j-c-end {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.pd-10px{
+    padding: 10px;
+}
+
+.icon-16x16 {
+    width: 16px;
+    height: 16px;
+}
+
+.icon-10x10 {
+    width: 10px;
+    height: 10px;
+}
+
+.z-i-2 {
+    z-index: 2;
+}
+
+.text-element-gray,
+.metadata-label {
+    padding-left: 10px;
+    width: fit-content;
+    height: fit-content;
+    color: var(--black);
+    position: relative;
+    font-size: 16px;
+    height: 20px;
+    line-height: 18px;
+}
+
+.text-element-gray::before,
+.metadata-label::before {
+    content: url('assets/icons/8x8/g_btn_element_8x8.png');
+    position: absolute;
+    left: 0px;
+    top: -1px;
+}
+
+.icon-24x24 {
+    width: 24px;
+    height: 24px;
+}
+
+.title {
+    margin-bottom: 0.5rem !important;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
+}
+
+.flex_space_between_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mg-bottom-5px {
+    margin-bottom: 5px;
+}
+
+.margin-bottom-8px {
+    margin-bottom: 8px;
+
+}
+
+.margin-bottom-10px {
+    margin-bottom: 10px;
+}
+
+.t-a-right {
+    text-align: right;
+}
+
+.t-a-center {
+    text-align: center;
+
+}
+
+.pd-10px {
+    padding: 10px;
+}
+
+.pd-r-10px {
+    padding-right: 10px;
+}
+
+.pd-r-5px {
+    padding-right: 5px;
+}
+
+.pd-l-5px {
+    padding-left: 5px;
+}
+
+.mg-auto {
+    margin: auto;
+}
+
+.bg-green {
+    background: green;
+}
+
+.mg-left-5px {
+    margin-left: 5px;
+}
+
+.mg-left-10px {
+    margin-left: 10px;
+}
+
+.mg-right-5px {
+    margin-right: 5px;
+}
+
+.mg-top-5px {
+    margin-top: 5px;
+}
+
+.mg-top-10px {
+    margin-top: 10px !important;
+}
+
+.mg-top-15px {
+    margin-top: 15px !important;
+}
+
+.mg-bottom-10px {
+    margin-bottom: 10px;
+}
+
+.w-50-percents {
+    width: 50%;
+}
+
+.w-100-percents {
+    width: 100%;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.pos-absolute {
+    position: absolute;
+}
+
+.mi-w-fit-content {
+    min-width: fit-content;
+}
+
+/* border bottom */
+.decoration-line {
+    height: 1px;
+    width: 100%;
+    background: var(--gray);
+}
+
+/* medium scroll bar */
+
+.medium-scroll::-webkit-scrollbar-track {
+    background: linear-gradient(to right,
+            var(--scroll-track-color) 0%,
+            var(--scroll-track-color) 45%,
+            var(--scroll-color) 50%,
+            var(--body-bg-color) 61%,
+            var(--body-bg-color) 100%);
+}
+
+.medium-scroll::-webkit-scrollbar {
+    width: 20px;
+    transition: all 0.5s linear;
+}
+
+.medium-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-color);
+    border-radius: 15px;
+}
+
+.medium-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: var(--scroll--hover-color);
+    border-radius: 15px;
+}
+
+/**********************/
+/* custom scroll code */
+/**********************/
+
+:root {
+    --scroll-color: black;
+    --scroll--hover-color: #666;
+    --scroll-track-color: rgba(255, 255, 255, 0);
+}
+
+* {
+    -webkit-overflow-scrolling: touch;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.scrollbar {
+    height: 200px;
+    overflow-y: scroll;
+    background: #c3bebe;
+    scrollbar-color: black #c3bebe;
+    scrollbar-width: thin;
+}

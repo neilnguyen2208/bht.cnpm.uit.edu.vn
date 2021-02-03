@@ -1,0 +1,63 @@
+
+#login-status #avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 0px;
+    margin-left: 30px;
+}
+
+@media (max-width: 768px) {
+    #login-status #avatar {
+        margin-left: 0px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #login-status #avatar {
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+#avatar:hover {
+    cursor: pointer;
+}
+
+#login-status.dropdown-toggle {
+    background: white;
+    border: transparent;
+}
+
+#login-status.dropdown-toggle:hover {
+    background: white;
+    border: transparent;
+}
+
+#login-status.dropdown-toggle:focus {
+    background-color: transparent;
+}
+
+#login-status primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+    background-color: white;
+    border-color: white;
+}
+
+#login-status.dropdown-toggle::after {
+    color: black;
+    background: white;
+}
+
+@media (max-width: 767px) {
+
+}
+
+@media (max-width: 1200px) {
+   
+
+}

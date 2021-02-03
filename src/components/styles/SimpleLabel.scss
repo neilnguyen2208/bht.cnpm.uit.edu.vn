@@ -1,0 +1,129 @@
+@import "./Form.scss";
+
+.gray-label {
+    margin-top: 10px;
+    width: fit-content;
+    height: fit-content;
+    // min-width: 80px;
+    vertical-align: middle;
+    line-height: 20px;
+    padding-top: 3px;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    line-height: 100%;
+    color: var(--black);
+    user-select: none;
+    margin-bottom: 5px;
+    padding-right: 5px;
+}
+
+.gray-normal-label {
+    width: fit-content;
+    height: fit-content;
+    min-width: 80px;
+    vertical-align: middle;
+    font-size: 1.2rem;
+    line-height: fit-content;
+    padding-top: 12px;
+    padding-bottom: 8px;
+    font-family: "BarlowCondensed-Medium";
+    line-height: 100%;
+    color: var(--black);
+    user-select: none;
+    margin-bottom: 5px;
+    padding-right: 5px;
+}
+
+
+.light-black-normal-label {
+    @extend .gray-normal-label;
+    color: var(--light-black);
+}
+
+
+
+.blue-label {
+    width: 100%;
+    height: fit-content;
+    vertical-align: auto;
+    text-align: left;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    line-height: 100%;
+    color: var(--blue);
+    user-select: none;
+    min-width: 80px;
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 2px;
+}
+
+.filter-label {
+    margin-top: 2px;
+    width: fit-content;
+    height: fit-content;
+    // min-width: 80px; 
+    vertical-align: middle;
+    font-size: 1.1rem;
+    padding-top: 3px;
+    font-family: "BarlowCondensed-Medium";
+    line-height: 100%;
+    color: var(--black);
+    user-select: none;
+    margin-bottom: 5px;
+}
+
+.color-border-label {
+    width: fit-content;
+    height: 20px;
+    padding-left: 4px;
+    padding-right: 4px;
+    vertical-align: middle;
+    font-size: 16px;
+    border-radius: 4px;
+    text-align: center;
+    font-family: "BarlowCondensed-SemiBold";
+    line-height: 100%;
+    user-select: none;
+}
+
+.red-border-label {
+    @extend .color-border-label;
+    border: 1px solid var(--red);
+    color: var(--red);
+
+}
+
+
+.blue-border-label {
+    @extend .color-border-label;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+
+}
+
+.green-border-label {
+    @extend .color-border-label;
+    border: 1px solid var(--blue);
+    color: var(--green);
+
+}
+
+label {
+    display: inline-block;
+}
+
+.wysiwyg-label {
+    padding-top: 0.1rem;
+    padding-left: 0.5rem;
+    font-family: 'Roboto-Medium', sans-serif;
+    font-size: 0.7rem;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 200px; 
+    color: var(--black);
+    padding-left: 0px;
+    position: relative;
+}

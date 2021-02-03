@@ -1,0 +1,79 @@
+.heading-list {}
+
+.heading-list .subject-description {
+  display: flex;
+}
+
+.heading-list .image {
+  width: 160px;
+  height: 130px;
+  object-fit: cover;
+  background: green;
+}
+
+.heading-list .content-container {
+  margin-left: 10px;
+}
+
+.heading-list .title {
+  height: 24px;
+  font-family: "RobotoSlab-Medium";
+  font-size: 20px;
+  color: var(--blue);
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.heading-list .description {
+  font-size: 16px;
+  font-family: "BarlowSemiCondensed-MediumItalic";
+
+}
+
+
+.heading-list .save-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.heading-list .main-content-text {
+  font-size: 19px;
+  font-family: "BarlowSemiCondensed-SemiBold";
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid var(--gray);
+}
+
+.heading-list .heading-list-container {
+  // background: green;
+  margin-top: 10px;
+  padding-left: 2%;
+  padding-right: 2%;
+  max-width: 600px;
+}
+
+.heading-list .heading-content-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray);
+
+}
+
+.heading-list .heading-content-title {
+  width: 100%;
+  font-size: 18.5px;
+  font-family: "BarlowCondensed-Medium";
+  display: flex;
+}
+
+.heading-list .two-dots {
+  margin-top: -2px;
+}
+
+.heading-content-container .dropdown-btn {
+  margin-right: 5px;
+  margin-top: 3px;
+
+}

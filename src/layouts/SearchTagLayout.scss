@@ -1,0 +1,31 @@
+.Searching_Tag {
+    position: relative;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px var(--gray) solid;
+    margin: auto;
+    padding-left: 10px;
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    color: var(--black);
+    user-select: none;
+    margin-bottom: 10px;
+}
+
+.search-tag-side-bar {
+    padding-left: 10px;
+    color: var(--black);
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 18px;
+    width: 240px;
+    height: 30px;
+
+}
+
+.search-tag-router-outlet {
+    width: 100%;
+    min-height: 50vh;
+    margin-top: 10px;
+}

@@ -1,0 +1,126 @@
+//loader
+.loader-container {
+  width: 100%;
+  height: 100%;
+  max-height: 50vh;
+  margin: auto;
+  position: relative;
+  opacity: 60%;
+  display: flex;
+  background: var(--light-gray);
+  border-radius: 5px
+
+}
+
+@keyframes loader-qqa1psw9t4 {
+  0% {
+    background: #5279db
+  }
+
+  12.5% {
+    background: #5279db
+  }
+
+  12.625% {
+    background: var(--gray)
+  }
+
+  100% {
+    background: var(--gray)
+  }
+}
+
+.loader-qqa1psw9t4 div {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: var(--gray);
+  animation: loader-qqa1psw9t4 1s linear infinite;
+}
+
+.loader-spinner-blocks-2wim9ni0j7v {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+
+}
+
+.loader-qqa1psw9t4 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+  /* see note above */
+}
+
+.loader-qqa1psw9t4 div {
+  box-sizing: content-box;
+}
+
+//content-loader
+.context-bg {
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.context-wrapper {
+  margin: 30px;
+  padding: 30px;
+  background: #fff;
+  width: 360px;
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+}
+
+.context-wrapper-cell {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+// Animation
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0
+  }
+
+  100% {
+    background-position: 468px 0
+  }
+}
+
+.animated-background {
+  animation-duration: 1.25s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #F6F6F6;
+  background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+  background-size: 800px 104px;
+  height: 96px;
+  position: relative;
+}
+
+// Page Elements
+.image-content-loader {
+  height: 60px;
+  width: 60px;
+  @extend .animated-background;
+}
+
+.text-content-loader {
+  margin-left: 20px
+}
+
+.text-line-loader {
+  height: 10px;
+  width: 230px;
+  margin: 4px 0;
+  @extend .animated-background;
+}

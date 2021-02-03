@@ -1,0 +1,122 @@
+.popup-menu {
+    top: -2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    background: white;
+    border: 0px;
+    border-radius: 5px;
+    display: flex;
+    padding: 4px;
+    cursor: pointer;
+    // border: 1px var(--gray) solid;
+}
+
+.popup-menu:after {
+    color: var(--light-black);
+    content: '•••';
+    position: absolute;
+    top: 8px;
+    left: 13px;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin-top: 2px;
+}
+
+.popup-menu-item {
+    position: relative;
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Regular";
+    font-size: 18px;
+    color: var(--black);
+    padding-left: 6px;
+    user-select: none;
+    height: fit-content;
+    z-index: 2;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.activated-popup-menu-item {
+    position: relative;
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Regular";
+    font-size: 18px;
+    color: var(--black);
+    padding-left: 4px;
+    user-select: none;
+    border-right: 4px white solid;
+    border-radius: 5px;
+    background: #dedede !important;
+    cursor: pointer;
+    // border-right: 3px var(--blue) solid;
+    z-index: 2;
+}
+
+.popup-menu-dropdown {
+    margin-top: 5px;
+    position: absolute;
+    border: 1px var(--grayish) solid;
+    border-bottom: 3px var(--gray) solid;
+    border-radius: 3px;
+    box-shadow: 0px 0px 2px 0px var(--grayish);
+    display: none;
+    user-select: none;
+    min-width: 160px;
+    width: fit-content;
+    background: white;
+    z-index: 1;
+}
+
+
+.popup-menu:hover,
+.popup-menu-item:hover {
+    opacity: 80%;
+    background: var(--grayish) !important;
+    cursor: pointer;
+}
+
+.popup-menu:active,
+.popup-menu-item:active {
+    background: #dedede !important;
+    cursor: pointer;
+}
+
+.disabled-popup-menu {
+    background: var(--gray);
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    color: white;
+    box-shadow: 0px 1px 0px 0px var(--grayish);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 5px;
+}
+
+.dropdown-icon {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+
+}
+
+.popup-menu-text {
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Regular";
+    font-size: 1.1rem;
+    color: var(--black);
+    padding-left: 0.35rem;
+    text-decoration: none !important;
+    outline: 0px;
+}
+
+.popup-menu-dropdown-container {
+    background: green;
+    width: fit-content;
+}

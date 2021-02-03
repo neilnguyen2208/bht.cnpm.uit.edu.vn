@@ -1,0 +1,410 @@
+/* Body Layout*/
+
+.left-sidebar-layout .router-outlet {
+    // padding-left: 10px;
+    width: 100%;
+    background: var(--white);
+}
+
+
+.left-sidebar-wrapper {}
+
+.left-sidebar-layout {
+    background: var(--white);
+    margin: auto;
+    margin-top: 20px;
+    position: relative;
+    width: 88%;
+    max-width: 1300px;
+    height: fit-content;
+    background-repeat: no-repeat;
+    min-width: 400px;
+    display: flex;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px 0px var(--gray);
+    padding: 10px;
+}
+
+.left-sidebar-layout .content-container {
+    width: 100%;
+    height: fit-content;
+    border: var(--gray) solid 1px;
+    border-top: 0px;
+    padding: 10px;
+    min-height: 700px;
+    padding-bottom: 40px;
+}
+
+.left-sidebar-layout .content-layout {
+    width: 100%;
+    height: fit-content;
+    border-top: 0px;
+    padding: 10px;
+    padding-right: 0px;
+    min-height: 700px;
+    padding-bottom: 40px;
+}
+
+.side-bar-avatar {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+
+.decoration-underline {
+    height: 3px;
+    width: 100%;
+    background: var(--blue);
+}
+
+.gray_thin_decoration-underline {
+    height: 1px;
+    width: 100%;
+    background: var(--grayish);
+}
+
+.number-of-item {
+    margin-bottom: 10px;
+    font-family: "BarlowCondensed-SemiBold";
+    display: flex;
+    font-size: 16;
+    color: var(--black);
+}
+
+
+/*This port contain Management info and vertical menu below Management info*/
+
+.left-sidebar {
+    position: relative;
+    width: 250px;
+}
+
+.fake-left-sidebar {
+    display: hidden;
+    position: relative;
+    width: 250px;
+    height: 0px;
+    background: transparent;
+}
+
+/* User Info Layout: contain: avatar, display name, gmail and logout button */
+
+.user-info-layout {
+    display: flex;
+    width: 100%;
+    border-left: 1px;
+    border-top: 1px;
+    border-right: 1px;
+    border-bottom: 1px;
+    border-color: var(--gray);
+    border-style: solid;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/*This port contain display and email*/
+
+.user-info-layout .User_Name_Gmail_Layout {
+    margin-left: 10px;
+    position: relative;
+    width: fit-content;
+}
+
+.user-info-layout .Display_Name {
+    position: relative;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 20px;
+    font-family: "RobotoSlab-Bold";
+    align-items: center;
+    color: var(--blue);
+}
+
+.user-info-layout .Gmail {
+    width: 100px;
+    position: relative;
+    font-family: "Rosario-Bold";
+    font-size: 16px;
+    line-height: 22px;
+    align-items: center;
+    color: var(--black);
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.user-role {
+    border-top: 0.35rem var(--blue) solid;
+    width: 100%;
+    border-bottom: 1px solid var(--gray);
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: var(--blue);
+    border-left: 1px solid var(--gray);
+    border-right: 1px solid var(--gray);
+}
+
+.achivement-layout {
+    padding-top: 5px;
+    justify-content: space-between;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 18px;
+    line-height: 30px;
+    width: 150px;
+    color: var(--black);
+    margin-left: 10px;
+    height: 80px;
+    border-bottom: 3px var(--gray) solid;
+    border-top: 3px var(--gray) solid;
+    padding-bottom: 5px;
+}
+
+.Small_user-item-element {
+    width: 20px;
+    height: 20px;
+}
+
+/*Management Vertical Menu Layout: contain these menu options: Tên hiển thị, đối mật khấu, Bài đăng */
+
+.Vertical_Menu_Layout {
+    margin-top: 0px;
+    padding: 10px;
+    padding-top: 0px;
+    position: relative;
+    box-sizing: border-box;
+    width: 250px;
+    border-left: 1px;
+    border-right: 1px;
+    border-bottom: 1px;
+    border-color: var(--gray);
+    border-top: 2px #dddddd;
+    border-style: solid;
+    height: 460px;
+}
+
+.Tab_Menu {
+    width: 100%;
+    border-right: 1px var(--gray) solid;
+    border-left: 1px var(--gray) solid;
+    display: flex;
+}
+
+.Tab_Menu_Item_Layout_50_percents {
+    width: 50%;
+    text-align: center;
+    padding: 5px;
+    padding-bottom: 0px;
+    user-select: none;
+    height: fit-content;
+}
+
+.Tab_Menu_Item_Layout {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: relative;
+    display: flex;
+    margin: auto;
+    padding: 4px;
+    width: 100%;
+    color: var(--black);
+}
+
+.Activated_Tab_Menu_Item_Layout {
+    position: relative;
+    display: flex;
+    margin: auto;
+    padding: 4px;
+    width: 100%;
+    background: #dddddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.Tab_Menu_Item_Layout:hover {
+    background: var(--grayish);
+}
+
+.Tab_Menu_Item {
+    position: relative;
+    display: flex;
+    margin: auto;
+    width: fit-content;
+}
+
+.Tab_Menu_Item_Text {
+    margin: auto;
+    width: fit-content;
+    margin-left: 5px;
+    line-height: 24px;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+}
+
+.vertical-menu-item {
+    box-sizing: border-box;
+    display: flex;
+    font-family: "BarlowCondensed-Medium";
+    color: var(--black);
+    user-select: none;
+    text-decoration: none;
+    box-shadow: 0px 1px 0px 0px var(--grayish);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-top: 0.35rem;
+    margin-bottom: 1px;
+    border: none;
+    border-radius: 0px;
+}
+
+.Vertical_Dropdown_Menu_Item_Container {
+    display: none;
+    user-select: none;
+    margin-left: 10%;
+    width: 90%;
+}
+
+.Vertical_Display_Block_Default_Dropdown_Menu_Item_Container {
+    display: block;
+    user-select: none;
+    margin-left: 10%;
+    width: 90%;
+}
+
+.side-bar-menu-item-text {
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    color: var(--black);
+    padding-left: 0.35rem;
+    text-decoration: none !important;
+    outline: 0px;
+    line-height: 1.7rem;
+}
+
+.Dropdown_Btn_Element {
+    width: 8px;
+    height: 8px;
+    vertical-align: auto;
+    margin-top: 10px;
+}
+
+.Blue_Dropdown_Element {
+    width: 8px;
+    height: 8px;
+    margin-top: 11px;
+}
+
+.Parent_Dropdown_Menu_Item {
+    width: 100%;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    color: white;
+    box-shadow: 0px 1px 0px 0px var(--grayish);
+    margin-top: 0.35rem;
+    margin-bottom: 1px;
+}
+
+.Btn_Element {
+    width: 8px;
+    height: 8px;
+    margin-top: 11px;
+}
+
+.vertical-sub-menu-item {
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.02rem;
+    color: var(--black);
+    padding-left: 10%;
+    user-select: none;
+    display: flex;
+    text-decoration: none;
+    padding-bottom: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    border: none;
+    border-radius: 0px;
+    line-height: 1.5rem;
+}
+
+.Parent_Dropdown_Menu_Item:hover,
+.vertical-menu-item:hover,
+.vertical-sub-menu-item:hover {
+    background: var(--grayish);
+    cursor: pointer;
+    border-right: 4px var(--gray) solid;
+}
+
+.Parent_Dropdown_Menu_Item:active,
+.vertical-menu-item:active,
+.vertical-sub-menu-item:active {
+    background: #dedede;
+    border: none;
+    border-right: 4px var(--blue) solid;
+    cursor: pointer;
+    outline: none;
+}
+
+.vertical-menu-item-icon {
+    margin-left: 0.35rem;
+    margin-top: 0.35rem;
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.vertical-sub-menu-item .text {
+    font-size: 1.02rem;
+}
+
+.main-interactive-menu-item-active {
+    @extend .vertical-menu-item;
+    background: #e5eeee;
+    cursor: pointer;
+    outline: 0px;
+    box-sizing: border-box;
+    border-right: 4px var(--blue) solid;
+}
+
+.Avatar_Layout {
+    width: 80px;
+    height: 80px;
+}
+
+//for scrolling page
+.left-sidebar_After_Header {
+    position: fixed !important;
+    margin-top: 10px;
+    top: 0px;
+}
+
+.left-sidebar_Before_Header {
+    position: relative;
+}
+
+.left-sidebar_Reach_Footer {
+    position: absolute;
+    bottom: 20px;
+}
+
+.management-layout {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    box-shadow: 0px 0px 5px var(--gray);
+}
+
+.management-layout .content-container {
+    padding-left: 10px;
+    width: 100%;
+    border-radius: 1px solid var(--gray);
+}

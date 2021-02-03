@@ -1,0 +1,115 @@
+.combox {
+    background: white;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    color: white;
+    box-shadow: 0px 0px 2px 0px var(--grayish);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    font-size: 18px;
+    position: relative;
+    min-width: 240px;
+    width: fit-content;
+    user-select: none;
+    cursor: pointer;
+    height: fit-content;
+    box-sizing: border-box;
+    height: 30px;
+    line-height: 24px;
+}
+
+// .combox.invalid
+
+.combox:hover {
+    box-shadow: 0px 0px 2px 0px var(--light-blue);
+    border: 1px var(--blue) solid;
+    background: white;
+}
+
+.combox-option {
+    position: relative;
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Regular";
+    font-size: 18px;
+    line-height: 1.5rem;
+    color: var(--black);
+    padding: 2px;
+    padding-left: 4px;
+    user-select: none;
+    z-index: 2;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.activated-combox-option {
+    @extend .combox-option;
+    background: #dedede;
+}
+
+.dropdown-container {
+    margin-top: 5px;
+    position: absolute;
+    border: 1px var(--grayish) solid;
+    border-bottom: 3px var(--blue) solid;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px 0px var(--grayish);
+    display: none;
+    user-select: none;
+    padding: 5px;
+    min-width: 240px;
+    width: fit-content;
+    background: white;
+    z-index: 1;
+}
+
+.combox-option:hover {
+    background: var(--grayish);
+}
+
+.combox:active,
+.combox-option:active {
+    background: #dedede !important;
+    cursor: pointer;
+}
+
+.disabled-combox {
+    background: var(--gray);
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    color: white;
+    box-shadow: 0px 1px 0px 0px var(--grayish);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 5px;
+}
+
+.dropdown-icon {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+
+}
+
+.combox-text {
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Regular";
+    font-size: 1.1rem;
+    color: var(--black);
+    padding-left: 0.35rem;
+    text-decoration: none !important;
+    outline: 0px;
+}
+
+.wrapper-combobox {
+    position: relative;
+    display: flex;
+    min-width: 240px;
+    width: fit-content;
+}

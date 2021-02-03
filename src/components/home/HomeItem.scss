@@ -1,0 +1,215 @@
+@import 'components/common/Metadata/Metadata.scss';
+
+.home-item {
+  position: relative;
+  height: fit-content;
+  background: white;
+  min-width: calc(33.6% - 10px);
+  border: 1px var(--gray) solid;
+  user-select: none;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 10px;
+  box-shadow: 0px 0px 2px 0px var(--grayish);
+}
+
+.home-item-container-wrapper {
+  // border-left: 1px var(--gray) solid;
+  // border-right: 1px var(--gray) solid;
+  padding: 10px;
+}
+
+.home-item-container {
+  overflow: scroll;
+  overflow-y: hidden;
+  padding-bottom: 0px;
+  width: 100%;
+  display: flex;
+  height: fit-content;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--gray);
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.home-item .image-container {
+  border-bottom: 3px solid var(--blue);
+}
+
+.home-item .metadata-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  font-family: "BarlowCondensed-Medium";
+  font-size: 18px;
+  color: var(--blue);
+}
+
+.home-item .image {
+  width: 160px;
+  height: 130px;
+  padding: 5px;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+
+.home-item .title-bar {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0px;
+  box-sizing: border-box;
+  height: 35px;
+}
+
+.home-item .title {
+  height: 24px;
+  font-family: "RobotoSlab-Medium";
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--light-black);
+  line-height: 24px;
+}
+
+.home-item .save-btn {
+  width: 18px;
+  height: 18px;
+}
+
+.home-item .save-btn-container {
+  width: 40px;
+  margin-top: 2px;
+}
+
+.home-item-metadata {
+  justify-content: flex-start;
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  font-family: "BarlowCondensed-Medium";
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--blue);
+  user-select: none;
+  padding: 10px;
+}
+
+.home-item .category {
+  font-family: "BarlowCondensed-Medium";
+  font-size: 16px;
+  vertical-align: middle;
+  height: 20px;
+  line-height: 18px;
+  background: var(--blue);
+  color: white;
+  padding-left: 10px;
+  padding-right: 5px;
+  margin-right: 5px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.home-item .category::before {
+  content: '';
+  background: white;
+  width: 3px;
+  height: 20px;
+  position: absolute;
+  margin-right: 10px;
+  left: 13px;
+}
+
+
+.home-item .title {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: -webkit-box;
+  width: 100%;
+  height: 50px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-item .metadata-2 {
+  margin-top: -5px;
+  display: flex;
+  padding-left: 10px;
+}
+
+.home-item .cover-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+
+}
+
+.home-item .summary,
+.home-item .description {
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 0px;
+  display: -webkit-box;
+  height: 80px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.home-item .reaction-bar {
+  margin-top: 10px;
+  border-top: 1px solid var(--gray);
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.home-item .view-count-container {
+  font-family: "BarlowCondensed-Medium";
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--light-black);
+}
+
+.home-item .like-count {
+  font-family: "BarlowCondensed-SemiBold";
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--light-black);
+  margin-left: 5px;
+}
+
+.post-like-btn {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.home-item .like-btn-container {
+  width: 40px;
+}
+
+.comment-count-container {
+  display: flex;
+  padding-left: 15px;
+  font-family: "BarlowCondensed-Medium";
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--light-black);
+  width: fit-content;
+  user-select: none;
+  width: 100px;
+}

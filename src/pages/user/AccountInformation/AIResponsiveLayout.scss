@@ -1,0 +1,20 @@
+@media (min-width: 0px) {
+    .Management_Account_Information_Bounding_Layout {
+        width: 100%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 800px) {
+    .Management_Account_Information_Bounding_Layout {
+        width: 400px;
+        margin: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .Management_Account_Information_Bounding_Layout {
+        width: 50%;
+        margin: inherit;
+    }
+}

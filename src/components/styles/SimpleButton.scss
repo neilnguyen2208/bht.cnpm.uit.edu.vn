@@ -1,0 +1,92 @@
+.white-button {
+    box-sizing: border-box;
+    width: fit-content;
+    height: 25px;
+    // vertical-align: auto;
+    text-align: center;
+    border-radius: 5px;
+    background: white;
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 18px;
+    line-height: 22px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--light-black);
+    border: var(--gray) 1px solid;
+    user-select: none !important;
+    min-width: 80px;
+    box-shadow: 0px 0px 1px 0px var(--grayish);
+}
+
+.white-button:hover {
+    cursor: pointer;
+    // opacity: 80%;
+    box-shadow: 0px 0px 4px 0px var(--gray);
+
+}
+
+.white-button:active {
+    background: var(--light-gray);
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.white-button:disabled {
+    background: var(--gray);
+    color: white;
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.red-button {
+    @extend .white-button;
+    background: var(--red);
+    color: white;
+    border: white;
+}
+
+.red-button:hover {
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.red-button:active {
+    background: var(--gray);
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.red-button:disabled {
+    background: var(--gray);
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.blue-button {
+    @extend .red-button;
+    background: var(--blue);
+}
+
+.blue-button:hover {
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.blue-button:active {
+    background: var(--gray);
+    cursor: pointer;
+}
+
+.blue-button:disabled {
+    background: var(--gray);
+    cursor: pointer;
+}
+
+.Is_Form_Button {
+    margin: auto;
+    margin-top: 1.2rem;
+}
+
+button:focus {
+    outline: none !important;
+}

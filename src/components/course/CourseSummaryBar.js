@@ -16,7 +16,7 @@ import 'components/styles/SimpleButton.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 
 
 class CourseSummaryBar extends Component {

@@ -163,7 +163,12 @@ a:hover {
     justify-content: flex-end;
 }
 
-.pd-10px{
+
+.mg-0px {
+    margin: 0px;
+}
+
+.pd-10px {
     padding: 10px;
 }
 

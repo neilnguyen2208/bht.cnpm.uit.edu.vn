@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import 'components/styles/SimpleButton.scss'
-import Modal from 'components/common/Modal/Modal'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -142,18 +141,6 @@ class PostSummary extends Component {
           <div className="blue-border-label">APPROVED</div>
         </div>
 
-    let popup = <></>;
-    if (this.props.isApprovingLoadDone)
-      popup = <Modal
-        shadow={true}
-        type="alert_success"
-        open={true}
-        title="Thành công"
-        text="Duyệt thành công"
-        closeModal={() => { this.open = false; this.setState({}); }}
-      >
-      </Modal>
-
     return (
       <div className="item-container" >
         <div className="item-normal-metadata-container" >
@@ -251,48 +238,21 @@ class PostSummary extends Component {
 
         </div>
 
-        <Modal
-          shadow={true}
-          type="confirmation"
-          open={this.isApprovingPopupOpen}
-          title="Xác nhận?"
-          text="Xác nhận duyệt bài viết này?"
-          closeModal={() => { this.isApprovingPostPUOpen = false; this.setState({}); }}
-        >
-          <button className="blue-button mg-right-5px" onClick={() => this.handleVerifyApprove()}>OK</button>
-          <button className="white-button" onClick={() => this.handleCancelApprove()}>Cancel</button>
-
-        </Modal>
-
-
       </div >
 
     );
   }
-  onApproveBtnClick = () => {
-    this.isApprovingPopupOpen = true; this.setState({});
-  }
+
   handleVerifyApprove = () => {
     this.props.approveAPost();
-    this.isApprovingPopupOpen = false; this.setState({});
+
   }
   handlerPreviewRequestedPost = () => {
-    
+
   }
 
   handlerRejectRequestedPost = () => {
-    this.isRejectRequestedPopupOpen = true;
-    this.setState({});
-  }
 
-  handleCancelRejectRequestedPostConfirmation = () => {
-    this.isRejectRequestedPopupOpen = false;
-    this.setState({});
-  }
-
-  handlerVerifyRejectRequestedPostConfirmation = () => {
-    this.isRejectRequestedPopupOpen = false;
-    this.setState({});
   }
 
   // likePost() { }

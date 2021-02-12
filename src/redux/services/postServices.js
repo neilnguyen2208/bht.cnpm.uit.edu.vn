@@ -53,8 +53,7 @@ export function postCreatePost(data) {
         fetch(`${remoteServiceBaseUrl}posts`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                // dispatch(post_CreatePostSuccess(result));
-                openModal("alert_success", "Thành công", "Tạo bài viết thành công!");
+                dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));   
             }
             )
             .catch(error => {

@@ -10,7 +10,7 @@ import "./UploadDocument.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/DocPostSummary.scss'
 import 'components/styles/DocPostDetail.scss'
-import Modal from 'components/common/Modal/Modal'
+
 //components
 import Tag from "components/common/Tag/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
@@ -75,7 +75,7 @@ class UploadDocument extends Component {
                 categoryID: "",//
                 subjectID: "",
                 imageURL: "null",
-                docURL:"http://www.africau.edu/images/default/sample.pdf"
+                docURL: "http://www.africau.edu/images/default/sample.pdf"
             },
 
             author: {
@@ -121,10 +121,6 @@ class UploadDocument extends Component {
         validation(validationCondition);
     }
 
-    handleModal = () => {
-
-    }
-
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
             UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, categoryID: selectedOption.id },
@@ -144,12 +140,6 @@ class UploadDocument extends Component {
             this.props.uploadADocument(this.state.UPLOAD_DOC_DTO);
         }
 
-    }
-
-    handleClosePopup = () => {
-        this.setState({
-            modalShow: false,
-        });
     }
 
     //#region  tag region
@@ -578,18 +568,7 @@ class UploadDocument extends Component {
                     </div >
                 </div >
             </div >
-        let modal = <></>
-        if (this.props.isUploadDone) {
-            modal = <Modal
-                open={this.props.isUploadDone}
-                shadow={true}
-                title={this.props.uploadMessage.type === 'success' ? 'Thành công' : 'Thất bại'}
-                text={this.props.uploadMessage.message}
-                type={this.props.uploadMessage.type === 'success' ? "alert_success" : "alert_failure"}
-                closeModal={() => { this.isNotifySuccessOpen = false; window.location.pathname = '/user/my-posts'; this.setState({}) }}
-            >
-            </Modal>
-        }
+
         return (
             <div className="left-sidebar-layout">
                 <UserSidebar />

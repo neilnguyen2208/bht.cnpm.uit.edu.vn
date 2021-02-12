@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import AdminLayout from 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 import gray_upload_icon from 'assets/images/gray_upload_icon.png'
 import gray_write_icon from 'assets/images/gray_write_icon.png'
 import './ActivityManagement.scss'

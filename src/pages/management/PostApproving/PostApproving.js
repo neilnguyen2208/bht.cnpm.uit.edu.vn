@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom'
 //import for redux
 import { getMyPostsList } from "redux/services/postServices";
 import { getPostCategories } from "redux/services/postCategoryServices";
-import Modal from "components/common/Modal/Modal"
+import Modal from "components/common/Modal/AlertModal"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";

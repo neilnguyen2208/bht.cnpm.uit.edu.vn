@@ -6,7 +6,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import './UserRoleManagement.scss'
 
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 import { ClickAwayListener } from '@material-ui/core';
 
 //import for redux

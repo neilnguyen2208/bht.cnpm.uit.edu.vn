@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import 'components/styles/DocPostSummary.scss'
 import 'components/styles/DocPostDetail.scss'
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 import { getPostByID } from "redux/services/postServices"
 

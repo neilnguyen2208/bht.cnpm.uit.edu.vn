@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import AdminLayout from 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 import gray_upload_icon from 'assets/images/gray_upload_icon.png'
 import gray_write_icon from 'assets/images/gray_write_icon.png'
 
@@ -47,19 +47,11 @@ class AccountInformation extends Component {
         this.roleID = 2;
         this.roleName = "";
 
-        //for popup
-        this.isChangeRoleConfirmationPopupOpen = false;
         this.passwordString = "";
         this.canClickSaveInformation = false;
-        this.isAnySuccessAlertPopupOpen = false;
-        this.isAnyFailedAlertPopupOpen = false;
-        this.isAnySuccessReloadAlertPopupOpen = false;
-
-        this.isChangeRoleConfirmationPopupOpen = false;
-        this.isUpdateInformationPopupOpen = false;
+       
         this.isAnyChangeRoleDropdownComboboxOpen = false;
 
-        this.isUpdateAvatarPopupOpen = false;
         this.isHaveAnyImageInFileLoader = false;
         //for valid input
         this.isDisplayNameEmpty = false;
@@ -104,7 +96,7 @@ class AccountInformation extends Component {
             this.updateInformation_DTO.username = this.username;
 
             this.roleList = this.props.roleList;
-          
+
             let roles_Combobox =
                 this.roleList.map(role =>
                     this.roleID === role.id ?
@@ -251,107 +243,6 @@ class AccountInformation extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* </div > */}
-
-                    {/* #region Popup region */}
-
-                    {/* modal success alert */}
-                    <Modal
-                        open={this.isAnySuccessAlertPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_success"
-                        closeModal={() => { this.isAnySuccessAlertPopupOpen = false; this.setState({}) }}
-                    />
-
-                    <Modal
-                        open={this.isAnySuccessReloadAlertPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_success"
-                        closeModal={() => { this.isAnySuccessReloadAlertPopupOpen = false; this.setState({}); window.location.reload() }}
-                    />
-
-                    {/* modal failed alert */}
-                    <Modal
-                        open={this.isAnyFailedAlertPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_failure"
-                        closeModal={() => { this.isAnyFailedAlertPopupOpen = false; this.setState({}) }}
-                    />
-
-                    {/* for verify change role */}
-                    <Modal
-                        open={this.isChangeRoleConfirmationPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="confirmation"
-                        closeModal={() => this.closeChangeRoleConfirmationPopup()}
-                    >
-
-                        {/* code footer to handler event in parent class (if you want to show a confirmation modal) */}
-                        <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyChangeRoleConfirmation()}>OK</button>
-                        <button className="white-button" onClick={() => this.handlerCancelChangeRoleConfirmation()}>Cancel</button>
-                    </Modal>
-
-                    {/* modal for veritfy update informartion */}
-                    <Modal
-                        open={this.isUpdateInformationPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="confirmation"
-                        closeModal={() => this.closeUpdateInformationConfirmationPopup()}
-                    >
-
-                        {/* code footer to handler event in parent class (if you want to show a confirmation modal) */}
-                        <div className="gray-label">Xác nhận?</div>
-                        <div style={{ display: "flex" }}>
-                            <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyUpdateInformation()}>OK</button>
-                            <button className="white-button" onClick={() => this.handlerCancelVerifyUpdateInformation()}>Cancel</button>
-                        </div>
-                    </Modal>
-
-                    {/* Popup for update avatar */}
-                    <Modal open={this.isUpdateAvatarPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="custom"
-                        closeModal={() => this.closeUpdateAvatarPopup()}
-                    >
-                        {/* <div className="modal-body">
-                            <ImageUploader
-                                withIcon={true}
-                                buttonText='Tải ảnh lên'
-                                onChange={this.onDrop}
-                                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                                maxFileSize={5242880}
-                                singleImage={true}
-                                withPreview={true}
-                                labelclassName="gray-label"
-                            ></ImageUploader>
-                        </div> */}
-                        {this.isHaveAnyImageInFileLoader
-                            ?
-                            <div className="modal-footer">
-
-                                <div className="gray-label">Xác nhận?</div>
-                                <div style={{ display: "flex" }}>
-                                    <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyUpdateAvatarConfirmation()}>OK</button>
-                                    <button className="white-button" onClick={() => { this.isUpdateAvatarPopupOpen = false; this.setState({}) }}>Cancel</button>
-                                </div>
-                            </div>
-                            :
-                            <></>
-                        }
-                    </Modal>
-                    {/* #endregion */}
                     <div src={this.state.pictures[0]}></div>
                 </div >
 

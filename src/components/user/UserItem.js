@@ -12,7 +12,7 @@ import 'components/styles/SimpleButton.scss'
 import 'components/styles/SimpleLabel.scss'
 
 //modal popup
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 
 import { ClickAwayListener } from '@material-ui/core';
 import { getRoleNameByName, getRoleNamebyID } from 'utils/permissionUtils'

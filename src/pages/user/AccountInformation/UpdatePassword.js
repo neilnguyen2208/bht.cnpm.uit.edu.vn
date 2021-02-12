@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Modal from 'components/common/Modal/Modal'
+import Modal from 'components/common/Modal/AlertModal'
 import { isContainSpecialCharacter } from 'utils/stringUtils'
 
 //import for Redux

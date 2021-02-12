@@ -10,7 +10,7 @@ import "./UploadDocument.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/DocPostSummary.scss'
 import 'components/styles/DocPostDetail.scss'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 //components
 import Tag from "components/common/Tag/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
@@ -580,7 +580,7 @@ class UploadDocument extends Component {
             </div >
         let modal = <></>
         if (this.props.isUploadDone) {
-            modal = <CustomModal
+            modal = <Modal
                 open={this.props.isUploadDone}
                 shadow={true}
                 title={this.props.uploadMessage.type === 'success' ? 'Thành công' : 'Thất bại'}
@@ -588,7 +588,7 @@ class UploadDocument extends Component {
                 type={this.props.uploadMessage.type === 'success' ? "alert_success" : "alert_failure"}
                 closeModal={() => { this.isNotifySuccessOpen = false; window.location.pathname = '/user/my-posts'; this.setState({}) }}
             >
-            </CustomModal>
+            </Modal>
         }
         return (
             <div className="left-sidebar-layout">

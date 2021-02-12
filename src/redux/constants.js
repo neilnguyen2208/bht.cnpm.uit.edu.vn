@@ -189,3 +189,7 @@ export const GET_POST_BY_ID_REQUEST = "GET_POST_BY_ID_REQUEST";
 export const GET_POST_BY_ID_SUCCESS = "GET_POST_BY_ID_SUCCESS";
 export const GET_POST_BY_ID_FAILURE = "GET_POST_BY_ID_FAILURE";
 
+//#region modal constant
+
+export const MODAL_CLOSE = "MODAL_CLOSE";
+export const MODAL_OPEN = "MODAL_OPEN";

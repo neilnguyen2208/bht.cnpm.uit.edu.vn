@@ -6,10 +6,6 @@ class Tag extends Component {
 
     //onDelete, tag: dmID, id, name/content
 
-    constructor(props) {
-        super(props);
-    }
-
     onDelete = () => {
         this.props.onDeleteTag(this.props.tag);
     }

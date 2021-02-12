@@ -7,6 +7,7 @@ class FormFileUploader extends Component {
     //onDelete, tag: dmID, id, name/content
     constructor(props) {
         super(props);
+        this.state = { data: "" }
     }
 
     onFileChange = () => {

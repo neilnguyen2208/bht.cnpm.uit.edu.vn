@@ -10,6 +10,7 @@ import CourseReducer from "redux/reducers/courseReducer"
 import CourseCategoryReducer from "redux/reducers/courseCategoryReducer"
 import HeadingReducer from "redux/reducers/headingReducer"
 import CommonReducer from "redux/reducers/commonReducer"
+import ModalReducer from "redux/reducers/modalReducer"
 
 var RootReducer = combineReducers({
     home: HomeReducer,
@@ -23,6 +24,7 @@ var RootReducer = combineReducers({
     course_category: CourseCategoryReducer,
     heading: HeadingReducer,
     common: CommonReducer,
+    modal: ModalReducer
 });
 
 export default RootReducer;

@@ -16,7 +16,7 @@ import 'components/styles/SimpleButton.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 
 
 class DocSummary extends Component {
@@ -245,7 +245,7 @@ class DocSummary extends Component {
         </div> */}
 
         {/* Popup for reject requested post */}
-        <CustomModal
+        <Modal
           shadow={true}
           type="confirmation"
           open={this.isRejectRequestedPopupOpen}
@@ -255,16 +255,16 @@ class DocSummary extends Component {
         >
           <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyRejectRequestedPostConfirmation()}>OK</button>
           <button className="white-button" onClick={() => this.handleCancelRejectRequestedPostConfirmation()}>Cancel</button>
-        </CustomModal>
+        </Modal>
 
-        <CustomModal shadow={true}
+        <Modal shadow={true}
           type="custom"
           open={this.isReportPopupOpen}
           title="Báo cáo vi phạm"
           closeModal={() => { this.isReportPopupOpen = false; this.setState({}); }}
         >
 
-        </CustomModal>
+        </Modal>
 
       </div >
 

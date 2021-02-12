@@ -3,10 +3,6 @@
 import React, { Component } from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Paginator from 'components/common/Paginator/ClientPaginator'
-import UserItem from 'components/user/UserItem'
-// import { ClickAwayListener } from '@material-ui/core'
-// import { getRoleNameByName, getRoleNameFilterByName } from 'utils/PermissionManagement'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 

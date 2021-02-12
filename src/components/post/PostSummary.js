@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import 'components/styles/SimpleButton.scss'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -144,7 +144,7 @@ class PostSummary extends Component {
 
     let popup = <></>;
     if (this.props.isApprovingLoadDone)
-      popup = <CustomModal
+      popup = <Modal
         shadow={true}
         type="alert_success"
         open={true}
@@ -152,7 +152,7 @@ class PostSummary extends Component {
         text="Duyệt thành công"
         closeModal={() => { this.open = false; this.setState({}); }}
       >
-      </CustomModal>
+      </Modal>
 
     return (
       <div className="item-container" >
@@ -251,7 +251,7 @@ class PostSummary extends Component {
 
         </div>
 
-        <CustomModal
+        <Modal
           shadow={true}
           type="confirmation"
           open={this.isApprovingPopupOpen}
@@ -262,7 +262,7 @@ class PostSummary extends Component {
           <button className="blue-button mg-right-5px" onClick={() => this.handleVerifyApprove()}>OK</button>
           <button className="white-button" onClick={() => this.handleCancelApprove()}>Cancel</button>
 
-        </CustomModal>
+        </Modal>
 
 
       </div >

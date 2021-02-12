@@ -29,6 +29,8 @@ import {    //highlight posts
 
 } from "redux/actions/postAction.js";
 
+import { openModal } from 'redux/actions/modalAction'
+
 import {
     remoteServiceBaseUrl
 } from 'utils/httpServices';
@@ -51,7 +53,8 @@ export function postCreatePost(data) {
         fetch(`${remoteServiceBaseUrl}posts`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                dispatch(post_CreatePostSuccess(result));
+                // dispatch(post_CreatePostSuccess(result));
+                openModal("alert_success", "Thành công", "Tạo bài viết thành công!");
             }
             )
             .catch(error => {

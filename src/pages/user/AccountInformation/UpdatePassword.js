@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import { isContainSpecialCharacter } from 'utils/stringUtils'
 
 //import for Redux
@@ -124,7 +124,7 @@ class UpdatePassword extends Component {
 
 
                     {/* modal for verifing change role */}
-                    <CustomModal
+                    <Modal
                         open={this.isChangeRoleConfirmationPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -136,10 +136,10 @@ class UpdatePassword extends Component {
                         {/* code footer to handler event in parent class (if you want to show a confirmation modal) */}
                         <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyChangeRoleConfirmation()}>OK</button>
                         <button className="white-button" onClick={() => this.handleCancelChangeRoleConfirmation()}>Cancel</button>
-                    </CustomModal>
+                    </Modal>
 
                     {/* modal for notification anything */}
-                    <CustomModal
+                    <Modal
                         open={this.isAnyFailedAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -147,9 +147,9 @@ class UpdatePassword extends Component {
                         type="alert_failure"
                         closeModal={() => this.closeFailedAlertPopup()}
                     >
-                    </CustomModal>
+                    </Modal>
 
-                    <CustomModal
+                    <Modal
                         open={this.isAnySuccessAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -157,10 +157,10 @@ class UpdatePassword extends Component {
                         type="alert_success"
                         closeModal={() => this.closeSuccessAlertPopup()}
                     >
-                    </CustomModal>
+                    </Modal>
 
                     {/* for popup and logout */}
-                    <CustomModal
+                    <Modal
                         open={this.isAnySuccessLogoutAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -168,7 +168,7 @@ class UpdatePassword extends Component {
                         type="alert_success"
                         closeModal={() => { this.props.getLogout(); this.isAnySuccessLogoutAlertPopupOpen = false; window.location.pathname = "/"; this.setState({}) }}
                     >
-                    </CustomModal>
+                    </Modal>
 
                 </div >
             );

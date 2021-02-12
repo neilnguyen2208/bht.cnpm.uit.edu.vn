@@ -5,7 +5,6 @@ import graySaveIcon from 'assets/icons/24x24/gbookmark_icon_24x24.png'
 import blueSaveIcon from 'assets/icons/24x24/bfbookmark_icon_24x24.png'
 
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
-import { itemType } from 'constants.js'
 
 //styles
 import 'components/styles/DocPostSummary.scss'
@@ -13,10 +12,6 @@ import 'components/styles/SimpleButton.scss'
 import './SubjectItem.scss'
 
 //components
-import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
-
-import Loader from 'components/common/Loader/Loader'
 import { Link } from 'react-router-dom'
 
 class CourseSummaryItem extends Component {

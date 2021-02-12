@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
 import 'components/styles/SimpleButton.scss'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
-import { Link } from 'react-router-dom'
-
 //resources
 import './Metadata.scss'
 
@@ -14,8 +11,6 @@ import 'components/styles/SimpleLabel.scss'
 import { componentType } from 'constants.js'
 
 //components
-import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-
 class Metadata extends Component {
 
   constructor(props) {
@@ -38,7 +33,7 @@ class Metadata extends Component {
             {this.props.category}
           </div>
           <div className="metadata-label">
-            {`${Math.ceil(this.props.readingTime/60)} phút đọc`}
+            {`${Math.ceil(this.props.readingTime / 60)} phút đọc`}
           </div>
         </div>
 

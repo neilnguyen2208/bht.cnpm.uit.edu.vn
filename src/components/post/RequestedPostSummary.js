@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import 'components/styles/DocPostSummary.scss'
 import 'components/styles/SimpleButton.scss'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 
 class RequestedPostSummary extends Component {
@@ -84,7 +84,7 @@ class RequestedPostSummary extends Component {
                 </div>
 
                 {/* Popup for reject requested post */}
-                <CustomModal
+                <Modal
                     shadow={true}
                     type="confirmation"
                     open={this.isRejectRequestedPopupOpen}
@@ -95,7 +95,7 @@ class RequestedPostSummary extends Component {
                     <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyRejectRequestedPostConfirmation()}>OK</button>
                     <button className="white-button" onClick={() => this.handleCancelRejectRequestedPostConfirmation()}>Cancel</button>
 
-                </CustomModal>
+                </Modal>
 
 
             </div>

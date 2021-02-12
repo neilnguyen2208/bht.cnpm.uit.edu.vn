@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import AdminLayout from 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import gray_upload_icon from 'assets/images/gray_upload_icon.png'
 import gray_write_icon from 'assets/images/gray_write_icon.png'
 import './ActivityManagement.scss'
@@ -13,7 +13,6 @@ import dropdown_btn from 'assets/images/dropdown_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { isContainSpecialCharacter } from 'utils/stringUtils'
-import ImageUploader from 'react-images-upload'
 
 //import for Redux
 import { bindActionCreators } from 'redux'

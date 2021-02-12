@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import 'components/styles/DocPostSummary.scss'
 import 'components/styles/DocPostDetail.scss'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 import { getPostByID } from "redux/services/postServices"
 
@@ -16,7 +16,7 @@ import unliked_btn from 'assets/images/unliked_btn.png'
 import full_blue_bookmark_btn from 'assets/images/full_blue_bookmark_btn.png'
 import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
 import Loader from 'components/common/Loader/Loader'
-import Comment from 'components/common/Comment/Comment'
+// import Comment from 'components/common/Comment/Comment'
 
 // import PDFViewer from 'pdf-viewer-reactjs'
 //import for pdf viewer:
@@ -138,7 +138,7 @@ class PostDetail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <Comment></Comment>
+                            {/* <Comment></Comment> */}
                         </div>
                         : <Loader />}
                 </div>

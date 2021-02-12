@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import AdminLayout from 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import gray_upload_icon from 'assets/images/gray_upload_icon.png'
 import gray_write_icon from 'assets/images/gray_write_icon.png'
 
@@ -16,7 +16,6 @@ import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UpdatePassword from './UpdatePassword'
 import { isContainSpecialCharacter } from 'utils/stringUtils'
-import ImageUploader from 'react-images-upload'
 
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -257,7 +256,7 @@ class AccountInformation extends Component {
                     {/* #region Popup region */}
 
                     {/* modal success alert */}
-                    <CustomModal
+                    <Modal
                         open={this.isAnySuccessAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -266,7 +265,7 @@ class AccountInformation extends Component {
                         closeModal={() => { this.isAnySuccessAlertPopupOpen = false; this.setState({}) }}
                     />
 
-                    <CustomModal
+                    <Modal
                         open={this.isAnySuccessReloadAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -276,7 +275,7 @@ class AccountInformation extends Component {
                     />
 
                     {/* modal failed alert */}
-                    <CustomModal
+                    <Modal
                         open={this.isAnyFailedAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -286,7 +285,7 @@ class AccountInformation extends Component {
                     />
 
                     {/* for verify change role */}
-                    <CustomModal
+                    <Modal
                         open={this.isChangeRoleConfirmationPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -298,10 +297,10 @@ class AccountInformation extends Component {
                         {/* code footer to handler event in parent class (if you want to show a confirmation modal) */}
                         <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyChangeRoleConfirmation()}>OK</button>
                         <button className="white-button" onClick={() => this.handlerCancelChangeRoleConfirmation()}>Cancel</button>
-                    </CustomModal>
+                    </Modal>
 
                     {/* modal for veritfy update informartion */}
-                    <CustomModal
+                    <Modal
                         open={this.isUpdateInformationPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -316,17 +315,17 @@ class AccountInformation extends Component {
                             <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyUpdateInformation()}>OK</button>
                             <button className="white-button" onClick={() => this.handlerCancelVerifyUpdateInformation()}>Cancel</button>
                         </div>
-                    </CustomModal>
+                    </Modal>
 
                     {/* Popup for update avatar */}
-                    <CustomModal open={this.isUpdateAvatarPopupOpen}
+                    <Modal open={this.isUpdateAvatarPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
                         text={this.notifyContent}
                         type="custom"
                         closeModal={() => this.closeUpdateAvatarPopup()}
                     >
-                        <div className="Custom_Modal_Body">
+                        {/* <div className="modal-body">
                             <ImageUploader
                                 withIcon={true}
                                 buttonText='Tải ảnh lên'
@@ -337,10 +336,10 @@ class AccountInformation extends Component {
                                 withPreview={true}
                                 labelclassName="gray-label"
                             ></ImageUploader>
-                        </div>
+                        </div> */}
                         {this.isHaveAnyImageInFileLoader
                             ?
-                            <div className="Custom_Modal_Footer">
+                            <div className="modal-footer">
 
                                 <div className="gray-label">Xác nhận?</div>
                                 <div style={{ display: "flex" }}>
@@ -351,7 +350,7 @@ class AccountInformation extends Component {
                             :
                             <></>
                         }
-                    </CustomModal>
+                    </Modal>
                     {/* #endregion */}
                     <div src={this.state.pictures[0]}></div>
                 </div >

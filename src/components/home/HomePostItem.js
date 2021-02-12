@@ -14,7 +14,7 @@ import './HomeItem.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 
 import Loader from 'components/common/Loader/Loader'
 import { Link } from 'react-router-dom'

@@ -17,9 +17,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 
-import liked_btn from 'assets/images/liked_btn.png'
 import unliked_btn from 'assets/images/unliked_btn.png'
-import full_blue_bookmark_btn from 'assets/images/full_blue_bookmark_btn.png'
 import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
 
 //utils
@@ -28,8 +26,6 @@ import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/timeUtils'
 import Metadata from 'components/common/Metadata/Metadata'
 import UserSidebar from 'layouts/UserSidebar'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
-import { faSatelliteDish } from "@fortawesome/free-solid-svg-icons";
 
 const validationCondition = {
     form: '#create-post-form',
@@ -87,8 +83,7 @@ class CreatePost extends Component {
             { dmID: 5, id: '', content: '' },
         ]
         this.isPopupOpen = false;
-        this.message = "";
-
+      
         this.tagQuickQueryResult =
             [
                 {
@@ -168,7 +163,7 @@ class CreatePost extends Component {
 
                 //compare voi 3 ket qua
                 if (this.props.tagQuickQueryResult) {
-                    this.props.tagQuickQueryResult.map(tag => {
+                    this.props.tagQuickQueryResult.forEach(tag => {
                         if (e.target.value.localeCompare(tag.content) === 0) {
                             console.log("equal");
                             hasOldTag = tag.id; //co tag giong tag cu
@@ -217,17 +212,15 @@ class CreatePost extends Component {
         //neu khong thi them co id
         let isTheSameContent = -1; // khong cos => -1 neu co => id cua tag 
 
-        this.shownTag.map(_tag => {
+        this.shownTag.forEach(_tag => {
             //kiem tra xem tag dang bam co giong tag cu hay khong
             if (tag.content.localeCompare(_tag.content) === 0) {
                 console.log("equal content");
                 isTheSameContent = _tag.id; //co tag giong tag cu
-                return;
             }
             if (tag.id === _tag.id) {
                 console.log("equal id");
                 isTheSameContent = _tag.id; //co tag giong tag cu
-                return;
             }
         })
 
@@ -266,13 +259,13 @@ class CreatePost extends Component {
 
         //xet theo id va content, cap nhat lai shownTag
         if (item.content)
-            this.shownTag.map(tag => {
+            this.shownTag.forEach(tag => {
                 if (tag.content === item.content)
                     item.content = ''; item.id = '';
             })
 
         else if (item.id) {
-            this.shownTag.map(tag => {
+            this.shownTag.forEach(tag => {
                 if (tag.id === item.id)
                     item.content = ''; item.id = '';
             })
@@ -280,18 +273,18 @@ class CreatePost extends Component {
 
         //cap nhat lai tmpDTO theo shownTag
         let tempTagDTO = [];
-        this.shownTag.map(tag => {
+        this.shownTag.forEach(tag => {
             if (tag.id || tag.content) {
                 tempTagDTO.push({ id: tag.id, content: tag.content })
             }
         })
 
         //cap nhat lai shownTag theo tmpDTO
-        this.shownTag.map(tag => {
+        this.shownTag.forEach(tag => {
             tag.id = ''; tag.content = '';
         })
 
-        tempTagDTO.map((tag, index) => {
+        tempTagDTO.forEach((tag, index) => {
             this.shownTag[index].id = tag.id;
             this.shownTag[index].content = tag.content;
         })
@@ -507,18 +500,7 @@ class CreatePost extends Component {
                     </div >
                 </div >
             </div >
-        let modal = <></>
-        if (this.props.isUploadDone) {
-            modal = <CustomModal
-                open={this.props.isUploadDone}
-                shadow={true}
-                title={this.props.uploadMessage.type === 'success' ? 'Thành công' : 'Thất bại'}
-                text={this.props.uploadMessage.message}
-                type={this.props.uploadMessage.type === 'success' ? "alert_success" : "alert_failure"}
-                closeModal={() => { this.isNotifySuccessOpen = false; window.location.pathname = '/user/my-posts'; this.setState({}) }}
-            >
-            </CustomModal>
-        }
+
         return (
             <div className="left-sidebar-layout">
                 <UserSidebar />
@@ -540,7 +522,6 @@ class CreatePost extends Component {
                 </div>
 
                 {/* Custom for notifing success */}
-                {modal}
 
             </div>
 
@@ -579,7 +560,6 @@ const mapStateToProps = (state) => {
 
         //upload thanh cong hay khong
         isUploadDone: state.post.createPost.isLoadingDone,
-        uploadMessage: state.post.createPost.notification
     };
 }
 

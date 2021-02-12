@@ -1,29 +1,21 @@
 import React, { Component } from 'react'
 
 import 'components/styles/DocPostSummary.scss'
-// import 'components/shared/DPD_ResponsiveLayout.scss'
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 
-import { management_getCurrentPreviewDocument } from "redux/services/docServices"
-import { getCurrentUser } from "redux/services/userServices"
-import { isGrantedPermissions, Document } from "utils/permissionUtils"
-import { getDocumentByID } from "redux/services/docServices"
+import { isGrantedPermissions } from "utils/permissionUtils"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import 'components/styles/DocPostDetail.scss'
-import gray_download_icon from 'assets/images/gray_download_icon.png'
 import PDFViewer from 'pdf-viewer-reactjs'
-import Cookies from 'js-cookie'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import liked_btn from 'assets/images/liked_btn.png'
 import unliked_btn from 'assets/images/unliked_btn.png'
 import dislike_btn from 'assets/images/dislike_btn.png'
 import undislike_btn from 'assets/images/undislike_btn.png'
 import download_btn from 'assets/images/gray_download_icon.png'
-import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 
 //import for pdf viewer:
 
@@ -232,7 +224,7 @@ class DocumentDetail extends Component {
 
                                 <div class="comment-box">
                                     <div class="comment-head">
-                                        <h6 class="comment-name by-author"><a href="">Nguyễn Văn Đông</a></h6>
+                                        <h6 class="comment-name by-author">Nguyễn Văn Đông</h6>
 
                                     </div>
                                     <div class="comment-content">
@@ -245,7 +237,7 @@ class DocumentDetail extends Component {
                                     <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" /></div>
                                     <div class="comment-box">
                                         <div class="comment-head">
-                                            <h6 class="comment-name"><a href="">Lưu Biêu Nghị</a></h6>
+                                            <h6 class="comment-name">Lưu Biêu Nghị</h6>
 
                                         </div>
                                         <div class="comment-content">
@@ -258,7 +250,7 @@ class DocumentDetail extends Component {
                                     <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
                                     <div class="comment-box">
                                         <div class="comment-head">
-                                            <h6 class="comment-name by-author"><a href="">Nguyễn Văn Đông</a></h6>
+                                            <h6 class="comment-name by-author">Nguyễn Văn Đông</h6>
 
                                         </div>
                                         <div class="comment-content">
@@ -276,7 +268,7 @@ class DocumentDetail extends Component {
                                 </div>
                                 <div class="comment-box">
                                     <div class="comment-head">
-                                        <h6 class="comment-name"><a href="">Lưu Biêu Nghị</a></h6>
+                                        <h6 class="comment-name">Lưu Biêu Nghị</h6>
                                     </div>
                                     <div class="comment-content">
                                         À, có một chỗ sai kìa bạn

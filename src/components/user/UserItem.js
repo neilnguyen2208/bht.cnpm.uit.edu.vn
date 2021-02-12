@@ -4,7 +4,7 @@ import gray_write_icon from 'assets/images/gray_write_icon.png'
 import gray_upload_icon from 'assets/images/gray_upload_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
-import icon_write from 'assets/images/icon_write.png'
+
 
 //combobox
 import 'components/common/Combobox/Combobox.scss'
@@ -12,7 +12,7 @@ import 'components/styles/SimpleButton.scss'
 import 'components/styles/SimpleLabel.scss'
 
 //modal popup
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 
 import { ClickAwayListener } from '@material-ui/core';
 import { getRoleNameByName, getRoleNamebyID } from 'utils/permissionUtils'
@@ -164,7 +164,7 @@ class UserItem extends Component {
                     </div >
 
                     {/* modal for veritfy change role */}
-                    <CustomModal
+                    <Modal
                         open={this.state.isChangeRoleConfirmationPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -176,11 +176,11 @@ class UserItem extends Component {
                         {/* code footer to handler event in parent class (if you want to show a confirmation modal) */}
                         <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyChangeRoleConfirmation()}>OK</button>
                         <button className="white-button" onClick={() => this.closeChangeRoleConfirmationPopup()}>Cancel</button>
-                    </CustomModal>
+                    </Modal>
 
 
                     {/* modal success alert */}
-                    <CustomModal
+                    <Modal
                         open={this.isAnySuccessAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -190,7 +190,7 @@ class UserItem extends Component {
                     />
 
                     {/* modal failed alert */}
-                    <CustomModal
+                    <Modal
                         open={this.isAnyFailedAlertPopupOpen}
                         shadow={true}
                         title={this.notifyHeader}

@@ -6,7 +6,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import './UserRoleManagement.scss'
 
-import CustomModal from 'components/common/CustomModalPopup/CustomModal'
+import Modal from 'components/common/Modal/Modal'
 import { ClickAwayListener } from '@material-ui/core';
 
 //import for redux
@@ -102,51 +102,51 @@ class UserRoleManagement extends Component {
                     </div>
 
                     {/* Popup for add new post category */}
-                    <CustomModal
+                    <Modal
                         shadow={true}
                         type="custom"
                         title="Thêm quyền bài viết"
                         open={this.isAddPostCategoryPopupOpen}
                         closeModal={() => { this.isAddPostCategoryPopupOpen = false; this.setState({}); }}
                     >
-                        <div className="Custom_Modal_Body">
+                        <div className="modal-body">
                             <div className="gray-label"> Tên quyền mới: </div>
                             <input type="text" className="form-input" placeholder="Nhập tên quyền ..." />
                         </div>
 
-                        <div className="Custom_Modal_Footer">
+                        <div className="modal-footer">
                             <div className="gray-label">Xác nhận?</div>
                             <div style={{ display: "flex" }}>
                                 <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyAddNewPostCategoryConfirmation()}>OK</button>
                                 <button className="white-button" onClick={() => { this.isAddPostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
                             </div>
                         </div>
-                    </CustomModal>
+                    </Modal>
 
                     {/* Popup for update a new post category */}
-                    <CustomModal
+                    <Modal
                         shadow={true}
                         type="custom"
                         title="Cập nhật quyền bài viết"
                         open={this.isEditPostCategoryPopupOpen}
                         closeModal={() => { this.isEditPostCategoryPopupOpen = false; this.setState({}); }}
                     >
-                        <div className="Custom_Modal_Body">
+                        <div className="modal-body">
                             <div className="gray-label"> Tên quyền: </div>
                             <input type="text" className="form-input" defaultValue={this.selected_category_name} />
                         </div>
 
-                        <div className="Custom_Modal_Footer">
+                        <div className="modal-footer">
                             <div className="gray-label">Xác nhận?</div>
                             <div style={{ display: "flex" }}>
                                 <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyEditPostCategoryConfirmation()}>OK</button>
                                 <button className="white-button" onClick={() => { this.isEditPostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
                             </div>
                         </div>
-                    </CustomModal>
+                    </Modal>
 
                     {/* Popup for verifying delete post category */}
-                    <CustomModal
+                    <Modal
                         shadow={true}
                         type="confirmation"
                         title={this.notifyHeader}
@@ -156,10 +156,10 @@ class UserRoleManagement extends Component {
                     >
                         <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyDeletePostCategoryConfirmation()}>OK</button>
                         <button className="white-button" onClick={() => { this.isVerifyDeletePostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
-                    </CustomModal>
+                    </Modal>
 
                     {/* Custom for notifing success */}
-                    <CustomModal
+                    <Modal
                         open={this.isNotifySuccessOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -167,10 +167,10 @@ class UserRoleManagement extends Component {
                         type="alert_success"
                         closeModal={() => { this.isNotifySuccessOpen = false; this.setState({}) }}
                     >
-                    </CustomModal>
+                    </Modal>
 
                     {/* Custom for notifing fail */}
-                    <CustomModal
+                    <Modal
                         open={this.isNotifyFailOpen}
                         shadow={true}
                         title={this.notifyHeader}
@@ -178,7 +178,7 @@ class UserRoleManagement extends Component {
                         type="alert_failure"
                         closeModal={() => { this.isNotifyFailOpen = false; this.setState({}) }}
                     >
-                    </CustomModal>
+                    </Modal>
 
                 </div >
             </div >

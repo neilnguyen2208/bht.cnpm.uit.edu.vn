@@ -145,7 +145,7 @@ class SearchDocument extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+   ;
     return {
         documentsList: state.document.documentSearchResult.data,
         docCategories: state.doc_category.categories.data,

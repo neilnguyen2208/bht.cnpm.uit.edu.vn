@@ -6,8 +6,8 @@ export default class Loader extends React.Component {
     return (
       <div className="loader-container">
         <div style={{ margin: "auto" }} >
-          <div className ="loader-spinner-blocks-2wim9ni0j7v">
-            <div className ="loader-qqa1psw9t4">
+          <div className="loader-spinner-blocks-2wim9ni0j7v">
+            <div className="loader-qqa1psw9t4">
               <div style={{ left: "38px", top: "38px", animationDelay: "0s" }}> </div>
               <div style={{ left: "80px", top: "38px", animationDelay: "0.125s" }}></div>
               <div style={{ left: "122px", top: "38px", animationDelay: "0.25s" }}></div>
@@ -19,6 +19,7 @@ export default class Loader extends React.Component {
             </div >
           </div >
         </div >
+        <div className="loader-text">{this.props.text}</div>
       </div>
     )
   }

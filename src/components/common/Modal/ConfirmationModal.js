@@ -67,7 +67,6 @@ class ConfirmationModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         currentModals: state.modal
     };

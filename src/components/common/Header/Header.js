@@ -348,7 +348,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
+   
     return {
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,

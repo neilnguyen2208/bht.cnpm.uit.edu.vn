@@ -31,39 +31,51 @@ import {    //highlight posts
 
 import { openModal } from 'redux/actions/modalAction'
 
-import {
+import http, {
     remoteServiceBaseUrl
 } from 'utils/httpServices';
 import history from 'history.js';
 
 export function postCreatePost(data) {
     return dispatch => {
-        dispatch(post_CreatePostRequest());
+        // dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
 
-        var requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                //token cac kieu
-            },
-            redirect: 'follow',
-            body: JSON.stringify(data)
-        };
+        // var requestOptions = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //         //token cac kieu
+        //     },
+        //     redirect: 'follow',
+        //     body: JSON.stringify(data)
+        // };
 
-        fetch(`${remoteServiceBaseUrl}posts`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));   
-            }
-            )
-            .catch(error => {
+        // fetch(`${remoteServiceBaseUrl}posts`, requestOptions)
+        //     .then(response => response.json())
+        //     .then(result => {
+        //         dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));
+        //     }
+        //     )
+        //     .catch(error => {
+        //         dispatch(openModal("error", { text: "Đang upload bài viết ..." }));
+        //     })
 
-                dispatch(post_CreatePostFailure(error)); //
-            })
+        http.post('/posts', JSON.stringify(data)).then(response => { console.log(response) });
     }
 }
 
-
+export function postCreatePost_(data) {
+    return dispatch => {
+        http.post('posts', data).then((response) => {
+            console.log("response");
+            console.log(response);
+        })
+            .catch(function (error) {
+                console.log("error");
+                console.log(error);
+            });
+    }
+}
 
 // my post
 export function getMyPostsList(page = 1, category = "") { //this API to get all approved document of a specific user.

@@ -78,7 +78,7 @@ class SearchPostByTag extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+   ;
     return {
         myPostsList: state.post.myPosts.data,
         postCategories: state.post_category.categories.data,

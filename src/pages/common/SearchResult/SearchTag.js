@@ -58,7 +58,7 @@ class SearchTag extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+   ;
     return {
         tagsList: state.tag.tagSearchResult.data,
         itemCount: state.tag.tagSearchResult.itemCount,

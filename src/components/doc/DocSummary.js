@@ -243,32 +243,7 @@ class DocSummary extends Component {
           <div className="blue-button" style={{ marginRight: "5px", fontSize: "16px" }} onClick={() => this.handlerPreviewRequestedPost()}>Xem trước</div>
           <div className="red-button" style={{ fontSize: "16px" }} onClick={() => { this.handlerRejectRequestedPost() }}>Từ chối</div>
         </div> */}
-
-        {/* Popup for reject requested post */}
-        <Modal
-          shadow={true}
-          type="confirmation"
-          open={this.isRejectRequestedPopupOpen}
-          title="Xác nhận?"
-          text="Xác nhận từ chối tiếp nhận bài viết này?"
-          closeModal={() => { this.isRejectRequestedPopupOpen = false; this.setState({}); }}
-        >
-          <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyRejectRequestedPostConfirmation()}>OK</button>
-          <button className="white-button" onClick={() => this.handleCancelRejectRequestedPostConfirmation()}>Cancel</button>
-        </Modal>
-
-        <Modal shadow={true}
-          type="custom"
-          open={this.isReportPopupOpen}
-          title="Báo cáo vi phạm"
-          closeModal={() => { this.isReportPopupOpen = false; this.setState({}); }}
-        >
-
-        </Modal>
-
       </div >
-
-
     );
   }
 

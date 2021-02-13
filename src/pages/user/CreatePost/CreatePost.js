@@ -61,10 +61,9 @@ class CreatePost extends Component {
             CREATE_POST_DTO: {
                 tags: [],
                 title: "Model View Presenter (MVP) in Android with a simple demo project.",//
-                content: ``,//
+                content: ``,
                 summary: `null`,
-                // authorID: "",// khong co nhe
-                categoryID: "",//
+                categoryID: "",
                 imageURL: "null",
                 readingTime: 10
             },
@@ -83,7 +82,7 @@ class CreatePost extends Component {
             { dmID: 5, id: '', content: '' },
         ]
         this.isPopupOpen = false;
-      
+
         this.tagQuickQueryResult =
             [
                 {
@@ -297,9 +296,6 @@ class CreatePost extends Component {
             }
         });
         this.forceUpdate();
-    }
-
-    handleClickTag = (item) => {
     }
 
     //#endregion
@@ -548,7 +544,7 @@ class CreatePost extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+   ;
 
     return {
         categories: state.post_category.categories.data,

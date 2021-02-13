@@ -157,7 +157,7 @@ class PostDetail extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+   ;
     return {
         currentPost: state.post.currentPost.data,
         isLoading: state.post.currentPost.isLoading

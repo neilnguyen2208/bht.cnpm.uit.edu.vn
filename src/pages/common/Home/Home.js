@@ -244,7 +244,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+   ;
     return {
         trendingDocuments: state.home.trendingDocuments.data,
         isTrendingDocumentLoading: state.home.trendingDocuments.isLoading,

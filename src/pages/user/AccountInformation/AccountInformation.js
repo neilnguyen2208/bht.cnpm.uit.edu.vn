@@ -484,7 +484,7 @@ class AccountInformation extends Component {
 //#region for Redux
 const mapStateToProps = (state) => {
     // (state);
-    // console.log(state);
+    //;
     return {
         roleList: state.user.allRoles,
         accountInformation: state.user.account

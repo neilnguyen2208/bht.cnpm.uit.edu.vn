@@ -1,5 +1,7 @@
 import axios from 'axios';
-
+import { openModal, closeModal } from 'redux/actions/modalAction'
+import qs from 'qs'
+import store from 'redux/store/index'
 export function getToken() {
   return localStorage.getItem('token');
 }
@@ -7,27 +9,19 @@ export function getToken() {
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
 
-const qs = require('qs');
 
-const http = axios.create({
+const request = axios.create({
   baseURL: remoteServiceBaseUrl,
-  timeout: 30000,
-  paramsSerializer: function (params) {
-    return qs.stringify(params, {
-      encode: false,
-    });
+  headers: {
+    'Content-Type': 'application/json', 
+    f: 's'
   },
-});
 
-http.interceptors.request.use(
+}
+);
+
+request.interceptors.request.use(
   function (config) {
-
-    console.log()
-    if (getToken()) {
-      config.headers.common['Authorization'] = 'Bearer ' + getToken();
-    }
-    config.headers.common['Access-Control-Allow-Origin'] = "*";
-    config.headers.common['crossdomain'] = true;
     return config;
   },
   function (error) {
@@ -35,29 +29,17 @@ http.interceptors.request.use(
   }
 );
 
-http.interceptors.response.use(
+request.interceptors.response.use(
   response => {
+    console.log(response);
     return response;
   },
   error => {
-    if (!!error.response && !!error.response.data.error && !!error.response.data.error.message && error.response.data.error.details) {
-      // Modal.error({
-      //   title: error.response.data.error.message,
-      //   content: error.response.data.error.details,
-      // });
-    } else if (!!error.response && !!error.response.data.error && !!error.response.data.error.message) {
-      // Modal.error({
-      //   title: L('LoginFailed'),
-      //   content: error.response.data.error.message,
-      // });
-    } else if (!error.response) {
-      // Modal.error({ content: L('UnknownError') });
-    }
+    store.dispatch(openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" }));
 
-    setTimeout(() => { }, 1000);
-
-    return Promise.reject(error);
+    // setTimeout(() => { }, 1000);
+    // return Promise.reject(error);
   }
 );
 
-export default http;
+export default request;

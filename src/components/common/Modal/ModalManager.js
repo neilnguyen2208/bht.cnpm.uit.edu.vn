@@ -27,6 +27,10 @@ class ModalManager extends React.Component {
                     return <AlertModal {...modalProps} key={modalType + index} />;
                 case "confirmation":
                     return <ConfirmationModal {...modalProps} key={modalType + index} />;
+                case "loading":
+                    return {
+                        // 
+                    }
                 default:
                     return <FormModal {...modalProps} key={modalType + index} />;
             }
@@ -36,7 +40,6 @@ class ModalManager extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         currentModals: state.modal
     };

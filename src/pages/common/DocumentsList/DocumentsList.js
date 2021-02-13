@@ -136,7 +136,7 @@ class DocumentsList extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+    
     return {
         documentsList: state.document.documentSearchResult.data,
         isListLoading: state.document.documentSearchResult.isLoading,

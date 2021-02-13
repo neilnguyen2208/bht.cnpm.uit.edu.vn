@@ -296,7 +296,7 @@ class ActivityManagement extends Component {
 //#region for Redux
 const mapStateToProps = (state) => {
     // (state);
-    // console.log(state);
+    //;
     return {
 
     };

@@ -12,7 +12,6 @@ export function getPostCategories() {
             method: 'GET',
             redirect: 'follow',
         };
-        console.log(requestOptions);
         fetch(`${remoteServiceBaseUrl}/posts/categories`, requestOptions)
             .then(response => response.json())
             .then(result => {

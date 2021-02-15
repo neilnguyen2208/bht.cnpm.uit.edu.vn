@@ -37,7 +37,7 @@ class FormFileUploader extends Component {
                     </label>
                     <input type="file" multiple={false} className="form-file-input" accept={this.props.fileType} id={'form-file-input-' + this.props.id} onChange={() => this.onFileChange()} />
                 </div>
-                <div className='form-tip-label file-info'></div>
+                <div className='form-tip-label file-info mg-top-5px'></div>
                 <div className="form-line mg-top-5px" />
             </div>
         )

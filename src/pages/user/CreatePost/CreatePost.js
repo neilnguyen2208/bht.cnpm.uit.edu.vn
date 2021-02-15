@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { postCreatePost } from "redux/services/postServices"
-import { get_tagQuickQueryResultRequest } from "redux/actions/tagAction"
+import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 
 import "./CreatePost.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
@@ -118,7 +118,10 @@ class CreatePost extends Component {
 
         validation(validationCondition);
     }
-
+    componentWillUnmount() {
+        //reset global state isLoadDone of tagSearchQuickQuerry 
+        store.dispatch(get_tagQuickQueryResultReset());
+    }
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
             CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, categoryID: selectedOption.id },
@@ -150,14 +153,15 @@ class CreatePost extends Component {
             return;
         }
         let value = e.target.value;
+
         //dispatch request
         store.dispatch(get_tagQuickQueryResultRequest());
-        // this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
-        // this.setState({ isSearchingTag: true })
-        //delay thoi gian, dispatch ham search nhung delay thoi gian
-        // clearTimeout(this.timeOut);
+        this.setState({ isSearchingTag: true })
 
-        // this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), 700);
+        // delay thoi gian, dispatch ham search nhung delay thoi gian
+        clearTimeout(this.timeOut);
+
+        this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), DELAY_TIME);
 
         document.getElementById("cr-post-qs-tag-result-container").classList.add('show');
         document.getElementById("cr-post-qs-tag-result-container").classList.remove('hidden');
@@ -350,7 +354,7 @@ class CreatePost extends Component {
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
-            console.log("loading")
+            document.getElementById("cr-post-tag-container-tip-label").innerText = "";
         }
         else
             if (this.props.isTagQuickQueryLoadDone) {
@@ -358,25 +362,31 @@ class CreatePost extends Component {
                     this.setState({ isSearchingTag: false })
                 }
                 if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
+
                     //truong hop khong co tag nao thoa man va chua du 5 tag
                     if (this.state.CREATE_POST_DTO.tags.length < 5) {
                         document.getElementById("cr-post-tag-input").classList.remove('invalid');
                         if (this.props.tagQuickQueryResult.length === 0)
                             document.getElementById("cr-post-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
-                            document.getElementById("cr-post-tag-container-tip-label").innerText = "Chọn tag phù hợp với bài viết của bạn.";
+                            document.getElementById("cr-post-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
                     }
                     else {
                         document.getElementById("cr-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
                         document.getElementById("cr-post-tag-input").classList.add('invalid');
                     }
-                    this.tagSearchResult =
-                        this.props.tagQuickQueryResult.map(tag => {
-                            return <div className="tag-search-item"
-                                onClick={() => { this.state.CREATE_POST_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
-                                <div className="tag-search-item-content">  {tag.content}</div>
-                            </div>
-                        })
+                    this.tagSearchResult = <div>
+                        <div className="d-flex">
+                            {this.props.tagQuickQueryResult.map(tag => {
+                                return <div className="tag-search-item"
+                                    onClick={() => { this.state.CREATE_POST_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                    <div className="tag-search-item-content">  {tag.content}</div>
+                                </div>
+                            })}
+                        </div>
+                        {this.props.tagQuickQueryResult.length !== 0 ?
+                            <div className='form-line' /> : <></>}
+                    </div>
                 }
             }
 
@@ -478,13 +488,8 @@ class CreatePost extends Component {
                                 {/* khi load xong thi ntn */}
                                 <div id="cr-post-qs-tag-result-container" className="form-input-dropdown-container hidden">
                                     <div className="form-input-dropdown">
-                                        <div className="d-flex">
-                                            {this.UNSAFE_componentWillMounttagSearchResult}
-                                        </div>
-
-                                        <div className="form-tip-label" id="cr-post-tag-container-tip-label">
-
-                                        </div>
+                                        {this.tagSearchResult}
+                                        <div className="form-tip-label" id="cr-post-tag-container-tip-label" />
                                     </div>
                                 </div>
 
@@ -510,7 +515,7 @@ class CreatePost extends Component {
                     </div >
                 </div >
             </div >
-        console.log(this.props);
+        console.log(this.props.isTagQuickQueryLoading);
 
         return (
             <div className="left-sidebar-layout">
@@ -564,7 +569,7 @@ const mapStateToProps = (state) => {
         isCategoryLoading: state.post_category.categories.isLoading,
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
-        //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc 
+        //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
     };
 }

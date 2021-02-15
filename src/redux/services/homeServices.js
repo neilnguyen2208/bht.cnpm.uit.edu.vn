@@ -68,7 +68,6 @@ export function getNewestPostsList() {
                     let result_1 = result;
                     let IDarr = ''; result.map(item => IDarr += item.id + ","
                     )
-                    console.log(result);
                     fetch(`${remoteServiceBaseUrl}/posts/statistic?postIDs=${IDarr}`, requestOptions)
                         .then(response => response.json())
                         .then(
@@ -106,7 +105,6 @@ export function getHighlightPostsList() {
                     let result_1 = result;
                     let IDarr = ''; result.map(item => IDarr += item.id + ","
                     )
-                    console.log(result);
                     fetch(`${remoteServiceBaseUrl}/posts/statistic?postIDs=${IDarr}`, requestOptions)
                         .then(response => response.json())
                         .then(

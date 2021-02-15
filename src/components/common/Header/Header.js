@@ -36,10 +36,16 @@ class Header extends React.Component {
             isQuickSearchShow: false,
             isCollapsedUserMenuOpened: false
         }
-        this.isHaveClickAwayQuickSearhResult = false;// dung de kiem tra neu bam ra ngoai search result lan 1
+        this.isHaveClickAwayQuickSearhResult = false;// dung de kiem tra neu bam ra ngoai search result lan 1'
+        this.quickSearchResultView = <></>;
+
     }
 
     componentDidMount() {
+    }
+
+    componentWillUnmount() {
+        //reset 
     }
 
     handleClickAwayQuickSearchResult = () => {
@@ -67,20 +73,19 @@ class Header extends React.Component {
                 window.location.href = (`/search/posts?page=1&q=${e.target.value}&category=1`);
 
             document.getElementById("qssr-container").style.display = "none";
-            document.getElementById("qsr-container-big").style.display = "none";
+            document.getElementById("qsr-container-big").style.display = "none";    
             return;
         }
     }
 
     render() {
-        let quickSearchResultView = <></>;
 
         if (this.props.isQuickSearchLoadDone) {
             if (this.props.quickSearchResultData)
-                if (this.props.quickSearchResultData.tagQuickSearchResults.length > 0 ||
+                if (this.props.quickSearchResultData.postQuickSearchResults.length > 0 ||
                     this.props.quickSearchResultData.docQuickSearchResults.length > 0 ||
                     this.props.quickSearchResultData.tagQuickSearchResults.length > 0)
-                    quickSearchResultView = <div>
+                    this.quickSearchResultView = <div>
                         {this.props.quickSearchResultData.tagQuickSearchResults.length > 0 ?
                             <div className='w-100-percents' id="quick-search-post-result-port">
                                 <div className="qs-type-title">BÀI VIẾT</div>
@@ -124,12 +129,12 @@ class Header extends React.Component {
                         }
                     </div >
                 else
-                    quickSearchResultView = <>Không có kết quả ...</>;
+                    this.quickSearchResultView = <>Không có kết quả ...</>;
             else {
-                quickSearchResultView = <Loader />;
+                this.quickSearchResultView = <Loader />;
             }
         }
-        else quickSearchResultView = <Loader />;
+        else this.quickSearchResultView = <Loader />;
 
         return (
 
@@ -191,7 +196,7 @@ class Header extends React.Component {
                                                 <img className="Cancel_Button" alt=""
                                                     id="qs-cancel-button" onClick={() => { this.handleCancelQuickSearch() }} src={red_delete_icon} />
                                             </div>
-                                            {quickSearchResultView}
+                                            {this.quickSearchResultView}
                                         </div>
                                     </div>
                                 </ClickAwayListener>
@@ -217,7 +222,7 @@ class Header extends React.Component {
                                                 <img className="Cancel_Button" alt=""
                                                     id="qs-cancel-button" onClick={() => { this.handleCancelQuickSearch() }} src={red_delete_icon} />
                                             </div>
-                                            {quickSearchResultView}
+                                            {this.quickSearchResultView}
                                         </div>
                                     </div>
                                 </ClickAwayListener>
@@ -348,7 +353,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-   
+
     return {
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,

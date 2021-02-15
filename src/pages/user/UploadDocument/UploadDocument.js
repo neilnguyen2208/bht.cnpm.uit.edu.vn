@@ -17,6 +17,8 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import UserSidebar from 'layouts/UserSidebar'
+import SmallLoader from 'components/common/Loader/Loader_S'
+
 import liked_btn from 'assets/images/liked_btn.png'
 import unliked_btn from 'assets/images/unliked_btn.png'
 import full_blue_bookmark_btn from 'assets/images/full_blue_bookmark_btn.png'
@@ -29,6 +31,10 @@ import { today } from 'utils/timeUtils'
 import Metadata from 'components/common/Metadata/Metadata'
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
+import store from "redux/store/index.js"
+import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from 'redux/actions/tagAction'
+
+const DELAY_TIME = 700;
 
 const validationCondition = {
     form: '#create-document-form',
@@ -120,7 +126,9 @@ class UploadDocument extends Component {
         document.querySelector(".cr-doc-form-container.edit").classList.add("d-block");
         validation(validationCondition);
     }
-
+    componentWillUnmount() {
+        store.dispatch(get_tagQuickQueryResultReset());
+    }
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
             UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, categoryID: selectedOption.id },
@@ -153,8 +161,17 @@ class UploadDocument extends Component {
             this.closeQuickSearchTag();
             return;
         }
+        let value = e.target.value;
+
+        //dispatch request
+        store.dispatch(get_tagQuickQueryResultRequest());
         this.setState({ isSearchingTag: true })
-        this.props.getTagQuickQueryResult(e.target.value);
+
+        // delay thoi gian, dispatch ham search nhung delay thoi gian
+        clearTimeout(this.timeOut);
+
+        this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), DELAY_TIME);
+
         document.getElementById("cr-doc-qs-tag-result-container").classList.add('show');
         document.getElementById("cr-doc-qs-tag-result-container").classList.remove('hidden');
     }
@@ -171,7 +188,7 @@ class UploadDocument extends Component {
 
                 //compare voi 3 ket qua
                 if (this.props.tagQuickQueryResult) {
-                    this.props.tagQuickQueryResult.map(tag => {
+                    this.props.tagQuickQueryResult.forEach(tag => {
                         if (e.target.value.localeCompare(tag.content) === 0) {
                             console.log("equal");
                             hasOldTag = tag.id; //co tag giong tag cu
@@ -222,7 +239,7 @@ class UploadDocument extends Component {
         //neu khong thi them co id
         let isTheSameContent = -1; // khong cos => -1 neu co => id cua tag 
 
-        this.shownTag.map(_tag => {
+        this.shownTag.forEach(_tag => {
             //kiem tra xem tag dang bam co giong tag cu hay khong
             if (tag.content.localeCompare(_tag.content) === 0) {
                 console.log("equal content");
@@ -271,13 +288,13 @@ class UploadDocument extends Component {
 
         //xet theo id va content, cap nhat lai shownTag
         if (item.content)
-            this.shownTag.map(tag => {
+            this.shownTag.forEach(tag => {
                 if (tag.content === item.content)
                     item.content = ''; item.id = '';
             })
 
         else if (item.id) {
-            this.shownTag.map(tag => {
+            this.shownTag.forEach(tag => {
                 if (tag.id === item.id)
                     item.content = ''; item.id = '';
             })
@@ -285,18 +302,18 @@ class UploadDocument extends Component {
 
         //cap nhat lai tmpDTO theo shownTag
         let tempTagDTO = [];
-        this.shownTag.map(tag => {
+        this.shownTag.forEach(tag => {
             if (tag.id || tag.content) {
                 tempTagDTO.push({ id: tag.id, content: tag.content })
             }
         })
 
         //cap nhat lai shownTag theo tmpDTO
-        this.shownTag.map(tag => {
+        this.shownTag.forEach(tag => {
             tag.id = ''; tag.content = '';
         })
 
-        tempTagDTO.map((tag, index) => {
+        tempTagDTO.forEach((tag, index) => {
             this.shownTag[index].id = tag.id;
             this.shownTag[index].content = tag.content;
         })
@@ -369,38 +386,44 @@ class UploadDocument extends Component {
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
         }
-        let tagSearchResult = <></>;
-        if (this.props.isTagQuickQueryLoadDone) {
-            if (this.state.isSearchingTag) {
-                this.setState({ isSearchingTag: false })
-            }
-            if (this.props.tagQuickQueryResult) {
-
-                //truong hop khong co tag nao thoa man va chua du 5 tag
-
-                if (this.state.UPLOAD_DOC_DTO.tags.length < 5) {
-                    document.getElementById("cr-doc-tag-input").classList.remove('invalid');
-                    if (this.props.tagQuickQueryResult.length === 0)
-                        document.getElementById("cr-doc-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
-                    else
-                        document.getElementById("cr-doc-tag-container-tip-label").innerText = "Chọn tag phù hợp với tài liệu của bạn.";
-                }
-                else {
-                    document.getElementById("cr-doc-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                    document.getElementById("cr-doc-tag-input").classList.add('invalid');
-                }
-                tagSearchResult =
-                    this.props.tagQuickQueryResult.map(tag => {
-                        return <div className="tag-search-item"
-                            onClick={() => { this.state.UPLOAD_DOC_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
-                            <div className="tag-search-item-content">  {tag.content}</div>
-                        </div>
-                    })
-            }
-            else {
-                tagSearchResult = <>Loading...</>
-            }
+        this.tagSearchResult = <></>;
+        if (this.props.isTagQuickQueryLoading) {
+            this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
+            document.getElementById("cr-doc-tag-container-tip-label").innerText = "";
         }
+        else
+            if (this.props.isTagQuickQueryLoadDone) {
+                if (this.state.isSearchingTag) {
+                    this.setState({ isSearchingTag: false })
+                }
+                if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
+
+                    //truong hop khong co tag nao thoa man va chua du 5 tag
+                    if (this.state.UPLOAD_DOC_DTO.tags.length < 5) {
+                        document.getElementById("cr-doc-tag-input").classList.remove('invalid');
+                        if (this.props.tagQuickQueryResult.length === 0)
+                            document.getElementById("cr-doc-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
+                        else
+                            document.getElementById("cr-doc-tag-container-tip-label").innerText = "Chọn tag phù hợp với tài liệu của bạn.";
+                    }
+                    else {
+                        document.getElementById("cr-doc-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
+                        document.getElementById("cr-doc-tag-input").classList.add('invalid');
+                    }
+                    this.tagSearchResult = <div>
+                        <div className="d-flex">
+                            {this.props.tagQuickQueryResult.map(tag => {
+                                return <div className="tag-search-item"
+                                    onClick={() => { this.state.UPLOAD_DOC_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                    <div className="tag-search-item-content">  {tag.content}</div>
+                                </div>
+                            })}
+                        </div>
+                        {this.props.tagQuickQueryResult.length !== 0 ?
+                            <div className='form-line' /> : <></>}
+                    </div>
+                }
+            }
 
         let body =
             <div>
@@ -521,7 +544,7 @@ class UploadDocument extends Component {
                                 <div id="cr-doc-qs-tag-result-container" className="form-input-dropdown-container hidden">
                                     <div className="form-input-dropdown">
                                         <div className="d-flex">
-                                            {tagSearchResult}
+                                            {this.tagSearchResult}
                                         </div>
 
                                         <div className="form-tip-label" id="cr-doc-tag-container-tip-label">
@@ -546,16 +569,16 @@ class UploadDocument extends Component {
                         {/* Upload */}
                         <div className="form-group" >
                             <label className="form-label-required">Tài liệu:</label>
-                            <input className="form-input" id="cr-doc-file-link"
+                            {/* <input className="form-input" id="cr-doc-file-link"
                                 placeholder="Nhập liên kết tài liệu ..." onChange={e => this.handleFileLinkChange(e)}
                                 type="text" >
-                            </input>
-                            {/* Su dung file input theo dung nhu cau truc duoi day thi moi co the tu validation
+                            </input> */}
+                            {/* Su dung file input theo dung nhu cau truc duoi day thi moi co the tu validation */}
                             <FormFileUploader id='cr-doc-file-input'
                                 onFileChange={(file) => this.onFileChange(file)}
                                 maxSize={26214400} //byte
                                 fileType={".pdf"} //n
-                            /> */}
+                            />
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
                             </div>

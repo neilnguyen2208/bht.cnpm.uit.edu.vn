@@ -122,9 +122,6 @@ export function getPostSearchResult(page = 0, categoryID = 1, searchTerm = '', s
             headers: myHeaders,
             redirect: 'follow'
         };
-
-        console.log("request");
-
         fetch(`${remoteServiceBaseUrl}posts/searchFilter?page=${page - 1}&category.id=${categoryID}&searchTerm=${searchTerm}&sort=${sort}`, requestOptions)
             .then(response => response.json())
             .then(
@@ -149,9 +146,6 @@ export function getPostByID(id) {
             headers: myHeaders,
             redirect: 'follow'
         };
-
-        console.log("request");
-
         fetch(`${remoteServiceBaseUrl}posts/${id}`, requestOptions)
             .then(response => response.json())
             .then(

@@ -6,10 +6,9 @@
   margin: auto;
   position: relative;
   opacity: 60%;
-  display: flex;
   background: var(--light-gray);
-  border-radius: 5px
-
+  border-radius: 5px;
+  margin: auto;
 }
 
 @keyframes loader-qqa1psw9t4 {
@@ -43,7 +42,7 @@
   height: 200px;
   display: inline-block;
   overflow: hidden;
-
+  margin: auto;
 }
 
 .loader-qqa1psw9t4 {
@@ -114,8 +113,18 @@
   @extend .animated-background;
 }
 
-.text-content-loader {
-  margin-left: 20px
+.loader-text {
+  color: var(--black);
+  padding-left: 0px;
+  position: relative;
+  padding-top: 0.1rem;
+  height: fit-content;
+  font-family: 'Roboto-Medium', sans-serif;
+  font-size: 0.7rem;
+  user-select: none;
+  min-width: 80px;
+  width: 100%;
+  text-align: center;
 }
 
 .text-line-loader {

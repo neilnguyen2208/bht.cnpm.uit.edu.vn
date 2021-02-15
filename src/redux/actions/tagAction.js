@@ -5,7 +5,8 @@ import {
 
     GET_TAG_QUICK_QUERY_REQUEST,
     GET_TAG_QUICK_QUERY_SUCCESS,
-    GET_TAG_QUICK_QUERY_FAILURE
+    GET_TAG_QUICK_QUERY_FAILURE,
+    GET_TAG_QUICK_QUERY_RESET
 } from 'redux/constants.js';
 
 
@@ -48,5 +49,12 @@ export function get_tagQuickQueryResultFailure(error) {
     return {
         type: GET_TAG_QUICK_QUERY_FAILURE,
         payload: error
+    }
+}
+
+
+export function get_tagQuickQueryResultReset() {
+    return {
+        type: GET_TAG_QUICK_QUERY_RESET
     }
 }

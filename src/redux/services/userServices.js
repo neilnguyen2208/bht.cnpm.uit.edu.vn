@@ -173,7 +173,6 @@ export function getLogout() {
         fetch(`http://${remoteServiceBaseUrl}/logout`, requestOptions)
             .then(response => response.text())
             .then(result => {
-                console.log(result);
                 dispatch(userGetLogout(JSON.parse(result).statusCode));
             })
             .catch(error => console.log('error', error));
@@ -218,8 +217,6 @@ export function management_getAllRoles() {
             .then(response => response.text())
             .then(
                 result => {
-
-                    // console.log("*"); console.log(result);
                     dispatch(managementGetAllRoles(JSON.parse(result).bhtUserGroups));
                 }
             )

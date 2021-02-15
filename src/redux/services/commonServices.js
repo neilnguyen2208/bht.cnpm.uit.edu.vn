@@ -18,8 +18,6 @@ export function getQuickSearchResult(searchTerm) {
             redirect: 'follow'
         };
         dispatch(get_QuickSearchResultRequest());
-
-        console.log("request")
         fetch(`${remoteServiceBaseUrl}quicksearch/queries?searchTerm=${searchTerm}`, requestOptions)
             .then(response => response.json())
             .then(result =>

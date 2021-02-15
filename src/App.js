@@ -94,6 +94,7 @@ const App = () => {
                         <Route exact path="/user/update-password" component={UpdatePassword} />
                         <Route exact path="/user/my-docs" component={MyDocumentsList} />
                         <Route exact path="/user/my-posts" component={MyPostsList} />
+                        <Route exact path="/user/saved-posts" component={MyPostsList} />
                         <Route exact path="/create-post" component={CreatePost} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-doc" component={UploadDocument} />

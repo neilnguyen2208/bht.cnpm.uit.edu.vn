@@ -260,7 +260,7 @@ class PostSummary extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    isApprovingLoadDone: state.post.approvePost.isLoadingDone,
+    isApprovingLoadDone: state.post.approvePost.isLoadDone,
     notification: state.post.approvePost.notification
   };
 }

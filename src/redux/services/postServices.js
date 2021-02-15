@@ -1,5 +1,5 @@
 import {    //highlight posts 
-
+  
     //my post
     get_MyPostsRequest,
     get_MyPostsSuccess,
@@ -15,10 +15,6 @@ import {    //highlight posts
     get_PostSearchResultSuccess,
     get_PostSearchResultFailure,
 
-    post_CreatePostRequest,
-    post_CreatePostSuccess,
-    post_CreatePostFailure,
-
     get_PostByIDRequest,
     get_PostByIDSuccess,
     get_PostByIDFailure,
@@ -31,102 +27,45 @@ import {    //highlight posts
 
 import { openModal } from 'redux/actions/modalAction'
 
-import http, {
-    remoteServiceBaseUrl
-} from 'utils/httpServices';
+import { request } from 'utils/httpServices';
 import history from 'history.js';
 
 export function postCreatePost(data) {
     return dispatch => {
+
+        //th nay se handle bang loader modal ben ngoai luon.
         // dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
-
-        // var requestOptions = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //         //token cac kieu
-        //     },
-        //     redirect: 'follow',
-        //     body: JSON.stringify(data)
-        // };
-
-        // fetch(`${remoteServiceBaseUrl}posts`, requestOptions)
-        //     .then(response => response.json())
-        //     .then(result => {
-        //         dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));
-        //     }
-        //     )
-        //     .catch(error => {
-        //         dispatch(openModal("error", { text: "Đang upload bài viết ..." }));
-        //     })
-
-        http.post('/posts', JSON.stringify(data)).then(response => { console.log(response) });
-    }
-}
-
-export function postCreatePost_(data) {
-    return dispatch => {
-        http.post('posts', data).then((response) => {
-            console.log("response");
-            console.log(response);
-        })
-            .catch(function (error) {
-                console.log("error");
-                console.log(error);
-            });
+        request.post('/posts', JSON.stringify(data))
+            .then(response => {
+                //handle success    
+                dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));
+            })
+            // .catch(dispatch)
     }
 }
 
 // my post
 export function getMyPostsList(page = 1, category = "") { //this API to get all approved document of a specific user.
     return dispatch => {
-
         dispatch(get_MyPostsRequest());
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`${remoteServiceBaseUrl}posts/myPosts`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-
-                    dispatch(get_MyPostsSuccess(result));
-                }
-            )
-            .catch(error => {
-                dispatch(get_MyPostsFailure(error))
-            })
+        request.get(`/posts/myPosts`).then(
+            response => {
+                dispatch(get_MyPostsSuccess(response.data));
+            }
+        )
     }
 }
 
 //posts list
 export function getPostsList(page = 1, category = "", searchTerm = "") {
     return dispatch => {
-
         dispatch(get_PostsListRequest(page, category, searchTerm));
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/myPosts`, requestOptions)
-            .then(response => response.json())
+        request.get(`https://5fca2bc63c1c220016441d27.mockapi.io/myPosts`)
             .then(
                 result => {
-                    dispatch(get_PostsListSuccess(result));
+                    dispatch(get_PostsListSuccess(result.data));
                 }
             )
-            .catch(error => {
-                dispatch(get_PostsListFailure(error))
-            })
     }
 }
 
@@ -134,54 +73,22 @@ export function getPostsList(page = 1, category = "", searchTerm = "") {
 export function getPostSearchResult(page = 0, categoryID = 1, searchTerm = '', sort = 'publishDtm,desc') {
     return dispatch => {
         dispatch(get_PostSearchResultRequest());
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        console.log("request");
-
-        fetch(`${remoteServiceBaseUrl}posts/searchFilter?page=${page - 1}&category.id=${categoryID}&searchTerm=${searchTerm}&sort=${sort}`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-                    dispatch(get_PostSearchResultSuccess(result));
-                    // history.push(`/search?type=post&page=${page}&category=${categoryID}&q=${searchTerm}`);
-                }
-            )
-            .catch(error => {
-                dispatch(get_PostSearchResultFailure(error))
-            })
+        request.get(`/posts/searchFilter?page=${page - 1}&category.id=${categoryID}&searchTerm=${searchTerm}&sort=${sort}`).then(
+            result => {
+                dispatch(get_PostSearchResultSuccess(result.data));
+                // history.push(`/search?type=post&page=${page}&category=${categoryID}&q=${searchTerm}`);
+            }
+        )
     }
 }
-
 
 //posts search result
 export function approveAPost(id) {
     return dispatch => {
         dispatch(post_ApproveAPostRequest());
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        console.log("request");
-
-        fetch(`${remoteServiceBaseUrl}posts/id=${id}/approval`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-                    dispatch(post_ApproveAPostSuccess());
-                }
-            )
-            .catch(error => {
-                dispatch(post_ApproveAPostFailure(error))
+        request.post(`/posts/id=${id}/approval`)
+            .then(result => {
+                dispatch(post_ApproveAPostSuccess());
             })
     }
 }
@@ -189,33 +96,16 @@ export function approveAPost(id) {
 export function getPostByID(id) {
     return dispatch => {
         dispatch(get_PostByIDRequest())
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        console.log("request");
-
-        fetch(`${remoteServiceBaseUrl}posts/${id}`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-                    let result_1 = result;
-                    fetch(`${remoteServiceBaseUrl}/posts/statistic?postIDs=${result_1.id}`, requestOptions)
-                        .then(response => response.json())
-                        .then(
-                            result => {
-
-                                dispatch(get_PostByIDSuccess({ ...result_1, ...result[0] }))
-                            }).catch(error => dispatch(get_PostByIDFailure(error)))
-
-                }
+        request.get(`/posts/${id}`)
+            .then(response => {
+                let _response = response; //response without statistic
+                request.get(`/posts/statistic?postIDs=${_response.data.id}`)
+                    .then(response => {
+                        console.log(response)
+                        dispatch(get_PostByIDSuccess({ ..._response.data, ...response.data[0] }))
+                    })
+            }
             )
-            .catch(error => {
-                dispatch(get_PostByIDFailure(error))
-            })
+
     }
 }

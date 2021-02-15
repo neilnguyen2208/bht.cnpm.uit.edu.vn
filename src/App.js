@@ -52,7 +52,7 @@ import ActivityManagement from 'pages/management/ActivityManagement/ActivityMana
 import DocumentManagement from 'pages/management/DocumentManagement/DocumentManagement'
 import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement'
 import ModalManager from 'components/common/Modal/ModalManager'
-
+import MyNotification from 'pages/user/MyActivities/MyActivities'
 const App = () => {
 
     return (
@@ -95,6 +95,7 @@ const App = () => {
                         <Route exact path="/user/my-docs" component={MyDocumentsList} />
                         <Route exact path="/user/my-posts" component={MyPostsList} />
                         <Route exact path="/create-post" component={CreatePost} />
+                        <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-doc" component={UploadDocument} />
                         <Route exact path="/courses/:id/artical" component={Artical} />
                         <Route exact path="/courses/:id/video" component={Video} />

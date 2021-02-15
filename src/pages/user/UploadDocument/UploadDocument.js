@@ -167,7 +167,7 @@ class UploadDocument extends Component {
 
             //neu chua search duoc thi khong cho bam enter
             //check voi 3 ket qua tim kiem duoc, neu khong match thi tao moi
-            if (this.props.isTagQuickQueryLoadingDone) {
+            if (this.props.isTagQuickQueryLoadDone) {
 
                 //compare voi 3 ket qua
                 if (this.props.tagQuickQueryResult) {
@@ -370,7 +370,7 @@ class UploadDocument extends Component {
             this.categoryList = this.props.categories;
         }
         let tagSearchResult = <></>;
-        if (this.props.isTagQuickQueryLoadingDone) {
+        if (this.props.isTagQuickQueryLoadDone) {
             if (this.state.isSearchingTag) {
                 this.setState({ isSearchingTag: false })
             }
@@ -620,9 +620,9 @@ const mapStateToProps = (state) => {
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
-        isTagQuickQueryLoadingDone: state.tag.tagQuickQueryResult.isLoadingDone,
+        isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
         //upload thanh cong hay khong
-        isUploadDone: state.document.uploadDocument.isLoadingDone,
+        isUploadDone: state.document.uploadDocument.isLoadDone,
         uploadMessage: state.document.uploadDocument.notification
     };
 }

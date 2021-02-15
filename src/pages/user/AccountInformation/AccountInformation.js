@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
 import React, { Component } from 'react'
-import AdminLayout from 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import Modal from 'components/common/Modal/AlertModal'
 import gray_upload_icon from 'assets/images/gray_upload_icon.png'
@@ -10,10 +9,8 @@ import gray_write_icon from 'assets/images/gray_write_icon.png'
 import './AccountInformation.scss'
 import 'components/styles/Form.scss'
 import './AIResponsiveLayout.scss'
-import { ClickAwayListener } from '@material-ui/core'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UpdatePassword from './UpdatePassword'
 import { isContainSpecialCharacter } from 'utils/stringUtils'
 
@@ -21,14 +18,9 @@ import { isContainSpecialCharacter } from 'utils/stringUtils'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCurrentUser } from 'redux/services/userServices'
 import { management_getAllRoles } from 'redux/services/userServices'
-
+import UserSidebar from 'layouts/UserSidebar'
 //import for role config
-import { getRoleNameFilterByName } from 'utils/permissionUtils'
-
-import Cookies from 'js-cookie'
-
 class AccountInformation extends Component {
     constructor(props) {
         super(props);
@@ -49,13 +41,11 @@ class AccountInformation extends Component {
 
         this.passwordString = "";
         this.canClickSaveInformation = false;
-       
+
         this.isAnyChangeRoleDropdownComboboxOpen = false;
 
         this.isHaveAnyImageInFileLoader = false;
-        //for valid input
-        this.isDisplayNameEmpty = false;
-        this.isDisplayNameContainSpecialCharacters = false;
+
 
         this.updateInformation_DTO = {
             username: "",
@@ -71,103 +61,29 @@ class AccountInformation extends Component {
     }
 
     componentDidMount() {
-        // (this.props);
-        this.props.getCurrentUser();
+
     }
 
     render() {
-
-        if (!this.props.accountInformation !== null && this.props.accountInformation !== undefined) {
-            this.accountInformation = this.props.accountInformation;
-            this.displayName = this.accountInformation.displayName;
-            this.userID = this.accountInformation.id;
-            this.password = this.accountInformation.password;
-            this.avatar = this.accountInformation.avatar;
-            this.email = this.accountInformation.email;
-            this.score = this.accountInformation.score;
-            this.postCount = this.accountInformation.postCount;
-            this.documentCount = this.accountInformation.documentCount;
-            this.roleID = this.accountInformation.roleId;
-            this.roleName = this.accountInformation.roleName;
-            this.username = this.accountInformation.username;
-            this.avatarURL = this.accountInformation.avatarURL;
-            // for update information DTO
-            this.updateInformation_DTO.oldPasword = this.password;
-            this.updateInformation_DTO.username = this.username;
-
-            this.roleList = this.props.roleList;
-
-            let roles_Combobox =
-                this.roleList.map(role =>
-                    this.roleID === role.id ?
-                        <div className="activated-combox-option" id={"user-role-dropdown-combobox-sub-item-" + role.id} value={role.role} key={role.id}>{role.role}</div> :
-                        <div className="combox-option" id={"user-role-dropdown-combobox-sub-item-" + role.id} value={role.role} key={role.id}
-                            onClick={() => this.handleDropDownMenuItemClick(role.id)}> {role.role}
-                        </div>
-                )
-
-            return (
-                <div>
+        return (
+            <div className="left-sidebar-layout">
+                <UserSidebar />
+                <div className="content-layout">
                     <Titlebar title="THÔNG TIN TÀI KHOẢN" />
                     <div className="content-container">
                         <div className="Show_Layout_Bounding_Layout">
-
-
                             <div className="Account_Information_Bounding_Layout">
                                 <div className="Account_Information_Layout">
-
-                                    {/* <div className="gray-label">Avatar: </div> */}
                                     <div className="Account_Information_Avatar_Layout">
-                                        {/* <img className="Account_Information_Avatar_Image" alt="avatar" src='https://i.imgur.com/SZJgL6C.jpg' ></img> */}
-                                        {/* <img className="Account_Information_Avatar_Image" alt="avatar" src={"https://drv.tw/~bht.cnpm.uit2@gmail.com/gd/BHTWeb/Avatar/" +  this.username + ".png'} ></img> */}
-                                        {/* <img className="Account_Information_Avatar_Image" alt="avatar" src={"https://cfaevjuhwlpmr2dgadvijg-on.drv.tw/BHTWeb/Avatar/" +  this.username + ".png'} ></img> */}
-
                                         <img className="Account_Information_Avatar_Image" alt="avatar" src={this.avatarURL} />
-                                        {/* <div className="mg-left-10px"></div> */}
-
-                                        {/* <div>{this.props.</div> */}
                                     </div>
 
                                     <div className="blue-button mg-auto " style={{ marginBottom: "20px", marginTop: "10px" }} onClick={() => this.handlerClickUpdateAvatar()}>Cập nhật avatar</div>
 
                                     <div className="mg-top-10px" />
 
-                                    <div className="d-flex">
-                                        <div className="gray-label" style={{ lineHeight: "25px" }}>Role:</div>
-                                        <ClickAwayListener onClickAway={() => { this.closeAllChangeRoleDropdownCombobox() }}>
-
-                                            <div style={{ position: "relative", display: "flex", width: "100%", zIndex: 10000 }}>
-                                                <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                                                    <div style={{ position: "absolute", width: "200px" }}>
-                                                        <div className="disabled-combox" id={"user-role-parent-dropdown-combobox"}>
-                                                            {/* // onClick={(e) => this.handleDropDownMenuClick(e, "user-role-parent-dropdown-combobox", "user-role-parent-dropdown-combobox-text", "user-role-dropdown-btn-element", "user-role-dropdown-combobox-container")}> */}
-                                                            <div className="d-flex">
-                                                                <div className="side-bar-menu-item-text" id={"user-role-parent-dropdown-combobox-text"}>
-                                                                    {
-                                                                        this.roleList.map(role =>
-                                                                            role.UserGroupID === this.roleID ?
-                                                                                getRoleNameFilterByName(role.UserGroupName)
-                                                                                : <></>
-                                                                        )
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id={"user-role-dropdown-btn-element"} />
-                                                        </div>
-
-                                                        {this.isChangeRoleDropdownComboboxOpen ? (
-                                                            <div className="combox-container" id={"user-role-dropdown-combobox-container"}>
-                                                                {roles_Combobox}
-                                                                <div className="mg-bottom-5px" />
-                                                                <div className="mg-bottom-5px" />
-                                                            </div>
-                                                        ) : <div id={"user-role-dropdown-combobox-container"}></div>}
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ClickAwayListener>
-                                    </div>
+A
+                                    {/* <A */}
 
                                     <div className="mg-top-5px" />
 
@@ -245,57 +161,21 @@ class AccountInformation extends Component {
                     </div>
                     <div src={this.state.pictures[0]}></div>
                 </div >
+            </div >
+        );
 
-            );
-        }
-        return <></>
     }
-
-    //#region handle for popup 
-
-    //for general alert popup
-    openSuccessAlertPopup = () => {
-        this.isAnySuccessAlertPopupOpen = true;
-        this.setState();
-    }
-
-    openFailedSuccessAlertPopup = () => {
-        this.isAnyFailedAlertPopupOpen = true;
-        this.setState({});
-    }
-
-    //for change role
-    closeChangeRoleConfirmationPopup = (roleID) => {
-        this.isChangeRoleConfirmationPopupOpen = false;
-        this.setState({});
-    }
-
-    closeUpdateInformationConfirmationPopup = () => {
-        this.isUpdateInformationPopupOpen = false;
-        this.setState({});
-    }
-
-    //for update avatar
-    closeUpdateAvatarPopup = () => {
-        this.isUpdateAvatarPopupOpen = false;
-        this.setState({});
-    }
-
-
-    //for update information
-    //#endregion
-
 
     //#region support initate value for rendering and handler image drop
     generatePassword = () => {
-        let _passwordString = "";
-        (String(this.props.accountInformation.password));
-        if (this.props.accountInformation.password !== undefined) {
-            for (let i = 0; i < this.props.accountInformation.password.length; i++) {
-                _passwordString += "*";
-            }
-        }
-        return _passwordString;
+        // let _passwordString = "";
+        // (String(this.props.accountInformation.password));
+        // if (this.props.accountInformation.password !== undefined) {
+        //     for (let i = 0; i < this.props.accountInformation.password.length; i++) {
+        //         _passwordString += "*";
+        //     }
+        // }
+        // return _passwordString;
     }
 
     onDrop = (pictureFile) => {
@@ -356,13 +236,6 @@ class AccountInformation extends Component {
 
         // open a confirmation popup
         this.openChangeRoleConfirmationPopup(roleID);
-    }
-
-    openChangeRoleConfirmationPopup = (roleID) => {
-        this.closeAllChangeRoleDropdownCombobox();
-        this.notifyHeader = "Xác nhận?";
-        this.notifyContent = "Xác nhận thay đổi quyền người dùng?";
-        this.setState({ isChangeRoleConfirmationPopupOpen: true });
     }
 
     closeAllChangeRoleDropdownCombobox = () => {
@@ -426,57 +299,6 @@ class AccountInformation extends Component {
 
     //#region main handler event and call APIs
 
-    handlerClickSaveInformation = () => {
-        this.notifyContent = "Xác nhận cập nhật thông tin?";
-        this.notifyHeader = "Cập nhật thông tin";
-        this.isUpdateInformationPopupOpen = true;
-        this.setState({});
-    }
-
-    handlerVerifyUpdateInformation = () => {
-
-        // console.log(this.updateInformation_DTO);
-
-        //call API
-
-
-    }
-
-    handlerCancelVerifyUpdateInformation = () => {
-        document.getElementById("management-display-name-text-input").value = this.displayName;
-        this.isUpdateInformationPopupOpen = false;
-        this.canClickSaveInformation = false;
-        this.setState({});
-    }
-
-    handlerVerifyChangeRoleConfirmation = (roleID) => {
-        // send request to server   
-        //...
-
-        this.closeChangeRoleConfirmationPopup();
-    }
-
-    handlerCancelChangeRoleConfirmation = () => { //phai co popup thi moi test duoc
-        this.roleID = this.recover_roleID;
-        this.closeChangeRoleConfirmationPopup();
-    }
-
-    handlerClickUpdateAvatar = () => {
-        this.isUpdateAvatarPopupOpen = true;
-        this.notifyContent = "Chọn ảnh:";
-        this.notifyHeader = "Cập nhật avatar";
-        this.setState({});
-    }
-
-    handlerVerifyUpdateAvatarConfirmation = () => {
-
-        //call API to update avatar.
-        this.isUpdateAvatarPopupOpen = false;
-        this.notifyContent = "Cập nhật ảnh đại diện thành công!";
-        this.notifyHeader = "Thành công";
-        this.isAnySuccessAlertPopupOpen = true;
-        this.setState({});
-    }
 
     //#endregion
 }
@@ -492,7 +314,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getCurrentUser, management_getAllRoles
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountInformation));

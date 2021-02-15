@@ -6,10 +6,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { management_getAllRoles } from 'redux/services/userServices'
+import Titlebar from 'components/common/Titlebar/Titlebar'
+import UserSidebar from 'layouts/UserSidebar'
 
 //import for role config
 
-class AccountInformation extends Component {
+class MyActivities extends Component {
     constructor(props) {
         super(props);
 
@@ -20,8 +22,16 @@ class AccountInformation extends Component {
     }
 
     render() {
+        return (
+            <div className="left-sidebar-layout">
+                <UserSidebar />
+                <div className="content-layout">
+                    <Titlebar title="THÔNG BÁO CỦA TÔI" />
+                    <div className="content-container">
 
-        return (<> My activities</>);
+                    </div>
+                </div>
+            </div>);
     }
 }
 //#region for Redux
@@ -36,5 +46,5 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountInformation));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyActivities));
  //#endregion

@@ -3,10 +3,6 @@ import {
     POST_APPROVE_A_POST_SUCCESS,
     POST_APPROVE_A_POST_FAILURE,
 
-    POST_CREATE_POST_REQUEST,
-    POST_CREATE_POST_SUCCESS,
-    POST_CREATE_POST_FAILURE,
-
     //highlight posts list
     GET_HIGHLIGHT_POSTS_LIST_REQUEST,
     GET_HIGHLIGHT_POSTS_LIST_SUCCESS,
@@ -62,12 +58,8 @@ const initialState = {
         data: [],
         error: ""
     },
-    createPost: {
-        isLoadingDone: false,
-        notification: { type: '', message: '' }
-    },
     approvePost: {
-        isLoadingDone: false,
+        isLoadDone: false,
         notification: { type: '', message: '' }
     },
 };
@@ -86,19 +78,6 @@ function PostReducer(state = initialState, action) {
         case GET_POST_BY_ID_FAILURE:
             {
                 return { ...state, currentPost: { isLoading: false, error: action.payload } }
-            }
-
-        case POST_CREATE_POST_REQUEST:
-            return {
-                ...state, createPost: { isLoadingDone: false }
-            };
-        case POST_CREATE_POST_SUCCESS:
-            {
-                return { ...state, createPost: { isLoadingDone: true, notification: { type: 'success', message: 'Tạo mới tài liệu thành công!' } } }
-            }
-        case POST_CREATE_POST_FAILURE:
-            {
-                return { ...state, createPost: { isLoading: true, notification: { type: 'error', message: action.payload } } }
             }
         //get all not approved post
 

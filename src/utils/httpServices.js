@@ -10,13 +10,11 @@ export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
 
 
-const request = axios.create({
+export const request = axios.create({
   baseURL: remoteServiceBaseUrl,
   headers: {
-    'Content-Type': 'application/json', 
-    f: 's'
+    'Content-Type': 'application/json',
   },
-
 }
 );
 
@@ -31,15 +29,16 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   response => {
-    console.log(response);
     return response;
   },
   error => {
-    store.dispatch(openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" }));
+    if (error.status !== 200)
+      store.dispatch(openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" }));
+    // setTimeout(() => {
 
-    // setTimeout(() => { }, 1000);
-    // return Promise.reject(error);
+    // }, 1000);
+    return Promise.reject(error);
   }
 );
 
-export default request;
+

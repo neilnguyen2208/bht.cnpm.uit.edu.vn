@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { postCreatePost } from "redux/services/postServices"
+import { get_tagQuickQueryResultRequest } from "redux/actions/tagAction"
 
 import "./CreatePost.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
@@ -24,8 +25,10 @@ import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/timeUtils'
+import store from 'redux/store/index'
 import Metadata from 'components/common/Metadata/Metadata'
 import UserSidebar from 'layouts/UserSidebar'
+import SmallLoader from 'components/common/Loader/Loader_S'
 
 const validationCondition = {
     form: '#create-post-form',
@@ -40,6 +43,8 @@ const validationCondition = {
     ],
 }
 
+const DELAY_TIME = 700;
+
 class CreatePost extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +56,7 @@ class CreatePost extends Component {
         ];
         this.isNotifySuccessOpen = false;
         this.state = {
-            currentCategory: "Danh muc 3",
+            currentCategory: "",
             publishDtm: today.getDateDMY(),
 
             isUploading: false,
@@ -81,7 +86,6 @@ class CreatePost extends Component {
             { dmID: 4, id: '', content: '' },
             { dmID: 5, id: '', content: '' },
         ]
-        this.isPopupOpen = false;
 
         this.tagQuickQueryResult =
             [
@@ -99,6 +103,8 @@ class CreatePost extends Component {
                 }
             ];
 
+        this.timeOut = null;
+        this.tagQuickQueryResult = <></>;
     }
 
     componentDidMount() {
@@ -107,11 +113,10 @@ class CreatePost extends Component {
         document.querySelector(".cr-post-form-container.edit").classList.remove("d-none");
         document.querySelector(".cr-post-form-container.preview").classList.add("d-none");
         document.querySelector(".cr-post-form-container.edit").classList.add("d-block");
+
+        this.timeOut = null;
+
         validation(validationCondition);
-    }
-
-    handleModal = () => {
-
     }
 
     onCategoryOptionChanged = (selectedOption) => {
@@ -144,8 +149,16 @@ class CreatePost extends Component {
             this.closeQuickSearchTag();
             return;
         }
-        this.setState({ isSearchingTag: true })
-        this.props.getTagQuickQueryResult(e.target.value);
+        let value = e.target.value;
+        //dispatch request
+        store.dispatch(get_tagQuickQueryResultRequest());
+        // this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
+        // this.setState({ isSearchingTag: true })
+        //delay thoi gian, dispatch ham search nhung delay thoi gian
+        // clearTimeout(this.timeOut);
+
+        // this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), 700);
+
         document.getElementById("cr-post-qs-tag-result-container").classList.add('show');
         document.getElementById("cr-post-qs-tag-result-container").classList.remove('hidden');
     }
@@ -158,7 +171,7 @@ class CreatePost extends Component {
 
             //neu chua search duoc thi khong cho bam enter
             //check voi 3 ket qua tim kiem duoc, neu khong match thi tao moi
-            if (this.props.isTagQuickQueryLoadingDone) {
+            if (this.props.isTagQuickQueryLoadDone) {
 
                 //compare voi 3 ket qua
                 if (this.props.tagQuickQueryResult) {
@@ -334,37 +347,38 @@ class CreatePost extends Component {
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
         }
-        let tagSearchResult = <></>;
-        if (this.props.isTagQuickQueryLoadingDone) {
-            if (this.state.isSearchingTag) {
-                this.setState({ isSearchingTag: false })
-            }
-            if (this.props.tagQuickQueryResult) {
-
-                //truong hop khong co tag nao thoa man va chua du 5 tag
-                if (this.state.CREATE_POST_DTO.tags.length < 5) {
-                    document.getElementById("cr-post-tag-input").classList.remove('invalid');
-                    if (this.props.tagQuickQueryResult.length === 0)
-                        document.getElementById("cr-post-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
-                    else
-                        document.getElementById("cr-post-tag-container-tip-label").innerText = "Chọn tag phù hợp với bài viết của bạn.";
-                }
-                else {
-                    document.getElementById("cr-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                    document.getElementById("cr-post-tag-input").classList.add('invalid');
-                }
-                tagSearchResult =
-                    this.props.tagQuickQueryResult.map(tag => {
-                        return <div className="tag-search-item"
-                            onClick={() => { this.state.CREATE_POST_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
-                            <div className="tag-search-item-content">  {tag.content}</div>
-                        </div>
-                    })
-            }
-            else {
-                tagSearchResult = <>Loading...</>
-            }
+        this.tagSearchResult = <></>;
+        if (this.props.isTagQuickQueryLoading) {
+            this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
+            console.log("loading")
         }
+        else
+            if (this.props.isTagQuickQueryLoadDone) {
+                if (this.state.isSearchingTag) {
+                    this.setState({ isSearchingTag: false })
+                }
+                if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
+                    //truong hop khong co tag nao thoa man va chua du 5 tag
+                    if (this.state.CREATE_POST_DTO.tags.length < 5) {
+                        document.getElementById("cr-post-tag-input").classList.remove('invalid');
+                        if (this.props.tagQuickQueryResult.length === 0)
+                            document.getElementById("cr-post-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
+                        else
+                            document.getElementById("cr-post-tag-container-tip-label").innerText = "Chọn tag phù hợp với bài viết của bạn.";
+                    }
+                    else {
+                        document.getElementById("cr-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
+                        document.getElementById("cr-post-tag-input").classList.add('invalid');
+                    }
+                    this.tagSearchResult =
+                        this.props.tagQuickQueryResult.map(tag => {
+                            return <div className="tag-search-item"
+                                onClick={() => { this.state.CREATE_POST_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                <div className="tag-search-item-content">  {tag.content}</div>
+                            </div>
+                        })
+                }
+            }
 
         let body =
             <div>
@@ -465,7 +479,7 @@ class CreatePost extends Component {
                                 <div id="cr-post-qs-tag-result-container" className="form-input-dropdown-container hidden">
                                     <div className="form-input-dropdown">
                                         <div className="d-flex">
-                                            {tagSearchResult}
+                                            {this.UNSAFE_componentWillMounttagSearchResult}
                                         </div>
 
                                         <div className="form-tip-label" id="cr-post-tag-container-tip-label">
@@ -496,6 +510,7 @@ class CreatePost extends Component {
                     </div >
                 </div >
             </div >
+        console.log(this.props);
 
         return (
             <div className="left-sidebar-layout">
@@ -544,25 +559,21 @@ class CreatePost extends Component {
 }
 
 const mapStateToProps = (state) => {
-   ;
-
     return {
         categories: state.post_category.categories.data,
         isCategoryLoading: state.post_category.categories.isLoading,
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc 
-        isTagQuickQueryLoadingDone: state.tag.tagQuickQueryResult.isLoadingDone,
-
-        //upload thanh cong hay khong
-        isUploadDone: state.post.createPost.isLoadingDone,
+        isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostCategories,
     getTagQuickQueryResult,
-    postCreatePost
+    postCreatePost,
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreatePost));

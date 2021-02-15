@@ -13,13 +13,11 @@ var initialState = {
         isLoading: false,
         data: [],
         itemCount: 20,
-        error: ''
     },
     tagQuickQueryResult: {
         isLoading: false,
-        isLoadingDone: false,
+        isLoadDone: false,
         data: [],
-        error: ''
     }
 }
 
@@ -34,27 +32,27 @@ export default function tagReducer(state = initialState, action) {
         }
         case GET_TAG_SEARCH_RESULT_SUCCESS: {
             return {
-                ...state, tagSearchResult: { isLoading: false, data: action.payload, itemCount: 30, error: '' }
+                ...state, tagSearchResult: { isLoading: false, data: action.payload, itemCount: 30 }
             }
         }
         case GET_TAG_SEARCH_RESULT_FAILURE: {
             return {
-                ...state, tagSearchResult: { isLoading: false, error: action.payload, data: [], itemCount: 0 }
+                ...state, tagSearchResult: { isLoading: false, data: [], itemCount: 0 }
             }
         }
         case GET_TAG_QUICK_QUERY_REQUEST: {
             return {
-                ...state, tagSearchResult: { isLoading: true, isLoadingDone: false }
+                ...state, tagSearchResult: { isLoading: true, isLoadDone: false }
             }
         }
         case GET_TAG_QUICK_QUERY_SUCCESS: {
             return {
-                ...state, tagQuickQueryResult: { isLoading: false, isLoadingDone: true, data: action.payload, error: '' }
+                ...state, tagQuickQueryResult: { isLoading: false, isLoadDone: true, data: action.payload }
             }
         }
         case GET_TAG_QUICK_QUERY_FAILURE: {
             return {
-                ...state, tagQuickQueryResult: { isLoading: false, error: action.payload }
+                ...state, tagQuickQueryResult: { isLoading: false, isLoadDone: true }
             }
         }
 

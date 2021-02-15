@@ -75,7 +75,7 @@ class Header extends React.Component {
     render() {
         let quickSearchResultView = <></>;
 
-        if (this.props.isQuickSearchLoadingDone) {
+        if (this.props.isQuickSearchLoadDone) {
             if (this.props.quickSearchResultData)
                 if (this.props.quickSearchResultData.tagQuickSearchResults.length > 0 ||
                     this.props.quickSearchResultData.docQuickSearchResults.length > 0 ||
@@ -352,7 +352,7 @@ const mapStateToProps = (state) => {
     return {
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,
-        isQuickSearchLoadingDone: state.common.quickSearchResult.isLoadingDone
+        isQuickSearchLoadDone: state.common.quickSearchResult.isLoadDone
 
     };
 };

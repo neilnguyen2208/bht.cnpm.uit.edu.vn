@@ -8,7 +8,7 @@ import {
     managementGetAllRoles
 } from "redux/actions/userAction.js";
 
-import { remoteServiceBaseUrl } from 'utils/httpServices'
+import { remoteServiceBaseUrl } from 'utils/requestUtils'
 
 import FormData from 'form-data';
 import Cookies from 'js-cookie';

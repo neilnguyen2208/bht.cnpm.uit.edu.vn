@@ -3,8 +3,8 @@ import {
     //new documents
     GET_QUICK_SEARCH_RESULT_REQUEST,
     GET_QUICK_SEARCH_RESULT_SUCCESS,
-    GET_QUICK_SEARCH_RESULT_FAILURE
-
+    GET_QUICK_SEARCH_RESULT_FAILURE,
+    GET_QUICK_SEARCH_RESULT_RESET
 } from "../constants.js"
 
 
@@ -13,8 +13,7 @@ const initialState = {
         isLoadDone: false,
         isLoading: false,
         data: {
-        },
-        error: ""
+        }
     }
 }
 
@@ -23,9 +22,11 @@ function CommonReducer(state = initialState, action) {
         case GET_QUICK_SEARCH_RESULT_REQUEST:
             return { ...state, quickSearchResult: { isLoading: true, isLoadDone: false } };
         case GET_QUICK_SEARCH_RESULT_SUCCESS:
-            return { ...state, quickSearchResult: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+            return { ...state, quickSearchResult: { isLoading: false, isLoadDone: true, data: action.payload } }
         case GET_QUICK_SEARCH_RESULT_FAILURE:
-            return { ...state, quickSearchResult: { isLoading: false, isLoadDone: true, error: action.payload, data: {} } }
+            return { ...state, quickSearchResult: { isLoading: false, isLoadDone: true, data: {} } }
+        case GET_QUICK_SEARCH_RESULT_RESET:
+            return { ...state, quickSearchResult: { isLoadDone: false } }
         default:
             return state;
     }

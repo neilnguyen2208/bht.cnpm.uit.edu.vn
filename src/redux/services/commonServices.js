@@ -4,29 +4,16 @@ import {
     get_QuickSearchResultSuccess,
     get_QuickSearchResultFailure,
 } from "redux/actions/commonAction.js";
-import { remoteServiceBaseUrl } from 'utils/httpServices'
+import { request } from 'utils/requestUtils'
 
-export function getQuickSearchResult(searchTerm) {
-
+export function getQuickSearchResult(query) {
     return dispatch => {
-
-        var myHeaders = new Headers();
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        dispatch(get_QuickSearchResultRequest());
-        fetch(`${remoteServiceBaseUrl}quicksearch/queries?searchTerm=${searchTerm}`, requestOptions)
-            .then(response => response.json())
-            .then(result =>
-                dispatch(get_QuickSearchResultSuccess(result))
-            )
+        request.get(`/quicksearch/queries?searchTerm=${query}`)
+            .then(response => {
+                dispatch(get_QuickSearchResultSuccess(response.data))
+            })
             .catch(error => {
-                dispatch(get_QuickSearchResultFailure(error)); //
+                dispatch(get_QuickSearchResultFailure()); //
             })
     }
-
-
 }

@@ -27,7 +27,7 @@ import {    //highlight posts
 
 import { openModal } from 'redux/actions/modalAction'
 
-import { request } from 'utils/httpServices';
+import { request } from 'utils/requestUtils';
 import history from 'history.js';
 
 export function postCreatePost(data) {

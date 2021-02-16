@@ -17,7 +17,7 @@ import {
     get_NewestActivitiesFailure,
 
 } from "redux/actions/homeAction.js";
-import { remoteServiceBaseUrl } from 'utils/httpServices'
+import { remoteServiceBaseUrl } from 'utils/requestUtils'
 
 export function getTrendingDocumentsList() {
 

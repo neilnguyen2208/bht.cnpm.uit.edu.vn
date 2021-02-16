@@ -33,8 +33,7 @@ import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEdi
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import store from "redux/store/index.js"
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from 'redux/actions/tagAction'
-
-const DELAY_TIME = 700;
+import {DELAY_TIME} from 'constants.js';
 
 const validationCondition = {
     form: '#create-document-form',

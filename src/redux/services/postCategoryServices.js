@@ -3,7 +3,7 @@ import {
     get_PostCategoriesRequest,
     get_PostCategoriesFailure
 } from "redux/actions/postCategoryAction.js";
-import { remoteServiceBaseUrl } from 'utils/httpServices'
+import { remoteServiceBaseUrl } from 'utils/requestUtils'
 
 export function getPostCategories() {
     return dispatch => {

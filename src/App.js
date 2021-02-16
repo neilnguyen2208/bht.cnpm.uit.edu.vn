@@ -1,26 +1,15 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-//common
 import Home from "pages/common/Home/Home";
-//import PostsList from "pages/common/PostsList/PostsList";
 import PostDetail from "pages/common/PostDetail/PostDetail";
-//import DocumentsList from "pages/common/DocumentsList/DocumentsList";
 import DocumentDetail from "pages/common/DocumentDetail/DocumentDetail";
 import Login from "pages/common/Login/Login";
 import Register from "pages/common/Register/Register";
 import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
 import SearchTagLayout from "layouts/SearchTagLayout";
-
-//user
-//common
-import NormalBlankLayout from "layouts/NormalBlankLayout"
-
-//management
 import AdminLayout from 'layouts/AdminSidebar'
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import SearchPostByTag from "pages/common/SearchResult/SearchPostByTag";
 import AccountInformation from "pages/user/AccountInformation/AccountInformation";
 import UpdatePassword from "pages/user/AccountInformation/UpdatePassword";
@@ -53,80 +42,74 @@ import DocumentManagement from 'pages/management/DocumentManagement/DocumentMana
 import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement'
 import ModalManager from 'components/common/Modal/ModalManager'
 import MyNotification from 'pages/user/MyActivities/MyActivities'
-const App = () => {
 
+const App = () => {
     return (
         <div style={{ minWidth: "320px", width: "100%", background: "white" }}>
             <ModalManager />
             <Router>
-                {/* <Route exact path="/demo-modal" component={ModalManager} /> */}
-                <Router>
-                    <Header />
-                    <div id="header" style={{ height: "65px" }}></div>
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/register" component={Register} />
-                        <Route exact path="/posts" component={PostsList} />
-                        <Route exact path="/documents" component={DocumentsList} />
-                        <Route exact path="/posts/:id" component={PostDetail} />
-                        <Route exact path="/documents/:id" component={DocumentDetail} />
-                        <Route exact path="/courses" component={CoursesList} />
-                        <Route exact path="/courses/:id" component={ChaptersList} />
-                        <Route path="/search/posts" exact component={SearchPost} />
-                        <Route path="/search/documents" exact component={SearchDocument} />
-                        <Route path="/search/tags" exact component={SearchTag} />
-                        <Route path="/search/courses" exact component={SearchCourses} />
+                <Header />
+                <div id="header" style={{ height: "65px" }}></div>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/posts" component={PostsList} />
+                    <Route exact path="/documents" component={DocumentsList} />
+                    <Route exact path="/posts/:id" component={PostDetail} />
+                    <Route exact path="/documents/:id" component={DocumentDetail} />
+                    <Route exact path="/courses" component={CoursesList} />
+                    <Route exact path="/courses/:id" component={ChaptersList} />
+                    <Route path="/search/posts" exact component={SearchPost} />
+                    <Route path="/search/documents" exact component={SearchDocument} />
+                    <Route path="/search/tags" exact component={SearchTag} />
+                    <Route path="/search/courses" exact component={SearchCourses} />
 
-                        {/* Search Tag */}
-                        <Route path="/tags/:id/">
-                            <SearchTagLayout>
-                                <Switch>
-                                    <Route exact path="/tags/:id/post" component={SearchPostByTag} />
-                                    {/* <Route exact path="/:id/doc" component={} /> */}
-                                </Switch>
-                            </SearchTagLayout>
-                        </Route>
+                    {/* Search Tag */}
+                    <Route path="/tags/:id/">
+                        <SearchTagLayout>
+                            <Switch>
+                                <Route exact path="/tags/:id/post" component={SearchPostByTag} />
+                            </Switch>
+                        </SearchTagLayout>
+                    </Route>
 
-                        {/* user layout */}
+                    {/* user layout */}
 
-                        <Route exact path="/user" component={AccountInformation} />
-                        <Route exact path="/user/update-password" component={UpdatePassword} />
-                        <Route exact path="/user/my-docs" component={MyDocumentsList} />
-                        <Route exact path="/user/my-posts" component={MyPostsList} />
-                        <Route exact path="/user/saved-posts" component={MyPostsList} />
-                        <Route exact path="/create-post" component={CreatePost} />
-                        <Route exact path="/user/notification" component={MyNotification} />
-                        <Route exact path="/upload-doc" component={UploadDocument} />
-                        <Route exact path="/courses/:id/artical" component={Artical} />
-                        <Route exact path="/courses/:id/video" component={Video} />
-                        <Route exact path="/courses/:id/exercise" component={Exercise} />
+                    <Route exact path="/user" component={AccountInformation} />
+                    <Route exact path="/user/update-password" component={UpdatePassword} />
+                    <Route exact path="/user/my-docs" component={MyDocumentsList} />
+                    <Route exact path="/user/my-posts" component={MyPostsList} />
+                    <Route exact path="/user/saved-posts" component={MyPostsList} />
+                    <Route exact path="/create-post" component={CreatePost} />
+                    <Route exact path="/user/notification" component={MyNotification} />
+                    <Route exact path="/upload-doc" component={UploadDocument} />
+                    <Route exact path="/courses/:id/artical" component={Artical} />
+                    <Route exact path="/courses/:id/video" component={Video} />
+                    <Route exact path="/courses/:id/exercise" component={Exercise} />
 
-                        {/* for admin only */}
+                    {/* for admin only */}
 
-                        {/* Admin and collab page content admin */}
-                        <Route exact path="/admin-sidebar" component={AdminSidebar} />
+                    {/* Admin and collab page content admin */}
+                    <Route exact path="/admin-sidebar" component={AdminSidebar} />
 
-                        {/* for admin */}
-                        <Route exact path="/admin/post-approving" component={PostApproving} />
-                        <Route exact path="/admin/doc-approving" component={DocumentApproving} />
-                        <Route exact path="/admin/post-management" component={PostManagement} />
-                        <Route exact path="/admin/document-management" component={DocumentManagement} />
-                        <Route exact path="/admin/user-management" component={UserManagement} />
-                        <Route exact path="/admin/page-notification" component={NotificationManagement} />
-                        <Route exact path="/admin/category-management" component={CategoryManagement} />
-                        <Route exact path="/admin/activity-management" component={ActivityManagement} />
-                        <Route exact path="/admin/user-role-management" component={UserRoleManagement} />
-                        <Route exact path="/admin/user-management/:id" component={AdminLayout} />
-                        <Route exact path="/admin/statistic" component={Statistic} />
-                        <Route exact path="/admin/courses-management" component={CoursesManagement} />
-
-                    </Switch>
-                    <div className="App"></div>
-                </Router >
+                    {/* for admin */}
+                    <Route exact path="/admin/post-approving" component={PostApproving} />
+                    <Route exact path="/admin/doc-approving" component={DocumentApproving} />
+                    <Route exact path="/admin/post-management" component={PostManagement} />
+                    <Route exact path="/admin/document-management" component={DocumentManagement} />
+                    <Route exact path="/admin/user-management" component={UserManagement} />
+                    <Route exact path="/admin/page-notification" component={NotificationManagement} />
+                    <Route exact path="/admin/category-management" component={CategoryManagement} />
+                    <Route exact path="/admin/activity-management" component={ActivityManagement} />
+                    <Route exact path="/admin/user-role-management" component={UserRoleManagement} />
+                    <Route exact path="/admin/user-management/:id" component={AdminLayout} />
+                    <Route exact path="/admin/statistic" component={Statistic} />
+                    <Route exact path="/admin/courses-management" component={CoursesManagement} />
+                </Switch>
+                <div className="App"></div>
                 <Footer />
-
-            </Router>
+            </Router >
         </div >
     );
 }

@@ -8,7 +8,7 @@ import {
   get_tagQuickQueryResultFailure
 
 } from '../actions/tagAction.js'
-import { request } from 'utils/httpServices'
+import { request } from 'utils/requestUtils'
 export function getTagSearchResult(searchTerm = "") {
   return dispatch => {
     dispatch(get_TagSearchResultRequest());

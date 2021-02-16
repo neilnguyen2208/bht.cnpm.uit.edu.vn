@@ -18,7 +18,7 @@ import {
 } from "redux/actions/docAction.js";
 //upload new document
 
-import { remoteServiceBaseUrl } from 'utils/httpServices'
+import { remoteServiceBaseUrl } from 'utils/requestUtils'
 
 export function getDocumentByID(id) {
     return dispatch => {

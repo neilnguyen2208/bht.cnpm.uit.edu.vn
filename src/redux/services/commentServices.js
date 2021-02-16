@@ -27,7 +27,7 @@ import {    //highlight posts
 
 import {
     remoteServiceBaseUrl
-} from 'utils/httpServices';
+} from 'utils/requestUtils';
 import history from 'history.js';
 
 export function postCreatePost(data) {

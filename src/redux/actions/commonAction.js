@@ -2,7 +2,8 @@ import {
   //new documents
   GET_QUICK_SEARCH_RESULT_REQUEST,
   GET_QUICK_SEARCH_RESULT_SUCCESS,
-  GET_QUICK_SEARCH_RESULT_FAILURE
+  GET_QUICK_SEARCH_RESULT_FAILURE,
+  GET_QUICK_SEARCH_RESULT_RESET
 } from "../constants.js"
 
 //new document
@@ -19,9 +20,14 @@ export function get_QuickSearchResultSuccess(data) {
   }
 }
 
-export function get_QuickSearchResultFailure(error) {
+export function get_QuickSearchResultFailure() {
   return {
     type: GET_QUICK_SEARCH_RESULT_FAILURE,
-    payload: error
+  }
+}
+
+export function get_QuickSearchResultReset() {
+  return {
+    type: GET_QUICK_SEARCH_RESULT_RESET,
   }
 }

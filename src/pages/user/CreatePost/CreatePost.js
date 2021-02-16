@@ -7,7 +7,7 @@ import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { postCreatePost } from "redux/services/postServices"
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
-
+import { DELAY_TIME } from 'constants.js'
 import "./CreatePost.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/DocPostDetail.scss'
@@ -42,8 +42,6 @@ const validationCondition = {
         validation.isRequired('cr-post-cke', 'form-ckeditor', 'Nội dung bài viết không được để trống')
     ],
 }
-
-const DELAY_TIME = 700;
 
 class CreatePost extends Component {
     constructor(props) {

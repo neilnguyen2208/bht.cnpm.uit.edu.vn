@@ -4,10 +4,7 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { Link, NavLink } from 'react-router-dom';
 import { ClickAwayListener } from '@material-ui/core';
-
 //utils
-import { routers } from 'router.config'
-import { ContentManagement } from 'utils/permissionUtils'
 //styles
 import "./Header.scss";
 import "components/styles/SimpleButton.scss";
@@ -24,10 +21,14 @@ import { getQuickSearchResult } from 'redux/services/commonServices';
 
 //components
 import Tag from "components/common/Tag/Tag";
-import Loader from "components/common/Loader/Loader"
+import SmallLoader from "components/common/Loader/Loader_S"
 import { logoRouter, headerMenuRouters } from "router.config"
-import { getSearchParamByName } from 'utils/urlUtils'
-import history from 'history.js'
+
+import store from 'redux/store/index'
+import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
+import { DELAY_TIME } from 'constants.js';
+
+
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -38,6 +39,8 @@ class Header extends React.Component {
         }
         this.isHaveClickAwayQuickSearhResult = false;// dung de kiem tra neu bam ra ngoai search result lan 1'
         this.quickSearchResultView = <></>;
+        this.timeOut = null;
+
 
     }
 
@@ -46,6 +49,7 @@ class Header extends React.Component {
 
     componentWillUnmount() {
         //reset 
+        store.dispatch(get_QuickSearchResultReset);
     }
 
     handleClickAwayQuickSearchResult = () => {
@@ -57,9 +61,11 @@ class Header extends React.Component {
     }
 
     onSearchTextFieldChange = (e) => {
-        console.log(e.target.value);
+        let query = e.target.value;
         this.showQuickSearchBigContainer();
-        this.props.getQuickSearchResult(e.target.value);
+        store.dispatch(get_QuickSearchResultRequest());
+        clearTimeout(this.timeOut);
+        this.timeOut = setTimeout(() => this.props.getQuickSearchResult(query), DELAY_TIME);
         document.getElementById("qssr-container").style.display = "block";
         document.getElementById("qsr-container-big").style.display = "block";
     }
@@ -71,12 +77,12 @@ class Header extends React.Component {
                 window.location.href = (`${this.props.location.pathname}?page=1&q=${e.target.value}&category=1`);
             else
                 window.location.href = (`/search/posts?page=1&q=${e.target.value}&category=1`);
-
             document.getElementById("qssr-container").style.display = "none";
-            document.getElementById("qsr-container-big").style.display = "none";    
+            document.getElementById("qsr-container-big").style.display = "none";
             return;
         }
     }
+
 
     render() {
 
@@ -129,12 +135,14 @@ class Header extends React.Component {
                         }
                     </div >
                 else
-                    this.quickSearchResultView = <>Không có kết quả ...</>;
+                    this.quickSearchResultView = <div className='form-tip-label'>Không có kết quả ...</div>;
             else {
-                this.quickSearchResultView = <Loader />;
+                this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />
             }
         }
-        else this.quickSearchResultView = <Loader />;
+        else
+            this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />
+
 
         return (
 
@@ -155,52 +163,6 @@ class Header extends React.Component {
                         </div>
 
                         <div className="header-begin-lv2" id="header-begin-lv2" >
-
-                            {/* Duoi 576 */}
-                            <div className="sb-container-small" >
-                                <form className="sb-text-field-container" autoComplete="off" onSubmit={(e) => this.handleSearch(e.target.value)} >
-                                    <input className="sb-text-field" id="search-box-text-field-small" type="text" placeholder="Search..." onChange={() => this.handleQuickSearch()} />
-                                    <div className="search-image-container"
-                                        id="search-image-button-container" > <img className="search-image-button"
-                                            src={search_icon}
-                                            alt="*"
-                                            onClick={
-                                                (e) => this.handleSearch(e.target.value)}
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            {/* 576 -> 992 */}
-                            <div className="qs-container-normal">
-                                <div className="sb-container-normal" >
-                                    <div className="sb-text-field-container">
-                                        <input className="sb-text-field"
-                                            id="sb-text-field-normal"
-                                            type="text" placeholder="Search..."
-                                            onChange={() => this.showQuickSearchNormalContainer()} />
-                                        <div className="search-image-container"
-                                            id="search-image-button-container" > <img className="search-image-button"
-                                                src={search_icon}
-                                                alt="*"
-                                                onClick={
-                                                    (e) => this.handleSearch(e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ClickAwayListener onClickAway={() => this.handleClickAwayQuickSearchResult()}>
-                                    <div className="qsr-container-normal" id="qsr-container-normal">
-                                        <div className="qssr-container" id="qssr-container" >
-                                            <div className="Cancel_Button_Port" id="qs-cancel-button-container" >
-                                                <img className="Cancel_Button" alt=""
-                                                    id="qs-cancel-button" onClick={() => { this.handleCancelQuickSearch() }} src={red_delete_icon} />
-                                            </div>
-                                            {this.quickSearchResultView}
-                                        </div>
-                                    </div>
-                                </ClickAwayListener>
-                            </div>
 
                             {/*> 992 */}
                             <div className="qs-container-big">
@@ -250,27 +212,7 @@ class Header extends React.Component {
                                 <div className="Menu_Icon_Part" />
                             </div>
                         </div>
-
                     </div>
-
-                    {/* <div className="Collapsed_User_Menu_Port" id="collapsed-user-menu-port" >
-                        <div className="Collapsed_User_Menu" id="collapsed-user-menu" >
-                            <div className="j-c-space-between" >
-                                <div className="d-flex" > <img className="Collapsed_User_Menu_Image_Button" src={upload_icon} alt="" />
-                                    <div>
-                                        <button className="Collapsed_User_Menu_Button" > Đăng nhập </button>
-                                    </div>
-                                    <div className="Logined_Menu" >
-                                        <div className="Collapsed_User_Menu_Item" > Trang cá nhân </div>
-                                        <div className="Collapsed_User_Menu_Item" > Thông báo... </div>
-                                        <div className="Collapsed_User_Menu_Item" > Bài viết của tôi </div>
-                                        <div className="Collapsed_User_Menu_Item" > Tài liệu của tôi </div>
-                                        <div className="Collapsed_User_Menu_Item" > Đăng xuất </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div >
         );

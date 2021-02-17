@@ -180,7 +180,7 @@ class UserSidebar extends Component {
                     activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
                     to={"/user/saved-posts?page=1"}
                     onClick={() => this.setState({})}>
-                    Bài viết đã lưu
+                    Đã lưu
                         </NavLink>
 
 

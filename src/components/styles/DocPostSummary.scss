@@ -127,7 +127,6 @@
     cursor: pointer;
 }
 
-
 .item-title:hover {
     color: var(--light-black);
 
@@ -141,7 +140,7 @@
     display: flex;
     align-items: center;
     color: var(--black);
-    // margin-top: 10px;
+    margin-top: 5px;
 }
 
 .doc-file-name {

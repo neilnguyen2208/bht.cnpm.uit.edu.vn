@@ -106,7 +106,7 @@ class PostsList extends Component {
                 <div className="layout-decoration">
                     <div className="mg-top-10px" />
                     <div className = "mg-bottom-10px j-c-space-between">
-                        <div style={{ display: "flex" }}>
+                        <div className = "d-flex">
                             <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
                             <div style={{ marginLeft: "5px" }}>
                                 <ComboBox
@@ -117,7 +117,7 @@ class PostsList extends Component {
                                 ></ComboBox></div>
                         </div>
 
-                        <div style={{ display: "flex" }}>
+                        <div className = "d-flex">
                             <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                             <div style={{ marginLeft: "5px" }}>
                                 <ComboBox

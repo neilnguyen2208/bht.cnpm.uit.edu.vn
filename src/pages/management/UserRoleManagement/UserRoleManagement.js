@@ -116,7 +116,7 @@ class UserRoleManagement extends Component {
 
                         <div className="modal-footer">
                             <div className="gray-label">Xác nhận?</div>
-                            <div style={{ display: "flex" }}>
+                            <div className = "d-flex">
                                 <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyAddNewPostCategoryConfirmation()}>OK</button>
                                 <button className="white-button" onClick={() => { this.isAddPostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
                             </div>
@@ -138,7 +138,7 @@ class UserRoleManagement extends Component {
 
                         <div className="modal-footer">
                             <div className="gray-label">Xác nhận?</div>
-                            <div style={{ display: "flex" }}>
+                            <div className = "d-flex">
                                 <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyEditPostCategoryConfirmation()}>OK</button>
                                 <button className="white-button" onClick={() => { this.isEditPostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
                             </div>

@@ -8,7 +8,6 @@ import gray_write_icon from 'assets/images/gray_write_icon.png'
 
 import './AccountInformation.scss'
 import 'components/styles/Form.scss'
-import './AIResponsiveLayout.scss'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 import UpdatePassword from './UpdatePassword'

@@ -18,7 +18,7 @@ class Tag extends Component {
         if (!this.props.tag.id && !this.props.tag.name && !this.props.tag.content) return <></>;
         return (
             <div className="simple-tag" onClick={this.onTagClick}>
-                <div style={{ display: "flex" }}>
+                <div className = "d-flex">
                     {!this.props.isReadOnly && <div onClick={this.onDelete} className="tag-delete-btn"><div className="close_8x8" /> </div>}
                     <div style={{ paddingLeft: "5px" }}> {this.props.tag.name}{this.props.tag.content} </div>
                 </div>

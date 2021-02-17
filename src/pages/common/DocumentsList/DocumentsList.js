@@ -105,7 +105,7 @@ class DocumentsList extends Component {
                             <div>{this.documentsList.length}</div>
                         </div>
 
-                        <div style={{ display: "flex" }}>
+                        <div className = "d-flex">
                             <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
                             <div style={{ marginLeft: "5px" }}>
                                 <ComboBox

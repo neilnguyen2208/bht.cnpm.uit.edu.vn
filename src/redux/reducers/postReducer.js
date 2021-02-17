@@ -33,13 +33,12 @@ import {
 
 const initialState = {
     currentPost: {
-        isLoading: false, data: '', error: ''
+        isLoading: false, data: {}
     },
     //search post: use for search post and post list
     postsList: {
         isLoading: false,
         data: [],
-        error: "",
         totalPages: 0
     },
 
@@ -47,7 +46,6 @@ const initialState = {
     myPosts: {
         isLoading: false,
         data: [],
-        error: "",
         totalPages: 0
     },
 
@@ -55,12 +53,10 @@ const initialState = {
     highlightPosts: {
         isLoading: false,
         isLoadDone: false,
-        data: [],
-        error: ""
+        data: []
     },
     approvePost: {
-        isLoadDone: false,
-        notification: { type: '', message: '' }
+        isLoadDone: false
     },
 };
 
@@ -77,7 +73,7 @@ function PostReducer(state = initialState, action) {
             }
         case GET_POST_BY_ID_FAILURE:
             {
-                return { ...state, currentPost: { isLoading: false, error: action.payload } }
+                return { ...state, currentPost: { ...state.currentPost, isLoading: false } }
             }
         //get all not approved post
 
@@ -102,11 +98,11 @@ function PostReducer(state = initialState, action) {
             };
         case GET_HIGHLIGHT_POSTS_LIST_SUCCESS:
             {
-                return { ...state, highlightPosts: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+                return { ...state, highlightPosts: { isLoading: false, isLoadDone: true, data: action.payload } }
             }
         case GET_HIGHLIGHT_POSTS_LIST_FAILURE:
             {
-                return { ...state, highlightPosts: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+                return { ...state, highlightPosts: { isLoading: false, isLoadDone: true, data: [] } }
             }
         //get my post
         case GET_MY_POSTS_REQUEST:
@@ -115,11 +111,11 @@ function PostReducer(state = initialState, action) {
             };
         case GET_MY_POSTS_SUCCESS:
             {
-                return { ...state, myPosts: { isLoading: false, data: action.payload.postSummaryWithStateDTOs, error: '', totalPage: action.payload.totalPages } }
+                return { ...state, myPosts: { isLoading: false, data: action.payload.postSummaryWithStateDTOs, totalPage: action.payload.totalPages } }
             }
         case GET_MY_POSTS_FAILURE:
             {
-                return { ...state, myPosts: { isLoading: false, error: action.payload, data: [] } }
+                return { ...state, myPosts: { isLoading: false, data: [] } }
             }
 
         //get post search result
@@ -131,12 +127,12 @@ function PostReducer(state = initialState, action) {
         case GET_POST_SEARCH_RESULT_SUCCESS:
         case GET_POSTS_LIST_SUCCESS:
             {
-                return { ...state, postsList: { ...state.postsList, isLoading: false, data: action.payload.postSummaryDTOs, error: '', totalPages: action.payload.totalPages } }
+                return { ...state, postsList: { ...state.postsList, isLoading: false, data: action.payload.postSummaryDTOs, totalPages: action.payload.totalPages } }
             }
         case GET_POST_SEARCH_RESULT_FAILURE:
         case GET_POSTS_LIST_FAILURE:
             {
-                return { ...state, postsList: { isLoading: false, error: action.payload, data: [] } }
+                return { ...state, postsList: { isLoading: false, data: [] } }
             }
 
         default:

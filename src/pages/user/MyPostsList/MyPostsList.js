@@ -2,44 +2,36 @@
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import PostSummary from 'components/post/PostSummary';
-import { itemType } from 'constants.js';
+import { itemType, approveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
 import { getMyPostsList } from "redux/services/postServices";
 import { getPostCategories } from "redux/services/postCategoryServices";
-
+import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
-
-import Loader from 'components/common/Loader/Loader'
+import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import UserSidebar from 'layouts/UserSidebar'
 
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
 class MyPostsList extends Component {
     constructor(props) {
         super();
-
-        this.filter = [
-            { id: 1, name: "Tất cả" },
-            { id: 2, name: "Chưa phê duyệt" },
-            { id: 3, name: "Đã phê duyệt" },
-            { id: 4, name: "Cần xem lại" }
-        ]
-
-        this.myPostsList = <></>
+        this.myPostsList = <div>
+            {DocPostSummaryLoader()}
+            {DocPostSummaryLoader()}
+            {DocPostSummaryLoader()}
+        </div>
     }
 
-    async componentDidMount() {
-        this.props.getPostCategories()
-
-        //get filter
+    componentDidMount() {
+        this.props.getPostCategories();
         let page = getSearchParamByName('page');
         let category = getSearchParamByName('category');
-
         this.props.getMyPostsList(page, category);
     }
 
@@ -53,7 +45,15 @@ class MyPostsList extends Component {
     }
 
     //combobox
-    onFilterOptionChanged = (selectedOption) => {
+    onCategoryOptionChange = (selectedOption) => {
+        setSearchParam("category", selectedOption.id);
+        let page = getSearchParamByName('page');
+        let category = getSearchParamByName('category');
+        this.props.getMyPostsList(page, category);
+        this.setState({});
+    }
+
+    onApproveOptionChange = (selectedOption) => {
         setSearchParam("category", selectedOption.id);
         let page = getSearchParamByName('page');
         let category = getSearchParamByName('category');
@@ -62,6 +62,43 @@ class MyPostsList extends Component {
     }
 
     render() {
+        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
+            this.comboboxsGroup =
+                <div className="two-element-filter-container">
+                    <div className="d-flex">
+                        <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
+                        <div className="mg-left-5px">
+                            <ComboBox
+                                selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
+                                options={this.props.postCategories}
+                                onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
+                                id="my-post-list-category-filter-combobox"
+                            ></ComboBox>
+                        </div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
+                        <div className="mg-left-5px">
+                            <ComboBox
+                                options={approveStatusOptions}
+                                placeHolder="Tất cả"
+                                onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
+                                id="my-post-list-approve-status-filter-combobox"
+                            ></ComboBox>
+                        </div>
+                    </div>
+                </div>
+        }
+        else this.comboboxsGroup = <div className="two-element-filter-container">
+            <div className="d-flex">
+                <div class="timeline-item d-flex">
+                    <div class="animated-background" style={{ width: "240px", height: "20px" }}></div>
+                </div>
+            </div>
+            <div class="timeline-item d-flex">
+                <div class="animated-background" style={{ width: "240px", height: "20px" }}></div>
+            </div>
+        </div>
 
         if (!this.props.isListLoading) {
             this.myPostsList = this.props.myPostsList.map((postItem) => (
@@ -86,48 +123,36 @@ class MyPostsList extends Component {
                 ></PostSummary >)
             )
         }
-
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
-
-
-            this.filter = this.props.postCategories;
-        }
-
+        else
+            this.myPostsList = <div>
+                {DocPostSummaryLoader()}
+                {DocPostSummaryLoader()}
+                {DocPostSummaryLoader()}
+            </div>
 
         return (
-            <div className="left-sidebar-layout">
+            <div className="left-sidebar-layout" >
                 <UserSidebar />
                 <div className="content-layout">
                     <Titlebar title="BÀI VIẾT CỦA TÔI" />
                     <div className="content-container">
-                        <div className="two-element-filter-container">
-                            <div style={{ display: "flex" }}>
-                                <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
-                                <div style={{ marginLeft: "5px" }}>
-                                    <ComboBox
-                                        selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
-                                        options={this.filter}
-                                        placeHolder="Chọn danh mục"
-                                        onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
-                                        id="my-post-list-search-filter-combobox"
-                                    ></ComboBox>
+                        {this.comboboxsGroup}
+
+                        <div className="filter-label d-flex">
+                            {!this.props.isListLoading ? <div className="d-flex">
+                                <div className="mg-right-5px mg-bottom-5px">Tổng số:</div>
+                                <div> {this.props.myPostsList.length}</div>
+                            </div>
+                                :
+                                <div className="d-flex">
+                                    <div class="timeline-item d-flex">
+                                        <div class="animated-background" style={{ width: "120px", height: "20px" }}></div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className="filter-label d-flex">
-                                <div className="mg-right-5px">Tổng số:</div>
-
-                                {!this.props.isListLoading ?
-                                    <div> {this.props.myPostsList.length}</div>
-                                    : <div>0</div>
-                                }
-                            </div>
+                            }
                         </div>
 
-                        {this.props.isListLoading ?
-                            < Loader /> :
-                            <>{this.myPostsList}</>
-                        }
+                        {this.myPostsList}
 
                         <Paginator config={{
                             changePage: (pageNumber) => this.onPageChange(pageNumber),

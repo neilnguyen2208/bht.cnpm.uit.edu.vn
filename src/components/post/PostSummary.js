@@ -57,14 +57,6 @@ class PostSummary extends Component {
 
   }
 
-  componentDidMount() {
-
-  }
-
-  getFirstImage() {
-
-  }
-
   //#region handle like, unlike buttons
   toggleLikeImage = () => {
     this.isLiked = !this.isLiked;
@@ -172,29 +164,30 @@ class PostSummary extends Component {
         </div>
 
         {/* title */}
-        <Link to={"/posts/" + this.id}>
-          <div className="item-title">
-            {this.props.title}
-          </div>
-        </Link>
+        <div className="mg-left-10px">
+          <Link to={"/posts/" + this.id}>
+            <div className="item-title">
+              {this.props.title}
+            </div>
+          </Link>
 
-        <div className="d-flex" style={{ marginTop: "-8px" }}>
-          <div className="d-flex"  >
-            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
-              {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+          <div className="d-flex" style={{ marginTop: "-8px" }}>
+            <div className="d-flex"  >
+              <img alt="*" className="metadata-icon" src={gray_btn_element} />
+              <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+                {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+              </div>
+            </div>
+
+            <div className="d-flex" >
+              <img alt="*" className="metadata-icon" src={gray_btn_element} />
+              <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+                {this.props.publishDtm.substring(0, 10)}
+              </div>
             </div>
           </div>
-
-          <div className="d-flex" >
-            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
-              {this.props.publishDtm.substring(0, 10)}
-            </div>
-          </div>
-
         </div>
-
+        
         <div className="item-summary">
           {this.props.summary}
         </div>
@@ -237,25 +230,9 @@ class PostSummary extends Component {
           }
 
         </div>
-
       </div >
-
     );
   }
-
-  handleVerifyApprove = () => {
-    this.props.approveAPost();
-
-  }
-  handlerPreviewRequestedPost = () => {
-
-  }
-
-  handlerRejectRequestedPost = () => {
-
-  }
-
-  // likePost() { }
 
 }
 const mapStateToProps = (state) => {

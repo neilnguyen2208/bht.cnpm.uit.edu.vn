@@ -16,8 +16,6 @@ import 'components/styles/SimpleButton.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import Modal from 'components/common/Modal/AlertModal'
-
 
 class DocSummary extends Component {
 
@@ -49,7 +47,6 @@ class DocSummary extends Component {
   }
 
   onLikeBtnClick = () => {
-
     // this.props.likeDocument(this.id);
     this.dislikes = this.isDisliked ? this.dislikes-- : this.dislikes;
     this.isDisliked = false;
@@ -60,7 +57,6 @@ class DocSummary extends Component {
   }
 
   onDislikeBtnClick = () => {
-
     // this.props.dislikeDocument(this.id);
     this.likes = this.isLiked ? this.likes-- : this.likes;
     this.isLiked = false;
@@ -68,10 +64,6 @@ class DocSummary extends Component {
     this.dislikes++;
     this.calculateBar();
     this.setState({});
-  }
-
-  componentDidMount() {
-
   }
 
   getFirstImage() {
@@ -191,28 +183,23 @@ class DocSummary extends Component {
 
         <div className="item-reaction-bar" style={{ right: "5px" }}>
           <div className="d-flex">
-
             <div className="like-dislike-bar">
-
               {/* 2 button */}
               <div className="j-c-space-between">
                 <div className="d-flex">
                   <div> {likeBtn}</div>
                   <div className="doc-like-dislike-count">{this.props.likes}</div>
                 </div>
-
                 <div className="d-flex">
                   <div> {dislikeBtn}</div>
                   <div className="doc-like-dislike-count">{this.props.dislikes}</div>
                 </div>
               </div>
-
               {/* rate bar */}
               <div className="rate-percent-bar">
                 <div className="like-rate-percent" id={'document-item-like-percents-' + this.props.id} />
               </div>
             </div>
-
             <div className="d-flex">
               <div className="doc-comment-count-container">
                 Bình luận
@@ -220,7 +207,6 @@ class DocSummary extends Component {
                   {this.props.commentCount}
                 </div>
               </div>
-
               <div className="download-count-layout">
                 <img src={download_btn} alt="^" className="download-btn"></img>
                 <div style={{ width: "2px" }}></div>
@@ -234,15 +220,7 @@ class DocSummary extends Component {
           </div>
 
         </div>
-        {/* <div className="j-c-space-between mg-top-10px">
 
-        </div> */}
-
-        {/* approving */}
-        {/* <div className="item-container_Footer">
-          <div className="blue-button" style={{ marginRight: "5px", fontSize: "16px" }} onClick={() => this.handlerPreviewRequestedPost()}>Xem trước</div>
-          <div className="red-button" style={{ fontSize: "16px" }} onClick={() => { this.handlerRejectRequestedPost() }}>Từ chối</div>
-        </div> */}
       </div >
     );
   }

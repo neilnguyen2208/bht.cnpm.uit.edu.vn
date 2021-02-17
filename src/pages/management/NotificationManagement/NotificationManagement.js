@@ -122,7 +122,7 @@ class NotificationManagement extends Component {
 
                         <div className="modal-footer">
                             <div className="gray-label">Xác nhận?</div>
-                            <div style={{ display: "flex" }}>
+                            <div className = "d-flex">
                                 <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyAddNewNotificationConfirmation()}>OK</button>
                                 <button className="white-button" onClick={() => { this.isAddNotificationPopupOpen = false; this.setState({}) }}>Cancel</button>
                             </div>
@@ -144,7 +144,7 @@ class NotificationManagement extends Component {
 
                         <div className="modal-footer">
                             <div className="gray-label">Xác nhận?</div>
-                            <div style={{ display: "flex" }}>
+                            <div className = "d-flex">
                                 <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyEditNotificationConfirmation()}>OK</button>
                                 <button className="white-button" onClick={() => { this.isEditNotificationPopupOpen = false; this.setState({}) }}>Cancel</button>
                             </div>

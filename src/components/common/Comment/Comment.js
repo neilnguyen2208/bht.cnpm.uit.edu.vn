@@ -82,7 +82,7 @@
 //                                 <span>{this.props.likes} </span>
 //                             Likes
 //                           </span>
-//                             <span className="desc"><i class="far fa-comment"></i><span>{this.props.commentsNumber}</span> Comments</span>
+//                             <span className="desc"><i className="far fa-comment"></i><span>{this.props.commentsNumber}</span> Comments</span>
 //                         </div>
 //                     </div>
 //                 </div>

@@ -1,5 +1,5 @@
 import {    //highlight posts 
-  
+
     //my post
     get_MyPostsRequest,
     get_MyPostsSuccess,
@@ -28,11 +28,11 @@ import {    //highlight posts
 import { openModal } from 'redux/actions/modalAction'
 
 import { request } from 'utils/requestUtils';
+import { generateSearchTerm } from 'utils/urlUtils'
 import history from 'history.js';
 
 export function postCreatePost(data) {
     return dispatch => {
-
         //th nay se handle bang loader modal ben ngoai luon.
         // dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
         request.post('/posts', JSON.stringify(data))
@@ -40,19 +40,27 @@ export function postCreatePost(data) {
                 //handle success    
                 dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));
             })
-            // .catch(dispatch)
+        // .catch(dispatch) => handle cho cai loader modal.
     }
 }
 
 // my post
-export function getMyPostsList(page = 1, category = "") { //this API to get all approved document of a specific user.
+export function getMyPostsList(searchTermObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyPostsRequest());
-        request.get(`/posts/myPosts`).then(
+        request.get(`/posts/myPosts?${generateSearchTerm(searchTermObject)}`).then(
             response => {
-                dispatch(get_MyPostsSuccess(response.data));
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.postSummaryWithStateDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let arr = result_1.postSummaryWithStateDTOs.map((item, i) => Object.assign({}, item, result.data[i]));
+                        dispatch(get_MyPostsSuccess({ postSummaryWithStateDTOs: arr, totalPages: result_1.totalPages }))
+                    }).catch(() => get_MyPostsFailure())
             }
-        )
+        ).catch(() => dispatch(get_MyPostsFailure()))
     }
 }
 

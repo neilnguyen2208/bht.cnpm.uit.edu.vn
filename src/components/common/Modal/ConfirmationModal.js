@@ -46,7 +46,7 @@ class ConfirmationModal extends React.Component {
                                 onClick={() => this.closeModal()} />
                         </div>
 
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <img className="modal-main-icon" src={confirmation_icon} alt="icon" />
                             <div className="modal-content-container">
                                 <div className="modal-text">

@@ -116,6 +116,7 @@ class CreatePost extends Component {
 
         validation(validationCondition);
     }
+
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
@@ -128,8 +129,19 @@ class CreatePost extends Component {
     }
 
     handleUploadBtnClick = () => {
+        let dom = document.createElement("DIV");
+        dom.innerHTML = this.state.CREATE_POST_DTO.content;
+        let plain_text = (dom.textContent || dom.innerText);
+        let tmpSummary = '';
+        if (this.state.CREATE_POST_DTO.content.length < 160) {
+            tmpSummary = plain_text;
+        }
+        else {
+            tmpSummary = plain_text.substring(0, 160);
+        }
+
         if (styleFormSubmit(validationCondition)) {
-            this.props.postCreatePost(this.state.CREATE_POST_DTO);
+            this.props.postCreatePost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary });
         }
     }
 
@@ -315,16 +327,12 @@ class CreatePost extends Component {
 
     //#endregion
     handleEditorChange = (value) => {
-        let dom = document.createElement("DIV");
-        dom.innerHTML = this.state.CREATE_POST_DTO.content;
-        let plain_text = (dom.textContent || dom.innerText);
-
         if (value.length < 160) {
-            this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value, summary: plain_text } })
+            this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } })
             return;
         }
         else {
-            this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value, summary: plain_text.substring(0, 160) } });
+            this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } });
             return;
         }
     };

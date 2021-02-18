@@ -216,44 +216,44 @@ class DocumentDetail extends Component {
                 </div>
 
 
-                <div class="comments-container">
-                    <ul id="comments-list" class="comments-list">
+                <div className="comments-container">
+                    <ul id="comments-list" className="comments-list">
                         <li>
-                            <div class="comment-main-level">
-                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+                            <div className="comment-main-level">
+                                <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
 
-                                <div class="comment-box">
-                                    <div class="comment-head">
-                                        <h6 class="comment-name by-author">Nguyễn Văn Đông</h6>
+                                <div className="comment-box">
+                                    <div className="comment-head">
+                                        <h6 className="comment-name by-author">Nguyễn Văn Đông</h6>
 
                                     </div>
-                                    <div class="comment-content">
+                                    <div className="comment-content">
                                         Mọi người thấy bài viết này như thế nào?                                           </div>
                                 </div>
                             </div>
 
-                            <ul class="comments-list reply-list">
+                            <ul className="comments-list reply-list">
                                 <li>
-                                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" /></div>
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name">Lưu Biêu Nghị</h6>
+                                    <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" /></div>
+                                    <div className="comment-box">
+                                        <div className="comment-head">
+                                            <h6 className="comment-name">Lưu Biêu Nghị</h6>
 
                                         </div>
-                                        <div class="comment-content">
+                                        <div className="comment-content">
                                             Hay nhưng mà nên có bản dịch nữa bạn, chưa ghi nguồn.
                                             </div>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name by-author">Nguyễn Văn Đông</h6>
+                                    <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+                                    <div className="comment-box">
+                                        <div className="comment-head">
+                                            <h6 className="comment-name by-author">Nguyễn Văn Đông</h6>
 
                                         </div>
-                                        <div class="comment-content">
+                                        <div className="comment-content">
                                             Ok, bạn
                                                               </div>
                                     </div>
@@ -262,15 +262,15 @@ class DocumentDetail extends Component {
                         </li>
 
                         <li>
-                            <div class="comment-main-level">
-                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" />
+                            <div className="comment-main-level">
+                                <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" />
 
                                 </div>
-                                <div class="comment-box">
-                                    <div class="comment-head">
-                                        <h6 class="comment-name">Lưu Biêu Nghị</h6>
+                                <div className="comment-box">
+                                    <div className="comment-head">
+                                        <h6 className="comment-name">Lưu Biêu Nghị</h6>
                                     </div>
-                                    <div class="comment-content">
+                                    <div className="comment-content">
                                         À, có một chỗ sai kìa bạn
                                      </div>
                                 </div>

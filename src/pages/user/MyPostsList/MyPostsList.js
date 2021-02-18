@@ -7,7 +7,7 @@ import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
 import { getMyPostsList } from "redux/services/postServices";
-import { getPostCategories } from "redux/services/postCategoryServices";
+import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
 import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -26,38 +26,54 @@ class MyPostsList extends Component {
             {DocPostSummaryLoader()}
             {DocPostSummaryLoader()}
         </div>
+
+        this.searchTermObject = {
+            page: 0,
+            "category.id": '',
+            sort: 'publishDtm,desc',
+            postState: ''
+        }
     }
 
     componentDidMount() {
-        this.props.getPostCategories();
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
-        this.props.getMyPostsList(page, category);
+        this.props.getPostCategoriesHaveAll();
+        this.searchTermObject = {
+            page: getSearchParamByName('page') - 1,
+            "category.id": getSearchParamByName('category') && getSearchParamByName('category') !== "0" ? getSearchParamByName('category') : null,
+            sort: 'publishDtm,desc',
+            postState: ''
+        }
+        this.props.getMyPostsList(this.searchTermObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
         setSearchParam("page", pageNumber);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
-        this.props.getMyPostsList(page, category);
+        this.searchTermObject = {
+            ...this.searchTermObject,
+            page: getSearchParamByName('page') - 1
+        }
+        this.props.getMyPostsList(this.searchTermObject);
         this.setState({});
     }
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
         setSearchParam("category", selectedOption.id);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
-        this.props.getMyPostsList(page, category);
+        this.searchTermObject = {
+            ...this.searchTermObject,
+            "category.id": selectedOption.id,
+        }
+        this.props.getMyPostsList(this.searchTermObject);
         this.setState({});
     }
 
     onApproveOptionChange = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
-        this.props.getMyPostsList(page, category);
+        this.searchTermObject = {
+            ...this.searchTermObject,
+            postState: selectedOption.postState
+        }
+        this.props.getMyPostsList(this.searchTermObject);
         this.setState({});
     }
 
@@ -69,7 +85,7 @@ class MyPostsList extends Component {
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
+                                selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 0}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
                                 id="my-post-list-category-filter-combobox"
@@ -91,12 +107,12 @@ class MyPostsList extends Component {
         }
         else this.comboboxsGroup = <div className="two-element-filter-container">
             <div className="d-flex">
-                <div class="timeline-item d-flex">
-                    <div class="animated-background" style={{ width: "240px", height: "20px" }}></div>
+                <div className="timeline-item d-flex">
+                    <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
                 </div>
             </div>
-            <div class="timeline-item d-flex">
-                <div class="animated-background" style={{ width: "240px", height: "20px" }}></div>
+            <div className="timeline-item d-flex">
+                <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
             </div>
         </div>
 
@@ -145,8 +161,8 @@ class MyPostsList extends Component {
                             </div>
                                 :
                                 <div className="d-flex">
-                                    <div class="timeline-item d-flex">
-                                        <div class="animated-background" style={{ width: "120px", height: "20px" }}></div>
+                                    <div className="timeline-item d-flex">
+                                        <div className="animated-background" style={{ width: "120px", height: "20px" }}></div>
                                     </div>
                                 </div>
                             }
@@ -154,12 +170,19 @@ class MyPostsList extends Component {
 
                         {this.myPostsList}
 
-                        <Paginator config={{
-                            changePage: (pageNumber) => this.onPageChange(pageNumber),
-                            pageCount: 1,
-                            currentPage: getSearchParamByName('page')
-                        }}
-                        />
+                        {!this.props.isListLoading ?
+                            <Paginator config={{
+                                changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                pageCount: this.props.totalPages,
+                                currentPage: parseInt(getSearchParamByName('page'))
+                            }}
+                            /> :
+                            <div className="d-flex">
+                                <div className="timeline-item d-flex">
+                                    <div className="animated-background" style={{ width: "120px", height: "20px" }}></div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div >
             </div >
@@ -168,17 +191,17 @@ class MyPostsList extends Component {
 }
 
 const mapStateToProps = (state) => {
-    //;
     return {
         myPostsList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.data,
+        postCategories: state.post_category.categories.searchData,
+        totalPages: state.post.myPosts.totalPages,
         isListLoading: state.post.myPosts.isLoading,
         isCategoryLoading: state.post_category.categories.isLoading
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPostsList, getPostCategories
+    getMyPostsList, getPostCategoriesHaveAll
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyPostsList));

@@ -26,7 +26,7 @@ class Paginator extends Component {
             this.arrayShownPages = [1, 2, 3, 4, 5, 6, 7]
         }
 
-        //handler action
+        //handler action: cac hanh dong khong lien quan toi so
         switch (action) {
             case "first":
                 page_number = 1;
@@ -45,8 +45,6 @@ class Paginator extends Component {
             default:
                 break;
         }
-
-
 
         //neu page count > so page duoc show
         if (this.props.config.pageCount >= this.numShownPage) {
@@ -100,10 +98,8 @@ class Paginator extends Component {
             }
         }
 
-
         //clear current list then add what we need
         this.currentPage = page_number;
-
 
         if (action !== "first_load") {
             this.setState({});
@@ -122,12 +118,12 @@ class Paginator extends Component {
             if (this.props.config.currentPage < this.props.config.pageCount) {
                 this.currentPage = this.props.config.currentPage;
                 //neu so page nho hon 0 => chuyen sang trang 1
-                if (this.currentPage <= 0) setSearchParam('page', 1);
             }
             else {
                 this.currentPage = this.props.config.pageCount;
                 setSearchParam('page', this.currentPage);
             }
+            if (this.currentPage <= 0) setSearchParam('page', 1);
 
             //neu so page nho hon so page duoc hien thi => hien so page nho hon
             if (this.props.config.pageCount < this.numShownPage) {
@@ -143,7 +139,6 @@ class Paginator extends Component {
                         arrayShownPages.push(i);
                     }
                 }
-
                 else {
                     this.onClickPaginationElement(this.currentPage, "first_load");
                 }

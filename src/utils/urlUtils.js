@@ -11,7 +11,7 @@ export function getSearchParamByName(name) {
     return null;
 }
 
-export function     setSearchParam(name, value) {
+export function setSearchParam(name, value) {
     if (window.location.search) {
         let query = window.location.search.substring(1);
         let vars = query.split("&");
@@ -34,8 +34,6 @@ export function     setSearchParam(name, value) {
 
         if (window.history.pushState) {
             let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?${newQuery}`;
-// console.log(newurl)
-
             window.history.pushState({ path: newurl }, '', newurl);
         }
         return;
@@ -55,5 +53,17 @@ export function isSearchParamHasValue(searchParam, values) {
             return true;
     }
     return false;
+}
+
+
+export function generateSearchTerm(searchTermObject) { //for generating search term from search term object.
+    let searchTerm = '';
+    Object.keys(searchTermObject)
+        .forEach(function eachKey(key) {
+            if (searchTermObject[key])
+                searchTerm = searchTerm + key + '=' + searchTermObject[key] + "&";
+        });
+    console.log(searchTerm);
+    return searchTerm;
 }
 

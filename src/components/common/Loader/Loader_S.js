@@ -8,8 +8,8 @@ export default class Loader extends React.Component {
     return (
       <div className="loader-container">
         <div className="d-flex">
-          <div class="loadingio-spinner-blocks-imwn1gmkpba">
-            <div class="ldio-dko3k82fjf6">
+          <div className="loadingio-spinner-blocks-imwn1gmkpba">
+            <div className="ldio-dko3k82fjf6">
               <div style={{ left: "15px", top: "15px", animationDelay: "0s" }}></div>
               <div style={{ left: "40px", top: "15px", animationDelay: "0.125s" }}></div>
               <div style={{ left: "65px", top: "15px", animationDelay: "0.25s" }}></div>

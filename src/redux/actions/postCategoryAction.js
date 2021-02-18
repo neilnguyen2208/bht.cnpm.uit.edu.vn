@@ -1,6 +1,7 @@
 import {
     GET_POST_CATEGORIES_REQUEST,
     GET_POST_CATEGORIES_SUCCESS,
+    GET_POST_CATEGORIES_SUCCESS_HAVE_ALL,
     GET_POST_CATEGORIES_FAILURE
 } from "../constants.js"
 
@@ -17,6 +18,15 @@ export function get_PostCategoriesSuccess(data) {
         payload: data
     }
 }
+
+
+export function get_PostCategoriesSuccessHaveAll(data) {
+    return {
+        type: GET_POST_CATEGORIES_SUCCESS_HAVE_ALL,
+        payload: data
+    }
+}
+
 
 export function get_PostCategoriesFailure(error) {
     return {

@@ -111,7 +111,7 @@ function PostReducer(state = initialState, action) {
             };
         case GET_MY_POSTS_SUCCESS:
             {
-                return { ...state, myPosts: { isLoading: false, data: action.payload.postSummaryWithStateDTOs, totalPage: action.payload.totalPages } }
+                return { ...state, myPosts: { isLoading: false, data: action.payload.postSummaryWithStateDTOs, totalPages: action.payload.totalPages } }
             }
         case GET_MY_POSTS_FAILURE:
             {

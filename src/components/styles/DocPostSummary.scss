@@ -116,11 +116,10 @@
 
 //Content
 .item-title {
-    padding-top: 5px;
     padding-bottom: 5px;
     font-family: "RobotoSlab-Regular";
     font-size: 24px;
-    line-height: 32px;
+    line-height: 24px;
     display: flex;
     align-items: center;
     color: var(--black);
@@ -251,7 +250,7 @@
     display: flex;
     margin: auto;
     width: 100%;
-    margin-top: 10px;
+    // margin-top: 10px;
     justify-content: space-between;
     height: fit-content;
     // background: green;
@@ -397,6 +396,4 @@
     height: 18px;
 }
 
-.post-like-btn{
-    
-}
+.post-like-btn {}

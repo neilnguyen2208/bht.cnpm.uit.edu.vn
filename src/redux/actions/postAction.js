@@ -95,10 +95,9 @@ export function get_MyPostsSuccess(data) {
     }
 }
 
-export function get_MyPostsFailure(error) {
+export function get_MyPostsFailure() {
     return {
-        type: GET_MY_POSTS_FAILURE,
-        payload: error
+        type: GET_MY_POSTS_FAILURE
     }
 }
 

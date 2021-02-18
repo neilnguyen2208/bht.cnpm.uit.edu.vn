@@ -171,7 +171,7 @@ class UserSidebar extends Component {
 
                   <NavLink className="vertical-sub-menu-item"
                     activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
-                    to={"/user/my-posts?page=1&category=1"}
+                    to={"/user/my-posts?page=1&category=0"}
                     onClick={() => this.setState({})}>
                     Bài viết của tôi
                         </NavLink>

@@ -20,7 +20,6 @@ export default class Combobox extends React.Component {
             name: ""
         }
 
-        this.placeHolder = "All";
         //if you don't want to show placeHolder => assign name by "none". 
         //=> it will show selected option have name equal to name of selectedOption ID
         //placeHolder is not use as an option :)if use want to use an option default, assign placeHolder by none
@@ -28,8 +27,6 @@ export default class Combobox extends React.Component {
         //if you used selectedOption ID, please assign name of placeHolder by none 
 
         this.disabled = false; //if you want to disable combobox, you this.
-
-
         this.isHaveFocus = false;
 
     }
@@ -99,9 +96,12 @@ export default class Combobox extends React.Component {
         }
 
         this.selectedOption = {
+            ...this.props.options.filter(item => item.id === id)[0],
             id: parseInt(id),
-            name: this.props.options.filter(item => item.id === id)[0].name
+            name: this.props.options.filter(item => item.id === id)[0].name,
         }
+
+        console.log(this.selectedOption);
 
         //pass to parent
         if (this.props.onOptionChanged)
@@ -153,7 +153,7 @@ export default class Combobox extends React.Component {
     }
 
     render() {
-        if (this.selectedOption.id === "" && this.props.selectedOptionID) {
+        if (this.selectedOption.id === "" && this.props.selectedOptionID) { //chua co lua chon nao va prop co selectedOption ID
             this.selectedOption = {
                 id: this.props.selectedOptionID,
                 name: this.props.options.filter(item => item.id === parseInt(this.props.selectedOptionID))[0].name

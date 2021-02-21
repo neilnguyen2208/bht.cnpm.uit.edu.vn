@@ -19,10 +19,10 @@ import Editor from 'components/common/CustomCKE/CKEditor.js';
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 
-import liked_btn from 'assets/images/liked_btn.png'
-import unliked_btn from 'assets/images/unliked_btn.png'
-import full_blue_bookmark_btn from 'assets/images/full_blue_bookmark_btn.png'
-import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
+import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
+import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
+import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x24.png'
+import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //utils
 import { ClickAwayListener } from '@material-ui/core';

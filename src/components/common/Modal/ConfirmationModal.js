@@ -1,8 +1,8 @@
 import React from "react";
 import './Modal.scss'
 import 'components/styles/Button.scss'
-import red_delete_icon from 'assets/images/red_delete_icon.png'
-import confirmation_icon from 'assets/images/confirmation_management_icon.png'
+import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
+import confirmation_icon from 'assets/icons/300x300/confirmation_icon.png'
 import { closeModal } from "redux/actions/modalAction";
 
 import { connect } from "react-redux";

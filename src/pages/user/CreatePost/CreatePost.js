@@ -18,8 +18,8 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 
-import unliked_btn from 'assets/images/unliked_btn.png'
-import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
+import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
+import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //utils
 import { ClickAwayListener } from '@material-ui/core';

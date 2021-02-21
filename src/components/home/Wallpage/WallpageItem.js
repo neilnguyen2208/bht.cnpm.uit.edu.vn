@@ -1,11 +1,11 @@
 import React from 'react';
 import './Wallpage.scss'
 
-import gray_btn_element from 'assets/images/g_btn_element.png'
-import liked_btn from 'assets/images/liked_btn.png'
-import unliked_btn from 'assets/images/unliked_btn.png'
-import full_blue_bookmark_btn from 'assets/images/full_blue_bookmark_btn.png'
-import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
+import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
+import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
+import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
+import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x24.png'
+import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 
 import { Link } from 'react-router-dom'

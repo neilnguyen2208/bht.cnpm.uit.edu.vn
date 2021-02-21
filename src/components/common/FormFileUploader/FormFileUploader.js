@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import upload_icon from 'assets/images/b_nb_upload_icon_64x64.png'
+import upload_icon from 'assets/icons/64x64/b_nb_upload_icon_64x64.png'
 import 'components/styles/Form.scss'
 //Set text props for this component
 class FormFileUploader extends Component {

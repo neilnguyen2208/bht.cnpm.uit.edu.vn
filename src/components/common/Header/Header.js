@@ -10,11 +10,11 @@ import "./Header.scss";
 import "components/styles/Button.scss";
 
 //resource
-import red_delete_icon from 'assets/images/red_delete_icon.png';
-import search_icon from 'assets/images/search_icon.png';
+import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png';
+import search_icon from 'assets/icons/24x24/search_icon_24x24.png';
 import logo from 'assets/images/logo.png';
-import upload_icon from 'assets/images/icon_upload.png';
-import write_icon from 'assets/images/icon_write.png';
+import upload_icon from 'assets/icons/48x48/blue_upload_icon_48x48.png';
+import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
 
 //services
 import { getQuickSearchResult } from 'redux/services/commonServices';

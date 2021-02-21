@@ -3,14 +3,14 @@ import React, { Component } from 'react'
 import { NavLink, Link } from "react-router-dom";
 
 // import resource image, icon
-import dropdown_btn from 'assets/images/dropdown_icon.png'
-import gray_write_icon from 'assets/images/gray_write_icon.png'
-import gray_upload_icon from 'assets/images/gray_upload_icon.png'
-import content_management_icon from 'assets/images/content_management_icon.png'
-import user_management_icon from 'assets/images/user_management_icon.png'
-import activity_management_icon from 'assets/images/activity_management_icon.png'
-import user_role_management_icon from 'assets/images/user_role_management_icon.png'
-import statistic_management_icon from 'assets/images/statistic_management_icon.png'
+import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
+import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
+import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
+import content_management_icon from 'assets/icons/24x24/content_management_icon_24x24.png'
+import user_management_icon from 'assets/icons/24x24/user_management_icon_24x24.png'
+import activity_management_icon from 'assets/icons/24x24/account_management_icon_24x24.png'
+import user_role_management_icon from 'assets/icons/24x24/user_role_management_icon_24x24.png'
+import statistic_management_icon from 'assets/icons/24x24/statistic_management_icon_24x24.png'
 
 //import scss
 import 'layouts/LeftSidebarLayout.scss'

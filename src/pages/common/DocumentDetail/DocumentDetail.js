@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import 'components/styles/Metadata.scss'
-import gray_btn_element from 'assets/images/g_btn_element.png'
+import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
 
 import { isGrantedPermissions } from "utils/permissionUtils"
 
@@ -11,11 +11,11 @@ import { connect } from "react-redux";
 import 'components/styles/DocPostDetail.scss'
 import PDFViewer from 'pdf-viewer-reactjs'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import liked_btn from 'assets/images/liked_btn.png'
-import unliked_btn from 'assets/images/unliked_btn.png'
-import dislike_btn from 'assets/images/dislike_btn.png'
-import undislike_btn from 'assets/images/undislike_btn.png'
-import download_btn from 'assets/images/gray_download_icon.png'
+import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
+import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
+import dislike_btn from 'assets/icons/24x24/disliked_icon_24x24.png'
+import undislike_btn from 'assets/icons/24x24/undisliked_icon_24x24.png'
+import download_btn from 'assets/icons/24x24/gray_download_icon_24x24.png'
 
 //import for pdf viewer:
 

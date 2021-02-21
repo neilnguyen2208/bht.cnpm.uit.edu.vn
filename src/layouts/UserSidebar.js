@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 
 // import resource image, icon
-import dropdown_btn from 'assets/images/dropdown_icon.png'
-import gray_write_icon from 'assets/images/gray_write_icon.png'
-import gray_upload_icon from 'assets/images/gray_upload_icon.png'
-import account_management_icon from 'assets/images/account_management_icon.png'
+import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
+import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
+import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
+import account_management_icon from 'assets/icons/24x24/account_management_icon_24x24.png'
 // import gray_nb_upload_icon from 'assets/images/gray_nb_upload_icon.png'
-import gray_nb_write_icon from 'assets/images/gray_nb_write_icon.png'
+import gray_nb_write_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 
 //import pages
 

@@ -7,10 +7,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { approveAPost } from 'redux/services/postServices'
 //resources
-import gray_btn_element from 'assets/images/g_btn_element.png'
+import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
-import edit_icon from 'assets/images/gray_nb_write_icon.png'
-import report_icon from 'assets/images/report_icon.png'
+import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
+import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteAPost, editAPost } from 'redux/services/postServices'
 // import 'components/styles/Metadata.scss'
 import 'components/styles/Metadata.scss'
@@ -45,7 +45,9 @@ class PostSummary extends Component {
   }
 
   onPopupMenuItemClick = (selectedItem) => {
-    console.log(selectedItem);
+    if (selectedItem.value === "DELETE_POST") {
+      this.props.deleteAPost(this.props.id);
+    }
   }
 
   render() {

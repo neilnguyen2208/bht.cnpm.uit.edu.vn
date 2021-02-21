@@ -3,13 +3,13 @@
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import Modal from 'components/common/Modal/AlertModal'
-import gray_upload_icon from 'assets/images/gray_upload_icon.png'
-import gray_write_icon from 'assets/images/gray_write_icon.png'
+import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
+import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 
 import './AccountInformation.scss'
 import 'components/styles/Form.scss'
-import dropdown_btn from 'assets/images/dropdown_icon.png'
-import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
+import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
+
 import UpdatePassword from './UpdatePassword'
 
 //import for Redux
@@ -210,7 +210,7 @@ A
             dropdown_container.style.display = "block";
             parent_menu_item.style.paddingLeft = "10px";
             show_text.style.color = "white";
-            dropdown_element.src = white_dropdown_btn;
+            
         }
 
         this.isChangeRoleDropdownComboboxOpen = true;

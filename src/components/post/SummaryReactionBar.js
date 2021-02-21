@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
 
 //resources
-import liked_icon from 'assets/images/liked_icon.png'
-import unliked_icon from 'assets/images/unliked_icon.png'
-import full_blue_bookmark_btn from 'assets/images/full_blue_bookmark_btn.png'
-import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
+import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
+import unliked_icon from 'assets/icons/24x24/unliked_icon_24x24.png'
+import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x24.png'
+import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //styles
 import 'components/styles/ReactionBar.scss'

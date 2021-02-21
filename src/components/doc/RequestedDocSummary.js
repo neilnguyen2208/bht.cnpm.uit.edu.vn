@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import 'components/styles/Metadata.scss'
 import 'components/styles/Button.scss'
 import Modal from 'components/common/Modal/AlertModal'
-import gray_btn_element from 'assets/images/g_btn_element.png'
+import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
 
 class RequestedDocSummary extends Component {
 

@@ -7,7 +7,7 @@ import { ClickAwayListener } from '@material-ui/core';
 //utils
 //styles
 import "./Header.scss";
-import "components/styles/SimpleButton.scss";
+import "components/styles/Button.scss";
 
 //resource
 import red_delete_icon from 'assets/images/red_delete_icon.png';

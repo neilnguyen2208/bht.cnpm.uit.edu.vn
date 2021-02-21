@@ -1,8 +1,8 @@
 import {
 
-    GET_ALL_NOT_APPROVED_DOCUMENTS_SUCCESS,
-    GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST,
-    GET_ALL_NOT_APPROVED_DOCUMENTS_FAILURE,
+    // GET_ALL_NOT_APPROVED_DOCUMENTS_SUCCESS,
+    // GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST,
+    // GET_ALL_NOT_APPROVED_DOCUMENTS_FAILURE,
 
     POST_APPROVE_A_POST_REQUEST,
     POST_APPROVE_A_POST_SUCCESS,
@@ -29,9 +29,28 @@ import {
     POST_CREATE_POST_REQUEST,
     POST_CREATE_POST_SUCCESS,
     POST_CREATE_POST_FAILURE,
+
     GET_POST_BY_ID_REQUEST,
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
+
+    LIKE_A_POST_REQUEST,
+    UNLIKE_A_POST_REQUEST,
+    LIKE_OR_UNLIKE_A_POST_SUCCESS,
+    LIKE_OR_UNLIKE_A_POST_FAILURE,
+
+    SAVE_A_POST_REQUEST,
+    UNSAVE_A_POST_REQUEST,
+    SAVE_OR_UNSAVE_A_POST_SUCCESS,
+    SAVE_OR_UNSAVE_A_POST_FAILURE,
+
+    DELETE_A_POST_REQUEST,
+    DELETE_A_POST_SUCCESS,
+    DELETE_A_POST_FAILURE,
+
+    EDIT_A_POST_REQUEST,
+    EDIT_A_POST_SUCCESS,
+    EDIT_A_POST_FAILURE
 
 } from "../constants.js"
 
@@ -77,9 +96,6 @@ export function post_ApproveAPostFailure(notification) {
         payload: notification
     }
 }
-
-
-
 
 //my posts
 export function get_MyPostsRequest() {
@@ -128,7 +144,6 @@ export function get_PostByIDFailure(error) {
     return { type: GET_POST_BY_ID_FAILURE, error: error }
 }
 
-
 //post search result
 export function get_PostSearchResultRequest() {
     return {
@@ -146,5 +161,102 @@ export function get_PostSearchResultFailure(error) {
     return {
         type: GET_POST_SEARCH_RESULT_FAILURE,
         payload: error
+    }
+}
+
+
+//post search result
+export function post_LikeAPostRequest(data) {
+    return {
+        type: LIKE_A_POST_REQUEST,
+        payload: data
+    }
+}
+
+export function delete_UnLikeAPostRequest(data) {
+    return {
+        type: UNLIKE_A_POST_REQUEST,
+        payload: data
+    }
+}
+
+export function likeOrUnLikeAPostSuccess(data) {
+    return {
+        type: LIKE_OR_UNLIKE_A_POST_SUCCESS,
+        payload: data
+    }
+}
+
+export function likeOrUnLikeAPostFailure(data) {
+    return {
+        type: LIKE_OR_UNLIKE_A_POST_FAILURE,
+        payload: data
+    }
+}
+
+//post search result, phan dung toi id sau nay moi lam, gio chua lam ki
+export function post_SaveAPostRequest(data) {
+    return {
+        type: SAVE_A_POST_REQUEST,
+        payload: data
+    }
+}
+
+export function delete_UnSaveAPostRequest(data) {
+    return {
+        type: UNSAVE_A_POST_REQUEST,
+        payload: data
+    }
+}
+
+export function saveOrUnSaveAPostSuccess(data) {
+    return {
+        type: SAVE_OR_UNSAVE_A_POST_SUCCESS,
+        payload: data
+    }
+}
+
+export function saveOrUnSaveAPostFailure() {
+    return {
+        type: SAVE_OR_UNSAVE_A_POST_FAILURE
+    }
+}
+
+export function delete_APostRequest(data) {
+    return {
+        type: DELETE_A_POST_REQUEST,
+        payload: data
+    }
+}
+
+export function delete_APostSuccess(data) {
+    return {
+        type: DELETE_A_POST_SUCCESS,
+        payload: data
+    }
+}
+
+export function delete_APostFailure() {
+    return {
+        type: DELETE_A_POST_FAILURE
+    }
+}
+
+export function post_EditAPostRequest() {
+    return {
+        type: EDIT_A_POST_REQUEST
+    }
+}
+
+export function post_EditAPostSuccess(data) {
+    return {
+        type: EDIT_A_POST_SUCCESS,
+        payload: data
+    }
+}
+
+export function post_EditAPostFailure() {
+    return {
+        type: EDIT_A_POST_FAILURE
     }
 }

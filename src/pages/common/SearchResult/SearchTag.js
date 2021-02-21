@@ -9,7 +9,7 @@ import { getSearchParamByName } from 'utils/urlUtils';
 import { getTagSearchResult } from 'redux/services/tagServices'
 import Tag from "components/common/Tag/Tag"
 import Loader from "components/common/Loader/Loader";
-import 'components/styles/SimpleLabel.scss';
+import 'components/styles/Label.scss';
 import SearchHorizontalMenubar from "pages/common/SearchResult/SearchHorizontalMenubar"
 
 class SearchTag extends Component {

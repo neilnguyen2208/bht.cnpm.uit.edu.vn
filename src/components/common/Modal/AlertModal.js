@@ -1,6 +1,6 @@
 import React from "react";
 import './Modal.scss'
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Button.scss'
 import red_delete_icon from 'assets/images/red_delete_icon.png'
 import success_management_icon from 'assets/images/success_management_icon.png'
 import fail_management_icon from 'assets/images/fail_management_icon.png'

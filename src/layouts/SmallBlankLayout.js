@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 //import scss
 import 'layouts/LeftSidebarLayout.scss'
-import 'components/styles/SimpleLabel.scss'
+import 'components/styles/Label.scss'
 
 //import components
 

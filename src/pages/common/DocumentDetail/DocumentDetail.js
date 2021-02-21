@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import 'components/styles/DocPostSummary.scss'
+import 'components/styles/Metadata.scss'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 
 import { isGrantedPermissions } from "utils/permissionUtils"
@@ -134,12 +134,7 @@ class DocumentDetail extends Component {
                                 <div className="normal-category">
                                     {this.category}
                                 </div>
-                                <img alt="*" className="metadata-icon" src={gray_btn_element} />
-                                <div className="DocPost_Metadata_Text">
-                                    Môn học: &nbsp;
-                                            {this.subject}
-                                </div>
-
+                               
                             </div>
 
                             <div className="user-infor-container">

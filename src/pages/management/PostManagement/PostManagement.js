@@ -2,10 +2,11 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import PostSummary from 'components/post/PostSummary';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
+import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
+import PostSummaryMetadata from 'components/post/SummaryMetadata'
 //import for redux
 import { getMyPostsList } from "redux/services/postServices";
 import { getPostCategories } from "redux/services/postCategoryServices";
@@ -14,9 +15,10 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
+import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
 import { NavLink } from 'react-router-dom'
 import Loader from 'components/common/Loader/Loader'
+
 
 class PostManagement extends Component {
     constructor(props) {
@@ -71,26 +73,30 @@ class PostManagement extends Component {
 
     render() {
         if (!this.props.isListLoading) {
-            this.postsList = this.props.postsList.map((postItem) => (
-                <PostSummary
-                    type={itemType.approving}
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    category={postItem.categoryName}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    likedStatus={postItem.likedStatus}
-                    savedStatus={postItem.savedStatus}
-                    readingTime={postItem.readingTime}
-                    likes={postItem.likeCount}
-                    comments={postItem.commentCount}
-                    approveStatus={postItem.approveStatus}
-                ></PostSummary >)
+            this.postsList = this.props.postsList.map((postItem) => {
+                return <div className="item-container">
+                   <PostSummaryMetadata
+                        type={postItem.type}
+                        id={postItem.id}
+                        authorName={postItem.authorName}
+                        authorID={postItem.authorID}
+                        publishDtm={postItem.publishDtm}
+                        categoryName={postItem.categoryName}
+                        categoryID={postItem.categoryID}
+                        title={postItem.title}
+                        summary={postItem.summary}
+                        imageURL={postItem.imageURL}
+                        readingTime={postItem.readingTime}
+                        approveState={postItem.postState} />
+                    <PostSummaryReactionBar
+                        id={postItem.id}
+                        likes={postItem.likeCount}
+                        comments={postItem.commentCount}
+                        likeStatus={postItem.likeStatus}
+                        savedStatus={postItem.savedStatus}
+                    />
+                </div >
+            }
             )
         }
 
@@ -113,7 +119,7 @@ class PostManagement extends Component {
                             </NavLink>
                         </div>
                         <div className="two-element-filter-container">
-                            <div className = "d-flex">
+                            <div className="d-flex">
                                 <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox

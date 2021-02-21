@@ -42,6 +42,7 @@ import DocumentManagement from 'pages/management/DocumentManagement/DocumentMana
 import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement'
 import ModalManager from 'components/common/Modal/ModalManager'
 import MyNotification from 'pages/user/MyActivities/MyActivities'
+import Loader_T from 'components/common/Loader/Loader_T'
 
 const App = () => {
     return (
@@ -106,6 +107,9 @@ const App = () => {
                     <Route exact path="/admin/user-management/:id" component={AdminLayout} />
                     <Route exact path="/admin/statistic" component={Statistic} />
                     <Route exact path="/admin/courses-management" component={CoursesManagement} />
+
+                    <Route exact path="/demo" component={Loader_T} />
+
                 </Switch>
                 <div className="App"></div>
                 <Footer />

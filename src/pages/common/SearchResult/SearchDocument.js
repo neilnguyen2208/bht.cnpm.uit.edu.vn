@@ -78,7 +78,7 @@ class SearchDocument extends Component {
                     title={documentItem.title}
                     summary={documentItem.summary}
                     imageURL={documentItem.imageURL}
-                    likedStatus={documentItem.likedStatus}
+                    likeStatus={documentItem.likeStatus}
                     savedStatus={documentItem.savedStatus}
                     readingTime={documentItem.readingTime}
                     likes={documentItem.likes}

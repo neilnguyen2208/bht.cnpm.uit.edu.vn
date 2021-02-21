@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import 'components/styles/DocPostSummary.scss'
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Metadata.scss'
+import 'components/styles/Button.scss'
 import Modal from 'components/common/Modal/AlertModal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 
@@ -34,7 +34,6 @@ class RequestedDocSummary extends Component {
         }
     }
 
-
     componentDidMount() {
 
     }
@@ -44,12 +43,10 @@ class RequestedDocSummary extends Component {
     }
 
     render() {
-
         return (
-
             <div className="item-container" >
                 <div className="item-main-layout">
-                    <div className="item-normal-metadata-container">
+                    <div className="metadata">
                         <div className="author-linkauthor-link" onClick={() => this.navigateToAuthorPersonalPage()}>
                             {this.authorName}
                         </div>
@@ -65,11 +62,11 @@ class RequestedDocSummary extends Component {
                         </div>
                     </div>
 
-                    <div className="item-title">
+                    <div className="title">
                         {this.props.title}
                     </div>
 
-                    <div className="item-summary">
+                    <div className="summary-text">
                         {this.props.content}
                     </div>
 

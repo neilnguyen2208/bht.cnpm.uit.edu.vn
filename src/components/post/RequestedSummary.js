@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import 'components/styles/DocPostSummary.scss'
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Metadata.scss'
+import 'components/styles/Button.scss'
 import Modal from 'components/common/Modal/AlertModal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
 
@@ -9,31 +9,11 @@ class RequestedPostSummary extends Component {
 
     constructor(props) {
         super(props);
-
-        this.id = this.props.id;
-        this.authorName = this.props.authorName;
-        this.authorID = this.props.authorID;
-        this.requestedDate = this.props.requestedDate;
-        this.requestedTime = this.props.requestedTime;
-        this.requestedCategory = this.props.requestedCategory;
-        this.requestedCategoryID = this.props.requestedCategoryID;
-        this.semester = this.props.semester;
-        this.year = this.props.year;
-        this.subject = this.props.subject;
-        this.title = this.props.title;
-        this.content = this.props.content;
-        this.image = this.props.image;
-        this.tags = this.props.tags;
-        this.viewCount = this.props.viewCount;
-        this.downCount = this.props.downCount;
-
         this.isRejectRequestedPopupOpen = false;
-
         this.state = {
             // isRejectRequestedPopupOpen: false,
         }
     }
-
 
     componentDidMount() {
 
@@ -49,7 +29,7 @@ class RequestedPostSummary extends Component {
 
             <div className="item-container" >
                 <div className="item-main-layout">
-                    <div className="item-normal-metadata-container">
+                    <div className="metadata">
                         <div className="author-linkauthor-link" onClick={() => this.navigateToAuthorPersonalPage()}>
                             {this.authorName}
                         </div>
@@ -65,11 +45,11 @@ class RequestedPostSummary extends Component {
                         </div>
                     </div>
 
-                    <div className="item-title">
+                    <div className="title">
                         {this.props.title}
                     </div>
 
-                    <div className="item-summary">
+                    <div className="summary-text">
                         {this.props.content}
                     </div>
 

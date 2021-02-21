@@ -11,14 +11,9 @@ import 'layouts/Layout.scss'
 import { itemType } from 'constants.js'
 import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
 //services
-import { getPostsList } from "redux/services/postServices"
-import { getPostCategories } from "redux/services/postCategoryServices"
-
 //components
 import ComboBox from 'components/common/Combobox/Combobox';
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import PostSummary from 'components/post/PostSummary'
-import Paginator from 'components/common/Paginator/ServerPaginator'
 import Loader from 'components/common/Loader/Loader'
 
 class Artical extends Component {
@@ -37,8 +32,6 @@ class Artical extends Component {
 
         let artical;
         if (this.props.artical) {
-
-
 
         }
         return (

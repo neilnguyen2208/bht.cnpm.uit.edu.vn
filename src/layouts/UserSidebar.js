@@ -14,7 +14,7 @@ import gray_nb_write_icon from 'assets/images/gray_nb_write_icon.png'
 
 //import scss
 import 'layouts/LeftSidebarLayout.scss'
-import 'components/styles/SimpleLabel.scss'
+import 'components/styles/Label.scss'
 import 'layouts/Layout.scss'
 
 //import for Redux

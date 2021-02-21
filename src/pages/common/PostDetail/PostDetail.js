@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import 'components/styles/DocPostSummary.scss'
+import 'components/styles/Metadata.scss'
 import 'components/styles/DocPostDetail.scss'
 import Modal from 'components/common/Modal/AlertModal'
 import gray_btn_element from 'assets/images/g_btn_element.png'
@@ -9,7 +9,7 @@ import { getPostByID } from "redux/services/postServices"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Metadata from "components/common/Metadata/Metadata"
+import Metadata from "components/post/DetailMetadata"
 import Tag from 'components/common/Tag/Tag'
 import liked_btn from 'assets/images/liked_btn.png'
 import unliked_btn from 'assets/images/unliked_btn.png'
@@ -44,7 +44,7 @@ class PostDetail extends Component {
         let tmpLike = this.state.isLiked;
 
         if (tmpLike === 0)
-            if (this.props.likedStatus) tmpLike = 1;
+            if (this.props.likeStatus) tmpLike = 1;
             else tmpLike = -1;
 
         tmpLike = - tmpLike;
@@ -78,7 +78,7 @@ class PostDetail extends Component {
         let saveBtn = <></>;
 
         //render likeBtn
-        if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likedStatus)) {
+        if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likeStatus)) {
             likeBtn = <img className="like-btn" alt="like" src={liked_btn} onClick={this.toggleLikeImage}></img>
         }
         else {
@@ -129,7 +129,7 @@ class PostDetail extends Component {
                                         <div className="save-text-container" onClick={this.toggleSaveImage}>
                                             <div>{saveBtn}</div>
                                         </div>
-                                        <div className="post-comment-count-container">
+                                        <div className="comment-count-container">
                                             Bình luận
                                              <div style={{ paddingLeft: "5px" }}>
                                                 {this.props.currentPost.commentCount}

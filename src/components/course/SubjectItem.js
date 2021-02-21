@@ -7,8 +7,7 @@ import blueSaveIcon from 'assets/icons/24x24/bfbookmark_icon_24x24.png'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 
 //styles
-import 'components/styles/DocPostSummary.scss'
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Button.scss'
 import './SubjectItem.scss'
 
 //components

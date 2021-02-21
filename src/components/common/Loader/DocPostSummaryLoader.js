@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import 'components/styles/DocPostSummary.scss';
+import 'components/styles/Metadata.scss';
 import './Loader.scss';
 
 export function DocPostSummaryLoader() {
   return (
     <div className="item-container" >
-      <div className="item-normal-metadata-container" >
+      <div className="metadata" >
         <div className="d-flex">
           <div className="d-flex">
             <div className="timeline-item d-flex">
@@ -23,7 +23,7 @@ export function DocPostSummaryLoader() {
 
       {/* title */}
       <div className="">
-        <div className="item-title">
+        <div className="title">
           <div className="timeline-item d-flex">
             <div className="animated-background" style={{ width: "120px", height: "20px" }}></div>
           </div>
@@ -37,12 +37,12 @@ export function DocPostSummaryLoader() {
           </div>
 
           <div className="d-flex" >
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+            <div className="light-black-label" style={{ marginLeft: "2px" }}>
               <div className="timeline-item d-flex">
                 <div className="animated-background" style={{ width: "8px", height: "2px" }}></div>
               </div>
             </div>
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+            <div className="light-black-label" style={{ marginLeft: "2px" }}>
               <div className="timeline-item d-flex">
                 <div className="animated-background" style={{ width: "120px", height: "20px" }}></div>
               </div>
@@ -51,13 +51,13 @@ export function DocPostSummaryLoader() {
         </div>
       </div>
 
-      <div className="item-summary">
+      <div className="summary-text">
         <div className="timeline-item d-flex">
           <div className="animated-background" style={{ width: "100%", height: "30px" }}></div>
         </div>
       </div>
 
-      <div className="item-reaction-bar">
+      <div className="reaction-bar">
         <div className="d-flex mg-top-5px">
           <div className="d-flex">
             {/* <div> {likeBtn}</div>
@@ -69,7 +69,7 @@ export function DocPostSummaryLoader() {
               {/* <div>{saveBtn}</div>
                   {this.isSaved ? "Lưu" : "Huỷ"} */}
             </div>
-            <div className="post-comment-count-container">
+            <div className="comment-count-container">
               {/* Bình luận */}
               <div style={{ paddingLeft: "5px" }}>
                 {/* {this.props.comments} */}

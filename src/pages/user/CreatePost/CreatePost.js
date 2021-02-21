@@ -24,9 +24,9 @@ import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
 //utils
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import { today } from 'utils/timeUtils'
+import { today } from 'utils/miscUtils'
 import store from 'redux/store/index'
-import Metadata from 'components/common/Metadata/Metadata'
+import Metadata from 'components/post/DetailMetadata'
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 
@@ -141,7 +141,7 @@ class CreatePost extends Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            this.props.postCreatePost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary });
+            this.props.postCreatePost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary + "..."});
         }
     }
 
@@ -425,7 +425,7 @@ class CreatePost extends Component {
                                 <div className="save-text-container" onClick={this.toggleSaveImage}>
                                     <div>{saveBtn}</div>
                                 </div>
-                                <div className="post-comment-count-container">
+                                <div className="comment-count-container">
                                     Bình luận
                                 <div style={{ paddingLeft: "5px" }}>
                                         {0}

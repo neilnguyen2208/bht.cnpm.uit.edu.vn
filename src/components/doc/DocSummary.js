@@ -11,8 +11,8 @@ import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import { itemType } from 'constants.js'
 
 //styles
-import 'components/styles/DocPostSummary.scss'
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Metadata.scss'
+import 'components/styles/Button.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
@@ -104,31 +104,31 @@ class DocSummary extends Component {
     if (this.props.approveState === "PENDING_APPROVAL")
       approveLabel =
         <div className="d-flex" >
-          <div className="metadata-light-black-label"> - </div>
+          <div className="light-black-label"> - </div>
           <div className="red-border-label">PENDING</div>
         </div >
     else if (this.props.approveState === "PENDING_FIX")
       approveLabel =
         <div className="d-flex">
-          <div className="metadata-light-black-label"> - </div>
+          <div className="light-black-label"> - </div>
           <div className="blue-border-label">PENDING</div>
         </div>
     else if (this.props.approveState === "REJECTED")
       approveLabel =
         <div className="d-flex">
-          <div className="metadata-light-black-label"> - </div>
+          <div className="light-black-label"> - </div>
           <div className="red-border-label">REJECTED</div>
         </div>
     else if (this.props.approveState === "APPROVED")
       approveLabel =
         <div className="d-flex">
-          <div className="metadata-light-black-label"> - </div>
+          <div className="light-black-label"> - </div>
           <div className="blue-border-label">APPROVED</div>
         </div>
 
     return (
       <div className="item-container" >
-        <div className="item-normal-metadata-container" >
+        <div className="metadata" >
           <div className="d-flex">
 
             <div className="d-flex">
@@ -138,7 +138,7 @@ class DocSummary extends Component {
               </div>
             </div>
 
-            <div className="metadata-light-black-label">bởi</div>
+            <div className="light-black-label">bởi</div>
             <div className="link-label" onClick={() => this.navigateToAuthorPersonalPage()}>
               {this.props.authorName}
             </div>
@@ -155,19 +155,17 @@ class DocSummary extends Component {
           }
 
         </div>
-        <div className="item-title">
+        <div className="title">
           {this.props.title}
         </div>
         <div className="d-flex" style={{ marginTop: "-8px" }}>
           <div className="d-flex" >
-            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+             <div className="metadata-label" style={{ marginLeft: "2px" }}>
               {this.props.publishDtm.substring(0, 10)}
             </div>
           </div>
           <div className="d-flex" >
-            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+             <div className="metadata-label" style={{ marginLeft: "2px" }}>
               lượt xem
               <div style={{ marginLeft: "5px" }}>
                 {this.props.views}
@@ -177,11 +175,11 @@ class DocSummary extends Component {
 
         </div>
 
-        <div className="item-summary">
+        <div className="summary-text">
           {this.props.description}
         </div>
 
-        <div className="item-reaction-bar" style={{ right: "5px" }}>
+        <div className="reaction-bar" style={{ right: "5px" }}>
           <div className="d-flex">
             <div className="like-dislike-bar">
               {/* 2 button */}

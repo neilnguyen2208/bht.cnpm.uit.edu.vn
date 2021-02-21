@@ -8,8 +8,8 @@ import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import { itemType } from 'constants.js'
 
 //styles
-import 'components/styles/DocPostSummary.scss'
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Metadata.scss'
+import 'components/styles/Button.scss'
 import './HomeItem.scss'
 
 //components
@@ -70,7 +70,7 @@ class CourseSummaryItem extends Component {
                 {this.props.categoryName}
               </div>
             </div>
-            <div className="metadata-light-black-label">bởi</div>
+            <div className="light-black-label">bởi</div>
             <Link className="link-label" to={/user/}>
               {this.props.authorName}
             </Link>
@@ -85,15 +85,13 @@ class CourseSummaryItem extends Component {
 
         <div className="metadata-2 j-c-space-between" >
           <div className="d-flex" >
-            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+             <div className="metadata-label" style={{ marginLeft: "2px" }}>
               {this.props.publishDtm.substring(0, 10)}
             </div>
           </div>
 
           <div className="d-flex"  >
-            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+             <div className="metadata-label" style={{ marginLeft: "2px" }}>
               Môn học:   {this.props.docSubject}
             </div>
           </div>

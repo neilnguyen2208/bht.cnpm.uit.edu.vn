@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import PostSummary from 'components/post/PostSummary';
 import { itemType, approveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
@@ -16,6 +15,8 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import UserSidebar from 'layouts/UserSidebar'
+import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
+import PostSummaryMetadata from 'components/post/SummaryMetadata'
 
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
 class MyPostsList extends Component {
@@ -117,27 +118,33 @@ class MyPostsList extends Component {
         </div>
 
         if (!this.props.isListLoading) {
-            this.myPostsList = this.props.myPostsList.map((postItem) => (
-                <PostSummary
-                    type={itemType.mySelf}
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    category={postItem.categoryName}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    likedStatus={postItem.likedStatus}
-                    savedStatus={postItem.savedStatus}
-                    readingTime={postItem.readingTime}
-                    likes={postItem.likeCount}
-                    comments={postItem.commentCount}
-                    approveState={postItem.postState}
-                ></PostSummary >)
-            )
+            this.myPostsList = this.props.myPostsList.map((item) => {
+                return <div className="item-container">
+                    <PostSummaryMetadata
+                        type={itemType.mySelf}
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        publishDtm={item.publishDtm}
+                        categoryName={item.categoryName}
+                        categoryID={item.categoryID}
+                        title={item.title}
+                        summary={item.summary}
+                        imageURL={item.imageURL}
+                        readingTime={item.readingTime}
+                        approveState={item.postState} 
+                        popUpMenuPrefix = "mppu"   //stand for my post popup 
+                        />
+                    <PostSummaryReactionBar
+                        title={item.title}
+                        id={item.id}
+                        likeCount={item.likeCount}
+                        commentCount={item.commentCount}
+                        likedStatus={item.likeStatus}
+                        savedStatus={item.savedStatus}
+                    />
+                </div >
+            })
         }
         else
             this.myPostsList = <div>
@@ -201,7 +208,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPostsList, getPostCategoriesHaveAll
+    getMyPostsList, getPostCategoriesHaveAll,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyPostsList));

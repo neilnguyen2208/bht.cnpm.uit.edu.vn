@@ -12,7 +12,6 @@ import { ClickAwayListener } from '@material-ui/core'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { isContainSpecialCharacter } from 'utils/stringUtils'
 
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -202,26 +201,7 @@ class ActivityManagement extends Component {
 
     //#region validator for display name input
     handlerChangeStateOfSubmitButton = () => {
-        this.canClickSaveInformation = true;
-        this.isDisplayNameEmpty = false;
-        this.isDisplayNameContainSpecialCharacters = false;
-
-        if ((this.updateInformation_DTO.displayname === ""
-            || this.updateInformation_DTO.displayname === null)) {
-            this.canClickSaveInformation = false;
-            this.isDisplayNameEmpty = true;
-            this.setState({});
-            return;
-        }
-
-        if (isContainSpecialCharacter(this.updateInformation_DTO.displayname)) {
-            this.canClickSaveInformation = false;
-            this.isDisplayNameContainSpecialCharacters = true;
-            this.setState({});
-            return;
-        }
-
-        this.setState({});
+     
     }
 
     handlerChangeUserDisplay = (e) => {

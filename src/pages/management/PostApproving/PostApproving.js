@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import PostSummary from 'components/post/PostSummary';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import { NavLink } from 'react-router-dom'
@@ -72,26 +71,8 @@ class PostApproving extends Component {
     render() {
         if (!this.props.isListLoading) {
             this.postsList = this.props.postsList.map((postItem) => (
-                <PostSummary
-                    type={itemType.approving}
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    category={postItem.categoryName}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    likedStatus={postItem.likedStatus}
-                    savedStatus={postItem.savedStatus}
-                    readingTime={postItem.readingTime}
-                    likes={postItem.likeCount}
-                    comments={postItem.commentCount}
-                    approveStatus={postItem.approveStatus}
-                ></PostSummary >)
-            )
+              <></>
+            ))
         }
 
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
@@ -113,7 +94,7 @@ class PostApproving extends Component {
                             </NavLink>
                         </div>
                         <div className="two-element-filter-container">
-                            <div className = "d-flex">
+                            <div className="d-flex">
                                 <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox
@@ -150,7 +131,7 @@ class PostApproving extends Component {
                     </div>
                 </div >
 
-              
+
 
             </div>
 
@@ -158,7 +139,7 @@ class PostApproving extends Component {
     }
 }
 const mapStateToProps = (state) => {
-   ;
+    ;
     return {
         postsList: state.post.myPosts.data,
         postCategories: state.post_category.categories.data,

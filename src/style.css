@@ -189,13 +189,20 @@ a:hover {
 .text-element-gray,
 .metadata-label {
     padding-left: 10px;
-    width: fit-content;
-    height: fit-content;
     color: var(--black);
     position: relative;
     font-size: 16px;
     height: 20px;
-    line-height: 18px;
+    line-height: 17px;
+    display: flex;
+    justify-content: flex-start;
+    height: 20px;
+    padding-top: 2px;
+    font-family: "BarlowCondensed-Regular";
+    color: var(--light-black);
+    user-select: none;
+    cursor: context-menu;
+    margin-right: 5px;
 }
 
 .text-element-gray::before,
@@ -203,7 +210,7 @@ a:hover {
     content: url('assets/icons/8x8/g_btn_element_8x8.png');
     position: absolute;
     left: 0px;
-    top: -1px;
+    top: 1px;
 }
 
 .icon-24x24 {
@@ -211,8 +218,17 @@ a:hover {
     height: 24px;
 }
 
+/* 
 .title {
     margin-bottom: 0.5rem !important;
+} */
+
+.vertical-line {
+    height: 100%;
+    width: 1px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background-color: var(--gray);
 }
 
 .d-none {

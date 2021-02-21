@@ -8,7 +8,7 @@ import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { uploadADocument } from "redux/services/docServices"
 import "./UploadDocument.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
-import 'components/styles/DocPostSummary.scss'
+import 'components/styles/Metadata.scss'
 import 'components/styles/DocPostDetail.scss'
 
 //components
@@ -27,8 +27,8 @@ import gray_bookmark_btn from 'assets/images/gray_bookmark_btn.png'
 //utils
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import { today } from 'utils/timeUtils'
-import Metadata from 'components/common/Metadata/Metadata'
+import { today } from 'utils/miscUtils'
+import Metadata from 'components/post/DetailMetadata'
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import store from "redux/store/index.js"
@@ -454,7 +454,7 @@ class UploadDocument extends Component {
                                 <div>{saveBtn}</div>
                                 {this.isSaved ? "Lưu" : "Huỷ"}
                             </div>
-                            <div className="post-comment-count-container">
+                            <div className="comment-count-container">
                                 Bình luận
                                 <div style={{ paddingLeft: "5px" }}>
                                     {this.props.comments}

@@ -27,7 +27,7 @@ export default class WallpageItem extends React.Component {
         let tmpLike = this.state.isLiked;
 
         if (tmpLike === 0)
-            if (this.props.likedStatus) tmpLike = 1;
+            if (this.props.likeStatus) tmpLike = 1;
             else tmpLike = -1;
 
         tmpLike = - tmpLike;
@@ -61,7 +61,7 @@ export default class WallpageItem extends React.Component {
         let saveBtn = <></>;
 
         //render likeBtn
-        if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likedStatus)) {
+        if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likeStatus)) {
             likeBtn = <img className="like-btn" alt="like" src={liked_btn} onClick={this.toggleLikeImage}></img>
         }
         else {
@@ -91,7 +91,7 @@ export default class WallpageItem extends React.Component {
 
                 <div>
                     {/* content */}
-                    <div className="item-normal-metadata-container" >
+                    <div className="metadata" >
                         <div className="d-flex">
                             <div className="d-flex">
                                 <div className="prefix-normal-category" />
@@ -99,7 +99,7 @@ export default class WallpageItem extends React.Component {
                                     {this.props.categoryName}
                                 </div>
                             </div>
-                            <div className="metadata-light-black-label">bởi</div>
+                            <div className="light-black-label">bởi</div>
                             <Link className="link-label" to={/user/}>
                                 {this.props.authorName}
                             </Link>
@@ -109,28 +109,25 @@ export default class WallpageItem extends React.Component {
 
                     {/* title */}
                     <Link to={"/posts/" + this.id}>
-                        <div className="item-title">
+                        <div className="title">
                             {this.props.title}
                         </div>
                     </Link>
 
                     <div className="d-flex" style={{ marginTop: "-8px" }}>
                         <div className="d-flex"  >
-                            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-                            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+                            <div className="metadata-label" style={{ marginLeft: "2px" }}>
                                 {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
                             </div>
                         </div>
-
                         <div className="d-flex" >
-                            <img alt="*" className="metadata-icon" src={gray_btn_element} />
-                            <div className="metadata-light-black-label" style={{ marginLeft: "2px" }}>
+                            <div className="metadata-label" style={{ marginLeft: "2px" }}>
                                 {this.props.publishDtm.substring(0, 10)}
                             </div>
                         </div>
                     </div>
 
-                    <div className="item-summary">
+                    <div className="summary-text">
                         {this.props.summary}
                     </div>
                 </div>
@@ -146,7 +143,7 @@ export default class WallpageItem extends React.Component {
                                 <div className="save-text-container" onClick={this.toggleSaveImage}>
                                     <div>{saveBtn}</div>
                                 </div>
-                                <div className="post-comment-count-container">
+                                <div className="comment-count-container">
                                     Bình luận
                                 <div style={{ paddingLeft: "5px" }}>
                                         {this.props.commentCount}

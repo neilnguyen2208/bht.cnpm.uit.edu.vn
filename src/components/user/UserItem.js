@@ -8,8 +8,8 @@ import dropdown_btn from 'assets/images/dropdown_icon.png'
 
 //combobox
 import 'components/common/Combobox/Combobox.scss'
-import 'components/styles/SimpleButton.scss'
-import 'components/styles/SimpleLabel.scss'
+import 'components/styles/Button.scss'
+import 'components/styles/Label.scss'
 
 //modal popup
 import Modal from 'components/common/Modal/AlertModal'

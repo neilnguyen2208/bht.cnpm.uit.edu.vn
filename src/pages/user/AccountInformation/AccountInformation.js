@@ -11,7 +11,6 @@ import 'components/styles/Form.scss'
 import dropdown_btn from 'assets/images/dropdown_icon.png'
 import white_dropdown_btn from 'assets/images/white_dropdown_icon.png'
 import UpdatePassword from './UpdatePassword'
-import { isContainSpecialCharacter } from 'utils/stringUtils'
 
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -279,12 +278,7 @@ A
             return;
         }
 
-        if (isContainSpecialCharacter(this.updateInformation_DTO.displayname)) {
-            this.canClickSaveInformation = false;
-            this.isDisplayNameContainSpecialCharacters = true;
-            this.setState({});
-            return;
-        }
+
 
         this.setState({});
     }

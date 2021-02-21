@@ -14,7 +14,7 @@ import statistic_management_icon from 'assets/images/statistic_management_icon.p
 
 //import scss
 import 'layouts/LeftSidebarLayout.scss'
-import 'components/styles/SimpleLabel.scss'
+import 'components/styles/Label.scss'
 
 //import resource string
 

@@ -20,18 +20,11 @@ export default class PopupMenu extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.selectedItemID) return;
-
-        this.selectedItem = {
-            id: this.props.selectedItemID,
-            name: this.props.items.filter(item => item.id === this.props.selectedItemID)[0].name
-        }
     }
 
     closeMenu = () => {
-        let parent_id = "popup-menu-" + this.props.id;
-
-        let container_id = "popup-menu-dropdown-" + this.props.id;
+        let parent_id = "pm-" + this.props.id;
+        let container_id = "pm-dropdown-" + this.props.id;
 
         let parent_menu_item = document.getElementById(parent_id);
         let dropdown = document.getElementById(container_id);
@@ -59,89 +52,74 @@ export default class PopupMenu extends React.Component {
             popup_menu.style.background = "var(--grayish)";
             dropdown.style.display = "block";
             dropdown.style.left = "-136px";
-
         }
-
         this.setState({ isDropdownOpen: true });
     }
 
-    handleMenuItemClick = (id) => {
-        this.selectedItem = {
-            id: id,
-            name: this.props.items.filter(item => item.id === id)[0].name
-        }
-
+    handleMenuItemClick = (menuItem) => {
         //pass to parent
+
+
+        let { id, value } = menuItem;
         if (this.props.onMenuItemClick)
-            this.props.onMenuItemClick(this.selectedItem);
+            this.props.onMenuItemClick({id, value});
+
         else console.log('error', "Please implement onMenuItemClick() of PopupMenu!");
         this.isAnyValueChanged = true;
-        this.closeAllItem();
+        this.closeMenu();
         this.setState({});
     }
 
     render() {
+        let items = this.props.items.map(menuItem => {
+            return <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
+                id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
+                key={menuItem.id}
+                onClick={() => this.handleMenuItemClick(menuItem)}>
+                <div className='d-flex'>
+                    {menuItem.tip ?
+                        <div className='d-flex'>
+                            {menuItem.icon ? <img className='popup-menu-icon' style={{
+                                height: "27px",
+                                paddingTop: "7px"
+                            }} alt="" src={menuItem.icon} /> : <></>}
+                            < div >
+                                <div className='popup-menu-text'>{menuItem.text}</div>
+                                <div className='popup-menu-tip'>{menuItem.tip}</div>
+                            </div>
+                        </div>
+                        :
+                        <div className='d-flex'>
+                            {menuItem.icon ? <img className='popup-menu-icon' style={{
+                                height: "23px",
+                                paddingTop: "0px",
+                                paddingBottom: "3px"
+                            }} alt="" src={menuItem.icon} /> : <></>}
+                            <div className='popup-menu-text'>{menuItem.text}</div>
+                        </div>
+                    }
+                </div>
 
-        if (this.selectedItem.id === "" && this.props.selectedItemID)
-            this.selectedItem = {
-                id: this.props.selectedItemID,
-                name: this.props.items.filter(item => item.id === this.props.selectedItemID)[0].name
-            }
-
-        let items = this.props.items.map(menu_item =>
-            <div className="popup-menu-item"
-                id={"popup-menu-menu_item-" + this.props.id + "-" + menu_item.id}
-                key={menu_item.id}
-                onClick={() => this.handleMenuItemClick(menu_item.id)}>
-                {menu_item.name}
-            </div>
+            </div >
+        }
         )
 
         return (
-            <div style={{ position: "relative", display: "flex" }} >
+            <div className='d-flex pos-relative' >
                 < ClickAwayListener onClickAway={() => { this.closeMenu() }}>
                     <div>
-                        <div className="popup-menu" id={"popup-menu-" + this.props.id}
-                            onClick={(e) => this.handlePopupMenuClick(e, "popup-menu-" + this.props.id, "popup-menu-dropdown-" + this.props.id, "popup-menu-dropdown-container-" + this.props.id)}>
+                        <div className="popup-menu" id={"pm-" + this.props.id} //pm: popup menu
+                            onClick={(e) => this.handlePopupMenuClick(e, "pm-" + this.props.id, "pm-dropdown-" + this.props.id, "pm-dropdown-container-" + this.props.id)}>
                             <div className="d-flex">
-                                {this.props.placeHolder === "none" ? //neu khong dung placeHolder
-                                    <div>{
-                                        this.props.items.map(item =>
-                                            <div>
-                                                {this.selectedItem.id ?
-                                                    <div>
-                                                        {item.id === this.selectedItem.id //neu da chon roi thi se hien thi cac gia tri duoc chon trong bang cac option
-                                                            ? item.name
-                                                            : ""}
-                                                    </div> : <div>
-                                                        {item.id === this.props.selectedItemID //neu da chon roi thi se hien thi cac gia tri duoc chon trong bang cac option
-                                                            ? item.name
-                                                            : ""}
-                                                    </div>
-                                                }
-                                            </div>
-                                        )
-                                    }
-                                    </div>
-                                    :
-                                    !this.isAnyValueChanged ? //neu dung, khi co thay doi se chuyen thanh selected name
-                                        <div>
-
-                                            {!this.props.selectedItemID && this.props.placeHolder === "none" ? this.props.items[0].name :
-                                                this.props.placeHolder}</div> :
-                                        this.selectedItem.name
-                                }
                             </div>
                         </div>
 
                         {/* dropdown */}
-
                         {this.state.isDropdownOpen ? (
-                            <div className="popup-menu-dropdown" id={"popup-menu-dropdown-" + this.props.id}>
+                            <div className="popup-menu-dropdown" id={"pm-dropdown-" + this.props.id}>
                                 {items}
-                                {/* <div className="mg-bottom-5px" /> */}
                             </div>
-                        ) : <div id={"popup-menu-dropdown-" + this.props.id}></div>}
+                        ) : <div id={"pm-dropdown-" + this.props.id}></div>}
                     </div>
                 </ClickAwayListener >
             </div >

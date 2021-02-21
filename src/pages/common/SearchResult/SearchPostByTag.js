@@ -7,12 +7,13 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
+import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
-import PostSummary from 'components/post/PostSummary'
 import Loader from 'components/common/Loader/Loader'
-import {itemType} from 'constants.js'
+import { itemType } from 'constants.js'
 
+import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
+import PostSummaryMetadata from 'components/post/SummaryMetadata'
 class SearchPostByTag extends Component {
     constructor(props) {
         super(props);
@@ -38,25 +39,28 @@ class SearchPostByTag extends Component {
 
         if (!this.props.isListLoading) {
             this.myPostsList = this.props.myPostsList.map((postItem) => (
-                <PostSummary
-                    type={itemType.normal}
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    category={postItem.categoryName}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    likedStatus={postItem.likedStatus}
-                    savedStatus={postItem.savedStatus}
-                    readingTime={postItem.readingTime}
-                    likes={postItem.likes}
-                    comments={postItem.commentCount}
-                    approveStatus={false}
-                ></PostSummary >)
+                <div className="item-container">
+                   <PostSummaryMetadata
+                        type={postItem.type}
+                        id={postItem.id}
+                        authorName={postItem.authorName}
+                        authorID={postItem.authorID}
+                        publishDtm={postItem.publishDtm}
+                        categoryName={postItem.categoryName}
+                        categoryID={postItem.categoryID}
+                        title={postItem.title}
+                        summary={postItem.summary}
+                        imageURL={postItem.imageURL}
+                        readingTime={postItem.readingTime}
+                        approveState={postItem.postState} />
+                    <PostSummaryReactionBar
+                        id={postItem.id}
+                        likes={postItem.likeCount}
+                        comments={postItem.commentCount}
+                        likeStatus={postItem.likeStatus}
+                        savedStatus={postItem.savedStatus}
+                    />
+                </div >)
             )
         }
         return (
@@ -78,7 +82,7 @@ class SearchPostByTag extends Component {
 }
 
 const mapStateToProps = (state) => {
-   ;
+    ;
     return {
         myPostsList: state.post.myPosts.data,
         postCategories: state.post_category.categories.data,

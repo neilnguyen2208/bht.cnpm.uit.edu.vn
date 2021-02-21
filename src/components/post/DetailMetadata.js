@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 
-import 'components/styles/SimpleButton.scss'
+import 'components/styles/Button.scss'
 //resources
-import './Metadata.scss'
+import 'components/styles/Metadata.scss'
 
 //styles
-import 'components/styles/SimpleLabel.scss'
+import 'components/styles/Label.scss'
 
 //constants
 import { componentType } from 'constants.js'
 
 //components
-class Metadata extends Component {
+class Metadata extends Component { //for detail of post
 
   constructor(props) {
     super(props);

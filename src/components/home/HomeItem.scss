@@ -1,4 +1,4 @@
-@import 'components/common/Metadata/Metadata.scss';
+@import 'components/styles/Metadata.scss';
 
 .home-item {
   position: relative;
@@ -190,26 +190,4 @@
   line-height: 20px;
   color: var(--light-black);
   margin-left: 5px;
-}
-
-.post-like-btn {
-  width: 18px;
-  height: 18px;
-  margin-top: 1px;
-}
-
-.home-item .like-btn-container {
-  width: 40px;
-}
-
-.comment-count-container {
-  display: flex;
-  padding-left: 15px;
-  font-family: "BarlowCondensed-Medium";
-  font-size: 18px;
-  line-height: 20px;
-  color: var(--light-black);
-  width: fit-content;
-  user-select: none;
-  width: 100px;
 }

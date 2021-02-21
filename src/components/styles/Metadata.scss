@@ -1,5 +1,4 @@
 .metadata {
-  margin-top: 5px;
   justify-content: flex-start;
   width: 100%;
   height: fit-content;
@@ -9,17 +8,18 @@
   line-height: 20px;
   color: var(--blue);
   user-select: none;
-  padding: 10px;
+
 }
 
 .metadata .title {
-  padding-top: 0px;
+  padding-bottom: 5px;
   font-family: "RobotoSlab-Regular";
-  font-size: 26px;
-  line-height: 32px;
+  font-size: 24px;
+  line-height: 24px;
   display: flex;
   align-items: center;
   color: var(--black);
+  cursor: pointer;
 }
 
 .metadata .category {
@@ -44,7 +44,7 @@
   height: 20px;
   position: absolute;
   margin-right: 10px;
-  left: 13px;
+  left: 3px;
 }
 
 .metadata .avatar {
@@ -68,4 +68,18 @@
   cursor: pointer;
   font-family: "RobotoSlab-Medium";
   color: var(--blue);
+}
+
+.item-container {
+  position: relative;
+  height: fit-content;
+  margin: auto;
+  padding: 10px;
+  background: white;
+  background-repeat: no-repeat;
+  border: 1px var(--gray) solid;
+  max-width: 1000px;
+  user-select: none;
+  border-bottom: 1px var(--gray) solid;
+  margin-bottom: 10px;
 }

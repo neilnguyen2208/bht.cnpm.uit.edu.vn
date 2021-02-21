@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -17,9 +16,11 @@ import { getPostCategories } from "redux/services/postCategoryServices"
 //components
 import ComboBox from 'components/common/Combobox/Combobox';
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import PostSummary from 'components/post/PostSummary'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import Loader from 'components/common/Loader/Loader'
+
+import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
+import PostSummaryMetadata from 'components/post/SummaryMetadata'
 
 class PostsList extends Component {
     constructor(props) {
@@ -77,27 +78,30 @@ class PostsList extends Component {
 
             this.postsList = this.props.postsList;
 
-            postsList = this.props.postsList.map((postItem) => (
-                <PostSummary
-                    type={itemType.normal}
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    category={postItem.category}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    likedStatus={postItem.likedStatus}
-                    savedStatus={postItem.savedStatus}
-                    readingTime={postItem.readingTime}
-                    likes={3} //
-                    commentCount={4} //
-                    approveStatus={false}
+            postsList = this.props.postsList.map((postItem) =>
+                <div className="item-container">
+                   <PostSummaryMetadata
+                        type={postItem.type}
+                        id={postItem.id}
+                        authorName={postItem.authorName}
+                        authorID={postItem.authorID}
+                        publishDtm={postItem.publishDtm}
+                        categoryName={postItem.categoryName}
+                        categoryID={postItem.categoryID}
+                        title={postItem.title}
+                        summary={postItem.summary}
+                        imageURL={postItem.imageURL}
+                        readingTime={postItem.readingTime}
+                        approveState={postItem.postState} />
+                    <PostSummaryReactionBar
+                        id={postItem.id}
+                        likes={postItem.likeCount}
+                        comments={postItem.commentCount}
+                        likeStatus={postItem.likeStatus}
+                        savedStatus={postItem.savedStatus}
+                    />
+                </div >
 
-                ></PostSummary >)
             )
         }
         return (
@@ -105,8 +109,8 @@ class PostsList extends Component {
                 <Titlebar title="BÀI VIẾT" />
                 <div className="layout-decoration">
                     <div className="mg-top-10px" />
-                    <div className = "mg-bottom-10px j-c-space-between">
-                        <div className = "d-flex">
+                    <div className="mg-bottom-10px j-c-space-between">
+                        <div className="d-flex">
                             <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
                             <div style={{ marginLeft: "5px" }}>
                                 <ComboBox
@@ -117,7 +121,7 @@ class PostsList extends Component {
                                 ></ComboBox></div>
                         </div>
 
-                        <div className = "d-flex">
+                        <div className="d-flex">
                             <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                             <div style={{ marginLeft: "5px" }}>
                                 <ComboBox
@@ -135,7 +139,6 @@ class PostsList extends Component {
                         < Loader /> :
                         <>{postsList}</>
                     }
-
 
                     <Paginator config={{
                         changePage: (pageNumber) => this.onPageChange(pageNumber),

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 //import resource string
 
 //import scss
-import 'components/styles/SimpleLabel.scss'
+import 'components/styles/Label.scss'
 
 //import components
 import PostsList from "pages/common/PostsList/PostsList"

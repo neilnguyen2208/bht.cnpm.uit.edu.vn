@@ -7,13 +7,17 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
+import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
-import PostSummary from 'components/post/PostSummary'
+
 import Loader from 'components/common/Loader/Loader'
 import { itemType } from 'constants.js'
 import { NavLink } from 'react-router-dom'
 import SearchHorizontalMenubar from './SearchHorizontalMenubar'
+
+import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
+import PostSummaryMetadata from 'components/post/SummaryMetadata'
+
 class SearchPost extends Component {
     constructor(props) {
         super(props);
@@ -70,29 +74,37 @@ class SearchPost extends Component {
     render() {
         let postSearchResult = <></>
         if (!this.props.isListLoading) {
-            postSearchResult = this.props.postSearchResult.map((postItem) => (
-                <PostSummary
-                    type={itemType.normal}
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    category={postItem.categoryName}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    readingTime={postItem.readingTime}
-                    approveStatus={false}
-                ></PostSummary >)
-            )
+            postSearchResult = this.props.postSearchResult.map((postItem) => {
+                return < div className="item-container" >
+                   <PostSummaryMetadata
+                        type={postItem.type}
+                        id={postItem.id}
+                        authorName={postItem.authorName}
+                        authorID={postItem.authorID}
+                        publishDtm={postItem.publishDtm}
+                        categoryName={postItem.categoryName}
+                        categoryID={postItem.categoryID}
+                        title={postItem.title}
+                        summary={postItem.summary}
+                        imageURL={postItem.imageURL}
+                        readingTime={postItem.readingTime}
+                        approveState={postItem.postState} />
+                    <PostSummaryReactionBar
+                        id={postItem.id}
+                        likes={postItem.likeCount}
+                        comments={postItem.commentCount}
+                        likeStatus={postItem.likeStatus}
+                        savedStatus={postItem.savedStatus}
+                    />
+                </div >
+
+            })
         }
         else
             postSearchResult = <Loader />
         let combobox = <></>;
         if (!this.props.isCategoryLoading) combobox =
-            <div className = "d-flex">
+            <div className="d-flex">
                 <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                 <div style={{ marginLeft: "5px" }}>
                     <ComboBox
@@ -117,7 +129,7 @@ class SearchPost extends Component {
                                 <div>
                                     <div>
                                         <div className="two-element-filter-container">
-                                            <div className = "d-flex">
+                                            <div className="d-flex">
                                                 <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
                                                 <div style={{ marginLeft: "5px" }}>
                                                     <ComboBox

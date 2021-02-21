@@ -26,8 +26,19 @@ import {
     //search post 
     GET_POST_SEARCH_RESULT_REQUEST,
     GET_POST_SEARCH_RESULT_SUCCESS,
-    GET_POST_SEARCH_RESULT_FAILURE
+    GET_POST_SEARCH_RESULT_FAILURE,
 
+    //like post
+    LIKE_A_POST_REQUEST,
+    UNLIKE_A_POST_REQUEST,
+    LIKE_OR_UNLIKE_A_POST_SUCCESS,
+    LIKE_OR_UNLIKE_A_POST_FAILURE,
+
+
+    SAVE_A_POST_REQUEST,
+    UNSAVE_A_POST_REQUEST,
+    SAVE_OR_UNSAVE_A_POST_SUCCESS,
+    SAVE_OR_UNSAVE_A_POST_FAILURE
 
 } from '../constants.js'
 
@@ -35,6 +46,7 @@ const initialState = {
     currentPost: {
         isLoading: false, data: {}
     },
+
     //search post: use for search post and post list
     postsList: {
         isLoading: false,
@@ -52,12 +64,18 @@ const initialState = {
     //highlight posts list
     highlightPosts: {
         isLoading: false,
-        isLoadDone: false,
         data: []
     },
+
+    postsListByTag: {
+        isLoading: false,
+        data: []
+    },
+
     approvePost: {
         isLoadDone: false
     },
+
 };
 
 function PostReducer(state = initialState, action) {
@@ -111,7 +129,7 @@ function PostReducer(state = initialState, action) {
             };
         case GET_MY_POSTS_SUCCESS:
             {
-                return { ...state, myPosts: { isLoading: false, data: action.payload.postSummaryWithStateDTOs, totalPages: action.payload.totalPages } }
+                return { ...state, myPosts: { isLoading: false, data: action.payload.data, totalPages: action.payload.totalPages } }
             }
         case GET_MY_POSTS_FAILURE:
             {
@@ -134,6 +152,22 @@ function PostReducer(state = initialState, action) {
             {
                 return { ...state, postsList: { isLoading: false, data: [] } }
             }
+
+        //like post
+        case LIKE_A_POST_REQUEST: {
+            return {
+                ...state, likePost: {isLoading: false} //use for all post item
+            }
+        }
+        case UNLIKE_A_POST_REQUEST: {
+            return { ...state, likePost: { isLoading: true } }
+        }
+        case LIKE_OR_UNLIKE_A_POST_SUCCESS: {
+            return { ...state, likePost: { isLoading: false } }
+        }
+        case LIKE_OR_UNLIKE_A_POST_FAILURE: {
+            return { ...state, likePost: { isLoading: false } }
+        }
 
         default:
             return state;

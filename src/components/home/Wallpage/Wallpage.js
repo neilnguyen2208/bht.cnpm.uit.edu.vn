@@ -82,7 +82,7 @@ class Wallpage extends React.Component {
                     title={postItem.title}
                     summary={postItem.summary}
                     imageURL={postItem.imageURL}
-                    likedStatus={postItem.likeStatus}
+                    likeStatus={postItem.likeStatus}
                     savedStatus={postItem.savedStatus}
                     readingTime={postItem.readingTime}
                     likeCount={postItem.likeCount}

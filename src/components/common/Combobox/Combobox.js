@@ -1,7 +1,6 @@
 import React from "react";
 import { ClickAwayListener } from '@material-ui/core';
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png';
-// import white_dropdown_btn from 'assets/images/white_dropdown_icon.png';
 import "./Combobox.scss"
 
 export default class Combobox extends React.Component {
@@ -62,7 +61,7 @@ export default class Combobox extends React.Component {
             this.validate();
     }
 
-    handleComboboxClick = (e, combobox_id, combobox_text_id, dropdown_element_id, container_id) => {
+    handleComboboxClick = (e, dropdown_element_id, container_id) => {
         e.preventDefault();
         let dropdown_element = document.getElementById(dropdown_element_id);
         let dropdown_container = document.getElementById(container_id);
@@ -145,6 +144,10 @@ export default class Combobox extends React.Component {
     //lay form
     getParent = (wrapperCombobox, selector) => {
         while (wrapperCombobox.parentElement) {
+
+            console.log(selector);
+            console.log(wrapperCombobox);
+
             if (wrapperCombobox.parentElement.matches(selector)) {
                 return wrapperCombobox.parentElement;
             }

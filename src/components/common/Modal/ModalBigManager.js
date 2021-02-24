@@ -1,14 +1,11 @@
 import React from "react"
-import AlertModal from './AlertModal';
-import ConfirmationModal from './ConfirmationModal';
-import FormModal from './FormModal'
-import LoaderModal from './LoaderModal'
+
 import EditPostModal from './EditPostModal'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-class ModalManager extends React.Component {
+class ModalBigManager extends React.Component {
     render() {
 
         // props gom co modalType va modalProps
@@ -17,25 +14,15 @@ class ModalManager extends React.Component {
         // voi form thi co title, onSubmitClick va onCancelClick va childrenProps (form ma nguoi dung tu thiet ke)
 
         const { currentModals } = this.props;
-        console.log(currentModals);
         const renderedModals = currentModals.map((modalDescription, index) => {
 
             //create loader for handling api 
-
             const { modalType, modalProps = {} } = modalDescription;
             switch (modalType) {
-                case "alert":
-                    return <AlertModal {...modalProps} key={modalType + index} />;
-                case "confirmation":
-                    return <ConfirmationModal {...modalProps} key={modalType + index} />;
-                case "loader":
-                    return <LoaderModal {...modalProps} key={modalType + index} />
-                case "form":
-                    return <FormModal {...modalProps} key={modalType + index} />
                 case "edit-post":
                     return <EditPostModal {...modalProps} key={modalType + index} />
                 default:
-                    return <FormModal {...modalProps} key={modalType + index} />;
+                    return <></>;
             }
         });
         return <span>{renderedModals}</span>
@@ -44,12 +31,12 @@ class ModalManager extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentModals: state.modal.modal
+        currentModals: state.modal.bigModal
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModalManager));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModalBigManager));
 

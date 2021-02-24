@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './Titlebar.scss'
 
-class Titlebar extends Component {
+class Titlebar extends PureComponent {
     render() {
         return (
-            <div className="h-menu-layout">
-                {/* Menu bar */}
-                <div className="title-bar">
-                    <div className="main-title">{this.props.title}</div>
-                </div>
+            <div className="title-bar">
+                <div className="main-title">{this.props.title}</div>
             </div>
         );
     }

@@ -83,3 +83,21 @@
   border-bottom: 1px var(--gray) solid;
   margin-bottom: 10px;
 }
+
+.image {
+  max-height: 200px;
+  width: fit-content;
+  object-fit: cover;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: "45px";
+  height: "45px";
+  border-radius: "50%";
+  background: "#c4c4c4";
+  margin-top: "2px";
+  object-fit: cover;
+}

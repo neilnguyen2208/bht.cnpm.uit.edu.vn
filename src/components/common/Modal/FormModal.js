@@ -3,13 +3,12 @@ import './Modal.scss'
 import 'components/styles/Button.scss'
 import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
 import { closeModal } from "redux/actions/modalAction";
-
-const actions = { closeModal };
+import store from 'redux/store/index.js'
 
 export default class FormModal extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { isOpen: true }
+       
     }
 
     closeModal = () => {
@@ -18,18 +17,18 @@ export default class FormModal extends React.Component {
 
     onSubmitClick = () => {
         this.props.closeModal();
-        if (this.props.onSubmitClick)
-            this.props.onSubmitClick();
+        if (this.props.onSubmit)
+            this.props.onSubmit();
     }
 
     onCancelClick = () => {
-        if (this.props.onCancelClick)
-            this.props.onCancelClick();
+        if (this.props.onCancel)
+            this.props.onCancel();
     }
 
     render() {
 
-        let { submitText, cancelText } = this.props;
+        let { submitText, cancelText, form } = this.props;
 
         return (
             <div>
@@ -42,7 +41,7 @@ export default class FormModal extends React.Component {
                                 onClick={() => this.closeModal()} />
                         </div>
                         {/* Tam thoi form se nhu the nay, sau nay su dung thi lam tiep */}
-                        {this.props.children}
+                        {this.props.form}
                         <div className="modal-footer">
                             <div className="blue-button" onClick={() => this.onSubmitClick()} >{submitText ? submitText : "Submit"}</div>
                             <div className="red-button" onClick={() => this.onCancelClick()} >{cancelText ? cancelText : "Cancel"}</div>

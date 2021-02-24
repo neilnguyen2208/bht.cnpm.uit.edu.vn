@@ -24,14 +24,20 @@ import {    //highlight posts
     post_ApproveAPostFailure,
 
     post_LikeAPostRequest,
+    post_LikeAPostSuccess,
+    post_LikeAPostFailure,
+
     delete_UnLikeAPostRequest,
-    likeOrUnLikeAPostSuccess,
-    likeOrUnLikeAPostFailure,
+    delete_UnLikeAPostSuccess,
+    delete_UnLikeAPostFailure,
 
     post_SaveAPostRequest,
     delete_UnSaveAPostRequest,
-    saveOrUnSaveAPostSuccess,
-    saveOrUnSaveAPostFailure,
+    post_SaveAPostSuccess,
+    post_SaveAPostFailure,
+    delete_UnSaveAPostSuccess,
+    delete_UnSaveAPostFailure,
+
 
     delete_APostRequest,
     delete_APostSuccess,
@@ -43,10 +49,11 @@ import {    //highlight posts
 
 } from "redux/actions/postAction.js";
 
-import { openModal } from 'redux/actions/modalAction'
+import { openModal, openBLModal } from 'redux/actions/modalAction'
 
 import { request } from 'utils/requestUtils';
 import { generateSearchTerm } from 'utils/urlUtils'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export function postCreatePost(data) {
     return dispatch => {
@@ -78,18 +85,10 @@ export function getMyPostsList(searchTermObject) { //this API to get all approve
                         for (let i = 0; i < result_1.postSummaryWithStateDTOs.length; i++) {
                             finalResult.push({
                                 ...result_1.postSummaryWithStateDTOs[i],
-                                ...(result.data.find((itmInner) => itmInner.postID === result_1.postSummaryWithStateDTOs[i].id)),
-
-                                //append mot bien isLikeLoading = false, isSaveLoading = false cho tat ca cac doi tuong thuoc mang finalResult => KHong can nua
-                                // isLikeLoading: false,
-                                // isSaveLoading: false,
-                                // isUnSaveLoading: false,
-                                // isUnLikeLoading: false
-
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.postSummaryWithStateDTOs[i].id)),
                             }
                             );
-                            //delete redundant key - value 
-                            delete finalResult[i].postID;
+                            //delete redundant key - value  
                         }
                         dispatch(get_MyPostsSuccess({ data: finalResult, totalPages: result_1.totalPages }))
                     }).catch(() => get_MyPostsFailure())
@@ -158,9 +157,9 @@ export function likeAPost(id) { //maybe use modal later
             .then(response => {
                 // response.data khong co data gi nen thoi, 
                 //do can cap nhat cac state khac nhau o cac trang khac nhau nen can them mot bien type
-                dispatch(likeOrUnLikeAPostSuccess(id));
+                dispatch(post_LikeAPostSuccess(id));
             }
-            ).catch(() => dispatch(likeOrUnLikeAPostFailure()))
+            ).catch(() => dispatch(post_LikeAPostFailure()))
     }
 }
 
@@ -169,9 +168,9 @@ export function unLikeAPost(id) { //maybe use modal later
         dispatch(delete_UnLikeAPostRequest())
         request.delete(`/posts/${id}/likeStatus`)
             .then(response => {
-                dispatch(likeOrUnLikeAPostSuccess(response.data));
+                dispatch(delete_UnLikeAPostSuccess(response.data));
             }
-            ).catch(() => dispatch(likeOrUnLikeAPostFailure()))
+            ).catch(() => dispatch(delete_UnLikeAPostFailure()))
     }
 }
 
@@ -180,9 +179,9 @@ export function saveAPost(id) { //maybe use modal later
         dispatch(post_SaveAPostRequest(id))
         request.post(`/posts/${id}/savedStatus`)
             .then(response => {
-                dispatch(saveOrUnSaveAPostSuccess(id));
+                dispatch(post_SaveAPostSuccess(id));
             }
-            ).catch(() => dispatch(saveOrUnSaveAPostFailure()))
+            ).catch(() => dispatch(post_SaveAPostFailure()))
     }
 }
 
@@ -191,9 +190,9 @@ export function unSaveAPost(id) { //maybe use modal later
         dispatch(delete_UnSaveAPostRequest(id))
         request.delete(`/posts/${id}/savedStatus`)
             .then(response => {
-                dispatch(saveOrUnSaveAPostSuccess(id));
+                dispatch(delete_UnSaveAPostSuccess(id));
             }
-            ).catch(() => dispatch(saveOrUnSaveAPostFailure()))
+            ).catch(() => dispatch(delete_UnSaveAPostFailure(id)))
     }
 }
 
@@ -201,18 +200,19 @@ export function unSaveAPost(id) { //maybe use modal later
 export function deleteAPost(id) { //maybe use modal later
     return dispatch => {
         dispatch(delete_APostRequest(id))
-        request.post(`/posts/${id}/savedStatus`)
-            .then(response => {
-                dispatch(delete_APostSuccess(id));
-            }
-            ).catch(() => dispatch(delete_APostFailure()))
+        // request.post(`/posts/${id}/savedStatus`)
+        setTimeout(dispatch(delete_APostSuccess(id)), 200)
+        dispatch(openBLModal({ text: "Xoá bài viết thành công!", icon: done_icon }))
+        // .then(response => {
+        // }
+        // ).catch(() => dispatch(delete_APostFailure()))
     }
 }
 
 export function editAPost(id, newPostContent) { //
     return dispatch => {
         dispatch(post_EditAPostRequest(id))
-        request.put(`/posts/${id}`)    
+        request.put(`/posts/${id}`)
             .then(response => {
                 dispatch(post_EditAPostSuccess(id, newPostContent));
             }

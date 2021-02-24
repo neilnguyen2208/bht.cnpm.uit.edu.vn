@@ -28,7 +28,6 @@ import store from 'redux/store/index'
 import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
 import { DELAY_TIME } from 'constants.js';
 
-
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -40,8 +39,6 @@ class Header extends React.Component {
         this.isHaveClickAwayQuickSearhResult = false;// dung de kiem tra neu bam ra ngoai search result lan 1'
         this.quickSearchResultView = <></>;
         this.timeOut = null;
-
-
     }
 
     componentDidMount() {

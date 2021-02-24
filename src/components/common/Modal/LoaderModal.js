@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { closeModal } from "redux/actions/modalAction";
-import Loader from ""
-class AlertModal extends React.Component {
+import MediumLoader from 'components/common/Loader/Loader_M';
+class LoaderModal extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -23,10 +23,9 @@ class AlertModal extends React.Component {
     }
 
     render() {
-        let { text } = this.props;
         return (
             <div>
-                <Loader text={this.props.text} />
+                <MediumLoader text={this.props.text} />
             </div>
         );
     }
@@ -42,4 +41,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     closeModal
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AlertModal));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoaderModal));

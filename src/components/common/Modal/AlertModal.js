@@ -10,8 +10,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { closeModal } from "redux/actions/modalAction";
-
-const actions = { closeModal };
+import store from 'redux/store/index.js'
 
 class AlertModal extends React.Component {
     constructor(props) {
@@ -19,11 +18,11 @@ class AlertModal extends React.Component {
     }
 
     closeModal = () => {
-        this.props.closeModal();
+        store.dispatch(closeModal())
     }
 
     onOKClick = () => {
-        this.props.closeModal();
+        store.dispatch(closeModal())
         if (this.props.onOKClick)
             this.props.onOKClick();
     }
@@ -65,12 +64,11 @@ class AlertModal extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentModals: state.modal
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    closeModal
+   
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AlertModal));

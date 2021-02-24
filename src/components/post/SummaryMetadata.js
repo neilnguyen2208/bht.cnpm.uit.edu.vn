@@ -7,11 +7,14 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { approveAPost } from 'redux/services/postServices'
 //resources
-import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteAPost, editAPost } from 'redux/services/postServices'
+
+import { openBigModal } from 'redux/actions/modalAction'
+import store from 'redux/store/index'
+
 // import 'components/styles/Metadata.scss'
 import 'components/styles/Metadata.scss'
 
@@ -46,93 +49,117 @@ class PostSummary extends Component {
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_POST") {
-      this.props.deleteAPost(this.props.id);
+      this.props.deleteAPost(this.props.id); //chi goi API, sau do nho component cha reload
+      if (this.props.reloadList)
+        this.props.reloadList();
     }
+
+    if (selectedItem.value === "EDIT_POST") {
+      store.dispatch(openBigModal("edit-post", { id: this.props.id }));
   }
+}
 
-  render() {
-    let approveLabel = <></>;
-    //#endregion
-    if (this.props.approveState === "PENDING_APPROVAL")
-      approveLabel = <div className="d-flex" >
-        <div className="light-black-label"> - </div>
-        <div className="red-border-label">PENDING</div>
-      </div >
-    else if (this.props.approveState === "PENDING_FIX")
-      approveLabel = <div className="d-flex">
-        <div className="light-black-label"> - </div>
-        <div className="blue-border-label">PENDING</div>
-      </div>
-    else if (this.props.approveState === "REJECTED")
-      approveLabel = <div className="d-flex">
-        <div className="light-black-label"> - </div>
-        <div className="red-border-label">REJECTED</div>
-      </div>
-    else if (this.props.approveState === "APPROVED")
-      approveLabel = <div className="d-flex">
-        <div className="light-black-label"> - </div>
-        <div className="blue-border-label">APPROVED</div>
-      </div>
-
-    return (
-      <div className="metadata">
-        <div className="j-c-space-between"  >
+render() {
+  return (
+    <div className="metadata">
+      <div className="j-c-space-between"  >
+        <div className="d-flex">
           <div className="d-flex">
-            <div className="d-flex">
-              <div className="category">
-                {this.props.categoryName}
-              </div>
+            <div className="category">
+              {this.props.categoryName}
             </div>
-            <div className="light-black-label">bởi</div>
-            <Link className="link-label" to={/user/}>
-              {this.props.authorName}
-            </Link>
-
-            {this.props.type === itemType.mySelf || this.props.type === itemType.approving ?
-              <>{approveLabel}</> : <></>}
           </div>
+          <div className="light-black-label">bởi</div>
+          <Link className="link-label" to={/user/}>
+            {this.props.authorName}
+          </Link>
 
-          {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
-          }
-          {(this.props.type === itemType.normal || !this.props.type) &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
-          }
-        </div>
-
-        {/* title */}
-        <div className="d-flex mg-top-5px">
-          {/* fake avatar */}
-          <div style={{ width: "45px", height: "45px", borderRadius: "50%", background: "#c4c4c4", marginTop: "2px" }}></div>
-          <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/posts/" + this.id}>
-              <div className="title">
-                {this.props.title}
-              </div>
-            </Link>
-
-            <div className="d-flex" style={{ marginTop: "-5px" }}>
-              <div className="d-flex"  >
-                <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
-                </div>
-              </div>
-
+          {this.props.type === itemType.mySelf || this.props.type === itemType.approving ?
+            <>{this.props.approveState === "PENDING_APPROVAL" ?
               <div className="d-flex" >
-                <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {this.props.publishDtm.substring(0, 10)}
-                </div>
+                <div className="light-black-label"> - </div>
+                <div className="red-border-label">PENDING</div>
+              </div >
+              : <>
+                {this.props.approveState === "PENDING_FIX" ?
+                  <div className="d-flex">
+                    <div className="light-black-label"> - </div>
+                    <div className="blue-border-label">PENDING</div>
+                  </div> : <>
+                    {this.props.approveState === "REJECTED" ?
+                      <div className="d-flex">
+                        <div className="light-black-label"> - </div>
+                        <div className="red-border-label">REJECTED</div>
+                      </div> :
+                      <>
+                        <div className="d-flex">
+                          <div className="light-black-label"> - </div>
+                          <div className="blue-border-label">APPROVED</div>
+                        </div>
+                      </>
+                    }
+                  </>
+                }
+              </>
+            }
+            </>
+            :
+            <></>
+          }
+        </div>
+
+        {this.props.type === itemType.mySelf &&
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+        }
+        {(this.props.type === itemType.normal || !this.props.type) &&
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+        }
+      </div>
+
+      {/* title */}
+      <div className="d-flex mg-top-5px">
+        {/* fake avatar */}
+        <img className="avatar" src={this.props.imageURL} alt="" />
+        <div className="mg-left-5px j-c-space-between d-flex-vertical">
+          <Link to={"/posts/" + this.id}>
+            <div className="title">
+              {this.props.title}
+            </div>
+          </Link>
+
+          <div className="d-flex" style={{ marginTop: "-5px" }}>
+            <div className="d-flex"  >
+              <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+              </div>
+            </div>
+
+            <div className="d-flex" >
+              <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                {this.props.publishDtm.substring(0, 10)}
               </div>
             </div>
           </div>
         </div>
+      </div>
 
+      {this.props.imageURL ?
+        <div>
+          <div className="decoration-line mg-top-10px" />
+          <img className="image" src={this.props.imageURL} alt="" />
+          <div className="summary-text mg-bottom-10px">
+            {this.props.summary}
+          </div>
+        </div>
+        :
         <div className="summary-text">
           {this.props.summary}
         </div>
-      </div>
-    );
-  }
+      }
+
+    </div >
+  );
+}
 }
 
 const mapStateToProps = (state) => {
@@ -141,7 +168,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  approveAPost
+  deleteAPost, editAPost
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostSummary));

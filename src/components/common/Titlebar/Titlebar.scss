@@ -17,3 +17,20 @@
     color: var(--blue);
 }
 
+.title-bar+.scroller-container {
+    border-bottom: 40px solid white; //fake size for scroller
+
+}
+
+.title-bar .modal-close-icon {
+    position: absolute;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    top: 14px;
+    cursor: pointer;
+}
+
+.title-bar .modal-close-icon:hover{
+    opacity: 80%;
+}

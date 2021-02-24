@@ -34,15 +34,20 @@ import {
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
 
+    //like post
     LIKE_A_POST_REQUEST,
     UNLIKE_A_POST_REQUEST,
-    LIKE_OR_UNLIKE_A_POST_SUCCESS,
-    LIKE_OR_UNLIKE_A_POST_FAILURE,
+    LIKE_A_POST_SUCCESS,
+    UNLIKE_A_POST_SUCCESS,
+    LIKE_A_POST_FAILURE,
+    UNLIKE_A_POST_FAILURE,
 
     SAVE_A_POST_REQUEST,
     UNSAVE_A_POST_REQUEST,
-    SAVE_OR_UNSAVE_A_POST_SUCCESS,
-    SAVE_OR_UNSAVE_A_POST_FAILURE,
+    SAVE_A_POST_SUCCESS,
+    UNSAVE_A_POST_SUCCESS,
+    UNSAVE_A_POST_FAILURE,
+    SAVE_A_POST_FAILURE,
 
     DELETE_A_POST_REQUEST,
     DELETE_A_POST_SUCCESS,
@@ -180,19 +185,34 @@ export function delete_UnLikeAPostRequest(data) {
     }
 }
 
-export function likeOrUnLikeAPostSuccess(data) {
+export function post_LikeAPostSuccess(data) {
     return {
-        type: LIKE_OR_UNLIKE_A_POST_SUCCESS,
+        type: LIKE_A_POST_SUCCESS,
         payload: data
     }
 }
 
-export function likeOrUnLikeAPostFailure(data) {
+export function delete_UnLikeAPostSuccess(data) {
     return {
-        type: LIKE_OR_UNLIKE_A_POST_FAILURE,
+        type: UNLIKE_A_POST_SUCCESS,
         payload: data
     }
 }
+
+export function post_LikeAPostFailure(data) {
+    return {
+        type: LIKE_A_POST_FAILURE,
+        payload: data
+    }
+}
+
+export function delete_UnLikeAPostFailure(data) {
+    return {
+        type: UNLIKE_A_POST_FAILURE,
+        payload: data
+    }
+}
+
 
 //post search result, phan dung toi id sau nay moi lam, gio chua lam ki
 export function post_SaveAPostRequest(data) {
@@ -209,23 +229,39 @@ export function delete_UnSaveAPostRequest(data) {
     }
 }
 
-export function saveOrUnSaveAPostSuccess(data) {
+export function post_SaveAPostSuccess(data) {
     return {
-        type: SAVE_OR_UNSAVE_A_POST_SUCCESS,
+        type: SAVE_A_POST_SUCCESS,
         payload: data
     }
 }
 
-export function saveOrUnSaveAPostFailure() {
+export function post_SaveAPostFailure(data) {
     return {
-        type: SAVE_OR_UNSAVE_A_POST_FAILURE
+        type: SAVE_A_POST_FAILURE,
+        payload: data
     }
 }
 
+export function delete_UnSaveAPostSuccess(data) {
+    return {
+        type: UNSAVE_A_POST_SUCCESS,
+        payload: data
+    }
+}
+
+export function delete_UnSaveAPostFailure(data) {
+    return {
+        type: UNSAVE_A_POST_FAILURE,
+        payload: data
+    }
+}
+
+// edit and delete post
 export function delete_APostRequest(data) {
     return {
         type: DELETE_A_POST_REQUEST,
-        payload: data
+        request: data
     }
 }
 
@@ -242,7 +278,7 @@ export function delete_APostFailure() {
     }
 }
 
-export function post_EditAPostRequest() {
+export function post_EditAPostRequest(data) {
     return {
         type: EDIT_A_POST_REQUEST
     }

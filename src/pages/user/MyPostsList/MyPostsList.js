@@ -78,6 +78,18 @@ class MyPostsList extends Component {
         this.setState({});
     }
 
+    reloadList = () => {
+        //neu con 1 item thi phai goi ve trang truoc
+        if (this.props.myPostsList.length === 1 && this.searchTermObject.page > 1)
+            this.searchTermObject = {
+                ...this.searchTermObject,
+                page: this.searchTermObject.page - 1, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
+            }
+        setSearchParam("page", this.searchTermObject.page);
+
+        this.props.getMyPostsList(this.searchTermObject);
+    }
+
     render() {
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
             this.comboboxsGroup =
@@ -118,33 +130,39 @@ class MyPostsList extends Component {
         </div>
 
         if (!this.props.isListLoading) {
-            this.myPostsList = this.props.myPostsList.map((item) => {
-                return <div className="item-container">
-                    <PostSummaryMetadata
-                        type={itemType.mySelf}
-                        id={item.id}
-                        authorName={item.authorName}
-                        authorID={item.authorID}
-                        publishDtm={item.publishDtm}
-                        categoryName={item.categoryName}
-                        categoryID={item.categoryID}
-                        title={item.title}
-                        summary={item.summary}
-                        imageURL={item.imageURL}
-                        readingTime={item.readingTime}
-                        approveState={item.postState} 
-                        popUpMenuPrefix = "mppu"   //stand for my post popup 
+            if (this.props.myPostsList.length !== 0)
+                this.myPostsList = this.props.myPostsList.map((item) => {
+                    return <div className="item-container">
+                        <PostSummaryMetadata
+                            type={itemType.mySelf}
+                            id={item.id}
+                            authorName={item.authorName}
+                            authorID={item.authorID}
+                            publishDtm={item.publishDtm}
+                            categoryName={item.categoryName}
+                            categoryID={item.categoryID}
+                            title={item.title}
+                            summary={item.summary}
+                            imageURL={item.imageURL}
+                            readingTime={item.readingTime}
+                            approveState={item.postState}
+                            popUpMenuPrefix="mppu"   //stand for my post popup 
+                            avatarURL={item.avatarURL}
+                            //chi co delete bai post la can load lai component nen de o parent component, cac hanh dong khac khong can
+                            reloadList={() => this.reloadList()}
                         />
-                    <PostSummaryReactionBar
-                        title={item.title}
-                        id={item.id}
-                        likeCount={item.likeCount}
-                        commentCount={item.commentCount}
-                        likedStatus={item.likeStatus}
-                        savedStatus={item.savedStatus}
-                    />
-                </div >
-            })
+                        <PostSummaryReactionBar
+                            title={item.title}
+                            id={item.id}
+                            likeCount={item.likeCount}
+                            commentCount={item.commentCount}
+                            likedStatus={item.likeStatus}
+                            savedStatus={item.savedStatus}
+                        />
+                    </div >
+                })
+            else
+                this.myPostsList = <div>Không có kết quả nào</div>;
         }
         else
             this.myPostsList = <div>

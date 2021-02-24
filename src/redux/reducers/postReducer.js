@@ -31,14 +31,22 @@ import {
     //like post
     LIKE_A_POST_REQUEST,
     UNLIKE_A_POST_REQUEST,
-    LIKE_OR_UNLIKE_A_POST_SUCCESS,
-    LIKE_OR_UNLIKE_A_POST_FAILURE,
-
+    LIKE_A_POST_SUCCESS,
+    UNLIKE_A_POST_SUCCESS,
+    LIKE_A_POST_FAILURE,
+    UNLIKE_A_POST_FAILURE,
 
     SAVE_A_POST_REQUEST,
     UNSAVE_A_POST_REQUEST,
-    SAVE_OR_UNSAVE_A_POST_SUCCESS,
-    SAVE_OR_UNSAVE_A_POST_FAILURE
+    SAVE_A_POST_SUCCESS,
+    UNSAVE_A_POST_SUCCESS,
+    SAVE_A_POST_FAILURE,
+    UNSAVE_A_POST_FAILURE,
+
+    DELETE_A_POST_REQUEST,
+    DELETE_A_POST_SUCCESS,
+    DELETE_A_POST_FAILURE,
+
 
 } from '../constants.js'
 
@@ -75,7 +83,8 @@ const initialState = {
     approvePost: {
         isLoadDone: false
     },
-
+    
+    likePostStatus: { isLiking: false, isUnLiking: false },
 };
 
 function PostReducer(state = initialState, action) {
@@ -149,25 +158,58 @@ function PostReducer(state = initialState, action) {
             }
         case GET_POST_SEARCH_RESULT_FAILURE:
         case GET_POSTS_LIST_FAILURE:
-            {
-                return { ...state, postsList: { isLoading: false, data: [] } }
-            }
+            return { ...state, postsList: { isLoading: false, data: [] } }
 
         //like post
-        case LIKE_A_POST_REQUEST: {
+        case LIKE_A_POST_REQUEST:
+            return { ...state, likePost: { isLoading: true } }//use for all post item
+
+        case LIKE_A_POST_SUCCESS:
+            return { ...state, likePost: { isLoading: false } }
+
+        case LIKE_A_POST_FAILURE:
+            return { ...state, likePost: { isLoading: false } }
+
+        //unlike post
+        case UNLIKE_A_POST_REQUEST:
+            return { ...state, unLikePost: { isLoading: true } } //true when any post is in the like request
+
+        case UNLIKE_A_POST_SUCCESS:
+            return { ...state, unLikePost: { isLoading: false } } //sau nay xu ly sau
+
+        case UNLIKE_A_POST_FAILURE: {
+            return { ...state, unLikePost: { isLoading: false } }
+        }
+
+        //like post
+        case SAVE_A_POST_REQUEST:
+            return { ...state, savePost: { isLoading: true } }//use for all post item
+
+        case SAVE_A_POST_SUCCESS:
+            return { ...state, savePost: { isLoading: false } }
+
+        case SAVE_A_POST_FAILURE:
+            return { ...state, savePost: { isLoading: false } }
+
+        //unsave post
+        case UNSAVE_A_POST_REQUEST:
+            return { ...state, unSavePost: { isLoading: true } } //true when any post is in the save request
+
+        case UNSAVE_A_POST_SUCCESS:
+            return { ...state, unSavePost: { isLoading: false } }
+
+        case UNSAVE_A_POST_FAILURE: {
+            return { ...state, unSavePost: { isLoading: false } }
+        }
+
+        case DELETE_A_POST_REQUEST:
             return {
-                ...state, likePost: {isLoading: false} //use for all post item
+                ...state
             }
-        }
-        case UNLIKE_A_POST_REQUEST: {
-            return { ...state, likePost: { isLoading: true } }
-        }
-        case LIKE_OR_UNLIKE_A_POST_SUCCESS: {
-            return { ...state, likePost: { isLoading: false } }
-        }
-        case LIKE_OR_UNLIKE_A_POST_FAILURE: {
-            return { ...state, likePost: { isLoading: false } }
-        }
+        case DELETE_A_POST_SUCCESS:
+            return { ...state }
+        case DELETE_A_POST_FAILURE:
+            return { ...state }
 
         default:
             return state;

@@ -32,11 +32,10 @@ request.interceptors.response.use(
     return response;
   },
   error => {
-    if (error.status !== 200)
+    if (error.status !== 200) {
       store.dispatch(openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" }));
-    // setTimeout(() => {
-
-    // }, 1000);
+      // setTimeout(window.location.reload(), 500);
+    }
     return Promise.reject(error);
   }
 );

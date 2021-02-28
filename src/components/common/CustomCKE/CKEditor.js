@@ -58,27 +58,28 @@ class Editor extends Component {
 
     //lay element ngoai cung cua editor hien tai
     this.errorMessage = document.getElementById("d-e-cke-wrapper-" + this.props.id).innerText;
-    this.formGroupElement = document.getElementById("d-f-g-cke-wrapper-" + this.props.id).innerText;
-    this.errorSelector = document.getElementById("d-e-s-cke-wrapper-" + this.props.id).innerText;
     let wrapperEditor = document.getElementById("cke-wrapper-" + this.props.id);
 
     //lay element error 
-    this.errorElement = this.getParent(wrapperEditor, this.formGroupElement).querySelector(this.errorSelector);
+    this.errorElement = this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label');
 
     if (this.errorMessage && !window.CKEDITOR.instances[this.editorID].getData()) {
       this.errorElement.innerText = this.errorMessage;
-      this.getParent(wrapperEditor, this.formGroupElement).classList.add('invalid');
+      this.getParent(wrapperEditor, '.form-group').classList.add('invalid');
       document.getElementById("cke-wrapper-" + this.props.id).classList.add("invalid");
 
     } else {
       this.errorElement.innerText = '';
-      this.getParent(wrapperEditor, this.formGroupElement).classList.remove('invalid');
+      this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
       document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
     }
   }
 
   onFocus = () => {
+    let wrapperEditor = document.getElementById("cke-wrapper-" + this.props.id);
     document.getElementById("cke-wrapper-" + this.props.id).classList.add("focus");
+    this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label').innerText = '';
+    this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
     document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
     if (this.props.onFocus) {
       this.props.onFocus();
@@ -98,7 +99,10 @@ class Editor extends Component {
     document.getElementById('ck-editor-loader' + this.props.id).style.display = "none";
     document.getElementById("cke-wrapper-" + this.props.id).style.border = "1px solid var(--gray)";
     if (this.props.onInstanceReady)
-      this.props.onInstanceReady()
+      this.props.onInstanceReady();
+    // console.log(this.props.myData)
+    // if (this.props.myData) window.CKEDITOR.instances[this.editorID].setData(this.props.myData); //some time have bug :(
+
   }
 
   //lay form
@@ -114,20 +118,19 @@ class Editor extends Component {
   render() {
     return (
       <div className="cke-wrapper form-ckeditor" id={"cke-wrapper-" + this.props.id}>
-        <input type="text-area" className="fake-cke" id={this.editorID} name={this.editorID} cols="100" rows="6" defaultValue={this.props.value}>
+        <input type="text-area" className="fake-cke" id={this.editorID} name={this.editorID} cols="100" rows="6" defaultValue={this.props.myData}>
         </input>
         <div id={"ck-editor-loader" + this.props.id}>
           <Loader />
         </div>
         {this.props.validation ? <div>
           <div id={"d-e-cke-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
-          <div id={"d-f-g-cke-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
-          <div id={"d-e-s-cke-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
         </div> : <></>}
       </div>
     );
   }
 }
-
-
+export function getInstance(id) {
+  return window.CKEDITOR.instances['ck-editor-' + id];
+}
 export default Editor;

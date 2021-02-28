@@ -1,15 +1,16 @@
 import React from "react";
 import './Modal.scss'
 import 'components/styles/Button.scss'
-import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
-import { closeModal } from "redux/actions/modalAction";
+import { closeBigModal } from "redux/actions/modalAction";
 import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { getPostByID } from "redux/services/postServices"
+import { getPostByID, editAPost } from "redux/services/postServices"
+import { get_PostByIDReset, put_EditAPostRequest } from "redux/actions/postAction"
+
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
 import "pages/user/CreatePost/CreatePost.scss";
@@ -20,7 +21,7 @@ import 'components/styles/DocPostDetail.scss'
 import Tag from "components/common/Tag/Tag";
 import ModalTitlebar from 'components/common/Titlebar/BigModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
-import Editor from 'components/common/CustomCKE/CKEditor.js';
+import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';
 import Loader from 'components/common/Loader/Loader'
 import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
 import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
@@ -33,8 +34,6 @@ import SmallLoader from 'components/common/Loader/Loader_S'
 
 const validationCondition = {
     form: '#edit-post-form',
-    formGroupSelector: '.form-group',
-    errorSelector: '.form-error-label',
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('ed-post-title', 'form-input', 'Tên bài viết không được để trống!'),
@@ -49,12 +48,13 @@ class EditPostModal extends React.Component {
         super(props);
         this.categoryList = [
             {
-                id: 1,
+                id: 0,
                 name: "Chọn danh mục"
             }
         ];
         this.isNotifySuccessOpen = false;
         this.state = {
+
             currentCategory: "",
             publishDtm: "",
 
@@ -77,6 +77,7 @@ class EditPostModal extends React.Component {
                 displayName: "Nguyễn Văn Đông",
                 username: "dongnsince1999"
             },
+
 
         };
         this.shownTag = [
@@ -103,24 +104,33 @@ class EditPostModal extends React.Component {
             ];
 
         this.timeOut = null;
+        this.isFirstLoad = false;
+        this.isInstanceReady = false;
         this.tagQuickQueryResult = <></>;
     }
     componentDidMount() {
+        validation(validationCondition);
         this.props.getPostCategories();
+        console.log(this.props.id);
         this.props.getPostByID(this.props.id);
         document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-block");
         document.querySelector(".ed-post-form-container.edit").classList.remove("d-none");
         document.querySelector(".ed-post-form-container.preview-modal").classList.add("d-none");
         document.querySelector(".ed-post-form-container.edit").classList.add("d-block");
+        this.isFirstLoad = false;
 
         this.timeOut = null;
+        this.isInstanceReady = false;
 
-        validation(validationCondition);
     }
 
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
+        store.dispatch(get_PostByIDReset());
+        store.dispatch(put_EditAPostRequest());
+        if (getInstance('ed-post-cke'))
+            getInstance('ed-post-cke').destroy();
     }
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
@@ -142,15 +152,12 @@ class EditPostModal extends React.Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            // this.props.postCreatePost({ ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
+            console.log(this.state.EDIT_POST_DTO)
+            this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
+            this.closeModal();
         }
     }
 
-    handleClosePopup = () => {
-        this.setState({
-            modalShow: false,
-        });
-    }
 
     //#region  tag region
     closeQuickSearchTag = () => {
@@ -178,6 +185,10 @@ class EditPostModal extends React.Component {
         document.getElementById("ed-post-qs-tag-result-container").classList.remove('hidden');
     }
 
+    onCKEInstanceReady = () => {
+        this.isInstanceReady = true;
+        this.setState({})
+    }
     keyHandler = (e) => {
         if (!e.target.value) return;
         let tags = this.state.EDIT_POST_DTO.tags;
@@ -278,6 +289,7 @@ class EditPostModal extends React.Component {
                 tags: tmpTagDTO
             }
         });
+
     }
 
     deleteTag = (item) => {
@@ -345,20 +357,19 @@ class EditPostModal extends React.Component {
     }
 
     closeModal = () => {
-        store.dispatch(closeModal())
+        store.dispatch(closeBigModal())
     }
 
     render() {
-        let body;
+
         //render likeBtn
         let likeBtn = <img className="like-btn" alt="like" src={unliked_btn} onClick={this.toggleLikeImage} ></img>
 
         //render saveBtn
         let saveBtn = <div className="d-flex" onClick={this.toggleSaveImage} >
-            <img className="save-btn" alt="dislike" src={gray_bookmark_btn} />
+            <img className="save-btn" alt="save" src={gray_bookmark_btn} />
             <div>Lưu</div>
         </div >
-
 
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
@@ -404,136 +415,31 @@ class EditPostModal extends React.Component {
                 }
             }
 
-
-        if (!this.props.isCurrentPostLoading && this.props.currentPost)
-            body = <div>
-                {/* Preview region */}
-                <div className="ed-post-form-container doc-post-detail preview-modal d-none" >
-                    <Metadata title={this.state.EDIT_POST_DTO.title}
-                        category={this.state.currentCategory}
-                        readingTime={this.state.EDIT_POST_DTO.readingTime}
-                        authorName={this.state.author.displayName}
-                        avartarURL={this.state.author.avatarURL}
-                        publishDtm={this.state.publishDtm}
-                    />
-                    <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_POST_DTO.content }} />
-
-                    <div className="mg-top-10px pd-10px" >
-                        {this.shownTag.map(item =>
-                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
-                        )}
-                    </div>
-                    <div className="post-reaction-bar">
-                        <div className="d-flex mg-top-5px mg-left-5px">
-                            <div className="d-flex">
-                                <div className="like-btn">  {likeBtn}</div>
-                                <div className="like-count">{0}</div>
-                            </div>
-
-                            <div className="d-flex">
-                                <div className="save-text-container" onClick={this.toggleSaveImage}>
-                                    <div>{saveBtn}</div>
-                                </div>
-                                <div className="comment-count-container">
-                                    Bình luận
-                          <div style={{ paddingLeft: "5px" }}>
-                                        {0}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Edit region */}
-                <div className="ed-post-form-container edit">
-                    <div id="edit-post-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
-                        <div className="mg-top-10px" />
-
-                        <div className="form-group">
-                            <label className="form-label-required">Tiêu đề:</label>
-                            <input className="form-input" id="ed-post-title"
-                                placeholder="Nhập tiêu đề bài viết ..." onChange={e => this.handleTitleChange(e)}
-                                type="text" defaultValue={this.props.currentPost.title} ></input>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div>
-
-                        {/* CKEditor */}
-                        <div className="form-group">
-                            <div className="form-label-required">Nội dung:</div>
-                            <Editor
-                                id="ed-post-cke"
-                                placeholder='Start typing here...'
-                                onChange={this.handleEditorChange}
-                                data={this.props.currentPost.content}
-                                validation
-                            />
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div>
-
-                        {/* Category */}
-                        <div className="form-group" >
-                            <label className="form-label-required">Danh mục:</label>
-                            <Combobox id="ed-post-category-combobox"
-                                // selectedOptionID={this.props.currentPost.categoryID}
-                                options={this.categoryList}
-                                onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
-                                placeHolder="Chọn danh mục"
-                                validation
-                            >
-                            </Combobox>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div >
-
-                        {/* Tag */}
-                        <div className='form-group mg-bottom-10px'>
-                            <label className="form-label">Tags:</label>
-
-                            <input onChange={(e) => this.quickSearchTags(e)} id="ed-post-tag-input"
-                                onKeyPress={(this.state.EDIT_POST_DTO.tags.length < 5) && this.keyHandler}
-                                className="form-input"
-                                placeholder="Nhập tag ..." />
-
-                            <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
-                                {/* khi load xong thi ntn */}
-                                <div id="ed-post-qs-tag-result-container" className="form-input-dropdown-container hidden">
-                                    <div className="form-input-dropdown">
-                                        {this.tagSearchResult}
-                                        <div className="form-tip-label" id="ed-post-tag-container-tip-label" />
-                                    </div>
-                                </div>
-
-                            </ClickAwayListener>
-
-                            <div className="form-tip-label-container">
-                                <div className="form-tip-label">Có thể nhập tối đa 5 tag.</div>
-                            </div>
-                            {console.log(this.props.tags)}
-                            <div className="mg-top-10px" >
-                                {this.shownTag.map(item =>
-                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} tag={[]} />
-                                )}
-                            </div>
-                            <div className="form-line" />
-
-                        </div>
-
-                        {/* Button */}
-                        <div className="form-group j-c-end pd-bottom-10px">
-                            <button className="blue-button form-submit-btn" onClick={() => this.handleUploadBtnClick()}>Lưu</button>
-                            <button className="white-button form-submit-btn mg-left-10px" onClick={() => this.closeModal()}>Huỷ</button>
-                        </div>
-                    </div >
-                </div >
-            </div >
-
-        else body = <Loader />;
+        //load lan dau tien hoac moi load xong thi gan data cho DTO
+        if (!this.props.isCurrentPostLoading && Object.keys(this.props.currentPost).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
+            this.isFirstLoad = true;
+            console.log("first load");
+            this.props.currentPost.tags.forEach((item, index) => {
+                this.shownTag[index].id = item.id;
+                this.shownTag[index].content = item.content;
+            })
+            getInstance('ed-post-cke').setData(this.props.currentPost.content)
+            this.setState({
+                EDIT_POST_DTO: {
+                    title: this.props.currentPost.title,
+                    tags: this.props.currentPost.tags ? this.props.currentPost.tags : [],
+                    content: this.props.currentPost.content,
+                    imageURL: this.props.currentPost.imageURL,
+                    // "summary": this.props.current =>tu tao lai
+                    categoryID: this.props.currentPost.categoryID
+                }
+            })
+        }
+        //load xong thi cho hien thi body
+        if (this.props.currentPost && !this.props.isCurrentPostLoading && document.getElementById('edit-post-body')) {
+            document.getElementById('edit-post-body').classList.add("d-block");
+            document.getElementById('edit-post-body').classList.remove("d-none");
+        }
 
         return (
             <div>
@@ -543,17 +449,147 @@ class EditPostModal extends React.Component {
                         <ModalTitlebar title="CHỈNH SỬA BÀI VIẾT" />
                         <div className="scroller-container mg-bottom-10px">
                             {/* <div className="modal-large-container"> */}
-                            {/* <div className="form-container"> */}
-                            <div>
-                                <div className="j-c-end " >
-                                    <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Chỉnh sửa</button>
-                                    <div className="mg-right-5px" />
-                                    <button className="white-button" disabled={this.state.isPreview} onClick={this.onPreviewBtnClick} >Preview</button>
+                            <div className="form-container">
+                                <div>
+                                    <div className="j-c-end " >
+                                        <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Chỉnh sửa</button>
+                                        <div className="mg-right-5px" />
+                                        <button className="white-button" disabled={this.state.isPreview} onClick={this.onPreviewBtnClick} >Preview</button>
+                                    </div>
+                                    <div className="decoration-line mg-top-10px" />
                                 </div>
-                                <div className="decoration-line mg-top-10px" />
+                                <div className="d-none" id="edit-post-body">
+                                    {/* Preview region */}
+                                    <div className="ed-post-form-container doc-post-detail preview-modal d-none" >
+                                        <Metadata title={this.state.EDIT_POST_DTO.title}
+                                            category={this.state.currentCategory}
+                                            readingTime={this.state.EDIT_POST_DTO.readingTime}
+                                            authorName={this.state.author.displayName}
+                                            avartarURL={this.state.author.avatarURL}
+                                            publishDtm={this.state.publishDtm}
+                                        />
+                                        <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_POST_DTO.content }} />
+
+                                        <div className="mg-top-10px pd-10px" >
+                                            {this.shownTag.map(item =>
+                                                <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
+                                            )}
+                                        </div>
+                                        <div className="post-reaction-bar">
+                                            <div className="d-flex mg-top-5px mg-left-5px">
+                                                <div className="d-flex">
+                                                    <div className="like-btn">  {likeBtn}</div>
+                                                    <div className="like-count">{0}</div>
+                                                </div>
+
+                                                <div className="d-flex">
+                                                    <div className="save-text-container" onClick={this.toggleSaveImage}>
+                                                        <div>{saveBtn}</div>
+                                                    </div>
+                                                    <div className="comment-count-container">
+                                                        Bình luận
+                                                         <div style={{ paddingLeft: "5px" }}>
+                                                            {0}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Edit region */}
+                                    <div className="ed-post-form-container edit">
+                                        <div id="edit-post-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
+                                            <div className="mg-top-10px" />
+
+                                            <div className="form-group">
+                                                <label className="form-label-required">Tiêu đề:</label>
+                                                <input className="form-input" id="ed-post-title"
+                                                    placeholder="Nhập tiêu đề bài viết ..."
+                                                    onChange={e => this.handleTitleChange(e)}
+                                                    type="text" defaultValue={
+                                                        !this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.title : ''} ></input>
+                                                <div className="form-error-label-container">
+                                                    <span className="form-error-label" ></span>
+                                                </div>
+                                            </div>
+
+                                            {/* CKEditor */}
+                                            <div className="form-group">
+                                                <div className="form-label-required">Nội dung:</div>
+                                                <Editor
+                                                    id={"ed-post-cke"}
+                                                    onChange={this.handleEditorChange}
+                                                    myData={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.content : ''}
+                                                    validation
+                                                    onInstanceReady={this.onCKEInstanceReady}
+                                                />
+                                                <div className="form-error-label-container">
+                                                    <span className="form-error-label" ></span>
+                                                </div>
+                                            </div>
+
+                                            {/* Category */}
+                                            <div className="form-group" >
+                                                <label className="form-label-required">Danh mục:</label>
+                                                <Combobox id="ed-post-category-combobox"
+                                                    selectedOptionID={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.categoryID : 0}
+                                                    options={this.categoryList}
+                                                    onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
+                                                    placeHolder="Chọn danh mục"
+                                                    validation
+                                                >
+                                                </Combobox>
+                                                <div className="form-error-label-container">
+                                                    <span className="form-error-label" ></span>
+                                                </div>
+                                            </div >
+
+                                            {/* Tag */}
+                                            <div className='form-group mg-bottom-10px'>
+                                                <label className="form-label">Tags:</label>
+
+                                                <input onChange={(e) => this.quickSearchTags(e)} id="ed-post-tag-input"
+                                                    onKeyPress={(this.state.EDIT_POST_DTO.tags.length < 5) && this.keyHandler}
+                                                    className="form-input"
+                                                    placeholder="Nhập tag ..." />
+
+                                                <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
+                                                    {/* khi load xong thi ntn */}
+                                                    <div id="ed-post-qs-tag-result-container" className="form-input-dropdown-container hidden">
+                                                        <div className="form-input-dropdown">
+                                                            {this.tagSearchResult}
+                                                            <div className="form-tip-label" id="ed-post-tag-container-tip-label" />
+                                                        </div>
+                                                    </div>
+
+                                                </ClickAwayListener>
+
+                                                <div className="form-tip-label-container">
+                                                    <div className="form-tip-label">Có thể nhập tối đa 5 tag.</div>
+                                                </div>
+                                                {/* {console.log(this.props.currentPost.tags)} */}
+                                                <div className="mg-top-10px" >
+                                                    {this.shownTag.map(item =>
+                                                        <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
+                                                    )}
+                                                </div>
+                                                <div className="form-line" />
+
+                                            </div>
+
+                                            {/* Button */}
+                                            <div className="form-group j-c-end pd-bottom-10px">
+                                                <button className="blue-button form-submit-btn" onClick={() => this.handleUploadBtnClick()}>Lưu</button>
+                                                <button className="white-button form-submit-btn mg-left-10px" onClick={() => this.closeModal()}>Huỷ</button>
+                                            </div>
+                                        </div >
+                                    </div >
+                                </div >
+                                {(this.props.isCurrentPostLoading || !this.props.currentPost) ?
+                                    <Loader /> :
+                                    <></>}
                             </div>
-                            {body}
-                            {/* </div> */}
                         </div>
                     </div>
                 </div>
@@ -575,7 +611,6 @@ class EditPostModal extends React.Component {
         document.querySelector(".ed-post-form-container.edit").classList.add("d-none");
         document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-none");
         document.querySelector(".ed-post-form-container.edit").classList.remove("d-block");
-        console.log(this.state);
     }
 }
 
@@ -583,8 +618,12 @@ const mapStateToProps = (state) => {
     return {
         categories: state.post_category.categories.data,
         isCategoryLoading: state.post_category.categories.isLoading,
-        isCurrentLoading: state.post.currentPost.isLoading,
+
+        isCurrentPostLoading: state.post.currentPost.isLoading,
         currentPost: state.post.currentPost.data,
+        isCurrentPostEditing: state.post.currentPost.isEditing,
+        isCurrentPostLoadDone: state.post.currentPost.isLoadDone,
+
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
@@ -596,6 +635,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostCategories,
     getTagQuickQueryResult,
     getPostByID,
+    editAPost
 
 }, dispatch);
 

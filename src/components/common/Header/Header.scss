@@ -11,8 +11,8 @@
 }
 
 .header-container {
+    top: 0px; 
     position: fixed;
-    z-index: 1000;
     box-sizing: border-box;
     background: white;
     border-bottom: 3px var(--gray) solid;

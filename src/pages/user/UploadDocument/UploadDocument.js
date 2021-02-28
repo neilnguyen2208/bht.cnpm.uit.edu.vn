@@ -37,8 +37,6 @@ import {DELAY_TIME} from 'constants.js';
 
 const validationCondition = {
     form: '#create-document-form',
-    formGroupSelector: '.form-group',
-    errorSelector: '.form-error-label',
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('cr-doc-title', 'form-input', 'Tên tài liệu không được để trống!'),

@@ -33,7 +33,8 @@ import {
     GET_POST_BY_ID_REQUEST,
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
-
+    GET_POST_BY_ID_RESET,
+    
     //like post
     LIKE_A_POST_REQUEST,
     UNLIKE_A_POST_REQUEST,
@@ -147,6 +148,10 @@ export function get_PostByIDSuccess(data) {
 
 export function get_PostByIDFailure(error) {
     return { type: GET_POST_BY_ID_FAILURE, error: error }
+}
+
+export function get_PostByIDReset() {
+    return { type: GET_POST_BY_ID_RESET }
 }
 
 //post search result
@@ -278,20 +283,20 @@ export function delete_APostFailure() {
     }
 }
 
-export function post_EditAPostRequest(data) {
+export function put_EditAPostRequest(data) {
     return {
         type: EDIT_A_POST_REQUEST
     }
 }
 
-export function post_EditAPostSuccess(data) {
+export function put_EditAPostSuccess(data) {
     return {
         type: EDIT_A_POST_SUCCESS,
         payload: data
     }
 }
 
-export function post_EditAPostFailure() {
+export function put_EditAPostFailure() {
     return {
         type: EDIT_A_POST_FAILURE
     }

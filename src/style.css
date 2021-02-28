@@ -59,12 +59,10 @@
     src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-BoldItalic.ttf) format("truetype");
 }
 
-
 @font-face {
     font-family: "BarlowSemiCondensed-MediumItalic";
     src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-MediumItalic.ttf) format("truetype");
 }
-
 
 @font-face {
     font-family: "BarlowSemiCondensed-Medium";

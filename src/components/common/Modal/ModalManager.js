@@ -17,7 +17,7 @@ class ModalManager extends React.Component {
         // voi form thi co title, onSubmitClick va onCancelClick va childrenProps (form ma nguoi dung tu thiet ke)
 
         const { currentModals } = this.props;
-        console.log(currentModals);
+        // console.log(currentModals);
         const renderedModals = currentModals.map((modalDescription, index) => {
 
             //create loader for handling api 

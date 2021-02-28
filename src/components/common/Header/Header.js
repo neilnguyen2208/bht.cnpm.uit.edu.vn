@@ -144,7 +144,7 @@ class Header extends React.Component {
         return (
 
             <div className="header-container" >
-                <div className="header" id="header" >
+                <div className="header"  >
 
                     {/* Begin lv1: contain logo and searchbar */}
                     {/* Begin lv2: searchbar */}

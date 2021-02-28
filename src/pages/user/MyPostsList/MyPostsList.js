@@ -17,7 +17,7 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import UserSidebar from 'layouts/UserSidebar'
 import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
 import PostSummaryMetadata from 'components/post/SummaryMetadata'
-
+import EditPostModal from 'components/common/Modal/EditPostModal'
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
 class MyPostsList extends Component {
     constructor(props) {

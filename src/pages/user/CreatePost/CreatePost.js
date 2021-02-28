@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { postCreatePost } from "redux/services/postServices"
+import { createAPost } from "redux/services/postServices"
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
 import "./CreatePost.scss";
@@ -32,8 +32,6 @@ import SmallLoader from 'components/common/Loader/Loader_S'
 
 const validationCondition = {
     form: '#create-post-form',
-    formGroupSelector: '.form-group',
-    errorSelector: '.form-error-label',
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('cr-post-title', 'form-input', 'Tên bài viết không được để trống!'),
@@ -141,7 +139,7 @@ class CreatePost extends Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            this.props.postCreatePost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary + "..."});
+            this.props.createAPost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary + "..." });
         }
     }
 
@@ -521,7 +519,6 @@ class CreatePost extends Component {
                     </div >
                 </div >
             </div >
-        console.log(this.props.isTagQuickQueryLoading);
 
         return (
             <div className="left-sidebar-layout">
@@ -583,7 +580,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostCategories,
     getTagQuickQueryResult,
-    postCreatePost,
+    createAPost,
 
 }, dispatch);
 

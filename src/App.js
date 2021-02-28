@@ -49,8 +49,8 @@ const App = () => {
     return (
         <div style={{ minWidth: "320px", width: "100%", background: "white" }}>
             <Router>
-                <Header />
                 <div id="header" style={{ height: "65px" }}></div>
+
                 <div>
                     <Switch>
                         <Route exact path="/" component={Home} />
@@ -109,7 +109,15 @@ const App = () => {
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
                     </Switch>
+
                     <Footer />
+
+                </div>
+
+                <Header />
+
+                <div>
+
                 </div>
                 {/* Thediv nay de can bang z index */}
                 <div>
@@ -121,7 +129,9 @@ const App = () => {
                 <div className="App"></div>
 
 
+
             </Router >
+
         </div >
     );
 }

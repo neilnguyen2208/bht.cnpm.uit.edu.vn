@@ -43,19 +43,19 @@ import {    //highlight posts
     delete_APostSuccess,
     delete_APostFailure,
 
-    post_EditAPostRequest,
-    post_EditAPostSuccess,
-    post_EditAPostFailure
+    put_EditAPostRequest,
+    put_EditAPostSuccess,
+    put_EditAPostFailure
 
 } from "redux/actions/postAction.js";
 
-import { openModal, openBLModal } from 'redux/actions/modalAction'
+import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
 
 import { request } from 'utils/requestUtils';
 import { generateSearchTerm } from 'utils/urlUtils'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
-export function postCreatePost(data) {
+export function createAPost(data) {
     return dispatch => {
         //th nay se handle bang loader modal ben ngoai luon.
         // dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
@@ -142,7 +142,6 @@ export function getPostByID(id) {
                 let _response = response; //response without statistic
                 request.get(`/posts/statistic?postIDs=${_response.data.id}`)
                     .then(response => {
-                        console.log(response)
                         dispatch(get_PostByIDSuccess({ ..._response.data, ...response.data[0] }))
                     })
             }
@@ -211,12 +210,16 @@ export function deleteAPost(id) { //maybe use modal later
 
 export function editAPost(id, newPostContent) { //
     return dispatch => {
-        dispatch(post_EditAPostRequest(id))
-        request.put(`/posts/${id}`)
+        console.log(newPostContent)
+        dispatch(put_EditAPostRequest())
+        dispatch(openModal("loader", { text: "Đang xử lý" }))
+        request.put(`/posts/${id}`, JSON.stringify(newPostContent))
             .then(response => {
-                dispatch(post_EditAPostSuccess(id, newPostContent));
+                dispatch(closeModal())
+                dispatch(openBLModal({ text: "Chỉnh sửa bài viết thành công!", icon: done_icon }))
+                dispatch(put_EditAPostSuccess(id, newPostContent));
             }
-            ).catch(() => dispatch(post_EditAPostFailure()))
+            ).catch(() => dispatch(put_EditAPostFailure()))
     }
 }
 

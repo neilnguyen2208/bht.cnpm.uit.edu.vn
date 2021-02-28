@@ -14,6 +14,7 @@ import { deleteAPost, editAPost } from 'redux/services/postServices'
 
 import { openBigModal } from 'redux/actions/modalAction'
 import store from 'redux/store/index'
+import EditPostModal from 'components/common/Modal/EditPostModal'
 
 // import 'components/styles/Metadata.scss'
 import 'components/styles/Metadata.scss'
@@ -56,110 +57,109 @@ class PostSummary extends Component {
 
     if (selectedItem.value === "EDIT_POST") {
       store.dispatch(openBigModal("edit-post", { id: this.props.id }));
+    }
   }
-}
 
-render() {
-  return (
-    <div className="metadata">
-      <div className="j-c-space-between"  >
-        <div className="d-flex">
+  render() {
+    return (
+      <div className="metadata">
+        <div className="j-c-space-between"  >
           <div className="d-flex">
-            <div className="category">
-              {this.props.categoryName}
+            <div className="d-flex">
+              <div className="category">
+                {this.props.categoryName}
+              </div>
             </div>
-          </div>
-          <div className="light-black-label">bởi</div>
-          <Link className="link-label" to={/user/}>
-            {this.props.authorName}
-          </Link>
+            <div className="light-black-label">bởi</div>
+            <Link className="link-label" to={/user/}>
+              {this.props.authorName}
+            </Link>
 
-          {this.props.type === itemType.mySelf || this.props.type === itemType.approving ?
-            <>{this.props.approveState === "PENDING_APPROVAL" ?
-              <div className="d-flex" >
-                <div className="light-black-label"> - </div>
-                <div className="red-border-label">PENDING</div>
-              </div >
-              : <>
-                {this.props.approveState === "PENDING_FIX" ?
-                  <div className="d-flex">
-                    <div className="light-black-label"> - </div>
-                    <div className="blue-border-label">PENDING</div>
-                  </div> : <>
-                    {this.props.approveState === "REJECTED" ?
-                      <div className="d-flex">
-                        <div className="light-black-label"> - </div>
-                        <div className="red-border-label">REJECTED</div>
-                      </div> :
-                      <>
+            {this.props.type === itemType.mySelf || this.props.type === itemType.approving ?
+              <>{this.props.approveState === "PENDING_APPROVAL" ?
+                <div className="d-flex" >
+                  <div className="light-black-label"> - </div>
+                  <div className="red-border-label">PENDING</div>
+                </div >
+                : <>
+                  {this.props.approveState === "PENDING_FIX" ?
+                    <div className="d-flex">
+                      <div className="light-black-label"> - </div>
+                      <div className="blue-border-label">PENDING</div>
+                    </div> : <>
+                      {this.props.approveState === "REJECTED" ?
                         <div className="d-flex">
                           <div className="light-black-label"> - </div>
-                          <div className="blue-border-label">APPROVED</div>
-                        </div>
-                      </>
-                    }
-                  </>
-                }
+                          <div className="red-border-label">REJECTED</div>
+                        </div> :
+                        <>
+                          <div className="d-flex">
+                            <div className="light-black-label"> - </div>
+                            <div className="blue-border-label">APPROVED</div>
+                          </div>
+                        </>
+                      }
+                    </>
+                  }
+                </>
+              }
               </>
+              :
+              <></>
             }
-            </>
-            :
-            <></>
+          </div>
+
+          {this.props.type === itemType.mySelf &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+          }
+          {(this.props.type === itemType.normal || !this.props.type) &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
           }
         </div>
 
-        {this.props.type === itemType.mySelf &&
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
-        }
-        {(this.props.type === itemType.normal || !this.props.type) &&
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
-        }
-      </div>
-
-      {/* title */}
-      <div className="d-flex mg-top-5px">
-        {/* fake avatar */}
-        <img className="avatar" src={this.props.imageURL} alt="" />
-        <div className="mg-left-5px j-c-space-between d-flex-vertical">
-          <Link to={"/posts/" + this.id}>
-            <div className="title">
-              {this.props.title}
-            </div>
-          </Link>
-
-          <div className="d-flex" style={{ marginTop: "-5px" }}>
-            <div className="d-flex"  >
-              <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+        {/* title */}
+        <div className="d-flex mg-top-5px">
+          {/* fake avatar */}
+          <img className="avatar" src={this.props.imageURL} alt="" />
+          <div className="mg-left-5px j-c-space-between d-flex-vertical">
+            <Link to={"/posts/" + this.id}>
+              <div className="title">
+                {this.props.title}
               </div>
-            </div>
+            </Link>
 
-            <div className="d-flex" >
-              <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                {this.props.publishDtm.substring(0, 10)}
+            <div className="d-flex" style={{ marginTop: "-5px" }}>
+              <div className="d-flex"  >
+                <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                  {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+                </div>
+              </div>
+
+              <div className="d-flex" >
+                <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                  {this.props.publishDtm.substring(0, 10)}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {this.props.imageURL ?
-        <div>
-          <div className="decoration-line mg-top-10px" />
-          <img className="image" src={this.props.imageURL} alt="" />
-          <div className="summary-text mg-bottom-10px">
+        {this.props.imageURL ?
+          <div>
+            <div className="decoration-line mg-top-10px" />
+            <img className="image" src={this.props.imageURL} alt="" />
+            <div className="summary-text mg-bottom-10px">
+              {this.props.summary}
+            </div>
+          </div>
+          :
+          <div className="summary-text">
             {this.props.summary}
           </div>
-        </div>
-        :
-        <div className="summary-text">
-          {this.props.summary}
-        </div>
-      }
-
-    </div >
-  );
-}
+        }
+      </div >
+    );
+  }
 }
 
 const mapStateToProps = (state) => {

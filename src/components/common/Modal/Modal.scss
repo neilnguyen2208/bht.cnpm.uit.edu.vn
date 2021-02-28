@@ -1,6 +1,6 @@
 //default, don't edit
 .modal-overlay-shadow {
-    z-index: 1000000;
+    // z-index: 1000000;
     top: 0px;
     left: 0px;
     background: var(--gray);
@@ -13,7 +13,7 @@
 }
 
 .modal-fixed-layout {
-    z-index: 1000000000;
+    // z-index: 1000000000;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -21,16 +21,14 @@
     position: fixed;
     padding-top: 10vh;
     padding-bottom: 10vh;
-
+    background: none;
     padding-left: 10vw;
     padding-right: 10vw;
-
-
 }
 
 .modal-wrapper {
     border-radius: 3px;
-    z-index: 1000000001;
+    // z-index: 1000000001;
     background: white;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 0px 3px 0 rgba(0, 0, 0, 0.17);
     height: fit-content;

@@ -63,7 +63,7 @@ export function generateSearchTerm(searchTermObject) { //for generating search t
             if (searchTermObject[key])
                 searchTerm = searchTerm + key + '=' + searchTermObject[key] + "&";
         });
-    console.log(searchTerm);
+    // console.log(searchTerm);
     return searchTerm;
 }
 

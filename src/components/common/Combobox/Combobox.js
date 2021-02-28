@@ -34,7 +34,6 @@ export default class Combobox extends React.Component {
         if (!this.isAnyValueChanged && !this.props.selectedOptionID && this.props.placeHolder) {
             document.getElementById("combobox-wrapper-" + this.props.id).classList.add("dummy-invalid");
             document.getElementById("combobox-wrapper-" + this.props.id).classList.remove("dummy-have-click");
-
         }
         if (this.props.validation) {
             document.getElementById("combobox-wrapper-" + this.props.id).classList.add("validation")
@@ -100,8 +99,6 @@ export default class Combobox extends React.Component {
             name: this.props.options.filter(item => item.id === id)[0].name,
         }
 
-        console.log(this.selectedOption);
-
         //pass to parent
         if (this.props.onOptionChanged)
             this.props.onOptionChanged(this.selectedOption);
@@ -117,25 +114,20 @@ export default class Combobox extends React.Component {
     }
 
     validate = () => {
-
         if (!this.isHaveFocus) return;
 
         //lay element ngoai cung cua editor hien tai
         let wrapperCombobox = document.getElementById("combobox-wrapper-" + this.props.id);
-
         this.errorMessage = document.getElementById("d-e-combobox-wrapper-" + this.props.id).innerText;
-        this.formGroupElement = document.getElementById("d-f-g-combobox-wrapper-" + this.props.id).innerText;
-        this.errorSelector = document.getElementById("d-e-s-combobox-wrapper-" + this.props.id).innerText;
-
-        this.errorElement = this.getParent(wrapperCombobox, this.formGroupElement).querySelector(this.errorSelector);
+        this.errorElement = this.getParent(wrapperCombobox, '.form-group').querySelector('.form-error-label');
 
         if (this.errorMessage &&
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.contains("dummy-invalid")) {
+            document.getElementById("combobox-wrapper-" + this.props.id).classList.contains("dummy-invalid")) { //invalid nhung khong hien UI
             this.errorElement.innerText = this.errorMessage;
-            this.getParent(wrapperCombobox, this.formGroupElement).classList.add('invalid');
+            this.getParent(wrapperCombobox, '.form-group').classList.add('invalid');
         } else {
             this.errorElement.innerText = '';
-            this.getParent(wrapperCombobox, this.formGroupElement).classList.remove('invalid');
+            this.getParent(wrapperCombobox, '.form-group').classList.remove('invalid');
         }
 
         return !this.errorMessage;
@@ -144,10 +136,6 @@ export default class Combobox extends React.Component {
     //lay form
     getParent = (wrapperCombobox, selector) => {
         while (wrapperCombobox.parentElement) {
-
-            console.log(selector);
-            console.log(wrapperCombobox);
-
             if (wrapperCombobox.parentElement.matches(selector)) {
                 return wrapperCombobox.parentElement;
             }
@@ -161,6 +149,8 @@ export default class Combobox extends React.Component {
                 id: this.props.selectedOptionID,
                 name: this.props.options.filter(item => item.id === parseInt(this.props.selectedOptionID))[0].name
             }
+            if (document.getElementById("combobox-wrapper-" + this.props.id))
+                document.getElementById("combobox-wrapper-" + this.props.id).classList.remove('dummy-invalid');
         }
 
         let options = this.props.options.map(option =>
@@ -185,7 +175,7 @@ export default class Combobox extends React.Component {
                     <div>
                         {/* select */}
                         <div className="combox" id={"combobox-" + this.props.id}
-                            onClick={(e) => this.handleComboboxClick(e, "combobox-" + this.props.id, "combobox-text-" + this.props.id, "combobox-btn-element-" + this.props.id, "dropdown-container-" + this.props.id)}>
+                            onClick={(e) => this.handleComboboxClick(e, "combobox-btn-element-" + this.props.id, "dropdown-container-" + this.props.id)}>
                             <div className="d-flex">
                                 <div className="combox-text" id={"combobox-text-" + this.props.id}>
                                     {
@@ -251,8 +241,7 @@ export default class Combobox extends React.Component {
                 </ClickAwayListener >
                 {this.props.validation ? <div>
                     <div id={"d-e-combobox-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
-                    <div id={"d-f-g-combobox-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
-                    <div id={"d-e-s-combobox-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
+
                 </div> : <></>
                 }
             </div >

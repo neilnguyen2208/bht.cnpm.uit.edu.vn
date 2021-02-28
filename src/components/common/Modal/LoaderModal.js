@@ -6,26 +6,16 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { closeModal } from "redux/actions/modalAction";
-import MediumLoader from 'components/common/Loader/Loader_M';
+import Loader from 'components/common/Loader/Loader_S';
 class LoaderModal extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    closeModal = () => {
-        this.props.closeModal();
-    }
-
-    onOKClick = () => {
-        this.props.closeModal();
-        if (this.props.onOKClick)
-            this.props.onOKClick();
-    }
 
     render() {
         return (
             <div>
-                <MediumLoader text={this.props.text} />
+                <div className="modal-overlay-shadow" />
+                <div className="modal-fixed-layout">
+                    <Loader text={this.props.text} />
+                </div>
             </div>
         );
     }

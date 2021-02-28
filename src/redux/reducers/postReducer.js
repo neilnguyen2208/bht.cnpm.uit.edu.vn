@@ -12,6 +12,7 @@ import {
     GET_POST_BY_ID_REQUEST,
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
+    GET_POST_BY_ID_RESET,
 
     //post list
     GET_POSTS_LIST_SUCCESS,
@@ -47,12 +48,15 @@ import {
     DELETE_A_POST_SUCCESS,
     DELETE_A_POST_FAILURE,
 
+    EDIT_A_POST_REQUEST,
+    EDIT_A_POST_SUCCESS,
+    EDIT_A_POST_FAILURE,
 
 } from '../constants.js'
 
 const initialState = {
     currentPost: {
-        isLoading: false, data: {}
+        isLoading: false, data: {}, isLoadDone: false, isEditing: false
     },
 
     //search post: use for search post and post list
@@ -83,7 +87,7 @@ const initialState = {
     approvePost: {
         isLoadDone: false
     },
-    
+
     likePostStatus: { isLiking: false, isUnLiking: false },
 };
 
@@ -92,15 +96,20 @@ function PostReducer(state = initialState, action) {
 
         case GET_POST_BY_ID_REQUEST:
             return {
-                ...state, currentPost: { isLoading: true }
+                ...state, currentPost: { isLoading: true, isLoadDone: false }
             };
         case GET_POST_BY_ID_SUCCESS:
             {
-                return { ...state, currentPost: { isLoading: false, data: action.payload } }
+                return { ...state, currentPost: { isLoading: false, data: action.payload, isLoadDone: true } }
             }
         case GET_POST_BY_ID_FAILURE:
             {
-                return { ...state, currentPost: { ...state.currentPost, isLoading: false } }
+                return { ...state, currentPost: { ...state.currentPost, isLoading: false, isLoadDone: true } }
+            }
+
+        case GET_POST_BY_ID_RESET:
+            {
+                return { ...state, currentPost: { ...state.currentPost, isLoadDone: false } }
             }
         //get all not approved post
 
@@ -210,7 +219,18 @@ function PostReducer(state = initialState, action) {
             return { ...state }
         case DELETE_A_POST_FAILURE:
             return { ...state }
-
+        case EDIT_A_POST_REQUEST:
+            return {
+                ...state, currentPost: { ...state.currentPost, isEditing: true }
+            }
+        case EDIT_A_POST_SUCCESS:
+            return {
+                ...state, currentPost: { ...state.currentPost, isEditing: false }
+            }
+        case EDIT_A_POST_FAILURE:
+            return {
+                ...state, currentPost: { ...state.currentPost, isEditing: false }
+            }
         default:
             return state;
     }

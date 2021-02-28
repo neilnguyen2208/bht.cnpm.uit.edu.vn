@@ -1,5 +1,8 @@
 //#region validation html elements not 
 
+const errorSelector = '.form-error-label';
+const formGroupSelector = '.form-group'
+
 // Đối tượng `Validator`
 export function validation(conditions) {
     function getParent(element, selector) {
@@ -14,7 +17,7 @@ export function validation(conditions) {
 
     // Hàm thực hiện validate
     function validate(element, rule) {
-        var errorElement = getParent(element, conditions.formGroupSelector).querySelector(conditions.errorSelector);
+        var errorElement = getParent(element, formGroupSelector).querySelector(errorSelector);
         var errorMessage;
 
         // Lấy ra các rules của selector
@@ -31,18 +34,12 @@ export function validation(conditions) {
             else
                 if (element.classList.contains('form-combobox')) {
                     document.getElementById("d-e-" + element.id).innerText = rules[i](false);
-                    document.getElementById("d-f-g-" + element.id).innerText = conditions.formGroupSelector;
-                    document.getElementById("d-e-s-" + element.id).innerText = conditions.errorSelector;
                     if (errorMessage) break;
                 }
                 else
                     if (element.classList.contains('form-ckeditor')) {
-
                         //kiem tra xem co class dummy invalid hay khong
                         document.getElementById("d-e-" + element.id).innerText = rules[i](false);
-                        document.getElementById("d-f-g-" + element.id).innerText = conditions.formGroupSelector;
-                        document.getElementById("d-e-s-" + element.id).innerText = conditions.errorSelector;
-
                         if (errorMessage) break;
                     }
                     else
@@ -55,11 +52,11 @@ export function validation(conditions) {
 
         if (errorMessage) {
             errorElement.innerText = errorMessage;
-            getParent(element, conditions.formGroupSelector).classList.add('invalid');
+            getParent(element, formGroupSelector).classList.add('invalid');
 
         } else {
             errorElement.innerText = '';
-            getParent(element, conditions.formGroupSelector).classList.remove('invalid');
+            getParent(element, formGroupSelector).classList.remove('invalid');
         }
 
         return !errorMessage;
@@ -79,7 +76,6 @@ export function validation(conditions) {
                 selectorRules[rule.selector] = [rule.test];
             }
             var elements = formElement.querySelectorAll(rule.selector);
-
             Array.from(elements).forEach(function (element) {
                 if (element.classList.contains('form-input')
                     || element.classList.contains('form-check-box')
@@ -88,16 +84,18 @@ export function validation(conditions) {
 
                     //xu ly cac HTMLInputElement
                     // Xử lý trường hợp blur khỏi input
-                    element.onblur = function () {
+
+                    document.getElementById(element.id).onblur = function () {
                         validate(element, rule);
                     }
 
                     // Xử lý mỗi khi người dùng nhập vào input
-                    element.oninput = function () {
-                        var errorElement = getParent(element, conditions.formGroupSelector).querySelector(conditions.errorSelector);
+                    document.getElementById(element.id).oninput = function () {
+                        var errorElement = getParent(element, formGroupSelector).querySelector(errorSelector);
                         errorElement.innerText = '';
-                        getParent(element, conditions.formGroupSelector).classList.remove('invalid');
+                        getParent(element, formGroupSelector).classList.remove('invalid');
                     }
+
                     //neu la HTMLInputElement => vong lap tiep theo
                     return;
                 }
@@ -129,7 +127,7 @@ validation.isRequired = function (selector, type, message) {
             selector: '#' + selector,
             type: type,
             test: function (value) {
-                return value ? '' : message || 'Vui lòng nhập trường này'
+                return (value && value !== '') ? '' : message || 'Vui lòng nhập trường này'
             }
         };
     }
@@ -159,7 +157,6 @@ validation.isRequired = function (selector, type, message) {
             selector: '#' + selector,
             type: type,
             test: function (value) {
-                console.log(value);
                 //  kiem tra xem co class dummy invalid hay khong o ben tren
                 return value ? undefined : message || 'Vui lòng nhập trường này'
             }
@@ -218,11 +215,12 @@ export function styleFormSubmit(conditions) {
     let selectorRules = {};
     let isFormValid = true;
     function validate(element, rule) {
-        let errorElement = getParent(element, conditions.formGroupSelector).querySelector(conditions.errorSelector);
+        let errorElement = getParent(element, formGroupSelector).querySelector(errorSelector);
         let errorMessage;
         let rules = selectorRules[rule.selector];
         // Lặp qua từng rule & kiểm tra
         // Nếu có lỗi thì dừng việc kiểm
+        // console.log(element);
         for (var i = 0; i < rules.length; ++i) {
             if (element.classList.contains('form-input')) {
                 errorMessage = rules[i](element.value);
@@ -246,25 +244,23 @@ export function styleFormSubmit(conditions) {
                     else
                         if (element.classList.contains('form-radio') || element.classList.contains('form-check-box')) {
                             errorMessage = rules[i](formElement.querySelector(rule.selector + ':checked'));
+                            if (errorMessage) break;
                         }
                         else
                             if (element.classList.contains('form-file-input')) {
                                 errorMessage = rules[i](element.value);
                                 if (errorMessage) break;
                             }
-
             if (errorMessage) break;
         }
 
         if (errorMessage) {
             errorElement.innerText = errorMessage;
-            getParent(element, conditions.formGroupSelector).classList.add('invalid');
-
+            getParent(element, '.form-group').classList.add('invalid');
         } else {
             errorElement.innerText = '';
-            getParent(element, conditions.formGroupSelector).classList.remove('invalid');
+            getParent(element, '.form-group').classList.remove('invalid');
         }
-
         return !errorMessage;
     }
 
@@ -285,24 +281,22 @@ export function styleFormSubmit(conditions) {
                 || element.classList.contains('form-radio')
                 || element.classList.contains('form-file-input')
             ) {
-                isFormValid = validate(element, rule)
-                return;
+                validate(element, rule);
             }
-
-            if (element.classList.contains('form-combobox')
-            ) {
-                isFormValid = validate(element, rule);
-                return;
-            }
-
             if (element.classList.contains('form-ckeditor')
             ) {
-                isFormValid = validate(element, rule);
-                return;
+                validate(element, rule);
+            }
+            if (element.classList.contains('form-combobox')
+            ) {
+                validate(element, rule);
             }
         });
     });
-    return isFormValid;
+
+    if (formElement.querySelectorAll('.invalid').length > 0)
+        return false;
+    else return true;
 }
 
 

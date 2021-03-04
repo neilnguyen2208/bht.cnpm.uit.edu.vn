@@ -27,7 +27,6 @@ export function get_PostCategoriesSuccessHaveAll(data) {
     }
 }
 
-
 export function get_PostCategoriesFailure(error) {
     return {
         type: GET_POST_CATEGORIES_FAILURE,

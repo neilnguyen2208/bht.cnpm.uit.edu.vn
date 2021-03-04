@@ -40,12 +40,12 @@ const validationCondition = {
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('cr-doc-title', 'form-input', 'Tên tài liệu không được để trống!'),
-        validation.isNotAllowSpecialCharacter('cr-doc-title', 'form-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
+        validation.noSpecialChar('cr-doc-title', 'form-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
         validation.isRequired('cr-doc-category-combobox', 'form-combobox', 'Danh mục không được để trống'),
         validation.isRequired('cr-doc-subject-combobox', 'form-combobox', 'Môn học không được để trống'),
         validation.isRequired('cr-doc-description', 'form-ckeditor', 'Mô tả tài liệu không được để trống'),
-        // validation.isRequired('cr-doc-file-input', 'form-file-input', 'Tài liệu không được để trống!')
-        validation.isRequired('cr-doc-file-link', 'form-input', 'Tài liệu không được để trống!')
+        validation.isRequired('cr-doc-file-input', 'form-file-input', 'Tài liệu không được để trống!')
+        // validation.isRequired('cr-doc-file-link', 'form-input', 'Tài liệu không được để trống!')
 
     ],
 }

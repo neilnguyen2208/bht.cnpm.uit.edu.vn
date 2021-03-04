@@ -122,7 +122,7 @@ export function validation(conditions) {
 // 1. Khi có lỗi => Trả ra message lỗi
 // 2. Khi hợp lệ => Không trả ra cái gì cả (undefined)
 validation.isRequired = function (selector, type, message) {
-    if (type === 'form-input') {
+    if (type === 'form-input' || type === 'form-area') {
         return {
             selector: '#' + selector,
             type: type,
@@ -198,7 +198,7 @@ validation.isConfirmed = function (selector, type, getConfirmValue, message) {
     }
 }
 
-validation.isNotAllowSpecialCharacter = function (selector, type, message) {
+validation.noSpecialChar = function (selector, type, message) {
     return {
         selector: '#' + selector,
         type: type,

@@ -1,6 +1,6 @@
 import React from "react"
 
-import EditPostModal from './EditPostModal'
+import EditPostModal from './CustomModal/EditPostModal'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';

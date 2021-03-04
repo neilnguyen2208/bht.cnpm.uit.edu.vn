@@ -121,9 +121,10 @@ class Paginator extends Component {
             }
             else {
                 this.currentPage = this.props.config.pageCount;
-                setSearchParam('page', this.currentPage);
+                // setSearchParam('page', this.currentPage);
             }
-            if (this.currentPage <= 0) setSearchParam('page', 1);
+            if (this.currentPage <= 0) this.currentPage = 1;
+            //  setSearchParam('page', 1);
 
             //neu so page nho hon so page duoc hien thi => hien so page nho hon
             if (this.props.config.pageCount < this.numShownPage) {

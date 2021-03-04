@@ -128,7 +128,7 @@ class SearchPost extends Component {
                                 < Loader /> :
                                 <div>
                                     <div>
-                                        <div className="two-element-filter-container">
+                                        <div className="filter-container">
                                             <div className="d-flex">
                                                 <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
                                                 <div style={{ marginLeft: "5px" }}>

@@ -19,9 +19,13 @@ import {    //highlight posts
     get_PostByIDSuccess,
     get_PostByIDFailure,
 
-    post_ApproveAPostRequest,
+    post_ApproveAPostReset,
     post_ApproveAPostSuccess,
     post_ApproveAPostFailure,
+
+    delete_RejectAPostReset,
+    delete_RejectAPostSuccess,
+    delete_RejectAPostFailure,
 
     post_LikeAPostRequest,
     post_LikeAPostSuccess,
@@ -45,14 +49,18 @@ import {    //highlight posts
 
     put_EditAPostRequest,
     put_EditAPostSuccess,
-    put_EditAPostFailure
+    put_EditAPostFailure,
+
+    get_PendingPostsRequest,
+    get_PendingPostsSuccess,
+    get_PendingPostsFailure
 
 } from "redux/actions/postAction.js";
 
 import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
 
 import { request } from 'utils/requestUtils';
-import { generateSearchTerm } from 'utils/urlUtils'
+import { generateSearchTerm, getSearchParamByName } from 'utils/urlUtils'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export function createAPost(data) {
@@ -110,6 +118,18 @@ export function getPostsList(page = 1, category = "", searchTerm = "") {
     }
 }
 
+export function getPendingPosts(searchTermObject) {
+    return dispatch => {
+        dispatch(get_PendingPostsRequest());
+        request.get(`/posts?${generateSearchTerm(searchTermObject)}`)
+            .then(
+                result => {
+                    dispatch(get_PendingPostsSuccess(result.data.postSummaryDTOs));
+                }
+            ).catch(error => { get_PendingPostsFailure(error) })
+    }
+}
+
 //posts search result
 export function getPostSearchResult(page = 0, categoryID = 1, searchTerm = '', sort = 'publishDtm,desc') {
     return dispatch => {
@@ -123,14 +143,25 @@ export function getPostSearchResult(page = 0, categoryID = 1, searchTerm = '', s
     }
 }
 
-//posts search result
 export function approveAPost(id) {
     return dispatch => {
-        dispatch(post_ApproveAPostRequest());
-        request.post(`/posts/id=${id}/approval`)
+        dispatch(post_ApproveAPostReset());
+        request.post(`/posts/${id}/approval`)
             .then(result => {
                 dispatch(post_ApproveAPostSuccess());
             })
+            .catch(error => post_ApproveAPostFailure())
+    }
+}
+
+export function rejectAPost(id) {
+    return dispatch => {
+        dispatch(delete_RejectAPostReset());
+        request.delete(`/posts/${id}/approval`)
+            .then(result => {
+                dispatch(delete_RejectAPostSuccess());
+            })
+            .catch(error => delete_RejectAPostFailure())
     }
 }
 
@@ -208,15 +239,14 @@ export function deleteAPost(id) { //maybe use modal later
     }
 }
 
-export function editAPost(id, newPostContent) { //
+export function editAPost(id, newPostContent, reloadList) { //
     return dispatch => {
-        console.log(newPostContent)
         dispatch(put_EditAPostRequest())
         dispatch(openModal("loader", { text: "Đang xử lý" }))
         request.put(`/posts/${id}`, JSON.stringify(newPostContent))
             .then(response => {
-                dispatch(closeModal())
-                dispatch(openBLModal({ text: "Chỉnh sửa bài viết thành công!", icon: done_icon }))
+                dispatch(closeModal());
+                dispatch(openBLModal({ text: "Chỉnh sửa bài viết thành công!", icon: done_icon }));
                 dispatch(put_EditAPostSuccess(id, newPostContent));
             }
             ).catch(() => dispatch(put_EditAPostFailure()))

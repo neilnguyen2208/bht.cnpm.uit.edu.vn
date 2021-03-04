@@ -1,13 +1,16 @@
 import {
 
-    // GET_ALL_NOT_APPROVED_DOCUMENTS_SUCCESS,
-    // GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST,
-    // GET_ALL_NOT_APPROVED_DOCUMENTS_FAILURE,
+    GET_PENDING_POSTS_REQUEST,
+    GET_PENDING_POSTS_SUCCESS,
+    GET_PENDING_POSTS_FAILURE,
 
-    POST_APPROVE_A_POST_REQUEST,
-    POST_APPROVE_A_POST_SUCCESS,
-    POST_APPROVE_A_POST_FAILURE,
-    // APPROVE_A_DOCUMENT,
+    APPROVE_A_POST_RESET,
+    APPROVE_A_POST_SUCCESS,
+    APPROVE_A_POST_FAILURE,
+
+    REJECT_A_POST_RESET,
+    REJECT_A_POST_SUCCESS,
+    REJECT_A_POST_FAILURE,
 
     //highlight posts 
 
@@ -34,7 +37,7 @@ import {
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
     GET_POST_BY_ID_RESET,
-    
+
     //like post
     LIKE_A_POST_REQUEST,
     UNLIKE_A_POST_REQUEST,
@@ -81,24 +84,42 @@ export function post_CreatePostFailure(notification) {
     }
 }
 
-
-//create a post 
-export function post_ApproveAPostRequest() {
+export function post_ApproveAPostReset() {
     return {
-        type: POST_APPROVE_A_POST_REQUEST
+        type: APPROVE_A_POST_RESET
     }
 }
 
 export function post_ApproveAPostSuccess(notification) {
     return {
-        type: POST_APPROVE_A_POST_SUCCESS,
+        type: APPROVE_A_POST_SUCCESS,
         payload: notification
     }
 }
 
 export function post_ApproveAPostFailure(notification) {
     return {
-        type: POST_APPROVE_A_POST_FAILURE,
+        type: APPROVE_A_POST_FAILURE,
+        payload: notification
+    }
+}
+
+export function delete_RejectAPostReset() {
+    return {
+        type: REJECT_A_POST_RESET
+    }
+}
+
+export function delete_RejectAPostSuccess(notification) {
+    return {
+        type: REJECT_A_POST_SUCCESS,
+        payload: notification
+    }
+}
+
+export function delete_RejectAPostFailure(notification) {
+    return {
+        type: REJECT_A_POST_FAILURE,
         payload: notification
     }
 }
@@ -174,7 +195,6 @@ export function get_PostSearchResultFailure(error) {
     }
 }
 
-
 //post search result
 export function post_LikeAPostRequest(data) {
     return {
@@ -217,7 +237,6 @@ export function delete_UnLikeAPostFailure(data) {
         payload: data
     }
 }
-
 
 //post search result, phan dung toi id sau nay moi lam, gio chua lam ki
 export function post_SaveAPostRequest(data) {
@@ -300,4 +319,16 @@ export function put_EditAPostFailure() {
     return {
         type: EDIT_A_POST_FAILURE
     }
+}
+
+export function get_PendingPostsRequest() {
+    return { type: GET_PENDING_POSTS_REQUEST }
+}
+
+export function get_PendingPostsSuccess(data) {
+    return { type: GET_PENDING_POSTS_SUCCESS, payload: data }
+}
+
+export function get_PendingPostsFailure(data) {
+    return { type: GET_PENDING_POSTS_FAILURE }
 }

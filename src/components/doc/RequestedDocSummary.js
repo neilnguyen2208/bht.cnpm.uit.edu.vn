@@ -10,23 +10,6 @@ class RequestedDocSummary extends Component {
     constructor(props) {
         super(props);
 
-        this.id = this.props.id;
-        this.authorName = this.props.authorName;
-        this.authorID = this.props.authorID;
-        this.requestedDate = this.props.requestedDate;
-        this.requestedTime = this.props.requestedTime;
-        this.requestedCategory = this.props.requestedCategory;
-        this.requestedCategoryID = this.props.requestedCategoryID;
-        this.semester = this.props.semester;
-        this.year = this.props.year;
-        this.subject = this.props.subject;
-        this.title = this.props.title;
-        this.content = this.props.content;
-        this.image = this.props.image;
-        this.tags = this.props.tags;
-        this.viewCount = this.props.viewCount;
-        this.downCount = this.props.downCount;
-
         this.isRejectRequestedPopupOpen = false;
 
         this.state = {
@@ -81,20 +64,6 @@ class RequestedDocSummary extends Component {
                 </div>
 
                 {/* Popup for reject requested post */}
-                <Modal
-                    shadow={true}
-                    type="confirmation"
-                    open={this.isRejectRequestedPopupOpen}
-                    title="Xác nhận?"
-                    text="Xác nhận từ chối tiếp nhận bài viết này?"
-                    closeModal={() => { this.isRejectRequestedPopupOpen = false; this.setState({}); }}
-                >
-                    <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyRejectRequestedPostConfirmation()}>OK</button>
-                    <button className="white-button" onClick={() => this.handleCancelRejectRequestedPostConfirmation()}>Cancel</button>
-
-                </Modal>
-
-
             </div>
         );
     }

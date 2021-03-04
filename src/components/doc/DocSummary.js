@@ -139,7 +139,7 @@ class DocSummary extends Component {
             </div>
 
             <div className="light-black-label">bởi</div>
-            <div className="link-label" onClick={() => this.navigateToAuthorPersonalPage()}>
+            <div className="link-label-s" onClick={() => this.navigateToAuthorPersonalPage()}>
               {this.props.authorName}
             </div>
 
@@ -213,7 +213,7 @@ class DocSummary extends Component {
             </div>
           </div>
 
-          <div className="link-label">
+          <div className="link-label-s">
             Đọc tiếp ...
           </div>
 

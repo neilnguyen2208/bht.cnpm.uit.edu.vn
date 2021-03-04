@@ -5,17 +5,15 @@ import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { approveAPost } from 'redux/services/postServices'
 //resources
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteAPost, editAPost } from 'redux/services/postServices'
 
-import { openBigModal } from 'redux/actions/modalAction'
+import { openBigModal, openModal } from 'redux/actions/modalAction'
 import store from 'redux/store/index'
-import EditPostModal from 'components/common/Modal/EditPostModal'
-
+import { validation } from 'utils/validationUtils'
 // import 'components/styles/Metadata.scss'
 import 'components/styles/Metadata.scss'
 
@@ -58,6 +56,56 @@ class PostSummary extends Component {
     if (selectedItem.value === "EDIT_POST") {
       store.dispatch(openBigModal("edit-post", { id: this.props.id }));
     }
+
+    if (selectedItem.value === "REPORT_POST") {
+      store.dispatch(openModal("form", {
+        id: `rpp-${this.props.id}`,
+        title: `Tố cáo bài viết.`,
+        formId: `#rpp-${this.props.id}-form`,
+        inputs: [
+          { //for rendering
+            id: `rpp-${this.props.id}-post-reason`,
+            isRequired: true,
+            type: 'form-text-area',
+          },
+          {
+            id: `rpp-${this.props.id}-post-reason-1`,
+            isRequired: true,
+            type: 'form-input',
+          },
+          {
+            id: `rpp-${this.props.id}-post-reason-2`,
+            isRequired: true,
+            type: 'form-file-input',
+          },
+          {
+            id: `rpp-${this.props.id}-post-reason-3`,
+            isRequired: true,
+            type: 'text-input',
+          }
+
+        ],
+        validationOptions: //for validation
+        {
+          form: `#rpp-${this.props.id}-form`,
+          rules: [
+            //truyen vao id, loai component, message
+            validation.isRequired(`rpp-${this.props.id}-post-reason`, 'form-text-area', 'Lý do không được để trống!'),
+            validation.noSpecialChar(`rpp-${this.props.id}-post-reason`, 'form-text-area', 'Lý do không được chứa ký tự đặc biệt!'),
+            validation.minLength(`rpp-${this.props.id}-post-reason`, 'form-text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
+          ],
+        },
+        onVerifyBtnClick: this.onVerifyReport(),
+        submitText: "Tố cáo",
+        cancelText: "Huỷ"
+
+      }
+      ));
+    }
+  }
+
+  onVerifyReport = () => {
+    //handle report
   }
 
   render() {
@@ -71,11 +119,11 @@ class PostSummary extends Component {
               </div>
             </div>
             <div className="light-black-label">bởi</div>
-            <Link className="link-label" to={/user/}>
+            <Link className="link-label-s" to={/user/}>
               {this.props.authorName}
             </Link>
 
-            {this.props.type === itemType.mySelf || this.props.type === itemType.approving ?
+            {this.props.type === itemType.mySelf ?
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>

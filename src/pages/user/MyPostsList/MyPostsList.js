@@ -17,26 +17,34 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import UserSidebar from 'layouts/UserSidebar'
 import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
 import PostSummaryMetadata from 'components/post/SummaryMetadata'
-import EditPostModal from 'components/common/Modal/EditPostModal'
+
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
 class MyPostsList extends Component {
     constructor(props) {
         super();
-        this.myPostsList = <div>
-            {DocPostSummaryLoader()}
-            {DocPostSummaryLoader()}
-            {DocPostSummaryLoader()}
-        </div>
 
-        this.searchTermObject = {
-            page: 0,
-            "category.id": '',
-            sort: 'publishDtm,desc',
-            postState: ''
-        }
+
     }
 
     componentDidMount() {
+        this.searchTermObject = {
+            "page": 0,
+            "category.id": null,
+            "postState": ''
+        }
+
+        this.searchParamObject = {
+            "category": 0,
+            "page": 1
+        }
+
+        if (!getSearchParamByName('category') || !getSearchParamByName('page'))
+            setSearchParam(this.searchParamObject);
+        else if (getSearchParamByName('page') <= 0) {
+            this.searchParamObject = { ...this.searchParamObject, "page": 1 };
+            setSearchParam(this.searchParamObject);
+        }
+
         this.props.getPostCategoriesHaveAll();
         this.searchTermObject = {
             page: getSearchParamByName('page') - 1,
@@ -49,7 +57,11 @@ class MyPostsList extends Component {
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "page": pageNumber
+        }
+        setSearchParam(this.searchParamObject);
         this.searchTermObject = {
             ...this.searchTermObject,
             page: getSearchParamByName('page') - 1
@@ -60,7 +72,8 @@ class MyPostsList extends Component {
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
+        this.searchParamObject = { ...this.searchParamObject, category: selectedOption.id }
+        setSearchParam(this.searchParamObject);
         this.searchTermObject = {
             ...this.searchTermObject,
             "category.id": selectedOption.id,
@@ -92,8 +105,8 @@ class MyPostsList extends Component {
 
     render() {
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
-            this.comboboxsGroup =
-                <div className="two-element-filter-container">
+            this.comboboxGroup =
+                <div className="filter-container">
                     <div className="d-flex">
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
@@ -118,7 +131,7 @@ class MyPostsList extends Component {
                     </div>
                 </div>
         }
-        else this.comboboxsGroup = <div className="two-element-filter-container">
+        else this.comboboxGroup = <div className="filter-container">
             <div className="d-flex">
                 <div className="timeline-item d-flex">
                     <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
@@ -148,7 +161,7 @@ class MyPostsList extends Component {
                             approveState={item.postState}
                             popUpMenuPrefix="mppu"   //stand for my post popup 
                             avatarURL={item.avatarURL}
-                            //chi co delete bai post la can load lai component nen de o parent component, cac hanh dong khac khong can
+                            //
                             reloadList={() => this.reloadList()}
                         />
                         <PostSummaryReactionBar
@@ -177,7 +190,7 @@ class MyPostsList extends Component {
                 <div className="content-layout">
                     <Titlebar title="BÀI VIẾT CỦA TÔI" />
                     <div className="content-container">
-                        {this.comboboxsGroup}
+                        {this.comboboxGroup}
 
                         <div className="filter-label d-flex">
                             {!this.props.isListLoading ? <div className="d-flex">

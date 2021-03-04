@@ -42,8 +42,12 @@
 
 }
 
+.modal-wrapper.form {
+    min-width: 600px;
+}
+
 @media (min-width: 576px) {
-    .modal-wrapper {
+    .modal-wrapper.big {
         width: 800px;
         min-width: 400px;
     }
@@ -61,7 +65,7 @@
     height: 2em;
     display: flex;
     position: relative;
-    font-family: "BarlowCondensed-Medium";
+    font-family: "BarlowCondensed-SemiBold";
     font-size: 18px;
     padding-top: 0.5em;
     line-height: 1em;
@@ -128,6 +132,9 @@
     padding-right: 10px;
     padding-left: 10px;
     width: 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
 }
 
 .modal-large-container {

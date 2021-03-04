@@ -8,7 +8,6 @@ import { closeModal } from "redux/actions/modalAction";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { CssBaseline } from "@material-ui/core";
 
 class ConfirmationModal extends React.Component {
     constructor(props) {
@@ -20,7 +19,6 @@ class ConfirmationModal extends React.Component {
     }
 
     onOKClick = () => {
-        this.props.closeModal();
         if (this.props.onOKClick)
             this.props.onOKClick();
     }

@@ -130,10 +130,12 @@ img {
 a {
     text-decoration: none;
     outline: none;
+    color: var(--blue);
 }
 
 a:hover {
     text-decoration: none;
+    color: var(--blue);
 }
 
 .d-flex {

@@ -35,7 +35,7 @@ const validationCondition = {
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('cr-post-title', 'form-input', 'Tên bài viết không được để trống!'),
-        validation.isNotAllowSpecialCharacter('cr-post-title', 'form-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
+        validation.noSpecialChar('cr-post-title', 'form-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
         validation.isRequired('cr-post-category-combobox', 'form-combobox', 'Danh mục không được để trống'),
         validation.isRequired('cr-post-cke', 'form-ckeditor', 'Nội dung bài viết không được để trống')
     ],

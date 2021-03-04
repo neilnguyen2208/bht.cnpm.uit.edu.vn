@@ -100,7 +100,7 @@ export default class WallpageItem extends React.Component {
                                 </div>
                             </div>
                             <div className="light-black-label">bởi</div>
-                            <Link className="link-label" to={/user/}>
+                            <Link className="link-label-s" to={/user/}>
                                 {this.props.authorName}
                             </Link>
                         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import './Modal.scss'
+import '../Modal.scss'
 import 'components/styles/Button.scss'
 import { closeBigModal } from "redux/actions/modalAction";
 import store from 'redux/store/index.js'
@@ -37,7 +37,7 @@ const validationCondition = {
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('ed-post-title', 'form-input', 'Tên bài viết không được để trống!'),
-        validation.isNotAllowSpecialCharacter('ed-post-title', 'form-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
+        validation.noSpecialChar('ed-post-title', 'form-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
         validation.isRequired('ed-post-category-combobox', 'form-combobox', 'Danh mục không được để trống'),
         validation.isRequired('ed-post-cke', 'form-ckeditor', 'Nội dung bài viết không được để trống')
     ],
@@ -111,8 +111,8 @@ class EditPostModal extends React.Component {
     componentDidMount() {
         validation(validationCondition);
         this.props.getPostCategories();
-        console.log(this.props.id);
         this.props.getPostByID(this.props.id);
+
         document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-block");
         document.querySelector(".ed-post-form-container.edit").classList.remove("d-none");
         document.querySelector(".ed-post-form-container.preview-modal").classList.add("d-none");
@@ -158,7 +158,6 @@ class EditPostModal extends React.Component {
         }
     }
 
-
     //#region  tag region
     closeQuickSearchTag = () => {
         document.getElementById("ed-post-qs-tag-result-container").classList.add('hidden');
@@ -189,6 +188,7 @@ class EditPostModal extends React.Component {
         this.isInstanceReady = true;
         this.setState({})
     }
+
     keyHandler = (e) => {
         if (!e.target.value) return;
         let tags = this.state.EDIT_POST_DTO.tags;
@@ -445,7 +445,7 @@ class EditPostModal extends React.Component {
             <div>
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
-                    <div className="modal-wrapper o-f-hidden pd-top-5px">
+                    <div className="modal-wrapper big o-f-hidden pd-top-5px">
                         <ModalTitlebar title="CHỈNH SỬA BÀI VIẾT" />
                         <div className="scroller-container mg-bottom-10px">
                             {/* <div className="modal-large-container"> */}
@@ -623,6 +623,7 @@ const mapStateToProps = (state) => {
         currentPost: state.post.currentPost.data,
         isCurrentPostEditing: state.post.currentPost.isEditing,
         isCurrentPostLoadDone: state.post.currentPost.isLoadDone,
+        isEditSuccess: state.post.currentPost.isEditDone,
 
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,

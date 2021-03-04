@@ -1,7 +1,11 @@
 import {
-    POST_APPROVE_A_POST_REQUEST,
-    POST_APPROVE_A_POST_SUCCESS,
-    POST_APPROVE_A_POST_FAILURE,
+    APPROVE_A_POST_RESET,
+    APPROVE_A_POST_SUCCESS,
+    APPROVE_A_POST_FAILURE,
+
+    REJECT_A_POST_RESET,
+    REJECT_A_POST_SUCCESS,
+    REJECT_A_POST_FAILURE,
 
     //highlight posts list
     GET_HIGHLIGHT_POSTS_LIST_REQUEST,
@@ -52,11 +56,16 @@ import {
     EDIT_A_POST_SUCCESS,
     EDIT_A_POST_FAILURE,
 
+    GET_PENDING_POSTS_REQUEST,
+    GET_PENDING_POSTS_SUCCESS,
+    GET_PENDING_POSTS_FAILURE,
+
+
 } from '../constants.js'
 
 const initialState = {
     currentPost: {
-        isLoading: false, data: {}, isLoadDone: false, isEditing: false
+        isLoading: false, data: {}, isLoadDone: false, isEditing: false, isEditDone: false
     },
 
     //search post: use for search post and post list
@@ -88,6 +97,15 @@ const initialState = {
         isLoadDone: false
     },
 
+    rejectPost: {
+        isLoadDone: false
+    },
+
+    pendingPosts: {
+        isLoading: false,
+        data: null
+    },
+
     likePostStatus: { isLiking: false, isUnLiking: false },
 };
 
@@ -113,18 +131,29 @@ function PostReducer(state = initialState, action) {
             }
         //get all not approved post
 
-        case POST_APPROVE_A_POST_REQUEST:
+        case APPROVE_A_POST_SUCCESS:
             {
-                return { ...state, approvePost: { isLoading: true } }
+                return { ...state, approvePost: { isLoadDone: true } }
             }
-        case POST_APPROVE_A_POST_SUCCESS:
+        case APPROVE_A_POST_FAILURE:
             {
-                return { ...state, approvePost: { isLoading: false, notification: { type: 'success', message: 'Duyệt thành công' } } }
+                return { ...state, approvePost: { isLoadDone: true } }
             }
-        case POST_APPROVE_A_POST_FAILURE:
+        case APPROVE_A_POST_RESET: {
+            return { ...state, approvePost: { isLoading: false } }
+        }
+
+        case REJECT_A_POST_SUCCESS:
             {
-                return { ...state, approvePost: { isLoading: false, notification: { type: 'failure', message: 'Duyệt thất bại' } } }
+                return { ...state, rejectPost: { isLoadDone: true } }
             }
+        case REJECT_A_POST_FAILURE:
+            {
+                return { ...state, rejectPost: { isLoadDone: true } }
+            }
+        case REJECT_A_POST_RESET: {
+            return { ...state, rejectPost: { isLoading: false } }
+        }
 
         //get highlight posts list
 
@@ -216,9 +245,13 @@ function PostReducer(state = initialState, action) {
                 ...state
             }
         case DELETE_A_POST_SUCCESS:
-            return { ...state }
+            return {
+                ...state
+            }
         case DELETE_A_POST_FAILURE:
-            return { ...state }
+            return {
+                ...state
+            }
         case EDIT_A_POST_REQUEST:
             return {
                 ...state, currentPost: { ...state.currentPost, isEditing: true }
@@ -230,6 +263,18 @@ function PostReducer(state = initialState, action) {
         case EDIT_A_POST_FAILURE:
             return {
                 ...state, currentPost: { ...state.currentPost, isEditing: false }
+            }
+        case GET_PENDING_POSTS_REQUEST:
+            return {
+                ...state, pendingPosts: { ...state.pendingPosts, isLoading: true }
+            }
+        case GET_PENDING_POSTS_SUCCESS:
+            return {
+                ...state, pendingPosts: { isLoading: false, data: action.payload }
+            }
+        case GET_PENDING_POSTS_FAILURE:
+            return {
+                ...state, pendingPosts: { isLoading: false, data: null }
             }
         default:
             return state;

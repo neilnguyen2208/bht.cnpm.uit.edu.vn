@@ -34,10 +34,10 @@ const validationCondition = {
     form: '#create-post-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('cr-post-title', 'form-input', 'Tên bài viết không được để trống!'),
-        validation.noSpecialChar('cr-post-title', 'form-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
-        validation.isRequired('cr-post-category-combobox', 'form-combobox', 'Danh mục không được để trống'),
-        validation.isRequired('cr-post-cke', 'form-ckeditor', 'Nội dung bài viết không được để trống')
+        validation.isRequired('cr-post-title', 'text-input', 'Tên bài viết không được để trống!'),
+        validation.noSpecialChar('cr-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
+        validation.isRequired('cr-post-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('cr-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống')
     ],
 }
 
@@ -441,7 +441,7 @@ class CreatePost extends Component {
 
                         <div className="form-group">
                             <label className="form-label-required">Tiêu đề:</label>
-                            <input className="form-input" id="cr-post-title"
+                            <input className="text-input" id="cr-post-title"
                                 placeholder="Nhập tiêu đề bài viết ..." onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
                             <div className="form-error-label-container">
@@ -485,13 +485,13 @@ class CreatePost extends Component {
 
                             <input onChange={(e) => this.quickSearchTags(e)} id="cr-post-tag-input"
                                 onKeyPress={(this.state.CREATE_POST_DTO.tags.length < 5) && this.keyHandler}
-                                className="form-input"
+                                className="text-input"
                                 placeholder="Nhập tag ..." />
 
                             <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                 {/* khi load xong thi ntn */}
-                                <div id="cr-post-qs-tag-result-container" className="form-input-dropdown-container hidden">
-                                    <div className="form-input-dropdown">
+                                <div id="cr-post-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                    <div className="text-input-dropdown">
                                         {this.tagSearchResult}
                                         <div className="form-tip-label" id="cr-post-tag-container-tip-label" />
                                     </div>

@@ -117,7 +117,7 @@ class Editor extends Component {
 
   render() {
     return (
-      <div className="cke-wrapper form-ckeditor" id={"cke-wrapper-" + this.props.id}>
+      <div className="cke-wrapper ckeditor" id={"cke-wrapper-" + this.props.id}>
         <input type="text-area" className="fake-cke" id={this.editorID} name={this.editorID} cols="100" rows="6" defaultValue={this.props.myData}>
         </input>
         <div id={"ck-editor-loader" + this.props.id}>

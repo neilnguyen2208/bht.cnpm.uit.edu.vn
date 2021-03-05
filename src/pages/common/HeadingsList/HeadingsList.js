@@ -9,7 +9,7 @@ import 'layouts/Layout.scss';
 import './HeadingsList.scss';
 //utils
 import { courseContentType } from "constants.js"
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils';
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils';
 import dropdownIcon from 'assets/icons/12x12/dropdown_12x12.png'
 
 //services

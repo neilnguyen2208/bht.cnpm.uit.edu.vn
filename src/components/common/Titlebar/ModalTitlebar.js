@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import './Titlebar.scss'
 import store from 'redux/store/index.js'
-import { closeBigModal } from 'redux/actions/modalAction'
+import { closeBigModal, closeModal } from 'redux/actions/modalAction'
 import close_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
 
-class BigModalTitlebar extends Component {
+class ModalTitlebar extends Component {
 
-    closeModal = () => { store.dispatch(closeBigModal()) }
+    closeModal = () => {
+        if (this.props.form)
+            store.dispatch(closeModal())
+        else
+            store.dispatch(closeBigModal())
+    }
     render() {
         return (
             <div className="title-bar">
@@ -18,4 +23,4 @@ class BigModalTitlebar extends Component {
         );
     }
 }
-export default BigModalTitlebar;
+export default ModalTitlebar;

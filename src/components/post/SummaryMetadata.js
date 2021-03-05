@@ -59,53 +59,43 @@ class PostSummary extends Component {
 
     if (selectedItem.value === "REPORT_POST") {
       store.dispatch(openModal("form", {
-        id: `rpp-${this.props.id}`,
-        title: `Tố cáo bài viết.`,
-        formId: `#rpp-${this.props.id}-form`,
-        inputs: [
-          { //for rendering
-            id: `rpp-${this.props.id}-post-reason`,
-            isRequired: true,
-            type: 'form-text-area',
-          },
-          {
-            id: `rpp-${this.props.id}-post-reason-1`,
-            isRequired: true,
-            type: 'form-input',
-          },
-          {
-            id: `rpp-${this.props.id}-post-reason-2`,
-            isRequired: true,
-            type: 'form-file-input',
-          },
-          {
-            id: `rpp-${this.props.id}-post-reason-3`,
-            isRequired: true,
-            type: 'text-input',
-          }
-
-        ],
-        validationOptions: //for validation
-        {
-          form: `#rpp-${this.props.id}-form`,
+        id: `rpp-form-modal`,//report post
+        title: `TỐ CÁO BÀI VIẾT`,
+        formId: `rpp-form`,
+        inputs:
+          [
+            { //for rendering
+              id: `rpp-form-input`,
+              isRequired: true,
+              label: "Lý do tố cáo:",
+              type: 'text-area',
+              placeHolder: "Nhập lý do tố cáo ...",
+              validation: true
+            },
+          ],
+        validationCondition: {
+          form: `#rpp-form`,
           rules: [
             //truyen vao id, loai component, message
-            validation.isRequired(`rpp-${this.props.id}-post-reason`, 'form-text-area', 'Lý do không được để trống!'),
-            validation.noSpecialChar(`rpp-${this.props.id}-post-reason`, 'form-text-area', 'Lý do không được chứa ký tự đặc biệt!'),
-            validation.minLength(`rpp-${this.props.id}-post-reason`, 'form-text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
+            validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
+            // validation.noSpecialChar(`rpp-form-input`, 'text-area', 'Lý do không được chứa ký tự đặc biệt!'),
+            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!'),
           ],
-        },
-        onVerifyBtnClick: this.onVerifyReport(),
-        submitText: "Tố cáo",
-        cancelText: "Huỷ"
 
+        },
+        submitText: "Tố cáo",
+        cancelText: "Huỷ",
+        verifyText: "Xác nhận",
+        cancelVerifyText: "Huỷ",
+        onVerify: (DTO) => this.onVerifyReport(DTO)
       }
       ));
     }
   }
 
-  onVerifyReport = () => {
+  onVerifyReport = (DTO) => {
     //handle report
+    console.log(DTO);
   }
 
   render() {

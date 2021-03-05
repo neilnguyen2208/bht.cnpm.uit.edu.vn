@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import Loader from 'components/common/Loader/Loader'
 import AdminSidebar from 'layouts/AdminSidebar'
@@ -29,67 +29,67 @@ class PostApproving extends Component {
     }
 
     componentDidMount() {
-        this.searchTermObject = {
+        this.searchParamObject = {
             "page": 0,
             "category": null,
             "postState": ''
         }
         
-        this.searchParamObject = {
+        this.queryParamObject = {
             "category": 0,
             "page": 1
         }
 
         this.props.getPostCategoriesHaveAll();
-        if (!getSearchParamByName('category') || !getSearchParamByName('page'))
-            setSearchParam(this.searchParamObject);
-        else if (getSearchParamByName('page') <= 0) {
-            setSearchParam({ ...this.searchParamObject, "page": 1 });
+        if (!getQueryParamByName('category') || !getQueryParamByName('page'))
+            setQueryParam(this.queryParamObject);
+        else if (getQueryParamByName('page') <= 0) {
+            setQueryParam({ ...this.queryParamObject, "page": 1 });
         }
 
-        this.searchTermObject = {
-            paginator: getSearchParamByName('page') - 1,
-            "category": getSearchParamByName('category') && getSearchParamByName('category') !== "0" ? getSearchParamByName('category') : null,
+        this.searchParamObject = {
+            paginator: getQueryParamByName('page') - 1,
+            "category": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
             postState: 'PENDING_APPROVAL',
         }
         console.log()
-        this.props.getPendingPosts(this.searchTermObject);
+        this.props.getPendingPosts(this.searchParamObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam({ "page": pageNumber });
-        this.searchTermObject = {
-            ...this.searchTermObject,
-            paginator: getSearchParamByName('page') - 1,
+        setQueryParam({ "page": pageNumber });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            paginator: getQueryParamByName('page') - 1,
             postState: 'PENDING_APPROVAL'
         }
-        this.props.getPendindPosts(this.searchTermObject);
+        this.props.getPendindPosts(this.searchParamObject);
         this.setState({});
     }
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setSearchParam({ "category": selectedOption.id });
-        this.searchTermObject = {
-            ...this.searchTermObject,
+        setQueryParam({ "category": selectedOption.id });
+        this.searchParamObject = {
+            ...this.searchParamObject,
             "category": selectedOption.id,
             postState: 'PENDING_APPROVAL'
         }
-        this.props.getPendingPosts(this.searchTermObject);
+        this.props.getPendingPosts(this.searchParamObject);
         this.setState({});
     }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.postsList.length === 1 && this.searchTermObject.page > 1)
-            this.searchTermObject = {
-                ...this.searchTermObject,
-                paginator: this.searchTermObject.page - 1, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
+        if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
+            this.searchParamObject = {
+                ...this.searchParamObject,
+                paginator: this.searchParamObject.page - 1, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
-        setSearchParam({ "page": this.searchTermObject.page });
+        setQueryParam({ "page": this.searchParamObject.page });
 
-        this.props.getPendingPosts(this.searchTermObject);
+        this.props.getPendingPosts(this.searchParamObject);
     }
 
     render() {
@@ -101,7 +101,7 @@ class PostApproving extends Component {
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 0}
+                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
                                 id="post-approving-category-filter-combobox"
@@ -179,7 +179,7 @@ class PostApproving extends Component {
                         <Paginator config={{
                             changePage: (pageNumber) => this.onPageChange(pageNumber),
                             pageCount: 1,
-                            currentPage: getSearchParamByName('page')
+                            currentPage: getQueryParamByName('page')
                         }}
                         />
                     </div>

@@ -10,7 +10,7 @@ import './Home.scss'
 
 //utils
 import { itemType } from 'constants.js'
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import HomePostItem from 'components/home/HomePostItem'
 import HomeDocumentItem from 'components/home/HomeDocumentItem'
 import Wallpage from 'components/home/Wallpage/Wallpage'
@@ -101,7 +101,7 @@ class Home extends Component {
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
+        setQueryParam("category", selectedOption.id);
 
     }
 

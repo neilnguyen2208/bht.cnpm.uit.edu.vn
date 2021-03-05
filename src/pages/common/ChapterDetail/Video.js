@@ -9,7 +9,7 @@ import 'layouts/Layout.scss'
 
 //utils
 import { itemType } from 'constants.js'
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 //services
 import { getPostsList } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
@@ -34,8 +34,8 @@ class PostsList extends Component {
         this.props.getPostCategories()
 
         //get filter
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
 
         this.props.getPostsList(page, category);
     }

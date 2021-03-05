@@ -10,7 +10,7 @@
     width: 100%;
 }
 
-.form-input {
+.text-input {
     box-shadow: 0px 0px 2px 0px var(--grayish);
     padding: 2px;
     padding-left: 10px;
@@ -32,13 +32,13 @@
     margin: auto;
 }
 
-.form-input::placeholder {
+.text-input::placeholder {
     font-family: "BarlowCondensed-Regular";
     font-size: 15px;
 }
 
-.form-input:hover,
-.form-input:focus {
+.text-input:hover,
+.text-input:focus {
     border: var(--blue) 1px solid;
     cursor: text;
     opacity: 90%;
@@ -46,14 +46,14 @@
     box-shadow: 0px 0px 2px 0px var(--light-blue);
 }
 
-.form-input:disabled {
+.text-input:disabled {
     background: var(--gray);
     color: var(--black);
     cursor: text;
     opacity: 90%;
 }
 
-.form-group.invalid .form-input {
+.form-group.invalid .text-input {
     border-color: var(--red);
     box-shadow: 0px 0px 2px 0px var(--light-red);
 
@@ -126,45 +126,35 @@
     border-bottom: 1px solid var(--gray);
 }
 
-.form-text-area {
-    width: 100%;
-    height: 100px;
-    min-height: 100px;
-    resize: none;
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    color: var(--black);
-    border: var(--gray) 1px solid;
-    font-family: "BarlowCondensed-Medium";
-    font-size: 1.1rem;
-    line-height: 20px;
-    color: var(--black);
+.text-area {
+   @extend .text-input;
+   height: 120px;
+   resize: none;
+   padding-top: 5px;
 }
 
-.form-text-area:hover,
-.form-text-area:focus {
+.text-area:hover,
+.text-area:focus {
     border: var(--blue) 1px solid;
-    cursor: text;
-    border-radius: 5px;
     outline: none;
 }
 
-.form-text-area::placeholder {
+.text-area::placeholder {
     font-family: "BarlowCondensed-Regular";
     font-size: 15px;
+    color: var(--black);
 }
 
 .form-group.invalid .form-error-label {
     color: var(--red);
 }
 
-.form-input.invalid {
+.text-input.invalid {
     border-color: var(--red);
     box-shadow: 0px 0px 2px 0px var(--light-red);
 }
 
-.form-group.invalid .form-file-input {
+.form-group.invalid .file-input {
     border-color: var(--red);
     box-shadow: 0px 0px 2px 0px var(--light-red);
 }
@@ -177,22 +167,22 @@
     background: var(--gray);
 }
 
-.form-input-dropdown-container {
+.text-input-dropdown-container {
     position: relative;
     width: 100%;
     height: 0px;
     max-height: fit-content;
 }
 
-.form-input-dropdown-container.hidden {
+.text-input-dropdown-container.hidden {
     display: none;
 }
 
-.form-input-dropdown-container.show {
+.text-input-dropdown-container.show {
     display: block;
 }
 
-.form-input-dropdown {
+.text-input-dropdown {
     margin-top: 2px;
     z-index: 1;
     position: absolute;
@@ -212,17 +202,17 @@
     // 
 }
 
-.form-ckeditor {
+.ckeditor {
     //tich hop vao wrraper
 
 }
 
-.form-combobox {
+.combobox {
     //tich hop vao wrraper luon
 
 }
 
-.form-file-input {
+.file-input {
     //tu no giong file input nhung khong duoc extend vi trong code co su dung styleSelector
     box-shadow: 0px 0px 2px 0px var(--grayish);
     padding: 2px;
@@ -241,7 +231,7 @@
     margin: auto;
 }
 
-.form-file-input-wrapper {
+.file-input-wrapper {
     border: var(--gray) 1px solid;
     border-radius: 5px;
     display: flex;
@@ -249,23 +239,23 @@
     justify-content: space-around;
 }
 
-.form-group.invalid .form-file-input-wrapper {
+.form-group.invalid .file-input-wrapper {
     border-color: var(--red);
     box-shadow: 0px 0px 2px 0px var(--light-red);
 }
 
-.form-file-input {
+.file-input {
     display: none;
 }
 
-.form-file-input-image {
+.file-input-image {
     position: relative;
     width: 64px;
     height: 64px;
     margin: auto;
 }
 
-.form-file-input.focus {}
+.file-input.focus {}
 
 .form-radio {}
 

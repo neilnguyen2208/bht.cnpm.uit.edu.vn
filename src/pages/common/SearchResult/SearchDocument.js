@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import DocSummary from 'components/doc/DocSummary'
 import Loader from 'components/common/Loader/Loader'
@@ -36,30 +36,30 @@ class SearchDocument extends Component {
 
     componentDidMount() {
         this.props.getDocCategories();
-        let searchTerm = getSearchParamByName('q'); //querry
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        let searchParam = getQueryParamByName('q'); //querry
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
 
-        this.props.getDocumentSearchResult(page, category, searchTerm) //api khác, tìm bằng tag
+        this.props.getDocumentSearchResult(page, category, searchParam) //api khác, tìm bằng tag
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
-        let searchTerm = getSearchParamByName('q'); //querry
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
-        this.props.getDocumentSearchResult(page ? page : 1, category ? category : "", searchTerm ? searchTerm : "");
+        setQueryParam("page", pageNumber);
+        let searchParam = getQueryParamByName('q'); //querry
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
+        this.props.getDocumentSearchResult(page ? page : 1, category ? category : "", searchParam ? searchParam : "");
         this.setState({});
     }
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let searchTerm = getSearchParamByName('q'); //querry
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
-        this.props.getDocumentsSearchResult(page ? page : 1, category ? category : "", searchTerm ? searchTerm : "");
+        setQueryParam("category", selectedOption.id);
+        let searchParam = getQueryParamByName('q'); //querry
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
+        this.props.getDocumentsSearchResult(page ? page : 1, category ? category : "", searchParam ? searchParam : "");
         this.setState({});
     }
     render() {
@@ -98,7 +98,7 @@ class SearchDocument extends Component {
                                 <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox
-                                        // selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
+                                        // selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 1}
                                         options={this.timeFilters}
                                         placeHolder="Chọn thời gian"
                                         onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
@@ -110,7 +110,7 @@ class SearchDocument extends Component {
                                 <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox
-                                        // selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
+                                        // selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 1}
                                         options={this.categoryFilters}
                                         placeHolder="Chọn danh mục"
                                         onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
@@ -133,7 +133,7 @@ class SearchDocument extends Component {
                             < Paginator config={{
                                 changePage: (pageNumber) => this.onPageChange(pageNumber),
                                 pageCount: 1,
-                                currentPage: getSearchParamByName('page')
+                                currentPage: getQueryParamByName('page')
                             }} />
                         </div>
 

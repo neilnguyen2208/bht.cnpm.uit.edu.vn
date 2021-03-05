@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import UserSidebar from 'layouts/UserSidebar'
 import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
@@ -22,85 +22,79 @@ import PostSummaryMetadata from 'components/post/SummaryMetadata'
 class MyPostsList extends Component {
     constructor(props) {
         super();
-
-
     }
 
     componentDidMount() {
-        this.searchTermObject = {
+        this.searchParamObject = {
             "page": 0,
             "category.id": null,
             "postState": ''
         }
 
-        this.searchParamObject = {
+        this.queryParamObject = {
             "category": 0,
             "page": 1
         }
 
-        if (!getSearchParamByName('category') || !getSearchParamByName('page'))
-            setSearchParam(this.searchParamObject);
-        else if (getSearchParamByName('page') <= 0) {
-            this.searchParamObject = { ...this.searchParamObject, "page": 1 };
-            setSearchParam(this.searchParamObject);
-        }
+        //force default properties, can't access by querry param
+        setQueryParam(this.queryParamObject);
 
         this.props.getPostCategoriesHaveAll();
-        this.searchTermObject = {
-            page: getSearchParamByName('page') - 1,
-            "category.id": getSearchParamByName('category') && getSearchParamByName('category') !== "0" ? getSearchParamByName('category') : null,
+        this.searchParamObject = {
+            page: getQueryParamByName('page'),
+            "category.id": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
             sort: 'publishDtm,desc',
             postState: ''
         }
-        this.props.getMyPostsList(this.searchTermObject);
+        this.props.getMyPostsList(this.searchParamObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        this.searchParamObject = {
-            ...this.searchParamObject,
+        this.queryParamObject = {
+            ...this.queryParamObject,
             "page": pageNumber
         }
-        setSearchParam(this.searchParamObject);
-        this.searchTermObject = {
-            ...this.searchTermObject,
-            page: getSearchParamByName('page') - 1
+        setQueryParam(this.queryParamObject);
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            page: getQueryParamByName('page')
         }
-        this.props.getMyPostsList(this.searchTermObject);
+        this.props.getMyPostsList(this.searchParamObject);
         this.setState({});
     }
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        this.searchParamObject = { ...this.searchParamObject, category: selectedOption.id }
-        setSearchParam(this.searchParamObject);
-        this.searchTermObject = {
-            ...this.searchTermObject,
+        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id }
+        setQueryParam(this.queryParamObject);
+        this.searchParamObject = {
+            ...this.searchParamObject,
             "category.id": selectedOption.id,
         }
-        this.props.getMyPostsList(this.searchTermObject);
+        this.props.getMyPostsList(this.searchParamObject);
         this.setState({});
     }
 
     onApproveOptionChange = (selectedOption) => {
-        this.searchTermObject = {
-            ...this.searchTermObject,
+        this.searchParamObject = {
+            ...this.searchParamObject,
             postState: selectedOption.postState
         }
-        this.props.getMyPostsList(this.searchTermObject);
+        this.props.getMyPostsList(this.searchParamObject);
         this.setState({});
     }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.myPostsList.length === 1 && this.searchTermObject.page > 1)
-            this.searchTermObject = {
-                ...this.searchTermObject,
-                page: this.searchTermObject.page - 1, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
+        if (this.props.myPostsList.length === 1 && this.searchParamObject.page > 1)
+            this.searchParamObject = {
+                ...this.searchParamObject,
+                page: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
-        setSearchParam("page", this.searchTermObject.page);
+        setQueryParam("page", this.searchParamObject.page);
 
-        this.props.getMyPostsList(this.searchTermObject);
+        this.props.getMyPostsList(this.searchParamObject);
     }
 
     render() {
@@ -111,7 +105,7 @@ class MyPostsList extends Component {
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 0}
+                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
                                 id="my-post-list-category-filter-combobox"
@@ -175,7 +169,7 @@ class MyPostsList extends Component {
                     </div >
                 })
             else
-                this.myPostsList = <div>Không có kết quả nào</div>;
+                this.myPostsList = <div>Không có kết quả nào!</div>;
         }
         else
             this.myPostsList = <div>
@@ -212,7 +206,7 @@ class MyPostsList extends Component {
                             <Paginator config={{
                                 changePage: (pageNumber) => this.onPageChange(pageNumber),
                                 pageCount: this.props.totalPages,
-                                currentPage: parseInt(getSearchParamByName('page'))
+                                currentPage: parseInt(getQueryParamByName('page'))
                             }}
                             /> :
                             <div className="d-flex">

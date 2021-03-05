@@ -202,7 +202,7 @@ class CategoryManagement extends Component {
                     >
                         <div className="modal-body">
                             <div className="gray-label"> Tên danh mục mới: </div>
-                            <input type="text" className="form-input" placeholder="Nhập tên danh mục ..." />
+                            <input type="text" className="text-input" placeholder="Nhập tên danh mục ..." />
                         </div>
 
                         <div className="modal-footer">
@@ -224,7 +224,7 @@ class CategoryManagement extends Component {
                     >
                         <div className="modal-body">
                             <div className="gray-label"> Tên danh mục: </div>
-                            <input type="text" className="form-input" defaultValue={this.selected_category_name} />
+                            <input type="text" className="text-input" defaultValue={this.selected_category_name} />
                         </div>
 
                         <div className="modal-footer">

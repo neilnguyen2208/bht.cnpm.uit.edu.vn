@@ -33,7 +33,7 @@ class UpdatePassword extends Component {
                                 <div className="gray-label mg-top-10px">
                                     Mật khẩu hiện tại:
                                     </div>
-                                <input type="password" autoComplete="new-password" defaultValue="" placeholder="Nhập mật khẩu hiện tại ..." className="form-input" onChange={(e) => this.handlerChangeCurrentPassword(e)} />
+                                <input type="password" autoComplete="new-password" defaultValue="" placeholder="Nhập mật khẩu hiện tại ..." className="text-input" onChange={(e) => this.handlerChangeCurrentPassword(e)} />
                                 <div className="error-label" hidden={!this.isCurrentPasswordEmpty} >
                                     *Mật khẩu hiện tại không được để trống.
                                     </div>
@@ -44,7 +44,7 @@ class UpdatePassword extends Component {
                                 <div className="gray-label Is_Form_Label">
                                     Mật khẩu mới:
                                     </div>
-                                <input type="password" defaultValue="" autoComplete="off" placeholder="Nhập mật khẩu mới ..." className="form-input" onChange={(e) => this.handlerChangeNewPassword(e)} />
+                                <input type="password" defaultValue="" autoComplete="off" placeholder="Nhập mật khẩu mới ..." className="text-input" onChange={(e) => this.handlerChangeNewPassword(e)} />
                                 <div className="error-label" hidden={!this.isNewPasswordEmpty} >
                                     *Mật khẩu mới không được để trống.
                                     </div>
@@ -62,7 +62,7 @@ class UpdatePassword extends Component {
                                 <div className="gray-label Is_Form_Label">
                                     Xác nhận mật khẩu:
                                 </div>
-                                <input type="password" autoComplete="off" defaultValue="" placeholder="Nhập lại mật khẩu mới ..." className="form-input" onChange={(e) => this.handlerChangeConfirmationPassword(e)} />
+                                <input type="password" autoComplete="off" defaultValue="" placeholder="Nhập lại mật khẩu mới ..." className="text-input" onChange={(e) => this.handlerChangeConfirmationPassword(e)} />
                                 <div className="error-label" hidden={!this.isConfirmationPasswordEmpty} >
                                     *Mật khẩu xác nhận không được để trống.
                                     </div>
@@ -96,10 +96,7 @@ class UpdatePassword extends Component {
     //#region main handler to call APIs
     handlerUpdatePassword = (e) => {
         e.preventDefault();
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("username", this.username);
-        urlencoded.append("oldPasword", this.updatePassword_DTO.currentPassword);
-        urlencoded.append("password", this.updatePassword_DTO.newPassword);
+     
     }
 
 }

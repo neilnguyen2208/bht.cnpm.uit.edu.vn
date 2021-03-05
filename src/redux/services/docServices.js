@@ -38,7 +38,7 @@ export function management_approveADocument(docID) {
 }
 
 
-export function getDocumentsList(page = 1, category = "", searchTerm = "") { //this API to get all approved document of a specific user.
+export function getDocumentsList(page = 1, category = "", searchParam = "") { //this API to get all approved document of a specific user.
     return dispatch => {
 
         var myHeaders = new Headers();
@@ -65,7 +65,7 @@ export function getDocumentsList(page = 1, category = "", searchTerm = "") { //t
     }
 }
 
-export function getDocumentSearchResult(page = 1, category = "", searchTerm = "") { //this API to get all approved document of a specific user.
+export function getDocumentSearchResult(page = 1, category = "", searchParam = "") { //this API to get all approved document of a specific user.
     return dispatch => {
         var myHeaders = new Headers();
         var requestOptions = {

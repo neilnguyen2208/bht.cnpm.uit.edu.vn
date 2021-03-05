@@ -15,7 +15,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { NavLink } from 'react-router-dom'
 import Loader from 'components/common/Loader/Loader'
 
@@ -38,35 +38,35 @@ class PostManagement extends Component {
         this.props.getPostCategories()
 
         //get filter
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
 
         this.props.getMyPostsList(page, category);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("page", pageNumber);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getMyPostsList(page, category);
         this.setState({});
     }
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("category", selectedOption.id);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getMyPostsList(page, category);
         this.setState({});
     }
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("category", selectedOption.id);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getMyDocumentsList(page, category);
         this.setState({});
     }
@@ -123,7 +123,7 @@ class PostManagement extends Component {
                                 <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox
-                                        selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
+                                        selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 1}
                                         options={this.filter}
                                         placeHolder="Chọn danh mục"
                                         onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
@@ -150,7 +150,7 @@ class PostManagement extends Component {
                         <Paginator config={{
                             changePage: (pageNumber) => this.onPageChange(pageNumber),
                             pageCount: 1,
-                            currentPage: getSearchParamByName('page')
+                            currentPage: getQueryParamByName('page')
                         }}
                         />
                     </div>

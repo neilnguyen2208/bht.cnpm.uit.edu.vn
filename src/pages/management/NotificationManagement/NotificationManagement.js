@@ -117,7 +117,7 @@ class NotificationManagement extends Component {
                     >
                         <div className="modal-body">
                             <div className="gray-label"> Nội dung thông báo: </div>
-                            <input type="text" className="form-input" placeholder="Nhập tên thông báo ..." />
+                            <input type="text" className="text-input" placeholder="Nhập tên thông báo ..." />
                         </div>
 
                         <div className="modal-footer">
@@ -139,7 +139,7 @@ class NotificationManagement extends Component {
                     >
                         <div className="modal-body">
                             <div className="gray-label"> Tên thông báo: </div>
-                            <input type="text" className="form-input" defaultValue={this.selected_category_name} />
+                            <input type="text" className="text-input" defaultValue={this.selected_category_name} />
                         </div>
 
                         <div className="modal-footer">

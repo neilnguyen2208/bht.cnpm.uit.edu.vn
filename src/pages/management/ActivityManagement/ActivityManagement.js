@@ -138,7 +138,7 @@ class ActivityManagement extends Component {
             dropdown_container.style.display = "block";
             parent_menu_item.style.paddingLeft = "10px";
             show_text.style.color = "white";
-            
+
         }
 
         this.isChangeRoleDropdownComboboxOpen = true;
@@ -201,7 +201,7 @@ class ActivityManagement extends Component {
 
     //#region validator for display name input
     handlerChangeStateOfSubmitButton = () => {
-     
+
     }
 
     handlerChangeUserDisplay = (e) => {
@@ -224,10 +224,7 @@ class ActivityManagement extends Component {
 
         // console.log(this.updateInformation_DTO);
 
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("username", this.updateInformation_DTO.username);
-        urlencoded.append("oldPasword", this.updateInformation_DTO.oldPasword);
-        urlencoded.append("displayname", this.updateInformation_DTO.displayname);
+
 
         //call API
 

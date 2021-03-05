@@ -9,7 +9,7 @@ import 'layouts/Layout.scss'
 
 //utils
 import { itemType } from 'constants.js'
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 //services
 //components
 class PostsList extends Component {

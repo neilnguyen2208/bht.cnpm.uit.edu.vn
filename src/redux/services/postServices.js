@@ -60,7 +60,7 @@ import {    //highlight posts
 import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
 
 import { request } from 'utils/requestUtils';
-import { generateSearchTerm, getSearchParamByName } from 'utils/urlUtils'
+import { generateSearchParam, getQueryParamByName } from 'utils/urlUtils'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export function createAPost(data) {
@@ -77,10 +77,10 @@ export function createAPost(data) {
 }
 
 // my post
-export function getMyPostsList(searchTermObject) { //this API to get all approved document of a specific user.
+export function getMyPostsList(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyPostsRequest());
-        request.get(`/posts/myPosts?${generateSearchTerm(searchTermObject)}`).then(
+        request.get(`/posts/myPosts?${generateSearchParam(searchParamObject)}`).then(
             response => {
                 let result_1 = response.data;
                 let IDarr = '';
@@ -106,9 +106,9 @@ export function getMyPostsList(searchTermObject) { //this API to get all approve
 }
 
 //posts list
-export function getPostsList(page = 1, category = "", searchTerm = "") {
+export function getPostsList(page = 1, category = "", searchParam = "") {
     return dispatch => {
-        dispatch(get_PostsListRequest(page, category, searchTerm));
+        dispatch(get_PostsListRequest(page, category, searchParam));
         request.get(`https://5fca2bc63c1c220016441d27.mockapi.io/myPosts`)
             .then(
                 result => {
@@ -118,10 +118,10 @@ export function getPostsList(page = 1, category = "", searchTerm = "") {
     }
 }
 
-export function getPendingPosts(searchTermObject) {
+export function getPendingPosts(searchParamObject) {
     return dispatch => {
         dispatch(get_PendingPostsRequest());
-        request.get(`/posts?${generateSearchTerm(searchTermObject)}`)
+        request.get(`/posts?${generateSearchParam(searchParamObject)}`)
             .then(
                 result => {
                     dispatch(get_PendingPostsSuccess(result.data.postSummaryDTOs));
@@ -131,13 +131,13 @@ export function getPendingPosts(searchTermObject) {
 }
 
 //posts search result
-export function getPostSearchResult(page = 0, categoryID = 1, searchTerm = '', sort = 'publishDtm,desc') {
+export function getPostSearchResult(page = 0, categoryID = 1, searchParam = '', sort = 'publishDtm,desc') {
     return dispatch => {
         dispatch(get_PostSearchResultRequest());
-        request.get(`/posts/searchFilter?page=${page - 1}&category.id=${categoryID}&searchTerm=${searchTerm}&sort=${sort}`).then(
+        request.get(`/posts/searchFilter?page=${page - 1}&category.id=${categoryID}&searchParam=${searchParam}&sort=${sort}`).then(
             result => {
                 dispatch(get_PostSearchResultSuccess(result.data));
-                // history.push(`/search?type=post&page=${page}&category=${categoryID}&q=${searchTerm}`);
+                // history.push(`/search?type=post&page=${page}&category=${categoryID}&q=${searchParam}`);
             }
         )
     }

@@ -145,6 +145,9 @@ export default class Combobox extends React.Component {
 
     render() {
         if (this.selectedOption.id === "" && this.props.selectedOptionID) { //chua co lua chon nao va prop co selectedOption ID
+
+            //check if selected ID is not in the options list.
+
             this.selectedOption = {
                 id: this.props.selectedOptionID,
                 name: this.props.options.filter(item => item.id === parseInt(this.props.selectedOptionID))[0].name
@@ -170,7 +173,7 @@ export default class Combobox extends React.Component {
         )
 
         return (
-            <div id={"combobox-wrapper-" + this.props.id} className='form-combobox wrapper-combobox' >
+            <div id={"combobox-wrapper-" + this.props.id} className='combobox wrapper-combobox' >
                 < ClickAwayListener id={"combobox-clickaway-wrapper-" + this.props.id} onClickAway={() => { this.onBlur() }}>
                     <div>
                         {/* select */}

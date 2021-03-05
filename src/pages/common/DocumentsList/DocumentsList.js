@@ -9,7 +9,7 @@ import { getDocumentsList } from "redux/services/docServices"
 import { getDocCategories } from "redux/services/docCategoryServices"
 
 //utils
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
 import { itemType } from 'constants.js'
 
 //components
@@ -38,26 +38,26 @@ class DocumentsList extends Component {
         this.props.getDocCategories()
 
         //get filter
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
 
         this.props.getDocumentsList(page, category);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("page", pageNumber);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getDocumentsList(page, category);
         this.setState({});
     }
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("category", selectedOption.id);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getDocumentsList(page, category);
         this.setState({});
     }
@@ -126,7 +126,7 @@ class DocumentsList extends Component {
                     <Paginator config={{
                         changePage: (pageNumber) => this.onPageChange(pageNumber),
                         pageCount: 20,
-                        currentPage: getSearchParamByName('page')
+                        currentPage: getQueryParamByName('page')
                     }}
                     />
                 </div>

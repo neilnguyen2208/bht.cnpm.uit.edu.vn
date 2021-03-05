@@ -19,7 +19,7 @@ import 'components/styles/DocPostDetail.scss'
 
 //components
 import Tag from "components/common/Tag/Tag";
-import ModalTitlebar from 'components/common/Titlebar/BigModalTitlebar';
+import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';
 import Loader from 'components/common/Loader/Loader'
@@ -36,10 +36,10 @@ const validationCondition = {
     form: '#edit-post-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('ed-post-title', 'form-input', 'Tên bài viết không được để trống!'),
-        validation.noSpecialChar('ed-post-title', 'form-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
-        validation.isRequired('ed-post-category-combobox', 'form-combobox', 'Danh mục không được để trống'),
-        validation.isRequired('ed-post-cke', 'form-ckeditor', 'Nội dung bài viết không được để trống')
+        validation.isRequired('ed-post-title', 'text-input', 'Tên bài viết không được để trống!'),
+        validation.noSpecialChar('ed-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
+        validation.isRequired('ed-post-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('ed-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống')
     ],
 }
 
@@ -504,7 +504,7 @@ class EditPostModal extends React.Component {
 
                                             <div className="form-group">
                                                 <label className="form-label-required">Tiêu đề:</label>
-                                                <input className="form-input" id="ed-post-title"
+                                                <input className="text-input" id="ed-post-title"
                                                     placeholder="Nhập tiêu đề bài viết ..."
                                                     onChange={e => this.handleTitleChange(e)}
                                                     type="text" defaultValue={
@@ -551,13 +551,13 @@ class EditPostModal extends React.Component {
 
                                                 <input onChange={(e) => this.quickSearchTags(e)} id="ed-post-tag-input"
                                                     onKeyPress={(this.state.EDIT_POST_DTO.tags.length < 5) && this.keyHandler}
-                                                    className="form-input"
+                                                    className="text-input"
                                                     placeholder="Nhập tag ..." />
 
                                                 <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                                     {/* khi load xong thi ntn */}
-                                                    <div id="ed-post-qs-tag-result-container" className="form-input-dropdown-container hidden">
-                                                        <div className="form-input-dropdown">
+                                                    <div id="ed-post-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                                        <div className="text-input-dropdown">
                                                             {this.tagSearchResult}
                                                             <div className="form-tip-label" id="ed-post-tag-container-tip-label" />
                                                         </div>

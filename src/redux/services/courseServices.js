@@ -89,7 +89,7 @@ export function getCoursesList(category = "") {
 }
 
 //coursess search result
-export function getCourseSearchResult(page = 1, category = "", searchTerm = "") {
+export function getCourseSearchResult(page = 1, category = "", searchParam = "") {
     return dispatch => {
         dispatch(get_CourseSearchResultRequest());
 

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 
 //
-import { getSearchParamByName } from 'utils/urlUtils';
+import { getQueryParamByName } from 'utils/urlUtils';
 import { getTagSearchResult } from 'redux/services/tagServices'
 import Tag from "components/common/Tag/Tag"
 import Loader from "components/common/Loader/Loader";
@@ -19,8 +19,8 @@ class SearchTag extends Component {
     }
 
     componentDidMount() {
-        let searchTerm = getSearchParamByName('q');
-        this.props.getTagSearchResult(searchTerm);
+        let searchParam = getQueryParamByName('q');
+        this.props.getTagSearchResult(searchParam);
     }
     render() {
 

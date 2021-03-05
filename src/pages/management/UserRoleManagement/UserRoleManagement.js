@@ -111,7 +111,7 @@ class UserRoleManagement extends Component {
                     >
                         <div className="modal-body">
                             <div className="gray-label"> Tên quyền mới: </div>
-                            <input type="text" className="form-input" placeholder="Nhập tên quyền ..." />
+                            <input type="text" className="text-input" placeholder="Nhập tên quyền ..." />
                         </div>
 
                         <div className="modal-footer">
@@ -133,7 +133,7 @@ class UserRoleManagement extends Component {
                     >
                         <div className="modal-body">
                             <div className="gray-label"> Tên quyền: </div>
-                            <input type="text" className="form-input" defaultValue={this.selected_category_name} />
+                            <input type="text" className="text-input" defaultValue={this.selected_category_name} />
                         </div>
 
                         <div className="modal-footer">

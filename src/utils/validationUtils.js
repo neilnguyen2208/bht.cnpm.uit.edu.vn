@@ -27,17 +27,17 @@ export function validation(conditions) {
         // Nếu có lỗi thì dừng việc kiểm
         for (var i = 0; i < rules.length; ++i) {
 
-            if (element.classList.contains('form-input')) {
+            if (element.classList.contains('text-input') || element.classList.contains('text-area')) {
                 errorMessage = rules[i](element.value);
                 if (errorMessage) break;
             }
             else
-                if (element.classList.contains('form-combobox')) {
+                if (element.classList.contains('combobox')) {
                     document.getElementById("d-e-" + element.id).innerText = rules[i](false);
                     if (errorMessage) break;
                 }
                 else
-                    if (element.classList.contains('form-ckeditor')) {
+                    if (element.classList.contains('ckeditor')) {
                         //kiem tra xem co class dummy invalid hay khong
                         document.getElementById("d-e-" + element.id).innerText = rules[i](false);
                         if (errorMessage) break;
@@ -77,10 +77,11 @@ export function validation(conditions) {
             }
             var elements = formElement.querySelectorAll(rule.selector);
             Array.from(elements).forEach(function (element) {
-                if (element.classList.contains('form-input')
+                if (element.classList.contains('text-input')
                     || element.classList.contains('form-check-box')
                     || element.classList.contains('form-radio')
-                    || element.classList.contains('form-file-input')) {
+                    || element.classList.contains('file-input')
+                    || element.classList.contains('text-area')) {
 
                     //xu ly cac HTMLInputElement
                     // Xử lý trường hợp blur khỏi input
@@ -100,13 +101,13 @@ export function validation(conditions) {
                     return;
                 }
 
-                if (element.classList.contains('form-combobox')
+                if (element.classList.contains('combobox')
                 ) {
                     validate(element, rule);
                     return;
                 }
 
-                if (element.classList.contains('form-ckeditor')
+                if (element.classList.contains('ckeditor')
                 ) {
                     validate(element, rule);
                     return;
@@ -122,7 +123,7 @@ export function validation(conditions) {
 // 1. Khi có lỗi => Trả ra message lỗi
 // 2. Khi hợp lệ => Không trả ra cái gì cả (undefined)
 validation.isRequired = function (selector, type, message) {
-    if (type === 'form-input' || type === 'form-area') {
+    if (type === 'text-input' || type === 'text-area') {
         return {
             selector: '#' + selector,
             type: type,
@@ -131,7 +132,7 @@ validation.isRequired = function (selector, type, message) {
             }
         };
     }
-    if (type === 'form-combobox') {
+    if (type === 'combobox') {
         return {
             selector: '#combobox-wrapper-' + selector,
             type: type,
@@ -141,7 +142,7 @@ validation.isRequired = function (selector, type, message) {
             }
         }
     }
-    if (type === 'form-ckeditor') {
+    if (type === 'ckeditor') {
         return {
             selector: '#cke-wrapper-' + selector,
             type: type,
@@ -152,7 +153,7 @@ validation.isRequired = function (selector, type, message) {
             }
         }
     }
-    if (type === 'form-file-input') {
+    if (type === 'file-input') {
         return {
             selector: '#' + selector,
             type: type,
@@ -213,7 +214,6 @@ validation.noSpecialChar = function (selector, type, message) {
 export function styleFormSubmit(conditions) {
     //chon tat ca cac combobox co validation
     let selectorRules = {};
-    let isFormValid = true;
     function validate(element, rule) {
         let errorElement = getParent(element, formGroupSelector).querySelector(errorSelector);
         let errorMessage;
@@ -222,19 +222,19 @@ export function styleFormSubmit(conditions) {
         // Nếu có lỗi thì dừng việc kiểm
         // console.log(element);
         for (var i = 0; i < rules.length; ++i) {
-            if (element.classList.contains('form-input')) {
+            if (element.classList.contains('text-input') || element.classList.contains('text-area')) {
                 errorMessage = rules[i](element.value);
                 if (errorMessage) break;
             }
             else
-                if (element.classList.contains('form-combobox')) {
+                if (element.classList.contains('combobox')) {
                     if (element.classList.contains("dummy-invalid")) {
                         errorMessage = rules[i](false);
                     }
                     if (errorMessage) break;
                 }
                 else
-                    if (element.classList.contains('form-ckeditor')) {
+                    if (element.classList.contains('ckeditor')) {
                         errorMessage = rules[i](window.CKEDITOR.instances["ck-editor-" + element.id.substring(12)].getData());
                         if (errorMessage) {
                             element.classList.add('invalid');
@@ -247,7 +247,7 @@ export function styleFormSubmit(conditions) {
                             if (errorMessage) break;
                         }
                         else
-                            if (element.classList.contains('form-file-input')) {
+                            if (element.classList.contains('file-input')) {
                                 errorMessage = rules[i](element.value);
                                 if (errorMessage) break;
                             }
@@ -276,18 +276,19 @@ export function styleFormSubmit(conditions) {
         var elements = formElement.querySelectorAll(rule.selector);
 
         Array.from(elements).forEach(function (element) {
-            if (element.classList.contains('form-input')
+            if (element.classList.contains('text-input')
                 || element.classList.contains('form-check-box')
                 || element.classList.contains('form-radio')
-                || element.classList.contains('form-file-input')
+                || element.classList.contains('file-input')
+                || element.classList.contains('text-area')
             ) {
                 validate(element, rule);
             }
-            if (element.classList.contains('form-ckeditor')
+            if (element.classList.contains('ckeditor')
             ) {
                 validate(element, rule);
             }
-            if (element.classList.contains('form-combobox')
+            if (element.classList.contains('combobox')
             ) {
                 validate(element, rule);
             }

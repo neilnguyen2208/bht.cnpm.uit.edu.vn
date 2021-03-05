@@ -103,32 +103,7 @@ export function postRegister(account) {
 
 export function postLogin(account) {
     return dispatch => {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("username", account.username);
-        urlencoded.append("password", account.password);
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow'
-        };
-
-
-        fetch(`http://${remoteServiceBaseUrl}/login`, requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                Cookies.set('JSESSIONID', JSON.parse(result).sessionID);
-                Cookies.set('UID', JSON.parse(result).account.id);
-                dispatch(userPostLogin(JSON.parse(result).account, JSON.parse(result).statusCode))
-
-            })
-            .catch(error => {
-                dispatch(userPostLogin(null, error.statusCode));
-
-            });
-
+     
     }
 }
 

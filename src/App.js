@@ -109,51 +109,6 @@ const App = () => {
                         <Route exact path="/admin/user-management/:id" component={AdminLayout} />
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
-                        <Route exact path="/demo-form" >
-                            <FormModal
-                                id={`rpp-${1}`}
-                                title={`Tố cáo bài viết.`}
-                                formId={`rpp-${1}-form`}
-                                inputs={[
-                                    { //for rendering
-                                        id: "rpp-1",
-                                        isRequired: true,
-                                        label: "Lý do tố cáo:",
-                                        type: 'form-text-area',
-                                        placeHolder: "Nhập lý do tố cáo ..."
-                                    },
-                                    {
-                                        label: "Lý do tố cáo:",
-                                        id: `rpp-2`,
-                                        isRequired: true,
-                                        type: 'form-ckeditor',
-                                    },
-                                    {
-                                        label: "Lý do tố cáo:",
-                                        id: "rpp-3",
-                                        isRequired: true,
-                                        type: 'form-file-input',
-                                    },
-                                    {
-                                        label: "Lý do tố cáo:",
-                                        id: "rpp-4",
-                                        isRequired: true,
-                                        type: 'form-input',
-                                    }
-                                ]}
-                                validationOptions={{
-                                    form: "#rpp-1-form",
-                                    rules: [
-                                        //truyen vao id, loai component, message
-                                        validation.isRequired(`rpp-1`, 'form-text-area', 'Lý do không được để trống!'),
-                                        validation.noSpecialChar(`rpp-1`, 'form-text-area', 'Lý do không được chứa ký tự đặc biệt!'),
-                                        validation.minLength(`rpp-1`, 'form-text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
-                                    ],
-                                }}
-                                // onVerifyBtnClick = this.onVerifyReport()
-                                submitText="Tố cáo"
-                                cancelText="Huỷ"
-                            /></Route>
 
                     </Switch>
 
@@ -161,7 +116,7 @@ const App = () => {
 
                 </div>
 
-                {/* <Header /> */}
+                <Header />
 
                 <div>
 

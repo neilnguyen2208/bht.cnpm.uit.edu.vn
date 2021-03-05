@@ -9,7 +9,7 @@ import {
 
 } from '../actions/tagAction.js'
 import { request } from 'utils/requestUtils'
-export function getTagSearchResult(searchTerm = "") {
+export function getTagSearchResult(searchParam = "") {
   return dispatch => {
     dispatch(get_TagSearchResultRequest());
     request.get(`https://5fe871c82e12ee0017ab46ef.mockapi.io/tags`)
@@ -20,11 +20,11 @@ export function getTagSearchResult(searchTerm = "") {
   }
 }
 
-export function getTagQuickQueryResult(searchTerm = "") {
+export function getTagQuickQueryResult(searchParam = "") {
   return dispatch => {
 
     //tao ra timeout va huy timeout cho moi lan go o day.
-    request.get(`/tags/quickQuery?query=${searchTerm}`).then(response => {
+    request.get(`/tags/quickQuery?query=${searchParam}`).then(response => {
       dispatch(get_tagQuickQueryResultSuccess(response.data))
     })
       .catch(dispatch(get_tagQuickQueryResultFailure()))

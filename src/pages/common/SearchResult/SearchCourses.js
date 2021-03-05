@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, isContainSpecialCharacter, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import Loader from 'components/common/Loader/Loader'
 import { itemType } from 'constants.js'
@@ -22,7 +22,7 @@ class SearchCourses extends Component {
         ]
 
         this.state = {
-            searchTerm: getSearchParamByName('q')
+            searchParam: getQueryParamByName('q')
         }
     }
 
@@ -40,7 +40,7 @@ class SearchCourses extends Component {
     }
 
     onCategoryFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
+        setQueryParam("category", selectedOption.id);
     }
 
     render() {

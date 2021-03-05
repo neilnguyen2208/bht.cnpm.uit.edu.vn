@@ -39,13 +39,13 @@ const validationCondition = {
     form: '#create-document-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('cr-doc-title', 'form-input', 'Tên tài liệu không được để trống!'),
-        validation.noSpecialChar('cr-doc-title', 'form-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
-        validation.isRequired('cr-doc-category-combobox', 'form-combobox', 'Danh mục không được để trống'),
-        validation.isRequired('cr-doc-subject-combobox', 'form-combobox', 'Môn học không được để trống'),
-        validation.isRequired('cr-doc-description', 'form-ckeditor', 'Mô tả tài liệu không được để trống'),
-        validation.isRequired('cr-doc-file-input', 'form-file-input', 'Tài liệu không được để trống!')
-        // validation.isRequired('cr-doc-file-link', 'form-input', 'Tài liệu không được để trống!')
+        validation.isRequired('cr-doc-title', 'text-input', 'Tên tài liệu không được để trống!'),
+        validation.noSpecialChar('cr-doc-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
+        validation.isRequired('cr-doc-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('cr-doc-subject-combobox', 'combobox', 'Môn học không được để trống'),
+        validation.isRequired('cr-doc-description', 'ckeditor', 'Mô tả tài liệu không được để trống'),
+        validation.isRequired('cr-doc-file-input', 'file-input', 'Tài liệu không được để trống!')
+        // validation.isRequired('cr-doc-file-link', 'text-input', 'Tài liệu không được để trống!')
 
     ],
 }
@@ -474,7 +474,7 @@ class UploadDocument extends Component {
 
                         <div className="form-group">
                             <label className="form-label-required">Tiêu đề:</label>
-                            <input className="form-input" id="cr-doc-title"
+                            <input className="text-input" id="cr-doc-title"
                                 placeholder="Nhập tiêu đề tài liệu ..." onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
                             <div className="form-error-label-container">
@@ -533,13 +533,13 @@ class UploadDocument extends Component {
 
                             <input onChange={(e) => this.quickSearchTags(e)} id="cr-doc-tag-input"
                                 onKeyPress={(this.state.UPLOAD_DOC_DTO.tags.length < 5) && this.keyHandler}
-                                className="form-input"
+                                className="text-input"
                                 placeholder="Nhập tag ..." />
 
                             <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                 {/* khi load xong thi ntn */}
-                                <div id="cr-doc-qs-tag-result-container" className="form-input-dropdown-container hidden">
-                                    <div className="form-input-dropdown">
+                                <div id="cr-doc-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                    <div className="text-input-dropdown">
                                         <div className="d-flex">
                                             {this.tagSearchResult}
                                         </div>
@@ -566,7 +566,7 @@ class UploadDocument extends Component {
                         {/* Upload */}
                         <div className="form-group" >
                             <label className="form-label-required">Tài liệu:</label>
-                            {/* <input className="form-input" id="cr-doc-file-link"
+                            {/* <input className="text-input" id="cr-doc-file-link"
                                 placeholder="Nhập liên kết tài liệu ..." onChange={e => this.handleFileLinkChange(e)}
                                 type="text" >
                             </input> */}

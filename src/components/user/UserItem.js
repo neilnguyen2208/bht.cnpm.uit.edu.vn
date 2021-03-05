@@ -263,13 +263,6 @@ class UserItem extends Component {
 
     handlerVerifyChangeRoleConfirmation = () => {
 
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("username", this.username);
-        urlencoded.append("ruleId", this.role_post);
-     
-        //call api
-
-        this.closeChangeRoleConfirmationPopup();
     }
 
     handleCancelChangeRoleConfirmation = () => { //phai co popup thi moi test duoc

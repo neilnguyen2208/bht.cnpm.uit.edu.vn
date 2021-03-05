@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { setSearchParam } from 'utils/urlUtils'
+import { setQueryParam } from 'utils/urlUtils'
 import 'components/common/Paginator/Paginator.scss'
 
 
@@ -121,10 +121,10 @@ class Paginator extends Component {
             }
             else {
                 this.currentPage = this.props.config.pageCount;
-                // setSearchParam('page', this.currentPage);
+                // setQueryParam('page', this.currentPage);
             }
             if (this.currentPage <= 0) this.currentPage = 1;
-            //  setSearchParam('page', 1);
+            //  setQueryParam('page', 1);
 
             //neu so page nho hon so page duoc hien thi => hien so page nho hon
             if (this.props.config.pageCount < this.numShownPage) {

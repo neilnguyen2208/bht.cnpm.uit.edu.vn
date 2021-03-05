@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import Loader from 'components/common/Loader/Loader'
 import { itemType } from 'constants.js'
@@ -23,15 +23,15 @@ class SearchPostByTag extends Component {
 
     async componentDidMount() {
 
-        let page = getSearchParamByName('page');
+        let page = getQueryParamByName('page');
         this.props.getMyPostsList(page); //api khác, tìm bằng tag
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("page", pageNumber);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getMyPostsList(page, category);
         this.setState({});
     }
@@ -74,7 +74,7 @@ class SearchPostByTag extends Component {
                 < Paginator config={{
                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                     pageCount: 7,
-                    currentPage: getSearchParamByName('page')
+                    currentPage: getQueryParamByName('page')
                 }} />
             </div>
         );

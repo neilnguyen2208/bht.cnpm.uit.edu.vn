@@ -10,7 +10,7 @@ import './CoursesList.scss'
 
 //utils
 import { itemType } from 'constants.js'
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 
 //services
 import { getCoursesList } from "redux/services/courseServices"
@@ -47,8 +47,8 @@ class CoursesList extends Component {
     componentDidMount() {
 
         //kiem tra xem seach param co category hay khong, neu khong thi thay bang 1
-        let category = getSearchParamByName('category');
-        if (!category) { setSearchParam('category', '1') }
+        let category = getQueryParamByName('category');
+        if (!category) { setQueryParam('category', '1') }
 
         this.props.getCoursesList(category);
         this.props.getCourseFalcutyCategories();
@@ -57,8 +57,8 @@ class CoursesList extends Component {
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        // let category = getSearchParamByName('category');
+        setQueryParam("category", selectedOption.id);
+        // let category = getQueryParamByName('category');
 
         // co mot API de goi danh sach cac mon hoc theo danh muc
 

@@ -114,7 +114,7 @@ A
                                                 < div className="gray-label Is_Form_Label">
                                                     Họ tên:
                                                 </div>
-                                                <input type="text" className="form-input"
+                                                <input type="text" className="text-input"
                                                     defaultValue={this.displayName} id="management-display-name-text-input"
                                                     onChange={(e) => this.handlerChangeUserDisplay(e)} />
                                                 <div className="error-label" hidden={!this.isDisplayNameEmpty} >
@@ -129,19 +129,19 @@ A
                                             <div className="gray-label Is_Form_Label">
                                                 Username:
                                             </div>
-                                            <input disabled type="text" className="form-input" defaultValue={this.username} />
+                                            <input disabled type="text" className="text-input" defaultValue={this.username} />
 
                                             {/* Password */}
                                             <div className="gray-label Is_Form_Label">
                                                 Password:
                                             </div>
-                                            <input disabled type="text" className="form-input" value={this.generatePassword()} />
+                                            <input disabled type="text" className="text-input" value={this.generatePassword()} />
 
                                             {/* Email */}
                                             <div className="gray-label Is_Form_Label">
                                                 Email:
                                             </div>
-                                            <input disabled type="text" className="form-input" defaultValue={this.email} />
+                                            <input disabled type="text" className="text-input" defaultValue={this.email} />
 
                                             <div className="d-flex mg-top-10px" >
                                                 <button disabled={!this.canClickSaveInformation} className="blue-button mg-auto" onClick={() => this.handlerClickSaveInformation()} >

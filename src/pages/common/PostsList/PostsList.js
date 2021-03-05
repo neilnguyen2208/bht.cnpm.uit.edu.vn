@@ -8,7 +8,7 @@ import 'layouts/Layout.scss'
 
 //utils
 import { itemType } from 'constants.js'
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 //services
 import { getPostsList } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
@@ -47,26 +47,26 @@ class PostsList extends Component {
         this.props.getPostCategories()
 
         //get filter
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
 
         this.props.getPostsList(page, category);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("page", pageNumber);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getPostsList(page, category);
         this.setState({});
     }
 
     //combobox
     onFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let page = getSearchParamByName('page');
-        let category = getSearchParamByName('category');
+        setQueryParam("category", selectedOption.id);
+        let page = getQueryParamByName('page');
+        let category = getQueryParamByName('category');
         this.props.getPostsList(page, category);
         this.setState({});
     }
@@ -143,7 +143,7 @@ class PostsList extends Component {
                     <Paginator config={{
                         changePage: (pageNumber) => this.onPageChange(pageNumber),
                         pageCount: 30,
-                        currentPage: getSearchParamByName('page')
+                        currentPage: getQueryParamByName('page')
                     }}
                     />
                 </div>

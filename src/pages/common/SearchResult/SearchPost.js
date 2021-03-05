@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
-import { getSearchParamByName, setSearchParam } from 'utils/urlUtils'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 
 import Loader from 'components/common/Loader/Loader'
@@ -28,47 +28,47 @@ class SearchPost extends Component {
         ]
 
         this.state = {
-            searchTerm: getSearchParamByName('q')
+            searchParam: getQueryParamByName('q')
         }
     }
 
     async componentDidMount() {
-        let page = !getSearchParamByName('page') ? '' : getSearchParamByName('page');
-        let searchTerm = !getSearchParamByName('q') ? '' : getSearchParamByName('q');
+        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
+        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
 
-        setSearchParam('page', page);
-        setSearchParam('q', searchTerm);
-        setSearchParam('category', 1);
+        setQueryParam('page', page);
+        setQueryParam('q', searchParam);
+        setQueryParam('category', 1);
 
 
         this.props.getPostCategories();
-        this.props.getPostSearchResult(page - 1, 1, searchTerm, 'publishDtm,desc');
+        this.props.getPostSearchResult(page - 1, 1, searchParam, 'publishDtm,desc');
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setSearchParam("page", pageNumber);
-        let page = !getSearchParamByName('page') ? '' : getSearchParamByName('page');
-        let category = !getSearchParamByName('category') ? '' : getSearchParamByName('category')
-        let searchTerm = !getSearchParamByName('q') ? '' : getSearchParamByName('q');
-        this.props.getPostSearchResult(page - 1, category, searchTerm, 'publishDtm,desc');
+        setQueryParam("page", pageNumber);
+        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
+        let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
+        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
+        this.props.getPostSearchResult(page - 1, category, searchParam, 'publishDtm,desc');
 
         this.setState({});
     }
 
     onTimeFilterOptionChanged = (selectedOption) => {
-        let page = !getSearchParamByName('page') ? '' : getSearchParamByName('page');
-        let category = !getSearchParamByName('category') ? '' : getSearchParamByName('category')
-        let searchTerm = !getSearchParamByName('q') ? '' : getSearchParamByName('q');
-        this.props.getPostSearchResult(page - 1, category, searchTerm, selectedOption.id === 1 ? 'publishDtm,desc' : 'publishDtm,asc');
+        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
+        let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
+        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
+        this.props.getPostSearchResult(page - 1, category, searchParam, selectedOption.id === 1 ? 'publishDtm,desc' : 'publishDtm,asc');
     }
 
     onCategoryFilterOptionChanged = (selectedOption) => {
-        setSearchParam("category", selectedOption.id);
-        let page = !getSearchParamByName('page') ? '' : getSearchParamByName('page');
-        let category = !getSearchParamByName('category') ? '' : getSearchParamByName('category')
-        let searchTerm = !getSearchParamByName('q') ? '' : getSearchParamByName('q');
-        this.props.getPostSearchResult(page - 1, category, searchTerm, 'publishDtm,desc');
+        setQueryParam("category", selectedOption.id);
+        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
+        let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
+        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
+        this.props.getPostSearchResult(page - 1, category, searchParam, 'publishDtm,desc');
     }
 
     render() {
@@ -108,7 +108,7 @@ class SearchPost extends Component {
                 <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                 <div style={{ marginLeft: "5px" }}>
                     <ComboBox
-                        // selectedOptionID={getSearchParamByName('category') ? getSearchParamByName('category') : 1}
+                        // selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 1}
                         options={this.props.postCategories}
                         placeHolder="Chọn danh mục"
                         onOptionChanged={(selectedOption) => this.onCategoryFilterOptionChanged(selectedOption)}
@@ -149,7 +149,7 @@ class SearchPost extends Component {
                                     < Paginator config={{
                                         changePage: (pageNumber) => this.onPageChange(pageNumber),
                                         pageCount: 1,
-                                        currentPage: getSearchParamByName('page') ? getSearchParamByName('page') : 1
+                                        currentPage: getQueryParamByName('page') ? getQueryParamByName('page') : 1
                                     }} />
                                 </div>
                             }

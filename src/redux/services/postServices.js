@@ -43,17 +43,21 @@ import {    //highlight posts
     delete_UnSaveAPostFailure,
 
 
-    delete_APostRequest,
+    delete_APostReset,
     delete_APostSuccess,
     delete_APostFailure,
 
-    put_EditAPostRequest,
+    put_EditAPostReset,
     put_EditAPostSuccess,
     put_EditAPostFailure,
 
     get_PendingPostsRequest,
     get_PendingPostsSuccess,
-    get_PendingPostsFailure
+    get_PendingPostsFailure,
+
+    post_ReportAPostReset,
+    post_ReportAPostSuccess,
+    post_ReportAPostFailure
 
 } from "redux/actions/postAction.js";
 
@@ -84,37 +88,24 @@ export function getMyPostsList(searchParamObject) { //this API to get all approv
             response => {
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.postSummaryWithStateDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response.data.dtos.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 request.get(`/posts/statistic?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
 
-                        for (let i = 0; i < result_1.postSummaryWithStateDTOs.length; i++) {
+                        for (let i = 0; i < result_1.dtos.length; i++) {
                             finalResult.push({
-                                ...result_1.postSummaryWithStateDTOs[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1.postSummaryWithStateDTOs[i].id)),
+                                ...result_1.dtos[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.dtos[i].id)),
                             }
                             );
                             //delete redundant key - value  
                         }
-                        dispatch(get_MyPostsSuccess({ data: finalResult, totalPages: result_1.totalPages }))
+                        dispatch(get_MyPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_MyPostsFailure())
             }
         ).catch(() => dispatch(get_MyPostsFailure()))
-    }
-}
-
-//posts list
-export function getPostsList(page = 1, category = "", searchParam = "") {
-    return dispatch => {
-        dispatch(get_PostsListRequest(page, category, searchParam));
-        request.get(`https://5fca2bc63c1c220016441d27.mockapi.io/myPosts`)
-            .then(
-                result => {
-                    dispatch(get_PostsListSuccess(result.data));
-                }
-            )
     }
 }
 
@@ -122,24 +113,41 @@ export function getPendingPosts(searchParamObject) {
     return dispatch => {
         dispatch(get_PendingPostsRequest());
         request.get(`/posts?${generateSearchParam(searchParamObject)}`)
-            .then(
-                result => {
-                    dispatch(get_PendingPostsSuccess(result.data.postSummaryDTOs));
-                }
-            ).catch(error => { get_PendingPostsFailure(error) })
+            .then(result => dispatch(get_PendingPostsSuccess(result.data)))
+            .catch(error => { get_PendingPostsFailure(error) })
     }
 }
 
 //posts search result
-export function getPostSearchResult(page = 0, categoryID = 1, searchParam = '', sort = 'publishDtm,desc') {
+export function getPostSearch(searchParamObject) {
     return dispatch => {
+
         dispatch(get_PostSearchResultRequest());
-        request.get(`/posts/searchFilter?page=${page - 1}&category.id=${categoryID}&searchParam=${searchParam}&sort=${sort}`).then(
-            result => {
-                dispatch(get_PostSearchResultSuccess(result.data));
-                // history.push(`/search?type=post&page=${page}&category=${categoryID}&q=${searchParam}`);
-            }
-        )
+        request.get(`/posts/searchFilter?${generateSearchParam(searchParamObject)}`)
+            .then(response => {
+
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.postSummaryDTOs.length; i++) {
+                            finalResult.push({
+                                ...result_1.postSummaryDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
+                            }
+                            );
+                        }
+                        console.log(finalResult);
+                        dispatch(get_PostSearchResultSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_PostSearchResultFailure())
+
+            })
+            .catch(error => dispatch(get_PostSearchResultFailure(error)))
     }
 }
 
@@ -229,19 +237,18 @@ export function unSaveAPost(id) { //maybe use modal later
 //chua co API cho viec xoa bai post
 export function deleteAPost(id) { //maybe use modal later
     return dispatch => {
-        dispatch(delete_APostRequest(id))
-        // request.post(`/posts/${id}/savedStatus`)
-        setTimeout(dispatch(delete_APostSuccess(id)), 200)
-        dispatch(openBLModal({ text: "Xoá bài viết thành công!", icon: done_icon }))
-        // .then(response => {
-        // }
-        // ).catch(() => dispatch(delete_APostFailure()))
+        dispatch(delete_APostReset(id))
+        request.delete(`/posts/${id}`).then(response => {
+            dispatch(delete_APostSuccess())
+            dispatch(openBLModal({ text: "Xoá bài viết thành công!", icon: done_icon }))
+
+        }).catch(error => { dispatch(delete_APostFailure(id)) })
     }
 }
 
 export function editAPost(id, newPostContent, reloadList) { //
     return dispatch => {
-        dispatch(put_EditAPostRequest())
+        dispatch(put_EditAPostReset())
         dispatch(openModal("loader", { text: "Đang xử lý" }))
         request.put(`/posts/${id}`, JSON.stringify(newPostContent))
             .then(response => {
@@ -252,4 +259,43 @@ export function editAPost(id, newPostContent, reloadList) { //
             ).catch(() => dispatch(put_EditAPostFailure()))
     }
 }
+
+export function reportAPost(id, reason) { //
+    return dispatch => {
+        dispatch(closeModal());
+        dispatch(post_ReportAPostReset())
+        dispatch(openModal("loader", { text: "Đang xử lý" }))
+        request.post(`/post/{id}/report?postID=${id}`, JSON.stringify(reason))
+            .then(response => {
+                dispatch(closeModal());
+                dispatch(post_ReportAPostSuccess());
+                dispatch(closeModal());
+                dispatch(openBLModal({ text: "Tố cáo bài viết thành công!", icon: done_icon }));
+
+            }
+            ).catch(() => dispatch(post_ReportAPostFailure()))
+    }
+}
+
+export function rejectAndFeedbackAPost(id, reason) { //
+    return dispatch => {
+        dispatch(closeModal());
+        // dispatch(post_RejectAndFeedbackAPostReset())
+        dispatch(openModal("loader", { text: "Đang xử lý" }))
+        request.post(`/posts/${id}/rejection`, JSON.stringify(reason))
+            .then(response => {
+                dispatch(closeModal());
+                //             dispatch(post_RejectAndFeedbackAPostSuccess());
+                dispatch(closeModal());
+                dispatch(openBLModal({ text: "Từ chối bài viết thành công!", icon: done_icon }));
+
+            }
+            ).catch(() => { }
+                //dispatch(post_RejectAndFeedbackAPostFailure())
+            )
+    }
+}
+
+
+
 

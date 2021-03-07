@@ -42,7 +42,7 @@ export function isQueryParamHasValue(queryParam, values) {
 
 export function generateSearchParam(searchParamObject) { //for generating search term from search term object.
     let searchParam = '';
-
+    console.log(searchParamObject)
     Object.keys(searchParamObject)
         .forEach(function eachKey(key) {
 

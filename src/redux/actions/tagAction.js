@@ -1,7 +1,7 @@
 import {
-    GET_TAG_SEARCH_RESULT_REQUEST,
-    GET_TAG_SEARCH_RESULT_SUCCESS,
-    GET_TAG_SEARCH_RESULT_FAILURE,
+    GET_TAG_SEARCH_REQUEST,
+    GET_TAG_SEARCH_SUCCESS,
+    GET_TAG_SEARCH_FAILURE,
 
     GET_TAG_QUICK_QUERY_REQUEST,
     GET_TAG_QUICK_QUERY_SUCCESS,
@@ -13,20 +13,20 @@ import {
 //search tag results
 export function get_TagSearchResultRequest() {
     return {
-        type: GET_TAG_SEARCH_RESULT_REQUEST
+        type: GET_TAG_SEARCH_REQUEST
     }
 }
 
 export function get_TagSearchResultSuccess(data) {
     return {
-        type: GET_TAG_SEARCH_RESULT_SUCCESS,
+        type: GET_TAG_SEARCH_SUCCESS,
         payload: data
     }
 }
 
 export function get_TagSearchResultFailure(error) {
     return {
-        type: GET_TAG_SEARCH_RESULT_FAILURE,
+        type: GET_TAG_SEARCH_FAILURE,
         payload: error
     }
 }

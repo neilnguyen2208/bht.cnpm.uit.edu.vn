@@ -53,7 +53,7 @@ class ModalBL extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <img className="bl-modal-close-modal-icon" alt="x" src={gray_delete_icon}
+                    <img className="bl-modal-close-icon" alt="x" src={gray_delete_icon}
                         onClick={() => this.closeModal()} />
                 </div>
             </div >

@@ -72,7 +72,7 @@ class DocumentApproving extends Component {
 
             documentsList = this.documents.map((documentItem => (
                 < DocSummary
-                    type={itemType.approving}
+                    type={itemType.approval}
                     key={documentItem.id}
                     id={documentItem.id}
                     authorName={documentItem.authorName}

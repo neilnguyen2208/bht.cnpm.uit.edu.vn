@@ -8,24 +8,17 @@ import { NavLink } from 'react-router-dom'
 import { getPendingPosts } from "redux/services/postServices";
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
 import RequestSummary from 'components/post/RequestSummary'
-import Modal from "components/common/Modal/AlertModal"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
-import Loader from 'components/common/Loader/Loader'
 import AdminSidebar from 'layouts/AdminSidebar'
 
 class PostApproving extends Component {
     constructor(props) {
         super();
-
-
-
-
-
     }
 
     componentDidMount() {
@@ -34,7 +27,7 @@ class PostApproving extends Component {
             "category": null,
             "postState": ''
         }
-        
+
         this.queryParamObject = {
             "category": 0,
             "page": 1
@@ -48,11 +41,11 @@ class PostApproving extends Component {
         }
 
         this.searchParamObject = {
-            paginator: getQueryParamByName('page') - 1,
+            paginator: getQueryParamByName('page'),
             "category": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
             postState: 'PENDING_APPROVAL',
         }
-        console.log()
+
         this.props.getPendingPosts(this.searchParamObject);
     }
 
@@ -61,7 +54,7 @@ class PostApproving extends Component {
         setQueryParam({ "page": pageNumber });
         this.searchParamObject = {
             ...this.searchParamObject,
-            paginator: getQueryParamByName('page') - 1,
+            paginator: getQueryParamByName('page'),
             postState: 'PENDING_APPROVAL'
         }
         this.props.getPendindPosts(this.searchParamObject);
@@ -85,9 +78,9 @@ class PostApproving extends Component {
         if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
-                paginator: this.searchParamObject.page - 1, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
+                paginator: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
-        setQueryParam({ "page": this.searchParamObject.page });
+        setQueryParam(this.queryParamObject);
 
         this.props.getPendingPosts(this.searchParamObject);
     }
@@ -132,7 +125,7 @@ class PostApproving extends Component {
                     readingTime={item.readingTime}
                     approveState={item.postState}
                     popUpMenuPrefix="papu"   //stand for post approving popup 
-                    avatarURL={item.avatarURL}
+                    authorAvatarURL={item.authorAvatarURL}
                     requestedTime={"20:20:20"}
                     requestedDate={"1/3/2021"}
                     //
@@ -148,7 +141,7 @@ class PostApproving extends Component {
             <div className="left-sidebar-layout">
                 <AdminSidebar />
                 <div className="content-layout">
-                    <Titlebar title="DUYỆT BÀI VIẾT" />
+                    <Titlebar title="QUẢN LÝ BÀI VIẾT" />
                     <div className="content-container">
                         <div className="h-menu-bar mg-top-10px">
                             <NavLink to="/admin/post-management/" className="h-menu-item" activeClassName='h-menu-item a-h-menu-item'>
@@ -161,27 +154,26 @@ class PostApproving extends Component {
 
                         {this.comboboxGroup}
                         {!this.props.isListLoading && this.props.postsList ?
-                            <div className="filter-label d-flex mg-bottom-10px">
-                                <div className="mg-right-5px">Tổng số:</div>
-                                <div> {this.props.postsList.length}</div>
-                            </div> : <></>
-                        }
-
-                        {this.props.isListLoading ?
+                            <>
+                                <div className="filter-label d-flex mg-bottom-10px">
+                                    <div className="mg-right-5px">Tổng số:</div>
+                                    <div> {this.props.totalElements}</div>
+                                </div>
+                                <>{this.postsList}</>
+                                <Paginator config={{
+                                    changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                    pageCount: this.props.totalPages,
+                                    currentPage: getQueryParamByName('page')
+                                }}
+                                />
+                            </>
+                            :
                             <div>
                                 {DocPostSummaryLoader()}
                                 {DocPostSummaryLoader()}
                                 {DocPostSummaryLoader()}
-                            </div> :
-                            <>{this.postsList}</>
+                            </div>
                         }
-
-                        <Paginator config={{
-                            changePage: (pageNumber) => this.onPageChange(pageNumber),
-                            pageCount: 1,
-                            currentPage: getQueryParamByName('page')
-                        }}
-                        />
                     </div>
                 </div >
             </div>
@@ -189,10 +181,16 @@ class PostApproving extends Component {
     }
 }
 const mapStateToProps = (state) => {
+    console.log(state.post.pendingPosts)
     return {
+        //pending posts list
         postsList: state.post.pendingPosts.data,
-        postCategories: state.post_category.categories.searchData,
         isListLoading: state.post.pendingPosts.isLoading,
+        totalPages: state.post.pendingPosts.totalPages,
+        totalElements: state.post.pendingPosts.totalElements,
+
+        //category
+        postCategories: state.post_category.categories.searchData,
         isCategoryLoading: state.post_category.categories.isLoading
     };
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Tag from "components/common/Tag/Tag"
-import { getPostSearchResult } from "redux/services/postServices"
+import { getPostSearch } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
@@ -42,7 +42,7 @@ class SearchPost extends Component {
 
 
         this.props.getPostCategories();
-        this.props.getPostSearchResult(page - 1, 1, searchParam, 'publishDtm,desc');
+        this.props.getPostSearch(page - 1, 1, searchParam, 'publishDtm,desc');
     }
 
     //server paginator
@@ -51,7 +51,7 @@ class SearchPost extends Component {
         let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
         let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
         let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
-        this.props.getPostSearchResult(page - 1, category, searchParam, 'publishDtm,desc');
+        this.props.getPostSearch(page - 1, category, searchParam, 'publishDtm,desc');
 
         this.setState({});
     }
@@ -60,7 +60,7 @@ class SearchPost extends Component {
         let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
         let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
         let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
-        this.props.getPostSearchResult(page - 1, category, searchParam, selectedOption.id === 1 ? 'publishDtm,desc' : 'publishDtm,asc');
+        this.props.getPostSearch(page - 1, category, searchParam, selectedOption.id === 1 ? 'publishDtm,desc' : 'publishDtm,asc');
     }
 
     onCategoryFilterOptionChanged = (selectedOption) => {
@@ -68,7 +68,7 @@ class SearchPost extends Component {
         let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
         let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
         let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
-        this.props.getPostSearchResult(page - 1, category, searchParam, 'publishDtm,desc');
+        this.props.getPostSearch(page - 1, category, searchParam, 'publishDtm,desc');
     }
 
     render() {
@@ -171,7 +171,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostSearchResult, getPostCategories
+    getPostSearch, getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPost));

@@ -13,7 +13,7 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils';
 import dropdownIcon from 'assets/icons/12x12/dropdown_12x12.png'
 
 //services
-import { getPostsList } from "redux/services/postServices";
+import {  } from "redux/services/postServices";
 import { getPostCategories } from "redux/services/postCategoryServices";
 
 //components
@@ -197,7 +197,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostsList, getPostCategories
+   getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

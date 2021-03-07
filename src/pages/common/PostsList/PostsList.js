@@ -10,7 +10,7 @@ import 'layouts/Layout.scss'
 import { itemType } from 'constants.js'
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 //services
-import { getPostsList } from "redux/services/postServices"
+import {  } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 //components
@@ -50,7 +50,7 @@ class PostsList extends Component {
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
 
-        this.props.getPostsList(page, category);
+        
     }
 
     //server paginator
@@ -58,7 +58,7 @@ class PostsList extends Component {
         setQueryParam("page", pageNumber);
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
-        this.props.getPostsList(page, category);
+        
         this.setState({});
     }
 
@@ -67,7 +67,7 @@ class PostsList extends Component {
         setQueryParam("category", selectedOption.id);
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
-        this.props.getPostsList(page, category);
+        
         this.setState({});
     }
 
@@ -163,7 +163,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostsList, getPostCategories
+   getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

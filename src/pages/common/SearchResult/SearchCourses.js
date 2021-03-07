@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Tag from "components/common/Tag/Tag"
-import { getPostSearchResult } from "redux/services/postServices"
+import { getPostSearch } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
@@ -74,7 +74,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostSearchResult, getPostCategories
+    getPostSearch, getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchCourses));

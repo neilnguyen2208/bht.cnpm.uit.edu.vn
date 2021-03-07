@@ -2,9 +2,7 @@ import React from "react";
 import './Modal.scss'
 import 'components/styles/Form.scss'
 import 'components/styles/Button.scss'
-import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
 import { closeModal, openModal } from "redux/actions/modalAction";
-import store from 'redux/store/index.js'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -29,12 +27,24 @@ class FormModal extends React.Component {
     }
 
     onSubmitClick = () => {
+        this.props.inputs.forEach(element => {
+            if (element.type === "text-area" || element.type === "text-input")
+                this.DTO[element.key] = document.querySelector('#' + element.id).value; //for text input and text area
+        });
+
+        if (this.props.append) {
+            Object.assign(this.DTO, this.props.append);
+        }
+
+        let { title, text, verifyText, cancelText, onVerify } = this.props.confirmBox;
         if (this.props.validationCondition)
             if (styleFormSubmit(this.props.validationCondition)) {
-                this.props.openModal("confirmation", { title: "A", onOKClick: this.props.onVerify(this.DTO) })
-            }
-            else return;
-        this.props.openModal("confirmation", { title: "A", onOKClick: this.props.onVerify(this.DTO) })
+                this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onVerify(this.DTO) });
+                return;
+            } else return;
+
+        else
+            this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onVerify(this.DTO) })
     }
 
     render() {

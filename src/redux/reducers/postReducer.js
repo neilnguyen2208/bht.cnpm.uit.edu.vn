@@ -29,9 +29,9 @@ import {
     GET_MY_POSTS_FAILURE,
 
     //search post 
-    GET_POST_SEARCH_RESULT_REQUEST,
-    GET_POST_SEARCH_RESULT_SUCCESS,
-    GET_POST_SEARCH_RESULT_FAILURE,
+    GET_POST_SEARCH_REQUEST,
+    GET_POST_SEARCH_SUCCESS,
+    GET_POST_SEARCH_FAILURE,
 
     //like post
     LIKE_A_POST_REQUEST,
@@ -48,11 +48,11 @@ import {
     SAVE_A_POST_FAILURE,
     UNSAVE_A_POST_FAILURE,
 
-    DELETE_A_POST_REQUEST,
+    DELETE_A_POST_RESET,
     DELETE_A_POST_SUCCESS,
     DELETE_A_POST_FAILURE,
 
-    EDIT_A_POST_REQUEST,
+    EDIT_A_POST_RESET,
     EDIT_A_POST_SUCCESS,
     EDIT_A_POST_FAILURE,
 
@@ -67,19 +67,22 @@ const initialState = {
     currentPost: {
         isLoading: false, data: {}, isLoadDone: false, isEditing: false, isEditDone: false
     },
-
+    isHaveDeleted: false,
+    isHaveEdited: false,
     //search post: use for search post and post list
     postsList: {
         isLoading: false,
         data: [],
-        totalPages: 0
+        totalPages: 0,
+        totalElements: 0
     },
 
     //my posts
     myPosts: {
         isLoading: false,
         data: [],
-        totalPages: 0
+        totalPages: 0,
+        totalElements: 0
     },
 
     //highlight posts list
@@ -103,10 +106,13 @@ const initialState = {
 
     pendingPosts: {
         isLoading: false,
-        data: null
+        data: null,
+        totalPages: 0,
+        totalElements: 0
     },
 
     likePostStatus: { isLiking: false, isUnLiking: false },
+
 };
 
 function PostReducer(state = initialState, action) {
@@ -176,7 +182,14 @@ function PostReducer(state = initialState, action) {
             };
         case GET_MY_POSTS_SUCCESS:
             {
-                return { ...state, myPosts: { isLoading: false, data: action.payload.data, totalPages: action.payload.totalPages } }
+                return {
+                    ...state, myPosts: {
+                        isLoading: false,
+                        data: action.payload.postSummaryWithStateDTOs,
+                        totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
+                        totalElements: action.payload.totalElements ? action.payload.totalElements : 0
+                    }
+                }
             }
         case GET_MY_POSTS_FAILURE:
             {
@@ -184,17 +197,24 @@ function PostReducer(state = initialState, action) {
             }
 
         //get post search result
-        case GET_POST_SEARCH_RESULT_REQUEST:
+        case GET_POST_SEARCH_REQUEST:
         case GET_POSTS_LIST_REQUEST:
             return {
                 ...state, postsList: { isLoading: true }
             };
-        case GET_POST_SEARCH_RESULT_SUCCESS:
+        case GET_POST_SEARCH_SUCCESS:
         case GET_POSTS_LIST_SUCCESS:
             {
-                return { ...state, postsList: { ...state.postsList, isLoading: false, data: action.payload.postSummaryDTOs, totalPages: action.payload.totalPages } }
+                return {
+                    ...state, postsList: {
+                        isLoading: false,
+                        data: action.payload.postSummaryWithStateDTOs,
+                        totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
+                        totalElements: action.payload.totalElements ? action.payload.totalElements : 0
+                    }
+                }
             }
-        case GET_POST_SEARCH_RESULT_FAILURE:
+        case GET_POST_SEARCH_FAILURE:
         case GET_POSTS_LIST_FAILURE:
             return { ...state, postsList: { isLoading: false, data: [] } }
 
@@ -240,41 +260,52 @@ function PostReducer(state = initialState, action) {
             return { ...state, unSavePost: { isLoading: false } }
         }
 
-        case DELETE_A_POST_REQUEST:
+        case DELETE_A_POST_RESET:
             return {
-                ...state
+                ...state, isHaveDeleted: false
             }
         case DELETE_A_POST_SUCCESS:
             return {
-                ...state
+                ...state, isHaveDeleted: true
             }
         case DELETE_A_POST_FAILURE:
             return {
-                ...state
+                ...state, isHaveDeleted: false
             }
-        case EDIT_A_POST_REQUEST:
+        case EDIT_A_POST_RESET:
             return {
-                ...state, currentPost: { ...state.currentPost, isEditing: true }
+                ...state, isHaveEdited: false
             }
         case EDIT_A_POST_SUCCESS:
             return {
-                ...state, currentPost: { ...state.currentPost, isEditing: false }
+                ...state, isHaveEdited: true
             }
         case EDIT_A_POST_FAILURE:
             return {
-                ...state, currentPost: { ...state.currentPost, isEditing: false }
+                ...state, isHaveEdited: false
             }
         case GET_PENDING_POSTS_REQUEST:
             return {
-                ...state, pendingPosts: { ...state.pendingPosts, isLoading: true }
+                ...state, pendingPosts: {
+                    ...state.pendingPosts,
+                    isLoading: true
+                }
             }
         case GET_PENDING_POSTS_SUCCESS:
             return {
-                ...state, pendingPosts: { isLoading: false, data: action.payload }
+                ...state, pendingPosts: {
+                    isLoading: false,
+                    data: action.payload.postSummaryDTOs,
+                    totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
+                    totalElements: action.payload.totalElements ? action.payload.totalElements : 0
+                }
             }
         case GET_PENDING_POSTS_FAILURE:
             return {
-                ...state, pendingPosts: { isLoading: false, data: null }
+                ...state, pendingPosts: {
+                    isLoading: false,
+                    data: null
+                }
             }
         default:
             return state;

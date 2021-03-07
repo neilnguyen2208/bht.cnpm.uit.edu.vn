@@ -1,7 +1,7 @@
 import {
-    GET_TAG_SEARCH_RESULT_REQUEST,
-    GET_TAG_SEARCH_RESULT_SUCCESS,
-    GET_TAG_SEARCH_RESULT_FAILURE,
+    GET_TAG_SEARCH_REQUEST,
+    GET_TAG_SEARCH_SUCCESS,
+    GET_TAG_SEARCH_FAILURE,
     GET_TAG_QUICK_QUERY_REQUEST,
     GET_TAG_QUICK_QUERY_SUCCESS,
     GET_TAG_QUICK_QUERY_FAILURE,
@@ -25,17 +25,17 @@ export default function tagReducer(state = initialState, action) {
     switch (action.type) {
 
         //get Search Results
-        case GET_TAG_SEARCH_RESULT_REQUEST: {
+        case GET_TAG_SEARCH_REQUEST: {
             return {
                 ...state, tagSearchResult: { isLoading: true }
             };
         }
-        case GET_TAG_SEARCH_RESULT_SUCCESS: {
+        case GET_TAG_SEARCH_SUCCESS: {
             return {
                 ...state, tagSearchResult: { isLoading: false, data: action.payload, itemCount: 30 }
             }
         }
-        case GET_TAG_SEARCH_RESULT_FAILURE: {
+        case GET_TAG_SEARCH_FAILURE: {
             return {
                 ...state, tagSearchResult: { isLoading: false, data: [], itemCount: 0 }
             }

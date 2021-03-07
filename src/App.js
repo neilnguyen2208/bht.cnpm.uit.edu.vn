@@ -44,8 +44,7 @@ import ModalManager from 'components/common/Modal/ModalManager'
 import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 import MyNotification from 'pages/user/MyActivities/MyActivities'
-import FormModal from 'components/common/Modal/FormModal'
-import { validation } from 'utils/validationUtils'
+
 const App = () => {
     return (
         <div style={{ minWidth: "320px", width: "100%", background: "white" }}>
@@ -123,9 +122,9 @@ const App = () => {
                 </div>
                 {/* Thediv nay de can bang z index */}
                 <div>
-                    <ModalManager />
                     <ModalBLManager />
                     <ModalBigManager />
+                    <ModalManager />
                 </div>
 
                 <div className="App"></div>

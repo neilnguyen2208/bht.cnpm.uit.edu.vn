@@ -100,85 +100,7 @@ class UserRoleManagement extends Component {
                             </div>
                         </div>
                     </div>
-
-                    {/* Popup for add new post category */}
-                    <Modal
-                        shadow={true}
-                        type="custom"
-                        title="Thêm quyền bài viết"
-                        open={this.isAddPostCategoryPopupOpen}
-                        closeModal={() => { this.isAddPostCategoryPopupOpen = false; this.setState({}); }}
-                    >
-                        <div className="modal-body">
-                            <div className="gray-label"> Tên quyền mới: </div>
-                            <input type="text" className="text-input" placeholder="Nhập tên quyền ..." />
-                        </div>
-
-                        <div className="modal-footer">
-                            <div className="gray-label">Xác nhận?</div>
-                            <div className = "d-flex">
-                                <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyAddNewPostCategoryConfirmation()}>OK</button>
-                                <button className="white-button" onClick={() => { this.isAddPostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
-                            </div>
-                        </div>
-                    </Modal>
-
-                    {/* Popup for update a new post category */}
-                    <Modal
-                        shadow={true}
-                        type="custom"
-                        title="Cập nhật quyền bài viết"
-                        open={this.isEditPostCategoryPopupOpen}
-                        closeModal={() => { this.isEditPostCategoryPopupOpen = false; this.setState({}); }}
-                    >
-                        <div className="modal-body">
-                            <div className="gray-label"> Tên quyền: </div>
-                            <input type="text" className="text-input" defaultValue={this.selected_category_name} />
-                        </div>
-
-                        <div className="modal-footer">
-                            <div className="gray-label">Xác nhận?</div>
-                            <div className = "d-flex">
-                                <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyEditPostCategoryConfirmation()}>OK</button>
-                                <button className="white-button" onClick={() => { this.isEditPostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
-                            </div>
-                        </div>
-                    </Modal>
-
-                    {/* Popup for verifying delete post category */}
-                    <Modal
-                        shadow={true}
-                        type="confirmation"
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        open={this.isVerifyDeletePostCategoryPopupOpen}
-                        closeModal={() => { this.isVerifyDeletePostCategoryPopupOpen = false; this.setState({}); }}
-                    >
-                        <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyDeletePostCategoryConfirmation()}>OK</button>
-                        <button className="white-button" onClick={() => { this.isVerifyDeletePostCategoryPopupOpen = false; this.setState({}) }}>Cancel</button>
-                    </Modal>
-
-                    {/* Custom for notifing success */}
-                    <Modal
-                        open={this.isNotifySuccessOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_success"
-                        closeModal={() => { this.isNotifySuccessOpen = false; this.setState({}) }}
-                    >
-                    </Modal>
-
-                    {/* Custom for notifing fail */}
-                    <Modal
-                        open={this.isNotifyFailOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_failure"
-                        closeModal={() => { this.isNotifyFailOpen = false; this.setState({}) }}
-                    >
-                    </Modal>
+F
 
                 </div >
             </div >
@@ -237,46 +159,6 @@ class UserRoleManagement extends Component {
         this.isAddPostCategoryPopupOpen = true;
         this.setState({});
     }
-
-    handlerVerifyAddNewPostCategoryConfirmation = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Thêm quyền bài viết thành công!";
-        this.isAddPostCategoryPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
-
-    //Edit post category item
-    handlerClickEditPostCategory = () => {
-        this.isEditPostCategoryPopupOpen = true;
-        this.setState({});
-    }
-
-    handlerVerifyEditPostCategoryConfirmation = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Cập nhật quyền bài viết thành công!";
-        this.isEditPostCategoryPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
-
-    //Delete post category item
-    handlerClickDeletePostCategory = () => {
-        this.notifyHeader = "Xác nhận?";
-        this.notifyContent = "Xác nhận xóa quyền bài viết được chọn?";
-        this.isVerifyDeletePostCategoryPopupOpen = true;
-        this.setState({});
-    }
-
-    handlerVerifyDeletePostCategoryConfirmation = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Xóa quyền bài viết thành công!";
-        this.isVerifyDeletePostCategoryPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
-
-
 }
 
 

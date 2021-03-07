@@ -15,9 +15,9 @@ import {
     GET_MY_COURSES_SUCCESS,
     GET_MY_COURSES_FAILURE,
 
-    GET_COURSE_SEARCH_RESULT_REQUEST,
-    GET_COURSE_SEARCH_RESULT_SUCCESS,
-    GET_COURSE_SEARCH_RESULT_FAILURE,
+    GET_COURSE_SEARCH_REQUEST,
+    GET_COURSE_SEARCH_SUCCESS,
+    GET_COURSE_SEARCH_FAILURE,
 
 
 } from '../constants.js'
@@ -68,17 +68,17 @@ function CourseReducer(state = initialState, action) {
             }
 
         //get course search result
-        case GET_COURSE_SEARCH_RESULT_REQUEST:
+        case GET_COURSE_SEARCH_REQUEST:
         case GET_COURSES_LIST_REQUEST:
             return {
                 ...state, coursesList: { isLoading: true }
             };
-        case GET_COURSE_SEARCH_RESULT_SUCCESS:
+        case GET_COURSE_SEARCH_SUCCESS:
         case GET_COURSES_LIST_SUCCESS:
             {
                 return { ...state, coursesList: { isLoading: false, data: action.payload, error: '' } }
             }
-        case GET_COURSE_SEARCH_RESULT_FAILURE:
+        case GET_COURSE_SEARCH_FAILURE:
         case GET_COURSES_LIST_FAILURE:
             {
                 return { ...state, coursesList: { isLoading: false, error: action.payload, data: [] } }

@@ -24,9 +24,9 @@ import {
     GET_DOCUMENTS_LIST_FAILURE,
 
     //document search results
-    GET_DOCUMENT_SEARCH_RESULT_REQUEST,
-    GET_DOCUMENT_SEARCH_RESULT_SUCCESS,
-    GET_DOCUMENT_SEARCH_RESULT_FAILURE,
+    GET_DOCUMENT_SEARCH_REQUEST,
+    GET_DOCUMENT_SEARCH_SUCCESS,
+    GET_DOCUMENT_SEARCH_FAILURE,
 
     UPLOAD_DOCUMENT_REQUEST, UPLOAD_DOCUMENT_SUCCESS, UPLOAD_DOCUMENT_FAILURE
 
@@ -95,20 +95,20 @@ export function get_DocumentsListFailure(error) {
 //document search result
 export function get_DocumentSearchResultRequest() {
     return {
-        type: GET_DOCUMENT_SEARCH_RESULT_REQUEST,
+        type: GET_DOCUMENT_SEARCH_REQUEST,
     }
 }
 
 export function get_DocumentSearchResultSuccess(data) {
     return {
-        type: GET_DOCUMENT_SEARCH_RESULT_SUCCESS,
+        type: GET_DOCUMENT_SEARCH_SUCCESS,
         payload: data
     }
 }
 
 export function get_DocumentSearchResultFailure(error) {
     return {
-        type: GET_DOCUMENT_SEARCH_RESULT_FAILURE,
+        type: GET_DOCUMENT_SEARCH_FAILURE,
         payload: error
     }
 }

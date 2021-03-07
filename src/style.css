@@ -329,6 +329,10 @@ a:hover {
     border-radius: 5px;
 }
 
+.bd-b-1px-solid {
+    border-bottom: 1pxs solid var(--gray);
+}
+
 .mg-auto {
     margin: auto;
 }

@@ -9,16 +9,15 @@ import { connect } from "react-redux";
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import { deleteAPost, editAPost } from 'redux/services/postServices'
-
-import { openBigModal, openModal } from 'redux/actions/modalAction'
+import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
+import { openBigModal, openModal, closeModal } from 'redux/actions/modalAction'
+import { delete_APostReset, put_EditAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
-// import 'components/styles/Metadata.scss'
-import 'components/styles/Metadata.scss'
 
 //styles
 import 'components/styles/Label.scss'
+import 'components/styles/Metadata.scss'
 
 //constants
 import { itemType } from 'constants.js'
@@ -48,9 +47,15 @@ class PostSummary extends Component {
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_POST") {
-      this.props.deleteAPost(this.props.id); //chi goi API, sau do nho component cha reload
-      if (this.props.reloadList)
-        this.props.reloadList();
+      //show confirmation popup and detete id verify
+      store.dispatch(openModal("confirmation",
+        {
+          title: "Xoá bài viết",
+          text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
+          confirmText: "Xác nhận",
+          cancelText: "Huỷ",
+          onConfirm: () => { this.props.deleteAPost(this.props.id); store.dispatch(closeModal()); }
+        }))
     }
 
     if (selectedItem.value === "EDIT_POST") {
@@ -70,9 +75,11 @@ class PostSummary extends Component {
               label: "Lý do tố cáo:",
               type: 'text-area',
               placeHolder: "Nhập lý do tố cáo ...",
-              validation: true
+              validation: true,
+              key: "reason"
             },
           ],
+        append: { id: this.props.id },
         validationCondition: {
           form: `#rpp-form`,
           rules: [
@@ -85,20 +92,37 @@ class PostSummary extends Component {
         },
         submitText: "Tố cáo",
         cancelText: "Huỷ",
-        verifyText: "Xác nhận",
-        cancelVerifyText: "Huỷ",
-        onVerify: (DTO) => this.onVerifyReport(DTO)
+        confirmBox: {
+          title: "Tố cáo bài viết",
+          text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
+          verifyText: "Xác nhận",
+          cancelText: "Huỷ",
+          onVerify: DTO => this.onVerifyReport(DTO)
+        }
       }
       ));
     }
   }
 
   onVerifyReport = (DTO) => {
-    //handle report
-    console.log(DTO);
+    this.props.reportAPost(DTO.id, { "reason": DTO.reason });
   }
 
   render() {
+
+    //reload the list when any item has been deleted or edited:
+    if (this.props.isHaveDeleted) {
+      if (this.props.reloadList)
+        this.props.reloadList();
+      store.dispatch(delete_APostReset())
+    }
+
+    if (this.props.isHaveEdited) {
+      if (this.props.reloadList)
+        this.props.reloadList();
+      store.dispatch(put_EditAPostReset())
+    }
+
     return (
       <div className="metadata">
         <div className="j-c-space-between"  >
@@ -113,7 +137,7 @@ class PostSummary extends Component {
               {this.props.authorName}
             </Link>
 
-            {this.props.type === itemType.mySelf ?
+            {this.props.type === itemType.mySelf || this.props.type === itemType.approval ?
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>
@@ -158,7 +182,7 @@ class PostSummary extends Component {
         {/* title */}
         <div className="d-flex mg-top-5px">
           {/* fake avatar */}
-          <img className="avatar" src={this.props.imageURL} alt="" />
+          <img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
             <Link to={"/posts/" + this.id}>
               <div className="title">
@@ -202,11 +226,15 @@ class PostSummary extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    //delete
+    isHaveDeleted: state.post.isHaveDeleted,
+    //edit
+    isHaveEdited: state.post.isHaveEdited
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPost, editAPost
+  deleteAPost, editAPost, reportAPost
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostSummary));

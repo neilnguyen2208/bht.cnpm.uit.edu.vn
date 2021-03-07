@@ -48,9 +48,6 @@ class UserItem extends Component {
             isChangeRoleConfirmationPopupOpen: false,
 
         }
-
-        this.isAnyFailedAlertPopupOpen = false;
-        this.isAnySuccessAlertPopupOpen = false;
         this.isTheFirstTimeLoaded = true;
 
     }
@@ -101,7 +98,7 @@ class UserItem extends Component {
             return (
                 <div className="User_Item"  >
 
-                    <img alt="avatar" src={"https://cfaevjuhwlpmr2dgadvijg-on.drv.tw/BHTWeb/Avatar/" +  this.username + '.png'} className="side-bar-avatar"></img>
+                    <img alt="avatar" src={"https://cfaevjuhwlpmr2dgadvijg-on.drv.tw/BHTWeb/Avatar/" + this.username + '.png'} className="side-bar-avatar"></img>
 
                     <div style={{
                         paddingLeft: "10px", width: "100%"
@@ -162,42 +159,6 @@ class UserItem extends Component {
                         </div>
                     </div >
 
-                    {/* modal for veritfy change role */}
-                    <Modal
-                        open={this.state.isChangeRoleConfirmationPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="confirmation"
-                        closeModal={() => this.closeChangeRoleConfirmationPopup()}
-                    >
-
-                        {/* code footer to handler event in parent class (if you want to show a confirmation modal) */}
-                        <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyChangeRoleConfirmation()}>OK</button>
-                        <button className="white-button" onClick={() => this.closeChangeRoleConfirmationPopup()}>Cancel</button>
-                    </Modal>
-
-
-                    {/* modal success alert */}
-                    <Modal
-                        open={this.isAnySuccessAlertPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_success"
-                        closeModal={() => { this.isAnySuccessAlertPopupOpen = false; this.setState({}) }}
-                    />
-
-                    {/* modal failed alert */}
-                    <Modal
-                        open={this.isAnyFailedAlertPopupOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_failure"
-                        closeModal={() => { this.isAnyFailedAlertPopupOpen = false; this.setState({}) }}
-                    />
-
 
                 </div >
             );
@@ -225,7 +186,7 @@ class UserItem extends Component {
             dropdown_container.style.display = "block";
             parent_menu_item.style.paddingLeft = "10px";
             show_text.style.color = "white";
-            
+
         }
 
         this.isAnyChangeRoleDropdownComboboxOpen = true;
@@ -245,32 +206,10 @@ class UserItem extends Component {
         sub_dropdown_item.className = "activated-combox-option";
         this.role_post = roleID;
 
-        //open a confirmation popup
-        this.openChangeRoleConfirmationPopup();
+ 
     }
 
-    //handler change role
-    openChangeRoleConfirmationPopup = () => {
-        this.closeAllChangeRoleDropdownCombobox();
-        this.notifyHeader = "Xác nhận?";
-        this.notifyContent = "Xác nhận thay đổi quyền người dùng?";
-        this.setState({ isChangeRoleConfirmationPopupOpen: true });
-    }
-
-    closeChangeRoleConfirmationPopup = (roleID) => {
-        this.setState({ isChangeRoleConfirmationPopupOpen: false });
-    }
-
-    handlerVerifyChangeRoleConfirmation = () => {
-
-    }
-
-    handleCancelChangeRoleConfirmation = () => { //phai co popup thi moi test duoc
-        this.roleID = { ...this.recover_roleID };
-        this.closeChangeRoleConfirmationPopup();
-
-        // this.setState({});
-    }
+  
 
     closeAllChangeRoleDropdownCombobox = () => {
 

@@ -1,7 +1,7 @@
 import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
-import { closeBigModal } from "redux/actions/modalAction";
+import { closeBigModal, closeModal, openModal } from "redux/actions/modalAction";
 import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { getPostByID, editAPost } from "redux/services/postServices"
-import { get_PostByIDReset, put_EditAPostRequest } from "redux/actions/postAction"
+import { get_PostByIDReset, put_EditAPostReset } from "redux/actions/postAction"
 
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
@@ -128,7 +128,7 @@ class EditPostModal extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(get_PostByIDReset());
-        store.dispatch(put_EditAPostRequest());
+        store.dispatch(put_EditAPostReset());
         if (getInstance('ed-post-cke'))
             getInstance('ed-post-cke').destroy();
     }
@@ -152,9 +152,20 @@ class EditPostModal extends React.Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            console.log(this.state.EDIT_POST_DTO)
-            this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
-            this.closeModal();
+            store.dispatch(openModal("confirmation",
+                {
+                    title: "Thay đổi bài viết",
+                    text: "Hành động này cần phê duyệt và không thể hoàn tác.",
+                    confirmText: "Xác nhận",
+                    cancelText: "Huỷ",
+                    onConfirm: () => {
+                        this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
+                        store.dispatch(closeModal()); //close confimation popup
+                        this.closeModal(); //close edit post popup
+                    }
+                }))
+
+
         }
     }
 

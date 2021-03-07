@@ -36,7 +36,7 @@ class AlertModal extends React.Component {
                     <div className="modal-wrapper">
                         <div className="modal-header">
                             <div> {title} </div>
-                            <img className="modal-close-modal" alt="header" src={red_delete_icon}
+                            <img className="modal-close-icon" alt="header" src={red_delete_icon}
                                 onClick={() => this.closeModal()} />
                         </div>
 
@@ -46,7 +46,7 @@ class AlertModal extends React.Component {
                                 :
                                 <img className="modal-main-icon" src={fail_management_icon} alt="icon" />
                             }
-                            <div className="modal-content-container">
+                            <div className="modal-content">
                                 <div className="modal-text">
                                     {text}
                                 </div>

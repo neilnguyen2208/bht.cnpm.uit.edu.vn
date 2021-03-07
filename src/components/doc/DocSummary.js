@@ -143,7 +143,7 @@ class DocSummary extends Component {
               {this.props.authorName}
             </div>
 
-            {this.props.type === itemType.mySelf || this.props.type === itemType.approving ?
+            {this.props.type === itemType.mySelf || this.props.type === itemType.approval ?
               <>{approveLabel}</> : <></>}
           </div>
 

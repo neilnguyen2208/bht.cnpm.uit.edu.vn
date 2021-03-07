@@ -15,9 +15,9 @@ import {
     GET_MY_COURSES_SUCCESS,
     GET_MY_COURSES_FAILURE,
 
-    GET_COURSE_SEARCH_RESULT_REQUEST,
-    GET_COURSE_SEARCH_RESULT_SUCCESS,
-    GET_COURSE_SEARCH_RESULT_FAILURE,
+    GET_COURSE_SEARCH_REQUEST,
+    GET_COURSE_SEARCH_SUCCESS,
+    GET_COURSE_SEARCH_FAILURE,
 
 
 } from "../constants.js"
@@ -67,20 +67,20 @@ export function get_CoursesListFailure(error) {
 //post search result
 export function get_CourseSearchResultRequest() {
     return {
-        type: GET_COURSE_SEARCH_RESULT_REQUEST
+        type: GET_COURSE_SEARCH_REQUEST
     }
 }
 
 export function get_CourseSearchResultSuccess(data) {
     return {
-        type: GET_COURSE_SEARCH_RESULT_SUCCESS,
+        type: GET_COURSE_SEARCH_SUCCESS,
         payload: data
     }
 }
 
 export function get_CourseSearchResultFailure(error) {
     return {
-        type: GET_COURSE_SEARCH_RESULT_FAILURE,
+        type: GET_COURSE_SEARCH_FAILURE,
         payload: error
     }
 }

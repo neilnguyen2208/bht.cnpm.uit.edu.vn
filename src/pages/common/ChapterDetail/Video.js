@@ -11,7 +11,7 @@ import 'layouts/Layout.scss'
 import { itemType } from 'constants.js'
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 //services
-import { getPostsList } from "redux/services/postServices"
+import {  } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 //components
@@ -37,7 +37,7 @@ class PostsList extends Component {
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
 
-        this.props.getPostsList(page, category);
+        
     }
     render() {
 
@@ -61,7 +61,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostsList, getPostCategories
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

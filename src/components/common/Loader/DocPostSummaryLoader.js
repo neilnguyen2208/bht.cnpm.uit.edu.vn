@@ -84,7 +84,7 @@ export function DocPostSummaryLoader() {
 
       {/* for implement approve item */}
       <div className="j-c-space-between">
-        {/* {this.props.type === itemType.approving ? */}
+        {/* {this.props.type === itemType.approval ? */}
         <div className="d-flex j-c-end" >
           <div className="timeline-item d-flex">
             <div className="animated-background" style={{ width: "60px", height: "20px" }}></div>

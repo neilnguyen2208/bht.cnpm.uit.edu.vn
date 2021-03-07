@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType, approveStatusOptions } from 'constants.js';
+import { itemType, userApproveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
@@ -26,7 +26,7 @@ class MyPostsList extends Component {
 
     componentDidMount() {
         this.searchParamObject = {
-            "page": 0,
+            "page": 1,
             "category.id": null,
             "postState": ''
         }
@@ -92,7 +92,7 @@ class MyPostsList extends Component {
                 ...this.searchParamObject,
                 page: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
-        setQueryParam("page", this.searchParamObject.page);
+        setQueryParam(this.queryParamObject);
 
         this.props.getMyPostsList(this.searchParamObject);
     }
@@ -100,7 +100,7 @@ class MyPostsList extends Component {
     render() {
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
             this.comboboxGroup =
-                <div className="filter-container">
+                <div className="filter-container j-c-space-between">
                     <div className="d-flex">
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
@@ -116,7 +116,7 @@ class MyPostsList extends Component {
                         <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                options={approveStatusOptions}
+                                options={userApproveStatusOptions}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
                                 id="my-post-list-approve-status-filter-combobox"
@@ -125,7 +125,7 @@ class MyPostsList extends Component {
                     </div>
                 </div>
         }
-        else this.comboboxGroup = <div className="filter-container">
+        else this.comboboxGroup = <div className="filter-container j-c-space-between ">
             <div className="d-flex">
                 <div className="timeline-item d-flex">
                     <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
@@ -154,7 +154,7 @@ class MyPostsList extends Component {
                             readingTime={item.readingTime}
                             approveState={item.postState}
                             popUpMenuPrefix="mppu"   //stand for my post popup 
-                            avatarURL={item.avatarURL}
+                            authorAvatarURL={item.authorAvatarURL}
                             //
                             reloadList={() => this.reloadList()}
                         />
@@ -186,33 +186,25 @@ class MyPostsList extends Component {
                     <div className="content-container">
                         {this.comboboxGroup}
 
-                        <div className="filter-label d-flex">
-                            {!this.props.isListLoading ? <div className="d-flex">
-                                <div className="mg-right-5px mg-bottom-5px">Tổng số:</div>
-                                <div> {this.props.myPostsList.length}</div>
-                            </div>
-                                :
-                                <div className="d-flex">
-                                    <div className="timeline-item d-flex">
-                                        <div className="animated-background" style={{ width: "120px", height: "20px" }}></div>
-                                    </div>
+                        {!this.props.isListLoading && this.props.myPostsList ?
+                            <>
+                                <div className="filter-label d-flex mg-bottom-10px">
+                                    <div className="mg-right-5px">Tổng số:</div>
+                                    <div> {this.props.totalElements}</div>
                                 </div>
-                            }
-                        </div>
-
-                        {this.myPostsList}
-
-                        {!this.props.isListLoading ?
-                            <Paginator config={{
-                                changePage: (pageNumber) => this.onPageChange(pageNumber),
-                                pageCount: this.props.totalPages,
-                                currentPage: parseInt(getQueryParamByName('page'))
-                            }}
-                            /> :
-                            <div className="d-flex">
-                                <div className="timeline-item d-flex">
-                                    <div className="animated-background" style={{ width: "120px", height: "20px" }}></div>
-                                </div>
+                                <div className="list-item-container">{this.myPostsList}</div>
+                                <Paginator config={{
+                                    changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                    pageCount: this.props.totalPages,
+                                    currentPage: getQueryParamByName('page')
+                                }}
+                                />
+                            </>
+                            :
+                            <div>
+                                {DocPostSummaryLoader()}
+                                {DocPostSummaryLoader()}
+                                {DocPostSummaryLoader()}
                             </div>
                         }
                     </div>
@@ -227,6 +219,7 @@ const mapStateToProps = (state) => {
         myPostsList: state.post.myPosts.data,
         postCategories: state.post_category.categories.searchData,
         totalPages: state.post.myPosts.totalPages,
+        totalElements: state.post.myPosts.totalElements,
         isListLoading: state.post.myPosts.isLoading,
         isCategoryLoading: state.post_category.categories.isLoading
     };

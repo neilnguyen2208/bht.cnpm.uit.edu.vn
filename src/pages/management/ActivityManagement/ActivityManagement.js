@@ -166,8 +166,7 @@ class ActivityManagement extends Component {
 
     openChangeRoleConfirmationPopup = (roleID) => {
         this.closeAllChangeRoleDropdownCombobox();
-        this.notifyHeader = "Xác nhận?";
-        this.notifyContent = "Xác nhận thay đổi quyền người dùng?";
+    
         this.setState({ isChangeRoleConfirmationPopupOpen: true });
     }
 

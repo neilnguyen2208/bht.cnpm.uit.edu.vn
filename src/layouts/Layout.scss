@@ -10,11 +10,107 @@
 .filter-container {
   width: 100%;
   margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px var(--gray) solid;
+  transform: all 0.5s;
+}
+
+.p-searchbar-container {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px var(--gray) solid;
+
+}
+
+.p-searchbar-input {
+  box-shadow: 0px 0px 2px 0px var(--grayish);
+  padding: 2px;
+  padding-left: 10px;
+  height: 2.0rem;
+  text-align: left;
+  background: white;
+  font-family: "BarlowCondensed-Medium";
+  font-size: 1.1rem;
+  line-height: 20px;
+  color: var(--black);
+  border: var(--gray) 1px solid;
+  min-width: 200px;
+  width: 100%;
+  border-radius: 5px;
+  outline: none;
+  position: relative;
+  margin: auto;
+}
+
+.p-searchbar-input::placeholder {
+  font-family: "BarlowCondensed-Regular";
+  font-size: 15px;
+}
+
+.p-searchbar-input:hover,
+.p-searchbar-input:focus {
+  border: var(--blue) 1px solid;
+  cursor: text;
+  opacity: 90%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px 0px var(--light-blue);
+}
+
+.p-searchbar-input:disabled {
+  background: var(--gray);
+  color: var(--black);
+  cursor: text;
+  opacity: 90%;
+}
+
+.p-searchbar-btn {
+  margin-left: 5px;
+  display: inline-block;
+  box-sizing: border-box;
+  width: fit-content;
+  height: 2rem;
+  text-align: center;
+  border-radius: 5px;
+  background: white;
+  font-family: "BarlowCondensed-SemiBold";
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--black);
+  border: var(--gray) 1px solid;
+  user-select: none !important;
+  min-width: fit-content;
+  box-shadow: 0px 0px 1px 0px var(--grayish);
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  cursor: pointer;
+  outline: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.p-searchbar-btn:hover {
+  box-shadow: 0px 0px 4px 0px var(--gray);
+  opacity: 80%;
+}
+
+.p-searchbar-btn:active {
+  border: white 1px solid;
+  opacity: 80%;
+}
+
+.p-searchbar-btn:disabled {
+  background: var(--gray);
+  color: white;
+  opacity: 90%;
+}
+
+.p-searchbar-icon {
+
+  width: 24px;
+  height: 26px;
+  padding-bottom: 2px;
+  // background: green;
 }
 
 .list-item-container {
@@ -35,7 +131,7 @@
   margin: auto;
 }
 
-.home-layout{
+.home-layout {
   width: 100%;
   max-width: 1000px;
   margin: auto;

@@ -10,9 +10,9 @@ import {
     GET_MY_DOCUMENTS_FAILURE,
 
     //DOCUMENT SEARCH RESULT
-    GET_DOCUMENT_SEARCH_RESULT_REQUEST,
-    GET_DOCUMENT_SEARCH_RESULT_SUCCESS,
-    GET_DOCUMENT_SEARCH_RESULT_FAILURE,
+    GET_DOCUMENT_SEARCH_REQUEST,
+    GET_DOCUMENT_SEARCH_SUCCESS,
+    GET_DOCUMENT_SEARCH_FAILURE,
 
     GET_ALL_NOT_APPROVED_DOCUMENTS_SUCCESS,
     GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST,
@@ -79,17 +79,17 @@ function DocReducer(state = initialState, action) {
 
         //document search result 
         //my post
-        case GET_DOCUMENT_SEARCH_RESULT_REQUEST:
+        case GET_DOCUMENT_SEARCH_REQUEST:
         case GET_DOCUMENTS_LIST_REQUEST:
             return {
                 ...state, documentSearchResult: { isLoading: true }
             };
-        case GET_DOCUMENT_SEARCH_RESULT_SUCCESS:
+        case GET_DOCUMENT_SEARCH_SUCCESS:
         case GET_DOCUMENTS_LIST_SUCCESS:
             {
                 return { ...state, documentSearchResult: { isLoading: false, data: action.payload, error: '' } }
             }
-        case GET_DOCUMENT_SEARCH_RESULT_FAILURE:
+        case GET_DOCUMENT_SEARCH_FAILURE:
         case GET_DOCUMENTS_LIST_FAILURE:
             {
                 return { ...state, documentSearchResult: { isLoading: false, error: action.payload, data: [] } }

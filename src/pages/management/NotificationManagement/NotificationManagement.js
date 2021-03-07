@@ -108,83 +108,6 @@ class NotificationManagement extends Component {
                     </div>
 
                     {/* Popup for add new post category */}
-                    <Modal
-                        shadow={true}
-                        type="custom"
-                        title="Thêm thông báo"
-                        open={this.isAddNotificationPopupOpen}
-                        closeModal={() => { this.isAddNotificationPopupOpen = false; this.setState({}); }}
-                    >
-                        <div className="modal-body">
-                            <div className="gray-label"> Nội dung thông báo: </div>
-                            <input type="text" className="text-input" placeholder="Nhập tên thông báo ..." />
-                        </div>
-
-                        <div className="modal-footer">
-                            <div className="gray-label">Xác nhận?</div>
-                            <div className = "d-flex">
-                                <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyAddNewNotificationConfirmation()}>OK</button>
-                                <button className="white-button" onClick={() => { this.isAddNotificationPopupOpen = false; this.setState({}) }}>Cancel</button>
-                            </div>
-                        </div>
-                    </Modal>
-
-                    {/* Popup for update a new post category */}
-                    <Modal
-                        shadow={true}
-                        type="custom"
-                        title="Cập nhật thông báo"
-                        open={this.isEditNotificationPopupOpen}
-                        closeModal={() => { this.isEditNotificationPopupOpen = false; this.setState({}); }}
-                    >
-                        <div className="modal-body">
-                            <div className="gray-label"> Tên thông báo: </div>
-                            <input type="text" className="text-input" defaultValue={this.selected_category_name} />
-                        </div>
-
-                        <div className="modal-footer">
-                            <div className="gray-label">Xác nhận?</div>
-                            <div className = "d-flex">
-                                <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyEditNotificationConfirmation()}>OK</button>
-                                <button className="white-button" onClick={() => { this.isEditNotificationPopupOpen = false; this.setState({}) }}>Cancel</button>
-                            </div>
-                        </div>
-                    </Modal>
-
-                    {/* Popup for verifying delete post category */}
-                    <Modal
-                        shadow={true}
-                        type="confirmation"
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        open={this.isVerifyDeleteNotificationPopupOpen}
-                        closeModal={() => { this.isVerifyDeleteNotificationPopupOpen = false; this.setState({}); }}
-                    >
-                        <button className="blue-button mg-right-5px" onClick={() => this.handlerVerifyDeleteNotificationConfirmation()}>OK</button>
-                        <button className="white-button" onClick={() => { this.isVerifyDeleteNotificationPopupOpen = false; this.setState({}) }}>Cancel</button>
-                    </Modal>
-
-                    {/* Custom for notifing success */}
-                    <Modal
-                        open={this.isNotifySuccessOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_success"
-                        closeModal={() => { this.isNotifySuccessOpen = false; this.setState({}) }}
-                    >
-                    </Modal>
-
-                    {/* Custom for notifing fail */}
-                    <Modal
-                        open={this.isNotifyFailOpen}
-                        shadow={true}
-                        title={this.notifyHeader}
-                        text={this.notifyContent}
-                        type="alert_failure"
-                        closeModal={() => { this.isNotifyFailOpen = false; this.setState({}) }}
-                    >
-                    </Modal>
 
                 </div >
             </div >
@@ -243,51 +166,7 @@ class NotificationManagement extends Component {
         this.setState({});
     }
 
-    handlerVerifyAddNewNotificationConfirmation = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Thêm thông báo thành công!";
-        this.isAddNotificationPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
 
-    //Edit post category item
-    handlerClickEditNotification = () => {
-        this.isEditNotificationPopupOpen = true;
-        this.setState({});
-    }
-
-    handlerVerifyEditNotificationConfirmation = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Cập nhật thông báo thành công!";
-        this.isEditNotificationPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
-
-    //Delete post category item
-    handlerClickDeleteNotification = () => {
-        this.notifyHeader = "Xác nhận?";
-        this.notifyContent = "Xác nhận xóa thông báo được chọn?";
-        this.isVerifyDeleteNotificationPopupOpen = true;
-        this.setState({});
-    }
-
-    handlerVerifyDeleteNotificationConfirmation = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Xóa thông báo thành công!";
-        this.isVerifyDeleteNotificationPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
-
-    handlerSetCurrentNotification = () => {
-        this.notifyHeader = "Thành công";
-        this.notifyContent = "Thay đổi thông báo hiện tại thành công!";
-        this.isVerifyDeleteNotificationPopupOpen = false;
-        this.isNotifySuccessOpen = true;
-        this.setState({});
-    }
 
 
 }

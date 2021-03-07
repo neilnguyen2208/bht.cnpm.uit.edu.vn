@@ -1,113 +1,216 @@
-/* eslint-disable react/jsx-pascal-case */
-/* eslint-disable react/jsx-pascal-case */
+
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
-
-import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
-import PostSummaryMetadata from 'components/post/SummaryMetadata'
+import { NavLink } from 'react-router-dom'
 //import for redux
-import { getMyPostsList } from "redux/services/postServices";
-import { getPostCategories } from "redux/services/postCategoryServices";
-import AdminSidebar from "layouts/AdminSidebar"
+import { getPostSearch } from "redux/services/postServices";
+import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
-import { NavLink } from 'react-router-dom'
-import Loader from 'components/common/Loader/Loader'
+import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
+import AdminSidebar from 'layouts/AdminSidebar'
+import { adminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
+import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
+import PostSummaryMetadata from 'components/post/SummaryMetadata'
+import store from 'redux/store/index.js';
+import { delete_APostReset, put_EditAPostReset } from 'redux/actions/postAction'
 
-
-class PostManagement extends Component {
+import 'layouts/Layout.scss'
+class PostApproving extends Component {
     constructor(props) {
         super();
-
-        this.filter = [
-            { id: 1, name: "Tất cả" },
-            { id: 2, name: "Chưa phê duyệt" },
-            { id: 3, name: "Đã phê duyệt" },
-            { id: 4, name: "Cần xem lại" }
-        ]
-
-        this.postsList = <></>
     }
 
-    async componentDidMount() {
-        this.props.getPostCategories()
+    componentDidMount() {
 
-        //get filter
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
 
-        this.props.getMyPostsList(page, category);
+        this.queryParamObject = {
+            "category": 0,
+            "page": 1,
+        }
+
+        this.searchParamObject = {
+            "page": 1,
+            "category": null,
+            "postState": '',
+            "searchTerm": '',
+        }
+
+        setQueryParam(this.queryParamObject)
+        this.props.getPostCategoriesHaveAll();
+        this.props.getPostSearch(this.searchParamObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam("page", pageNumber);
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
-        this.props.getMyPostsList(page, category);
+        setQueryParam({ "page": pageNumber });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            page: getQueryParamByName('page'),
+        }
+        this.props.getPendindPosts(this.searchParamObject);
         this.setState({});
     }
 
     //combobox
-    onFilterOptionChanged = (selectedOption) => {
-        setQueryParam("category", selectedOption.id);
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
-        this.props.getMyPostsList(page, category);
+    onCategoryOptionChange = (selectedOption) => {
+        setQueryParam({ "category": selectedOption.id });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "category": selectedOption.id,
+            postState: ''
+        }
+        this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
 
-    //combobox
-    onFilterOptionChanged = (selectedOption) => {
-        setQueryParam("category", selectedOption.id);
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
-        this.props.getMyDocumentsList(page, category);
+    onApproveOptionChange = (selectedOption) => {
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            postState: selectedOption.postState
+        }
+        this.props.getPostSearch(this.searchParamObject);
         this.setState({});
+    }
+
+    onTimeOptionChange = (selectedOption) => {
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            sort: selectedOption.sort
+        }
+        this.props.getPostSearch(this.searchParamObject);
+        this.setState({});
+    }
+
+    onSearchTermChange = () => {
+
+        this.searchParamObject = { ...this.searchParamObject, searchTerm: document.querySelector('.pm.p-searchbar-input').value };
+        this.props.getPostSearch(this.searchParamObject);
+        this.setState({});
+    }
+
+    reloadList = () => {
+        //neu con 1 item thi phai goi ve trang truoc
+        if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
+            this.searchParamObject = {
+                ...this.searchParamObject,
+                page: this.searchParamObject.page,
+            }
+        setQueryParam(this.queryParamObject);
+
+        this.props.getPostSearch(this.searchParamObject);
     }
 
     render() {
-        if (!this.props.isListLoading) {
-            this.postsList = this.props.postsList.map((postItem) => {
+        //combobox
+        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
+            this.comboboxGroup =
+                <div className="filter-container">
+                    <div className="p-searchbar-container">
+                        {/* page search bar */}
+                        <div className="filter-label t-a-right mg-right-5px">Từ khoá tìm kiếm:</div>
+                        <div className="d-flex">
+                            <input type="text" className="p-searchbar-input mg-left-5px pm" placeholder="Nhập từ khoá ..." />
+                            <button className="p-searchbar-btn" onClick={() => { this.onSearchTermChange() }}>
+                                <div className="d-flex">
+                                    Tìm kiếm
+                                    {/* <img src={search_icon} className="p-searchbar-icon" alt=""></img> */}
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="j-c-space-between">
+                        <div>
+                            <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
+                            <div className="mg-left-5px">
+                                <ComboBox
+                                    selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
+                                    options={this.props.postCategories}
+                                    onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
+                                    id="pmcf-combobox" //post management category filter
+                                ></ComboBox>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
+                            <div className="mg-left-5px">
+                                <ComboBox
+                                    options={adminApproveStatusOptions}
+                                    placeHolder="Tất cả"
+                                    onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
+                                    id="pmasf-combobox" //post management approval status filter 
+                                ></ComboBox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mg-top-10px">
+                        <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
+                        <div className="mg-left-5px">
+                            <ComboBox
+                                options={publishedTimeOptions}
+                                selectedOptionID={1}
+                                placeHolder="Tất cả"
+                                onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
+                                id="pmtf-combobox" //post management time filter 
+                            ></ComboBox>
+                        </div>
+                    </div>
+                </div >
+        }
+        else this.comboboxGroup = <div className="filter-container">
+            <div className="timeline-item d-flex">
+                <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
+            </div>
+        </div>
+
+        if (!this.props.isListLoading && this.props.postsList) {
+            this.postsList = this.props.postsList.map((item) => {
                 return <div className="item-container">
-                   <PostSummaryMetadata
-                        type={postItem.type}
-                        id={postItem.id}
-                        authorName={postItem.authorName}
-                        authorID={postItem.authorID}
-                        publishDtm={postItem.publishDtm}
-                        categoryName={postItem.categoryName}
-                        categoryID={postItem.categoryID}
-                        title={postItem.title}
-                        summary={postItem.summary}
-                        imageURL={postItem.imageURL}
-                        readingTime={postItem.readingTime}
-                        approveState={postItem.postState} />
+                    <PostSummaryMetadata
+                        type={itemType.mySelf}
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        publishDtm={item.publishDtm}
+                        categoryName={item.categoryName}
+                        categoryID={item.categoryID}
+                        title={item.title}
+                        summary={item.summary}
+                        imageURL={item.imageURL}
+                        readingTime={item.readingTime}
+                        approveState={item.postState}
+                        popUpMenuPrefix="pmpu"   //stand for my post popup 
+                        authorAvatarURL={item.authorAvatarURL}
+                        //
+                        reloadList={() => this.reloadList()}
+                    />
                     <PostSummaryReactionBar
-                        id={postItem.id}
-                        likes={postItem.likeCount}
-                        comments={postItem.commentCount}
-                        likeStatus={postItem.likeStatus}
-                        savedStatus={postItem.savedStatus}
+                        title={item.title}
+                        id={item.id}
+                        likeCount={item.likeCount}
+                        commentCount={item.commentCount}
+                        likedStatus={item.likeStatus}
+                        savedStatus={item.savedStatus}
                     />
                 </div >
             }
             )
         }
-
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
 
             this.filter = this.props.postCategories;
         }
         return (
-            <div className="management-layout">
+            <div className="left-sidebar-layout">
                 <AdminSidebar />
-                <div className="content-container">
+                <div className="content-layout">
                     <Titlebar title="QUẢN LÝ BÀI VIẾT" />
                     <div className="content-container">
                         <div className="h-menu-bar mg-top-10px">
@@ -118,41 +221,30 @@ class PostManagement extends Component {
                                 Duyệt bài viết
                             </NavLink>
                         </div>
-                        <div className="filter-container">
-                            <div className="d-flex">
-                                <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
-                                <div style={{ marginLeft: "5px" }}>
-                                    <ComboBox
-                                        selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 1}
-                                        options={this.filter}
-                                        placeHolder="Chọn danh mục"
-                                        onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
-                                        id="my-post-list-search-filter-combobox"
-                                    ></ComboBox>
+
+                        {this.comboboxGroup}
+
+                        {!this.props.isListLoading && this.props.postsList ?
+                            <>
+                                <div className="filter-label d-flex mg-bottom-10px">
+                                    <div className="mg-right-5px">Tổng số:</div>
+                                    <div> {this.props.totalElements}</div>
                                 </div>
+                                <div className="list-item-container">{this.postsList}</div>
+                                <Paginator config={{
+                                    changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                    pageCount: this.props.totalPages,
+                                    currentPage: getQueryParamByName('page')
+                                }}
+                                />
+                            </>
+                            :
+                            <div>
+                                {DocPostSummaryLoader()}
+                                {DocPostSummaryLoader()}
+                                {DocPostSummaryLoader()}
                             </div>
-
-                            <div className="filter-label d-flex">
-                                <div className="mg-right-5px">Tổng số:</div>
-
-                                {!this.props.isListLoading ?
-                                    <div> {this.props.postsList.length}</div>
-                                    : <div>0</div>
-                                }
-                            </div>
-                        </div>
-
-                        {this.props.isListLoading ?
-                            < Loader /> :
-                            <>{this.postsList}</>
                         }
-
-                        <Paginator config={{
-                            changePage: (pageNumber) => this.onPageChange(pageNumber),
-                            pageCount: 1,
-                            currentPage: getQueryParamByName('page')
-                        }}
-                        />
                     </div>
                 </div >
             </div>
@@ -160,16 +252,22 @@ class PostManagement extends Component {
     }
 }
 const mapStateToProps = (state) => {
+    console.log(state.post.postsList)
     return {
-        postsList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.data,
-        isListLoading: state.post.myPosts.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading
+        //pending posts list
+        postsList: state.post.postsList.data,
+        isListLoading: state.post.postsList.isLoading,
+        totalPages: state.post.postsList.totalPages,
+        totalElements: state.post.postsList.totalElements,
+
+        //category
+        postCategories: state.post_category.categories.searchData,
+        isCategoryLoading: state.post_category.categories.isLoading,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPostsList, getPostCategories
+    getPostSearch, getPostCategoriesHaveAll
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostManagement));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostApproving));

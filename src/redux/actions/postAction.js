@@ -25,9 +25,9 @@ import {
     GET_POSTS_LIST_FAILURE,
 
     //post search result & post list
-    GET_POST_SEARCH_RESULT_REQUEST,
-    GET_POST_SEARCH_RESULT_SUCCESS,
-    GET_POST_SEARCH_RESULT_FAILURE,
+    GET_POST_SEARCH_REQUEST,
+    GET_POST_SEARCH_SUCCESS,
+    GET_POST_SEARCH_FAILURE,
 
     POST_CREATE_POST_REQUEST,
     POST_CREATE_POST_SUCCESS,
@@ -53,13 +53,17 @@ import {
     UNSAVE_A_POST_FAILURE,
     SAVE_A_POST_FAILURE,
 
-    DELETE_A_POST_REQUEST,
+    DELETE_A_POST_RESET,
     DELETE_A_POST_SUCCESS,
     DELETE_A_POST_FAILURE,
 
-    EDIT_A_POST_REQUEST,
+    EDIT_A_POST_RESET,
     EDIT_A_POST_SUCCESS,
-    EDIT_A_POST_FAILURE
+    EDIT_A_POST_FAILURE,
+
+    REPORT_A_POST_RESET,
+    REPORT_A_POST_SUCCESS,
+    REPORT_A_POST_FAILURE
 
 } from "../constants.js"
 
@@ -178,19 +182,19 @@ export function get_PostByIDReset() {
 //post search result
 export function get_PostSearchResultRequest() {
     return {
-        type: GET_POST_SEARCH_RESULT_REQUEST
+        type: GET_POST_SEARCH_REQUEST
     }
 }
 
 export function get_PostSearchResultSuccess(data) {
     return {
-        type: GET_POST_SEARCH_RESULT_SUCCESS, payload: data
+        type: GET_POST_SEARCH_SUCCESS, payload: data
     }
 }
 
 export function get_PostSearchResultFailure(error) {
     return {
-        type: GET_POST_SEARCH_RESULT_FAILURE,
+        type: GET_POST_SEARCH_FAILURE,
         payload: error
     }
 }
@@ -282,9 +286,9 @@ export function delete_UnSaveAPostFailure(data) {
 }
 
 // edit and delete post
-export function delete_APostRequest(data) {
+export function delete_APostReset(data) {
     return {
-        type: DELETE_A_POST_REQUEST,
+        type: DELETE_A_POST_RESET,
         request: data
     }
 }
@@ -302,9 +306,9 @@ export function delete_APostFailure() {
     }
 }
 
-export function put_EditAPostRequest(data) {
+export function put_EditAPostReset(data) {
     return {
-        type: EDIT_A_POST_REQUEST
+        type: EDIT_A_POST_RESET
     }
 }
 
@@ -318,6 +322,25 @@ export function put_EditAPostSuccess(data) {
 export function put_EditAPostFailure() {
     return {
         type: EDIT_A_POST_FAILURE
+    }
+}
+
+
+export function post_ReportAPostReset() {
+    return {
+        type: REPORT_A_POST_RESET
+    }
+}
+
+export function post_ReportAPostSuccess() {
+    return {
+        type: REPORT_A_POST_SUCCESS
+    }
+}
+
+export function post_ReportAPostFailure() {
+    return {
+        type: REPORT_A_POST_FAILURE
     }
 }
 

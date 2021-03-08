@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
-import { NavLink } from 'react-router-dom'
 //import for redux
 import { getPostSearch } from "redux/services/postServices";
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
@@ -15,19 +14,14 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
 import { adminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
-import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
-import PostSummaryMetadata from 'components/post/SummaryMetadata'
-import store from 'redux/store/index.js';
-import { delete_APostReset, put_EditAPostReset } from 'redux/actions/postAction'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
+import PostSummaryMetadata from 'components/post/SummaryInfo'
+import PostManagementNavbar from './PostManagementNavbar'
 
 import 'layouts/Layout.scss'
 class PostApproving extends Component {
-    constructor(props) {
-        super();
-    }
 
     componentDidMount() {
-
 
         this.queryParamObject = {
             "category": 0,
@@ -48,7 +42,7 @@ class PostApproving extends Component {
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam({ "page": pageNumber });
+        setQueryParam({ ...this.queryParamObject, "page": pageNumber });
         this.searchParamObject = {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
@@ -59,7 +53,7 @@ class PostApproving extends Component {
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ "category": selectedOption.id });
+        setQueryParam({ ...this.queryParamObject, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
@@ -191,8 +185,7 @@ class PostApproving extends Component {
                         //
                         reloadList={() => this.reloadList()}
                     />
-                    <PostSummaryReactionBar
-                        title={item.title}
+                    <PostNormalReactionbar
                         id={item.id}
                         likeCount={item.likeCount}
                         commentCount={item.commentCount}
@@ -213,14 +206,7 @@ class PostApproving extends Component {
                 <div className="content-layout">
                     <Titlebar title="QUẢN LÝ BÀI VIẾT" />
                     <div className="content-container">
-                        <div className="h-menu-bar mg-top-10px">
-                            <NavLink to="/admin/post-management/" className="h-menu-item" activeClassName='h-menu-item a-h-menu-item'>
-                                Quản lý bài viết
-                             </NavLink>
-                            <NavLink to="/admin/post-approving/" className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
-                                Duyệt bài viết
-                            </NavLink>
-                        </div>
+                        <PostManagementNavbar />
 
                         {this.comboboxGroup}
 

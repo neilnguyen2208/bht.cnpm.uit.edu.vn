@@ -62,7 +62,7 @@ export default class PopupMenu extends React.Component {
 
         let { id, value } = menuItem;
         if (this.props.onMenuItemClick)
-            this.props.onMenuItemClick({id, value});
+            this.props.onMenuItemClick({ id, value });
 
         else console.log('error', "Please implement onMenuItemClick() of PopupMenu!");
         this.isAnyValueChanged = true;
@@ -90,7 +90,7 @@ export default class PopupMenu extends React.Component {
                         </div>
                         :
                         <div className='d-flex'>
-                            {menuItem.icon ? <img className='popup-menu-icon' style={{
+                            {menuItem.icon ? <img className='popup-menu-icon' style={menuItem.style ? menuItem.style : {
                                 height: "23px",
                                 paddingTop: "0px",
                                 paddingBottom: "3px"

@@ -10,8 +10,9 @@ import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
-import { openBigModal, openModal, closeModal } from 'redux/actions/modalAction'
-import { delete_APostReset, put_EditAPostReset } from 'redux/actions/postAction'
+import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
+import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 
@@ -30,13 +31,20 @@ class PostSummary extends Component {
   constructor(props) {
     super(props);
     this.normalMenuItemList = [
-      { id: 3, name: "Báo cáo", icon: report_icon },
+      { id: 3, name: "Report", icon: report_icon },
     ]
 
     this.mySelfMenuItemList = [
       { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
       { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
-      { id: 3, text: "Báo cáo", value: "REPORT_POST", icon: report_icon },
+      {
+        id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
+        style: {
+          height: "26px",
+          paddingTop: "3px",
+          paddingBottom: "3px"
+        }
+      },
     ]
 
     this.id = this.props.id;
@@ -65,7 +73,7 @@ class PostSummary extends Component {
     if (selectedItem.value === "REPORT_POST") {
       store.dispatch(openModal("form", {
         id: `rpp-form-modal`,//report post
-        title: `TỐ CÁO BÀI VIẾT`,
+        title: `REPORT BÀI VIẾT`,
         formId: `rpp-form`,
         inputs:
           [
@@ -85,26 +93,27 @@ class PostSummary extends Component {
           rules: [
             //truyen vao id, loai component, message
             validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-            // validation.noSpecialChar(`rpp-form-input`, 'text-area', 'Lý do không được chứa ký tự đặc biệt!'),
-            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!'),
+            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
           ],
 
         },
-        submitText: "Tố cáo",
+        submitText: "Report",
         cancelText: "Huỷ",
         confirmBox: {
-          title: "Tố cáo bài viết",
+          title: "Report bài viết",
           text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
-          verifyText: "Xác nhận",
+          confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onVerify: DTO => this.onVerifyReport(DTO)
+          onConfirm: DTO => this.onConfirmReport(DTO)
         }
       }
       ));
     }
   }
 
-  onVerifyReport = (DTO) => {
+  onConfirmReport = (DTO) => {
+    store.dispatch(closeModal());
+    store.dispatch(closeModal());
     this.props.reportAPost(DTO.id, { "reason": DTO.reason });
   }
 
@@ -121,6 +130,11 @@ class PostSummary extends Component {
       if (this.props.reloadList)
         this.props.reloadList();
       store.dispatch(put_EditAPostReset())
+    }
+
+    if (this.props.isHaveReported) {
+      store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
+      store.dispatch(post_ReportAPostReset())
     }
 
     return (
@@ -198,9 +212,11 @@ class PostSummary extends Component {
               </div>
 
               <div className="d-flex" >
-                <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {this.props.publishDtm.substring(0, 10)}
-                </div>
+                {this.props.publishDtm ?
+                  <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                    {this.props.publishDtm.substring(0, 10)}
+                  </div>
+                  : <></>}
               </div>
             </div>
           </div>
@@ -229,7 +245,9 @@ const mapStateToProps = (state) => {
     //delete
     isHaveDeleted: state.post.isHaveDeleted,
     //edit
-    isHaveEdited: state.post.isHaveEdited
+    isHaveEdited: state.post.isHaveEdited,
+    //report
+    isHaveReported: state.post.isHaveReported
   };
 }
 

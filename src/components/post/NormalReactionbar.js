@@ -13,14 +13,14 @@ import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x2
 import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //styles
-import 'components/styles/ReactionBar.scss'
+import 'components/styles/Reactionbar.scss'
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
 
 //utils
 import { formatNumber } from 'utils/miscUtils.js'
 
-class SummaryReactionBar extends Component {
+class NormalReactionbar extends Component {
 
   constructor(props) {
     super(props);
@@ -152,5 +152,5 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   saveAPost, unSaveAPost, likeAPost, unLikeAPost
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SummaryReactionBar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NormalReactionbar));
 

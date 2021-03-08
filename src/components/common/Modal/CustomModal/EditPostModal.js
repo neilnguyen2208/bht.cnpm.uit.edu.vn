@@ -29,7 +29,7 @@ import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.pn
 //utils
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import Metadata from 'components/post/DetailMetadata'
+import Metadata from 'components/post/DetailInfo'
 import SmallLoader from 'components/common/Loader/Loader_S'
 
 const validationCondition = {

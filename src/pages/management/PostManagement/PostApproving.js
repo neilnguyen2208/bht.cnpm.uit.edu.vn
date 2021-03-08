@@ -7,7 +7,8 @@ import { NavLink } from 'react-router-dom'
 //import for redux
 import { getPendingPosts } from "redux/services/postServices";
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
-import RequestSummary from 'components/post/RequestSummary'
+import RequestInfo from 'components/post/RequestInfo'
+import SummaryInfo from 'components/post/SummaryInfo'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,6 +16,8 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
+import PostManagementNavbar from './PostManagementNavbar'
+import RequestReactionbar from 'components/post/RequestReactionbar'
 
 class PostApproving extends Component {
     constructor(props) {
@@ -22,27 +25,18 @@ class PostApproving extends Component {
     }
 
     componentDidMount() {
-        this.searchParamObject = {
-            "page": 0,
-            "category": null,
-            "postState": ''
-        }
 
         this.queryParamObject = {
-            "category": 0,
-            "page": 1
+            category: 0,
+            page: 1
         }
 
         this.props.getPostCategoriesHaveAll();
-        if (!getQueryParamByName('category') || !getQueryParamByName('page'))
-            setQueryParam(this.queryParamObject);
-        else if (getQueryParamByName('page') <= 0) {
-            setQueryParam({ ...this.queryParamObject, "page": 1 });
-        }
+        setQueryParam(this.queryParamObject);
 
         this.searchParamObject = {
             paginator: getQueryParamByName('page'),
-            "category": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
+            category: getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
             postState: 'PENDING_APPROVAL',
         }
 
@@ -51,7 +45,7 @@ class PostApproving extends Component {
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam({ "page": pageNumber });
+        setQueryParam({ ...this.queryParamObject, pages: pageNumber });
         this.searchParamObject = {
             ...this.searchParamObject,
             paginator: getQueryParamByName('page'),
@@ -63,7 +57,7 @@ class PostApproving extends Component {
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ "category": selectedOption.id });
+        setQueryParam({ ...this.queryParamObject, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
@@ -111,26 +105,40 @@ class PostApproving extends Component {
 
         if (!this.props.isListLoading && this.props.postsList) {
             this.postsList = this.props.postsList.map((item) => (
-                <RequestSummary
-                    type={itemType.mySelf}
-                    id={item.id}
-                    authorName={item.authorName}
-                    authorID={item.authorID}
-                    publishDtm={item.publishDtm}
-                    categoryName={item.categoryName}
-                    categoryID={item.categoryID}
-                    title={item.title}
-                    summary={item.summary}
-                    imageURL={item.imageURL}
-                    readingTime={item.readingTime}
-                    approveState={item.postState}
-                    popUpMenuPrefix="papu"   //stand for post approving popup 
-                    authorAvatarURL={item.authorAvatarURL}
-                    requestedTime={"20:20:20"}
-                    requestedDate={"1/3/2021"}
-                    //
-                    reloadList={() => this.reloadList()}
-                />))
+                <div className="item-container">
+                    <RequestInfo
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        categoryName={item.categoryName}
+                        categoryID={item.categoryID}
+                        requestedTime={"20:20:20"}
+                        requestedDate={"1/3/2021"}
+                        title={item.title}
+                    />
+                    <SummaryInfo
+                        type={itemType.approval}
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        publishDtm={item.publishDtm}
+                        categoryName={item.categoryName}
+                        categoryID={item.categoryID}
+                        title={item.title}
+                        summary={item.summary}
+                        imageURL={item.imageURL}
+                        readingTime={item.readingTime}
+                        approveState={item.postState}
+                        popUpMenuPrefix="papu"   //stand for post approving popup 
+                        authorAvatarURL={item.authorAvatarURL}
+                        //
+                        reloadList={() => this.reloadList()}
+                    />
+                    <RequestReactionbar
+                        id={item.id}
+                        reloadList={() => this.reloadList()} />
+                </div>
+            ))
         }
 
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
@@ -143,14 +151,7 @@ class PostApproving extends Component {
                 <div className="content-layout">
                     <Titlebar title="QUẢN LÝ BÀI VIẾT" />
                     <div className="content-container">
-                        <div className="h-menu-bar mg-top-10px">
-                            <NavLink to="/admin/post-management/" className="h-menu-item" activeClassName='h-menu-item a-h-menu-item'>
-                                Quản lý bài viết
-                             </NavLink>
-                            <NavLink to="/admin/post-approving/" className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
-                                Duyệt bài viết
-                            </NavLink>
-                        </div>
+                        <PostManagementNavbar />
 
                         {this.comboboxGroup}
                         {!this.props.isListLoading && this.props.postsList ?

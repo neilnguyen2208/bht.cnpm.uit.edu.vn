@@ -26,7 +26,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
 import store from 'redux/store/index'
-import Metadata from 'components/post/DetailMetadata'
+import Metadata from 'components/post/DetailInfo'
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 

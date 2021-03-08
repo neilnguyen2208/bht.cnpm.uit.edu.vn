@@ -19,8 +19,8 @@ import Titlebar from 'components/common/Titlebar/Titlebar'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import Loader from 'components/common/Loader/Loader'
 
-import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
-import PostSummaryMetadata from 'components/post/SummaryMetadata'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
+import PostSummaryMetadata from 'components/post/SummaryInfo'
 
 class PostsList extends Component {
     constructor(props) {
@@ -93,7 +93,7 @@ class PostsList extends Component {
                         imageURL={postItem.imageURL}
                         readingTime={postItem.readingTime}
                         approveState={postItem.postState} />
-                    <PostSummaryReactionBar
+                    <PostNormalReactionbar
                         id={postItem.id}
                         likes={postItem.likeCount}
                         comments={postItem.commentCount}

@@ -15,8 +15,8 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import UserSidebar from 'layouts/UserSidebar'
-import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
-import PostSummaryMetadata from 'components/post/SummaryMetadata'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
+import PostSummaryMetadata from 'components/post/SummaryInfo'
 
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
 class MyPostsList extends Component {
@@ -158,7 +158,7 @@ class MyPostsList extends Component {
                             //
                             reloadList={() => this.reloadList()}
                         />
-                        <PostSummaryReactionBar
+                        <PostNormalReactionbar
                             title={item.title}
                             id={item.id}
                             likeCount={item.likeCount}

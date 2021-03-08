@@ -36,13 +36,13 @@ class DocSummary extends Component {
     this.tags = this.props.tags;
 
     this.normalMenuItemList = [
-      { id: 3, name: "Báo cáo", icon: trash_icon },
+      { id: 3, name: "Report", icon: trash_icon },
     ]
 
     this.mySelfMenuItemList = [
       { id: 1, name: "Xoá", icon: trash_icon },
       { id: 2, name: "Chỉnh sửa", icon: trash_icon },
-      { id: 3, name: "Báo cáo", icon: trash_icon },
+      { id: 3, name: "Report", icon: trash_icon },
     ]
   }
 

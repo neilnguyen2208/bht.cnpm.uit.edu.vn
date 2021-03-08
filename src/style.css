@@ -120,7 +120,6 @@ img {
     justify-content: space-between;
 }
 
-
 .j-c-space-around {
     display: flex;
     justify-content: space-around;
@@ -234,11 +233,6 @@ a:hover {
     display: block;
 }
 
-.flex_space_between_container {
-    display: flex;
-    justify-content: space-between;
-}
-
 .mg-bottom-5px {
     margin-bottom: 5px;
 }
@@ -330,7 +324,7 @@ a:hover {
 }
 
 .bd-b-1px-solid {
-    border-bottom: 1pxs solid var(--gray);
+    border-bottom: 1px solid var(--gray);
 }
 
 .mg-auto {

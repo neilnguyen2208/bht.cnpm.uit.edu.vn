@@ -15,8 +15,8 @@ import { itemType } from 'constants.js'
 import { NavLink } from 'react-router-dom'
 import SearchHorizontalMenubar from './SearchHorizontalMenubar'
 
-import PostSummaryReactionBar from 'components/post/SummaryReactionBar'
-import PostSummaryMetadata from 'components/post/SummaryMetadata'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
+import PostSummaryMetadata from 'components/post/SummaryInfo'
 
 class SearchPost extends Component {
     constructor(props) {
@@ -89,7 +89,7 @@ class SearchPost extends Component {
                         imageURL={postItem.imageURL}
                         readingTime={postItem.readingTime}
                         approveState={postItem.postState} />
-                    <PostSummaryReactionBar
+                    <PostNormalReactionbar
                         id={postItem.id}
                         likes={postItem.likeCount}
                         comments={postItem.commentCount}

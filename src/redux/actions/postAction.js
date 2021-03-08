@@ -12,7 +12,10 @@ import {
     REJECT_A_POST_SUCCESS,
     REJECT_A_POST_FAILURE,
 
-    //highlight posts 
+    REJECT_AND_FEEDBACK_A_POST_RESET,
+    REJECT_AND_FEEDBACK_A_POST_SUCCESS,
+    REJECT_AND_FEEDBACK_A_POST_FAILURE,
+
 
     //my post
     GET_MY_POSTS_REQUEST,
@@ -63,7 +66,17 @@ import {
 
     REPORT_A_POST_RESET,
     REPORT_A_POST_SUCCESS,
-    REPORT_A_POST_FAILURE
+    REPORT_A_POST_FAILURE,
+
+    GET_REPORTED_POSTS_REQUEST,
+    GET_REPORTED_POSTS_SUCCESS,
+    GET_REPORTED_POSTS_FAILURE,
+
+    RESOLVE_A_POST_RESET,
+    RESOLVE_A_POST_SUCCESS,
+    RESOLVE_A_POST_FAILURE,
+
+
 
 } from "../constants.js"
 
@@ -114,17 +127,34 @@ export function delete_RejectAPostReset() {
     }
 }
 
-export function delete_RejectAPostSuccess(notification) {
+export function delete_RejectAPostSuccess() {
     return {
-        type: REJECT_A_POST_SUCCESS,
-        payload: notification
+        type: REJECT_A_POST_SUCCESS
     }
 }
 
-export function delete_RejectAPostFailure(notification) {
+export function delete_RejectAPostFailure() {
     return {
-        type: REJECT_A_POST_FAILURE,
-        payload: notification
+        type: REJECT_A_POST_FAILURE
+    }
+}
+
+
+export function delete_RejectAndFeedbackAPostReset() {
+    return {
+        type: REJECT_AND_FEEDBACK_A_POST_RESET
+    }
+}
+
+export function delete_RejectAndFeedbackAPostSuccess() {
+    return {
+        type: REJECT_AND_FEEDBACK_A_POST_SUCCESS
+    }
+}
+
+export function delete_RejectAndFeedbackAPostFailure() {
+    return {
+        type: REJECT_AND_FEEDBACK_A_POST_FAILURE
     }
 }
 
@@ -147,6 +177,27 @@ export function get_MyPostsFailure() {
         type: GET_MY_POSTS_FAILURE
     }
 }
+
+//reported post
+export function get_ReportedPostsRequest() {
+    return {
+        type: GET_REPORTED_POSTS_REQUEST,
+    }
+}
+
+export function get_ReportedPostsSuccess(data) {
+    return {
+        type: GET_REPORTED_POSTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ReportedPostsFailure() {
+    return {
+        type: GET_REPORTED_POSTS_FAILURE
+    }
+}
+
 
 //posts list 
 export function get_PostsListRequest() {
@@ -354,4 +405,22 @@ export function get_PendingPostsSuccess(data) {
 
 export function get_PendingPostsFailure(data) {
     return { type: GET_PENDING_POSTS_FAILURE }
+}
+
+export function post_ResolveAPostReset() {
+    return {
+        type: RESOLVE_A_POST_RESET
+    }
+}
+
+export function post_ResolveAPostSuccess() {
+    return {
+        type: RESOLVE_A_POST_SUCCESS
+    }
+}
+
+export function post_ResolveAPostFailure() {
+    return {
+        type: RESOLVE_A_POST_FAILURE
+    }
 }

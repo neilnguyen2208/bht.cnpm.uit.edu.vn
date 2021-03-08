@@ -28,7 +28,7 @@ import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.pn
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
-import Metadata from 'components/post/DetailMetadata'
+import Metadata from 'components/post/DetailInfo'
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import store from "redux/store/index.js"

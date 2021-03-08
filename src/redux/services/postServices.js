@@ -10,6 +10,10 @@ import {    //highlight posts
     get_PostsListSuccess,
     get_PostsListFailure,
 
+    get_ReportedPostsRequest,
+    get_ReportedPostsSuccess,
+    get_ReportedPostsFailure,
+
     //post search result 
     get_PostSearchResultRequest,
     get_PostSearchResultSuccess,
@@ -57,7 +61,12 @@ import {    //highlight posts
 
     post_ReportAPostReset,
     post_ReportAPostSuccess,
-    post_ReportAPostFailure
+    post_ReportAPostFailure,
+
+
+    post_ResolveAPostReset,
+    post_ResolveAPostSuccess,
+    post_ResolveAPostFailure
 
 } from "redux/actions/postAction.js";
 
@@ -69,14 +78,14 @@ import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export function createAPost(data) {
     return dispatch => {
-        //th nay se handle bang loader modal ben ngoai luon.
-        // dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
+        dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
         request.post('/posts', JSON.stringify(data))
             .then(response => {
                 //handle success    
-                dispatch(openModal("alert", { title: "Thành công", text: "Tạo bài viết thành công!", type: "success" }));
+                dispatch(closeModal());
+                dispatch(openBLModal({ text: "Tạo bài viết thành công!", icon: done_icon }));
             })
-        // .catch(dispatch) => handle cho cai loader modal.
+
     }
 }
 
@@ -115,6 +124,50 @@ export function getPendingPosts(searchParamObject) {
         request.get(`/posts?${generateSearchParam(searchParamObject)}`)
             .then(result => dispatch(get_PendingPostsSuccess(result.data)))
             .catch(error => { get_PendingPostsFailure(error) })
+    }
+}
+
+export function getReportedPosts(searchParamObject) {
+    return dispatch => {
+        dispatch(get_ReportedPostsRequest());
+        request.get(`/post/report?${generateSearchParam(searchParamObject)}`)
+            .then(response => {
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.userPostReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.userPostReportDTOs.length; i++) {
+                            finalResult.push({
+                                ...result_1.userPostReportDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.userPostReportDTOs[i].postID)),
+                            }
+                            );
+                        }
+                        console.log(finalResult);
+                        dispatch(get_ReportedPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_ReportedPostsFailure())
+
+
+            }
+
+            )
+            .catch(error => { get_ReportedPostsFailure(error) })
+    }
+}
+
+export function resolveAPost(id, resolveDTO) {
+    return dispatch => {
+        dispatch(post_ResolveAPostReset());
+        request.delete(`/posts/resolveReport/${id}`, JSON.stringify(resolveDTO))
+            .then(result => {
+                dispatch(post_ResolveAPostSuccess());
+            })
+            .catch(error => post_ResolveAPostFailure())
     }
 }
 
@@ -262,16 +315,10 @@ export function editAPost(id, newPostContent, reloadList) { //
 
 export function reportAPost(id, reason) { //
     return dispatch => {
-        dispatch(closeModal());
         dispatch(post_ReportAPostReset())
-        dispatch(openModal("loader", { text: "Đang xử lý" }))
-        request.post(`/post/{id}/report?postID=${id}`, JSON.stringify(reason))
+        request.post(`/post/${id}/report`, JSON.stringify(reason))
             .then(response => {
-                dispatch(closeModal());
                 dispatch(post_ReportAPostSuccess());
-                dispatch(closeModal());
-                dispatch(openBLModal({ text: "Tố cáo bài viết thành công!", icon: done_icon }));
-
             }
             ).catch(() => dispatch(post_ReportAPostFailure()))
     }

@@ -20,7 +20,7 @@ class Wallpage extends React.Component {
         }
 
         this.normalMenuItemList = [
-            { id: 3, name: "Báo cáo" },
+            { id: 3, name: "Report" },
         ]
     }
 

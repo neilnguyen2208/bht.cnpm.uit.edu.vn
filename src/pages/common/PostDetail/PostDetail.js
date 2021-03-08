@@ -9,7 +9,7 @@ import { getPostByID } from "redux/services/postServices"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Metadata from "components/post/DetailMetadata"
+import Metadata from "components/post/DetailInfo"
 import Tag from 'components/common/Tag/Tag'
 import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
 import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'

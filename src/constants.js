@@ -1,6 +1,8 @@
-export const itemType = { approving: "APPROVAL", normal: "NORMAL", mySelf: "MY_SELF" }
+export const itemType = { approving: "APPROVAL", normal: "NORMAL", mySelf: "MY_SELF", report: "REPORT" }
 export const componentType = { document: "DOCUMENT", post: "POST" }
-export const approvingStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED", waitingForFeedback: "PENDING_FIX" }
+export const approvalStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED", waitingForFeedback: "PENDING_FIX" }
+export const resolveType = { keep: "KEEP", delete: "DELETE" }
+export const resolveStatus = { resolved: "RESOLVED", notResolved: "NOT_RESOLVED" }
 export const courseContentType = { video: "VIDEO", artical: "ARTICAL", exercise: "EXERCISE" };
 
 export const userApproveStatusOptions = [

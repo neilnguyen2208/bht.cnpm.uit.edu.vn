@@ -1,24 +1,3 @@
-export const HOME_GET_TOP_DOC = "HOME_GET_TOP_DOC";
-export const HOME_GET_TOP_DOCUMENT = "HOME_GET_TOP_DOCUMENT";
-export const HOME_GET_ACCOUNT_INFO = "HOME_GET_ACCOUNT_INFO";
-
-// doc
-//// 1. For writer
-
-//// 2. For reader
-
-// post
-//// 1. For writer
-
-
-//// 2. For reader
-
-
-// user
-
-//#endregion 
-
-//#region management exclusive constant
 
 //for document
 export const GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST = "GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST";
@@ -92,10 +71,18 @@ export const GET_MY_POSTS_REQUEST = "GET_MY_POSTS_REQUEST";
 export const GET_MY_POSTS_SUCCESS = "GET_MY_POSTS_SUCCESS";
 export const GET_MY_POSTS_FAILURE = "GET_MY_POSTS_FAILURE";
 
+//reported post list
+export const GET_REPORTED_POSTS_REQUEST = "GET_REPORTED_POSTS_REQUEST";
+export const GET_REPORTED_POSTS_SUCCESS = "GET_REPORTED_POSTS_SUCCESS";
+export const GET_REPORTED_POSTS_FAILURE = "GET_REPORTED_POSTS_FAILURE";
 
-//#endregion
+//resolve a post
+export const RESOLVE_A_POST_RESET = "RESOLVE_A_POST_RESET";
+export const RESOLVE_A_POST_SUCCESS = "RESET_A_POST_SUCCESS";
+export const RESOLVE_A_POST_FAILURE = "RESET_A_POST_FAILURE";
+//keep a reported post 
 
-//#region document
+
 
 //documents list
 export const GET_DOCUMENTS_LIST_REQUEST = "GET_DOCUMENTS_LIST_REQUEST";

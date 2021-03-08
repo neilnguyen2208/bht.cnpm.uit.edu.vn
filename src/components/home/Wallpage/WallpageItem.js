@@ -15,7 +15,7 @@ export default class WallpageItem extends React.Component {
     constructor(props) {
         super(props);
         this.normalMenuItemList = [
-            { id: 3, name: "Báo cáo", icon: trash_icon },
+            { id: 3, name: "Report", icon: trash_icon },
         ]
 
         this.likeCount = -1; //dummy for change

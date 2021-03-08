@@ -25,7 +25,7 @@ import CoursesList from "pages/common/CoursesList/CoursesList"
 import ChaptersList from "pages/common/HeadingsList/HeadingsList"
 import PostsList from 'pages/common/PostsList/PostsList'
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
-import PostApproving from 'pages/management/PostApproving/PostApproving'
+import PostApproving from 'pages/management/PostManagement/PostApproving'
 import DocumentApproving from 'pages/management/DocumentApproving/DocumentApproving'
 import NotificationManagement from 'pages/management/NotificationManagement/NotificationManagement'
 import CategoryManagement from 'pages/management/NotificationManagement/NotificationManagement'
@@ -44,6 +44,7 @@ import ModalManager from 'components/common/Modal/ModalManager'
 import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 import MyNotification from 'pages/user/MyActivities/MyActivities'
+import PostReportManagement from 'pages/management/PostManagement/PostReportManagement'
 
 const App = () => {
     return (
@@ -96,9 +97,12 @@ const App = () => {
                         <Route exact path="/admin-sidebar" component={AdminSidebar} />
 
                         {/* for admin */}
-                        <Route exact path="/admin/post-approving" component={PostApproving} />
-                        <Route exact path="/admin/doc-approving" component={DocumentApproving} />
+
                         <Route exact path="/admin/post-management" component={PostManagement} />
+                        <Route exact path="/admin/post-management/report" component={PostReportManagement} />
+                        <Route exact path="/admin/post-management/approval" component={PostApproving} />
+
+                        <Route exact path="/admin/doc-approving" component={DocumentApproving} />
                         <Route exact path="/admin/document-management" component={DocumentManagement} />
                         <Route exact path="/admin/user-management" component={UserManagement} />
                         <Route exact path="/admin/page-notification" component={NotificationManagement} />

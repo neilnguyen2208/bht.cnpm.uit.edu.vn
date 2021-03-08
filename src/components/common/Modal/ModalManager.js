@@ -12,8 +12,8 @@ class ModalManager extends React.Component {
     render() {
 
         // props gom co modalType va modalProps
-        // voi alert_failure va alert_success thi co titlte, text, onOKClick
-        // voi confirmation thi co title, text, onOKClick va onCancelClick
+        // voi alert_failure va alert_success thi co titlte, text, onOK
+        // voi confirmation thi co title, text, onConfirm va onCancel
         // voi form thi co title, onSubmitClick va onCancelClick va childrenProps (form ma nguoi dung tu thiet ke)
 
         const { currentModals } = this.props;
@@ -32,8 +32,6 @@ class ModalManager extends React.Component {
                     return <LoaderModal {...modalProps} key={modalType + index} />
                 case "form":
                     return <FormModal {...modalProps} key={modalType + index} />
-                case "edit-post":
-                    return <EditPostModal {...modalProps} key={modalType + index} />
                 default:
                     return <FormModal {...modalProps} key={modalType + index} />;
             }

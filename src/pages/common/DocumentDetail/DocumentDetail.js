@@ -63,8 +63,8 @@ class DocumentDetail extends Component {
         this.isAnySuccessAlertPopupOpen = false;
 
         this.normalMenuItemList = [
-            // { id: 3, name: "Báo cáo", icon: trash_icon },
-            { id: 3, name: "Báo cáo" },
+            // { id: 3, name: "Report", icon: trash_icon },
+            { id: 3, name: "Report" },
         ]
 
 

@@ -30,21 +30,22 @@ class FormModal extends React.Component {
         this.props.inputs.forEach(element => {
             if (element.type === "text-area" || element.type === "text-input")
                 this.DTO[element.key] = document.querySelector('#' + element.id).value; //for text input and text area
+         
         });
-
         if (this.props.append) {
             Object.assign(this.DTO, this.props.append);
         }
+        console.log(this.DTO)
 
-        let { title, text, verifyText, cancelText, onVerify } = this.props.confirmBox;
+        let { title, text, verifyText, cancelText, onConfirm } = this.props.confirmBox;
         if (this.props.validationCondition)
             if (styleFormSubmit(this.props.validationCondition)) {
-                this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onVerify(this.DTO) });
+                this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onConfirm: () => onConfirm(this.DTO) });
                 return;
             } else return;
 
         else
-            this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onVerify(this.DTO) })
+            this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onConfirm(this.DTO) })
     }
 
     render() {
@@ -84,7 +85,10 @@ class FormModal extends React.Component {
                                                                             input.selectedOptionID
                                                                             : input.options[0].id}
                                                                         options={input.options}
-                                                                        onOptionChanged={(selectedOption) => input.onOptionChanged(selectedOption)}
+                                                                        onOptionChanged={(selectedOption) => {
+                                                                            this.DTO[input.key] = input.onOptionChanged(selectedOption);
+                                                                        }
+                                                                        }
                                                                         placeHolder={input.placeHolder}
                                                                         validation={input.validation}
                                                                     >

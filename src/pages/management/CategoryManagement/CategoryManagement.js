@@ -37,7 +37,7 @@ class CategoryManagement extends Component {
 
         //for Edit and Delete, only choose 1 item in all table
         this.selected_category_id = "";
-        this.selected_category_name = "";
+        this.selected_category-name = "";
 
         //for document category
         this.documentCategoriesList = [];
@@ -229,7 +229,7 @@ class CategoryManagement extends Component {
         category_item.className = "Custom_Table_Item_Activated";
 
         this.selected_category_id = id;
-        // this.selected_category_name = name;
+        // this.selected_category-name = name;
 
         this.setState({
             canClickDeletePostCategory: true,
@@ -271,7 +271,7 @@ class CategoryManagement extends Component {
         category_item.className = "Custom_Table_Item_Activated";
 
         this.selected_category_id = id;
-        // this.selected_category_name = name;
+        // this.selected_category-name = name;
 
         this.setState({
             canClickDeletePostCategory: true,

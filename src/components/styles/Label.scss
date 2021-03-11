@@ -173,7 +173,7 @@ label {
 }
 
 .summary-text {
-    font-family: "Sarabun-Regular";
+    font-family: 'Raleway', sans-serif;
     font-size: 16px;
     line-height: 25px;
     display: flex;
@@ -200,6 +200,8 @@ label {
 
 .link-label-m {
     @extend .link-label-s;
+    font-size: 20px;
+    line-height: 20px;
     font-family: "BarlowCondensed-SemiBold";
 }
 

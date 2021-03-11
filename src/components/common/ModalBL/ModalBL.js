@@ -15,7 +15,8 @@ class ModalBL extends React.Component {
     }
 
     closeModal = () => {
-        console.log("close" + this.props.id)
+        if (this.timeOut)
+            clearTimeout(this.timeOut);
         store.dispatch(closeBLModal(this.props.id));
     }
 
@@ -26,16 +27,15 @@ class ModalBL extends React.Component {
     }
 
     componentDidMount() {
-        // this.timeOut = setTimeout(() => this.props.closeModal(), 3000)
+        this.timeOut = setTimeout(() => this.props.closeMLModal(), 3000)
     }
 
     componentWillUnmount() {
-        // clearTimeout(this.timeOut);
+        if (this.timeOut)
+            clearTimeout(this.timeOut);
     }
 
     render() {
-
-        let { id } = this.props;
         let { icon, text, btnText } = this.props;
 
         return (

@@ -28,7 +28,7 @@ class RequestedDocSummary extends Component {
     render() {
         return (
             <div className="item-container" >
-                <div className="item-main-layout">
+                <div >
                     <div className="metadata">
                         <div className="author-linkauthor-link" onClick={() => this.navigateToAuthorPersonalPage()}>
                             {this.authorName}

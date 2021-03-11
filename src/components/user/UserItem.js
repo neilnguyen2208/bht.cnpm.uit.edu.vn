@@ -96,7 +96,7 @@ class UserItem extends Component {
             )
 
             return (
-                <div className="User_Item"  >
+                <div className="user-item"  >
 
                     <img alt="avatar" src={"https://cfaevjuhwlpmr2dgadvijg-on.drv.tw/BHTWeb/Avatar/" + this.username + '.png'} className="side-bar-avatar"></img>
 
@@ -104,24 +104,24 @@ class UserItem extends Component {
                         paddingLeft: "10px", width: "100%"
                     }}>
                         < div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <div className="User_Item_Name">{this.name}</div>
-                            {/* <div className="User_Item_Edit_Btn" onClick={() => { window.location.href = "/management/users_management/" + this.userID }}>
-                                <img alt="edit" className="User_Item_Edit_Btn_Element mg-right-5px" src={icon_write} />
+                            <div className="user-item-name">{this.name}</div>
+                            {/* <div className="user-item_Edit_Btn" onClick={() => { window.location.href = "/management/users_management/" + this.userID }}>
+                                <img alt="edit" className="user-item_Edit_Btn_Element mg-right-5px" src={icon_write} />
                                 <div className="gray-label" style={{ paddingTop: "2px" }}>Chỉnh sửa</div>
                             </div> */}
                         </div>
                         <div>
-                            <div className="User_Item_Email">{this.email}</div>
+                            <div className="user-item_Email">{this.email}</div>
 
                             {/* statusbar: score, docs count, posts count, role */}
-                            <div className="User_Item_Statusbar" >
+                            <div className="user-item_Statusbar" >
 
                                 <div style={{ "display": "flex" }}>
-                                    <div className="User_Item_Score">Scrore: {this.score}</div>
-                                    <img alt="avatar" src={gray_write_icon} className="user-item-element" ></img>
-                                    <div className="User_Item_Post_Count">{this.postCount}</div>
-                                    <img alt="avatar" src={gray_upload_icon} className="user-item-element"></img>
-                                    <div className="User_Item_Doc_Count"> {this.docCount}</div>
+                                    <div className="user-item_Score">Scrore: {this.score}</div>
+                                    <img alt="avatar" src={gray_write_icon} className="user-item-icon" ></img>
+                                    <div className="post-count">{this.postCount}</div>
+                                    <img alt="avatar" src={gray_upload_icon} className="user-item-icon"></img>
+                                    <div className="doc-count"> {this.docCount}</div>
                                 </div>
 
                                 <ClickAwayListener onClickAway={() => { this.closeAllChangeRoleDropdownCombobox() }}>
@@ -206,10 +206,10 @@ class UserItem extends Component {
         sub_dropdown_item.className = "activated-combox-option";
         this.role_post = roleID;
 
- 
+
     }
 
-  
+
 
     closeAllChangeRoleDropdownCombobox = () => {
 

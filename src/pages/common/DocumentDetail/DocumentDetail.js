@@ -8,7 +8,7 @@ import { isGrantedPermissions } from "utils/permissionUtils"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import 'components/styles/DocPostDetail.scss'
+import 'components/styles/Detail.scss'
 import PDFViewer from 'pdf-viewer-reactjs'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -122,7 +122,7 @@ class DocumentDetail extends Component {
             <div>
                 <div className="doc-post-detail" >
                     <div>
-                        <div className="main-layout">
+                        <div >
 
                             <div className="title">
                                 {this.title}
@@ -134,7 +134,7 @@ class DocumentDetail extends Component {
                                 <div className="normal-category">
                                     {this.category}
                                 </div>
-                               
+
                             </div>
 
                             <div className="user-infor-container">

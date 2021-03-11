@@ -17,6 +17,7 @@ class Editor extends Component {
 
     let configuration = {
       toolbar: toolbarConfig,
+      // removeDialogTabs: 'image:advanced'
 
     };
 
@@ -46,6 +47,53 @@ class Editor extends Component {
     if (this.props.validation) {
       document.getElementById("cke-wrapper-" + this.props.id).classList.add("validation")
     }
+
+    window.CKEDITOR.on('dialogDefinition', function (ev) {
+      // Take the dialog name and its definition from the event data.
+      var dialogName = ev.data.name;
+      var dialogDefinition = ev.data.definition;
+
+      // Check if the definition is from the dialog window you are interested in (the "Link" dialog window).
+      if (dialogName === 'link') {
+
+        //override title of popup.
+        dialogDefinition.title = "LINK";
+
+        //remove advanced and target tab
+        dialogDefinition.removeContents('advanced');
+        dialogDefinition.removeContents('target');
+
+
+        // Get a reference to the "Link Info" tab.
+        var infoTab = dialogDefinition.getContents('info');
+        //Remove link type
+        infoTab.get('linkType').style = 'display: none';
+        infoTab.get('anchorOptions').style = 'display: none';
+
+
+        // Set the default value for the URL field.
+        var urlField = infoTab.get('url');
+        urlField['default'] = 'www.example.com';
+      }
+
+      if (dialogName === 'image') {
+        dialogDefinition.removeContents('advanced');
+        dialogDefinition.removeContents('Link');
+        console.log(dialogDefinition);
+        dialogDefinition.title = "HÌNH ẢNH";
+
+        var infoTab = dialogDefinition.getContents('info');
+        console.log(infoTab);
+        infoTab.get('txtAlt').style = 'display: none';
+        infoTab.get('txtBorder').style = 'display: none';
+        infoTab.get('txtHSpace').style = 'display: none';
+        infoTab.get('txtVSpace').style = 'display: none';
+        infoTab.get('htmlPreview').style = 'display: none';
+
+
+
+      }
+    });
   }
 
   onEditorChange = (data) => {
@@ -100,9 +148,6 @@ class Editor extends Component {
     document.getElementById("cke-wrapper-" + this.props.id).style.border = "1px solid var(--gray)";
     if (this.props.onInstanceReady)
       this.props.onInstanceReady();
-    // console.log(this.props.myData)
-    // if (this.props.myData) window.CKEDITOR.instances[this.editorID].setData(this.props.myData); //some time have bug :(
-
   }
 
   //lay form

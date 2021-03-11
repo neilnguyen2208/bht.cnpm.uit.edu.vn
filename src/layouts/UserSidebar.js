@@ -70,12 +70,12 @@ class UserSidebar extends Component {
                 <div className="score">Scrore: {score}</div>
                 <div className="d-flex j-c-space-between">
                   <div className="d-flex w-50-percents">
-                    <img alt="post count" src={gray_write_icon} className="user-item-element" ></img>
+                    <img alt="post count" src={gray_write_icon} className="user-item-icon" ></img>
                     <div className="mg-left-5px">{postCount}</div>
                   </div>
 
                   <div className="d-flex w-50-percents">
-                    <img alt="upload count" src={gray_upload_icon} className="user-item-element"></img>
+                    <img alt="upload count" src={gray_upload_icon} className="user-item-icon"></img>
                     <div className="mg-left-5px"> {docCount}</div>
                   </div>
                 </div>

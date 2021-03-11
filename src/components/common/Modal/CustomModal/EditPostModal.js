@@ -15,7 +15,7 @@ import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "re
 import { DELAY_TIME } from 'constants.js'
 import "pages/user/CreatePost/CreatePost.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
-import 'components/styles/DocPostDetail.scss'
+import 'components/styles/Detail.scss'
 
 //components
 import Tag from "components/common/Tag/Tag";

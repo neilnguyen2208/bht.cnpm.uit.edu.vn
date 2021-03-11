@@ -9,7 +9,7 @@ import { uploadADocument } from "redux/services/docServices"
 import "./UploadDocument.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Metadata.scss'
-import 'components/styles/DocPostDetail.scss'
+import 'components/styles/Detail.scss'
 
 //components
 import Tag from "components/common/Tag/Tag";

@@ -5,7 +5,7 @@ import 'components/styles/Button.scss'
 import calendar_icon from 'assets/icons/24x24/calendar_icon_24x24.png'
 import clock_icon from 'assets/icons/24x24/clock_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import { resolveType, resolveStatus } from 'constants.js'
+import { resolveStatus } from 'constants.js'
 
 import { Link } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ export default class ReportInfo extends React.PureComponent {
 
     render() {
 
-        if (this.props.resolveTimed)
+        if (this.props.resolvedTime)
             this.type = resolveStatus.resolved
         else
             this.type = resolveStatus.notResolved;

@@ -9,9 +9,11 @@ import { resolveAPost } from 'redux/services/postServices';
 import 'components/styles/Reactionbar.scss'
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
-import { openModal } from 'redux/actions/modalAction.js';
+import { openModal, closeModal, openBLModal } from 'redux/actions/modalAction.js';
 import store from 'redux/store/index.js';
 import { validation } from 'utils/validationUtils.js';
+import { post_ResolveAPostReset } from 'redux/actions/postAction'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 class ReportReactionbar extends Component {
 
@@ -45,7 +47,7 @@ class ReportReactionbar extends Component {
             key: "resolvedNote"
           },
         ],
-      append: { id: this.props.id },
+      // append: { id: this.props.id },
       validationCondition: {
         form: `#rsap-form`,
         rules: [
@@ -68,13 +70,19 @@ class ReportReactionbar extends Component {
 
   }
 
-  onConfirmResolve = (DTO) => {
-    console.log(DTO);
+  onConfirmResolve = (resolveDTO) => {
+    this.props.resolveAPost(this.props.id, resolveDTO)
   }
 
   render() {
 
-
+    if (this.props.isHaveResolved) {
+      store.dispatch(closeModal());
+      store.dispatch(closeModal());
+      this.props.reloadList();
+      store.dispatch(post_ResolveAPostReset());
+      store.dispatch(openBLModal({ icon: done_icon, text: "Xử lý bài viết thành công!" }))
+    }
 
     return (
       <div className="reaction-bar j-c-end pd-top-5px">

@@ -1,5 +1,4 @@
-
-.User_Item {
+.user-item {
     position: relative;
     height: fit-content;
     margin: auto;
@@ -8,20 +7,56 @@
     width: 100%;
     background-repeat: no-repeat;
     border: 1px var(--gray) solid;
-    border-top: 3pxvar(--grayish) solid;
+    border-top: 3px var(--grayish) solid;
     border-radius: 5px;
     display: flex;
     user-select: none;
 }
 
-.User_Item:hover,
-.User_ItemL:active {
+.user-info {
+    position: relative;
+    height: fit-content;
+    width: 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    user-select: none;
+    color: var(--black);
+}
+
+.user-info .post-count-container,
+.user-info .doc-count-container {
+    height: 24px;
+
+}
+
+.reputation-container {
+    display: flex;
+}
+
+.user-info .reputation-sub-container {
+    display: flex;
+    min-width: 60px;
+    width: fit-content;
+    cursor: pointer;
+    max-width: 80px;
+    margin-right: 2px;
+}
+
+.user-info .reputaion-label {
+    margin-top: 1px;
+    font-size: 18px;
+    padding-left: 3px;
+    color: var(--light-black)
+}
+
+.user-item:hover,
+.user-itemL:active {
     border: 1px white solid;
     border-top: 3px var(--blue) solid;
     box-shadow: 0px 0px 5px 1px var(--gray);
 }
 
-.User_Item_Name {
+.user-item-name {
     width: fit-content;
     height: 25px;
     font-family: "RobotoSlab-Bold";
@@ -32,7 +67,7 @@
     padding-right: 20px;
 }
 
-.User_Item_Edit_Btn {
+.user-item_Edit_Btn {
     width: 140px;
     display: flex;
     background: #dddddd;
@@ -40,7 +75,7 @@
     border-radius: 5px;
 }
 
-.User_Item_Edit_Btn_Element {
+.user-item_Edit_Btn_Element {
     position: relative;
     padding-top: 2px;
     padding-left: 2px;
@@ -48,16 +83,16 @@
     height: 25px;
 }
 
-.User_Item_Edit_Btn:hover {
+.user-item_Edit_Btn:hover {
     opacity: 90%;
     cursor: pointer;
 }
 
-.User_Item_Edit_Btn:active {
+.user-item_Edit_Btn:active {
     opacity: 80%;
 }
 
-.User_Item_Email {
+.user-item_Email {
     height: 20px;
     font-family: "Rosario";
     font-style: normal;
@@ -68,34 +103,41 @@
     color: rgba(0, 0, 0, 0.5);
 }
 
-.user-item-element {
+.user-item-icon {
     width: 30px;
     height: 30px;
     padding: 2px;
 }
 
-.User_Item_Score {
+
+.user-info-icon {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+}
+
+.user-item_Score {
     position: relative;
     width: 150px;
     height: 30px;
     align-items: center;
 }
 
-.User_Item_Post_Count {
+.user-item .post-count {
     position: relative;
     width: 60px;
     height: 30px;
     padding-left: 5px;
 }
 
-.User_Item_Doc_Count {
+.user-item .doc-count {
     position: relative;
     width: 60px;
     height: 30px;
     padding-left: 5px;
 }
 
-.User_Item_Statusbar {
+.user-item_Statusbar {
     display: flex;
     font-family: "BarlowCondensed-SemiBold";
     font-size: 18px;

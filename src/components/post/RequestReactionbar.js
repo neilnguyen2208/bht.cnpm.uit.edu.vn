@@ -3,12 +3,10 @@ import React, { Component } from 'react'
 import 'components/styles/Metadata.scss'
 import 'components/styles/Button.scss'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
-import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { approveAPost, rejectAPost, rejectAndFeedbackAPost } from 'redux/services/postServices'
-import calendar_icon from 'assets/icons/24x24/calendar_icon_24x24.png'
 import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
 import store from 'redux/store/index'
 import { post_ApproveAPostReset, delete_RejectAPostReset, delete_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
@@ -102,7 +100,7 @@ class RequestedSummary extends Component {
 
         if (this.props.isHaveRejectedAndFeedbacked) {
             store.dispatch(closeModal());
-            store.dispatch(delete_RejectAPostReset());
+            store.dispatch(delete_RejectAndFeedbackAPostReset());
             store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
             this.props.reloadList();
         }

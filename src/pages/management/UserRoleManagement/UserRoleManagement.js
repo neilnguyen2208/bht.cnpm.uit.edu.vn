@@ -19,25 +19,7 @@ import { getRoleNameByName } from 'utils/permissionUtils'
 import AdminSidebar from 'layouts/AdminSidebar'
 class UserRoleManagement extends Component {
     constructor(props) {
-        super();
 
-        //Notify
-        this.notifyHeader = "";
-        this.notifyContent = "";
-        this.isNotifySuccessOpen = false;
-        this.isNotifyFailOpen = false;
-
-        //for Edit and Delete, only choose 1 item in all table
-        this.selected_category_id = "";
-        this.selected_category_name = "";
-
-        this.state = {
-            canClickEditPostCategory: false,
-            canClickDeletePostCategory: false,
-            canClickEditDocCategory: false,
-            canClickDeleteDocCategory: false,
-
-        }
     }
 
     componentDidMount() {
@@ -124,22 +106,6 @@ F
 
     //post category area:
     handlerPostCategoryItemClick = (e, id, name) => {
-        let all_item = document.getElementsByName("Post_Custom_Table_Item");
-
-        for (let i = 0; i < all_item.length; i++) {
-            all_item[i].className = "Custom_Table_Item";
-        }
-
-        let category_item = document.getElementById("management-post-category-item-" + id);
-        category_item.className = "Custom_Table_Item_Activated";
-
-        this.selected_category_id = id;
-        this.selected_category_name = name;
-
-        this.setState({
-            canClickDeletePostCategory: true,
-            canClickEditPostCategory: true
-        });
 
     }
 

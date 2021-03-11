@@ -89,11 +89,11 @@ A
                                         <div className="Account_Information_score">Scrore: {this.score}</div>
                                         <div className="Account_Information_Achivement_Post_Doc_Count_Layout">
                                             <div className="d-flex w-50-percents">
-                                                <img alt="post count" src={gray_write_icon} className="user-item-element" ></img>
+                                                <img alt="post count" src={gray_write_icon} className="user-item-icon" ></img>
                                                 <div className="mg-left-5px">{this.postCount}</div>
                                             </div>
                                             <div className="d-flex w-50-percents">
-                                                <img alt="upload count" src={gray_upload_icon} className="user-item-element"></img>
+                                                <img alt="upload count" src={gray_upload_icon} className="user-item-icon"></img>
                                                 <div className="mg-left-5px"> {this.documentCount}</div>
                                             </div>
                                         </div>

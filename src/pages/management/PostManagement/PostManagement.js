@@ -216,7 +216,7 @@ class PostApproving extends Component {
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
-                                <div className="list-item-container">{this.postsList}</div>
+                                <div>{this.postsList}</div>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,
@@ -238,7 +238,6 @@ class PostApproving extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state.post.postsList)
     return {
         //pending posts list
         postsList: state.post.postsList.data,

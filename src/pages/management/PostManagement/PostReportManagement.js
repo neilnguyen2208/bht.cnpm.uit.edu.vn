@@ -84,13 +84,13 @@ class PostReportManagement extends Component {
                         imageURL={item.postImageURL}
 
                         reportTime={item.reportTime}
-                        resolvedTime={item.resolveTime}
+                        resolvedTime={item.resolvedTime}
                         resolvedNote={item.resolvedNote}
                         actionTaken={item.actionTaken}
                     />
 
                     <ReportReactionbar type={itemType.mySelf}
-                        id={item.id}
+                        id={item.id} //report id, not post id
                         reloadList={() => this.reloadList()} />
                 </div>
             ))

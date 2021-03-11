@@ -94,7 +94,7 @@ class SearchDocument extends Component {
                     <div className="mg-top-10px" />
                     <div className="nm-bl-layout-router-outlet" >
                         <div className="filter-container">
-                            <div className = "d-flex">
+                            <div className="d-flex">
                                 <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox
@@ -106,7 +106,7 @@ class SearchDocument extends Component {
                                     ></ComboBox>
                                 </div>
                             </div>
-                            <div className = "d-flex">
+                            <div className="d-flex">
                                 <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                                 <div style={{ marginLeft: "5px" }}>
                                     <ComboBox
@@ -126,7 +126,7 @@ class SearchDocument extends Component {
                                     < Loader /> :
                                     <div>
                                         <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {"20"}  </div>
-                                        <div className="list-item-container">{this.documentSearchResult}</div>
+                                        <div >{this.documentSearchResult}</div>
                                     </div>
                             }
 
@@ -145,7 +145,7 @@ class SearchDocument extends Component {
 }
 
 const mapStateToProps = (state) => {
-   ;
+    ;
     return {
         documentsList: state.document.documentSearchResult.data,
         docCategories: state.doc_category.categories.data,

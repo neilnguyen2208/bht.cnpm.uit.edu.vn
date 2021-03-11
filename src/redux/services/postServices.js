@@ -163,7 +163,7 @@ export function getReportedPosts(searchParamObject) {
 export function resolveAPost(id, resolveDTO) {
     return dispatch => {
         dispatch(post_ResolveAPostReset());
-        request.delete(`/posts/resolveReport/${id}`, JSON.stringify(resolveDTO))
+        request.post(`/post/resolveReport/{id}?reportID=${id}`, JSON.stringify(resolveDTO))
             .then(result => {
                 dispatch(post_ResolveAPostSuccess());
             })

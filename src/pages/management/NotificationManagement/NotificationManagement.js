@@ -35,18 +35,6 @@ class NotificationManagement extends Component {
 
     }
 
-    fetchAllNotification = () => {
-        //feta
-    }
-
-    fetchAllRole = () => {
-
-    }
-
-    onPageChange = () => {
-
-    }
-
     render() {
         return (
             <div className="management-layout">
@@ -115,55 +103,18 @@ class NotificationManagement extends Component {
     }
 
     handlerCategoryTypeDropDownClick = (dropdown_id, container_id) => {
-        let dropdown = document.getElementById(dropdown_id);
-        let container = document.getElementById(container_id);
-
-        if (container.style.display === "none") {
-            container.style.display = "block";
-            dropdown.style.width = "100%";
-        }
-        else {
-            container.style.display = "none";
-            dropdown.style.width = "30%";
-        }
     }
 
     //post category area:
     handlerNotificationItemClick = (e, id, name) => {
-        let all_item = document.getElementsByName("Post_Custom_Table_Item");
-
-        for (let i = 0; i < all_item.length; i++) {
-            all_item[i].className = "Custom_Table_Item";
-        }
-
-        let category_item = document.getElementById("management-post-category-item-" + id);
-        category_item.className = "Custom_Table_Item_Activated";
-
-        this.selected_category_id = id;
-        this.selected_category_name = name;
-
-        this.setState({
-            canClickDeleteNotification: true,
-            canClickEditNotification: true
-        });
 
     }
 
     closeAllNotificationListItemActivated = () => {
-        let all_item = document.getElementsByName("Post_Custom_Table_Item");
-        for (let i = 0; i < all_item.length; i++) {
-            all_item[i].className = "Custom_Table_Item";
-        }
-        this.setState({
-            canClickDeleteNotification: false,
-            canClickEditNotification: false
-        });
     }
 
     //Add post category area:
     handlerClickAddNotification = () => {
-        this.isAddNotificationPopupOpen = true;
-        this.setState({});
     }
 
 

@@ -10,18 +10,13 @@ import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "re
 import { DELAY_TIME } from 'constants.js'
 import "./CreatePost.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
-import 'components/styles/DocPostDetail.scss'
-
-//components
+import 'components/styles/Detail.scss'
 import Tag from "components/common/Tag/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
-
 import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
 import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
-
-//utils
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
@@ -29,6 +24,8 @@ import store from 'redux/store/index'
 import Metadata from 'components/post/DetailInfo'
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
+import { detailType } from 'constants.js'
+
 
 const validationCondition = {
     form: '#create-post-form',
@@ -397,17 +394,24 @@ class CreatePost extends Component {
         let body =
             <div>
                 {/* Preview region */}
-                <div className="cr-post-form-container doc-post-detail preview" >
+                <div className="cr-post-form-container post-detail-container preview" >
                     <Metadata title={this.state.CREATE_POST_DTO.title}
-                        category={this.state.currentCategory}
+                        categoryName={this.state.currentCategory}
+                        categoryID={this.state.CREATE_POST_DTO.categoryID}
                         readingTime={this.state.CREATE_POST_DTO.readingTime}
                         authorName={this.state.author.displayName}
                         avartarURL={this.state.author.avatarURL}
                         publishDtm={this.state.publishDtm}
+                        type={detailType.preview}
                     />
-                    <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.CREATE_POST_DTO.content }} />
 
-                    <div className="mg-top-10px pd-10px" >
+                    {/* content here */}
+                    <div className="ck-editor-output" dangerouslySetInnerHTML={{
+                        __html:
+                            this.state.CREATE_POST_DTO.content
+                    }} />
+
+                    <div className="mg-top-10px" >
                         {this.shownTag.map(item =>
                             <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
                         )}

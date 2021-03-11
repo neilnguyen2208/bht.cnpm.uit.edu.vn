@@ -4,6 +4,7 @@ export const approvalStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED
 export const resolveType = { keep: "KEEP", delete: "DELETE" }
 export const resolveStatus = { resolved: "RESOLVED", notResolved: "NOT_RESOLVED" }
 export const courseContentType = { video: "VIDEO", artical: "ARTICAL", exercise: "EXERCISE" };
+export const detailType = { preview: "PREVIEW", normal: "NORMAL" }
 
 export const userApproveStatusOptions = [
   { id: 1, name: "Tất cả", postState: "" },

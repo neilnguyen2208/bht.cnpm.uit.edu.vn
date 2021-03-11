@@ -192,7 +192,7 @@ class MyPostsList extends Component {
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
-                                <div className="list-item-container">{this.myPostsList}</div>
+                                <div >{this.myPostsList}</div>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,

@@ -59,7 +59,6 @@ class Paginator extends Component {
 
     // UI/UX when click on the pagination item
     onClickPaginationElement = (page_number, action) => {
-        // console.log(page_number);
         //handler action
         switch (action) {
             case "first":

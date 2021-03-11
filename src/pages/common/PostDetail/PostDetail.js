@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import 'components/styles/Metadata.scss'
-import 'components/styles/DocPostDetail.scss'
+import 'components/styles/Detail.scss'
 import Modal from 'components/common/Modal/AlertModal'
 import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
 import { getPostByID } from "redux/services/postServices"

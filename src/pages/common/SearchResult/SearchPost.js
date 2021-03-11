@@ -76,7 +76,7 @@ class SearchPost extends Component {
         if (!this.props.isListLoading) {
             postSearchResult = this.props.postSearchResult.map((postItem) => {
                 return < div className="item-container" >
-                   <PostSummaryMetadata
+                    <PostSummaryMetadata
                         type={postItem.type}
                         id={postItem.id}
                         authorName={postItem.authorName}
@@ -144,7 +144,7 @@ class SearchPost extends Component {
                                         </div>
 
                                         <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.postSearchResult.length}  </div>
-                                        <div className="list-item-container">{postSearchResult}</div>
+                                        <div >{postSearchResult}</div>
                                     </div>
                                     < Paginator config={{
                                         changePage: (pageNumber) => this.onPageChange(pageNumber),

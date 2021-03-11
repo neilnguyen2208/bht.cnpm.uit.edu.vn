@@ -30,10 +30,52 @@
   cursor: pointer;
 }
 
-.metadata .category {
+.doc-detail-container .title,
+.post-detail-container .title {
+  @extend .title;
+  font-size: 30px;
+  line-height: 30px;
+  margin-top: 10px;
+}
+
+
+.metadata-label {
+  padding-left: 10px;
+  color: var(--black);
+  position: relative;
+  font-size: 16px;
+  height: 20px;
+  line-height: 17px;
+  display: flex;
+  justify-content: flex-start;
+  height: 20px;
+  padding-top: 2px;
+  font-family: "BarlowCondensed-Regular";
+  color: var(--light-black);
+  user-select: none;
+  cursor: context-menu;
+  margin-right: 5px;
+}
+
+.metadata-label::before {
+  content: url('../../assets/icons/8x8/g_btn_element_8x8.png');
+  position: absolute;
+  left: 0px;
+  top: 1px;
+}
+
+.doc-detail-container .metadata-label,
+.post-detail-container .metadata-label {
+  @extend .metadata-label;
+  height: 24px;
+  font-size: 18px;
+  font-family: "BarlowCondensed-Regular";
+
+}
+
+.category {
   font-family: "BarlowCondensed-Medium";
   font-size: 16px;
-  vertical-align: middle;
   height: 20px;
   line-height: 18px;
   background: var(--blue);

@@ -18,7 +18,6 @@
   display: flex;
   min-width: 50px;
   width: fit-content;
-  // border-right: 1px solid var(--gray);
   border-radius: 3px;
   padding-right: 3px;
   padding-left: 3px;
@@ -168,11 +167,6 @@
   margin-top: 3px;
 }
 
-// .comment-count-container:hover,
-// .download-count-layout:hover {
-//   opacity: 80%;
-//   cursor: pointer;
-// }
 
 .view-count-layout,
 .view-count {

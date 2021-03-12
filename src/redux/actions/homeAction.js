@@ -41,20 +41,20 @@ export function get_TrendingDocumentsListFailure(error) {
 
 
 //highlight posts 
-export function get_HighlightPostsListRequest() {
+export function get_HighlightPostsRequest() {
   return {
     type: GET_HIGHLIGHT_POSTS_LIST_REQUEST,
   }
 }
 
-export function get_HighlightPostsListSuccess(data) {
+export function get_HighlightPostsSuccess(data) {
   return {
     type: GET_HIGHLIGHT_POSTS_LIST_SUCCESS,
     payload: data
   }
 }
 
-export function get_HighlightPostsListFailure(error) {
+export function get_HighlightPostsFailure(error) {
   return {
     type: GET_HIGHLIGHT_POSTS_LIST_FAILURE,
     payload: error

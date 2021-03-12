@@ -4,7 +4,7 @@ import './Wallpage.scss'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getHighlightPostsList } from 'redux/services/homeServices'
+import { getHighlightPosts } from 'redux/services/homeServices'
 
 import Loader from 'components/common/Loader/Loader'
 
@@ -25,7 +25,7 @@ class Wallpage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getHighlightPostsList()
+        this.props.getHighlightPosts();
     }
 
     prevSlide = () => {
@@ -69,7 +69,7 @@ class Wallpage extends React.Component {
         };
 
         let highlightView = <></>;
-        if (!this.props.isLoading) {
+        if (!this.props.isLoading && this.props.highlightPosts) {
             highlightView = this.props.highlightPosts.map(postItem =>
                 <WallpageItem
                     key={postItem.id}
@@ -132,6 +132,7 @@ class Wallpage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.home.highlightPosts.data)
     return {
         highlightPosts: state.home.highlightPosts.data,
         isLoading: state.home.highlightPosts.isLoading
@@ -139,7 +140,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getHighlightPostsList
+    getHighlightPosts
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Wallpage));

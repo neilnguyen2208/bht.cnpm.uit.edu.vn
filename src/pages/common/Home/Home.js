@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 
 //styles
 import 'layouts/Layout.scss'
-import './Home.scss'
+// import 'components/Home.scss'
 
 //utils
 import { itemType } from 'constants.js'
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
-import HomePostItem from 'components/home/HomePostItem'
+import HomePostItem from 'components/post/HomeInfo'
 import HomeDocumentItem from 'components/home/HomeDocumentItem'
 import Wallpage from 'components/home/Wallpage/Wallpage'
 
@@ -19,7 +19,7 @@ import Wallpage from 'components/home/Wallpage/Wallpage'
 import {
     getTrendingDocumentsList,
     getNewestPostsList,
-    getHighlightPostsList,
+    getHighlightPosts,
     getNewestActivities
 }
     from 'redux/services/homeServices'
@@ -31,58 +31,6 @@ import SubjectItem from 'components/course/SubjectItem'
 class Home extends Component {
     constructor(props) {
         super();
-
-        this.newPosts = [
-            {
-                "id": 51,
-                "authorID": 1,
-                "authorName": "alex",
-                "categoryID": 7,
-                "categoryName": "Hoạt động",
-                "imageURL": "https://i.imgur.com/LnHFl0h.png",
-                "publishDtm": "2020-01-26T00:00:00",
-                "readingTime": 300,
-                "summary": "etNullam ut nisi a odio semper cursus.",
-                "title": "magna. Nam ligula elit, pretium et, rutrum non, hendrerit id, ante."
-            },
-            {
-                "id": 151,
-                "authorID": 1,
-                "authorName": "alex",
-                "categoryID": 4,
-                "categoryName": "Post Category 02",
-                "imageURL": "https://i.imgur.com/LnHFl0h.png",
-                "publishDtm": "2020-01-26T00:00:00",
-                "readingTime": 300,
-                "summary": "Đây là tóm tắt của bài post",
-                "title": "Đây là tiêu đề của bài post"
-            },
-            {
-                "id": 1,
-                "authorID": 1,
-                "authorName": "alex",
-                "categoryID": 1,
-                "categoryName": "Post Category 01",
-                "imageURL": "https://i.imgur.com/LnHFl0h.png",
-                "publishDtm": "2020-01-26T00:00:00",
-                "readingTime": 300,
-                "summary": "Summary of post 01",
-                "title": "Post 01 title"
-            },
-            {
-                "id": 101,
-                "authorID": 1,
-                "authorName": "alex",
-                "categoryID": 7,
-                "categoryName": "Hoạt động",
-                "imageURL": "https://i.imgur.com/LnHFl0h.png",
-                "publishDtm": "2020-01-26T00:00:00",
-                "readingTime": 300,
-                "summary": "Nullam scelerisque neque sed sem egestas blandit. Vestibulum",
-                "title": "mvel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras"
-            }
-
-        ]
         this.state = {
 
             slider: ["first", "second", "third", "fourth", "fifth"],
@@ -96,7 +44,7 @@ class Home extends Component {
         this.props.getNewestActivities();
         this.props.getNewestPostsList();
         this.props.getTrendingDocumentsList();
-        this.props.getHighlightPostsList();
+        this.props.getHighlightPosts();
     }
 
     //combobox
@@ -117,6 +65,7 @@ class Home extends Component {
                 <div className="home-item-container">
                     {this.props.newPosts.map(postItem => {
                         return <HomePostItem
+                            authorAvatarURL={postItem.authorAvatarURL}
                             key={postItem.id}
                             id={postItem.id}
                             authorName={postItem.authorName}
@@ -142,8 +91,8 @@ class Home extends Component {
         }
 
         if (!this.props.isTrendingDocumentLoading)
-            trendingDocumentsList = <div className="home-item-container-wrapper">
-                <div className="home-item-container">
+            trendingDocumentsList = <div className="home-item-container-wrapper scroller-container">
+                <div className="home-item-container ">
                     {this.props.trendingDocuments.map(item => {
                         return <HomeDocumentItem
                             id={item.id}
@@ -156,10 +105,10 @@ class Home extends Component {
                             readingTime={item.readingTime}
                             summary={item.summary}
                             title={item.title}
-                            downloads = {item.downloads}
-                            views = {item.views}
+                            downloads={item.downloads}
+                            views={item.views}
                             docSubject={item.docSubject}
-                            docSubjectID = {item.docSubjectID}
+                            docSubjectID={item.docSubjectID}
                         ></HomeDocumentItem>
                     })}
                 </div>
@@ -177,6 +126,7 @@ class Home extends Component {
                             id={postItem.id}
                             authorName={postItem.authorName}
                             authorID={postItem.authorID}
+                            authorAvatarURL={postItem.authorAvatarURL}
                             publishDtm={postItem.publishDtm}
                             categoryName={postItem.categoryName}
                             categoryID={postItem.categoryID}
@@ -201,21 +151,18 @@ class Home extends Component {
             <div className="pr-layout">
                 <Wallpage sliderWidth="1000" sliderHeight="250" />
                 <div className="home-layout" >
-                    <div className="decoration-line mg-bottom-10px" />
-                    {/* Đại cương */}
-                    <div className="course-type-title" >
-                        <div className="d-flex">
-                            <div className="rect-decoration" />
-                            <div>
-                                <div className="title">
-                                    BÀI VIẾT MỚI NHẤT:
-                            </div>
-                            </div>
+                    <div className="part-title" >
+                        <div className="title">
+                            BÀI VIẾT MỚI NHẤT
                         </div>
                     </div>
+                    <div className="decoration-line mg-top-5px" />
+
                     {newestPostsList}
+
+
                     {/* Cơ sở nhóm ngành */}
-                    <div className="course-type-title">
+                    <div className="part-title">
                         <div className="d-flex">
                             <div className="rect-decoration" />
                             <div className="title">
@@ -225,7 +172,7 @@ class Home extends Component {
                     </div>
                     {trendingDocumentsList}
                     {/* Danh sách môn học */}
-                    <div className="course-type-title">
+                    <div className="part-title">
                         <div className="d-flex">
                             <div className="rect-decoration" />
                             <div className="title">
@@ -238,13 +185,13 @@ class Home extends Component {
                     </div>
                     <div className="mg-top-10px" />
                 </div >
-            </div>
+            </div >
         );
     }
 }
 
 const mapStateToProps = (state) => {
-   ;
+    console.log(state.post.newPosts);
     return {
         trendingDocuments: state.home.trendingDocuments.data,
         isTrendingDocumentLoading: state.home.trendingDocuments.isLoading,
@@ -261,7 +208,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getTrendingDocumentsList,
     getNewestPostsList,
-    getHighlightPostsList,
+    getHighlightPosts,
     getNewestActivities
 }, dispatch);
 

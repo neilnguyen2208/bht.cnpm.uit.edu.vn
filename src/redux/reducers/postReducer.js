@@ -11,11 +11,6 @@ import {
     REJECT_AND_FEEDBACK_A_POST_SUCCESS,
     REJECT_AND_FEEDBACK_A_POST_FAILURE,
 
-    //highlight posts list
-    GET_HIGHLIGHT_POSTS_LIST_REQUEST,
-    GET_HIGHLIGHT_POSTS_LIST_SUCCESS,
-    GET_HIGHLIGHT_POSTS_LIST_FAILURE,
-
     //post
     GET_POST_BY_ID_REQUEST,
     GET_POST_BY_ID_SUCCESS,
@@ -138,10 +133,6 @@ const initialState = {
 function PostReducer(state = initialState, action) {
     switch (action.type) {
 
-        case GET_POST_BY_ID_REQUEST:
-            return {
-                ...state, currentPost: { isLoading: true, isLoadDone: false }
-            };
         case GET_POST_BY_ID_SUCCESS:
             return {
                 ...state, currentPost: { isLoading: false, data: action.payload, isLoadDone: true }
@@ -173,16 +164,6 @@ function PostReducer(state = initialState, action) {
             return { ...state, isHaveRejectedAndFeedbacked: false };
         case REJECT_AND_FEEDBACK_A_POST_RESET:
             return { ...state, isHaveRejectedAndFeedbacked: false };
-
-        //get highlight posts list
-        case GET_HIGHLIGHT_POSTS_LIST_REQUEST:
-            return {
-                ...state, highlightPosts: { isLoading: true, isLoadDone: false }
-            };
-        case GET_HIGHLIGHT_POSTS_LIST_SUCCESS:
-            return { ...state, highlightPosts: { isLoading: false, isLoadDone: true, data: action.payload } };
-        case GET_HIGHLIGHT_POSTS_LIST_FAILURE:
-            return { ...state, highlightPosts: { isLoading: false, isLoadDone: true, data: [] } };
 
         //my post
         case GET_MY_POSTS_REQUEST:

@@ -214,10 +214,6 @@ export function get_PostsListFailure(error) {
 
 //post by IDarr
 //posts list 
-export function get_PostByIDRequest() {
-    return { type: GET_POST_BY_ID_REQUEST }
-}
-
 export function get_PostByIDSuccess(data) {
     return { type: GET_POST_BY_ID_SUCCESS, payload: data }
 }

@@ -1,165 +1,165 @@
-import React from 'react';
-import './Wallpage.scss'
+import React, { Component } from 'react'
 
-import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
-import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
-import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
-import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x24.png'
-import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
-import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
-
+import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
-import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+import { bindActionCreators } from 'redux';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+//resources
+import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
+import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
+import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
+import { post_ReportAPostReset } from 'redux/actions/postAction'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
+import store from 'redux/store/index'
+import { validation } from 'utils/validationUtils'
+import NormalReactionbar from 'components/post/NormalReactionbar'
 
-export default class WallpageItem extends React.Component {
+//styles
+import 'components/styles/Label.scss'
+import 'components/styles/Metadata.scss'
+
+//components
+import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+class WallpageItem extends React.Component {
+
     constructor(props) {
         super(props);
         this.normalMenuItemList = [
-            { id: 3, name: "Report", icon: trash_icon },
+            { id: 3, name: "Report", value: "REPORT_POST", icon: report_icon },
         ]
-
-        this.likeCount = -1; //dummy for change
-        this.state = { isLiked: 0, isSaved: 0 }
     }
 
-    toggleLikeImage = () => {
+    onPopupMenuItemClick = (selectedItem) => {
+        if (selectedItem.value === "REPORT_POST") {
+            store.dispatch(openModal("form", {
+                id: `rpp-form-modal`,//report post
+                title: `REPORT BÀI VIẾT`,
+                formId: `rpp-form`,
+                inputs:
+                    [
+                        { //for rendering
+                            id: `rpp-form-input`,
+                            isRequired: true,
+                            label: "Lý do tố cáo:",
+                            type: 'text-area',
+                            placeHolder: "Nhập lý do tố cáo ...",
+                            validation: true,
+                            key: "reason"
+                        },
+                    ],
+                append: { id: this.props.id },
+                validationCondition: {
+                    form: `#rpp-form`,
+                    rules: [
+                        //truyen vao id, loai component, message
+                        validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
+                        validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
+                    ],
 
-        let tmpLike = this.state.isLiked;
-
-        if (tmpLike === 0)
-            if (this.props.likeStatus) tmpLike = 1;
-            else tmpLike = -1;
-
-        tmpLike = - tmpLike;
-
-        if (this.props.likeStatus) {
-            this.likeCount = tmpLike === -1 ? this.props.likeCount - 1 : this.props.likeCount;
+                },
+                submitText: "Report",
+                cancelText: "Huỷ",
+                confirmBox: {
+                    title: "Report bài viết",
+                    text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
+                    confirmText: "Xác nhận",
+                    cancelText: "Huỷ",
+                    onConfirm: DTO => this.onConfirmReport(DTO)
+                }
+            }
+            ));
         }
-        else {
-            this.likeCount = tmpLike === -1 ? this.props.likeCount + 1 : this.props.likeCount;
-        }
-        console.log(this.state.isLiked);
-        //call API
-        this.setState({ isLiked: tmpLike });
-
-        console.log(this.state.isLiked)
     }
-
-    toggleSaveImage = () => {
-        let tmp = this.state.isSaved;
-        if (tmp === 0)
-            tmp = this.props.savedStatus ? 1 : -1;
-        tmp = -tmp;
-
-        //call API
-        this.setState({ isSaved: tmp });
-    }
-
     render() {
-        //initiate some element
-        let likeBtn = <></>;
-        let saveBtn = <></>;
-
-        //render likeBtn
-        if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likeStatus)) {
-            likeBtn = <img className="like-btn" alt="like" src={liked_btn} onClick={this.toggleLikeImage}></img>
+        if (this.props.isHaveReported) {
+            store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
+            store.dispatch(post_ReportAPostReset())
         }
-        else {
-            likeBtn = <img className="like-btn" alt="like" src={unliked_btn} onClick={this.toggleLikeImage} ></img>
-        }
-
-        //render saveBtn
-        if (this.state.isSaved === 1 || (this.state.isSaved === 0 && this.props.savedStatus)) {
-            saveBtn = <div className="d-flex" onClick={this.toggleSaveImage} >
-                <img className="save-btn" alt="like" src={full_blue_bookmark_btn} />
-                <div>Huỷ</div>
-            </div>
-        }
-        else {
-            saveBtn = <div className="d-flex" onClick={this.toggleSaveImage} >
-                <img className="save-btn" alt="dislike" src={gray_bookmark_btn} />
-                <div>Lưu</div>
-            </div >
-        }
-
-        return <div className="wallpage-item">
-            <div className="left-container">
-                <img src={this.props.imageURL} className='image' alt="loading cover" />
-            </div>
-
-            <div className="right-container">
-
-                <div>
-                    {/* content */}
-                    <div className="metadata" >
-                        <div className="d-flex">
-                            <div className="d-flex">
-                                <div className="prefix-normal-category" />
-                                <div className="normal-category">
-                                    {this.props.categoryName}
-                                </div>
-                            </div>
-                            <div className="light-black-label">bởi</div>
-                            <Link className="link-label-s" to={/user/}>
-                                {this.props.authorName}
-                            </Link>
-                        </div>
-                        <PopupMenu items={this.normalMenuItemList} id={`wallpage-item-popup-menu-${this.props.id}`} />
-                    </div>
-
-                    {/* title */}
-                    <Link to={"/posts/" + this.id}>
-                        <div className="title">
-                            {this.props.title}
-                        </div>
-                    </Link>
-
-                    <div className="d-flex" style={{ marginTop: "-8px" }}>
-                        <div className="d-flex"  >
-                            <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                                {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
-                            </div>
-                        </div>
-                        <div className="d-flex" >
-                            <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                                {this.props.publishDtm.substring(0, 10)}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="summary-text">
-                        {this.props.summary}
-                    </div>
+        return (
+            <div className="wallpage-item">
+                <div className="left-container">
+                    <img src={this.props.imageURL} className='image' alt="loading cover" />
                 </div>
 
-                <div className="j-c-end">
-                    <div className="post-reaction-bar">
-                        <div className="d-flex mg-top-5px">
+                <div className="right-container">
+                    <div className="metadata">
+                        <div className="j-c-space-between" >
                             <div className="d-flex">
-                                <div className="like-btn">  {likeBtn}</div>
-                                <div className="like-count">{this.likeCount !== -1 ? this.likeCount : this.props.likeCount}</div>
-                            </div>
-                            <div className="d-flex">
-                                <div className="save-text-container" onClick={this.toggleSaveImage}>
-                                    <div>{saveBtn}</div>
+                                <div className="d-flex">
+                                    <div className="category">
+                                        {this.props.categoryName}
+                                    </div>
                                 </div>
-                                <div className="comment-count-container">
-                                    Bình luận
-                                <div style={{ paddingLeft: "5px" }}>
-                                        {this.props.commentCount}
+                                <div className="light-black-label">bởi</div>
+                                <Link className="link-label-s" to={/user/}>
+                                    {this.props.authorName}
+                                </Link>
+                            </div>
+                            <div>
+                                <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`hipm-${this.props.id}`} />
+                            </div>
+                        </div>
+
+                        {/* title */}
+                        <div className="d-flex mg-top-5px">
+                            {/* fake avatar */}
+                            <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+                            <div className="mg-left-5px j-c-space-between d-flex-vertical">
+                                <Link to={"/posts/" + this.id}>
+                                    <div className="title">
+                                        {this.props.title}
+                                    </div>
+                                </Link>
+
+                                <div className="d-flex" style={{ marginTop: "-5px" }}>
+                                    <div className="d-flex"  >
+                                        <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                                            {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+                                        </div>
+                                    </div>
+
+                                    <div className="d-flex" >
+                                        {this.props.publishDtm ?
+                                            <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                                                {this.props.publishDtm.substring(0, 10)}
+                                            </div>
+                                            : <></>}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="link-label mg-top-5px"
-                            onClick={() => { window.location.href = "/posts/id=" + this.props.id }}>
-                            Đọc tiếp ...
+
+                        <div className="summary-text">
+                            {this.props.summary}
                         </div>
-                    </div>
-                </div>
+                    </div >
+                    <NormalReactionbar
+                        id={this.props.id}
+                        likeCount={this.props.likeCount}
+                        commentCount={this.props.commentCount}
+                        likedStatus={this.props.likedStatus}
+                        savedStatus={this.props.savedStatus}
+                    />
+                </div >
+
             </div >
-        </div >
+        );
     }
 }
 
+
+
+const mapStateToProps = (state) => {
+    return {
+        //report
+        isHaveReported: state.post.isHaveReported
+    };
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    reportAPost
+}, dispatch);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WallpageItem));
 

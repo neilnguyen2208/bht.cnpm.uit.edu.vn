@@ -27,7 +27,7 @@ class ModalBL extends React.Component {
     }
 
     componentDidMount() {
-        this.timeOut = setTimeout(() => this.props.closeMLModal(), 3000)
+        this.timeOut = setTimeout(() => this.props.closeBLModal(), 3000)
     }
 
     componentWillUnmount() {

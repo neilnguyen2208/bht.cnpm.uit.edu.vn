@@ -159,7 +159,6 @@ class MyPostsList extends Component {
                             reloadList={() => this.reloadList()}
                         />
                         <PostNormalReactionbar
-                            title={item.title}
                             id={item.id}
                             likeCount={item.likeCount}
                             commentCount={item.commentCount}

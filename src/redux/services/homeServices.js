@@ -4,9 +4,9 @@ import {
     get_TrendingDocumentsListSuccess,
     get_TrendingDocumentsListFailure,
 
-    get_HighlightPostsListRequest,
-    get_HighlightPostsListSuccess,
-    get_HighlightPostsListFailure,
+    get_HighlightPostsRequest,
+    get_HighlightPostsSuccess,
+    get_HighlightPostsFailure,
 
     get_NewestPostsListRequest,
     get_NewestPostsListSuccess,
@@ -17,7 +17,7 @@ import {
     get_NewestActivitiesFailure,
 
 } from "redux/actions/homeAction.js";
-import { remoteServiceBaseUrl } from 'utils/requestUtils'
+import { remoteServiceBaseUrl, request } from 'utils/requestUtils'
 
 export function getTrendingDocumentsList() {
 
@@ -70,7 +70,7 @@ export function getNewestPostsList() {
                         .then(
                             result => {
                                 let arr = result_1.map((item, i) => Object.assign({}, item, result[i]));
-                                console.log(arr);
+                                // console.log(arr);
                                 dispatch(get_NewestPostsListSuccess(arr))
                             }).catch(error => dispatch(get_NewestPostsListFailure(error)))
                 }
@@ -83,37 +83,35 @@ export function getNewestPostsList() {
 }
 
 //highlight post
-export function getHighlightPostsList() {
+export function getHighlightPosts() {
     return dispatch => {
+        dispatch(get_HighlightPostsRequest());
+        console.log("A")
 
-        dispatch(get_HighlightPostsListRequest());
+        request.get(`/posts/newest`).then(
+            response => {
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
 
-        fetch(`${remoteServiceBaseUrl}/posts/newest`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-                    let result_1 = result;
-                    let IDarr = ''; result.map(item => IDarr += item.id + ","
-                    )
-                    fetch(`${remoteServiceBaseUrl}/posts/statistic?postIDs=${IDarr}`, requestOptions)
-                        .then(response => response.json())
-                        .then(
-                            result => {
-                                let arr = result_1.map((item, i) => Object.assign({}, item, result[i]));
-                                dispatch(get_HighlightPostsListSuccess(arr))
-                            }).catch(error => dispatch(get_HighlightPostsListFailure(error)))
-                }
-            )
-            .catch(error => {
-                dispatch(get_HighlightPostsListFailure(error))
-            })
+                        for (let i = 0; i < result_1.length; i++) {
+                            finalResult.push({
+                                ...result_1[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                            }
+                            );
+                            //delete redundant key - value  
+                        }
+
+                        dispatch(get_HighlightPostsSuccess(finalResult))
+                    }).catch(() => get_HighlightPostsFailure())
+            }
+        ).catch(() => dispatch(get_HighlightPostsFailure()))
     }
 }
 

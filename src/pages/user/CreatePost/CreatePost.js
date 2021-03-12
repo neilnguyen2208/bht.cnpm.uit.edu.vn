@@ -25,6 +25,7 @@ import Metadata from 'components/post/DetailInfo'
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { detailType } from 'constants.js'
+import NormalReactionbar from "components/post/NormalReactionbar";
 
 
 const validationCondition = {
@@ -400,7 +401,7 @@ class CreatePost extends Component {
                         categoryID={this.state.CREATE_POST_DTO.categoryID}
                         readingTime={this.state.CREATE_POST_DTO.readingTime}
                         authorName={this.state.author.displayName}
-                        avartarURL={this.state.author.avatarURL}
+                        authorAvartarURL={this.state.author.authorAvatarURL}
                         publishDtm={this.state.publishDtm}
                         type={detailType.preview}
                     />
@@ -411,31 +412,19 @@ class CreatePost extends Component {
                             this.state.CREATE_POST_DTO.content
                     }} />
 
-                    <div className="mg-top-10px" >
+                    <div className="mg-top-10px mg-bottom-10px" >
                         {this.shownTag.map(item =>
                             <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
                         )}
                     </div>
-                    <div className="post-reaction-bar">
-                        <div className="d-flex mg-top-5px  mg-left-5px">
-                            <div className="d-flex">
-                                <div className="like-btn">  {likeBtn}</div>
-                                <div className="like-count">{0}</div>
-                            </div>
-
-                            <div className="d-flex">
-                                <div className="save-text-container" onClick={this.toggleSaveImage}>
-                                    <div>{saveBtn}</div>
-                                </div>
-                                <div className="comment-count-container">
-                                    Bình luận
-                                <div style={{ paddingLeft: "5px" }}>
-                                        {0}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <NormalReactionbar
+                        id={"-1"}
+                        likeCount={0}
+                        commentCount={0}
+                        likedStatus={false}
+                        savedStatus={false}
+                        type="PREVIEW"
+                    />
                 </div>
 
                 {/* Edit region */}

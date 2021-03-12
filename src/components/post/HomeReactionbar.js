@@ -115,7 +115,7 @@ class NormalReactionbar extends Component {
 
     return (
       <div className="reaction-bar">
-        <div className="d-flex mg-top-5px">
+        <div className="d-flex">
           <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div> {likeBtn}</div>
             <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
@@ -134,7 +134,7 @@ class NormalReactionbar extends Component {
             </div>
           </div>
         </div>
-        <Link to={`/posts/${this.props.id}`} className="link-label-s mg-top-5px" >
+        <Link to={`/posts/${this.props.id}`} className="link-label-s" >
           Đọc tiếp ...
             </Link>
       </div >

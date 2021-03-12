@@ -19,7 +19,7 @@ import {    //highlight posts
     get_PostSearchResultSuccess,
     get_PostSearchResultFailure,
 
-    get_PostByIDRequest,
+    get_PostByIDReset,
     get_PostByIDSuccess,
     get_PostByIDFailure,
 
@@ -228,7 +228,7 @@ export function rejectAPost(id) {
 
 export function getPostByID(id) {
     return dispatch => {
-        dispatch(get_PostByIDRequest())
+        dispatch(get_PostByIDReset())
         request.get(`/posts/${id}`)
             .then(response => {
                 let _response = response; //response without statistic
@@ -238,6 +238,7 @@ export function getPostByID(id) {
                     })
             }
             )
+            .catch(error => { dispatch(get_PostByIDFailure(error)) })
     }
 }
 

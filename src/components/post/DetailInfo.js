@@ -81,7 +81,7 @@ class PostSummary extends Component {
       store.dispatch(openBigModal("edit-post", { id: this.props.id }));
     }
 
-    if (selectedItem.value === "REPORT_POST") {
+    if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
       store.dispatch(openModal("form", {
         id: `rpp-form-modal`,//report post
         title: `REPORT BÀI VIẾT`,
@@ -183,6 +183,7 @@ class PostSummary extends Component {
 
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
+          {console.log(this.props.authorAvatarURL)}
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>

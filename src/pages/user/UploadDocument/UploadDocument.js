@@ -33,7 +33,7 @@ import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEdi
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import store from "redux/store/index.js"
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from 'redux/actions/tagAction'
-import {DELAY_TIME} from 'constants.js';
+import { DELAY_TIME } from 'constants.js';
 
 const validationCondition = {
     form: '#create-document-form',
@@ -430,12 +430,12 @@ class UploadDocument extends Component {
                         category={this.state.currentCategory}
                         readingTime={this.state.UPLOAD_DOC_DTO.readingTime}
                         authorName={this.state.author.displayName}
-                        avartarURL={this.state.author.avatarURL}
+                        authorAvartarURL={this.state.author.avatarURL}
                         publishDtm={this.state.publishDtm}
                     />
                     <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.UPLOAD_DOC_DTO.content }} />
 
-                    <div className="mg-top-10px pd-10px" >
+                    <div className="mg-top-10px" >
                         {this.shownTag.map(item =>
                             <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
                         )}

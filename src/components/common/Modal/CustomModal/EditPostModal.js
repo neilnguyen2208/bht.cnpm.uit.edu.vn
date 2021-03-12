@@ -31,6 +31,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import Metadata from 'components/post/DetailInfo'
 import SmallLoader from 'components/common/Loader/Loader_S'
+import NormalReactionbar from 'components/post/NormalReactionbar'
 
 const validationCondition = {
     form: '#edit-post-form',
@@ -373,15 +374,6 @@ class EditPostModal extends React.Component {
 
     render() {
 
-        //render likeBtn
-        let likeBtn = <img className="like-btn" alt="like" src={unliked_btn} onClick={this.toggleLikeImage} ></img>
-
-        //render saveBtn
-        let saveBtn = <div className="d-flex" onClick={this.toggleSaveImage} >
-            <img className="save-btn" alt="save" src={gray_bookmark_btn} />
-            <div>Lưu</div>
-        </div >
-
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
         }
@@ -429,7 +421,6 @@ class EditPostModal extends React.Component {
         //load lan dau tien hoac moi load xong thi gan data cho DTO
         if (!this.props.isCurrentPostLoading && Object.keys(this.props.currentPost).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
             this.isFirstLoad = true;
-            console.log("first load");
             this.props.currentPost.tags.forEach((item, index) => {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
@@ -441,8 +432,14 @@ class EditPostModal extends React.Component {
                     tags: this.props.currentPost.tags ? this.props.currentPost.tags : [],
                     content: this.props.currentPost.content,
                     imageURL: this.props.currentPost.imageURL,
-                    // "summary": this.props.current =>tu tao lai
-                    categoryID: this.props.currentPost.categoryID
+                    categoryID: this.props.currentPost.categoryID,
+                    categoryName: this.props.currentPost.categoryName,
+                    readingTime: this.props.currentPost.readingTime,
+                    authorName: this.props.currentPost.authorName,
+                    authorID: this.props.currentPost.authorID,
+                    authorAvatarURL: this.props.currentPost.authorAvatarURL,
+                    id: this.props.currentPost.id
+
                 }
             })
         }
@@ -454,6 +451,7 @@ class EditPostModal extends React.Component {
 
         return (
             <div>
+
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
@@ -471,41 +469,36 @@ class EditPostModal extends React.Component {
                                 </div>
                                 <div className="d-none" id="edit-post-body">
                                     {/* Preview region */}
-                                    <div className="ed-post-form-container doc-post-detail preview-modal d-none" >
-                                        <Metadata title={this.state.EDIT_POST_DTO.title}
-                                            category={this.state.currentCategory}
+                                    <div className="ed-post-form-container post-detail-container preview-modal d-none" >
+                                        <div style={{ marginTop: "20px" }} />
+                                        <Metadata
+                                            id={this.props.currentPost.id}
+                                            title={this.state.EDIT_POST_DTO.title}
+                                            categoryName={this.state.EDIT_POST_DTO.categoryName}
+                                            categoryID={this.state.EDIT_POST_DTO.categoryID}
                                             readingTime={this.state.EDIT_POST_DTO.readingTime}
-                                            authorName={this.state.author.displayName}
-                                            avartarURL={this.state.author.avatarURL}
-                                            publishDtm={this.state.publishDtm}
+                                            authorName={this.state.EDIT_POST_DTO.authorName}
+                                            authorAvatarURL={this.state.EDIT_POST_DTO.authorAvatarURL}
+                                            authorID={this.state.EDIT_POST_DTO.authorID}
+                                            publishDtm={this.state.EDIT_POST_DTO.publishDtm}
+                                            type="PREVIEW"
+                                            popUpMenuPrefix="edpmd-"
                                         />
                                         <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_POST_DTO.content }} />
 
-                                        <div className="mg-top-10px pd-10px" >
+                                        <div className="mg-top-10px mg-bottom-10px" >
                                             {this.shownTag.map(item =>
                                                 <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
                                             )}
                                         </div>
-                                        <div className="post-reaction-bar">
-                                            <div className="d-flex mg-top-5px mg-left-5px">
-                                                <div className="d-flex">
-                                                    <div className="like-btn">  {likeBtn}</div>
-                                                    <div className="like-count">{0}</div>
-                                                </div>
-
-                                                <div className="d-flex">
-                                                    <div className="save-text-container" onClick={this.toggleSaveImage}>
-                                                        <div>{saveBtn}</div>
-                                                    </div>
-                                                    <div className="comment-count-container">
-                                                        Bình luận
-                                                         <div style={{ paddingLeft: "5px" }}>
-                                                            {0}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <NormalReactionbar
+                                            id={"-1"}
+                                            likeCount={0}
+                                            commentCount={0}
+                                            likedStatus={false}
+                                            savedStatus={false}
+                                            type="PREVIEW"
+                                        />
                                     </div>
 
                                     {/* Edit region */}
@@ -626,6 +619,7 @@ class EditPostModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.post.currentPost)
     return {
         categories: state.post_category.categories.data,
         isCategoryLoading: state.post_category.categories.isLoading,

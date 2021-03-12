@@ -6,13 +6,6 @@ import { connect } from "react-redux";
 
 //styles
 import 'layouts/Layout.scss'
-
-//utils
-import { itemType } from 'constants.js'
-import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
-//services
-//components
-import ComboBox from 'components/common/Combobox/Combobox';
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import Loader from 'components/common/Loader/Loader'
 

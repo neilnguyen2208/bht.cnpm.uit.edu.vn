@@ -1,18 +1,18 @@
 .course-description {}
 
-.course-type-title {
+.part-title {
   display: flex;
   justify-content: space-between;
 }
 
-.course-type-title .rect-decoration {
+.part-title .rect-decoration {
   width: 5px;
   height: 100%;
   margin-right: 5px;
   background: var(--blue);
 }
 
-.course-type-title .title {
+.part-title .title {
   color: var(--blue);
   font-size: 20px;
   font-family: "BarlowSemiCondensed-Bold";
@@ -21,14 +21,14 @@
   margin-bottom: 0px !important;
 }
 
-.course-type-title .sub-title {
+.part-title .sub-title {
   color: var(--black);
   font-size: 18px;
   font-family: "BarlowCondensed-MediumItalic";
   font-weight: 400;
 }
 
-.course-type-title .show-all-button {
+.part-title .show-all-button {
   display: flex;
   padding: 5px;
   border-radius: 5px;
@@ -38,12 +38,12 @@
 }
 
 
-.course-type-title .show-all-text {
+.part-title .show-all-text {
   display: flex;
 }
 
 
-.course-type-title .show-all-icon {
+.part-title .show-all-icon {
   display: flex;
   margin-top: 8px;
   margin-left: 5px;

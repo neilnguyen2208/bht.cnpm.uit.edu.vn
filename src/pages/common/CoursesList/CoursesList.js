@@ -144,7 +144,7 @@ class CoursesList extends Component {
 
                 <div className="decoration-line mg-bottom-10px" />
                 {/* Đại cương */}
-                <div className="course-type-title" >
+                <div className="part-title" >
                     <div className="d-flex">
                         <div className="rect-decoration" />
                         <div>
@@ -173,7 +173,7 @@ class CoursesList extends Component {
                 </div>
 
                 {/* Cơ sở nhóm ngành */}
-                <div className="course-type-title">
+                <div className="part-title">
                     <div className="d-flex">
                         <div className="rect-decoration" />
                         <div>
@@ -204,7 +204,7 @@ class CoursesList extends Component {
 
 
                 {/* Danh sách môn học */}
-                <div className="course-type-title">
+                <div className="part-title">
                     <div className="d-flex">
                         <div className="rect-decoration" />
                         <div>

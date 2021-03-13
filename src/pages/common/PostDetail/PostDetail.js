@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Metadata from "components/post/DetailInfo"
-import Tag from 'components/common/Tag/Tag'
+import Tag from 'components/common/tag/Tag'
 import Loader from 'components/common/Loader/Loader'
 import NormalReactionbar from 'components/post/NormalReactionbar'
 import store from 'redux/store/index.js';

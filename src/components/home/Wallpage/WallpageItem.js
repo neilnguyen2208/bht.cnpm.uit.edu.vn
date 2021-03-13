@@ -25,21 +25,21 @@ class WallpageItem extends React.Component {
 
     constructor(props) {
         super(props);
-        this.normalMenuItemList = [
-            { id: 3, name: "Report", value: "REPORT_POST", icon: report_icon },
+        this.menuItemList = [
+            { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },
         ]
     }
 
     onPopupMenuItemClick = (selectedItem) => {
         if (selectedItem.value === "REPORT_POST") {
             store.dispatch(openModal("form", {
-                id: `rpp-form-modal`,//report post
+                id: `hirpp-form-modal`,//high light item report post
                 title: `REPORT BÀI VIẾT`,
-                formId: `rpp-form`,
+                formId: `hirpp-form`,
                 inputs:
                     [
                         { //for rendering
-                            id: `rpp-form-input`,
+                            id: `hirpp-form-input`,
                             isRequired: true,
                             label: "Lý do tố cáo:",
                             type: 'text-area',
@@ -50,11 +50,11 @@ class WallpageItem extends React.Component {
                     ],
                 append: { id: this.props.id },
                 validationCondition: {
-                    form: `#rpp-form`,
+                    form: `#hirpp-form`,
                     rules: [
                         //truyen vao id, loai component, message
-                        validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-                        validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
+                        validation.isRequired(`hirpp-form-input`, 'text-area', 'Lý do không được để trống!'),
+                        validation.minLength(`hirpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
                     ],
 
                 },
@@ -79,7 +79,7 @@ class WallpageItem extends React.Component {
         return (
             <div className="wallpage-item">
                 <div className="left-container">
-                    <img src={this.props.imageURL} className='image' alt="loading cover" />
+                    <img src={this.props.imageURL} className='image' alt="cover" />
                 </div>
 
                 <div className="right-container">
@@ -96,9 +96,8 @@ class WallpageItem extends React.Component {
                                     {this.props.authorName}
                                 </Link>
                             </div>
-                            <div>
-                                <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`hipm-${this.props.id}`} />
-                            </div>
+                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.menuItemList} id={`hipm-${this.props.id}`} />
+
                         </div>
 
                         {/* title */}
@@ -106,7 +105,7 @@ class WallpageItem extends React.Component {
                             {/* fake avatar */}
                             <img className="avatar" src={this.props.authorAvatarURL} alt="" />
                             <div className="mg-left-5px j-c-space-between d-flex-vertical">
-                                <Link to={"/posts/" + this.id}>
+                                <Link to={"/posts/" + this.props.id}>
                                     <div className="title">
                                         {this.props.title}
                                     </div>
@@ -134,15 +133,16 @@ class WallpageItem extends React.Component {
                             {this.props.summary}
                         </div>
                     </div >
-                    <NormalReactionbar
-                        id={this.props.id}
-                        likeCount={this.props.likeCount}
-                        commentCount={this.props.commentCount}
-                        likedStatus={this.props.likedStatus}
-                        savedStatus={this.props.savedStatus}
-                    />
+                    <div >
+                        <NormalReactionbar
+                            id={this.props.id}
+                            likeCount={this.props.likeCount}
+                            commentCount={this.props.commentCount}
+                            likedStatus={this.props.likedStatus}
+                            savedStatus={this.props.savedStatus}
+                        />
+                    </div>
                 </div >
-
             </div >
         );
     }

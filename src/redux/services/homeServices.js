@@ -86,8 +86,6 @@ export function getNewestPostsList() {
 export function getHighlightPosts() {
     return dispatch => {
         dispatch(get_HighlightPostsRequest());
-        console.log("A")
-
         request.get(`/posts/newest`).then(
             response => {
                 let result_1 = response.data;

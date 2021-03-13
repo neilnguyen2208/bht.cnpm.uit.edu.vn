@@ -45,23 +45,23 @@ class PostApproving extends Component {
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam({ ...this.queryParamObject, pages: pageNumber });
+        setQueryParam({ ...this.queryParamObject, page: pageNumber });
         this.searchParamObject = {
             ...this.searchParamObject,
             paginator: getQueryParamByName('page'),
-            postState: 'PENDING_APPROVAL'
         }
-        this.props.getPendindPosts(this.searchParamObject);
+        this.props.getPendingPosts(this.searchParamObject);
         this.setState({});
     }
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, "category": selectedOption.id });
+        setQueryParam({ ...this.queryParamObject, page: 1, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
-            postState: 'PENDING_APPROVAL'
+            postState: 'PENDING_APPROVAL',
+            paginator: 1
         }
         this.props.getPendingPosts(this.searchParamObject);
         this.setState({});

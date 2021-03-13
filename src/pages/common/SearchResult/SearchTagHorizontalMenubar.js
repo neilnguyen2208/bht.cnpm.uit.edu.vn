@@ -10,17 +10,14 @@ export default class SearchHorizontalMenubar extends Component {
           <div className="gray-normal-label">'{decodeURIComponent(getQueryParamByName('q'))}'</div>
         </div>
         <div className="h-menu-bar">
-          <NavLink to={`/search/posts?q=${getQueryParamByName('q')}`} className="h-menu-item" activeClassName='h-menu-item a-h-menu-item'>
+          <NavLink to="/tags/posts" className="h-menu-item" activeClassName='h-menu-item a-h-menu-item'>
             Bài viết
           </NavLink>
-          <NavLink to={`/search/documents?q=${getQueryParamByName('q')}`} className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
+          <NavLink to="/tags/documents" className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
             Tài liệu
           </NavLink>
-          <NavLink to={`/search/courses?q=${getQueryParamByName('q')}`} className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
-            Khoá học
-          </NavLink>
-          <NavLink to={`/search/tags?q=${getQueryParamByName('q')}`} className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
-            Tag
+          <NavLink to="/tags/courses" className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
+            Bài tập
           </NavLink>
         </div>
         <div className="mg-top-10px" />

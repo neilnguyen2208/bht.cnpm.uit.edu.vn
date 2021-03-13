@@ -69,16 +69,9 @@ const App = () => {
                         <Route path="/search/courses" exact component={SearchCourses} />
 
                         {/* Search Tag */}
-                        <Route path="/tags/:id/">
-                            <SearchTagLayout>
-                                <Switch>
-                                    <Route exact path="/tags/:id/post" component={SearchPostByTag} />
-                                </Switch>
-                            </SearchTagLayout>
-                        </Route>
+                        <Route path="/tags/posts/" exact component={SearchPostByTag} />
 
                         {/* user layout */}
-
                         <Route exact path="/user" component={AccountInformation} />
                         <Route exact path="/user/update-password" component={UpdatePassword} />
                         <Route exact path="/user/my-docs" component={MyDocumentsList} />
@@ -92,7 +85,6 @@ const App = () => {
                         <Route exact path="/courses/:id/exercise" component={Exercise} />
 
                         {/* for admin only */}
-
                         {/* Admin and collab page content admin */}
                         <Route exact path="/admin-sidebar" component={AdminSidebar} />
 

@@ -20,7 +20,7 @@ import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
 import { getQuickSearchResult } from 'redux/services/commonServices';
 
 //components
-import Tag from "components/common/Tag/Tag";
+import Tag from "components/common/tag/Tag";
 import SmallLoader from "components/common/Loader/Loader_S"
 import { logoRouter, headerMenuRouters } from "router.config"
 
@@ -191,14 +191,10 @@ class Header extends React.Component {
 
                     {/*  */}
                     <div className="Header_End_Lv1">
-
-                        {/* Tao bai viet, tai khoan, upload */}
                         <div className="Header_End_Lv2" > <img className="Header_Image_Button" alt="" src={upload_icon} />
                             <img className="Header_Image_Button" src={write_icon} alt="" />
                             <button className="blue-button mg-auto mi-w-fit-content" > Đăng nhập </button>
                         </div>
-
-                        {/* Collapse menu cho noi dung tren */}
                         <div className="Header_End_Lv2_Collapse"
                             onClick={this.state.isCollapsedUserMenuOpened ?
                                 () => this.handleCloseCollapsedUserMenu()

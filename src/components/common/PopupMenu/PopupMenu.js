@@ -20,37 +20,29 @@ export default class PopupMenu extends React.Component {
     }
 
     componentDidMount() {
+        this.setState({ isDropdownOpen: false });
     }
 
     closeMenu = () => {
         let parent_id = "pm-" + this.props.id;
-        let container_id = "pm-dropdown-" + this.props.id;
-
         let parent_menu_item = document.getElementById(parent_id);
-        let dropdown = document.getElementById(container_id);
-
-        if (dropdown.style.display === "block") {
-            dropdown.style.display = "none";
+        if (this.state.isDropdownOpen) {
             parent_menu_item.style.background = "white";
-            parent_menu_item.style.paddingLeft = "0px";
         }
-        this.setState({})
+        this.setState({ isDropdownOpen: false })
     }
 
-    handlePopupMenuClick = (e, popup_menu_id, dropdown_id, dropdown_container_id) => {
+    handlePopupMenuClick = (e, popup_menu_id, dropdown_id) => {
         e.preventDefault();
-
         let popup_menu = document.getElementById(popup_menu_id);
         let dropdown = document.getElementById(dropdown_id);
 
-        if (dropdown.style.display === "block") {
+        if (this.isDropdownOpen) {
             dropdown.style.display = "none";
             popup_menu.style.background = "white";
-
         }
         else {
             popup_menu.style.background = "var(--grayish)";
-            dropdown.style.display = "block";
             dropdown.style.left = "-136px";
         }
         this.setState({ isDropdownOpen: true });
@@ -106,10 +98,11 @@ export default class PopupMenu extends React.Component {
 
         return (
             <div className='d-flex pos-relative' >
+
                 < ClickAwayListener onClickAway={() => { this.closeMenu() }}>
                     <div>
                         <div className="popup-menu" id={"pm-" + this.props.id} //pm: popup menu
-                            onClick={(e) => this.handlePopupMenuClick(e, "pm-" + this.props.id, "pm-dropdown-" + this.props.id, "pm-dropdown-container-" + this.props.id)}>
+                            onClick={(e) => this.handlePopupMenuClick(e, "pm-" + this.props.id, "pm-dropdown-" + this.props.id)}>
                             <div className="d-flex">
                             </div>
                         </div>

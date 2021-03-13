@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Tag from "components/common/Tag/Tag"
-import { getMyPostsList } from "redux/services/postServices"
+import Tag from "components/common/tag/Tag"
+import { getMyPostsList, getPostSearch } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
@@ -13,67 +13,89 @@ import Loader from 'components/common/Loader/Loader'
 import { itemType } from 'constants.js'
 
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
-import PostSummaryMetadata from 'components/post/SummaryInfo'
+import SearchTagHorizontalMenubar from './SearchTagHorizontalMenubar';
+import PostSummaryMetadata from 'components/post/SummaryInfo';
+
 class SearchPostByTag extends Component {
-    constructor(props) {
-        super(props);
+    componentDidMount() {
+        this.queryParamObject = {
+            "page": 1,
+            tag: getQueryParamByName('tag')
 
-        this.postsList = <></>
-    }
+        }
 
-    async componentDidMount() {
+        this.searchParamObject = {
+            "page": 1,
+            tags: getQueryParamByName('tag'),
+            searchTerm: ''
+        }
 
-        let page = getQueryParamByName('page');
-        this.props.getMyPostsList(page); //api khác, tìm bằng tag
+        setQueryParam(this.queryParamObject)
+        //   this.props.getPostCategoriesHaveAll();
+        this.props.getPostSearch(this.searchParamObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam("page", pageNumber);
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
-        this.props.getMyPostsList(page, category);
+        setQueryParam({ ...this.queryParamObject, "page": pageNumber });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            page: getQueryParamByName('page'),
+        }
+        this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
+
     render() {
 
+        let postSearchResult = <></>
         if (!this.props.isListLoading) {
-            this.myPostsList = this.props.myPostsList.map((postItem) => (
-                <div className="item-container">
-                   <PostSummaryMetadata
-                        type={postItem.type}
-                        id={postItem.id}
-                        authorName={postItem.authorName}
-                        authorID={postItem.authorID}
-                        publishDtm={postItem.publishDtm}
-                        categoryName={postItem.categoryName}
-                        categoryID={postItem.categoryID}
-                        title={postItem.title}
-                        summary={postItem.summary}
-                        imageURL={postItem.imageURL}
-                        readingTime={postItem.readingTime}
-                        approveState={postItem.postState} />
-                    <PostNormalReactionbar
-                        id={postItem.id}
-                        likes={postItem.likeCount}
-                        comments={postItem.commentCount}
-                        likeStatus={postItem.likeStatus}
-                        savedStatus={postItem.savedStatus}
+            postSearchResult = this.props.postSearchResult.map((item) => {
+                return < div className="item-container" >
+                    <PostSummaryMetadata
+                        type={itemType.normal}
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        publishDtm={item.publishDtm}
+                        categoryName={item.categoryName}
+                        categoryID={item.categoryID}
+                        title={item.title}
+                        summary={item.summary}
+                        imageURL={item.imageURL}
+                        readingTime={item.readingTime}
+                        approveState={item.postState}
+                        popUpMenuPrefix="pmpu"   //stand for my post popup 
+                        authorAvatarURL={item.authorAvatarURL}
+                        //
+                        reloadList={() => this.reloadList()}
                     />
-                </div >)
-            )
+                    {/* <PostNormalReactionbar
+                        id={item.id}
+                        likeCount={item.likeCount}
+                        commentCount={item.commentCount}
+                        likedStatus={item.likeStatus}
+                        savedStatus={item.savedStatus}
+                    /> */}
+                </div >
+
+            })
         }
+        else
+            postSearchResult = <Loader />
+
         return (
             <div>
+                <SearchTagHorizontalMenubar />
                 {
                     this.props.isListLoading ?
                         < Loader /> :
-                        <>{this.myPostsList}</>
+                        <>{postSearchResult}</>
                 }
 
                 < Paginator config={{
                     changePage: (pageNumber) => this.onPageChange(pageNumber),
-                    pageCount: 7,
+                    pageCount: 1,
                     currentPage: getQueryParamByName('page')
                 }} />
             </div>
@@ -82,17 +104,20 @@ class SearchPostByTag extends Component {
 }
 
 const mapStateToProps = (state) => {
-    ;
     return {
-        myPostsList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.data,
-        isListLoading: state.post.myPosts.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading
+        postCategories: state.post_category.categories.searchData,
+        isListLoading: state.post.postsList.isLoading,
+        isCategoryLoading: state.post_category.categories.isLoading,
+        postSearchResult: state.post.postsList.data,
+        totalPages: state.post.postsList.totalPages,
+        totalElements: state.post.postsList.totalElements,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPostsList, getPostCategories
+    // getMyPostsList
+    getPostSearch
+    // , getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPostByTag));

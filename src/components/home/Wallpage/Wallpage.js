@@ -87,6 +87,7 @@ class Wallpage extends React.Component {
                     readingTime={postItem.readingTime}
                     likeCount={postItem.likeCount}
                     commentCount={postItem.commentCount}
+                    authorAvatarURL={postItem.authorAvatarURL}
                 />
             )
         }

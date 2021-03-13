@@ -122,7 +122,7 @@ class NormalReactionbar extends Component {
           </div>
           <div className="vertical-line" />
           <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
-            <div >{saveBtn}</div>
+            <div className="d-flex"> {saveBtn}</div>
           </div>
           <div className="vertical-line" />
           <div className="comment-count-container">

@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 
 //
-import { getQueryParamByName } from 'utils/urlUtils';
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils';
 import { getTagSearchResult } from 'redux/services/tagServices'
-import Tag from "components/common/Tag/Tag"
+import Tag from "components/common/tag/Tag"
 import Loader from "components/common/Loader/Loader";
 import 'components/styles/Label.scss';
 import SearchHorizontalMenubar from "pages/common/SearchResult/SearchHorizontalMenubar"
@@ -19,9 +19,18 @@ class SearchTag extends Component {
     }
 
     componentDidMount() {
-        let searchParam = getQueryParamByName('q');
-        this.props.getTagSearchResult(searchParam);
+        this.queryParamObject = {
+            "q": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+        }
+
+        this.searchParamObject = {
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+        }
+
+        setQueryParam(this.queryParamObject)
+        this.props.getTagSearchResult(this.searchParamObject);
     }
+
     render() {
 
         return (
@@ -38,7 +47,7 @@ class SearchTag extends Component {
                                     <div className="decoration-line margin-bottom-10px"></div>
                                     {
                                         this.props.tagsList.map(item =>
-                                            <Link to={`/tags/${item.id}/post`} >
+                                            <Link to={`/tags/posts?tag=${item.id}`} >
                                                 <Tag isReadOnly={true} tag={item} />
                                             </Link>
                                         )
@@ -58,7 +67,7 @@ class SearchTag extends Component {
 }
 
 const mapStateToProps = (state) => {
-   ;
+    ;
     return {
         tagsList: state.tag.tagSearchResult.data,
         itemCount: state.tag.tagSearchResult.itemCount,

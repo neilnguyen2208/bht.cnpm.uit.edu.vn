@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCurrentUser } from 'redux/services/userServices'
 
-import Tag from 'components/common/Tag/Tag'
+import Tag from 'components/common/tag/Tag'
 import "components/common/Titlebar/Titlebar.scss"
 import "layouts/Layout.scss"
 import "layouts/SearchPage.scss"

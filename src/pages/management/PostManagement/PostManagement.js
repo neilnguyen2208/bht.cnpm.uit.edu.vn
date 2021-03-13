@@ -47,35 +47,43 @@ class PostApproving extends Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
         }
-        this.props.getPendindPosts(this.searchParamObject);
+        this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, "category": selectedOption.id });
+        setQueryParam({
+            ...this.queryParamObject, "page": 1, "category": selectedOption.id
+        });
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
-            postState: ''
+            page: 1
         }
         this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
 
     onApproveOptionChange = (selectedOption) => {
+        setQueryParam({
+            ...this.queryParamObject, "page": 1
+        });
         this.searchParamObject = {
             ...this.searchParamObject,
-            postState: selectedOption.postState
+            postState: selectedOption.postState,
+            "page": 1
         }
         this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
 
     onTimeOptionChange = (selectedOption) => {
+        setQueryParam({ ...this.queryParamObject, "page": 1 });
         this.searchParamObject = {
             ...this.searchParamObject,
-            sort: selectedOption.sort
+            sort: selectedOption.sort,
+            "page": 1
         }
         this.props.getPostSearch(this.searchParamObject);
         this.setState({});
@@ -83,7 +91,7 @@ class PostApproving extends Component {
 
     onSearchTermChange = () => {
 
-        this.searchParamObject = { ...this.searchParamObject, searchTerm: document.querySelector('.pm.p-searchbar-input').value };
+        this.searchParamObject = { ...this.searchParamObject, page: 1, searchTerm: document.querySelector('.pm.p-searchbar-input').value };
         this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }

@@ -22,10 +22,11 @@
   padding-right: 3px;
   padding-left: 3px;
   cursor: pointer;
+
 }
 
 .like-btn-container:hover,
-.save-btn-container:hover {
+.reaction-bar .save-btn-container:hover {
   background: var(--grayish);
 }
 
@@ -51,12 +52,13 @@
 
 //saveBtn
 
-.save-btn-container {
-  width: 50px;
+.reaction-bar .save-btn-container {
+  width: 55px;
   display: flex;
   border-radius: 3px;
   padding-left: 4px;
   cursor: pointer;
+  position: relative;
 }
 
 .reaction-bar .save-btn {
@@ -68,6 +70,8 @@
 .save-btn-text {
   padding-top: 1px;
   font-size: 15px;
+  color: var(--black);
+  line-height: 16px;
 }
 
 //commentBtn

@@ -12,7 +12,7 @@ import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
 
 //components
-import Tag from "components/common/Tag/Tag";
+import Tag from "components/common/tag/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';

@@ -36,20 +36,10 @@ class PostReportManagement extends Component {
 
     //server paginator
     onPageChange = (pageNumber) => {
-
+        setQueryParam({ page: pageNumber })
         this.searchParamObject = {
             ...this.searchParamObject,
-            paginator: getQueryParamByName('page'),
-        }
-        this.props.getReportedPosts(this.searchParamObject);
-        this.setState({});
-    }
-
-    //combobox
-    onCategoryOptionChange = (selectedOption) => {
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            "category": selectedOption.id
+            page: getQueryParamByName('page'),
         }
         this.props.getReportedPosts(this.searchParamObject);
         this.setState({});

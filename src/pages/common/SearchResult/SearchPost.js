@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Tag from "components/common/Tag/Tag"
 import { getPostSearch } from "redux/services/postServices"
-import { getPostCategories } from "redux/services/postCategoryServices"
+import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -11,111 +10,116 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 
 import Loader from 'components/common/Loader/Loader'
-import { itemType } from 'constants.js'
-import { NavLink } from 'react-router-dom'
 import SearchHorizontalMenubar from './SearchHorizontalMenubar'
 
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 
+import { publishedTimeOptions, itemType } from 'constants.js';
 class SearchPost extends Component {
-    constructor(props) {
-        super(props);
 
-        this.timeFilters = [
-            { id: 1, name: "Mới nhất" },
-            { id: 2, name: "Cũ nhất" }
-        ]
 
-        this.state = {
-            searchParam: getQueryParamByName('q')
+    componentDidMount() {
+        this.queryParamObject = {
+            "category": 0,
+            "page": 1,
+            "q": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+
         }
-    }
 
-    async componentDidMount() {
-        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
-        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
+        this.searchParamObject = {
+            "page": 1,
+            "category": null,
+            "postState": '',
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+        }
 
-        setQueryParam('page', page);
-        setQueryParam('q', searchParam);
-        setQueryParam('category', 1);
-
-
-        this.props.getPostCategories();
-        this.props.getPostSearch(page - 1, 1, searchParam, 'publishDtm,desc');
+        setQueryParam(this.queryParamObject)
+        this.props.getPostCategoriesHaveAll();
+        this.props.getPostSearch(this.searchParamObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam("page", pageNumber);
-        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
-        let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
-        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
-        this.props.getPostSearch(page - 1, category, searchParam, 'publishDtm,desc');
-
+        setQueryParam({ ...this.queryParamObject, "page": pageNumber });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            page: getQueryParamByName('page'),
+        }
+        this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
 
-    onTimeFilterOptionChanged = (selectedOption) => {
-        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
-        let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
-        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
-        this.props.getPostSearch(page - 1, category, searchParam, selectedOption.id === 1 ? 'publishDtm,desc' : 'publishDtm,asc');
+    onTimeOptionChange = (selectedOption) => {
+        setQueryParam({ ...this.queryParamObject, "page": 1 });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            sort: selectedOption.sort
+        }
+        this.props.getPostSearch(this.searchParamObject);
+        this.setState({});
     }
 
-    onCategoryFilterOptionChanged = (selectedOption) => {
-        setQueryParam("category", selectedOption.id);
-        let page = !getQueryParamByName('page') ? '' : getQueryParamByName('page');
-        let category = !getQueryParamByName('category') ? '' : getQueryParamByName('category')
-        let searchParam = !getQueryParamByName('q') ? '' : getQueryParamByName('q');
-        this.props.getPostSearch(page - 1, category, searchParam, 'publishDtm,desc');
+    onCategoryOptionChange = (selectedOption) => {
+        setQueryParam({ ...this.queryParamObject, "page": 1, "category": selectedOption.id });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "category": selectedOption.id,
+            "page": 1
+        }
+        this.props.getPostSearch(this.searchParamObject);
+        this.setState({});
     }
 
     render() {
         let postSearchResult = <></>
         if (!this.props.isListLoading) {
-            postSearchResult = this.props.postSearchResult.map((postItem) => {
+            postSearchResult = this.props.postSearchResult.map((item) => {
                 return < div className="item-container" >
                     <PostSummaryMetadata
-                        type={postItem.type}
-                        id={postItem.id}
-                        authorName={postItem.authorName}
-                        authorID={postItem.authorID}
-                        publishDtm={postItem.publishDtm}
-                        categoryName={postItem.categoryName}
-                        categoryID={postItem.categoryID}
-                        title={postItem.title}
-                        summary={postItem.summary}
-                        imageURL={postItem.imageURL}
-                        readingTime={postItem.readingTime}
-                        approveState={postItem.postState} />
+                        type={itemType.normal}
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        publishDtm={item.publishDtm}
+                        categoryName={item.categoryName}
+                        categoryID={item.categoryID}
+                        title={item.title}
+                        summary={item.summary}
+                        imageURL={item.imageURL}
+                        readingTime={item.readingTime}
+                        approveState={item.postState}
+                        popUpMenuPrefix="pmpu"   //stand for my post popup 
+                        authorAvatarURL={item.authorAvatarURL}
+                        //
+                        reloadList={() => this.reloadList()}
+                    />
                     <PostNormalReactionbar
-                        id={postItem.id}
-                        likes={postItem.likeCount}
-                        comments={postItem.commentCount}
-                        likeStatus={postItem.likeStatus}
-                        savedStatus={postItem.savedStatus}
+                        id={item.id}
+                        likeCount={item.likeCount}
+                        commentCount={item.commentCount}
+                        likedStatus={item.likeStatus}
+                        savedStatus={item.savedStatus}
                     />
                 </div >
-
             })
         }
         else
             postSearchResult = <Loader />
         let combobox = <></>;
-        if (!this.props.isCategoryLoading) combobox =
-            <div className="d-flex">
-                <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
-                <div style={{ marginLeft: "5px" }}>
-                    <ComboBox
-                        // selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 1}
-                        options={this.props.postCategories}
-                        placeHolder="Chọn danh mục"
-                        onOptionChanged={(selectedOption) => this.onCategoryFilterOptionChanged(selectedOption)}
-                        id="search-post-category-filter-combobox"
-                    ></ComboBox>
+        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0)
+            combobox =
+                <div className="d-flex">
+                    <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
+                    <div className="mg-left-5px">
+                        <ComboBox
+                            selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
+                            options={this.props.postCategories}
+                            onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
+                            id="spcf-combobox" //post search category filter
+                        ></ComboBox>
+                    </div>
                 </div>
-            </div>
 
         return (
             <div className="pr-layout" >
@@ -128,27 +132,28 @@ class SearchPost extends Component {
                                 < Loader /> :
                                 <div>
                                     <div>
-                                        <div className="filter-container">
+                                        <div className="filter-container j-c-space-between" >
                                             <div className="d-flex">
                                                 <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
-                                                <div style={{ marginLeft: "5px" }}>
+                                                <div className="mg-left-5px">
                                                     <ComboBox
-                                                        options={this.timeFilters}
-                                                        placeHolder="Chọn thời gian"
-                                                        onOptionChanged={(selectedOption) => this.onTimeFilterOptionChanged(selectedOption)}
-                                                        id="search-post-time-filter-combobox"
+                                                        options={publishedTimeOptions}
+                                                        selectedOptionID={1}
+                                                        placeHolder="Tất cả"
+                                                        onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
+                                                        id="pstf-combobox" //post seacrh time filter 
                                                     ></ComboBox>
                                                 </div>
                                             </div>
                                             {combobox}
                                         </div>
 
-                                        <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.postSearchResult.length}  </div>
+                                        <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
                                         <div >{postSearchResult}</div>
                                     </div>
                                     < Paginator config={{
                                         changePage: (pageNumber) => this.onPageChange(pageNumber),
-                                        pageCount: 1,
+                                        pageCount: this.props.totalPages,
                                         currentPage: getQueryParamByName('page') ? getQueryParamByName('page') : 1
                                     }} />
                                 </div>
@@ -163,15 +168,18 @@ class SearchPost extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        postSearchResult: state.post.postsList.data,
-        postCategories: state.post_category.categories.data,
+        postCategories: state.post_category.categories.searchData,
         isListLoading: state.post.postsList.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading
+        isCategoryLoading: state.post_category.categories.isLoading,
+        postSearchResult: state.post.postsList.data,
+
+        totalPages: state.post.postsList.totalPages,
+        totalElements: state.post.postsList.totalElements,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostSearch, getPostCategories
+    getPostSearch, getPostCategoriesHaveAll
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPost));

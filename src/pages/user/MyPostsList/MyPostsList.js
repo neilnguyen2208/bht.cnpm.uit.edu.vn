@@ -66,19 +66,23 @@ class MyPostsList extends Component {
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id }
+        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id, page: 1 }
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
             "category.id": selectedOption.id,
+            page: 1
         }
         this.props.getMyPostsList(this.searchParamObject);
         this.setState({});
     }
 
     onApproveOptionChange = (selectedOption) => {
+        this.queryParamObject = { ...this.queryParamObject, page: 1 };
+        setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
+            page: 1,
             postState: selectedOption.postState
         }
         this.props.getMyPostsList(this.searchParamObject);

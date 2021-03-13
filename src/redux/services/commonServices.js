@@ -8,7 +8,7 @@ import { request } from 'utils/requestUtils'
 
 export function getQuickSearchResult(query) {
     return dispatch => {
-        request.get(`/quicksearch/queries?searchParam=${query}`)
+        request.get(`/quicksearch/queries?searchTerm=${query}`)
             .then(response => {
                 dispatch(get_QuickSearchResultSuccess(response.data))
             })

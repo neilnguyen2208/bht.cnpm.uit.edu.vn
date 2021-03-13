@@ -117,12 +117,12 @@ class NormalReactionbar extends Component {
       <div className="reaction-bar">
         <div className="d-flex mg-top-5px">
           <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-            <div> {likeBtn}</div>
+            <div className="d-flex"> {likeBtn}</div>
             <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
           </div>
           <div className="vertical-line" />
           <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
-            <div >{saveBtn}</div>
+            {saveBtn}
           </div>
           <div className="vertical-line" />
           <div className="comment-count-container">

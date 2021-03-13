@@ -31,7 +31,7 @@ class PostSummary extends Component {
   constructor(props) {
     super(props);
     this.normalMenuItemList = [
-      { id: 3, name: "Report", icon: report_icon },
+      { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },
     ]
 
     this.mySelfMenuItemList = [
@@ -184,7 +184,6 @@ class PostSummary extends Component {
               <></>
             }
           </div>
-
           {this.props.type === itemType.mySelf &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
           }
@@ -198,7 +197,7 @@ class PostSummary extends Component {
           {/* fake avatar */}
           <img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/posts/" + this.id}>
+            <Link to={"/posts/" + this.props.id}>
               <div className="title">
                 {this.props.title}
               </div>

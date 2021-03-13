@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Tag from "components/common/Tag/Tag"
+import Tag from "components/common/tag/Tag"
 import { getPostSearch } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 

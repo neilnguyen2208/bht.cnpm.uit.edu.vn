@@ -37,7 +37,6 @@ class PostApproving extends Component {
         this.searchParamObject = {
             paginator: getQueryParamByName('page'),
             category: getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
-            postState: 'PENDING_APPROVAL',
         }
 
         this.props.getPendingPosts(this.searchParamObject);
@@ -60,7 +59,6 @@ class PostApproving extends Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
-            postState: 'PENDING_APPROVAL',
             paginator: 1
         }
         this.props.getPendingPosts(this.searchParamObject);

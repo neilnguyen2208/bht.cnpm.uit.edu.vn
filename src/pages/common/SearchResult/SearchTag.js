@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 //
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils';
 import { getTagSearchResult } from 'redux/services/tagServices'
-import Tag from "components/common/tag/Tag"
+import Tag from "components/post/Tag"
 import Loader from "components/common/Loader/Loader";
 import 'components/styles/Label.scss';
 import SearchHorizontalMenubar from "pages/common/SearchResult/SearchHorizontalMenubar"

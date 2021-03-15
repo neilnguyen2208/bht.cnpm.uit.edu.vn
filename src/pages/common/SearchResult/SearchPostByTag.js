@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Tag from "components/common/tag/Tag"
-import { getMyPostsList, getPostSearch } from "redux/services/postServices"
+import Tag from "components/post/Tag"
+import { getMyPosts, getPostSearch } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
@@ -10,11 +10,12 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import Loader from 'components/common/Loader/Loader'
-import { itemType } from 'constants.js'
+import { itemType } from 'constants.js';
 
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import SearchTagHorizontalMenubar from './SearchTagHorizontalMenubar';
 import PostSummaryMetadata from 'components/post/SummaryInfo';
+import RelativeTagSidebar from 'layouts/RelativeTagSidebar';
 
 class SearchPostByTag extends Component {
     componentDidMount() {
@@ -30,8 +31,7 @@ class SearchPostByTag extends Component {
             searchTerm: ''
         }
 
-        setQueryParam(this.queryParamObject)
-        //   this.props.getPostCategoriesHaveAll();
+        setQueryParam(this.queryParamObject);
         this.props.getPostSearch(this.searchParamObject);
     }
 
@@ -70,34 +70,47 @@ class SearchPostByTag extends Component {
                         //
                         reloadList={() => this.reloadList()}
                     />
-                    {/* <PostNormalReactionbar
+                    <PostNormalReactionbar
                         id={item.id}
                         likeCount={item.likeCount}
                         commentCount={item.commentCount}
                         likedStatus={item.likeStatus}
                         savedStatus={item.savedStatus}
-                    /> */}
+                    />
                 </div >
 
             })
         }
-        else
-            postSearchResult = <Loader />
 
         return (
-            <div>
-                <SearchTagHorizontalMenubar />
-                {
-                    this.props.isListLoading ?
-                        < Loader /> :
-                        <>{postSearchResult}</>
-                }
+            <div className="search-layout">
+                <div className="current-tag">
+                    Tag:
+                </div>
+                <div className="d-flex">
+                    <RelativeTagSidebar />
+                    <div className="w-100-percents" >
+                        <SearchTagHorizontalMenubar />
+                        {
+                            this.props.isListLoading ?
+                                < Loader /> :
+                                <>
+                                    <div className="filter-label d-flex mg-bottom-10px">
+                                        <div className="mg-right-5px">Tổng số:</div>
+                                        <div> {this.props.totalElements}</div>
+                                    </div>
+                                    {postSearchResult}
+                                    < Paginator config={{
+                                        changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                        pageCount: this.props.totalPages,
+                                        currentPage: getQueryParamByName('page')
+                                    }} />
+                                </>
+                        }
 
-                < Paginator config={{
-                    changePage: (pageNumber) => this.onPageChange(pageNumber),
-                    pageCount: 1,
-                    currentPage: getQueryParamByName('page')
-                }} />
+
+                    </div>
+                </div>
             </div>
         );
     }
@@ -115,9 +128,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    // getMyPostsList
     getPostSearch
-    // , getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPostByTag));

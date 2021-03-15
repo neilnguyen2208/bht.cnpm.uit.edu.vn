@@ -213,9 +213,9 @@ class DocSummary extends Component {
             </div>
           </div>
 
-          <div className="link-label-s">
+          {/* <div className="link-label-s">
             Đọc tiếp ...
-          </div>
+          </div> */}
 
         </div>
 

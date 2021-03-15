@@ -22,9 +22,8 @@
 .simple-tag:hover {
     opacity: 80%;
     background: var(--blue);
+    color: white;
 }
-
-
 
 .simple-tag:hover::after {
     border-color: transparent transparent transparent var(--blue);

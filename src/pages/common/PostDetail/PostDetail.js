@@ -8,12 +8,13 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Metadata from "components/post/DetailInfo"
-import Tag from 'components/common/tag/Tag'
+import Tag from 'components/post/Tag'
 import Loader from 'components/common/Loader/Loader'
 import NormalReactionbar from 'components/post/NormalReactionbar'
 import store from 'redux/store/index.js';
 import { get_PostByIDReset } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
+import RelativePosts from 'components/post/RelativePosts'
 
 class PostDetail extends Component {
 
@@ -28,44 +29,63 @@ class PostDetail extends Component {
 
     render() {
         return (
-            <div>
-                <div className="cr-post-form-container post-detail-container preview" >
-                    {this.props.isLoadDone ?
-                        <div>
-                            <Metadata
-                                id={this.props.currentPost.id}
-                                title={this.props.currentPost.title}
-                                categoryName={this.props.currentPost.categoryName}
-                                categoryID={this.props.currentPost.categoryID}
-                                readingTime={this.props.currentPost.readingTime}
-                                authorName={this.props.currentPost.authorName}
-                                authorAvatarURL={this.props.currentPost.authorAvatarURL}
-                                publishDtm={this.props.currentPost.publishDtm}
+            <div className="d-flex">
+                <div className="mg-auto">
+                    <div className="d-flex">
+                        <div className="post-detail-container" >
+                            {this.props.isLoadDone ?
+                                <div>
+                                    <Metadata
+                                        id={this.props.currentPost.id}
+                                        title={this.props.currentPost.title}
+                                        categoryName={this.props.currentPost.categoryName}
+                                        categoryID={this.props.currentPost.categoryID}
+                                        readingTime={this.props.currentPost.readingTime}
+                                        authorName={this.props.currentPost.authorName}
+                                        authorAvatarURL={this.props.currentPost.authorAvatarURL}
+                                        publishDtm={this.props.currentPost.publishDtm}
 
-                            />
+                                    />
 
-                            {/* content here */}
-                            <div className="ck-editor-output" dangerouslySetInnerHTML={{
-                                __html:
-                                    this.props.currentPost.content
-                            }} />
+                                    {/* content here */}
+                                    <div className="ck-editor-output" dangerouslySetInnerHTML={{
+                                        __html:
+                                            this.props.currentPost.content
+                                    }} />
 
-                            <div className="mg-top-10px mg-bottom-10px" >
-                                {this.props.currentPost.tags.map(item =>
-                                    <Tag isReadOnly={true} tag={item} />
-                                )}
-                            </div>
-                            <NormalReactionbar
-                                id={this.props.currentPost.id}
-                                likeCount={this.props.currentPost.likeCount}
-                                commentCount={this.props.currentPost.commentCount}
-                                likedStatus={this.props.currentPost.likeStatus}
-                                savedStatus={this.props.currentPost.savedStatus}
-                            // type="PREVIEW"
-                            />
-                            {/* <Comment></Comment> */}
+                                    <div className="mg-top-10px mg-bottom-10px" >
+                                        {this.props.currentPost.tags.map(item =>
+                                            <Tag isReadOnly={true} tag={item} />
+                                        )}
+                                    </div>
+                                    <NormalReactionbar
+                                        id={this.props.currentPost.id}
+                                        likeCount={this.props.currentPost.likeCount}
+                                        commentCount={this.props.currentPost.commentCount}
+                                        likedStatus={this.props.currentPost.likeStatus}
+                                        savedStatus={this.props.currentPost.savedStatus}
+                                    // type="PREVIEW"
+                                    />
+                                    {/* <Comment></Comment> */}
+                                </div>
+                                : <Loader />}
                         </div>
-                        : <Loader />}
+                        <div>
+                            <RelativePosts title={"CÙNG TÁC GIẢ"} items={
+                                [
+                                    { title: "Demo cho bạn xem thử thôi. Dài ra một chút xem thử.", id: 1 },
+                                    { title: "Demo cho bạn xem thử thôi.", id: 151 },
+                                    { title: "Demo cho bạn xem thử thôi.", id: 1 }
+                                ]} />
+                            <RelativePosts title={"CÙNG DANH MỤC"}
+                                items={
+                                    [
+                                        { title: "Demo cho bạn xem thử thôi.", id: 1 },
+                                        { title: "Demo cho bạn xem thử thôi.", id: 151 },
+                                        { title: "Demo cho bạn xem thử thôi.", id: 1 }
+                                    ]} />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

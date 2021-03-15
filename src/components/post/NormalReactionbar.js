@@ -134,7 +134,7 @@ class NormalReactionbar extends Component {
             </div>
           </div>
         </div>
-        <Link to={`/posts/${this.props.id}`} className="link-label-s mg-top-5px" >
+        <Link to={`/posts/${this.props.id}`} className="continue-read mg-top-5px" >
           Đọc tiếp ...
             </Link>
       </div >

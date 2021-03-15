@@ -20,13 +20,15 @@ import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
 import { getQuickSearchResult } from 'redux/services/commonServices';
 
 //components
-import Tag from "components/common/tag/Tag";
+import Tag from "components/post/Tag";
 import SmallLoader from "components/common/Loader/Loader_S"
 import { logoRouter, headerMenuRouters } from "router.config"
 
 import store from 'redux/store/index'
 import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
+import { get_PostByIDReset } from 'redux/actions/postAction'
 import { DELAY_TIME } from 'constants.js';
+import QuickSearchResult from './QuickSearchResult'
 
 class Header extends React.Component {
     constructor(props) {
@@ -83,63 +85,16 @@ class Header extends React.Component {
 
     render() {
 
+        // Handle quick search result
         if (this.props.isQuickSearchLoadDone) {
             if (this.props.quickSearchResultData)
-                if (this.props.quickSearchResultData.postQuickSearchResults.length > 0 ||
-                    this.props.quickSearchResultData.docQuickSearchResults.length > 0 ||
-                    this.props.quickSearchResultData.tagQuickSearchResults.length > 0)
-                    this.quickSearchResultView = <div>
-                        {this.props.quickSearchResultData.tagQuickSearchResults.length > 0 ?
-                            <div className='w-100-percents' id="quick-search-post-result-port">
-                                <div className="qs-type-title">BÀI VIẾT</div>
-                                {this.props.quickSearchResultData.postQuickSearchResults.map(result =>
-
-                                    <Link to={`/posts/${result.id}`} className="qs-result-item  mg-top-5px">
-                                        <div className="d-flex mg-top-5px">
-                                            <img alt="" src={result.imageURL} className="qs-result-image mg-right-5px" />
-                                            <div className="qsr-title">{result.title}</div>
-                                        </div>
-                                    </Link>
-                                )
-                                }
-                            </div> : <></>
-                        }
-                        {this.props.quickSearchResultData.docQuickSearchResults.length > 0 ?
-                            <div className='w-100-percents' id="quick-search-doc-result-port">
-                                <div className="qs-type-title">TÀI LIỆU</div>
-                                {this.props.quickSearchResultData.docQuickSearchResults.map(result =>
-                                    <Link to={`/documents/${result.id}`} className="qs-result-item  mg-top-5px">
-                                        <div className="d-flex mg-top-5px">
-                                            <img alt="" src={result.imageURL} className="qs-result-image mg-right-5px" />
-                                            <div className="qsr-title">{result.title}</div>
-                                        </div>
-                                    </Link>)
-                                }
-                            </div> : <></>
-                        }
-                        {this.props.quickSearchResultData.tagQuickSearchResults.length > 0 ?
-                            <div className='w-100-percents' id="quick-search-tag-result-port">
-                                <div className="qs-type-title mg-top-5px ">TAGS</div>
-                                <div className="d-flex mg-top-5px">
-                                    {this.props.quickSearchResultData.tagQuickSearchResults.map(result =>
-                                        <Link to={`/tags/${result.id}/post?page=1`} className="d-flex">
-                                            <Tag isReadOnly={true} tag={{ "id": result.id, "name": result.content }} />
-                                        </Link>
-                                    )
-                                    }
-                                </div>
-                            </div> : <></>
-                        }
-                    </div >
-                else
-                    this.quickSearchResultView = <div className='form-tip-label'>Không có kết quả ...</div>;
+                this.quickSearchResultView = <QuickSearchResult quickSearchResultData={this.props.quickSearchResultData} />
             else {
                 this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />
             }
         }
         else
-            this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />
-
+            this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />;
 
         return (
 

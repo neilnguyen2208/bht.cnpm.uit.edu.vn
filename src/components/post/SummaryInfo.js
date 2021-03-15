@@ -197,7 +197,7 @@ class PostSummary extends Component {
           {/* fake avatar */}
           <img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/posts/" + this.props.id}>
+            <Link to={"/post-content/" + this.props.id}>
               <div className="title">
                 {this.props.title}
               </div>

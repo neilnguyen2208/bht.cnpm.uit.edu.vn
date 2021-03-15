@@ -1,3 +1,27 @@
+.current-tag {
+    position: relative;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px var(--gray) solid;
+    margin: auto;
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    color: var(--black);
+    user-select: none;
+    margin-bottom: 10px;
+    line-height: 30px;
+}
+
+.search-tag-side-bar {
+    color: var(--black);
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 18px;
+    width: 240px;
+    height: 30px;
+}
+
 .search-layout {
     width: 100%;
     max-width: 880px;
@@ -19,7 +43,7 @@
     width: 100%;
     border: 1px var(--blue) solid;
     margin: auto;
-   height: 30px;
+    height: 30px;
 }
 
 .h-menu-item {
@@ -42,7 +66,8 @@
     opacity: 80%;
 }
 
-.a-h-menu-item { //activated-horizontal-menu-item
+.a-h-menu-item {
+    //activated-horizontal-menu-item
     cursor: pointer;
     background: var(--blue);
     color: white;

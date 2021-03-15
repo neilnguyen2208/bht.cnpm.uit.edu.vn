@@ -18,7 +18,7 @@ import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 
 //components
-import Tag from "components/common/tag/Tag";
+import Tag from "components/post/Tag";
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';

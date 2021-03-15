@@ -8,13 +8,12 @@ import Login from "pages/common/Login/Login";
 import Register from "pages/common/Register/Register";
 import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
-import SearchTagLayout from "layouts/SearchTagLayout";
 import AdminLayout from 'layouts/AdminSidebar'
 import SearchPostByTag from "pages/common/SearchResult/SearchPostByTag";
 import AccountInformation from "pages/user/AccountInformation/AccountInformation";
 import UpdatePassword from "pages/user/AccountInformation/UpdatePassword";
 import MyDocumentsList from "pages/user/MyDocumentsList/MyDocumentsList";
-import MyPostsList from "pages/user/MyPostsList/MyPostsList";
+import MyPosts from "pages/user/MyPosts/MyPosts";
 import SearchTag from "pages/common/SearchResult/SearchTag";
 import SearchPost from "pages/common/SearchResult/SearchPost";
 import SearchDocument from "pages/common/SearchResult/SearchDocument";
@@ -45,6 +44,8 @@ import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 import MyNotification from 'pages/user/MyActivities/MyActivities'
 import PostReportManagement from 'pages/management/PostManagement/PostReportManagement'
+import SavedPosts from 'pages/user/MyPosts/SavedPosts'
+
 
 const App = () => {
     return (
@@ -59,7 +60,7 @@ const App = () => {
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/posts" component={PostsList} />
                         <Route exact path="/documents" component={DocumentsList} />
-                        <Route exact path="/posts/:id" component={PostDetail} />
+                        <Route exact path="/post-content/:id" component={PostDetail} />
                         <Route exact path="/documents/:id" component={DocumentDetail} />
                         <Route exact path="/courses" component={CoursesList} />
                         <Route exact path="/courses/:id" component={ChaptersList} />
@@ -75,8 +76,8 @@ const App = () => {
                         <Route exact path="/user" component={AccountInformation} />
                         <Route exact path="/user/update-password" component={UpdatePassword} />
                         <Route exact path="/user/my-docs" component={MyDocumentsList} />
-                        <Route exact path="/user/my-posts" component={MyPostsList} />
-                        <Route exact path="/user/saved-posts" component={MyPostsList} />
+                        <Route exact path="/user/my-posts" component={MyPosts} />
+                        <Route exact path="/user/saved-posts" component={SavedPosts} />
                         <Route exact path="/create-post" component={CreatePost} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-doc" component={UploadDocument} />

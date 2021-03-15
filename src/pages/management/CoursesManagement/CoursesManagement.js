@@ -6,7 +6,7 @@ import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
-import { getMyPostsList } from "redux/services/postServices";
+import { getMyPosts } from "redux/services/postServices";
 import { getPostCategories } from "redux/services/postCategoryServices";
 import AdminSidebar from "layouts/AdminSidebar"
 import { bindActionCreators } from 'redux';
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPostsList, getPostCategories
+    getMyPosts, getPostCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CoursesManagement));

@@ -90,7 +90,7 @@ export function createAPost(data) {
 }
 
 // my post
-export function getMyPostsList(searchParamObject) { //this API to get all approved document of a specific user.
+export function getMyPosts(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyPostsRequest());
         request.get(`/posts/myPosts?${generateSearchParam(searchParamObject)}`).then(
@@ -121,7 +121,7 @@ export function getMyPostsList(searchParamObject) { //this API to get all approv
 export function getPendingPosts(searchParamObject) {
     return dispatch => {
         dispatch(get_PendingPostsRequest());
-        request.get(`/posts?${generateSearchParam(searchParamObject)}`)
+        request.get(`/posts/pendingApproval?${generateSearchParam(searchParamObject)}`)
             .then(result => dispatch(get_PendingPostsSuccess(result.data)))
             .catch(error => { get_PendingPostsFailure(error) })
     }

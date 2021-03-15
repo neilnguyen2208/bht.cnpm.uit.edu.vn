@@ -1,0 +1,51 @@
+import React, { Component } from 'react'
+
+import 'components/styles/Button.scss'
+import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+//styles
+import 'components/styles/Label.scss'
+import 'components/styles/Button.scss'
+import { getPostByID } from 'redux/services/postServices'
+//constants
+
+//components
+class RelativePosts extends Component {
+  render() {
+    return (
+      <div className="relative-sidebar">
+        <div className="relative-title">
+          {this.props.title}
+        </div>
+        <div style={{ padding: "5px" }}>
+          {this.props.items.map(item =>
+            <Link className="relative-item" onClick={() => this.props.getPostByID(item.id)} >
+              <div className="relative-item-icon" />
+              <div className="relative-item-title">{item.title}</div>
+            </Link>
+          ) 
+          }
+        </div >
+        <div className="relative-see-more">
+          <div className="link-label-s">Xem thêm ...</div>
+        </div>
+      </div >
+
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+  };
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getPostByID
+}, dispatch);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RelativePosts));
+

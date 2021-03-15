@@ -5,7 +5,7 @@ import { itemType, userApproveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
-import { getMyPostsList } from "redux/services/postServices";
+import { getMyPosts } from "redux/services/postServices";
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
 import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
@@ -19,7 +19,7 @@ import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
-class MyPostsList extends Component {
+class MyPosts extends Component {
     constructor(props) {
         super();
     }
@@ -46,7 +46,7 @@ class MyPostsList extends Component {
             sort: 'publishDtm,desc',
             postState: ''
         }
-        this.props.getMyPostsList(this.searchParamObject);
+        this.props.getMyPosts(this.searchParamObject);
     }
 
     //server paginator
@@ -60,7 +60,7 @@ class MyPostsList extends Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page')
         }
-        this.props.getMyPostsList(this.searchParamObject);
+        this.props.getMyPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -73,7 +73,7 @@ class MyPostsList extends Component {
             "category.id": selectedOption.id,
             page: 1
         }
-        this.props.getMyPostsList(this.searchParamObject);
+        this.props.getMyPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -85,7 +85,7 @@ class MyPostsList extends Component {
             page: 1,
             postState: selectedOption.postState
         }
-        this.props.getMyPostsList(this.searchParamObject);
+        this.props.getMyPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -98,7 +98,7 @@ class MyPostsList extends Component {
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getMyPostsList(this.searchParamObject);
+        this.props.getMyPosts(this.searchParamObject);
     }
 
     render() {
@@ -229,7 +229,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPostsList, getPostCategoriesHaveAll,
+    getMyPosts, getPostCategoriesHaveAll,
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyPostsList));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyPosts));

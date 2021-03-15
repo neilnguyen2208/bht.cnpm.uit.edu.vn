@@ -108,7 +108,19 @@ class SearchPost extends Component {
             postSearchResult = <Loader />
         let combobox = <></>;
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0)
-            combobox =
+            combobox = <div className="j-c-space-between">
+                <div className="d-flex">
+                    <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
+                    <div className="mg-left-5px">
+                        <ComboBox
+                            options={publishedTimeOptions}
+                            selectedOptionID={1}
+                            placeHolder="Tất cả"
+                            onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
+                            id="pstf-combobox" //post seacrh time filter 
+                        ></ComboBox>
+                    </div>
+                </div>
                 <div className="d-flex">
                     <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                     <div className="mg-left-5px">
@@ -120,6 +132,7 @@ class SearchPost extends Component {
                         ></ComboBox>
                     </div>
                 </div>
+            </div>
 
         return (
             <div className="pr-layout" >
@@ -128,29 +141,17 @@ class SearchPost extends Component {
                     <div className="mg-top-10px" />
                     <div className="nm-bl-layout-router-outlet" >
                         <div>
+                            <div className="filter-container" >
+                                {combobox}
+                            </div>
                             {this.props.isListLoading ?
                                 < Loader /> :
                                 <div>
-                                    <div>
-                                        <div className="filter-container j-c-space-between" >
-                                            <div className="d-flex">
-                                                <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
-                                                <div className="mg-left-5px">
-                                                    <ComboBox
-                                                        options={publishedTimeOptions}
-                                                        selectedOptionID={1}
-                                                        placeHolder="Tất cả"
-                                                        onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                                        id="pstf-combobox" //post seacrh time filter 
-                                                    ></ComboBox>
-                                                </div>
-                                            </div>
-                                            {combobox}
-                                        </div>
 
-                                        <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
-                                        <div >{postSearchResult}</div>
-                                    </div>
+
+                                    <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
+                                    <div >{postSearchResult}</div>
+
                                     < Paginator config={{
                                         changePage: (pageNumber) => this.onPageChange(pageNumber),
                                         pageCount: this.props.totalPages,

@@ -223,6 +223,7 @@ export function get_PostByIDFailure(error) {
 }
 
 export function get_PostByIDReset() {
+    console.log("called");
     return { type: GET_POST_BY_ID_RESET }
 }
 

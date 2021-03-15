@@ -284,7 +284,7 @@ function PostReducer(state = initialState, action) {
             return {
                 ...state, pendingPosts: {
                     isLoading: false,
-                    data: action.payload.postSummaryDTOs,
+                    data: action.payload.postSummaryWithStateDTOs,
                     totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
                     totalElements: action.payload.totalElements ? action.payload.totalElements : 0
                 }

@@ -65,7 +65,7 @@ class Editor extends Component {
 
 
         // Get a reference to the "Link Info" tab.
-        var infoTab = dialogDefinition.getContents('info');
+        let infoTab = dialogDefinition.getContents('info');
         //Remove link type
         infoTab.get('linkType').style = 'display: none';
         infoTab.get('anchorOptions').style = 'display: none';
@@ -79,11 +79,9 @@ class Editor extends Component {
       if (dialogName === 'image') {
         dialogDefinition.removeContents('advanced');
         dialogDefinition.removeContents('Link');
-        console.log(dialogDefinition);
         dialogDefinition.title = "HÌNH ẢNH";
 
-        var infoTab = dialogDefinition.getContents('info');
-        console.log(infoTab);
+        let infoTab = dialogDefinition.getContents('info');
         infoTab.get('txtAlt').style = 'display: none';
         infoTab.get('txtBorder').style = 'display: none';
         infoTab.get('txtHSpace').style = 'display: none';

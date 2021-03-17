@@ -11,7 +11,7 @@ import 'components/styles/Button.scss'
 import 'components/styles/Label.scss'
 
 //modal popup
-import Modal from 'components/common/Modal/AlertModal'
+
 
 import { ClickAwayListener } from '@material-ui/core';
 import { getRoleNameByName, getRoleNamebyID } from 'utils/permissionUtils'

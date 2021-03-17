@@ -14,11 +14,17 @@ import {
     get_DocumentSearchResultSuccess,
     get_DocumentSearchResultFailure,
 
-    post_UploadDocumentRequest, post_UploadDocumentSuccess, post_UploadDocumentFailure
+    post_UploadDocumentRequest,
+    post_UploadDocumentSuccess,
+    post_UploadDocumentFailure,
 } from "redux/actions/docAction.js";
+import FormData from 'form-data';
+import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
+
 //upload new document
 
-import { remoteServiceBaseUrl } from 'utils/requestUtils'
+import { request, multipartRequest } from 'utils/requestUtils'
 
 export function getDocumentByID(id) {
     return dispatch => {
@@ -40,25 +46,14 @@ export function management_approveADocument(docID) {
 
 export function getDocumentsList(page = 1, category = "", searchParam = "") { //this API to get all approved document of a specific user.
     return dispatch => {
-
-        var myHeaders = new Headers();
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
         dispatch(get_DocumentsListRequest());
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/myDocuments`, requestOptions)
-            .then(response => response.text())
+        request.get(`https://5fca2bc63c1c220016441d27.mockapi.io/myDocuments`)
             .then(
                 result => {
                     dispatch(get_DocumentsListSuccess(JSON.parse(result)));
                 }
             )
             .catch(error => {
-
                 dispatch(get_DocumentsListFailure(JSON.parse(error))); //
             })
 
@@ -79,6 +74,8 @@ export function getDocumentSearchResult(page = 1, category = "", searchParam = "
             .then(
                 result => {
                     dispatch(get_DocumentSearchResultSuccess(JSON.parse(result)));
+                    dispatch(openBLModal({ text: "Tạo tài liệu mới thành công!", icon: done_icon }));
+
                 }
             )
             .catch(error => {
@@ -88,7 +85,7 @@ export function getDocumentSearchResult(page = 1, category = "", searchParam = "
     }
 }
 
-export function getMyDocumentsList(page = 1, category = "") { //this API to get all approved document of a specific user.
+export function getMyDocuments(page = 1, category = "") { //this API to get all approved document of a specific user.
     return dispatch => {
         var myHeaders = new Headers();
         var requestOptions = {
@@ -112,28 +109,35 @@ export function getMyDocumentsList(page = 1, category = "") { //this API to get 
     }
 }
 
-export function uploadADocument(data) {
+export function uploadADocument(data, files) {
     return dispatch => {
         dispatch(post_UploadDocumentRequest());
+        let fileData = new FormData();
+        // files.forEach(file => {
+        fileData.append('file', files);
+        // })
+        console.log(fileData);
+        console.log(data);
 
-        var requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                //token cac kieu
-            },
-            redirect: 'follow',
-            body: JSON.stringify(data)
-        };
+        multipartRequest.post(`/documents/upload`, fileData)
+            .then(response => {
+                // console.log(response)
+                // data.code = response.data.code; //assign secret code.
 
-        fetch(`${remoteServiceBaseUrl}documents`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                dispatch(post_UploadDocumentSuccess(result));
+
             }
             )
             .catch(error => {
                 dispatch(post_UploadDocumentFailure(error)); //
             })
+
+
+        // request.post('/documents', JSON.stringify(data)).then(response => {
+        //     dispatch(post_UploadDocumentSuccess(response));
+        //     dispatch(openBLModal())
+        // })
+        //     .catch(error => {
+        //         dispatch(post_UploadDocumentFailure(error)); //
+        //     })
     }
 }

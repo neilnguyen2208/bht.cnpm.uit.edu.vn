@@ -35,7 +35,6 @@ class FormModal extends React.Component {
         if (this.props.append) {
             Object.assign(this.DTO, this.props.append);
         }
-        console.log(this.DTO)
 
         let { title, text, verifyText, cancelText, onConfirm } = this.props.confirmBox;
         if (this.props.validationCondition)

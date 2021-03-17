@@ -1,17 +1,11 @@
 /* eslint-disable react/jsx-pascal-case */
 
 import React, { Component } from 'react'
-import AdminLayout from 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Modal from 'components/common/Modal/AlertModal'
-import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
-import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import './ActivityManagement.scss'
 import 'components/styles/Form.scss'
-import { ClickAwayListener } from '@material-ui/core'
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -21,14 +15,8 @@ import { getCurrentUser } from 'redux/services/userServices'
 import { management_getAllRoles } from 'redux/services/userServices'
 import AdminSidebar from 'layouts/AdminSidebar'
 //import for role config
-import { getRoleNameFilterByName } from 'utils/permissionUtils'
 
 class ActivityManagement extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     componentDidMount() {
 
     }
@@ -166,7 +154,7 @@ class ActivityManagement extends Component {
 
     openChangeRoleConfirmationPopup = (roleID) => {
         this.closeAllChangeRoleDropdownCombobox();
-    
+
         this.setState({ isChangeRoleConfirmationPopupOpen: true });
     }
 

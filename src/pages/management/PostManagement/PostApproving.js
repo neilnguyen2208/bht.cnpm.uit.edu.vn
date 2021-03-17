@@ -18,6 +18,10 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import AdminSidebar from 'layouts/AdminSidebar'
 import PostManagementNavbar from './PostManagementNavbar'
 import RequestReactionbar from 'components/post/RequestReactionbar'
+import { post_ApproveAPostReset, delete_RejectAPostReset, delete_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
+import { openBLModal, closeModal } from 'redux/actions/modalAction'
+import store from 'redux/store/index'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 class PostApproving extends Component {
     constructor(props) {
@@ -103,7 +107,7 @@ class PostApproving extends Component {
 
         if (!this.props.isListLoading && this.props.postsList) {
             this.postsList = this.props.postsList.map((item) => (
-                <div className="item-container">
+                <div className="item-container" key={item.id}>
                     <RequestInfo
                         id={item.id}
                         authorName={item.authorName}
@@ -123,7 +127,7 @@ class PostApproving extends Component {
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
                         title={item.title}
-                        summary={item.summary}
+                        // summary={item.summary}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.postState}
@@ -131,6 +135,7 @@ class PostApproving extends Component {
                         authorAvatarURL={item.authorAvatarURL}
                         //
                         reloadList={() => this.reloadList()}
+                        content={item.content}
                     />
                     <RequestReactionbar
                         id={item.id}
@@ -142,6 +147,28 @@ class PostApproving extends Component {
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
 
             this.filter = this.props.postCategories;
+        }
+
+
+        if (this.props.isHaveApproved) {
+            store.dispatch(closeModal());
+            store.dispatch(post_ApproveAPostReset());
+            store.dispatch(openBLModal({ icon: done_icon, text: "Duyệt bài viết thành công!" }))
+            this.reloadList();
+        }
+
+        if (this.props.isHaveRejectedAndFeedbacked) {
+            store.dispatch(closeModal());
+            store.dispatch(delete_RejectAndFeedbackAPostReset());
+            store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
+            this.reloadList();
+        }
+
+        if (this.props.isHaveRejected) {
+            store.dispatch(closeModal());
+            store.dispatch(delete_RejectAPostReset());
+            store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
+            this.reloadList();
         }
         return (
             <div className="left-sidebar-layout">
@@ -180,7 +207,6 @@ class PostApproving extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state.post.pendingPosts)
     return {
         //pending posts list
         postsList: state.post.pendingPosts.data,
@@ -190,7 +216,12 @@ const mapStateToProps = (state) => {
 
         //category
         postCategories: state.post_category.categories.searchData,
-        isCategoryLoading: state.post_category.categories.isLoading
+        isCategoryLoading: state.post_category.categories.isLoading,
+
+        //handle 3 actions
+        isHaveApproved: state.post.isHaveApproved,
+        isHaveRejected: state.post.isHaveRejected,
+        isHaveRejectedAndFeedbacked: state.post.isHaveRejectedAndFeedbacked,
     };
 }
 

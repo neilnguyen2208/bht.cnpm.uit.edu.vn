@@ -86,7 +86,7 @@ class NormalReactionbar extends Component {
   }
 
   render() {
-    // console.log(this.props);
+    // 
     //#region like, unlike buttons
     let likeBtn = <div></div>;
     let saveBtn = <div></div>;

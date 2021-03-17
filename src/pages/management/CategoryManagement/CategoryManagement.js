@@ -5,7 +5,7 @@ import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import './CategoryManagement.scss'
-import Modal from 'components/common/Modal/AlertModal'
+
 import { ClickAwayListener } from '@material-ui/core';
 
 //import for Redux

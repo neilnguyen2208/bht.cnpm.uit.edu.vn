@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { getPostSearch } from "redux/services/postServices"
+import { getDocumentSearch } from "redux/services/postServices"
+
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -114,9 +115,7 @@ class SearchPostByTag extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        postCategories: state.post_category.categories.searchData,
         isListLoading: state.post.postsList.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading,
         postSearchResult: state.post.postsList.data,
         totalPages: state.post.postsList.totalPages,
         totalElements: state.post.postsList.totalElements,
@@ -124,7 +123,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostSearch
+    getDocumentSearch
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPostByTag));

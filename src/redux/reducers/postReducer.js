@@ -125,9 +125,6 @@ const initialState = {
         totalPages: 1,
         totalElements: 0
     },
-
-    likePostStatus: { isLiking: false, isUnLiking: false },
-
 };
 
 function PostReducer(state = initialState, action) {

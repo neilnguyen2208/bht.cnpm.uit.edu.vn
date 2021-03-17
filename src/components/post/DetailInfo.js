@@ -183,7 +183,6 @@ class PostSummary extends Component {
 
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
-          {console.log(this.props.authorAvatarURL)}
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>

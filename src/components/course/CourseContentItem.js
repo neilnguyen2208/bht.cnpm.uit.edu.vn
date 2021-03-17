@@ -16,7 +16,7 @@ import 'components/styles/Button.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import Modal from 'components/common/Modal/AlertModal'
+
 
 
 class CourseSummaryItem extends Component {

@@ -14,31 +14,25 @@ import {
     GET_DOCUMENT_SEARCH_SUCCESS,
     GET_DOCUMENT_SEARCH_FAILURE,
 
-    GET_ALL_NOT_APPROVED_DOCUMENTS_SUCCESS,
-    GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST,
-    GET_ALL_NOT_APPROVED_DOCUMENTS_FAILURE,
-
     UPLOAD_DOCUMENT_REQUEST,
     UPLOAD_DOCUMENT_SUCCESS,
-    UPLOAD_DOCUMENT_FAILURE
+    UPLOAD_DOCUMENT_FAILURE,
 
 } from '../constants.js'
 
 const initialState = {
-
-
     documentSearchResult: {
         isLoading: false,
         data: [],
         error: ""
     },
-
     myDocuments: {
         isLoading: false,
         data: [],
         error: ""
-    }
-    , uploadDocument: { isLoading: true }
+    },
+    isHaveUploaded: false,
+
 }
 
 function DocReducer(state = initialState, action) {
@@ -66,15 +60,15 @@ function DocReducer(state = initialState, action) {
             }
         case UPLOAD_DOCUMENT_REQUEST:
             return {
-                ...state, uploadDocument: { isLoading: true }
+                ...state, isHaveUploaded: false
             };
         case UPLOAD_DOCUMENT_SUCCESS:
             {
-                return { ...state, uploadDocument: { isLoading: false, notification: { type: 'success', message: 'Tải tài liệu thành công' } } }
+                return { ...state, isHaveUploaded: true }
             }
         case UPLOAD_DOCUMENT_FAILURE:
             return {
-                ...state, uploadDocument: { isLoading: false, notification: { type: 'failure', message: 'Tài tài liệu thất bại.' } }
+                ...state, isHaveUploaded: true
             }
 
         //document search result 

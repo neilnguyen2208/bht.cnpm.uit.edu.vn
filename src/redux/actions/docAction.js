@@ -1,18 +1,4 @@
 import {
-
-
-    //
-    GET_ALL_NOT_APPROVED_DOCUMENTS_SUCCESS,
-    GET_ALL_NOT_APPROVED_DOCUMENTS_REQUEST,
-    GET_ALL_NOT_APPROVED_DOCUMENTS_FAILURE,
-
-    APPROVE_A_DOCUMENT,
-
-    //new documents
-    GET_TRENDING_DOCUMENTS_LIST_REQUEST,
-    GET_TRENDING_DOCUMENTS_LIST_SUCCESS,
-    GET_TRENDING_DOCUMENTS_LIST_FAILURE,
-
     //my documents
     GET_MY_DOCUMENTS_REQUEST,
     GET_MY_DOCUMENTS_SUCCESS,
@@ -28,27 +14,11 @@ import {
     GET_DOCUMENT_SEARCH_SUCCESS,
     GET_DOCUMENT_SEARCH_FAILURE,
 
-    UPLOAD_DOCUMENT_REQUEST, UPLOAD_DOCUMENT_SUCCESS, UPLOAD_DOCUMENT_FAILURE
+    UPLOAD_DOCUMENT_REQUEST, //to drive
+    UPLOAD_DOCUMENT_SUCCESS,
+    UPLOAD_DOCUMENT_FAILURE,
 
 } from "../constants.js"
-
-
-
-//
-// export function get_NotApprovedDocumentsList(requestedDocs) {
-//     return {
-//         type: GET_ALL_NOT_APPROVED_DOCUMENTS,
-//         payload: requestedDocs,
-//     }
-// }
-
-// export function managementApproveADocument(requestedDoc) {
-//     return {
-//         type: APPROVE_A_DOCUMENT,
-//         payload: requestedDoc,
-//     }
-// }
-
 
 //my documents
 export function get_MyDocumentsRequest() {
@@ -121,10 +91,10 @@ export function post_UploadDocumentRequest() {
     }
 }
 
-export function post_UploadDocumentSuccess(notification) {
+export function post_UploadDocumentSuccess(data) {
     return {
         type: UPLOAD_DOCUMENT_SUCCESS,
-        payload: notification
+        payload: data
     }
 }
 

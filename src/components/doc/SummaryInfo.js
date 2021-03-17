@@ -1,3 +1,6 @@
+
+
+
 import React, { Component } from 'react'
 
 import 'components/styles/Button.scss'
@@ -233,6 +236,27 @@ class PostSummary extends Component {
         {summary}
       </div >
     );
+  }
+
+
+  // Calculates bar widths
+  calculateBar = () => {
+
+    if (this.likes === this.dislikes) {
+      if (document.getElementById('document-item-like-percents-' + this.props.id))
+        document.getElementById('document-item-like-percents-' + this.props.id).style.width = "50%";
+      return;
+    }
+    else {
+      let percentageLikes;
+      //Simple math to calculate percentages
+      let total = this.likes + this.dislikes;
+      percentageLikes = (this.likes / total) * 100;
+      if (document.getElementById('document-item-like-percents-' + this.props.id))
+        //We need to apply the widths to our elements
+        document.getElementById('document-item-like-percents-' + this.props.id).style.width = percentageLikes.toString() + "%";
+    }
+
   }
 }
 

@@ -83,7 +83,7 @@
     padding-left: 0.5rem;
     height: fit-content;
     font-family: 'Roboto-Medium', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.718rem;
     color: var(--red);
     user-select: none;
     min-width: 80px;
@@ -126,10 +126,10 @@
 }
 
 .text-area {
-   @extend .text-input;
-   height: 120px;
-   resize: none;
-   padding-top: 5px;
+    @extend .text-input;
+    height: 120px;
+    resize: none;
+    padding-top: 5px;
 }
 
 .text-area:hover,
@@ -153,7 +153,7 @@
     box-shadow: 0px 0px 2px 0px var(--light-red);
 }
 
-.form-group.invalid .file-input {
+.form-group.invalid .file-input-label {
     border-color: var(--red);
     box-shadow: 0px 0px 2px 0px var(--light-red);
 }
@@ -193,6 +193,10 @@
 
 }
 
+.file-input {
+    cursor: pointer;
+}
+
 .validation {
     // class này không được dùng để làm gì cả,
     // nếu một element có 2 class là validation và form-group 
@@ -211,40 +215,37 @@
 
 }
 
-.file-input {
-    //tu no giong file input nhung khong duoc extend vi trong code co su dung styleSelector
-    box-shadow: 0px 0px 2px 0px var(--grayish);
-    padding: 2px;
-    font-family: "BarlowCondensed-Medium";
-    font-size: 1.1rem;
-    line-height: 18px;
-    color: var(--black);
-    border: var(--gray) 1px solid;
-    user-select: none;
-    min-width: 200px;
-    width: 100%;
-    min-height: 100px;
-    border-radius: 5px;
-    outline: none;
-    position: relative;
-    margin: auto;
+.file-input-container {
+    // dung de select thoi ...
 }
 
 .file-input-wrapper {
-    border: var(--gray) 1px solid;
+    opacity: 100%;
+    position: relative;
+    height: fit-content;
+    width: 100%;
+}
+
+.file-input-wrapper .file-input:hover,
+.file-input-wrapper .file-input:focus {
+    background: var(--light-gray);
+    border: 1px var(--blue) solid;
+    box-shadow: 0px 0px 2px 0px var(--light-blue);
+}
+
+.file-input-wrapper .file-input-label {
+    width: 100%;
+    border: 1px var(--gray) solid;
     border-radius: 5px;
-    display: flex;
-    height: 110px;
-    justify-content: space-around;
+    padding-bottom: 5px;
+    cursor: pointer;
 }
 
-.form-group.invalid .file-input-wrapper {
-    border-color: var(--red);
-    box-shadow: 0px 0px 2px 0px var(--light-red);
-}
-
-.file-input {
-    display: none;
+.file-input-label:hover,
+.file-input-label:focus {
+    background: var(--light-gray);
+    border: 1px var(--blue) solid;
+    box-shadow: 0px 0px 2px 0px var(--light-blue);
 }
 
 .file-input-image {
@@ -254,7 +255,7 @@
     margin: auto;
 }
 
-.file-input.focus {}
+.file-input-wrapper.focus {}
 
 .form-radio {}
 

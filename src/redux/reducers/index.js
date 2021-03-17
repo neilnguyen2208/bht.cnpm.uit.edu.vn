@@ -11,6 +11,7 @@ import CourseCategoryReducer from "redux/reducers/courseCategoryReducer"
 import HeadingReducer from "redux/reducers/headingReducer"
 import CommonReducer from "redux/reducers/commonReducer"
 import ModalReducer from "redux/reducers/modalReducer"
+import DocSubjectReducer from "redux/reducers/docSubjectReducer"
 
 var RootReducer = combineReducers({
     home: HomeReducer,
@@ -19,6 +20,7 @@ var RootReducer = combineReducers({
     document: DocReducer,
     post_category: PostCategoryReducer,
     doc_category: DocCategoryReducer,
+    doc_subject: DocSubjectReducer,
     tag: TagReducer,
     course: CourseReducer,
     course_category: CourseCategoryReducer,

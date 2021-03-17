@@ -5,8 +5,8 @@ import { itemType, userApproveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
-import { getMyPosts } from "redux/services/postServices";
-import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
+import { getMyDocuments } from "redux/services/docServices";
+import { getDocCategoriesHaveAll } from "redux/services/docCategoryServices";
 import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -15,13 +15,14 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import UserSidebar from 'layouts/UserSidebar'
-import PostNormalReactionbar from 'components/post/NormalReactionbar'
-import PostSummaryMetadata from 'components/post/SummaryInfo'
+import DocumentsNormalReactionbar from 'components/doc/NormalReactionbar'
+import DocumentsSummaryMetadata from 'components/doc/SummaryInfo'
 import store from 'redux/store/index'
-import { delete_APostReset, put_EditAPostReset } from 'redux/actions/postAction'
 
-//Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
-class MyPosts extends Component {
+import { delete_ADocumentReset, put_EditADocumentReset } from 'redux/actions/docAction'
+
+//Sample URL: http://localhost:3000/user/my-docs?page=3&category=1
+class MyDocuments extends Component {
     constructor(props) {
         super();
     }
@@ -30,7 +31,7 @@ class MyPosts extends Component {
         this.searchParamObject = {
             "page": 1,
             "category.id": null,
-            "postState": ''
+            "docState": ''
         }
 
         this.queryParamObject = {
@@ -41,14 +42,14 @@ class MyPosts extends Component {
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
 
-        this.props.getPostCategoriesHaveAll();
+        this.props.getDocCategoriesHaveAll();
         this.searchParamObject = {
             page: getQueryParamByName('page'),
             "category.id": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
             sort: 'publishDtm,desc',
-            postState: ''
+            docState: ''
         }
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getMyDocuments(this.searchParamObject);
     }
 
     //server paginator
@@ -62,7 +63,7 @@ class MyPosts extends Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page')
         }
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getMyDocuments(this.searchParamObject);
         this.setState({});
     }
 
@@ -75,7 +76,7 @@ class MyPosts extends Component {
             "category.id": selectedOption.id,
             page: 1
         }
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getMyDocuments(this.searchParamObject);
         this.setState({});
     }
 
@@ -85,22 +86,22 @@ class MyPosts extends Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             page: 1,
-            postState: selectedOption.postState
+            docState: selectedOption.docState
         }
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getMyDocuments(this.searchParamObject);
         this.setState({});
     }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.myPostsList.length === 1 && this.searchParamObject.page > 1)
+        if (this.props.myDocumentsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
                 page: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getMyDocuments(this.searchParamObject);
     }
 
 
@@ -108,17 +109,17 @@ class MyPosts extends Component {
     render() {
 
         //reload the list when any item has been deleted or edited:
-        if (this.props.isHaveDeleted) {
-            this.reloadList();
-            store.dispatch(delete_APostReset())
-        }
+        // if (this.props.isHaveDeleted) {
+        //     this.reloadList();
+        //     store.dispatch(delete_ADocumentReset())
+        // }
 
-        if (this.props.isHaveEdited) {
-            this.reloadList();
-            store.dispatch(put_EditAPostReset())
-        }
+        // if (this.props.isHaveEdited) {
+        //     this.reloadList();
+        //     store.dispatch(put_EditADocumentReset())
+        // }
 
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
+        if (!this.props.isCategoryLoading && this.props.docCategories.length !== 0) {
             this.comboboxGroup =
                 <div className="filter-container j-c-space-between">
                     <div className="d-flex">
@@ -126,9 +127,9 @@ class MyPosts extends Component {
                         <div className="mg-left-5px">
                             <ComboBox
                                 selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
-                                options={this.props.postCategories}
+                                options={this.props.docCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="my-post-list-category-filter-combobox"
+                                id="my-doc-list-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -139,7 +140,7 @@ class MyPosts extends Component {
                                 options={userApproveStatusOptions}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
-                                id="my-post-list-approve-status-filter-combobox"
+                                id="my-doc-list-approve-status-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -157,10 +158,10 @@ class MyPosts extends Component {
         </div>
 
         if (!this.props.isListLoading) {
-            if (this.props.myPostsList.length !== 0)
-                this.myPostsList = this.props.myPostsList.map((item) => {
+            if (this.props.myDocumentsList.length !== 0)
+                this.myDocumentsList = this.props.myDocumentsList.map((item) => {
                     return <div className="item-container">
-                        <PostSummaryMetadata
+                        <DocumentsSummaryMetadata
                             type={itemType.mySelf}
                             id={item.id}
                             authorName={item.authorName}
@@ -172,13 +173,13 @@ class MyPosts extends Component {
                             summary={item.summary}
                             imageURL={item.imageURL}
                             readingTime={item.readingTime}
-                            approveState={item.postState}
-                            popUpMenuPrefix="mppu"   //stand for my post popup 
+                            approveState={item.docState}
+                            popUpMenuPrefix="mppu"   //stand for my doc popup 
                             authorAvatarURL={item.authorAvatarURL}
                             //
                             reloadList={() => this.reloadList()}
                         />
-                        <PostNormalReactionbar
+                        <DocumentsNormalReactionbar
                             id={item.id}
                             likeCount={item.likeCount}
                             commentCount={item.commentCount}
@@ -188,10 +189,10 @@ class MyPosts extends Component {
                     </div >
                 })
             else
-                this.myPostsList = <div>Không có kết quả nào!</div>;
+                this.myDocumentsList = <div>Không có kết quả nào!</div>;
         }
         else
-            this.myPostsList = <div>
+            this.myDocumentsList = <div>
                 {DocPostSummaryLoader()}
                 {DocPostSummaryLoader()}
                 {DocPostSummaryLoader()}
@@ -205,13 +206,13 @@ class MyPosts extends Component {
                     <div className="content-container">
                         {this.comboboxGroup}
 
-                        {!this.props.isListLoading && this.props.myPostsList ?
+                        {!this.props.isListLoading && this.props.myDocumentsList ?
                             <>
                                 <div className="filter-label d-flex mg-bottom-10px">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
-                                <div >{this.myPostsList}</div>
+                                <div >{this.myDocumentsList}</div>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,
@@ -235,21 +236,24 @@ class MyPosts extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        myPostsList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.searchData,
-        totalPages: state.post.myPosts.totalPages,
-        totalElements: state.post.myPosts.totalElements,
-        isListLoading: state.post.myPosts.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        myDocumentsList: state.doc.myDocuments.data,
+        docCategories: state.doc_category.categories.searchData,
+        totalPages: state.doc.myDocuments.totalPages,
+        totalElements: state.doc.myDocuments.totalElements,
+        isListLoading: state.doc.myDocuments.isLoading,
+        isCategoryLoading: state.doc_category.categories.isLoading,
 
         //handle 2 actions: delete and edit
-        isHaveDeleted: state.post.isHaveDeleted,
-        isHaveEdited: state.post.isHaveEdited,
+        isHaveDeleted: state.doc.isHaveDeleted,
+        isHaveEdited: state.doc.isHaveEdited,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPosts, getPostCategoriesHaveAll,
+    getMyDocuments,
+    getDocCategoriesHaveAll,
+    // getDocCategories,
+
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyPosts));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyDocuments));

@@ -572,7 +572,6 @@ class EditPostModal extends React.Component {
                                                 <div className="form-tip-label-container">
                                                     <div className="form-tip-label">Có thể nhập tối đa 5 tag.</div>
                                                 </div>
-                                                {/* {console.log(this.props.currentPost.tags)} */}
                                                 <div className="mg-top-10px" >
                                                     {this.shownTag.map(item =>
                                                         <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
@@ -619,7 +618,6 @@ class EditPostModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.post.currentPost)
     return {
         categories: state.post_category.categories.data,
         isCategoryLoading: state.post_category.categories.isLoading,

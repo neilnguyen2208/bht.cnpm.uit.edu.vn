@@ -12,7 +12,7 @@ import AdminLayout from 'layouts/AdminSidebar'
 import SearchPostByTag from "pages/common/SearchResult/SearchPostByTag";
 import AccountInformation from "pages/user/AccountInformation/AccountInformation";
 import UpdatePassword from "pages/user/AccountInformation/UpdatePassword";
-import MyDocumentsList from "pages/user/MyDocumentsList/MyDocumentsList";
+import MyDocuments from "pages/user/MyDocuments/MyDocuments";
 import MyPosts from "pages/user/MyPosts/MyPosts";
 import SearchTag from "pages/common/SearchResult/SearchTag";
 import SearchPost from "pages/common/SearchResult/SearchPost";
@@ -75,7 +75,7 @@ const App = () => {
                         {/* user layout */}
                         <Route exact path="/user" component={AccountInformation} />
                         <Route exact path="/user/update-password" component={UpdatePassword} />
-                        <Route exact path="/user/my-docs" component={MyDocumentsList} />
+                        <Route exact path="/user/my-docs" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
                         <Route exact path="/create-post" component={CreatePost} />

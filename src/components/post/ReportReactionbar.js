@@ -9,11 +9,9 @@ import { resolveAPost } from 'redux/services/postServices';
 import 'components/styles/Reactionbar.scss'
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
-import { openModal, closeModal, openBLModal } from 'redux/actions/modalAction.js';
+import { openModal } from 'redux/actions/modalAction.js';
 import store from 'redux/store/index.js';
 import { validation } from 'utils/validationUtils.js';
-import { post_ResolveAPostReset } from 'redux/actions/postAction'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 class ReportReactionbar extends Component {
 
@@ -75,15 +73,6 @@ class ReportReactionbar extends Component {
   }
 
   render() {
-
-    if (this.props.isHaveResolved) {
-      store.dispatch(closeModal());
-      store.dispatch(closeModal());
-      this.props.reloadList();
-      store.dispatch(post_ResolveAPostReset());
-      store.dispatch(openBLModal({ icon: done_icon, text: "Xử lý bài viết thành công!" }))
-    }
-
     return (
       <div className="reaction-bar j-c-end pd-top-5px">
         <button className="blue-button" onClick={() => this.handleResolve()}>Xử lý bài viết</button>
@@ -95,7 +84,6 @@ class ReportReactionbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isHaveResolved: state.post.isHaveResolved
   };
 }
 

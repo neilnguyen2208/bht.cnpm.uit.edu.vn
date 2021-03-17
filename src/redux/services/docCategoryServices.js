@@ -1,31 +1,33 @@
 import {
     get_DocCategoriesSuccess,
+    get_DocCategoriesHaveAllSuccess,
     get_DocCategoriesRequest,
     get_DocCategoriesFailure
 } from "redux/actions/docCategoryAction.js";
 
+import { request } from 'utils/requestUtils';
+
 export function getDocCategories() {
     return dispatch => {
-
         dispatch(get_DocCategoriesRequest());
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/category`, requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                dispatch(get_DocCategoriesSuccess(JSON.parse(result)));
+        request.get('/documents/categories')
+            .then(response => {
+                dispatch(get_DocCategoriesSuccess(response.data))
             })
-            .catch(error => {
-                
-                dispatch(get_DocCategoriesFailure(error))
-            });
-     
+            .catch(error => dispatch(get_DocCategoriesFailure(error)))
     }
 }
 
+export function getDocCategoriesHaveAll() { //co truong tat ca hay khong
+    return dispatch => {
+        dispatch(get_DocCategoriesRequest());
+        request.get(`/posts/categories`).then(response => {
+            dispatch(get_DocCategoriesHaveAllSuccess(response.data));
+        })
+            .catch(error => {
+                console.log(error);
+                dispatch(get_DocCategoriesFailure());
+            });
 
-
+    }
+}

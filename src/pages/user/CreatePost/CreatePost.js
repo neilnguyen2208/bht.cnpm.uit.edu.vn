@@ -15,8 +15,6 @@ import Tag from "components/post/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
-import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
-import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
@@ -26,7 +24,7 @@ import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { detailType } from 'constants.js'
 import NormalReactionbar from "components/post/NormalReactionbar";
-
+import HoverHint from "components/common/HoverHint/HoverHint"
 
 const validationCondition = {
     form: '#create-post-form',
@@ -340,15 +338,6 @@ class CreatePost extends Component {
     }
 
     render() {
-        //render likeBtn
-        let likeBtn = <img className="like-btn" alt="like" src={unliked_btn} onClick={this.toggleLikeImage} ></img>
-
-        //render saveBtn
-        let saveBtn = <div className="d-flex" onClick={this.toggleSaveImage} >
-            <img className="save-btn" alt="dislike" src={gray_bookmark_btn} />
-            <div>Lưu</div>
-        </div >
-
 
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
@@ -433,7 +422,10 @@ class CreatePost extends Component {
                         <div className="mg-top-10px" />
 
                         <div className="form-group">
-                            <label className="form-label-required">Tiêu đề:</label>
+                            <div className="j-c-space-between">
+                                <label className="form-label-required">Tiêu đề:</label>
+                                <HoverHint message="Bạn đã gửi Hôm qua"   id="crphvh-1" />
+                            </div>
                             <input className="text-input" id="cr-post-title"
                                 placeholder="Nhập tiêu đề bài viết ..." onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
@@ -565,6 +557,7 @@ const mapStateToProps = (state) => {
         isCategoryLoading: state.post_category.categories.isLoading,
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
+        
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
     };

@@ -71,6 +71,14 @@ class WallpageItem extends React.Component {
             ));
         }
     }
+
+
+    onConfirmReport = (DTO) => {
+        store.dispatch(closeModal());
+        store.dispatch(closeModal());
+        this.props.reportAPost(DTO.id, { "reason": DTO.reason });
+    }
+    
     render() {
         if (this.props.isHaveReported) {
             store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import React, { Component } from 'react'
 
 //services
-import { getMyDocumentsList } from "redux/services/docServices"
+import { getMyDocuments } from "redux/services/docServices"
 import { getDocCategories } from "redux/services/docCategoryServices"
 
 //utils
@@ -15,7 +15,7 @@ import { itemType } from 'constants.js'
 //components
 import Loader from "components/common/Loader/Loader"
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import DocSummary from 'components/doc/DocSummary'
+import SummaryInfo from 'components/doc/SummaryInfo'
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import ComboBox from 'components/common/Combobox/Combobox';
 import AdminSidebar from 'layouts/AdminSidebar'
@@ -42,7 +42,7 @@ class DocumentApproving extends Component {
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
 
-        this.props.getMyDocumentsList(page, category);
+        this.props.getMyDocuments(page, category);
     }
 
     //server paginator
@@ -50,7 +50,7 @@ class DocumentApproving extends Component {
         setQueryParam("page", pageNumber);
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
-        this.props.getMyDocumentsList(page, category);
+        this.props.getMyDocuments(page, category);
         this.setState({});
     }
 
@@ -59,7 +59,7 @@ class DocumentApproving extends Component {
         setQueryParam("category", selectedOption.id);
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
-        this.props.getMyDocumentsList(page, category);
+        this.props.getMyDocuments(page, category);
         this.setState({});
     }
 
@@ -71,7 +71,7 @@ class DocumentApproving extends Component {
             this.documents = this.props.documents;
 
             documentsList = this.documents.map((documentItem => (
-                < DocSummary
+                < SummaryInfo
                     type={itemType.approval}
                     key={documentItem.id}
                     id={documentItem.id}
@@ -90,7 +90,7 @@ class DocumentApproving extends Component {
                     description={documentItem.description}
                     imageURL={documentItem.imageURL}
 
-                ></DocSummary >)
+                ></SummaryInfo >)
             ))
         }
 
@@ -150,7 +150,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyDocumentsList, getDocCategories
+    getMyDocuments, getDocCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentApproving));

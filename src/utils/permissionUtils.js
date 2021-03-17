@@ -217,18 +217,6 @@ export function getRoleNamebyID(roleId) {
 
 //to use this function, class use this must have 
 export const isGrantedPermissions = function (permissionList) {
-    // if (this.props.accountInformation.roleName) {
-    //     for (let key in permissionList) {
-    //         if (!(getPermissionOfRoleByRoleName(this.props.accountInformation.roleName).hasOwnProperty(key)))
-    //             return false;
-    //     }
-    //     return true;
-    // }
-    // else {
-    //     console.log("Please make props.accountInformation.roleName of " + this.class + "not undefined or null!")
-    // }
-    // return false;
-
     return true;
 }
 

@@ -6,7 +6,6 @@ import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
 import { getReportedPosts } from "redux/services/postServices";
 import ReportInfo from 'components/post/ReportInfo'
-import SummaryInfo from 'components/post/SummaryInfo'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,6 +14,10 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import AdminSidebar from 'layouts/AdminSidebar'
 import PostManagementNavbar from './PostManagementNavbar'
 import ReportReactionbar from 'components/post/ReportReactionbar'
+import store from 'redux/store/index'
+import { post_ResolveAPostReset } from 'redux/actions/postAction'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
+import { closeModal, openBLModal } from 'redux/actions/modalAction.js';
 
 class PostReportManagement extends Component {
     constructor(props) {
@@ -59,6 +62,13 @@ class PostReportManagement extends Component {
 
     render() {
 
+        if (this.props.isHaveResolved) {
+            store.dispatch(closeModal());
+            store.dispatch(closeModal());
+            this.reloadList();
+            store.dispatch(post_ResolveAPostReset());
+            store.dispatch(openBLModal({ icon: done_icon, text: "Xử lý bài viết thành công!" }))
+        }
         if (!this.props.isListLoading && this.props.postsList) {
             this.postsList = this.props.postsList.map((item) => (
                 <div className="item-container">
@@ -81,7 +91,9 @@ class PostReportManagement extends Component {
 
                     <ReportReactionbar type={itemType.mySelf}
                         id={item.id} //report id, not post id
-                        reloadList={() => this.reloadList()} />
+                    // reloadList={() => this.reloadList()}
+
+                    />
                 </div>
             ))
         }
@@ -129,6 +141,10 @@ const mapStateToProps = (state) => {
         isListLoading: state.post.reportedPosts.isLoading,
         totalPages: state.post.reportedPosts.totalPages,
         totalElements: state.post.reportedPosts.totalElements,
+
+        //handle action resolve a report
+        isHaveResolved: state.post.isHaveResolved
+
     };
 }
 

@@ -12,10 +12,16 @@ class FormFileUploader extends Component {
 
     onFileChange = () => {
         var name = document.getElementById('file-input-' + this.props.id);
-        document.querySelector('.form-tip-label.file-info').innerText = `Tên file: ${name.files.item(0).name}\n Kích thước:  ${Math.round(name.files.item(0).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${name.files.item(0).type} `
+        let displayText = '';
+        for (let i = 0; i < name.files.length; i++) {
+            displayText = displayText + ` - Tên file: ${name.files.item(i).name}\n Kích thước:  ${Math.round(name.files.item(i).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${name.files.item(i).type} \n`;
+        }
+
+        document.querySelector('.form-tip-label.file-info').innerText = displayText;
+
         //max file, size, type
         if (this.props.onFileChange) {
-            this.props.onFileChange(document.getElementById('file-input-' + this.props.id).files.item(0))
+            this.props.onFileChange(document.getElementById('file-input-' + this.props.id).files)
         }
     }
 
@@ -23,22 +29,30 @@ class FormFileUploader extends Component {
         //xu ly sau
     }
 
+    handleOverMaxItemCount = () => {
+
+    }
+
+    handleWrongType = () => {
+
+    }
+
     render() {
         return (
-            <div>
-                <div className="file-input-wrapper">
-                    <label for={'file-input-' + this.props.id}>
-                        <div className="c-pointer">
-                            <div className="d-flex">
-                                <img alt="...loading..." className='file-input-image' src={upload_icon} />
-                            </div>
-                            <div className="form-tip-label t-a-center">Định dạng {this.props.fileType} <br></br>Dung lượng không quá {Math.round(this.props.maxSize / 1048576 * 100) / 100 + "MB"}</div>
+            <div className="file-input-wrapper">
+                <label className="file-input-label" id={'file-input-label-' + this.props.id} for={'file-input-' + this.props.id}>
+                    <div className="c-pointer">
+                        <div className="d-flex">
+                            <img alt="...loading..." className='file-input-image' src={upload_icon} />
                         </div>
-                    </label>
-                    <input type="file" multiple={false} className="file-input" accept={this.props.fileType} id={'file-input-' + this.props.id} onChange={() => this.onFileChange()} />
-                </div>
-                <div className='form-tip-label file-info mg-top-5px'></div>
-                <div className="form-line mg-top-5px" />
+                        <div className="form-tip-label t-a-center">Định dạng {this.props.fileType}
+                            <br></br>Dung lượng không quá {Math.round(this.props.maxSize / 1048576 * 100) / 100 + "MB"}
+
+                            {/* {this.<br></br>} */}
+                        </div>
+                    </div>
+                    <input type="file" multiple={this.props.multiple} className="file-input" accept={this.props.fileType} id={'file-input-' + this.props.id} onChange={() => this.onFileChange()} />
+                </label>
             </div>
         )
     }

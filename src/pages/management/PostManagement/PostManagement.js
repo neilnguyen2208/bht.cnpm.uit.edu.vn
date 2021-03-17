@@ -17,8 +17,10 @@ import { adminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 import PostManagementNavbar from './PostManagementNavbar'
-
+import store from 'redux/store/index'
+import { put_EditAPostReset, delete_APostReset } from 'redux/actions/postAction'
 import 'layouts/Layout.scss'
+
 class PostApproving extends Component {
 
     componentDidMount() {
@@ -109,6 +111,17 @@ class PostApproving extends Component {
     }
 
     render() {
+
+        //reload the list when any item has been deleted or edited:
+        if (this.props.isHaveDeleted) {
+            this.reloadList();
+            store.dispatch(delete_APostReset())
+        }
+
+        if (this.props.isHaveEdited) {
+            this.reloadList();
+            store.dispatch(put_EditAPostReset())
+        }
         //combobox
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
             this.comboboxGroup =
@@ -256,6 +269,11 @@ const mapStateToProps = (state) => {
         //category
         postCategories: state.post_category.categories.searchData,
         isCategoryLoading: state.post_category.categories.isLoading,
+
+        //handle 2 actions: delete and edit
+        isHaveDeleted: state.post.isHaveDeleted,
+        isHaveEdited: state.post.isHaveEdited,
+
     };
 }
 

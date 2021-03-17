@@ -1,7 +1,7 @@
 import {
     GET_POST_CATEGORIES_REQUEST,
     GET_POST_CATEGORIES_SUCCESS,
-    GET_POST_CATEGORIES_SUCCESS_HAVE_ALL,
+    GET_POST_CATEGORIES_HAVE_ALL_SUCCESS,
     GET_POST_CATEGORIES_FAILURE
 } from '../constants.js'
 
@@ -18,7 +18,7 @@ function PostCategoryReducer(state = initialState, action) {
         //get post category
         case GET_POST_CATEGORIES_REQUEST:
             return { ...state, categories: { ...state.categories, isLoading: true } }
-        case GET_POST_CATEGORIES_SUCCESS_HAVE_ALL:
+        case GET_POST_CATEGORIES_HAVE_ALL_SUCCESS:
             //append category to this current array of data
             return { ...state, categories: { ...state.categories, searchData: [{ id: 0, name: "Tất cả", value: null }, ...action.payload], isLoading: false } }
         case GET_POST_CATEGORIES_SUCCESS:

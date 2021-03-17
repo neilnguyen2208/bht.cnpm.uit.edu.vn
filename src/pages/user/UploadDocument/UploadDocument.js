@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getPostCategories } from "redux/services/postCategoryServices";
+import { getDocCategories } from "redux/services/docCategoryServices";
+import { getDocumentSubjects } from "redux/services/docSubjectServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { uploadADocument } from "redux/services/docServices"
 import "./UploadDocument.scss";
@@ -12,17 +13,12 @@ import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
 
 //components
-import Tag from "components/post/Tag";
+import Tag from "components/doc/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
-
-import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
-import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
-import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x24.png'
-import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //utils
 import { ClickAwayListener } from '@material-ui/core';
@@ -44,21 +40,15 @@ const validationCondition = {
         validation.isRequired('cr-doc-category-combobox', 'combobox', 'Danh mục không được để trống'),
         validation.isRequired('cr-doc-subject-combobox', 'combobox', 'Môn học không được để trống'),
         validation.isRequired('cr-doc-description', 'ckeditor', 'Mô tả tài liệu không được để trống'),
-        validation.isRequired('cr-doc-file-input', 'file-input', 'Tài liệu không được để trống!')
-        // validation.isRequired('cr-doc-file-link', 'text-input', 'Tài liệu không được để trống!')
-
+        validation.isRequired('cr-doc-file-input', 'file-input', 'Tài liệu không được để trống!'),
+        validation.maxFileCount('cr-doc-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
+        validation.maxFileSize('cr-doc-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
     ],
 }
 
 class UploadDocument extends Component {
     constructor(props) {
         super(props);
-        this.categoryList = [
-            {
-                id: 1,
-                name: "Chọn danh mục"
-            }
-        ];
 
         this.state = {
             currentCategory: "Chọn danh mục",
@@ -72,15 +62,17 @@ class UploadDocument extends Component {
             UPLOAD_DOC_DTO: {
                 tags: [],
                 title: "Model View Presenter (MVP) in Android with a simple demo project.",//
-                content: ``,//
-                summary: `null`,
+                description: ``,//
+                // summary: `null`,
                 // authorID: "",// khong co nhe
                 categoryID: "",//
                 subjectID: "",
                 imageURL: "null",
-                docURL: "http://www.africau.edu/images/default/sample.pdf"
+                // docURL: "http://www.africau.edu/images/default/sample.pdf",
+                code: "",
+                // fileName: ""
             },
-
+            file_DTO: { file: "" },
             author: {
                 avatarURL: "https://i.imgur.com/SZJgL6C.png",
                 displayName: "Nguyễn Văn Đông",
@@ -116,16 +108,20 @@ class UploadDocument extends Component {
     }
 
     componentDidMount() {
-        this.props.getPostCategories();
+        this.props.getDocCategories();
+        this.props.getDocumentSubjects();
+
         document.querySelector(".cr-doc-form-container.preview").classList.remove("d-block");
         document.querySelector(".cr-doc-form-container.edit").classList.remove("d-none");
         document.querySelector(".cr-doc-form-container.preview").classList.add("d-none");
         document.querySelector(".cr-doc-form-container.edit").classList.add("d-block");
         validation(validationCondition);
     }
+
     componentWillUnmount() {
         store.dispatch(get_tagQuickQueryResultReset());
     }
+
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
             UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, categoryID: selectedOption.id },
@@ -142,7 +138,7 @@ class UploadDocument extends Component {
 
     handleUploadBtnClick = () => {
         if (styleFormSubmit(validationCondition)) {
-            this.props.uploadADocument(this.state.UPLOAD_DOC_DTO);
+            this.props.uploadADocument(this.state.UPLOAD_DOC_DTO, this.state.fileDTO);
         }
 
     }
@@ -325,27 +321,13 @@ class UploadDocument extends Component {
         this.forceUpdate();
     }
 
-    handleClickTag = (item) => {
-    }
-
-    handleFileLinkChange = (e) => {
-
-    }
-
     //#endregion
     handleEditorChange = (value) => {
-        let dom = document.createElement("DIV");
-        dom.innerHTML = this.state.UPLOAD_DOC_DTO.content;
-        let plain_text = (dom.textContent || dom.innerText);
+        // let dom = document.createElement("DIV");
+        // dom.innerHTML = this.state.UPLOAD_DOC_DTO.content;
+        // let plain_text = (dom.textContent || dom.innerText);
+        this.setState({ UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, description: value } });
 
-        if (value.length < 160) {
-            this.setState({ UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, content: value, summary: plain_text } })
-            return;
-        }
-        else {
-            this.setState({ UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, summary: plain_text.substring(0, 160) } });
-            return;
-        }
     };
 
     handleTitleChange = (e) => {
@@ -354,35 +336,18 @@ class UploadDocument extends Component {
         })
     }
 
-    onFileChange = (file) => {
+    onFileChange = (files) => {
         //gan cho state
-        this.setState({ UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, file } })
+        // console.log(files[0]);
+        // if (files.length > 0)
+        // this.setState({ ...this.state, fileDTO: files[0], UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, fileName: files[0].name } })
+        this.setState({ ...this.state, fileDTO: files[0] })
+
     }
 
     render() {
+        //load for category and subject 
 
-        let likeBtn = <div></div>;
-        let saveBtn = <div></div>;
-
-        //render likeBtn
-        if (!this.isLiked) {
-            likeBtn = <img className="like-btn" alt="like" src={liked_btn} onClick={this.toggleLikeImage}></img>
-        }
-        else {
-            likeBtn = <img className="like-btn" alt="like" src={unliked_btn} onClick={this.toggleLikeImage} ></img>
-        }
-
-        //render saveBtn
-        if (!this.isSaved) {
-            saveBtn = <img className="save-btn" alt="dislike" src={full_blue_bookmark_btn}></img>
-        }
-        else {
-            saveBtn = <img className="save-btn" alt="dislike" src={gray_bookmark_btn} ></img>
-        }
-
-        if (!this.props.isCategoryLoading && this.props.categories) {
-            this.categoryList = this.props.categories;
-        }
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
@@ -441,30 +406,7 @@ class UploadDocument extends Component {
                         )}
                     </div>
 
-                    <div className="d-flex mg-top-5px pd-10px">
-                        <div className="d-flex">
-                            <div> {likeBtn}</div>
-                            <div className="like-count">0</div>
-                        </div>
-
-                        <div className="d-flex">
-                            <div className="save-text-container" onClick={this.toggleSaveImage}>
-                                <div>{saveBtn}</div>
-                                {this.isSaved ? "Lưu" : "Huỷ"}
-                            </div>
-                            <div className="comment-count-container">
-                                Bình luận
-                                <div style={{ paddingLeft: "5px" }}>
-                                    {this.props.comments}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="reaction-bar">
-                        <div className="gray-label">Bình luận: {this.viewCount}</div>
-                        <div className="gray-label mg-left-5px">lượt xem: {this.viewCount}</div>
-                    </div>
+                    {/* Create Nomal Reactionbar for doc later */}
                 </div>
 
                 {/* Edit region */}
@@ -502,7 +444,7 @@ class UploadDocument extends Component {
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
                             <Combobox id="cr-doc-category-combobox"
-                                options={this.categoryList}
+                                options={(!this.props.isCategoryLoading && this.props.categories) ? this.props.categories : [{ id: 1, name: "Chọn danh mục" }]}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"
                                 validation
@@ -513,11 +455,12 @@ class UploadDocument extends Component {
                             </div>
                         </div >
 
+                        {/* Subject */}
                         <div className="form-group" >
                             <label className="form-label-required">Môn học:</label>
                             <Combobox id="cr-doc-subject-combobox"
-                                options={this.categoryList}
-                                onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
+                                options={(!this.props.isSubjectLoading && this.props.subjects) ? this.props.subjects : [{ id: 1, name: "Chọn môn học" }]}
+                                onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
                                 placeHolder="Chọn môn học"
                                 validation
                             >
@@ -566,19 +509,18 @@ class UploadDocument extends Component {
                         {/* Upload */}
                         <div className="form-group" >
                             <label className="form-label-required">Tài liệu:</label>
-                            {/* <input className="text-input" id="cr-doc-file-link"
-                                placeholder="Nhập liên kết tài liệu ..." onChange={e => this.handleFileLinkChange(e)}
-                                type="text" >
-                            </input> */}
-                            {/* Su dung file input theo dung nhu cau truc duoi day thi moi co the tu validation */}
                             <FormFileUploader id='cr-doc-file-input'
                                 onFileChange={(file) => this.onFileChange(file)}
                                 maxSize={26214400} //byte
                                 fileType={".pdf"} //n
+                                multiple
+                                maxFileCount={3}
                             />
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
                             </div>
+                            <div className='form-tip-label file-info mg-top-20px'></div>
+                            <div className="form-line mg-top-5px" />
                         </div>
 
                         {/* Button */}
@@ -629,26 +571,31 @@ class UploadDocument extends Component {
         document.querySelector(".cr-doc-form-container.edit").classList.add("d-none");
         document.querySelector(".cr-doc-form-container.preview").classList.remove("d-none");
         document.querySelector(".cr-doc-form-container.edit").classList.remove("d-block");
-        console.log(this.state);
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.post_category.categories.data,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        //category and subject
+        categories: state.doc_category.categories.data,
+        isCategoryLoading: state.doc_category.categories.isLoading,
+        subjects: state.doc_subject.subjects.data,
+        isSubjectLoading: state.doc_subject.subjects.isLoading,
+
+        //tah
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
+
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
         //upload thanh cong hay khong
-        isUploadDone: state.document.uploadDocument.isLoadDone,
-        uploadMessage: state.document.uploadDocument.notification
+
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostCategories,
+    getDocCategories,
+    getDocumentSubjects,
     getTagQuickQueryResult,
     uploadADocument
 }, dispatch);

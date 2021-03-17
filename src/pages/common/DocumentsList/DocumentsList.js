@@ -15,7 +15,7 @@ import { itemType } from 'constants.js'
 //components
 import Loader from "components/common/Loader/Loader"
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import DocSummary from 'components/doc/DocSummary'
+import SummaryInfo from 'components/doc/SummaryInfo'
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import ComboBox from 'components/common/Combobox/Combobox';
 
@@ -71,7 +71,7 @@ class DocumentsList extends Component {
                 this.documentsList = this.props.documentsList;
 
                 documentsList = this.documentsList.map((documentItem) => (
-                    < DocSummary
+                    < SummaryInfo
                         type={itemType.normal}
                         key={documentItem.id}
                         id={"document-item" + documentItem.id}
@@ -90,7 +90,7 @@ class DocumentsList extends Component {
                         description={documentItem.description}
                         imageURL={documentItem.imageURL}
 
-                    ></DocSummary >)
+                    ></SummaryInfo >)
                 )
             }
         }

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Modal from 'components/common/Modal/AlertModal'
+
 import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 

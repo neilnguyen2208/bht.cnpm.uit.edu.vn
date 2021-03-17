@@ -72,7 +72,6 @@ class CoursesList extends Component {
         let allSubjectList = <></>;
 
         if (!this.props.isDaiCuongSubjectLoading) {
-            console.log(this.props.daiCuongSubjectList)
             daiCuongSubjectList =
                 <div className="subject-item-container">
                     {this.props.daiCuongSubjectList.map(subjectItem => {

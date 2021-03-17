@@ -133,7 +133,6 @@ class Wallpage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.home.highlightPosts.data)
     return {
         highlightPosts: state.home.highlightPosts.data,
         isLoading: state.home.highlightPosts.isLoading

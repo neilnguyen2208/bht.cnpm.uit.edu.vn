@@ -72,7 +72,6 @@ export function getCoursesList(category = "") {
             redirect: 'follow'
         };
 
-        console.log("***");
         fetch(`https://5fe871c82e12ee0017ab46ef.mockapi.io/courses`, requestOptions)
             .then(response => response.text())
             .then(

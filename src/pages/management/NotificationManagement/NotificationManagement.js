@@ -6,7 +6,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import './NotificationManagement.scss'
 // import done_icon from 'assets/images/done_icon.png'
-import Modal from 'components/common/Modal/AlertModal'
+
 import { ClickAwayListener } from '@material-ui/core';
 import AdminSidebar from 'layouts/AdminSidebar'
 class NotificationManagement extends Component {

@@ -1,8 +1,7 @@
 //#region validation html elements not 
-
 const errorSelector = '.form-error-label';
-const formGroupSelector = '.form-group'
-
+const formGroupSelector = '.form-group';
+var ele;
 // Đối tượng `Validator`
 export function validation(conditions) {
     function getParent(element, selector) {
@@ -46,7 +45,9 @@ export function validation(conditions) {
                         if (element.classList.contains('form-radio') || element.classList.contains('form-check-box')) {
                             errorMessage = rules[i](formElement.querySelector(rule.selector + ':checked'));
                         }
-
+                        else if (element.classList.contains('file-input')) {
+                            errorMessage = rules[i](element.files);
+                        }
             if (errorMessage) break;
         }
 
@@ -80,7 +81,7 @@ export function validation(conditions) {
                 if (element.classList.contains('text-input')
                     || element.classList.contains('form-check-box')
                     || element.classList.contains('form-radio')
-                    || element.classList.contains('file-input')
+
                     || element.classList.contains('text-area')) {
 
                     //xu ly cac HTMLInputElement
@@ -98,6 +99,13 @@ export function validation(conditions) {
                     }
 
                     //neu la HTMLInputElement => vong lap tiep theo
+                    return;
+                }
+
+                if (element.classList.contains('file-input')) {
+                    document.getElementById(element.id).onchange = function () {
+                        validate(element, rule);
+                    }
                     return;
                 }
 
@@ -155,11 +163,11 @@ validation.isRequired = function (selector, type, message) {
     }
     if (type === 'file-input') {
         return {
-            selector: '#' + selector,
+            selector: '#file-input-' + selector,
             type: type,
             test: function (value) {
-                //  kiem tra xem co class dummy invalid hay khong o ben tren
-                return value ? undefined : message || 'Vui lòng nhập trường này'
+                //  kiem tra xem co file nao torng chuoi hay khong
+                return value.length > 0 ? undefined : message || 'Vui lòng nhập trường này'
             }
         }
     }
@@ -208,6 +216,31 @@ validation.noSpecialChar = function (selector, type, message) {
         }
     };
 }
+
+//for file input only
+validation.maxFileCount = function (selector, type, itemCount, message) {
+    return {
+        selector: '#file-input-' + selector,
+        type: type,
+        test: function (value) {
+            return value.length <= itemCount ? undefined : message || `Không được vượt quá ${itemCount} file`
+        }
+    };
+}
+
+validation.maxFileSize = function (selector, type, fileSize, message) {
+    return {
+        selector: '#file-input-' + selector,
+        type: type,
+        test: function (value) {
+            let totalSize = 0;
+            for (let i = 0; i < value.length; i++) {
+                totalSize = totalSize + value[i].size;
+            }
+            return totalSize < fileSize ? undefined : message || `Không được vượt quá  ${Math.round(fileSize / 1048576 * 100) / 100} MB`
+        }
+    };
+}
 //#endregion
 
 //check kieu khac khong the mo rong nhu ben tren
@@ -220,7 +253,6 @@ export function styleFormSubmit(conditions) {
         let rules = selectorRules[rule.selector];
         // Lặp qua từng rule & kiểm tra
         // Nếu có lỗi thì dừng việc kiểm
-        // console.log(element);
         for (var i = 0; i < rules.length; ++i) {
             if (element.classList.contains('text-input') || element.classList.contains('text-area')) {
                 errorMessage = rules[i](element.value);
@@ -248,7 +280,7 @@ export function styleFormSubmit(conditions) {
                         }
                         else
                             if (element.classList.contains('file-input')) {
-                                errorMessage = rules[i](element.value);
+                                errorMessage = rules[i](element.files);
                                 if (errorMessage) break;
                             }
             if (errorMessage) break;

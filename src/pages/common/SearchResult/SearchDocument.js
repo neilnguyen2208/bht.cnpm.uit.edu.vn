@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
-import DocSummary from 'components/doc/DocSummary'
+import SummaryInfo from 'components/doc/SummaryInfo'
 import Loader from 'components/common/Loader/Loader'
 import { itemType } from 'constants.js'
 import SearchHorizontalMenubar from './SearchHorizontalMenubar'
@@ -66,7 +66,7 @@ class SearchDocument extends Component {
 
         if (!this.props.isListLoading) {
             this.documentSearchResult = this.props.documentsList.map((documentItem) => (
-                <DocSummary
+                <SummaryInfo
                     type={itemType.normal}
                     key={documentItem.id}
                     id={documentItem.id}
@@ -84,7 +84,7 @@ class SearchDocument extends Component {
                     likes={documentItem.likes}
                     comments={documentItem.commentCount}
                     approveStatus={false}
-                ></DocSummary >)
+                ></SummaryInfo >)
             )
         }
         return (

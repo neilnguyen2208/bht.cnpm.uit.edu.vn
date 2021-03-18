@@ -5,10 +5,10 @@ import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import { NavLink } from 'react-router-dom'
 //import for redux
-import { getPendingPosts } from "redux/services/postServices";
-import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
-import RequestInfo from 'components/post/RequestInfo'
-import SummaryInfo from 'components/post/SummaryInfo'
+import { getPendingDocuments } from "redux/services/documentServices";
+import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices";
+// import RequestInfo from 'components/document/RequestInfo'
+// import SummaryInfo from 'components/document/SummaryInfo'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -16,14 +16,14 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
-import PostManagementNavbar from './PostManagementNavbar'
-import RequestReactionbar from 'components/post/RequestReactionbar'
-import { post_ApproveAPostReset, delete_RejectAPostReset, delete_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
+import DocumentManagementNavbar from './DocumentManagementNavbar'
+// import RequestReactionbar from 'components/document/RequestReactionbar'
+// import { document_ApproveADocumentReset, delete_RejectADocumentReset, delete_RejectAndFeedbackADocumentReset } from 'redux/actions/documentAction'
 import { openBLModal, closeModal } from 'redux/actions/modalAction'
 import store from 'redux/store/index'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
-class PostApproving extends Component {
+class DocumentApproving extends Component {
     constructor(props) {
         super();
     }
@@ -35,15 +35,15 @@ class PostApproving extends Component {
             page: 1
         }
 
-        this.props.getPostCategoriesHaveAll();
+        this.props.getDocumentCategoriesHaveAll();
         setQueryParam(this.queryParamObject);
 
         this.searchParamObject = {
-            paginator: getQueryParamByName('page'),
-            category: getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
+            "paginator": 1,
+            "category": 0,
         }
 
-        this.props.getPendingPosts(this.searchParamObject);
+        this.props.getPendingDocuments(this.searchParamObject);
     }
 
     //server paginator
@@ -53,37 +53,37 @@ class PostApproving extends Component {
             ...this.searchParamObject,
             paginator: getQueryParamByName('page'),
         }
-        this.props.getPendingPosts(this.searchParamObject);
+        this.props.getPendingDocuments(this.searchParamObject);
         this.setState({});
     }
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, page: 1, "category": selectedOption.id });
+        setQueryParam({ ...this.queryParamObject, paginator: 1, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
             paginator: 1
         }
-        this.props.getPendingPosts(this.searchParamObject);
+        this.props.getPendingDocuments(this.searchParamObject);
         this.setState({});
     }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
+        if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
                 paginator: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getPendingPosts(this.searchParamObject);
+        this.props.getPendingDocuments(this.searchParamObject);
     }
 
     render() {
         //combobox
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
+        if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
             this.comboboxGroup =
                 <div className="filter-container">
                     <div className="d-flex">
@@ -91,9 +91,9 @@ class PostApproving extends Component {
                         <div className="mg-left-5px">
                             <ComboBox
                                 selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
-                                options={this.props.postCategories}
+                                options={this.props.documentCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="post-approving-category-filter-combobox"
+                                id="document-approval-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -105,10 +105,10 @@ class PostApproving extends Component {
             </div>
         </div>
 
-        if (!this.props.isListLoading && this.props.postsList) {
-            this.postsList = this.props.postsList.map((item) => (
+        if (!this.props.isListLoading && this.props.documentsList) {
+            this.documentsList = this.props.documentsList.map((item) => (
                 <div className="item-container" key={item.id}>
-                    <RequestInfo
+                    {/* <RequestInfo
                         id={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
@@ -130,8 +130,8 @@ class PostApproving extends Component {
                         // summary={item.summary}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
-                        approveState={item.postState}
-                        popUpMenuPrefix="papu"   //stand for post approving popup 
+                        approveState={item.documentState}
+                        popUpMenuPrefix="papu"   //stand for document approval popup 
                         authorAvatarURL={item.authorAvatarURL}
                         //
                         reloadList={() => this.reloadList()}
@@ -139,53 +139,53 @@ class PostApproving extends Component {
                     />
                     <RequestReactionbar
                         id={item.id}
-                        reloadList={() => this.reloadList()} />
+                        reloadList={() => this.reloadList()} /> */}
                 </div>
             ))
         }
 
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
+        if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
 
-            this.filter = this.props.postCategories;
+            this.filter = this.props.documentCategories;
         }
 
 
-        if (this.props.isHaveApproved) {
-            store.dispatch(closeModal());
-            store.dispatch(post_ApproveAPostReset());
-            store.dispatch(openBLModal({ icon: done_icon, text: "Duyệt bài viết thành công!" }))
-            this.reloadList();
-        }
+        // if (this.props.isHaveApproved) {
+        //     store.dispatch(closeModal());
+        //     store.dispatch(document_ApproveADocumentReset());
+        //     store.dispatch(openBLModal({ icon: done_icon, text: "Duyệt bài viết thành công!" }))
+        //     this.reloadList();
+        // }
 
-        if (this.props.isHaveRejectedAndFeedbacked) {
-            store.dispatch(closeModal());
-            store.dispatch(delete_RejectAndFeedbackAPostReset());
-            store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
-            this.reloadList();
-        }
+        // if (this.props.isHaveRejectedAndFeedbacked) {
+        //     store.dispatch(closeModal());
+        //     store.dispatch(delete_RejectAndFeedbackADocumentReset());
+        //     store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
+        //     this.reloadList();
+        // }
 
-        if (this.props.isHaveRejected) {
-            store.dispatch(closeModal());
-            store.dispatch(delete_RejectAPostReset());
-            store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
-            this.reloadList();
-        }
+        // if (this.props.isHaveRejected) {
+        //     store.dispatch(closeModal());
+        //     store.dispatch(delete_RejectADocumentReset());
+        //     store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
+        //     this.reloadList();
+        // }
         return (
             <div className="left-sidebar-layout">
                 <AdminSidebar />
                 <div className="content-layout">
                     <Titlebar title="QUẢN LÝ BÀI VIẾT" />
                     <div className="content-container">
-                        <PostManagementNavbar />
+                        <DocumentManagementNavbar />
 
                         {this.comboboxGroup}
-                        {!this.props.isListLoading && this.props.postsList ?
+                        {!this.props.isListLoading && this.props.documentsList ?
                             <>
                                 <div className="filter-label d-flex mg-bottom-10px">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
-                                <>{this.postsList}</>
+                                <>{this.documentsList}</>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,
@@ -208,25 +208,26 @@ class PostApproving extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        //pending posts list
-        postsList: state.post.pendingPosts.data,
-        isListLoading: state.post.pendingPosts.isLoading,
-        totalPages: state.post.pendingPosts.totalPages,
-        totalElements: state.post.pendingPosts.totalElements,
+        //pending documents list
+        documentsList: state.document.pendingDocuments.data,
+        isListLoading: state.document.pendingDocuments.isLoading,
+        totalPages: state.document.pendingDocuments.totalPages,
+        totalElements: state.document.pendingDocuments.totalElements,
 
         //category
-        postCategories: state.post_category.categories.searchData,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        documentCategories: state.document_category.categories.searchData,
+        isCategoryLoading: state.document_category.categories.isLoading,
 
         //handle 3 actions
-        isHaveApproved: state.post.isHaveApproved,
-        isHaveRejected: state.post.isHaveRejected,
-        isHaveRejectedAndFeedbacked: state.post.isHaveRejectedAndFeedbacked,
+        isHaveApproved: state.document.isHaveApproved,
+        isHaveRejected: state.document.isHaveRejected,
+        isHaveRejectedAndFeedbacked: state.document.isHaveRejectedAndFeedbacked,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPendingPosts, getPostCategoriesHaveAll
+    getPendingDocuments,
+    getDocumentCategoriesHaveAll
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostApproving));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentApproving));

@@ -113,7 +113,7 @@ class UserItem extends Component {
                         <div>
                             <div className="user-item_Email">{this.email}</div>
 
-                            {/* statusbar: score, docs count, posts count, role */}
+                            {/* statusbar: score, documents count, posts count, role */}
                             <div className="user-item_Statusbar" >
 
                                 <div style={{ "display": "flex" }}>

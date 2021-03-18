@@ -4,15 +4,20 @@ import {
     get_MyDocumentsSuccess,
     get_MyDocumentsFailure,
 
+    //my documents
+    get_PendingDocumentsRequest,
+    get_PendingDocumentsSuccess,
+    get_PendingDocumentsFailure,
+
     //documents list
     get_DocumentsListRequest,
     get_DocumentsListSuccess,
     get_DocumentsListFailure,
 
     //document search result
-    get_DocumentSearchResultRequest,
-    get_DocumentSearchResultSuccess,
-    get_DocumentSearchResultFailure,
+    get_DocumentSearchRequest,
+    get_DocumentSearchSuccess,
+    get_DocumentSearchFailure,
 
     post_UploadDocumentRequest,
     post_UploadDocumentSuccess,
@@ -20,6 +25,12 @@ import {
     post_ReactionADocumentRequest,
     post_ReactionADocumentSuccess,
     post_ReactionADocumentFailure,
+
+    get_ReportedDocumentsSuccess,
+    get_ReportedDocumentsRequest,
+    get_ReportedDocumentsFailure
+
+
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam } from 'utils/urlUtils';
@@ -67,7 +78,7 @@ export function getDocumentsList(page = 1, category = "", searchParam = "") { //
 
 export function getDocumentSearch(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
-        dispatch(get_MyDocumentsRequest());
+        dispatch(get_DocumentSearchRequest());
         request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
@@ -87,12 +98,77 @@ export function getDocumentSearch(searchParamObject) { //this API to get all app
                             );
                         }
 
-                        dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
-                    }).catch(() => get_MyDocumentsFailure())
+                        dispatch(get_DocumentSearchSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_DocumentSearchFailure())
                 // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
             })
             .catch(error => {
-                dispatch(get_MyDocumentsFailure(error))
+                dispatch(get_DocumentSearchFailure(error))
+            })
+    }
+}
+
+export function getPendingDocuments(searchParamObject) {
+    return dispatch => {
+        dispatch(get_PendingDocumentsRequest());
+        request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+            .then(response => {
+                //statistic
+                let result_1 = response.data;
+                let IDarr = '';
+                // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                IDarr = "1,151";
+                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+                        for (let i = 0; i < result_1.docDetails.length; i++) {
+                            finalResult.push({
+                                ...result_1.docDetails[i],
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
+                            }
+                            );
+                        }
+
+                        dispatch(get_PendingDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_PendingDocumentsFailure())
+                // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
+            })
+            .catch(error => {
+                dispatch(get_PendingDocumentsFailure(error))
+            })
+    }
+}
+
+
+export function getReportedDocuments(searchParamObject) {
+    return dispatch => {
+        dispatch(get_ReportedDocumentsRequest());
+        request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+            .then(response => {
+                //statistic
+                let result_1 = response.data;
+                let IDarr = '';
+                // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                IDarr = "1,151";
+                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+                        for (let i = 0; i < result_1.docDetails.length; i++) {
+                            finalResult.push({
+                                ...result_1.docDetails[i],
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
+                            }
+                            );
+                        }
+
+                        dispatch(get_ReportedDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_ReportedDocumentsFailure())
+                // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
+            })
+            .catch(error => {
+                dispatch(get_PendingDocumentsFailure(error))
             })
     }
 }

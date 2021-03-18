@@ -5,7 +5,7 @@ import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
 import { getDocumentSearch } from "redux/services/documentServices";
-import { getDocCategoriesHaveAll } from "redux/services/documentCategoryServices";
+import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -31,14 +31,14 @@ class DocumentApproving extends Component {
         }
 
         this.searchParamObject = {
-            "page": 1,
+            "paginator": 1,
             "category": null,
-            "documentState": '',
-            "searchTerm": '',
+            // "documentState": '',
+            // "searchTerm": '',
         }
 
         setQueryParam(this.queryParamObject)
-        this.props.getDocCategoriesHaveAll();
+        this.props.getDocumentCategoriesHaveAll();
         this.props.getDocumentSearch(this.searchParamObject);
     }
 
@@ -61,7 +61,7 @@ class DocumentApproving extends Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             "category": selectedOption.id,
-            page: 1
+            paginator: 1
         }
         this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
@@ -85,7 +85,7 @@ class DocumentApproving extends Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             sort: selectedOption.sort,
-            "page": 1
+            "paginator": 1
         }
         this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
@@ -93,7 +93,7 @@ class DocumentApproving extends Component {
 
     onSearchTermChange = () => {
 
-        this.searchParamObject = { ...this.searchParamObject, page: 1, searchTerm: document.querySelector('.dm.p-searchbar-input').value };
+        this.searchParamObject = { ...this.searchParamObject, paginator: 1, searchTerm: document.querySelector('.dm.p-searchbar-input').value };
         this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
     }
@@ -103,7 +103,7 @@ class DocumentApproving extends Component {
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
-                page: this.searchParamObject.page,
+                paginator: this.searchParamObject.page,
             }
         setQueryParam(this.queryParamObject);
 
@@ -188,31 +188,40 @@ class DocumentApproving extends Component {
         if (!this.props.isListLoading && this.props.documentsList) {
             this.documentsList = this.props.documentsList.map((item) => {
                 return <div className="item-container">
-                    <DocumentSummaryMetadata
-                        type={itemType.mySelf}
-                        id={item.id}
-                        authorName={item.authorName}
-                        authorID={item.authorID}
-                        publishDtm={item.publishDtm}
-                        categoryName={item.categoryName}
-                        categoryID={item.categoryID}
-                        title={item.title}
-                        summary={item.summary}
-                        imageURL={item.imageURL}
-                        readingTime={item.readingTime}
-                        approveState={item.documentState}
-                        popUpMenuPrefix="dmpu"   //stand for my document popup 
-                        authorAvatarURL={item.authorAvatarURL}
-                        //
-                        reloadList={() => this.reloadList()}
-                    />
-                    <DocumentNormalReactionbar
-                        id={item.id}
-                        likeCount={item.likeCount}
-                        commentCount={item.commentCount}
-                        likedStatus={item.likeStatus}
-                        savedStatus={item.savedStatus}
-                    />
+                    <div className="item-container" key={item.id}>
+                        <DocumentSummaryMetadata
+                            type={itemType.mySelf}
+                            id={item.id}
+                            authorName={item.authorName}
+                            authorID={item.authorID}
+                            publishDtm={item.publishDtm}
+                            categoryName={item.categoryName}
+                            categoryID={item.categoryID}
+                            subjectName={item.documentSubject}
+                            subjectID={item.documentSubjectID}
+
+                            title={item.title}
+                            // fileName={item.fileName}
+                            fileName={"Demo file name.pdf"}
+                            description={item.description}
+                            imageURL={item.imageURL}
+                            readingTime={item.readingTime}
+                            approveState={item.docState}
+                            popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                            authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                            //
+                            reloadList={() => this.reloadList()}
+                        />
+                        <DocumentNormalReactionbar
+                            id={item.id}
+                            likeCount={item.likeCount ? item.likeCount : 2}
+                            dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                            docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
+                            commentCount={item.commentCount ? item.commentCount : 10}
+                            downloadCount={item.downloadCount ? item.downloadCount : 21}
+                            viewCount={item.viewCount ? item.viewCount : 1200}
+                        />
+                    </div >
                 </div >
             }
             )
@@ -278,7 +287,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentSearch, getDocCategoriesHaveAll
+    getDocumentSearch, getDocumentCategoriesHaveAll
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentApproving));

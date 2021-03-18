@@ -93,7 +93,7 @@ class PostApproving extends Component {
                                 selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="post-approving-category-filter-combobox"
+                                id="post-approval-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -131,7 +131,7 @@ class PostApproving extends Component {
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.postState}
-                        popUpMenuPrefix="papu"   //stand for post approving popup 
+                        popUpMenuPrefix="papu"   //stand for post approval popup 
                         authorAvatarURL={item.authorAvatarURL}
                         //
                         reloadList={() => this.reloadList()}

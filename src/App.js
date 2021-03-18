@@ -23,9 +23,7 @@ import Video from "pages/common/ChapterDetail/Video"
 import CoursesList from "pages/common/CoursesList/CoursesList"
 import ChaptersList from "pages/common/HeadingsList/HeadingsList"
 import PostsList from 'pages/common/PostsList/PostsList'
-import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import PostApproving from 'pages/management/PostManagement/PostApproving'
-import DocumentApproving from 'pages/management/DocumentApproving/DocumentApproving'
 import NotificationManagement from 'pages/management/NotificationManagement/NotificationManagement'
 import CategoryManagement from 'pages/management/NotificationManagement/NotificationManagement'
 import Statistic from 'pages/management/Statistic/Statistic'
@@ -37,15 +35,23 @@ import SearchCourses from 'pages/common/SearchResult/SearchCourses'
 import UploadDocument from 'pages/user/UploadDocument/UploadDocument'
 import CreatePost from 'pages/user/CreatePost/CreatePost'
 import ActivityManagement from 'pages/management/ActivityManagement/ActivityManagement'
-import DocumentManagement from 'pages/management/DocumentManagement/DocumentManagement'
+
 import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement'
-import ModalManager from 'components/common/Modal/ModalManager'
-import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
-import ModalBigManager from 'components/common/Modal/ModalBigManager'
+
 import MyNotification from 'pages/user/MyActivities/MyActivities'
 import PostReportManagement from 'pages/management/PostManagement/PostReportManagement'
 import SavedPosts from 'pages/user/MyPosts/SavedPosts'
 
+import DocumentManagement from 'pages/management/DocumentManagement/DocumentManagement'
+import DocumentReportManagement from "pages/management/DocumentManagement/DocumentReportManagement";
+import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
+import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
+
+
+// modal
+import ModalManager from 'components/common/Modal/ModalManager'
+import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
+import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 const App = () => {
     return (
@@ -75,7 +81,7 @@ const App = () => {
                         {/* user layout */}
                         <Route exact path="/user" component={AccountInformation} />
                         <Route exact path="/user/update-password" component={UpdatePassword} />
-                        <Route exact path="/user/my-docs" component={MyDocuments} />
+                        <Route exact path="/user/my-documents" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
                         <Route exact path="/create-post" component={CreatePost} />
@@ -95,8 +101,10 @@ const App = () => {
                         <Route exact path="/admin/post-management/report" component={PostReportManagement} />
                         <Route exact path="/admin/post-management/approval" component={PostApproving} />
 
-                        <Route exact path="/admin/document-approving" component={DocumentApproving} />
+                        <Route exact path="/admin/document-management/approval" component={DocumentApproving} />
                         <Route exact path="/admin/document-management" component={DocumentManagement} />
+                        <Route exact path="/admin/document-management/report" component={DocumentReportManagement} />
+
                         <Route exact path="/admin/user-management" component={UserManagement} />
                         <Route exact path="/admin/page-notification" component={NotificationManagement} />
                         <Route exact path="/admin/category-management" component={CategoryManagement} />

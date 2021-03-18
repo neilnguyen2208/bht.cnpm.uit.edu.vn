@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Tag from "components/post/Tag"
 import { getDocumentSearch } from "redux/services/documentServices"
-import { getDocCategories } from "redux/services/documentCategoryServices"
+import { getDocumentCategories } from "redux/services/documentCategoryServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -18,7 +18,7 @@ class SearchDocument extends Component {
     constructor(props) {
         super(props);
 
-        this.documentSearchResult = [];
+        this.documentSearch = [];
 
         this.categoryFilters = [
             { id: 1, name: "Tất cả" },
@@ -35,7 +35,7 @@ class SearchDocument extends Component {
     }
 
     componentDidMount() {
-        this.props.getDocCategories();
+        this.props.getDocumentCategories();
         let searchParam = getQueryParamByName('q'); //querry
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
@@ -65,7 +65,7 @@ class SearchDocument extends Component {
     render() {
 
         if (!this.props.isListLoading) {
-            this.documentSearchResult = this.props.documentsList.map((documentItem) => (
+            this.documentSearch = this.props.documentsList.map((documentItem) => (
                 <SummaryInfo
                     type={itemType.normal}
                     key={documentItem.id}
@@ -126,7 +126,7 @@ class SearchDocument extends Component {
                                     < Loader /> :
                                     <div>
                                         <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {"20"}  </div>
-                                        <div >{this.documentSearchResult}</div>
+                                        <div >{this.documentSearch}</div>
                                     </div>
                             }
 
@@ -147,15 +147,15 @@ class SearchDocument extends Component {
 const mapStateToProps = (state) => {
     ;
     return {
-        documentsList: state.document.documentSearchResult.data,
-        docCategories: state.doc_category.categories.data,
-        isListLoading: state.document.documentSearchResult.isLoading,
-        isCategoryLoading: state.doc_category.categories.isLoading
+        documentsList: state.document.documentSearch.data,
+        docCategories: state.document_category.categories.data,
+        isListLoading: state.document.documentSearch.isLoading,
+        isCategoryLoading: state.document_category.categories.isLoading
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentSearch, getDocCategories
+    getDocumentSearch, getDocumentCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchDocument));

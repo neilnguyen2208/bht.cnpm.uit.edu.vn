@@ -12,7 +12,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getDocCategories } from "redux/services/documentCategoryServices";
+import { getDocumentCategories } from "redux/services/documentCategoryServices";
 
 //chuyen thanh chi xem nen chua co handle click cho cac item trong bang danh muc bai viet
 class CategoryManagement extends Component {
@@ -67,7 +67,7 @@ class CategoryManagement extends Component {
     }
 
     componentDidMount() {
-        this.props.getDocCategories();
+        this.props.getDocumentCategories();
 
 
     }
@@ -296,13 +296,13 @@ class CategoryManagement extends Component {
 //#region for Redux
 const mapStateToProps = (state) => {
     return {
-        categoryList: state.doc_categories,
+        categoryList: state.document_categories,
 
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocCategories,
+    getDocumentCategories,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryManagement));

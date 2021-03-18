@@ -294,7 +294,7 @@ class DocumentDetail extends Component {
     }
 
     navigateToSameCategoryDocsPage = () => {
-        window.location.href = "/docs/category?id=" + this.categoryID;
+        window.location.href = "/documents/category?id=" + this.categoryID;
     }
     //#endregion
 

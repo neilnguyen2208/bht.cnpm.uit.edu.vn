@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 
 //services
 import { getDocumentsList } from "redux/services/documentServices"
-import { getDocCategories } from "redux/services/documentCategoryServices"
+import { getDocumentCategories } from "redux/services/documentCategoryServices"
 
 //utils
 import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
@@ -35,7 +35,7 @@ class DocumentsList extends Component {
     }
 
     componentDidMount() {
-        this.props.getDocCategories()
+        this.props.getDocumentCategories()
 
         //get filter
         let page = getQueryParamByName('page');
@@ -138,14 +138,14 @@ class DocumentsList extends Component {
 const mapStateToProps = (state) => {
     
     return {
-        documentsList: state.document.documentSearchResult.data,
-        isListLoading: state.document.documentSearchResult.isLoading,
-        isCategoryLoading: state.doc_category.categories.isLoading
+        documentsList: state.document.documentSearch.data,
+        isListLoading: state.document.documentSearch.isLoading,
+        isCategoryLoading: state.document_category.categories.isLoading
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentsList, getDocCategories
+    getDocumentsList, getDocumentCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentsList));

@@ -1,32 +1,32 @@
 import {
-    get_DocCategoriesSuccess,
-    get_DocCategoriesHaveAllSuccess,
-    get_DocCategoriesRequest,
-    get_DocCategoriesFailure
+    get_DocumentCategoriesSuccess,
+    get_DocumentCategoriesHaveAllSuccess,
+    get_DocumentCategoriesRequest,
+    get_DocumentCategoriesFailure
 } from "redux/actions/documentCategoryAction.js";
 
 import { request } from 'utils/requestUtils';
 
-export function getDocCategories() {
+export function getDocumentCategories() {
     return dispatch => {
-        dispatch(get_DocCategoriesRequest());
+        dispatch(get_DocumentCategoriesRequest());
         request.get('/documents/categories')
             .then(response => {
-                dispatch(get_DocCategoriesSuccess(response.data))
+                dispatch(get_DocumentCategoriesSuccess(response.data))
             })
-            .catch(error => dispatch(get_DocCategoriesFailure(error)))
+            .catch(error => dispatch(get_DocumentCategoriesFailure(error)))
     }
 }
 
-export function getDocCategoriesHaveAll() { //co truong tat ca hay khong
+export function getDocumentCategoriesHaveAll() { //co truong tat ca hay khong
     return dispatch => {
-        dispatch(get_DocCategoriesRequest());
+        dispatch(get_DocumentCategoriesRequest());
         request.get(`/documents/categories`).then(response => {
-            dispatch(get_DocCategoriesHaveAllSuccess(response.data));
+            dispatch(get_DocumentCategoriesHaveAllSuccess(response.data));
         })
             .catch(error => {
                 console.log(error);
-                dispatch(get_DocCategoriesFailure());
+                dispatch(get_DocumentCategoriesFailure());
             });
 
     }

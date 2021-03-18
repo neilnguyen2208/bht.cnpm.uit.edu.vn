@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getDocCategories } from "redux/services/documentCategoryServices";
+import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getDocumentSubjects } from "redux/services/documentSubjectServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { uploadADocument } from "redux/services/documentServices"
@@ -108,7 +108,7 @@ class UploadDocument extends Component {
     }
 
     componentDidMount() {
-        this.props.getDocCategories();
+        this.props.getDocumentCategories();
         this.props.getDocumentSubjects();
 
         document.querySelector(".cr-document-form-container.preview").classList.remove("d-block");
@@ -577,10 +577,10 @@ class UploadDocument extends Component {
 const mapStateToProps = (state) => {
     return {
         //category and subject
-        categories: state.doc_category.categories.data,
-        isCategoryLoading: state.doc_category.categories.isLoading,
-        subjects: state.doc_subject.subjects.data,
-        isSubjectLoading: state.doc_subject.subjects.isLoading,
+        categories: state.document_category.categories.data,
+        isCategoryLoading: state.document_category.categories.isLoading,
+        subjects: state.document_subject.subjects.data,
+        isSubjectLoading: state.document_subject.subjects.isLoading,
 
         //tah
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
@@ -594,7 +594,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocCategories,
+    getDocumentCategories,
     getDocumentSubjects,
     getTagQuickQueryResult,
     uploadADocument

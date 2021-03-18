@@ -74,16 +74,16 @@ class CourseSummaryItem extends Component {
   }
 
   navigateToSameCategoryDocsPage = () => {
-    window.location.href = "/docs/category?id=" + this.requestedCategoryID;
+    window.location.href = "/documents/category?id=" + this.requestedCategoryID;
   }
 
   handlerPreviewRequestedPost = () => {
     if (window.location.pathname.substring(0, 6) === "/admin") {
-      window.location.href = "/admin/document-approving/" + this.id;
+      window.location.href = "/admin/document-approval/" + this.id;
       return;
     }
     if (window.location.pathname.substring(0, 5) === "/user")
-      window.location.href = "/user/document-approving/" + this.id;
+      window.location.href = "/user/document-approval/" + this.id;
 
   }
 

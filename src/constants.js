@@ -1,4 +1,4 @@
-export const itemType = { approving: "APPROVAL", normal: "NORMAL", mySelf: "MY_SELF", report: "REPORT" }
+export const itemType = { approval: "APPROVAL", normal: "NORMAL", mySelf: "MY_SELF", report: "REPORT" }
 export const componentType = { document: "DOCUMENT", post: "POST" }
 export const approvalStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED", waitingForFeedback: "PENDING_FIX" }
 export const resolveType = { keep: "KEEP", delete: "DELETE" }

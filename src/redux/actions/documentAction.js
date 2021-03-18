@@ -4,6 +4,16 @@ import {
     GET_MY_DOCUMENTS_SUCCESS,
     GET_MY_DOCUMENTS_FAILURE,
 
+    //pending documents
+    GET_PENDING_DOCUMENTS_REQUEST,
+    GET_PENDING_DOCUMENTS_SUCCESS,
+    GET_PENDING_DOCUMENTS_FAILURE,
+
+    //reported documents
+    GET_REPORTED_DOCUMENTS_REQUEST,
+    GET_REPORTED_DOCUMENTS_SUCCESS,
+    GET_REPORTED_DOCUMENTS_FAILURE,
+
     //documents list
     GET_DOCUMENTS_LIST_REQUEST,
     GET_DOCUMENTS_LIST_SUCCESS,
@@ -44,6 +54,50 @@ export function get_MyDocumentsFailure(error) {
     }
 }
 
+//my documents
+export function get_PendingDocumentsRequest() {
+    return {
+        type: GET_PENDING_DOCUMENTS_REQUEST,
+    }
+}
+
+export function get_PendingDocumentsSuccess(data) {
+    return {
+        type: GET_PENDING_DOCUMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_PendingDocumentsFailure(error) {
+    return {
+        type: GET_PENDING_DOCUMENTS_FAILURE,
+        payload: error
+    }
+}
+
+
+//my documents
+export function get_ReportedDocumentsRequest() {
+    return {
+        type: GET_REPORTED_DOCUMENTS_REQUEST,
+    }
+}
+
+export function get_ReportedDocumentsSuccess(data) {
+    return {
+        type: GET_REPORTED_DOCUMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ReportedDocumentsFailure(error) {
+    return {
+        type: GET_REPORTED_DOCUMENTS_FAILURE,
+        payload: error
+    }
+}
+
+
 //documents list
 export function get_DocumentsListRequest() {
     return {
@@ -66,20 +120,20 @@ export function get_DocumentsListFailure(error) {
 }
 
 //document search result
-export function get_DocumentSearchResultRequest() {
+export function get_DocumentSearchRequest() {
     return {
         type: GET_DOCUMENT_SEARCH_REQUEST,
     }
 }
 
-export function get_DocumentSearchResultSuccess(data) {
+export function get_DocumentSearchSuccess(data) {
     return {
         type: GET_DOCUMENT_SEARCH_SUCCESS,
         payload: data
     }
 }
 
-export function get_DocumentSearchResultFailure(error) {
+export function get_DocumentSearchFailure(error) {
     return {
         type: GET_DOCUMENT_SEARCH_FAILURE,
         payload: error

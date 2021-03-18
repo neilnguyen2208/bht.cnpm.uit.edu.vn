@@ -6,7 +6,7 @@ import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
 import { getMyDocuments } from "redux/services/documentServices";
-import { getDocCategoriesHaveAll } from "redux/services/documentCategoryServices";
+import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices";
 import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
 import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
@@ -16,8 +16,8 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import UserSidebar from 'layouts/UserSidebar'
-import DocumentsNormalReactionbar from 'components/document/NormalReactionbar'
-import DocumentsSummaryMetadata from 'components/document/SummaryInfo'
+import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
+import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import store from 'redux/store/index'
 
 import { delete_ADocumentReset, put_EditADocumentReset } from 'redux/actions/documentAction'
@@ -43,7 +43,7 @@ class MyDocuments extends Component {
 
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
-        this.props.getDocCategoriesHaveAll();
+        this.props.getDocumentCategoriesHaveAll();
         this.props.getDocumentSubjectsHaveAll();
         this.props.getMyDocuments(this.searchParamObject);
     }
@@ -172,7 +172,7 @@ class MyDocuments extends Component {
             if (this.props.myDocumentsList.length !== 0)
                 this.myDocumentsList = this.props.myDocumentsList.map((item) => {
                     return <div className="item-container" key = {item.id}>
-                        <DocumentsSummaryMetadata
+                        <DocumentSummaryMetadata
                             type={itemType.mySelf}
                             id={item.id}
                             authorName={item.authorName}
@@ -195,7 +195,7 @@ class MyDocuments extends Component {
                             //
                             reloadList={() => this.reloadList()}
                         />
-                        <DocumentsNormalReactionbar
+                        <DocumentNormalReactionbar
                             id={item.id}
                             likeCount={item.likeCount ? item.likeCount : 2}
                             dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
@@ -258,13 +258,13 @@ const mapStateToProps = (state) => {
     return {
         //
         myDocumentsList: state.document.myDocuments.data,
-        categories: state.doc_category.categories.searchData,
-        subjects: state.doc_subject.subjects.searchData,
+        categories: state.document_category.categories.searchData,
+        subjects: state.document_subject.subjects.searchData,
         totalPages: state.document.myDocuments.totalPages,
         totalElements: state.document.myDocuments.totalElements,
         isListLoading: state.document.myDocuments.isLoading,
-        isCategoryLoading: state.doc_category.categories.isLoading,
-        isSubjectLoading: state.doc_subject.subjects.isLoading,
+        isCategoryLoading: state.document_category.categories.isLoading,
+        isSubjectLoading: state.document_subject.subjects.isLoading,
 
         //handle 2 actions: delete and edit
         isHaveDeleted: state.document.isHaveDeleted,
@@ -276,7 +276,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getMyDocuments,
-    getDocCategoriesHaveAll,
+    getDocumentCategoriesHaveAll,
     getDocumentSubjectsHaveAll,
 
 }, dispatch);

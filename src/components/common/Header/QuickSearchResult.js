@@ -41,7 +41,7 @@ class QuickSearchResult extends React.PureComponent {
                     </div> : <></>
                 }
                 {this.props.quickSearchResultData.docQuickSearchResults.length > 0 ?
-                    <div className='w-100-percents' id="quick-search-doc-result-port">
+                    <div className='w-100-percents' id="quick-search-document-result-port">
                         <div className="qs-type-title">TÀI LIỆU</div>
                         {this.props.quickSearchResultData.docQuickSearchResults.map(result =>
                             <Link to={`/documents/${result.id}`}>

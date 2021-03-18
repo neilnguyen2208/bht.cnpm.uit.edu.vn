@@ -46,8 +46,8 @@ const PermissionList = {
         View: { CategoryView: "CATEGORY_VIEW" },
         All: {
             CategoryView: "CATEGORY_VIEW",
-            DocCategoryAdd: "DOC_CATEGORY_ADD",
-            DocCategoryEdit: "DOC_CATEGORY_EDIT",
+            DocCategoryAdd: "DOCUMENT_CATEGORY_ADD",
+            DocCategoryEdit: "DOCUMENT_CATEGORY_EDIT",
             PostCategoryAdd: "POST_CATEGORY_ADD",
             PostCategoryEdit: "POST_CATEGORY_EDIT",
             SubjectCategoryAdd: "SUBJECT_CATEGORY_ADD",
@@ -56,11 +56,11 @@ const PermissionList = {
             SemesterCategoryEdit: "SEMESTER_CATEGORY_EDIT",
         },
         DocCategory: {
-            Add: { DocCategoryAdd: "DOC_CATEGORY_ADD" },
-            Edit: { DocCategoryEdit: "DOC_CATEGORY_EDIT" },
+            Add: { DocCategoryAdd: "DOCUMENT_CATEGORY_ADD" },
+            Edit: { DocCategoryEdit: "DOCUMENT_CATEGORY_EDIT" },
             All: {
-                DocCategoryAdd: "DOC_CATEGORY_ADD",
-                DocCategoryEdit: "DOC_CATEGORY_EDIT"
+                DocCategoryAdd: "DOCUMENT_CATEGORY_ADD",
+                DocCategoryEdit: "DOCUMENT_CATEGORY_EDIT"
             }
         },
         PostCategory:

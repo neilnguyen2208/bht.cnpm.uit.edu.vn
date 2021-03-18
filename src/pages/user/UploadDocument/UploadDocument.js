@@ -3,17 +3,17 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getDocCategories } from "redux/services/docCategoryServices";
-import { getDocumentSubjects } from "redux/services/docSubjectServices";
+import { getDocCategories } from "redux/services/documentCategoryServices";
+import { getDocumentSubjects } from "redux/services/documentSubjectServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { uploadADocument } from "redux/services/docServices"
+import { uploadADocument } from "redux/services/documentServices"
 import "./UploadDocument.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
 
 //components
-import Tag from "components/doc/Tag";
+import Tag from "components/document/Tag";
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
@@ -35,14 +35,14 @@ const validationCondition = {
     form: '#create-document-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('cr-doc-title', 'text-input', 'Tên tài liệu không được để trống!'),
-        validation.noSpecialChar('cr-doc-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
-        validation.isRequired('cr-doc-category-combobox', 'combobox', 'Danh mục không được để trống'),
-        validation.isRequired('cr-doc-subject-combobox', 'combobox', 'Môn học không được để trống'),
-        validation.isRequired('cr-doc-description', 'ckeditor', 'Mô tả tài liệu không được để trống'),
-        validation.isRequired('cr-doc-file-input', 'file-input', 'Tài liệu không được để trống!'),
-        validation.maxFileCount('cr-doc-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
-        validation.maxFileSize('cr-doc-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
+        validation.isRequired('cr-document-title', 'text-input', 'Tên tài liệu không được để trống!'),
+        validation.noSpecialChar('cr-document-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
+        validation.isRequired('cr-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('cr-document-subject-combobox', 'combobox', 'Môn học không được để trống'),
+        validation.isRequired('cr-document-description', 'ckeditor', 'Mô tả tài liệu không được để trống'),
+        validation.isRequired('cr-document-file-input', 'file-input', 'Tài liệu không được để trống!'),
+        validation.maxFileCount('cr-document-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
+        validation.maxFileSize('cr-document-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
     ],
 }
 
@@ -59,7 +59,7 @@ class UploadDocument extends Component {
             isPreview: false,
             isSearchingTag: false,
 
-            UPLOAD_DOC_DTO: {
+            UPLOAD_DOCUMENT_DTO: {
                 tags: [],
                 title: "Model View Presenter (MVP) in Android with a simple demo project.",//
                 description: ``,//
@@ -111,10 +111,10 @@ class UploadDocument extends Component {
         this.props.getDocCategories();
         this.props.getDocumentSubjects();
 
-        document.querySelector(".cr-doc-form-container.preview").classList.remove("d-block");
-        document.querySelector(".cr-doc-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-doc-form-container.preview").classList.add("d-none");
-        document.querySelector(".cr-doc-form-container.edit").classList.add("d-block");
+        document.querySelector(".cr-document-form-container.preview").classList.remove("d-block");
+        document.querySelector(".cr-document-form-container.edit").classList.remove("d-none");
+        document.querySelector(".cr-document-form-container.preview").classList.add("d-none");
+        document.querySelector(".cr-document-form-container.edit").classList.add("d-block");
         validation(validationCondition);
     }
 
@@ -124,29 +124,29 @@ class UploadDocument extends Component {
 
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
-            UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, categoryID: selectedOption.id },
+            UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, categoryID: selectedOption.id },
             currentCategory: selectedOption.name
         })
     }
 
     onSubjectOptionChanged = (selectedOption) => {
         this.setState({
-            UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, subjectID: selectedOption.id },
+            UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, subjectID: selectedOption.id },
             currentSubject: selectedOption.name
         })
     }
 
     handleUploadBtnClick = () => {
         if (styleFormSubmit(validationCondition)) {
-            this.props.uploadADocument(this.state.UPLOAD_DOC_DTO, this.state.fileDTO);
+            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.state.fileDTO);
         }
 
     }
 
     //#region  tag region
     closeQuickSearchTag = () => {
-        document.getElementById("cr-doc-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("cr-doc-qs-tag-result-container").classList.remove('show');
+        document.getElementById("cr-document-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("cr-document-qs-tag-result-container").classList.remove('show');
     }
 
     quickSearchTags = (e) => {
@@ -165,13 +165,13 @@ class UploadDocument extends Component {
 
         this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), DELAY_TIME);
 
-        document.getElementById("cr-doc-qs-tag-result-container").classList.add('show');
-        document.getElementById("cr-doc-qs-tag-result-container").classList.remove('hidden');
+        document.getElementById("cr-document-qs-tag-result-container").classList.add('show');
+        document.getElementById("cr-document-qs-tag-result-container").classList.remove('hidden');
     }
 
     keyHandler = (e) => {
         if (!e.target.value) return;
-        let tags = this.state.UPLOAD_DOC_DTO.tags;
+        let tags = this.state.UPLOAD_DOCUMENT_DTO.tags;
         let hasOldTag = -1; // khong cos => -1 neu co => id cua tag 
         if (e.charCode === 13) { //press Enter    
 
@@ -190,8 +190,8 @@ class UploadDocument extends Component {
                 }
 
                 //dong search container
-                document.getElementById("cr-doc-qs-tag-result-container").classList.add('hidden');
-                document.getElementById("cr-doc-qs-tag-result-container").classList.remove('show');
+                document.getElementById("cr-document-qs-tag-result-container").classList.add('hidden');
+                document.getElementById("cr-document-qs-tag-result-container").classList.remove('show');
 
                 //tao moi hoac dung lai tag cu
                 let tmpShownTag = this.shownTag;
@@ -213,8 +213,8 @@ class UploadDocument extends Component {
                 }
 
                 this.setState({
-                    UPLOAD_DOC_DTO: {
-                        ...this.state.UPLOAD_DOC_DTO,
+                    UPLOAD_DOCUMENT_DTO: {
+                        ...this.state.UPLOAD_DOCUMENT_DTO,
                         tags: tags
                     }
                 });
@@ -252,7 +252,7 @@ class UploadDocument extends Component {
             return;
         }
 
-        let tmpTagDTO = this.state.UPLOAD_DOC_DTO.tags;
+        let tmpTagDTO = this.state.UPLOAD_DOCUMENT_DTO.tags;
         tmpTagDTO.push({ id: tag.id });
 
         //cap nhat lai shownTag theo tmpDTO
@@ -264,12 +264,12 @@ class UploadDocument extends Component {
         }
 
         //cap nhat lai shown tag tu state
-        document.getElementById("cr-doc-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("cr-doc-qs-tag-result-container").classList.remove('show');
+        document.getElementById("cr-document-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("cr-document-qs-tag-result-container").classList.remove('show');
 
         this.setState({
-            UPLOAD_DOC_DTO: {
-                ...this.state.UPLOAD_DOC_DTO,
+            UPLOAD_DOCUMENT_DTO: {
+                ...this.state.UPLOAD_DOCUMENT_DTO,
                 tags: tmpTagDTO
             }
         });
@@ -313,8 +313,8 @@ class UploadDocument extends Component {
 
         //cap nhat lai DTO theo tmpDTO
         this.setState({
-            UPLOAD_DOC_DTO: {
-                ...this.state.UPLOAD_DOC_DTO,
+            UPLOAD_DOCUMENT_DTO: {
+                ...this.state.UPLOAD_DOCUMENT_DTO,
                 tags: tempTagDTO,
             }
         });
@@ -324,15 +324,15 @@ class UploadDocument extends Component {
     //#endregion
     handleEditorChange = (value) => {
         // let dom = document.createElement("DIV");
-        // dom.innerHTML = this.state.UPLOAD_DOC_DTO.content;
+        // dom.innerHTML = this.state.UPLOAD_DOCUMENT_DTO.content;
         // let plain_text = (dom.textContent || dom.innerText);
-        this.setState({ UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, description: value } });
+        this.setState({ UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, description: value } });
 
     };
 
     handleTitleChange = (e) => {
         this.setState({
-            UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, title: e.target.value }
+            UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, title: e.target.value }
         })
     }
 
@@ -340,7 +340,7 @@ class UploadDocument extends Component {
         //gan cho state
         // console.log(files[0]);
         // if (files.length > 0)
-        // this.setState({ ...this.state, fileDTO: files[0], UPLOAD_DOC_DTO: { ...this.state.UPLOAD_DOC_DTO, fileName: files[0].name } })
+        // this.setState({ ...this.state, fileDTO: files[0], UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, fileName: files[0].name } })
         this.setState({ ...this.state, fileDTO: files[0] })
 
     }
@@ -351,7 +351,7 @@ class UploadDocument extends Component {
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
-            document.getElementById("cr-doc-tag-container-tip-label").innerText = "";
+            document.getElementById("cr-document-tag-container-tip-label").innerText = "";
         }
         else
             if (this.props.isTagQuickQueryLoadDone) {
@@ -361,22 +361,22 @@ class UploadDocument extends Component {
                 if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
-                    if (this.state.UPLOAD_DOC_DTO.tags.length < 5) {
-                        document.getElementById("cr-doc-tag-input").classList.remove('invalid');
+                    if (this.state.UPLOAD_DOCUMENT_DTO.tags.length < 5) {
+                        document.getElementById("cr-document-tag-input").classList.remove('invalid');
                         if (this.props.tagQuickQueryResult.length === 0)
-                            document.getElementById("cr-doc-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
+                            document.getElementById("cr-document-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
-                            document.getElementById("cr-doc-tag-container-tip-label").innerText = "Chọn tag phù hợp với tài liệu của bạn.";
+                            document.getElementById("cr-document-tag-container-tip-label").innerText = "Chọn tag phù hợp với tài liệu của bạn.";
                     }
                     else {
-                        document.getElementById("cr-doc-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        document.getElementById("cr-doc-tag-input").classList.add('invalid');
+                        document.getElementById("cr-document-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
+                        document.getElementById("cr-document-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
                             {this.props.tagQuickQueryResult.map(tag => {
                                 return <div className="tag-search-item"
-                                    onClick={() => { this.state.UPLOAD_DOC_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                    onClick={() => { this.state.UPLOAD_DOCUMENT_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
                                     <div className="tag-search-item-content">  {tag.content}</div>
                                 </div>
                             })}
@@ -390,15 +390,15 @@ class UploadDocument extends Component {
         let body =
             <div>
                 {/* Preview region */}
-                <div className="cr-doc-form-container doc-post-detail preview" >
-                    <Metadata title={this.state.UPLOAD_DOC_DTO.title}
+                <div className="cr-document-form-container document-post-detail preview" >
+                    <Metadata title={this.state.UPLOAD_DOCUMENT_DTO.title}
                         category={this.state.currentCategory}
-                        readingTime={this.state.UPLOAD_DOC_DTO.readingTime}
+                        readingTime={this.state.UPLOAD_DOCUMENT_DTO.readingTime}
                         authorName={this.state.author.displayName}
                         authorAvartarURL={this.state.author.avatarURL}
                         publishDtm={this.state.publishDtm}
                     />
-                    <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.UPLOAD_DOC_DTO.content }} />
+                    <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.UPLOAD_DOCUMENT_DTO.content }} />
 
                     <div className="mg-top-10px" >
                         {this.shownTag.map(item =>
@@ -410,13 +410,13 @@ class UploadDocument extends Component {
                 </div>
 
                 {/* Edit region */}
-                <div className="cr-doc-form-container edit">
+                <div className="cr-document-form-container edit">
                     <div id="create-document-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
                         <div className="mg-top-10px" />
 
                         <div className="form-group">
                             <label className="form-label-required">Tiêu đề:</label>
-                            <input className="text-input" id="cr-doc-title"
+                            <input className="text-input" id="cr-document-title"
                                 placeholder="Nhập tiêu đề tài liệu ..." onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
                             <div className="form-error-label-container">
@@ -429,7 +429,7 @@ class UploadDocument extends Component {
                             <div className="form-label-required">Mô tả tài liệu:</div>
                             <Editor
                                 config={SimpleCKEToolbarConfiguration}
-                                id="cr-doc-description"
+                                id="cr-document-description"
                                 placeholder='Start typing here...'
                                 onChange={this.handleEditorChange}
                                 data="<p>Nhập nội dung tài liệu ...</p>"
@@ -443,7 +443,7 @@ class UploadDocument extends Component {
                         {/* Category */}
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
-                            <Combobox id="cr-doc-category-combobox"
+                            <Combobox id="cr-document-category-combobox"
                                 options={(!this.props.isCategoryLoading && this.props.categories) ? this.props.categories : [{ id: 1, name: "Chọn danh mục" }]}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"
@@ -458,7 +458,7 @@ class UploadDocument extends Component {
                         {/* Subject */}
                         <div className="form-group" >
                             <label className="form-label-required">Môn học:</label>
-                            <Combobox id="cr-doc-subject-combobox"
+                            <Combobox id="cr-document-subject-combobox"
                                 options={(!this.props.isSubjectLoading && this.props.subjects) ? this.props.subjects : [{ id: 1, name: "Chọn môn học" }]}
                                 onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
                                 placeHolder="Chọn môn học"
@@ -474,20 +474,20 @@ class UploadDocument extends Component {
                         <div className='form-group'>
                             <label className="form-label">Tags:</label>
 
-                            <input onChange={(e) => this.quickSearchTags(e)} id="cr-doc-tag-input"
-                                onKeyPress={(this.state.UPLOAD_DOC_DTO.tags.length < 5) && this.keyHandler}
+                            <input onChange={(e) => this.quickSearchTags(e)} id="cr-document-tag-input"
+                                onKeyPress={(this.state.UPLOAD_DOCUMENT_DTO.tags.length < 5) && this.keyHandler}
                                 className="text-input"
                                 placeholder="Nhập tag ..." />
 
                             <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                 {/* khi load xong thi ntn */}
-                                <div id="cr-doc-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                <div id="cr-document-qs-tag-result-container" className="text-input-dropdown-container hidden">
                                     <div className="text-input-dropdown">
                                         <div className="d-flex">
                                             {this.tagSearchResult}
                                         </div>
 
-                                        <div className="form-tip-label" id="cr-doc-tag-container-tip-label">
+                                        <div className="form-tip-label" id="cr-document-tag-container-tip-label">
 
                                         </div>
                                     </div>
@@ -509,7 +509,7 @@ class UploadDocument extends Component {
                         {/* Upload */}
                         <div className="form-group" >
                             <label className="form-label-required">Tài liệu:</label>
-                            <FormFileUploader id='cr-doc-file-input'
+                            <FormFileUploader id='cr-document-file-input'
                                 onFileChange={(file) => this.onFileChange(file)}
                                 maxSize={26214400} //byte
                                 fileType={".pdf"} //n
@@ -558,19 +558,19 @@ class UploadDocument extends Component {
 
     onEditBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-doc-form-container.preview").classList.remove("d-block");
-        document.querySelector(".cr-doc-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-doc-form-container.preview").classList.add("d-none");
-        document.querySelector(".cr-doc-form-container.edit").classList.add("d-block");
+        document.querySelector(".cr-document-form-container.preview").classList.remove("d-block");
+        document.querySelector(".cr-document-form-container.edit").classList.remove("d-none");
+        document.querySelector(".cr-document-form-container.preview").classList.add("d-none");
+        document.querySelector(".cr-document-form-container.edit").classList.add("d-block");
 
     }
 
     onPreviewBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-doc-form-container.preview").classList.add("d-block");
-        document.querySelector(".cr-doc-form-container.edit").classList.add("d-none");
-        document.querySelector(".cr-doc-form-container.preview").classList.remove("d-none");
-        document.querySelector(".cr-doc-form-container.edit").classList.remove("d-block");
+        document.querySelector(".cr-document-form-container.preview").classList.add("d-block");
+        document.querySelector(".cr-document-form-container.edit").classList.add("d-none");
+        document.querySelector(".cr-document-form-container.preview").classList.remove("d-none");
+        document.querySelector(".cr-document-form-container.edit").classList.remove("d-block");
     }
 }
 

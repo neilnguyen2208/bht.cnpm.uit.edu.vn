@@ -95,7 +95,7 @@ const App = () => {
                         <Route exact path="/admin/post-management/report" component={PostReportManagement} />
                         <Route exact path="/admin/post-management/approval" component={PostApproving} />
 
-                        <Route exact path="/admin/doc-approving" component={DocumentApproving} />
+                        <Route exact path="/admin/document-approving" component={DocumentApproving} />
                         <Route exact path="/admin/document-management" component={DocumentManagement} />
                         <Route exact path="/admin/user-management" component={UserManagement} />
                         <Route exact path="/admin/page-notification" component={NotificationManagement} />

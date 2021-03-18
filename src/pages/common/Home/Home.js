@@ -107,8 +107,8 @@ class Home extends Component {
                             title={item.title}
                             downloads={item.downloads}
                             views={item.views}
-                            docSubject={item.docSubject}
-                            docSubjectID={item.docSubjectID}
+                            documentSubject={item.documentSubject}
+                            documentSubjectID={item.documentSubjectID}
                         ></HomeDocumentItem>
                     })}
                 </div>

@@ -12,7 +12,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getDocCategories } from "redux/services/docCategoryServices";
+import { getDocCategories } from "redux/services/documentCategoryServices";
 
 //chuyen thanh chi xem nen chua co handle click cho cac item trong bang danh muc bai viet
 class CategoryManagement extends Component {
@@ -140,19 +140,19 @@ class CategoryManagement extends Component {
                         <div style={{ height: "5px" }}></div>
 
                         {/* Danh mục tài liệu */}
-                        <div className="Category_Type_Dropdown" id="management-parent-doc-categories-dropdown" onClick={() => this.handlerCategoryTypeDropDownClick("management-parent-doc-categories-dropdown", "management-parent-doc-categories-container")}>
+                        <div className="Category_Type_Dropdown" id="management-parent-document-categories-dropdown" onClick={() => this.handlerCategoryTypeDropDownClick("management-parent-document-categories-dropdown", "management-parent-document-categories-container")}>
                             <div>
                                 DANH MỤC TÀI LIỆU
                         </div>
                             <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                         </div>
 
-                        <div className="Category_Type_Dropdown_Container" id="management-parent-doc-categories-container">
+                        <div className="Category_Type_Dropdown_Container" id="management-parent-document-categories-container">
                             <div className="Category_Component_List mg-top-5px">
                                 <div className="Category_Component">
 
                                     {/* Danh sach cac danh muc tai lieu*/}
-                                    <div className="Category_Dropdown mg-top-15px" id="management-doc-categories-dropdown" onClick={() => this.handlerCategoryTypeDropDownClick("management-doc-categories-dropdown", "management-doc-categories-container")}>
+                                    <div className="Category_Dropdown mg-top-15px" id="management-document-categories-dropdown" onClick={() => this.handlerCategoryTypeDropDownClick("management-document-categories-dropdown", "management-document-categories-container")}>
                                         <div className="Category_Dropdown_Title">
                                             Danh sách danh mục:
                                         </div>
@@ -160,7 +160,7 @@ class CategoryManagement extends Component {
                                     </div>
 
                                     <ClickAwayListener onClickAway={() => { this.closeAllDocCategoryListItemActivated() }}>
-                                        <div className="Category_Dropdown_Container  mg-top-5px" id="management-doc-categories-container">
+                                        <div className="Category_Dropdown_Container  mg-top-5px" id="management-document-categories-container">
                                             <div className="custom-table-layout">
                                                 <div className="custom-table-header">
                                                     <div className="custom-table-20percents-column">Mã danh mục</div>
@@ -168,7 +168,7 @@ class CategoryManagement extends Component {
                                                 </div>
                                                 <div className="custom-table-layout" >
                                                     {this.documentCategoriesList.map(item =>
-                                                        <div className="Custom_Table_Item" name="Document-category_Custom_Table_Item" key={item.id} id={'management-doc-category-item-' + item.id} onClick={(e) => this.handerDocCategoryItemClick(e, item.id, item.name)}>
+                                                        <div className="Custom_Table_Item" name="Document-category_Custom_Table_Item" key={item.id} id={'management-document-category-item-' + item.id} onClick={(e) => this.handerDocCategoryItemClick(e, item.id, item.name)}>
                                                             <div className="Custom_Table_Item_20percents">{item.id}</div>
                                                             <div className="Custom_Table_Item_80percents">{item.name}</div>
                                                         </div>
@@ -266,7 +266,7 @@ class CategoryManagement extends Component {
             all_item[i].className = "Custom_Table_Item";
         }
 
-        let category_item = document.getElementById("management-doc-category-item-" + id);
+        let category_item = document.getElementById("management-document-category-item-" + id);
         // category_item.className
         category_item.className = "Custom_Table_Item_Activated";
 

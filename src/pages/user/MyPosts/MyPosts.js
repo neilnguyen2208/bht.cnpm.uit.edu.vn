@@ -42,12 +42,6 @@ class MyPosts extends Component {
         setQueryParam(this.queryParamObject);
 
         this.props.getPostCategoriesHaveAll();
-        this.searchParamObject = {
-            page: getQueryParamByName('page'),
-            "category.id": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
-            sort: 'publishDtm,desc',
-            postState: ''
-        }
         this.props.getMyPosts(this.searchParamObject);
     }
 
@@ -125,7 +119,7 @@ class MyPosts extends Component {
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
+                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : "0"}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
                                 id="my-post-list-category-filter-combobox"

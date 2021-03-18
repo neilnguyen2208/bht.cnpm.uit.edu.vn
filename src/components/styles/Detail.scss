@@ -1,4 +1,4 @@
-.doc-detail-container,
+.document-detail-container,
 .post-detail-container {
     position: relative;
     width: 100%;
@@ -16,20 +16,20 @@
 
 }
 
-.doc-detail-container.preview,
+.document-detail-container.preview,
 .post-detail-container.preview {
-    @extend .doc-detail-container;
+    @extend .document-detail-container;
     margin: auto;
 
 }
 
 
-.doc-detail-container .continue-read,
+.document-detail-container .continue-read,
 .post-detail-container .continue-read {
     display: none;
 }
 
-.doc-detail .view-count-down-count {
+.document-detail .view-count-down-count {
     margin-top: 30px;
     display: flex;
     font-family: "BarlowCondensed-Medium";
@@ -40,7 +40,7 @@
     margin-left: 5%;
 }
 
-.doc-detail .doc-live-preview {
+.document-detail .document-live-preview {
     margin-top: 5px;
     width: 100%;
     padding: 10px;
@@ -51,28 +51,6 @@
     border: 1px var(--gray) solid;
     border-radius: 5px;
     height: 660px;
-}
-
-.doc-detail .file-name {
-    width: fit-content;
-    margin-left: 5px;
-    display: flex;
-    justify-content: flex-start;
-    height: fit-content;
-    position: relative;
-    height: fit-content;
-    font-family: "BarlowCondensed-Medium";
-    font-size: 20px;
-    line-height: 20px;
-    display: flex;
-    color: var(--blue);
-    user-select: none;
-}
-
-.doc-detail .file-name:hover,
-.doc-detail .file-name:active {
-    opacity: 80%;
-    cursor: pointer;
 }
 
 //exclusive for custom pdf viewer (by overriding these classes in template)

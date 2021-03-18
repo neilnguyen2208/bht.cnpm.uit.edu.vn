@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Tag from "components/post/Tag"
-import { getDocumentSearchResult } from "redux/services/docServices"
-import { getDocCategories } from "redux/services/docCategoryServices"
+import { getDocumentSearch } from "redux/services/documentServices"
+import { getDocCategories } from "redux/services/documentCategoryServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
-import SummaryInfo from 'components/doc/SummaryInfo'
+import SummaryInfo from 'components/document/SummaryInfo'
 import Loader from 'components/common/Loader/Loader'
 import { itemType } from 'constants.js'
 import SearchHorizontalMenubar from './SearchHorizontalMenubar'
@@ -40,7 +40,7 @@ class SearchDocument extends Component {
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
 
-        this.props.getDocumentSearchResult(page, category, searchParam) //api khác, tìm bằng tag
+        this.props.getDocumentSearch(page, category, searchParam) //api khác, tìm bằng tag
     }
 
     //server paginator
@@ -49,7 +49,7 @@ class SearchDocument extends Component {
         let searchParam = getQueryParamByName('q'); //querry
         let page = getQueryParamByName('page');
         let category = getQueryParamByName('category');
-        this.props.getDocumentSearchResult(page ? page : 1, category ? category : "", searchParam ? searchParam : "");
+        this.props.getDocumentSearch(page ? page : 1, category ? category : "", searchParam ? searchParam : "");
         this.setState({});
     }
 
@@ -102,7 +102,7 @@ class SearchDocument extends Component {
                                         options={this.timeFilters}
                                         placeHolder="Chọn thời gian"
                                         onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
-                                        id="search-doc-time-filter-combobox"
+                                        id="search-document-time-filter-combobox"
                                     ></ComboBox>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@ class SearchDocument extends Component {
                                         options={this.categoryFilters}
                                         placeHolder="Chọn danh mục"
                                         onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
-                                        id="search-doc-category-filter-combobox"
+                                        id="search-document-category-filter-combobox"
                                     ></ComboBox>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentSearchResult, getDocCategories
+    getDocumentSearch, getDocCategories
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchDocument));

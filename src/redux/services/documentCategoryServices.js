@@ -3,7 +3,7 @@ import {
     get_DocCategoriesHaveAllSuccess,
     get_DocCategoriesRequest,
     get_DocCategoriesFailure
-} from "redux/actions/docCategoryAction.js";
+} from "redux/actions/documentCategoryAction.js";
 
 import { request } from 'utils/requestUtils';
 
@@ -21,7 +21,7 @@ export function getDocCategories() {
 export function getDocCategoriesHaveAll() { //co truong tat ca hay khong
     return dispatch => {
         dispatch(get_DocCategoriesRequest());
-        request.get(`/posts/categories`).then(response => {
+        request.get(`/documents/categories`).then(response => {
             dispatch(get_DocCategoriesHaveAllSuccess(response.data));
         })
             .catch(error => {

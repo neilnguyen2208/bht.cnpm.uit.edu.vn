@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import React, { Component } from 'react'
 
 //services
-import { getDocumentsList } from "redux/services/docServices"
-import { getDocCategories } from "redux/services/docCategoryServices"
+import { getDocumentsList } from "redux/services/documentServices"
+import { getDocCategories } from "redux/services/documentCategoryServices"
 
 //utils
 import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
@@ -15,7 +15,7 @@ import { itemType } from 'constants.js'
 //components
 import Loader from "components/common/Loader/Loader"
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import SummaryInfo from 'components/doc/SummaryInfo'
+import SummaryInfo from 'components/document/SummaryInfo'
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import ComboBox from 'components/common/Combobox/Combobox';
 
@@ -112,7 +112,7 @@ class DocumentsList extends Component {
                                     options={this.filter}
                                     selectedOptionID={1}
                                     onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
-                                    id="my-doc-list-search-filter-combobox"
+                                    id="my-document-list-search-filter-combobox"
                                 ></ComboBox></div>
                         </div>
 

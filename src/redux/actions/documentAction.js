@@ -17,6 +17,9 @@ import {
     UPLOAD_DOCUMENT_REQUEST, //to drive
     UPLOAD_DOCUMENT_SUCCESS,
     UPLOAD_DOCUMENT_FAILURE,
+    REACTION_A_DOCUMENT_REQUEST,
+    REACTION_A_DOCUMENT_SUCCESS,
+    REACTION_A_DOCUMENT_FAILURE,
 
 } from "../constants.js"
 
@@ -105,3 +108,20 @@ export function post_UploadDocumentFailure(notification) {
     }
 }
 
+export function post_ReactionADocumentRequest() {
+    return {
+        type: REACTION_A_DOCUMENT_REQUEST
+    }
+}
+
+export function post_ReactionADocumentSuccess() {
+    return {
+        type: REACTION_A_DOCUMENT_SUCCESS
+    }
+}
+
+export function post_ReactionADocumentFailure() {
+    return {
+        type: REACTION_A_DOCUMENT_FAILURE
+    }
+}

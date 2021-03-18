@@ -79,11 +79,11 @@ class CourseSummaryItem extends Component {
 
   handlerPreviewRequestedPost = () => {
     if (window.location.pathname.substring(0, 6) === "/admin") {
-      window.location.href = "/admin/doc-approving/" + this.id;
+      window.location.href = "/admin/document-approving/" + this.id;
       return;
     }
     if (window.location.pathname.substring(0, 5) === "/user")
-      window.location.href = "/user/doc-approving/" + this.id;
+      window.location.href = "/user/document-approving/" + this.id;
 
   }
 

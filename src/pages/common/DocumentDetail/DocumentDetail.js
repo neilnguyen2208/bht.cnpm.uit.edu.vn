@@ -105,22 +105,22 @@ class DocumentDetail extends Component {
 
         //render likeBtn
         if (!this.isLiked) {
-            likeBtn = <img className="doc-like-dislike-btn" alt="like" src={liked_btn} onClick={this.onLikeBtnClick}></img>
+            likeBtn = <img className="document-like-dislike-btn" alt="like" src={liked_btn} onClick={this.onLikeBtnClick}></img>
         }
         else {
-            likeBtn = <img className="doc-like-dislike-btn" alt="like" src={unliked_btn} onClick={this.onLikeBtnClick} ></img>
+            likeBtn = <img className="document-like-dislike-btn" alt="like" src={unliked_btn} onClick={this.onLikeBtnClick} ></img>
         }
 
         //render dislikeBtn
         if (!this.isDisliked) {
-            dislikeBtn = <img className="doc-like-dislike-btn" alt="dislike" src={dislike_btn} onClick={this.onDislikeBtnClick}></img>
+            dislikeBtn = <img className="document-like-dislike-btn" alt="dislike" src={dislike_btn} onClick={this.onDislikeBtnClick}></img>
         }
         else {
-            dislikeBtn = <img className="doc-like-dislike-btn" alt="dislike" src={undislike_btn} onClick={this.onDislikeBtnClick} ></img>
+            dislikeBtn = <img className="document-like-dislike-btn" alt="dislike" src={undislike_btn} onClick={this.onDislikeBtnClick} ></img>
         }
         return (
             <div>
-                <div className="doc-post-detail" >
+                <div className="document-post-detail" >
                     <div>
                         <div >
 
@@ -145,7 +145,7 @@ class DocumentDetail extends Component {
                                         <div className="posted-time">đã đăng vào ngày {this.uploadedTime}</div>
                                     </div>
                                 </div>
-                                <PopupMenu items={this.normalMenuItemList} id={`doc-item-popup-menu-${this.props.id}`} />
+                                <PopupMenu items={this.normalMenuItemList} id={`document-item-popup-menu-${this.props.id}`} />
 
                             </div>
 
@@ -153,7 +153,7 @@ class DocumentDetail extends Component {
                                 {this.content}
                             </div>
 
-                            <div className="doc-file-name"
+                            <div className="document-file-name"
                                 onClick={() => window.open("https://drive.google.com/file/d/" + this.linkFile + "/preview")}>
                                 {this.fileName}
                             </div>
@@ -168,12 +168,12 @@ class DocumentDetail extends Component {
                                 <div className="j-c-space-between">
                                     <div className="d-flex">
                                         <div> {likeBtn}</div>
-                                        <div className="doc-like-dislike-count">{this.props.likes}</div>
+                                        <div className="document-like-dislike-count">{this.props.likes}</div>
                                     </div>
 
                                     <div className="d-flex">
                                         <div> {dislikeBtn}</div>
-                                        <div className="doc-like-dislike-count">{this.props.dislikes}</div>
+                                        <div className="document-like-dislike-count">{this.props.dislikes}</div>
                                     </div>
                                 </div>
 
@@ -184,7 +184,7 @@ class DocumentDetail extends Component {
                             </div>
 
                             <div className="d-flex">
-                                <div className="doc-comment-count-container">
+                                <div className="document-comment-count-container">
                                     Bình luận
                                     <div className="comment-count">
                                         {this.props.commentCount}
@@ -198,7 +198,7 @@ class DocumentDetail extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="doc-live-preview">
+                        <div className="document-live-preview">
                             <PDFViewer
                                 document={{
                                     url: 'https://arxiv.org/pdf/quant-ph/0410100.pdf',

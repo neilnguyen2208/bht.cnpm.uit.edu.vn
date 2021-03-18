@@ -96,7 +96,7 @@
   min-width: 50px;
   display: flex;
   font-family: "BarlowSemiCondensed-Medium";
-  font-size: 15px;
+  font-size: 16px;
   line-height: 20px;
   color: var(--black);
   width: fit-content;
@@ -110,27 +110,6 @@
 .comment-btn-number {
   margin-left: 5px;
   font-family: "BarlowCondensed-Medium";
-}
-
-.doc-file-name {
-  width: fit-content;
-  margin-left: 5px;
-  display: flex;
-  justify-content: flex-start;
-  height: fit-content;
-  position: relative;
-  font-family: "BarlowCondensed-Medium";
-  font-size: 20px;
-  line-height: 1.0em;
-  color: var(--blue);
-  user-select: none;
-  margin-top: 5px;
-}
-
-.doc-file-name:hover,
-.doc-file-name:active {
-  opacity: 80%;
-  cursor: pointer;
 }
 
 .item-container_Tags_Layout {
@@ -148,21 +127,23 @@
   height: 20px;
 }
 
-.doc-like-dislike-btn {
-  width: 16px;
-  height: 16px;
-  margin-top: -4px;
+.document-like-btn,
+.document-dislike-btn {
+  width: 18px;
+  height: 18px;
+  // margin-top: -4px;
   cursor: pointer;
 }
 
-.doc-like-dislike-btn:hover {
+.document-like-btn:hover,
+.document-dislike-btn:hover {
   opacity: 80%;
 }
 
-.doc-like-dislike-count {
+.document-like-count {
   font-family: "BarlowCondensed-Medium";
-  font-size: 16px;
-  margin-top: 2px;
+  font-size: 18px;
+  margin-top: -1px;
   line-height: 20px;
   color: var(--black);
   margin-left: 5px;
@@ -172,7 +153,7 @@
   width: 100%;
   background: var(--gray);
   height: 3px;
-  margin-top: -2px;
+  margin-top: 2px;
   position: relative;
 
 }
@@ -180,42 +161,60 @@
 .like-rate-percent {
   position: absolute;
   background: var(--blue);
-  height: 3px;
+  height: 4px;
 }
 
-.doc-comment-count-container {
+.document-comment-count-container {
   @extend .comment-count-container;
-  margin-top: 3px;
-}
-
-
-.view-count-layout,
-.view-count {
-  display: flex;
-  padding-left: 15px;
-  font-family: "BarlowCondensed-Regular";
-  font-size: 18px;
-  line-height: 20px;
-  color: var(--black);
-  width: fit-content;
-  user-select: none;
-  margin-top: 3px;
-}
-
-.download-count-layout {
-  display: flex;
-  padding-left: 15px;
-  font-family: "BarlowCondensed-Regular";
-  font-size: 18px;
-  line-height: 20px;
-  color: var(--black);
-  width: fit-content;
-  user-select: none;
   margin-top: 2px;
+}
+
+.like-dislike-rate-bar {
+  margin-right: 5px;
+}
+
+.download-btn-container {
+  display: flex;
+  font-family: "BarlowCondensed-Medium";
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--black);
+  width: fit-content;
+  user-select: none;
+  margin-top: 5px;
+  max-width: 50px;
+  justify-content: space-between;
+  margin-left: 15px;
+}
+
+.view-count-container {
+  @extend .download-btn-container;
+  max-width: 50px;
+  margin-left: 0px;
+}
+
+.download-count,
+.view-count {
+  margin-left: 5px;
+  width: fit-content;
+}
+
+.blue-rate-percent-bar {
+  @extend .rate-percent-bar;
+  top: -5px;
+  background: var(--blue);
+  position: absolute;
+  width: 10px;
 }
 
 .download-btn {
   margin-top: 2px;
   width: 18px;
   height: 18px;
+}
+
+.preview-icon {
+  margin-top: 3px;
+  width: auto;
+  height: 16px;
 }

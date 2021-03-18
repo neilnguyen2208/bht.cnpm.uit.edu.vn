@@ -24,12 +24,16 @@ const initialState = {
     documentSearchResult: {
         isLoading: false,
         data: [],
-        error: ""
+        error: "",
+        totalPages: 0,
+        totalElements: 0
     },
     myDocuments: {
         isLoading: false,
         data: [],
-        error: ""
+        error: "",
+        totalPages: 0,
+        totalElements: 0
     },
     isHaveUploaded: false,
 
@@ -52,7 +56,14 @@ function DocReducer(state = initialState, action) {
             };
         case GET_MY_DOCUMENTS_SUCCESS:
             {
-                return { ...state, myDocuments: { isLoading: false, data: action.payload, error: '' } }
+                return {
+                    ...state, myDocuments: {
+                        isLoading: false,
+                        data: action.payload.docSummaryWithStateDTOs,
+                        totalElements: action.payload.totalElements,
+                        totalPages: action.payload.totalPages, error: ''
+                    }
+                }
             }
         case GET_MY_DOCUMENTS_FAILURE:
             {

@@ -83,7 +83,7 @@ class CourseSummaryItem extends Component {
 
           <div className="d-flex"  >
             <div className="metadata-label" style={{ marginLeft: "2px" }}>
-              Môn học:   {this.props.docSubject}
+              Môn học:   {this.props.documentSubject}
             </div>
           </div>
         </div>

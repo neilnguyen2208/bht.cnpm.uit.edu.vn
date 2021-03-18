@@ -96,7 +96,7 @@ class UserSidebar extends Component {
             //Hanh dong se lam trong lan render thanh cong dau tien
           }
 
-          < div className="Vertical_Menu_Layout"  >
+          < div className="vertical-menu-container"  >
             <div style={{ display: "block" }}>
               {/* Quan ly tai khoan menu item*/}
               <div className="Parent_Dropdown_Menu_Item" id="account-managent-parent-menu-item"
@@ -198,28 +198,28 @@ class UserSidebar extends Component {
 
 
               <div style={{ display: "block" }}>
-                <div className="Parent_Dropdown_Menu_Item" id="user-doc-managent-parent-menu-item"
+                <div className="Parent_Dropdown_Menu_Item" id="user-document-managent-parent-menu-item"
                   onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e,
-                    "user-doc-management-parent-menu-item",
-                    "user-doc-management-parent-menu-item-text",
-                    "user-doc-management-dropdown-btn-element",
-                    "user-doc-management-menu-item-container")
+                    "user-document-management-parent-menu-item",
+                    "user-document-management-parent-menu-item-text",
+                    "user-document-management-dropdown-btn-element",
+                    "user-document-management-menu-item-container")
                   }>
                   <div className="d-flex">
                     <img alt="*" className="vertical-menu-item-icon"
                       src={gray_nb_write_icon} />
                     <div className="side-bar-menu-item-text"
-                      id="user-doc-managent-parent-menu-item-text">
+                      id="user-document-managent-parent-menu-item-text">
                       {"Tài liệu"}
                     </div>
                   </div>
                   <img alt="v" className="Dropdown_Btn_Element"
                     src={dropdown_btn}
-                    id="user-doc-managent-parent-menu-item-text" />
+                    id="user-document-managent-parent-menu-item-text" />
                 </div >
 
                 <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container"
-                  id="user-doc-management-menu-item-container">
+                  id="user-document-management-menu-item-container">
                   <div className="mg-bottom-5px"></div>
 
                   <NavLink className="vertical-sub-menu-item"

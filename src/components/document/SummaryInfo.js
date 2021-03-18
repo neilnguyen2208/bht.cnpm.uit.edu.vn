@@ -133,20 +133,20 @@ class PostSummary extends Component {
       summary = <div>
         <div className="decoration-line mg-top-10px" />
         <img className="image" src={this.props.imageURL} alt="" />
-        <div className="summary-text mg-bottom-10px">
-          {this.props.summary}
+        <div className="summary-text mg-bottom-5px">
+          {this.props.description}
         </div>
       </div>
     }
     else
       if (this.props.summary && this.props.summary !== "null")
         summary = <div className="summary-text" >
-          {this.props.summary}
+          {this.props.description}
         </div >
       else
         summary = <div className="ck-editor-output" dangerouslySetInnerHTML={{
           __html:
-            this.props.content
+            this.props.description
         }} />
 
 
@@ -219,7 +219,8 @@ class PostSummary extends Component {
             <div className="d-flex" style={{ marginTop: "-5px" }}>
               <div className="d-flex"  >
                 <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+                  {/* {Math.ceil(this.props.readingTime / 60) + " phút đọc"} */}
+                  {this.props.subjectName}
                 </div>
               </div>
 
@@ -233,31 +234,19 @@ class PostSummary extends Component {
             </div>
           </div>
         </div>
+        <div className="file-name">{this.props.fileName}</div>
         {summary}
+        {/* <div className="j-c-end">
+          <Link to={`/posts/${this.props.id}`} className="continue-read mg-bottom-5px" >
+            Xem tài liệu >>
+            </Link>
+        </div> */}
       </div >
     );
   }
 
 
-  // Calculates bar widths
-  calculateBar = () => {
 
-    if (this.likes === this.dislikes) {
-      if (document.getElementById('document-item-like-percents-' + this.props.id))
-        document.getElementById('document-item-like-percents-' + this.props.id).style.width = "50%";
-      return;
-    }
-    else {
-      let percentageLikes;
-      //Simple math to calculate percentages
-      let total = this.likes + this.dislikes;
-      percentageLikes = (this.likes / total) * 100;
-      if (document.getElementById('document-item-like-percents-' + this.props.id))
-        //We need to apply the widths to our elements
-        document.getElementById('document-item-like-percents-' + this.props.id).style.width = percentageLikes.toString() + "%";
-    }
-
-  }
 }
 
 const mapStateToProps = (state) => {

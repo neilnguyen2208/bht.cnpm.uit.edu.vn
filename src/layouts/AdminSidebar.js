@@ -86,7 +86,7 @@ class AdminSidebar extends Component {
                         {getRoleNameByName(roleName)}
                     </div>
 
-                    < div className="Vertical_Menu_Layout"  >
+                    <div className="vertical-menu-container"  >
                         <div>
                             {/* Quản lý nội dung */}
                             <div hidden={!this.isGrantedPermissions(ContentManagement.Management)}>
@@ -120,7 +120,7 @@ class AdminSidebar extends Component {
                                         (this.isGrantedPermissions(ContentManagement.Management)
                                             && this.isGrantedPermissions(Document.Approve)) ?
                                             <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-menu-item" className="vertical-sub-menu-item"
-                                                to={"/admin/doc-approving"} >
+                                                to={"/admin/document-management"} >
                                                 <div className="text">
                                                     Quản lý tài liệu
                                                 </div>

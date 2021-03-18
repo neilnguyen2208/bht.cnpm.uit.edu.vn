@@ -121,7 +121,7 @@ class UserItem extends Component {
                                     <img alt="avatar" src={gray_write_icon} className="user-item-icon" ></img>
                                     <div className="post-count">{this.postCount}</div>
                                     <img alt="avatar" src={gray_upload_icon} className="user-item-icon"></img>
-                                    <div className="doc-count"> {this.docCount}</div>
+                                    <div className="document-count"> {this.docCount}</div>
                                 </div>
 
                                 <ClickAwayListener onClickAway={() => { this.closeAllChangeRoleDropdownCombobox() }}>

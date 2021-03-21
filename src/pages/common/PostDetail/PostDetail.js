@@ -12,7 +12,11 @@ import Tag from 'components/post/Tag'
 import Loader from 'components/common/Loader/Loader'
 import NormalReactionbar from 'components/post/NormalReactionbar'
 import store from 'redux/store/index.js';
-import { get_PostByIDReset } from 'redux/actions/postAction';
+import {
+    get_PostByIDReset,
+    get_RelativeSameAuthorPostsReset,
+    get_RelativeSameCategoryPostsReset
+} from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 
@@ -24,7 +28,9 @@ class PostDetail extends Component {
     }
 
     componentWillUnmount() {
-        store.dispatch(get_PostByIDReset())
+        store.dispatch(get_PostByIDReset());
+        store.dispatch(get_RelativeSameAuthorPostsReset());
+        store.dispatch(get_RelativeSameCategoryPostsReset());
     }
 
     render() {
@@ -71,19 +77,14 @@ class PostDetail extends Component {
                                 : <Loader />}
                         </div>
                         <div>
-                            <RelativePosts title={"CÙNG TÁC GIẢ"} items={
-                                [
-                                    { title: "Demo cho bạn xem thử thôi. Dài ra một chút xem thử.", id: 1 },
-                                    { title: "Demo cho bạn xem thử thôi.", id: 151 },
-                                    { title: "Demo cho bạn xem thử thôi.", id: 1 }
-                                ]} />
-                            <RelativePosts title={"CÙNG DANH MỤC"}
-                                items={
-                                    [
-                                        { title: "Demo cho bạn xem thử thôi.", id: 1 },
-                                        { title: "Demo cho bạn xem thử thôi.", id: 151 },
-                                        { title: "Demo cho bạn xem thử thôi.", id: 1 }
-                                    ]} />
+                            {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
+                                <RelativePosts title={"CÙNG TÁC GIẢ"} items={
+                                    this.props.sameAuthor} />
+                                : <Loader />}
+                            {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
+                                <RelativePosts title={"CÙNG DANH MỤC"}
+                                    items={this.props.sameCategory} /> : <Loader />
+                            }
                         </div>
                     </div>
                 </div>
@@ -93,10 +94,13 @@ class PostDetail extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.post.currentPost)
     return {
         currentPost: state.post.currentPost.data,
-        isLoadDone: state.post.currentPost.isLoadDone
+        isLoadDone: state.post.currentPost.isLoadDone,
+        sameCategory: state.post.sameCategory.data,
+        isSameCategoryLoadDone: state.post.sameCategory.isLoadDone,
+        sameAuthor: state.post.sameAuthor.data,
+        isSameAuthorLoadDone: state.post.sameCategory.isLoadDone,
     };
 }
 

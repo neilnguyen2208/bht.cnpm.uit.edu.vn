@@ -29,9 +29,9 @@ class RelativePosts extends Component {
           ) 
           }
         </div >
-        <div className="relative-see-more">
+        {/* <div className="relative-see-more">
           <div className="link-label-s">Xem thêm ...</div>
-        </div>
+        </div> */}
       </div >
 
     );

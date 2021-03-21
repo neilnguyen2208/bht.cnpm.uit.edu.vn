@@ -31,8 +31,20 @@ export function getTrendingDocuments() {
                 request.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
+
+
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.length; i++) {
+                            finalResult.push({
+                                ...result_1[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                            }
+                            );
+                        }
+
                         console.log(arr);
-                        dispatch(get_TrendingDocumentsSuccess(arr))
+                        dispatch(get_TrendingDocumentsSuccess(finalResult))
                     }).catch(error => dispatch(get_TrendingDocumentsFailure(error)))
             }
         )
@@ -54,8 +66,16 @@ export function getNewestPosts() {
 
                 request.get(`/posts/statistic?postIDs=${IDarr}`)
                     .then(result => {
-                        let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
-                        dispatch(get_NewestPostsSuccess(arr))
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.length; i++) {
+                            finalResult.push({
+                                ...result_1[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                            }
+                            );
+                        }
+                        dispatch(get_NewestPostsSuccess(finalResult))
                     }).catch(error => dispatch(get_NewestPostsFailure(error)))
             }
         )
@@ -76,9 +96,16 @@ export function getHighlightPosts() {
                     let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
                     request.get(`/posts/statistic?postIDs=${IDarr}`)
                         .then(result => {
-                            let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
-                            console.log(arr);
-                            dispatch(get_HighlightPostsSuccess(arr))
+                            let finalResult = [];
+
+                            for (let i = 0; i < result_1.length; i++) {
+                                finalResult.push({
+                                    ...result_1[i],
+                                    ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                                }
+                                );
+                            }
+                            dispatch(get_HighlightPostsSuccess(finalResult))
                         }).catch(error => dispatch(get_HighlightPostsFailure(error)))
                 }
             )
@@ -99,9 +126,16 @@ export function getNewestActivities() {
                     let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
                     request.get(`/posts/statistic?postIDs=${IDarr}`)
                         .then(result => {
-                            let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
-                            // console.log(arr);
-                            dispatch(get_NewestActivitiesSuccess(arr))
+                            let finalResult = [];
+
+                            for (let i = 0; i < result_1.length; i++) {
+                                finalResult.push({
+                                    ...result_1[i],
+                                    ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                                }
+                                );
+                            }
+                            dispatch(get_NewestActivitiesSuccess(finalResult))
                         }).catch(error => dispatch(get_NewestActivitiesFailure(error)))
                 }
             )

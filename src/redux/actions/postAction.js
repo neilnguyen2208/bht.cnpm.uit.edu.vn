@@ -16,7 +16,6 @@ import {
     REJECT_AND_FEEDBACK_A_POST_SUCCESS,
     REJECT_AND_FEEDBACK_A_POST_FAILURE,
 
-
     //my post
     GET_MY_POSTS_REQUEST,
     GET_MY_POSTS_SUCCESS,
@@ -74,6 +73,12 @@ import {
     RESOLVE_A_POST_RESET,
     RESOLVE_A_POST_SUCCESS,
     RESOLVE_A_POST_FAILURE,
+    GET_RELATIVE_SAME_CATEGORY_POSTS_SUCCESS,
+    GET_RELATIVE_SAME_CATEGORY_POSTS_RESET,
+    GET_RELATIVE_SAME_CATEGORY_POSTS_FAILURE,
+    GET_RELATIVE_SAME_AUTHOR_POSTS_FAILURE,
+    GET_RELATIVE_SAME_AUTHOR_POSTS_SUCCESS,
+    GET_RELATIVE_SAME_AUTHOR_POSTS_RESET,
 
 
 
@@ -199,7 +204,7 @@ export function get_ReportedPostsFailure() {
 
 //posts list 
 export function get_PostsListRequest() {
-    return { type: GET_POSTS_LIST_REQUEST}
+    return { type: GET_POSTS_LIST_REQUEST }
 }
 
 export function get_PostsListSuccess(data) {
@@ -416,5 +421,44 @@ export function post_ResolveAPostSuccess() {
 export function post_ResolveAPostFailure() {
     return {
         type: RESOLVE_A_POST_FAILURE
+    }
+}
+
+export function get_RelativeSameCategoryPostsReset() {
+    return {
+        type: GET_RELATIVE_SAME_CATEGORY_POSTS_RESET
+    }
+}
+
+export function get_RelativeSameCategoryPostsSuccess(data) {
+    return {
+        type: GET_RELATIVE_SAME_CATEGORY_POSTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_RelativeSameCategoryPostsFailure() {
+    return {
+        type: GET_RELATIVE_SAME_CATEGORY_POSTS_FAILURE
+    }
+}
+
+
+export function get_RelativeSameAuthorPostsReset() {
+    return {
+        type: GET_RELATIVE_SAME_AUTHOR_POSTS_RESET
+    }
+}
+
+export function get_RelativeSameAuthorPostsSuccess(data) {
+    return {
+        type: GET_RELATIVE_SAME_AUTHOR_POSTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_RelativeSameAuthorPostsFailure() {
+    return {
+        type: GET_RELATIVE_SAME_AUTHOR_POSTS_FAILURE
     }
 }

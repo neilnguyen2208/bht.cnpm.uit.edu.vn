@@ -66,7 +66,13 @@ import {    //highlight posts
 
     post_ResolveAPostReset,
     post_ResolveAPostSuccess,
-    post_ResolveAPostFailure
+    post_ResolveAPostFailure,
+    get_RelativeSameCategoryPostsReset,
+    get_RelativeSameCategoryPostsSuccess,
+    get_RelativeSameCategoryPostsFailure,
+    get_RelativeSameAuthorPostsReset,
+    get_RelativeSameAuthorPostsSuccess,
+    get_RelativeSameAuthorPostsFailure
 
 } from "redux/actions/postAction.js";
 
@@ -196,6 +202,7 @@ export function getPostSearch(searchParamObject) {
                         dispatch(get_PostSearchResultSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_PostSearchResultFailure())
 
+
             })
             .catch(error => dispatch(get_PostSearchResultFailure(error)))
     }
@@ -229,6 +236,11 @@ export function getPostByID(id) {
         request.get(`/posts/${id}`)
             .then(response => {
                 let _response = response; //response without statistic
+
+
+                dispatch(getSameAuthorPosts(_response.data.id, _response.data.authorID));
+                dispatch(getSameCategoryPosts(_response.data.id, _response.data.categoryID));
+                
                 request.get(`/posts/statistic?postIDs=${_response.data.id}`)
                     .then(response => {
                         dispatch(get_PostByIDSuccess({ ..._response.data, ...response.data[0] }))
@@ -338,6 +350,29 @@ export function rejectAndFeedbackAPost(id, reason) { //
                 // dispatch(post_RejectAndFeedbackAPostFailure())
             }
             )
+    }
+}
+
+export function getSameCategoryPosts(postID, categoryID) {
+    return dispatch => {
+        dispatch(get_RelativeSameCategoryPostsReset())
+
+        request.get(`/posts/relatedSameCategory?postID=${postID}&categoryID=${categoryID}`)
+            .then(response => {
+                dispatch(get_RelativeSameCategoryPostsSuccess(response.data))
+            })
+            .catch(error => { dispatch(get_RelativeSameCategoryPostsFailure(error)) })
+    }
+}
+
+export function getSameAuthorPosts(postID, authorID) {
+    return dispatch => {
+        dispatch(get_RelativeSameAuthorPostsReset())
+        request.get(`/posts/relatedSameAuthor?postID=${postID}&authorID=${authorID}`)
+            .then(response => {
+                dispatch(get_RelativeSameAuthorPostsSuccess(response.data))
+            })
+            .catch(error => { dispatch(get_RelativeSameAuthorPostsFailure(error)) })
     }
 }
 

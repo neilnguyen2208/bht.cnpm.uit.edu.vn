@@ -69,13 +69,35 @@ import {
     RESOLVE_A_POST_RESET,
     RESOLVE_A_POST_SUCCESS,
     RESOLVE_A_POST_FAILURE,
+    GET_RELATIVE_SAME_AUTHOR_POSTS_RESET,
+    GET_RELATIVE_SAME_AUTHOR_POSTS_SUCCESS,
+    GET_RELATIVE_SAME_AUTHOR_POSTS_FAILURE,
+    GET_RELATIVE_SAME_CATEGORY_POSTS_RESET,
+    GET_RELATIVE_SAME_CATEGORY_POSTS_SUCCESS,
+    GET_RELATIVE_SAME_CATEGORY_POSTS_FAILURE,
 
 } from '../constants.js'
 
 const initialState = {
+    //for post detail
     currentPost: {
-        isLoading: false, data: {}, isLoadDone: false,
+        isLoading: false,
+        data: {},
+        isLoadDone: false,
+
     },
+    sameCategory: {
+        isLoadDone: false,
+        data: [],
+        error: ''
+    },
+    sameAuthor: {
+        isLoadDone: false,
+        data: [],
+        error: ''
+    },
+
+    //
     isHaveDeleted: false,
     isHaveEdited: false,
     isHaveReported: false,
@@ -326,7 +348,41 @@ function PostReducer(state = initialState, action) {
                     totalElements: 0
                 }
             };
+        case GET_RELATIVE_SAME_AUTHOR_POSTS_RESET:
+            return { ...state, sameAuthor: { isLoadDone: false } };
+        case GET_RELATIVE_SAME_AUTHOR_POSTS_SUCCESS:
+            return {
+                ...state, sameAuthor: {
+                    isLoadDone: true,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_SAME_AUTHOR_POSTS_FAILURE:
+            return {
+                ...state, sameAuthor: {
+                    error: action.payload,
+                    isLoadDone: true, data: []
+                }
+            }
 
+        case GET_RELATIVE_SAME_CATEGORY_POSTS_RESET:
+            return { ...state, sameCategory: { isLoadDone: false } };
+        case GET_RELATIVE_SAME_CATEGORY_POSTS_SUCCESS:
+            return {
+                ...state, sameCategory: {
+                    isLoadDone: true,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_SAME_CATEGORY_POSTS_FAILURE:
+            return {
+                ...state, sameCategory: {
+                    error: action.payload,
+                    isLoadDone: true, data: []
+                }
+            }
 
 
         default:

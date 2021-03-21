@@ -166,7 +166,7 @@ class SavedPosts extends Component {
 
                         {!this.props.isListLoading && this.props.myPostsList ?
                             <>
-                                <div className="filter-label d-flex mg-bottom-10px">
+                                <div className="sum-item-label">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>

@@ -86,7 +86,7 @@ const App = () => {
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
                         <Route exact path="/create-post" component={CreatePost} />
                         <Route exact path="/user/notification" component={MyNotification} />
-                        <Route exact path="/upload-doc" component={UploadDocument} />
+                        <Route exact path="/upload-document" component={UploadDocument} />
                         <Route exact path="/courses/:id/artical" component={Artical} />
                         <Route exact path="/courses/:id/video" component={Video} />
                         <Route exact path="/courses/:id/exercise" component={Exercise} />

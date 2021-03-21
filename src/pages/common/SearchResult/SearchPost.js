@@ -29,9 +29,10 @@ class SearchPost extends Component {
 
         this.searchParamObject = {
             "page": 1,
-            "category": null,
-            "postState": '',
+            "categoryID": null,
+            "sortByPublishDtm": "desc",
             "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+
         }
 
         setQueryParam(this.queryParamObject)
@@ -54,7 +55,7 @@ class SearchPost extends Component {
         setQueryParam({ ...this.queryParamObject, "page": 1 });
         this.searchParamObject = {
             ...this.searchParamObject,
-            sort: selectedOption.sort
+            "sortByPublishDtm": selectedOption.sort
         }
         this.props.getPostSearch(this.searchParamObject);
         this.setState({});
@@ -64,7 +65,7 @@ class SearchPost extends Component {
         setQueryParam({ ...this.queryParamObject, "page": 1, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category": selectedOption.id,
+            "categoryID": selectedOption.id,
             "page": 1
         }
         this.props.getPostSearch(this.searchParamObject);
@@ -147,8 +148,6 @@ class SearchPost extends Component {
                             {this.props.isListLoading ?
                                 < Loader /> :
                                 <div>
-
-
                                     <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
                                     <div >{postSearchResult}</div>
 

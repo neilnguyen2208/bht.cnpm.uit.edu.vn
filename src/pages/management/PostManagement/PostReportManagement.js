@@ -109,7 +109,7 @@ class PostReportManagement extends Component {
                         <div />
                         {!this.props.isListLoading ?
                             <>
-                                <div className="filter-label d-flex mg-bottom-10px">
+                                <div className="sum-item-label mg-top-10px">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>

@@ -41,7 +41,7 @@ export const userRouters = [
   { path: "/user/my-posts", exact: true, title: "Bài viết của tôi", label: "", permission: [] },
   { path: "/user/notification", exact: true, title: "Thông báo", label: "", permission: [] },
   { path: "/create-post", exact: true, title: "Tạo bài viết", label: "", permision: [] },
-  { path: "/upload-doc", exact: true, title: "Upload Tài liệu", label: "", permision: [] }
+  { path: "/upload-document", exact: true, title: "Upload Tài liệu", label: "", permision: [] }
 ]
 
 export const appRouter =

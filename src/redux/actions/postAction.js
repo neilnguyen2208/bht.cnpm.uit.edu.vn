@@ -36,7 +36,6 @@ import {
     POST_CREATE_POST_SUCCESS,
     POST_CREATE_POST_FAILURE,
 
-    GET_POST_BY_ID_REQUEST,
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
     GET_POST_BY_ID_RESET,
@@ -139,7 +138,6 @@ export function delete_RejectAPostFailure() {
     }
 }
 
-
 export function delete_RejectAndFeedbackAPostReset() {
     return {
         type: REJECT_AND_FEEDBACK_A_POST_RESET
@@ -201,7 +199,7 @@ export function get_ReportedPostsFailure() {
 
 //posts list 
 export function get_PostsListRequest() {
-    return { type: GET_POSTS_LIST_REQUEST }
+    return { type: GET_POSTS_LIST_REQUEST}
 }
 
 export function get_PostsListSuccess(data) {
@@ -223,7 +221,6 @@ export function get_PostByIDFailure(error) {
 }
 
 export function get_PostByIDReset() {
-    console.log("called");
     return { type: GET_POST_BY_ID_RESET }
 }
 

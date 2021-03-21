@@ -88,6 +88,8 @@ class MyDocuments extends Component {
         this.setState({});
     }
 
+
+
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
         if (this.props.myDocumentsList.length === 1 && this.searchParamObject.page > 1)
@@ -115,7 +117,7 @@ class MyDocuments extends Component {
         //     store.dispatch(put_EditADocumentReset())
         // }
 
-        if (!this.props.isCategoryLoading) {
+        if (!this.props.isCategoryLoading && this.props.categories) {
             this.comboboxGroup =
                 <div className="j-c-space-between">
                     <div>
@@ -155,7 +157,7 @@ class MyDocuments extends Component {
             </div>
         </div>
 
-        if (!this.props.isSubjectLoading)
+        if (!this.props.isSubjectLoading && this.props.subjects)
             this.subjectCombobox = < div className="mg-top-10px" >
                 <div className="filter-label t-a-right mg-right-5px">Môn học: </div>
                 <div className="mg-left-5px">
@@ -171,17 +173,17 @@ class MyDocuments extends Component {
         if (!this.props.isListLoading) {
             if (this.props.myDocumentsList.length !== 0)
                 this.myDocumentsList = this.props.myDocumentsList.map((item) => {
-                    return <div className="item-container" key = {item.id}>
+                    return <div className="item-container" key={item.id}>
                         <DocumentSummaryMetadata
                             type={itemType.mySelf}
                             id={item.id}
                             authorName={item.authorName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
-                            categoryName={item.categoryName}
+                            categoryName={item.category}
                             categoryID={item.categoryID}
-                            subjectName={item.documentSubject}
-                            subjectID={item.documentSubjectID}
+                            subjectName={item.docSubject}
+                            subjectID={item.docSubjectID}
 
                             title={item.title}
                             // fileName={item.fileName}
@@ -228,7 +230,7 @@ class MyDocuments extends Component {
                         </div>
                         {!this.props.isListLoading && this.props.myDocumentsList ?
                             <>
-                                <div className="filter-label d-flex mg-bottom-10px">
+                                <div className="sum-item-label">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>

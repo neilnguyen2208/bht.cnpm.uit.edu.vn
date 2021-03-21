@@ -18,7 +18,7 @@ function DocCategoryReducer(state = initialState, action) {
     switch (action.type) {
         //get post category
         case GET_DOCUMENT_CATEGORIES_REQUEST:
-            return { ...state, categories: { ...state.categories, isLoading: true } }
+            return { ...state, categories: { isLoading: true } }
         case GET_DOCUMENT_CATEGORIES_SUCCESS:
             return { ...state, categories: { isLoading: false, data: action.payload, error: '' } }
         case GET_DOCUMENT_CATEGORIES_HAVE_ALL_SUCCESS:

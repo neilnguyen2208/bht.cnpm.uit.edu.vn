@@ -143,17 +143,18 @@ label {
 }
 
 .black-label-s {
-    line-height: 1.0em;
+    margin-top: 1px;
+    width: fit-content;
     display: flex;
-    justify-content: flex-start;
-    height: 20px;
-    padding-top: 2px;
+    height: fit-content;
     position: relative;
+    height: 20px;
     font-family: "BarlowCondensed-Medium";
     font-size: 16px;
+    line-height: 18px;
     color: var(--black);
     user-select: none;
-    cursor: context-menu;
+    cursor: pointer;
     margin-right: 5px;
 }
 
@@ -180,27 +181,28 @@ label {
     align-items: center;
     color: var(--black);
     margin-top: 5px;
+    user-select: text;
 }
 
 .link-label-s {
-    margin-top: 1px;
     width: fit-content;
     display: flex;
     height: fit-content;
     position: relative;
     height: 20px;
-    font-family: "BarlowCondensed-Medium";
-    font-size: 18px;
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 17px;
     line-height: 18px;
     color: var(--blue);
     user-select: none;
     cursor: pointer;
     margin-right: 5px;
+
 }
 
 .link-label-m {
     @extend .link-label-s;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 20px;
     font-family: "BarlowCondensed-SemiBold";
 }

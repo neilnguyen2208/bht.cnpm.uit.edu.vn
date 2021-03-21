@@ -23,6 +23,39 @@
 
 }
 
+.sum-item-label {
+  margin-top: 2px;
+  width: fit-content;
+  height: fit-content;
+  vertical-align: middle;
+  font-size: 1.1rem;
+  padding-top: 3px;
+  font-family: "BarlowCondensed-Medium";
+  line-height: 100%;
+  color: var(--black);
+  user-select: none;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.flipped-container {
+  border-bottom: 1px solid var(--gray);
+  height: fit-content;
+  width: 100%;
+  overflow-y: auto;
+  margin: 0 auto;
+}
+
+.flipped-content {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.flipped,
+.flipped .flipped-content {
+  transform: rotateX(180deg);
+}
+
 .p-searchbar-input {
   box-shadow: 0px 0px 2px 0px var(--grayish);
   padding: 2px;

@@ -146,8 +146,13 @@ class Header extends React.Component {
 
                     {/*  */}
                     <div className="Header_End_Lv1">
-                        <div className="Header_End_Lv2" > <img className="Header_Image_Button" alt="" src={upload_icon} />
-                            <img className="Header_Image_Button" src={write_icon} alt="" />
+                        <div className="Header_End_Lv2" >
+                            <Link to="/upload-document" className="d-flex">
+                                <img className="header-image-button" alt="" src={upload_icon} />
+                            </Link>
+                            <Link to="/create-post" className="d-flex">
+                                <img className="header-image-button" src={write_icon} alt="" />
+                            </Link>
                             <button className="blue-button mg-auto mi-w-fit-content" > Đăng nhập </button>
                         </div>
                         <div className="Header_End_Lv2_Collapse"

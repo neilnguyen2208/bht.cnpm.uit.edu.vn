@@ -26,8 +26,8 @@ class PostsList extends Component {
 
         this.searchParamObject = {
             "page": 1,
-            "category": null,
-            "sort": "publishDtm,desc",
+            "categoryID": null,
+            "sortByPublishDtm": "publishDtm,desc",
             searchTerm: ''
         }
 
@@ -51,7 +51,7 @@ class PostsList extends Component {
         setQueryParam({ ...this.queryParamObject, "page": 1 });
         this.searchParamObject = {
             ...this.searchParamObject,
-            sort: selectedOption.sort
+            sortByPublishDtm: selectedOption.sort
         }
         this.props.getPostSearch(this.searchParamObject);
         this.setState({});
@@ -61,7 +61,7 @@ class PostsList extends Component {
         setQueryParam({ ...this.queryParamObject, "page": 1, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category": selectedOption.id,
+            "categoryID": selectedOption.id,
             "page": 1
         }
         this.props.getPostSearch(this.searchParamObject);

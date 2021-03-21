@@ -207,155 +207,23 @@ class DocumentDetail extends Component {
                             {/* <iframe src={"https://drive.google.com/file/d/" + this.linkFile + "/preview"} width="100%" height="100%"></iframe> */}
                             {/* <iframe src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview?hl=en"} width="100%" height="100%"></iframe> */}
                         </div>
+
                     </div>
                 </div>
+            </div>
 
-
-                <div className="comments-container">
-                    <ul id="comments-list" className="comments-list">
-                        <li>
-                            <div className="comment-main-level">
-                                <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
-
-                                <div className="comment-box">
-                                    <div className="comment-head">
-                                        <h6 className="comment-name by-author">Nguyễn Văn Đông</h6>
-
-                                    </div>
-                                    <div className="comment-content">
-                                        Mọi người thấy bài viết này như thế nào?                                           </div>
-                                </div>
-                            </div>
-
-                            <ul className="comments-list reply-list">
-                                <li>
-                                    <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" /></div>
-                                    <div className="comment-box">
-                                        <div className="comment-head">
-                                            <h6 className="comment-name">Lưu Biêu Nghị</h6>
-
-                                        </div>
-                                        <div className="comment-content">
-                                            Hay nhưng mà nên có bản dịch nữa bạn, chưa ghi nguồn.
-                                            </div>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
-                                    <div className="comment-box">
-                                        <div className="comment-head">
-                                            <h6 className="comment-name by-author">Nguyễn Văn Đông</h6>
-
-                                        </div>
-                                        <div className="comment-content">
-                                            Ok, bạn
-                                                              </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <div className="comment-main-level">
-                                <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" />
-
-                                </div>
-                                <div className="comment-box">
-                                    <div className="comment-head">
-                                        <h6 className="comment-name">Lưu Biêu Nghị</h6>
-                                    </div>
-                                    <div className="comment-content">
-                                        À, có một chỗ sai kìa bạn
-                                     </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div >
 
         );
-    }
-
-    // return<></>
-    // }
-    //#region navigate region
-    navigateToAuthorPersonalPage = () => {
-
-        //neu khong la admin => home
-        if (window.location.pathname.substring(0, 6) === "/admin" && this.roleName === "ADMIN")
-            return <>{window.location.pathname = "admin/user-management/" + this.authorID}</>;
-
-        //neu la admin => admin
-        if (window.location.pathname.substring(0, 5) === "/user" && this.roleName === "COLLABORATOR")
-            return <>{window.location.pathname = "/user/" + this.authorID}</>;
-        ;
-    }
-
-    navigateToSameCategoryDocsPage = () => {
-        window.location.href = "/documents/category?id=" + this.categoryID;
-    }
-    //#endregion
-
-    handlerRejectRequestedPost = () => {
-        this.isRejectRequestedPopupOpen = true;
-        this.setState({});
-    }
-
-    handleCancelRejectRequestedPostConfirmation = () => {
-        this.isRejectRequestedPopupOpen = false;
-        this.setState({});
-    }
-
-    handlerVerifyRejectRequestedPostConfirmation = () => {
-        this.isRejectRequestedPopupOpen = false;
-        this.setState({});
-    }
-
-    handlerApproveRequestedPost = () => {
-        this.isApproveRequestedPopupOpen = true;
-        this.setState({});
-    }
-
-    handlerVerifyApproveRequestedPostConfirmation = () => {
-        //
-    }
-
-    handleCancelApproveRequestedPostConfirmation = () => {
-        this.isApproveRequestedPopupOpen = false;
-        this.setState({});
-    }
-
-    //Calculates bar widths
-    calculateBar = () => {
-
-        if (this.likes === this.dislikes) {
-            if (document.getElementById('document-item-like-percents-' + this.props.id))
-                document.getElementById('document-item-like-percents-' + this.props.id).style.width = "50%";
-            return;
-        }
-        else {
-            let percentageLikes;
-            //Simple math to calculate percentages
-            let total = this.likes + this.dislikes;
-            percentageLikes = (this.likes / total) * 100;
-            if (document.getElementById('document-item-like-percents-' + this.props.id))
-                //We need to apply the widths to our elements
-                document.getElementById('document-item-like-percents-' + this.props.id).style.width = percentageLikes.toString() + "%";
-        }
     }
 }
 const mapStateToProps = (state) => {
     return {
-        // document: state.document.document,
-        // accountInformation: state.user.account
+
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    // getDocumentByID,
-    // getCurrentUser
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentDetail));

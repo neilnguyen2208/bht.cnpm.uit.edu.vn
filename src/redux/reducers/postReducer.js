@@ -12,7 +12,6 @@ import {
     REJECT_AND_FEEDBACK_A_POST_FAILURE,
 
     //post
-    GET_POST_BY_ID_REQUEST,
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
     GET_POST_BY_ID_RESET,
@@ -269,6 +268,14 @@ function PostReducer(state = initialState, action) {
         case REPORT_A_POST_FAILURE:
             return { ...state, isHaveReported: false };
 
+        //resolve    
+        case RESOLVE_A_POST_RESET:
+            return { ...state, isHaveResolved: false };
+        case RESOLVE_A_POST_SUCCESS:
+            return { ...state, isHaveResolved: true };
+        case RESOLVE_A_POST_FAILURE:
+            return { ...state, isHaveResolved: false };
+
         //pending post
         case GET_PENDING_POSTS_REQUEST:
             return {
@@ -320,13 +327,7 @@ function PostReducer(state = initialState, action) {
                 }
             };
 
-        //resolve    
-        case RESOLVE_A_POST_RESET:
-            return { ...state, isHaveResolved: false };
-        case RESOLVE_A_POST_SUCCESS:
-            return { ...state, isHaveResolved: true };
-        case RESOLVE_A_POST_FAILURE:
-            return { ...state, isHaveResolved: false };
+
 
         default:
             return state;

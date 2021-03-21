@@ -6,10 +6,11 @@ import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getPostCategories } from "redux/services/postCategoryServices";
+import { getDocumentSubjects } from "redux/services/documentSubjectServices";
+import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { getPostByID, editAPost } from "redux/services/postServices"
-import { get_PostByIDReset, put_EditAPostReset } from "redux/actions/postAction"
+import { getDocumentByID, editADocument } from "redux/services/documentServices"
+import { get_DocumentByIDReset, put_EditADocumentReset } from "redux/actions/documentAction"
 
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
@@ -17,7 +18,7 @@ import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 
 //components
-import Tag from "components/post/Tag";
+import Tag from "components/document/Tag";
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';
@@ -28,22 +29,24 @@ import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.pn
 //utils
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import Metadata from 'components/post/DetailInfo'
+import Metadata from 'components/document/DetailInfo'
 import SmallLoader from 'components/common/Loader/Loader_S'
-import NormalReactionbar from 'components/post/NormalReactionbar'
+import NormalReactionbar from 'components/document/NormalReactionbar'
 
 const validationCondition = {
-    form: '#edit-post-form',
+    form: '#edit-document-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('ed-post-title', 'text-input', 'Tên bài viết không được để trống!'),
-        validation.noSpecialChar('ed-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
-        validation.isRequired('ed-post-category-combobox', 'combobox', 'Danh mục không được để trống'),
-        validation.isRequired('ed-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống')
+        validation.isRequired('ed-document-title', 'text-input', 'Tên tài liệu không được để trống!'),
+        validation.noSpecialChar('ed-document-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
+        validation.isRequired('ed-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('ed-document-cke', 'ckeditor', 'Nội dung tài liệu không được để trống'),
+        validation.isRequired('ed-document-subject-combobox', 'combobox', 'Nội dung tài liệu không được để trống')
+
     ],
 }
 
-class EditPostModal extends React.Component {
+class EditDocumentModal extends React.Component {
     constructor(props) {
         super(props);
         this.categoryList = [
@@ -52,17 +55,21 @@ class EditPostModal extends React.Component {
                 name: "Chọn danh mục"
             }
         ];
+        this.subjectList = [
+            { id: 0, name: "Chọn danh mục" }
+        ]
         this.isNotifySuccessOpen = false;
         this.state = {
 
             currentCategory: "",
+            currentSubject: "",
             publishDtm: "",
 
             isUploading: false,
             isPreview: false,
             isSearchingTag: false,
 
-            EDIT_POST_DTO: {
+            EDIT_DOCUMENT_DTO: {
                 tags: [],
                 title: '',//
                 content: ``,
@@ -110,13 +117,15 @@ class EditPostModal extends React.Component {
     }
     componentDidMount() {
         validation(validationCondition);
-        this.props.getPostCategories();
-        this.props.getPostByID(this.props.id);
+        this.props.getDocumentCategories();
+        this.props.getDocumentSubjects();
 
-        document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-block");
-        document.querySelector(".ed-post-form-container.edit").classList.remove("d-none");
-        document.querySelector(".ed-post-form-container.preview-modal").classList.add("d-none");
-        document.querySelector(".ed-post-form-container.edit").classList.add("d-block");
+        this.props.getDocumentByID(this.props.id);
+
+        document.querySelector(".ed-document-form-container.preview-modal").classList.remove("d-block");
+        document.querySelector(".ed-document-form-container.edit").classList.remove("d-none");
+        document.querySelector(".ed-document-form-container.preview-modal").classList.add("d-none");
+        document.querySelector(".ed-document-form-container.edit").classList.add("d-block");
         this.isFirstLoad = false;
 
         this.timeOut = null;
@@ -127,24 +136,33 @@ class EditPostModal extends React.Component {
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
-        store.dispatch(get_PostByIDReset());
-        store.dispatch(put_EditAPostReset());
-        if (getInstance('ed-post-cke'))
-            getInstance('ed-post-cke').destroy();
+        store.dispatch(get_DocumentByIDReset());
+        store.dispatch(put_EditADocumentReset());
+        if (getInstance('ed-document-cke'))
+            getInstance('ed-document-cke').destroy();
     }
+
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
-            EDIT_POST_DTO: { ...this.state.EDIT_POST_DTO, categoryID: selectedOption.id },
+            EDIT_DOCUMENT_DTO: { ...this.state.EDIT_DOCUMENT_DTO, categoryID: selectedOption.id },
             currentCategory: selectedOption.name
+        })
+    }
+
+
+    onSubjectOptionChanged = (selectedOption) => {
+        this.setState({
+            EDIT_DOCUMENT_DTO: { ...this.state.EDIT_DOCUMENT_DTO, subjectID: selectedOption.id },
+            currentSubject: selectedOption.name
         })
     }
 
     handleUploadBtnClick = () => {
         let dom = document.createElement("DIV");
-        dom.innerHTML = this.state.EDIT_POST_DTO.content;
+        dom.innerHTML = this.state.EDIT_DOCUMENT_DTO.content;
         let plain_text = (dom.textContent || dom.innerText);
         let tmpSummary = '';
-        if (this.state.EDIT_POST_DTO.content.length < 160) {
+        if (this.state.EDIT_DOCUMENT_DTO.content.length < 160) {
             tmpSummary = plain_text;
         }
         else {
@@ -154,14 +172,14 @@ class EditPostModal extends React.Component {
         if (styleFormSubmit(validationCondition)) {
             store.dispatch(openModal("confirmation",
                 {
-                    title: "Thay đổi bài viết",
+                    title: "Thay đổi tài liệu",
                     text: "Hành động này cần phê duyệt và không thể hoàn tác.",
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
+                        this.props.editADocument(this.props.id, { ...this.state.EDIT_DOCUMENT_DTO, summary: tmpSummary + "..." });
                         store.dispatch(closeModal()); //close confimation popup
-                        this.closeModal(); //close edit post popup
+                        this.closeModal(); //close edit document popup
                     }
                 }))
 
@@ -171,8 +189,8 @@ class EditPostModal extends React.Component {
 
     //#region  tag region
     closeQuickSearchTag = () => {
-        document.getElementById("ed-post-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("ed-post-qs-tag-result-container").classList.remove('show');
+        document.getElementById("ed-document-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("ed-document-qs-tag-result-container").classList.remove('show');
     }
 
     quickSearchTags = (e) => {
@@ -191,8 +209,8 @@ class EditPostModal extends React.Component {
 
         this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), DELAY_TIME);
 
-        document.getElementById("ed-post-qs-tag-result-container").classList.add('show');
-        document.getElementById("ed-post-qs-tag-result-container").classList.remove('hidden');
+        document.getElementById("ed-document-qs-tag-result-container").classList.add('show');
+        document.getElementById("ed-document-qs-tag-result-container").classList.remove('hidden');
     }
 
     onCKEInstanceReady = () => {
@@ -202,7 +220,7 @@ class EditPostModal extends React.Component {
 
     keyHandler = (e) => {
         if (!e.target.value) return;
-        let tags = this.state.EDIT_POST_DTO.tags;
+        let tags = this.state.EDIT_DOCUMENT_DTO.tags;
         let hasOldTag = -1; // khong cos => -1 neu co => id cua tag 
         if (e.charCode === 13) { //press Enter    
 
@@ -221,8 +239,8 @@ class EditPostModal extends React.Component {
                 }
 
                 //dong search container
-                document.getElementById("ed-post-qs-tag-result-container").classList.add('hidden');
-                document.getElementById("ed-post-qs-tag-result-container").classList.remove('show');
+                document.getElementById("ed-document-qs-tag-result-container").classList.add('hidden');
+                document.getElementById("ed-document-qs-tag-result-container").classList.remove('show');
 
                 //tao moi hoac dung lai tag cu
                 let tmpShownTag = this.shownTag;
@@ -244,8 +262,8 @@ class EditPostModal extends React.Component {
                 }
 
                 this.setState({
-                    EDIT_POST_DTO: {
-                        ...this.state.EDIT_POST_DTO,
+                    EDIT_DOCUMENT_DTO: {
+                        ...this.state.EDIT_DOCUMENT_DTO,
                         tags: tags
                     }
                 });
@@ -279,7 +297,7 @@ class EditPostModal extends React.Component {
             return;
         }
 
-        let tmpTagDTO = this.state.EDIT_POST_DTO.tags;
+        let tmpTagDTO = this.state.EDIT_DOCUMENT_DTO.tags;
         tmpTagDTO.push({ id: tag.id });
 
         //cap nhat lai shownTag theo tmpDTO
@@ -291,12 +309,12 @@ class EditPostModal extends React.Component {
         }
 
         //cap nhat lai shown tag tu state
-        document.getElementById("ed-post-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("ed-post-qs-tag-result-container").classList.remove('show');
+        document.getElementById("ed-document-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("ed-document-qs-tag-result-container").classList.remove('show');
 
         this.setState({
-            EDIT_POST_DTO: {
-                ...this.state.EDIT_POST_DTO,
+            EDIT_DOCUMENT_DTO: {
+                ...this.state.EDIT_DOCUMENT_DTO,
                 tags: tmpTagDTO
             }
         });
@@ -341,8 +359,8 @@ class EditPostModal extends React.Component {
 
         //cap nhat lai DTO theo tmpDTO
         this.setState({
-            EDIT_POST_DTO: {
-                ...this.state.EDIT_POST_DTO,
+            EDIT_DOCUMENT_DTO: {
+                ...this.state.EDIT_DOCUMENT_DTO,
                 tags: tempTagDTO,
             }
         });
@@ -352,18 +370,18 @@ class EditPostModal extends React.Component {
     //#endregion
     handleEditorChange = (value) => {
         if (value.length < 160) {
-            this.setState({ EDIT_POST_DTO: { ...this.state.EDIT_POST_DTO, content: value } })
+            this.setState({ EDIT_DOCUMENT_DTO: { ...this.state.EDIT_DOCUMENT_DTO, content: value } })
             return;
         }
         else {
-            this.setState({ EDIT_POST_DTO: { ...this.state.EDIT_POST_DTO, content: value } });
+            this.setState({ EDIT_DOCUMENT_DTO: { ...this.state.EDIT_DOCUMENT_DTO, content: value } });
             return;
         }
     };
 
     handleTitleChange = (e) => {
         this.setState({
-            EDIT_POST_DTO: { ...this.state.EDIT_POST_DTO, title: e.target.value }
+            EDIT_DOCUMENT_DTO: { ...this.state.EDIT_DOCUMENT_DTO, title: e.target.value }
         })
     }
 
@@ -377,10 +395,14 @@ class EditPostModal extends React.Component {
             this.categoryList = this.props.categories;
         }
 
+        if (!this.props.isSubjectLoading && this.props.subjects) {
+            this.subjectList = this.props.subjects;
+        }
+
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
-            document.getElementById("ed-post-tag-container-tip-label").innerText = "";
+            document.getElementById("ed-document-tag-container-tip-label").innerText = "";
         }
 
         else
@@ -391,22 +413,22 @@ class EditPostModal extends React.Component {
                 if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
-                    if (this.state.EDIT_POST_DTO.tags.length < 5) {
-                        document.getElementById("ed-post-tag-input").classList.remove('invalid');
+                    if (this.state.EDIT_DOCUMENT_DTO.tags.length < 5) {
+                        document.getElementById("ed-document-tag-input").classList.remove('invalid');
                         if (this.props.tagQuickQueryResult.length === 0)
-                            document.getElementById("ed-post-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
+                            document.getElementById("ed-document-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
-                            document.getElementById("ed-post-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
+                            document.getElementById("ed-document-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
                     }
                     else {
-                        document.getElementById("ed-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        document.getElementById("ed-post-tag-input").classList.add('invalid');
+                        document.getElementById("ed-document-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
+                        document.getElementById("ed-document-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
                             {this.props.tagQuickQueryResult.map(tag => {
                                 return <div className="tag-search-item"
-                                    onClick={() => { this.state.EDIT_POST_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                    onClick={() => { this.state.EDIT_DOCUMENT_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
                                     <div className="tag-search-item-content">  {tag.content}</div>
                                 </div>
                             })}
@@ -418,34 +440,36 @@ class EditPostModal extends React.Component {
             }
 
         //load lan dau tien hoac moi load xong thi gan data cho DTO
-        if (!this.props.isCurrentPostLoading && Object.keys(this.props.currentPost).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
+        if (!this.props.isCurrentDocumentLoading && Object.keys(this.props.currentDocument).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
             this.isFirstLoad = true;
-            this.props.currentPost.tags.forEach((item, index) => {
+            this.props.currentDocument.tags.forEach((item, index) => {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
-            getInstance('ed-post-cke').setData(this.props.currentPost.content)
+            getInstance('ed-document-cke').setData(this.props.currentDocument.content)
             this.setState({
-                EDIT_POST_DTO: {
-                    title: this.props.currentPost.title,
-                    tags: this.props.currentPost.tags ? this.props.currentPost.tags : [],
-                    content: this.props.currentPost.content,
-                    imageURL: this.props.currentPost.imageURL,
-                    categoryID: this.props.currentPost.categoryID,
-                    categoryName: this.props.currentPost.categoryName,
-                    readingTime: this.props.currentPost.readingTime,
-                    authorName: this.props.currentPost.authorName,
-                    authorID: this.props.currentPost.authorID,
-                    authorAvatarURL: this.props.currentPost.authorAvatarURL,
-                    id: this.props.currentPost.id
+                EDIT_DOCUMENT_DTO: {
+                    title: this.props.currentDocument.title,
+                    tags: this.props.currentDocument.tags ? this.props.currentDocument.tags : [],
+                    content: this.props.currentDocument.content,
+                    imageURL: this.props.currentDocument.imageURL,
+                    categoryID: this.props.currentDocument.categoryID,
+                    categoryName: this.props.currentDocument.categoryName,
+                    readingTime: this.props.currentDocument.readingTime,
+                    authorName: this.props.currentDocument.authorName,
+                    authorID: this.props.currentDocument.authorID,
+                    authorAvatarURL: this.props.currentDocument.authorAvatarURL,
+                    id: this.props.currentDocument.id,
+                    subjectID: this.props.currentDocument.subjectID,
+                    subjectName: this.props.currentDocument.subject
 
                 }
             })
         }
         //load xong thi cho hien thi body
-        if (this.props.currentPost && !this.props.isCurrentPostLoading && document.getElementById('edit-post-body')) {
-            document.getElementById('edit-post-body').classList.add("d-block");
-            document.getElementById('edit-post-body').classList.remove("d-none");
+        if (this.props.currentDocument && !this.props.isCurrentDocumentLoading && document.getElementById('edit-document-body')) {
+            document.getElementById('edit-document-body').classList.add("d-block");
+            document.getElementById('edit-document-body').classList.remove("d-none");
         }
 
         return (
@@ -454,7 +478,7 @@ class EditPostModal extends React.Component {
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
-                        <ModalTitlebar title="CHỈNH SỬA BÀI VIẾT" />
+                        <ModalTitlebar title="CHỈNH SỬA TÀI LIỆU" />
                         <div className="scroller-container mg-bottom-10px">
                             {/* <div className="modal-large-container"> */}
                             <div className="form-container">
@@ -466,24 +490,24 @@ class EditPostModal extends React.Component {
                                     </div>
                                     <div className="decoration-line mg-top-10px" />
                                 </div>
-                                <div className="d-none" id="edit-post-body">
+                                <div className="d-none" id="edit-document-body">
                                     {/* Preview region */}
-                                    <div className="ed-post-form-container post-detail-container preview-modal d-none" >
+                                    <div className="ed-document-form-container document-detail-container preview-modal d-none" >
                                         <div style={{ marginTop: "20px" }} />
                                         <Metadata
-                                            id={this.props.currentPost.id}
-                                            title={this.state.EDIT_POST_DTO.title}
-                                            categoryName={this.state.EDIT_POST_DTO.categoryName}
-                                            categoryID={this.state.EDIT_POST_DTO.categoryID}
-                                            readingTime={this.state.EDIT_POST_DTO.readingTime}
-                                            authorName={this.state.EDIT_POST_DTO.authorName}
-                                            authorAvatarURL={this.state.EDIT_POST_DTO.authorAvatarURL}
-                                            authorID={this.state.EDIT_POST_DTO.authorID}
-                                            publishDtm={this.state.EDIT_POST_DTO.publishDtm}
+                                            id={this.props.currentDocument.id}
+                                            title={this.state.EDIT_DOCUMENT_DTO.title}
+                                            categoryName={this.state.EDIT_DOCUMENT_DTO.categoryName}
+                                            categoryID={this.state.EDIT_DOCUMENT_DTO.categoryID}
+                                            readingTime={this.state.EDIT_DOCUMENT_DTO.readingTime}
+                                            authorName={this.state.EDIT_DOCUMENT_DTO.authorName}
+                                            authorAvatarURL={this.state.EDIT_DOCUMENT_DTO.authorAvatarURL}
+                                            authorID={this.state.EDIT_DOCUMENT_DTO.authorID}
+                                            publishDtm={this.state.EDIT_DOCUMENT_DTO.publishDtm}
                                             type="PREVIEW"
                                             popUpMenuPrefix="edpmd-"
                                         />
-                                        <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_POST_DTO.content }} />
+                                        <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_DOCUMENT_DTO.content }} />
 
                                         <div className="mg-top-10px mg-bottom-10px" >
                                             {this.shownTag.map(item =>
@@ -491,27 +515,29 @@ class EditPostModal extends React.Component {
                                             )}
                                         </div>
                                         <NormalReactionbar
-                                            id={"-1"}
+                                            id={-1}
                                             likeCount={0}
+                                            dislikeCount={0}
+                                            docReactionType={"NONE"}
                                             commentCount={0}
-                                            likedStatus={false}
-                                            savedStatus={false}
+                                            downloadCount={0}
+                                            viewCount={0}
                                             type="PREVIEW"
                                         />
                                     </div>
 
                                     {/* Edit region */}
-                                    <div className="ed-post-form-container edit">
-                                        <div id="edit-post-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
+                                    <div className="ed-document-form-container edit">
+                                        <div id="edit-document-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
                                             <div className="mg-top-10px" />
 
                                             <div className="form-group">
                                                 <label className="form-label-required">Tiêu đề:</label>
-                                                <input className="text-input" id="ed-post-title"
-                                                    placeholder="Nhập tiêu đề bài viết ..."
+                                                <input className="text-input" id="ed-document-title"
+                                                    placeholder="Nhập tiêu đề tài liệu ..."
                                                     onChange={e => this.handleTitleChange(e)}
                                                     type="text" defaultValue={
-                                                        !this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.title : ''} ></input>
+                                                        !this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.title : ''} ></input>
                                                 <div className="form-error-label-container">
                                                     <span className="form-error-label" ></span>
                                                 </div>
@@ -521,9 +547,9 @@ class EditPostModal extends React.Component {
                                             <div className="form-group">
                                                 <div className="form-label-required">Nội dung:</div>
                                                 <Editor
-                                                    id={"ed-post-cke"}
+                                                    id={"ed-document-cke"}
                                                     onChange={this.handleEditorChange}
-                                                    myData={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.content : ''}
+                                                    myData={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.content : ''}
                                                     validation
                                                     onInstanceReady={this.onCKEInstanceReady}
                                                 />
@@ -535,11 +561,27 @@ class EditPostModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Danh mục:</label>
-                                                <Combobox id="ed-post-category-combobox"
-                                                    selectedOptionID={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.categoryID : 0}
+                                                <Combobox id="ed-document-category-combobox"
+                                                    selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.categoryID : 0}
                                                     options={this.categoryList}
                                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                                     placeHolder="Chọn danh mục"
+                                                    validation
+                                                >
+                                                </Combobox>
+                                                <div className="form-error-label-container">
+                                                    <span className="form-error-label" ></span>
+                                                </div>
+                                            </div >
+
+                                            {/* Category */}
+                                            <div className="form-group" >
+                                                <label className="form-label-required">Môn học:</label>
+                                                <Combobox id="ed-subject-subject-combobox"
+                                                    selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.subjectID : 0}
+                                                    options={this.subjectList}
+                                                    onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
+                                                    placeHolder="Chọn môn học"
                                                     validation
                                                 >
                                                 </Combobox>
@@ -552,17 +594,17 @@ class EditPostModal extends React.Component {
                                             <div className='form-group mg-bottom-10px'>
                                                 <label className="form-label">Tags:</label>
 
-                                                <input onChange={(e) => this.quickSearchTags(e)} id="ed-post-tag-input"
-                                                    onKeyPress={(this.state.EDIT_POST_DTO.tags.length < 5) && this.keyHandler}
+                                                <input onChange={(e) => this.quickSearchTags(e)} id="ed-document-tag-input"
+                                                    onKeyPress={(this.state.EDIT_DOCUMENT_DTO.tags.length < 5) && this.keyHandler}
                                                     className="text-input"
                                                     placeholder="Nhập tag ..." />
 
                                                 <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                                     {/* khi load xong thi ntn */}
-                                                    <div id="ed-post-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                                    <div id="ed-document-qs-tag-result-container" className="text-input-dropdown-container hidden">
                                                         <div className="text-input-dropdown">
                                                             {this.tagSearchResult}
-                                                            <div className="form-tip-label" id="ed-post-tag-container-tip-label" />
+                                                            <div className="form-tip-label" id="ed-document-tag-container-tip-label" />
                                                         </div>
                                                     </div>
 
@@ -588,7 +630,7 @@ class EditPostModal extends React.Component {
                                         </div >
                                     </div >
                                 </div >
-                                {(this.props.isCurrentPostLoading || !this.props.currentPost) ?
+                                {(this.props.isCurrentDocumentLoading || !this.props.currentDocument) ?
                                     <Loader /> :
                                     <></>}
                             </div>
@@ -600,30 +642,35 @@ class EditPostModal extends React.Component {
     }
     onEditBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-block");
-        document.querySelector(".ed-post-form-container.edit").classList.remove("d-none");
-        document.querySelector(".ed-post-form-container.preview-modal").classList.add("d-none");
-        document.querySelector(".ed-post-form-container.edit").classList.add("d-block");
+        document.querySelector(".ed-document-form-container.preview-modal").classList.remove("d-block");
+        document.querySelector(".ed-document-form-container.edit").classList.remove("d-none");
+        document.querySelector(".ed-document-form-container.preview-modal").classList.add("d-none");
+        document.querySelector(".ed-document-form-container.edit").classList.add("d-block");
 
     }
 
     onPreviewBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".ed-post-form-container.preview-modal").classList.add("d-block");
-        document.querySelector(".ed-post-form-container.edit").classList.add("d-none");
-        document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-none");
-        document.querySelector(".ed-post-form-container.edit").classList.remove("d-block");
+        document.querySelector(".ed-document-form-container.preview-modal").classList.add("d-block");
+        document.querySelector(".ed-document-form-container.edit").classList.add("d-none");
+        document.querySelector(".ed-document-form-container.preview-modal").classList.remove("d-none");
+        document.querySelector(".ed-document-form-container.edit").classList.remove("d-block");
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.post_category.categories.data,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        categories: state.document_category.categories.data,
+        isCategoryLoading: state.document_category.categories.isLoading,
 
-        isCurrentPostLoading: state.post.currentPost.isLoading,
-        currentPost: state.post.currentPost.data,
-        isCurrentPostLoadDone: state.post.currentPost.isLoadDone,
+        subjects: state.document_subject.subjects.data,
+        isSubjectLoading: state.document_subject.subjects.isLoading,
+
+        isCurrentDocumentLoading: state.document.currentDocument.isLoading,
+        currentDocument: state.document.currentDocument.data,
+        isCurrentDocumentLoadDone: state.document.currentDocument.isLoadDone,
+
+
 
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
@@ -633,11 +680,12 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostCategories,
+    getDocumentCategories,
+    getDocumentSubjects,
     getTagQuickQueryResult,
-    getPostByID,
-    editAPost
+    getDocumentByID,
+    editADocument
 
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditPostModal));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditDocumentModal));

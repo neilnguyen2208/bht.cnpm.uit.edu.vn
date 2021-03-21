@@ -17,6 +17,8 @@ import { adminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import DocumentManagementNavbar from './DocumentManagementNavbar'
+import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
+
 import store from 'redux/store/index'
 // import { put_EditADocumentReset, delete_ADocumentReset } from 'redux/actions/documentAction'
 import 'layouts/Layout.scss'
@@ -39,6 +41,8 @@ class DocumentApproving extends Component {
 
         setQueryParam(this.queryParamObject)
         this.props.getDocumentCategoriesHaveAll();
+        this.props.getDocumentSubjectsHaveAll();
+
         this.props.getDocumentSearch(this.searchParamObject);
     }
 
@@ -97,7 +101,16 @@ class DocumentApproving extends Component {
         this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
     }
-
+    onSubjectOptionChange = (selectedOption) => {
+        // setQueryParam({ ...this.queryParamObject, paginator: 1, "category": selectedOption.id });
+        // this.searchParamObject = {
+        //     ...this.searchParamObject,
+        //     "category": selectedOption.id,
+        //     paginator: 1
+        // }
+        // this.props.getPendingDocuments(this.searchParamObject);
+        // this.setState({});
+    }
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
@@ -125,7 +138,7 @@ class DocumentApproving extends Component {
         //combobox
         if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
             this.comboboxGroup =
-                <div className="filter-container">
+                <div>
                     <div className="p-searchbar-container">
                         {/* page search bar */}
                         <div className="filter-label t-a-right mg-right-5px">Từ khoá tìm kiếm:</div>
@@ -165,18 +178,7 @@ class DocumentApproving extends Component {
                         </div>
                     </div>
 
-                    <div className="mg-top-10px">
-                        <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
-                        <div className="mg-left-5px">
-                            <ComboBox
-                                options={publishedTimeOptions}
-                                selectedOptionID={1}
-                                placeHolder="Tất cả"
-                                onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                id="dmtf-combobox" //document management time filter 
-                            ></ComboBox>
-                        </div>
-                    </div>
+
                 </div >
         }
         else this.comboboxGroup = <div className="filter-container">
@@ -185,51 +187,82 @@ class DocumentApproving extends Component {
             </div>
         </div>
 
+        if (!this.props.isSubjectLoading)
+            this.subjectCombobox = <div className="j-c-space-between">
+                < div  >
+                    <div className="filter-label t-a-right mg-right-5px">Môn học: </div>
+                    <div className="mg-left-5px">
+                        <ComboBox
+                            options={this.props.subjects}
+                            placeHolder="Tất cả"
+                            onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
+                            id="my-document-list-subject-filter-combobox"
+                        ></ComboBox>
+                    </div>
+                </div >
+                <div className="mg-top-10px">
+                    <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
+                    <div className="mg-left-5px">
+                        <ComboBox
+                            options={publishedTimeOptions}
+                            selectedOptionID={1}
+                            placeHolder="Tất cả"
+                            onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
+                            id="dmtf-combobox" //document management time filter 
+                        ></ComboBox>
+                    </div>
+                </div>
+            </div>
+
+        else this.categoryCombobox = <div className="filter-container">
+            <div className="timeline-item d-flex">
+                <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
+            </div>
+        </div>
+
         if (!this.props.isListLoading && this.props.documentsList) {
             this.documentsList = this.props.documentsList.map((item) => {
-                return <div className="item-container">
-                    <div className="item-container" key={item.id}>
-                        <DocumentSummaryMetadata
-                            type={itemType.mySelf}
-                            id={item.id}
-                            authorName={item.authorName}
-                            authorID={item.authorID}
-                            publishDtm={item.publishDtm}
-                            categoryName={item.categoryName}
-                            categoryID={item.categoryID}
-                            subjectName={item.documentSubject}
-                            subjectID={item.documentSubjectID}
+                return <div className="item-container" key={item.id}>
+                    <DocumentSummaryMetadata
+                        type={itemType.mySelf}
+                        id={item.id}
+                        authorName={item.authorName}
+                        authorID={item.authorID}
+                        publishDtm={item.publishDtm}
+                        categoryName={item.category}
+                        categoryID={item.categoryID}
+                        subjectName={item.docSubject}
+                        subjectID={item.docSubjectID}
 
-                            title={item.title}
-                            // fileName={item.fileName}
-                            fileName={"Demo file name.pdf"}
-                            description={item.description}
-                            imageURL={item.imageURL}
-                            readingTime={item.readingTime}
-                            approveState={item.docState}
-                            popUpMenuPrefix="mdpu"   //stand for my doc popup 
-                            authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
-                            //
-                            reloadList={() => this.reloadList()}
-                        />
-                        <DocumentNormalReactionbar
-                            id={item.id}
-                            likeCount={item.likeCount ? item.likeCount : 2}
-                            dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
-                            docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
-                            commentCount={item.commentCount ? item.commentCount : 10}
-                            downloadCount={item.downloadCount ? item.downloadCount : 21}
-                            viewCount={item.viewCount ? item.viewCount : 1200}
-                        />
-                    </div >
+                        title={item.title}
+                        // fileName={item.fileName}
+                        fileName={"Demo file name.pdf"}
+                        description={item.description}
+                        imageURL={item.imageURL}
+                        readingTime={item.readingTime}
+                        approveState={item.docState}
+                        popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                        //
+                        reloadList={() => this.reloadList()}
+                    />
+                    <DocumentNormalReactionbar
+                        id={item.id}
+                        likeCount={item.likeCount ? item.likeCount : 2}
+                        dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                        docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
+                        commentCount={item.commentCount ? item.commentCount : 10}
+                        downloadCount={item.downloadCount ? item.downloadCount : 21}
+                        viewCount={item.viewCount ? item.viewCount : 1200}
+                    />
                 </div >
             }
             )
         }
         if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
-
             this.filter = this.props.documentCategories;
         }
+
         return (
             <div className="left-sidebar-layout">
                 <AdminSidebar />
@@ -238,11 +271,13 @@ class DocumentApproving extends Component {
                     <div className="content-container">
                         <DocumentManagementNavbar />
 
-                        {this.comboboxGroup}
-
+                        <div className="filter-container">
+                            {this.comboboxGroup}
+                            {this.subjectCombobox}
+                        </div>
                         {!this.props.isListLoading && this.props.documentsList ?
                             <>
-                                <div className="filter-label d-flex mg-bottom-10px">
+                                <div className="sum-item-label">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
@@ -275,6 +310,10 @@ const mapStateToProps = (state) => {
         totalPages: state.document.documentsList.totalPages,
         totalElements: state.document.documentsList.totalElements,
 
+        //subject
+        subjects: state.document_subject.subjects.searchData,
+        isSubjectLoading: state.document_subject.subjects.isLoading,
+
         //category
         documentCategories: state.document_category.categories.searchData,
         isCategoryLoading: state.document_category.categories.isLoading,
@@ -287,7 +326,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentSearch, getDocumentCategoriesHaveAll
+    getDocumentSubjectsHaveAll,
+    getDocumentSearch,
+    getDocumentCategoriesHaveAll,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentApproving));

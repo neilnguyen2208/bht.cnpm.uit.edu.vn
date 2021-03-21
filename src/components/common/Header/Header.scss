@@ -414,12 +414,18 @@
     opacity: 80%;
 }
 
-.Header_Image_Button {
+
+.header-image-button {
     object-fit: cover;
     margin: auto;
     width: 24px;
     height: 24px;
     margin-right: 5px;
+    cursor: pointer;
+}
+
+.header-image-button:hover {
+    opacity: 80%;
 }
 
 .Header_End_Lv2_Collapse {
@@ -575,7 +581,7 @@
         // margin-bottom: 5px;
     }
 
-    .Header_Image_Button {
+    .header-image-button {
         width: 30px;
         height: 30px;
         margin-right: 10px;

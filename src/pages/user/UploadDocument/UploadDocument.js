@@ -7,7 +7,6 @@ import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getDocumentSubjects } from "redux/services/documentSubjectServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { uploadADocument } from "redux/services/documentServices"
-import "./UploadDocument.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
@@ -63,14 +62,12 @@ class UploadDocument extends Component {
                 tags: [],
                 title: "Model View Presenter (MVP) in Android with a simple demo project.",//
                 description: ``,//
-                // summary: `null`,
-                // authorID: "",// khong co nhe
+                publishDtm: "2021-03-20T11:02:45.622Z",
+                version: "0",
                 categoryID: "",//
                 subjectID: "",
                 imageURL: "null",
-                // docURL: "http://www.africau.edu/images/default/sample.pdf",
-                code: "",
-                // fileName: ""
+                fileCode: "",
             },
             file_DTO: { file: "" },
             author: {

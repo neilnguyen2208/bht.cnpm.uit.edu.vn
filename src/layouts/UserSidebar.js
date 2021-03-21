@@ -232,7 +232,7 @@ class UserSidebar extends Component {
                   <NavLink
                     activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
                     className="vertical-sub-menu-item"
-                    to={"/upload-doc"}>
+                    to={"/upload-document"}>
                     Upload tài liệu
                         </NavLink>
 

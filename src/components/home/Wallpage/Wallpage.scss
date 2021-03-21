@@ -108,8 +108,7 @@
     padding-bottom: 5px;
     margin-bottom: 10px;
     background-repeat: no-repeat;
-    // border: 1px var(--gray) solid;
-    max-width: 980px;
+    max-width: 1000px;
     user-select: none;
     border-bottom: 1px var(--gray) solid;
     background: white;
@@ -131,16 +130,43 @@
 }
 
 .i-h-slider-wrapper {
-    width: 980px;
+    width: 1000px;
     overflow: hidden;
     margin: auto;
     margin-bottom: 10px;
 }
 
 .slider-wrapper {
-    width: 980px;
-    height: 240px;
+    width: 1000px;
+    height: 220px;
     overflow: hidden;
+}
+
+.highlight-title {
+    position: absolute;
+    font-family: "BarlowSemiCondensed-BoldItalic";
+    font-size: 18px;
+    background: var(--blue);
+    padding: 2px;
+    padding-left: 30px;
+    // height: 26px;
+    padding-right: 20px;
+    color: white;
+}
+
+.hightlight-icon {
+    height: 24px;
+    position: absolute;
+    left: 5px;
+    width: auto;
+}
+
+.highlight-line {
+    width: 100%;
+    height: 4px;
+    top: 0px;
+    position: relative;
+    background: var(--blue);
 }
 
 .slider {
@@ -150,7 +176,7 @@
 .slider-item {
     float: left;
     position: relative;
-    line-height: 240px;
+    line-height: 220px;
     transition: all .2s linear;
 }
 
@@ -158,7 +184,7 @@
     @extend .slider-item
 }
 
-.buttons-container {
+.i-h-slider-wrapper .btn-container {
     position: relative;
     display: flex;
 }
@@ -169,13 +195,13 @@
     outline: none;
 }
 
-.buttons-container .prev-button {
+.i-h-slider-wrapper .prev-button {
     background-size: 100%;
-    background-color: white;
+    // background-color: white;
     border: 1px solid var(--gray);
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
+    height: 22px;
+    width: 22px;
+    border-radius: 20%;
     margin: auto;
     color: #fff;
     cursor: pointer;
@@ -183,17 +209,20 @@
     outline: none;
     transition: all 0.2s linear;
     transform: rotate(90deg);
-    padding-top: 2px;
-    padding-top: 6px;
-    padding-left: 8px;
+    
+    padding-top: 3px;
+    padding-left: 4px;
+    margin-left: 20px;
 }
 
-.buttons-container .next-button {
+.i-h-slider-wrapper .next-button {
     @extend .prev-button;
     // margin-right: -20px;
     transform: rotate(-90deg);
-    padding-top: 6px;
-    padding-left: 8px;
+    padding-top: 3px;
+    padding-left: 4px;
+    margin-left: 5px;
+    
 }
 
 .buttons-wrapper button:hover {
@@ -204,21 +233,22 @@
 /* indicators */
 
 .indicators {
-    margin-top: 5px;
-    width: 1000px;
+    margin-top: 10px;
+    width: fit-content;
     bottom: -4px;
     z-index: 2 !important;
     text-align: center;
 }
 
 .indicators li {
+    margin-top: 2px;
     display: inline-block;
     margin-right: 5px;
     width: 12px;
     height: 12px;
     font-size: 16px;
     line-height: 30px;
-    border-radius: 100%;
+    border-radius: 20%;
     text-align: center;
     background-color: var(--gray);
     color: #333;
@@ -240,22 +270,22 @@
 
 //wall page
 .wallpage-item {
-    height: 240px;
+    height: 220px;
     display: flex;
 }
 
 .left-container {
     display: block;
-    width: 280px;
-    height: 240px;
-    margin-left: 8px;
+    width: 320px;
+    height: 220px;
 }
 
 .right-container {
-    width: 620px;
-    margin-left: 5px;
-    height: 240px;
+    width: 670px;
+    height: 220px;
     border: 1px solid var(--gray);
+    border-top: 4px solid var(--blue);
+    margin-left: 10px;
     padding: 10px;
     box-sizing: border-box;
     flex-direction: column;
@@ -264,9 +294,11 @@
 }
 
 .wallpage-item .image {
-    width: 280px;
-    height: 240px;
+    width: 330px;
+    height: 220px;
     object-fit: cover;
+    border-top: 4px solid var(--blue);
+
 }
 
 .wallpage-item .item-container {
@@ -293,7 +325,7 @@
     width: 18px;
     height: 18px;
     display: block;
-    margin-top:1px;
+    margin-top: 1px;
 }
 
 .post-reaction-bar .like-btn:hover {

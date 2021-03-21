@@ -5,7 +5,7 @@ import 'components/styles/Button.scss'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { approveAPost, rejectAPost, rejectAndFeedbackAPost } from 'redux/services/postServices'
+import { approveADocument, rejectADocument, rejectAndFeedbackADocument } from 'redux/services/documentServices'
 import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
@@ -23,7 +23,7 @@ class RequestedSummary extends Component {
     }
 
     onConfirmApprove = () => {
-        this.props.approveAPost(this.props.id);
+        this.props.approveADocument(this.props.id);
     }
 
     handleReject = () => {
@@ -36,18 +36,18 @@ class RequestedSummary extends Component {
     }
 
     onConfirmReject = () => {
-        this.props.rejectAPost(this.props.id);
+        this.props.rejectADocument(this.props.id);
     }
 
     handleRejectAndFeedback = () => {
         store.dispatch(openModal("form", {
-            id: `rjafbp-form-modal`,//reject and feed back
+            id: `rjafbdcm-form-modal`,//reject and feed back
             title: `TỪ CHỐI BÀI VIẾT`,
-            formId: `rjafbp-form`,
+            formId: `rjafbdcm-form`,
             inputs:
                 [
                     { //for rendering
-                        id: `rjafbp-form-input`,
+                        id: `rjafbdcm-form-input`,
                         isRequired: true,
                         label: "Lý do từ chối:",
                         type: 'text-area',
@@ -58,12 +58,12 @@ class RequestedSummary extends Component {
                 ],
             append: { id: this.props.id },
             validationCondition: {
-                form: `#rjafbp-form`,
+                form: `#rjafbdcm-form`,
                 rules: [
                     //truyen vao id, loai component, message
-                    validation.isRequired(`rjafbp-form-input`, 'text-area', 'Lý do không được để trống!'),
+                    validation.isRequired(`rjafbdcm-form-input`, 'text-area', 'Lý do không được để trống!'),
                     // validation.noSpecialChar(`rpp-form-input`, 'text-area', 'Lý do không được chứa ký tự đặc biệt!'),
-                    validation.minLength(`rjafbp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!'),
+                    validation.minLength(`rjafbdcm-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!'),
                 ],
 
             },
@@ -85,7 +85,7 @@ class RequestedSummary extends Component {
     }
 
     onConfirmRejectAndFeedback = (rejectDTO) => {
-        this.props.rejectAndFeedbackAPost(rejectDTO.id, rejectDTO.reason)
+        this.props.rejectAndFeedbackADocument(rejectDTO.id, rejectDTO.reason)
     }
 
     render() {
@@ -108,14 +108,14 @@ class RequestedSummary extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isHaveApproved: state.post.isHaveApproved,
-        isHaveRejected: state.post.isHaveRejected,
-        isHaveRejectedAndFeedbacked: state.post.isHaveRejectedAndFeedbacked,
+        isHaveApproved: state.document.isHaveApproved,
+        isHaveRejected: state.document.isHaveRejected,
+        isHaveRejectedAndFeedbacked: state.document.isHaveRejectedAndFeedbacked,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    approveAPost, rejectAPost, rejectAndFeedbackAPost
+    approveADocument, rejectADocument, rejectAndFeedbackADocument
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RequestedSummary));

@@ -9,15 +9,19 @@ import { getHighlightPosts } from 'redux/services/homeServices'
 import Loader from 'components/common/Loader/Loader'
 
 import WallpageItem from './WallpageItem'
+import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
 
 class Wallpage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            slider: ["first", "second", "third", "fourth", "fifth"],
+            slider: [],
             activeIndex: 1,
             left: 0
         }
+
+        this.isLoadDone = false;
+
 
         this.normalMenuItemList = [
             { id: 3, name: "Report" },
@@ -65,57 +69,61 @@ class Wallpage extends React.Component {
         var style = {
             left: this.state.left,
             width: 1000,
-            height: 250
+            height: 240
         };
 
-        let highlightView = <></>;
-        if (!this.props.isLoading && this.props.highlightPosts) {
-            highlightView = this.props.highlightPosts.map(postItem =>
-                <WallpageItem
-                    key={postItem.id}
-                    id={postItem.id}
-                    authorName={postItem.authorName}
-                    authorID={postItem.authorID}
-                    publishDtm={postItem.publishDtm}
-                    categoryName={postItem.categoryName}
-                    categoryID={postItem.categoryID}
-                    title={postItem.title}
-                    summary={postItem.summary}
-                    imageURL={postItem.imageURL}
-                    likeStatus={postItem.likeStatus}
-                    savedStatus={postItem.savedStatus}
-                    readingTime={postItem.readingTime}
-                    likeCount={postItem.likeCount}
-                    commentCount={postItem.commentCount}
-                    authorAvatarURL={postItem.authorAvatarURL}
-                />
-            )
+        // let highlightView = <></>;
+        if (!this.props.isLoading && this.props.highlightPosts.length !== 0 && !this.isLoadDone) {
+            this.setState({
+                slider: this.props.highlightPosts
+            });
+
+            this.isLoadDone = true;
         }
-        else highlightView = < Loader />;
+        // else highlightView = < Loader />;
 
         return (
             <div className='i-h-slider-wrapper' >
-                <div className="i-h-slider">
-                    {/* Show sliders */}
-                    <div className="d-flex">
-                        <div className='buttons-container'>
-                            <div className="prev-button" onClick={this.prevSlide}></div>
-                        </div>
-                        <div className="slider-wrapper">
-                            <ul className="slider">
-                                {this.state.slider.map(function (item, index) {
-                                    return (<li style={style} className={index + 1 === this.state.activeIndex ? 'slider-item' : 'hide'}>
-                                        {highlightView}
+                {/* Show sliders */}
+                <div className="d-flex">
+                    <div className="slider-wrapper">
+                        <ul className="slider">
+                            {
+                                this.state.slider.map(function (item, index) {
+                                    return (<li key={index} style={style} className={index + 1 === this.state.activeIndex ? 'slider-item' : 'hide'}>
+                                        <WallpageItem
+                                            key={item.id}
+                                            id={item.id}
+                                            authorName={item.authorName}
+                                            authorID={item.authorID}
+                                            publishDtm={item.publishDtm}
+                                            categoryName={item.categoryName}
+                                            categoryID={item.categoryID}
+                                            title={item.title}
+                                            summary={item.summary}
+                                            imageURL={item.imageURL}
+                                            likeStatus={item.likeStatus}
+                                            savedStatus={item.savedStatus}
+                                            readingTime={item.readingTime}
+                                            likeCount={item.likeCount}
+                                            commentCount={item.commentCount}
+                                            authorAvatarURL={item.authorAvatarURL}
+                                        />
+
                                     </li>)
                                 }, this)
-                                }
-                            </ul>
-                        </div>
-                        <div className="buttons-container">
-                            <div className="next-button" onClick={this.nextSlide}></div>
-                        </div>
+                            }
+                        </ul>
                     </div>
+                    <div className="pos-absolute" >
+                        <div className="highlight-title" >
+                            <img className="hightlight-icon" src={highlight_icon} alt="*" />
+                                             HIGHLIGHTS
+                                </div>
+                    </div>
+                </div>
 
+                <div className="j-c-end">
                     <div className="indicators-wrapper">
                         <ul className="indicators">
                             {this.state.slider.map(function (item, index) {
@@ -126,13 +134,21 @@ class Wallpage extends React.Component {
                             }
                         </ul>
                     </div>
+                    <div className='btn-container'>
+                        <div className="prev-button" onClick={this.prevSlide}></div>
+                    </div>
+                    <div className="btn-container">
+                        <div className="next-button" onClick={this.nextSlide}></div>
+                    </div>
                 </div>
+                <div className="mg-top-5px mg-bottom-10px" />
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
+    
     return {
         highlightPosts: state.home.highlightPosts.data,
         isLoading: state.home.highlightPosts.isLoading

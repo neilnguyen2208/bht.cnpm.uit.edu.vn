@@ -63,20 +63,20 @@ export function get_HighlightPostsFailure(error) {
 
 
 //highlight posts 
-export function get_NewestPostsListRequest() {
+export function get_NewestPostsRequest() {
   return {
     type: GET_NEWEST_POSTS_LIST_REQUEST,
   }
 }
 
-export function get_NewestPostsListSuccess(data) {
+export function get_NewestPostsSuccess(data) {
   return {
     type: GET_NEWEST_POSTS_LIST_SUCCESS,
     payload: data
   }
 }
 
-export function get_NewestPostsListFailure(error) {
+export function get_NewestPostsFailure(error) {
   return {
     type: GET_NEWEST_POSTS_LIST_FAILURE,
     payload: error

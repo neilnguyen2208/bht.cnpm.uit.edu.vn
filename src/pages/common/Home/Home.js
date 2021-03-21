@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 //styles
 import 'layouts/Layout.scss'
-// import 'components/Home.scss'
+import './Home.scss'
 
 //utils
 import { itemType } from 'constants.js'
@@ -18,7 +18,7 @@ import Wallpage from 'components/home/Wallpage/Wallpage'
 //services
 import {
     getTrendingDocumentsList,
-    getNewestPostsList,
+    getNewestPosts,
     getHighlightPosts,
     getNewestActivities
 }
@@ -42,7 +42,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.getNewestActivities();
-        this.props.getNewestPostsList();
+        this.props.getNewestPosts();
         this.props.getTrendingDocumentsList();
         this.props.getHighlightPosts();
     }
@@ -55,39 +55,42 @@ class Home extends Component {
 
     render() {
 
-        let newestPostsList = <></>;
+        let newestPosts = <></>;
         let trendingDocumentsList = <></>;
         let newestActivitiesList = <></>;
-        let allSubjectList = <></>;
+        // let allSubjectList = <></>;
 
         if (!this.props.isNewPostsLoading) {
-            newestPostsList = <div className="home-item-container-wrapper">
-                <div className="home-item-container">
-                    {this.props.newPosts.map(postItem => {
-                        return <HomePostItem
-                            authorAvatarURL={postItem.authorAvatarURL}
-                            key={postItem.id}
-                            id={postItem.id}
-                            authorName={postItem.authorName}
-                            authorID={postItem.authorID}
-                            publishDtm={postItem.publishDtm}
-                            categoryName={postItem.categoryName}
-                            categoryID={postItem.categoryID}
-                            title={postItem.title}
-                            summary={postItem.summary}
-                            imageURL={postItem.imageURL}
-                            likeStatus={postItem.likeStatus}
-                            savedStatus={postItem.savedStatus}
-                            readingTime={postItem.readingTime}
-                            likeCount={postItem.likeCount}
-                            commentCount={postItem.commentCount}
-                        ></HomePostItem>
-                    })}
-                </div>
-            </div>
+            newestPosts =
+                //  <div className="home-item-container-wrapper">
+                // <div className="home-item-container">
+                // {
+                this.props.newPosts.map(postItem => {
+                    return <HomePostItem
+                        authorAvatarURL={postItem.authorAvatarURL}
+                        key={postItem.id}
+                        id={postItem.id}
+                        authorName={postItem.authorName}
+                        authorID={postItem.authorID}
+                        publishDtm={postItem.publishDtm}
+                        categoryName={postItem.categoryName}
+                        categoryID={postItem.categoryID}
+                        title={postItem.title}
+                        summary={postItem.summary}
+                        imageURL={postItem.imageURL}
+                        likeStatus={postItem.likeStatus}
+                        savedStatus={postItem.savedStatus}
+                        readingTime={postItem.readingTime}
+                        likeCount={postItem.likeCount}
+                        commentCount={postItem.commentCount}
+                    ></HomePostItem>
+                })
+            // }
+            // </div>
+            // </div>
         }
         else {
-            newestPostsList = <Loader />
+            newestPosts = <Loader />
         }
 
         if (!this.props.isTrendingDocumentLoading)
@@ -118,30 +121,26 @@ class Home extends Component {
         }
 
         if (!this.props.isNewActivitiesLoading) {
-            newestActivitiesList = <div className="home-item-container-wrapper">
-                <div className="home-item-container">
-                    {this.props.newActivities.map(postItem => {
-                        return <HomePostItem
-                            key={postItem.id}
-                            id={postItem.id}
-                            authorName={postItem.authorName}
-                            authorID={postItem.authorID}
-                            authorAvatarURL={postItem.authorAvatarURL}
-                            publishDtm={postItem.publishDtm}
-                            categoryName={postItem.categoryName}
-                            categoryID={postItem.categoryID}
-                            title={postItem.title}
-                            summary={postItem.summary}
-                            imageURL={postItem.imageURL}
-                            likeStatus={postItem.likeStatus}
-                            savedStatus={postItem.savedStatus}
-                            readingTime={postItem.readingTime}
-                            likeCount={postItem.likeCount}
-                            commentCount={postItem.commentCount}
-                        ></HomePostItem>
-                    })}
-                </div>
-            </div>
+            newestActivitiesList = this.props.newActivities.map(postItem => {
+                return <HomePostItem
+                    key={postItem.id}
+                    id={postItem.id}
+                    authorName={postItem.authorName}
+                    authorID={postItem.authorID}
+                    authorAvatarURL={postItem.authorAvatarURL}
+                    publishDtm={postItem.publishDtm}
+                    categoryName={postItem.categoryName}
+                    categoryID={postItem.categoryID}
+                    title={postItem.title}
+                    summary={postItem.summary}
+                    imageURL={postItem.imageURL}
+                    likeStatus={postItem.likeStatus}
+                    savedStatus={postItem.savedStatus}
+                    readingTime={postItem.readingTime}
+                    likeCount={postItem.likeCount}
+                    commentCount={postItem.commentCount}
+                ></HomePostItem>
+            })
         }
         else {
             newestActivitiesList = <Loader />
@@ -151,38 +150,39 @@ class Home extends Component {
             <div className="pr-layout">
                 <Wallpage sliderWidth="1000" sliderHeight="250" />
                 <div className="home-layout" >
+
+                    {/* bài viết mới nhất */}
                     <div className="part-title" >
-                        <div className="title">
-                            BÀI VIẾT MỚI NHẤT
+                        BÀI VIẾT MỚI NHẤT
+                    </div>
+                    <div className="mg-top-5px" />
+                    <div className="flipped-container flipped home-item-container">
+                        <div className="flipped-content">
+                            {newestPosts}
                         </div>
                     </div>
-                    <div className="decoration-line mg-top-5px" />
-
-                    {newestPostsList}
-
 
                     {/* Cơ sở nhóm ngành */}
                     <div className="part-title">
-                        <div className="d-flex">
-                            <div className="rect-decoration" />
-                            <div className="title">
-                                TÀI LIỆU HAY:
-                        </div>
+                        TÀI LIỆU HAY:
+                    </div>
+                    <div className="mg-top-5px" />
+                    <div className="flipped-container flipped home-item-container">
+                        <div className="flipped-content">
+                            {trendingDocumentsList}
                         </div>
                     </div>
-                    {trendingDocumentsList}
+
                     {/* Danh sách môn học */}
                     <div className="part-title">
-                        <div className="d-flex">
-                            <div className="rect-decoration" />
-                            <div className="title">
-                                HOẠT ĐỘNG MỚI:
-                            </div>
-                        </div>
+                        HOẠT ĐỘNG MỚI:
                     </div>
-                    <div>
-                        {newestActivitiesList}
-                    </div>
+                    <div className="mg-top-5px" />
+                    <div className="flipped-container flipped home-item-container">
+                        <div className="flipped-content">
+                            {newestActivitiesList}
+                        </div >
+                    </div >
                     <div className="mg-top-10px" />
                 </div >
             </div >
@@ -191,7 +191,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.post.newPosts);
     return {
         trendingDocuments: state.home.trendingDocuments.data,
         isTrendingDocumentLoading: state.home.trendingDocuments.isLoading,
@@ -207,7 +206,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getTrendingDocumentsList,
-    getNewestPostsList,
+    getNewestPosts,
     getHighlightPosts,
     getNewestActivities
 }, dispatch);

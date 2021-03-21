@@ -8,9 +8,9 @@ import {
     get_HighlightPostsSuccess,
     get_HighlightPostsFailure,
 
-    get_NewestPostsListRequest,
-    get_NewestPostsListSuccess,
-    get_NewestPostsListFailure,
+    get_NewestPostsRequest,
+    get_NewestPostsSuccess,
+    get_NewestPostsFailure,
 
     get_NewestActivitiesRequest,
     get_NewestActivitiesSuccess,
@@ -45,39 +45,26 @@ export function getTrendingDocumentsList() {
     }
 }
 
-export function getNewestPostsList() {
-
+export function getNewestPosts() {
     return dispatch => {
+        dispatch(get_NewestPostsRequest());
+        request.get(`/posts/newest`).then(
+            response => {
 
-        var myHeaders = new Headers();
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.map(item => IDarr += item.id + ","); //create id array
 
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        dispatch(get_NewestPostsListRequest());
-
-        fetch(`${remoteServiceBaseUrl}/posts/newest`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-                    let result_1 = result;
-                    let IDarr = ''; result.map(item => IDarr += item.id + ","
-                    )
-                    fetch(`${remoteServiceBaseUrl}/posts/statistic?postIDs=${IDarr}`, requestOptions)
-                        .then(response => response.json())
-                        .then(
-                            result => {
-                                let arr = result_1.map((item, i) => Object.assign({}, item, result[i]));
-                                // console.log(arr);
-                                dispatch(get_NewestPostsListSuccess(arr))
-                            }).catch(error => dispatch(get_NewestPostsListFailure(error)))
-                }
-            )
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(result => {
+                        let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
+                        console.log(arr);
+                        dispatch(get_NewestPostsSuccess(arr))
+                    }).catch(error => dispatch(get_NewestPostsFailure(error)))
+            }
+        )
             .catch(error => {
-
-                dispatch(get_NewestPostsListFailure(error)); //
+                dispatch(get_NewestPostsFailure(error)); //
             })
     }
 }
@@ -86,55 +73,44 @@ export function getNewestPostsList() {
 export function getHighlightPosts() {
     return dispatch => {
         dispatch(get_HighlightPostsRequest());
-        request.get(`/posts/newest`).then(
-            response => {
-                let result_1 = response.data;
-                let IDarr = '';
-                response.data.map(item => IDarr += item.id + ",") //tao ra mang id moi
-
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
-                    .then(result => {
-                        //merge summary array and statistic array
-                        let finalResult = [];
-
-                        for (let i = 0; i < result_1.length; i++) {
-                            finalResult.push({
-                                ...result_1[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
-                            }
-                            );
-                            //delete redundant key - value  
-                        }
-
-                        dispatch(get_HighlightPostsSuccess(finalResult))
-                    }).catch(() => get_HighlightPostsFailure())
-            }
-        ).catch(() => dispatch(get_HighlightPostsFailure()))
+        request.get(`/posts/newest`)
+            .then(
+                response => {
+                    let result_1 = response.data;
+                    let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
+                    request.get(`/posts/statistic?postIDs=${IDarr}`)
+                        .then(result => {
+                            let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
+                            console.log(arr);
+                            dispatch(get_HighlightPostsSuccess(arr))
+                        }).catch(error => dispatch(get_HighlightPostsFailure(error)))
+                }
+            )
+            .catch(error => {
+                dispatch(get_HighlightPostsFailure(error)); //
+            })
     }
 }
 
 
 export function getNewestActivities() {
     return dispatch => {
-
         dispatch(get_NewestActivitiesRequest());
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/highlight`, requestOptions)
-            .then(response => response.text())
+        request.get(`/posts/newest`)
             .then(
-                result => {
-                    dispatch(get_NewestActivitiesSuccess(JSON.parse(result)));
+                response => {
+                    let result_1 = response.data;
+                    let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
+                    request.get(`/posts/statistic?postIDs=${IDarr}`)
+                        .then(result => {
+                            let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
+                            // console.log(arr);
+                            dispatch(get_NewestActivitiesSuccess(arr))
+                        }).catch(error => dispatch(get_NewestActivitiesFailure(error)))
                 }
             )
             .catch(error => {
-                dispatch(get_NewestActivitiesFailure(error))
+                dispatch(get_NewestActivitiesFailure(error)); //
             })
     }
 }

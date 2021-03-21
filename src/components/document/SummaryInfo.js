@@ -12,9 +12,8 @@ import { connect } from "react-redux";
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
+import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
-import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
@@ -29,12 +28,12 @@ import { itemType } from 'constants.js'
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 
-class PostSummary extends Component {
+class DocumentSummary extends Component {
 
   constructor(props) {
     super(props);
     this.normalMenuItemList = [
-      { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },
+      { id: 3, text: "Report", icon: report_icon, value: "REPORT_DOC" },
     ]
 
     this.mySelfMenuItemList = [
@@ -65,23 +64,26 @@ class PostSummary extends Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPost(this.props.id); store.dispatch(closeModal()); }
+          onConfirm: () => {
+            this.props.deleteADocument(this.props.id);
+            store.dispatch(closeModal());
+          }
         }))
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      store.dispatch(openBigModal("edit-post", { id: this.props.id }));
+      store.dispatch(openBigModal("edit-document", { id: this.props.id }));
     }
 
     if (selectedItem.value === "REPORT_POST") {
       store.dispatch(openModal("form", {
-        id: `rpp-form-modal`,//report post
+        id: `rpdcm-form-modal`,//report document
         title: `REPORT BÀI VIẾT`,
-        formId: `rpp-form`,
+        formId: `rpdcm-form`,
         inputs:
           [
             { //for rendering
-              id: `rpp-form-input`,
+              id: `rpdcm-form-input`,
               isRequired: true,
               label: "Lý do tố cáo:",
               type: 'text-area',
@@ -92,11 +94,11 @@ class PostSummary extends Component {
           ],
         append: { id: this.props.id },
         validationCondition: {
-          form: `#rpp-form`,
+          form: `#rpdcm-form`,
           rules: [
             //truyen vao id, loai component, message
-            validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
+            validation.isRequired(`rpdcm-form-input`, 'text-area', 'Lý do không được để trống!'),
+            validation.minLength(`rpdcm-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
           ],
 
         },
@@ -117,7 +119,7 @@ class PostSummary extends Component {
   onConfirmReport = (DTO) => {
     store.dispatch(closeModal());
     store.dispatch(closeModal());
-    this.props.reportAPost(DTO.id, { "reason": DTO.reason });
+    this.props.reportADocument(DTO.id, { "reason": DTO.reason });
   }
 
   render() {
@@ -125,7 +127,6 @@ class PostSummary extends Component {
     //only set for report.
     if (this.props.isHaveReported) {
       store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
-      store.dispatch(post_ReportAPostReset())
     }
 
     let summary = <></>;
@@ -198,7 +199,7 @@ class PostSummary extends Component {
             }
           </div>
           {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for document item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
@@ -210,7 +211,7 @@ class PostSummary extends Component {
           {/* fake avatar */}
           < img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/post-content/" + this.props.id}>
+            <Link to={"/document-content/" + this.props.id}>
               <div className="title">
                 {this.props.title}
               </div>
@@ -236,11 +237,11 @@ class PostSummary extends Component {
         </div>
         <div className="file-name">{this.props.fileName}</div>
         {summary}
-        {/* <div className="j-c-end">
-          <Link to={`/posts/${this.props.id}`} className="continue-read mg-bottom-5px" >
+        <div className="j-c-end">
+          <Link to={`/documents/${this.props.id}`} className="continue-read mg-bottom-5px" >
             Xem tài liệu >>
             </Link>
-        </div> */}
+        </div>
       </div >
     );
   }
@@ -252,13 +253,13 @@ class PostSummary extends Component {
 const mapStateToProps = (state) => {
   return {
     //report
-    isHaveReported: state.post.isHaveReported
+    isHaveReported: state.document.isHaveReported
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPost, editAPost, reportAPost
+  deleteADocument, editADocument, reportADocument
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostSummary));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentSummary));
 

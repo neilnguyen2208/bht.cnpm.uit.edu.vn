@@ -8,7 +8,6 @@ import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { createAPost } from "redux/services/postServices"
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
-import "./CreatePost.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import Tag from "components/post/Tag";

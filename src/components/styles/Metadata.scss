@@ -141,12 +141,25 @@
   margin-right: 5px;
 }
 
-.report-reason {
+.report-reason,
+.feedback-reason {
   border: 1px solid var(--gray);
-  padding: 5px;
+  padding: 3px;
+  color: var(--black);
+  padding-left: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  margin-top: 5px;
 }
+
+.feedback-container {
+  margin-top: 10px;
+  // padding-top: 5px;
+  color: var(--black);
+  // border-top: 1px solid var(--gray);
+}
+
+
 
 .report-content {
   padding: 10px;

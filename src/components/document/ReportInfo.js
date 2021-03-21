@@ -35,7 +35,9 @@ export default class ReportInfo extends React.PureComponent {
                             }
                         </div>
 
-                        <Link className="activity-title" to={`/post-content/${this.props.id}`} >{this.props.title}</Link>
+                        {/* <Link className="activity-title" to={`/document-content/${this.props.id}`} >{this.props.title}</Link> */}
+                        <Link className="activity-title" to={`/document-content/${151}`} >{this.props.title}</Link>
+
                     </div>
                     <div>
                         {this.props.reportTime ?

@@ -18,7 +18,7 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import AdminSidebar from 'layouts/AdminSidebar'
 import PostManagementNavbar from './PostManagementNavbar'
 import RequestReactionbar from 'components/post/RequestReactionbar'
-import { post_ApproveAPostReset, delete_RejectAPostReset, delete_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
+import { post_ApproveAPostReset, post_RejectAPostReset, post_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
 import { openBLModal, closeModal } from 'redux/actions/modalAction'
 import store from 'redux/store/index'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
@@ -71,6 +71,7 @@ class PostApproving extends Component {
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
+        console.log("reload");
         if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
@@ -159,14 +160,14 @@ class PostApproving extends Component {
 
         if (this.props.isHaveRejectedAndFeedbacked) {
             store.dispatch(closeModal());
-            store.dispatch(delete_RejectAndFeedbackAPostReset());
+            store.dispatch(post_RejectAndFeedbackAPostReset());
             store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
             this.reloadList();
         }
 
         if (this.props.isHaveRejected) {
             store.dispatch(closeModal());
-            store.dispatch(delete_RejectAPostReset());
+            store.dispatch(post_RejectAPostReset());
             store.dispatch(openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" }))
             this.reloadList();
         }

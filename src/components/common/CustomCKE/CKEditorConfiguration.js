@@ -11,3 +11,7 @@ export const SimpleCKEToolbarConfiguration = [
   { name: 'clipboard', items: ['Undo', 'Redo'] },
   { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
 ];
+export const styleConfig = [
+  { name: 'Function, Variable', element: 'code' },
+  { name: 'Highlight', element: 'span', styles: { 'background-color': 'Yellow' } },
+]

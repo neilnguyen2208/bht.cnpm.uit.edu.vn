@@ -245,19 +245,19 @@ export function delete_RejectADocumentFailure() {
 }
 
 
-export function delete_RejectAndFeedbackADocumentReset() {
+export function post_RejectAndFeedbackADocumentReset() {
     return {
         type: REJECT_AND_FEEDBACK_A_DOCUMENT_RESET
     }
 }
 
-export function delete_RejectAndFeedbackADocumentSuccess() {
+export function post_RejectAndFeedbackADocumentSuccess() {
     return {
         type: REJECT_AND_FEEDBACK_A_DOCUMENT_SUCCESS
     }
 }
 
-export function delete_RejectAndFeedbackADocumentFailure() {
+export function post_RejectAndFeedbackADocumentFailure() {
     return {
         type: REJECT_AND_FEEDBACK_A_DOCUMENT_FAILURE
     }

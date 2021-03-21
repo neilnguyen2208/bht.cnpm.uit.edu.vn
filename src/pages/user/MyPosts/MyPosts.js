@@ -170,6 +170,7 @@ class MyPosts extends Component {
                             popUpMenuPrefix="mppu"   //stand for my post popup 
                             authorAvatarURL={item.authorAvatarURL}
                             //
+                            feedback={item.feedback}
                             reloadList={() => this.reloadList()}
                         />
                         <PostNormalReactionbar

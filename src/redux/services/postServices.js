@@ -5,6 +5,8 @@ import {    //highlight posts
     get_MyPostsSuccess,
     get_MyPostsFailure,
 
+    post_CreateAPostReset,
+    post_CreateAPostSuccess,
     //posts list 
     // get_PostsListRequest,
     // get_PostsListSuccess,
@@ -27,9 +29,9 @@ import {    //highlight posts
     post_ApproveAPostSuccess,
     post_ApproveAPostFailure,
 
-    delete_RejectAPostReset,
-    delete_RejectAPostSuccess,
-    delete_RejectAPostFailure,
+    post_RejectAPostReset,
+    post_RejectAPostSuccess,
+    post_RejectAPostFailure,
 
     post_LikeAPostRequest,
     post_LikeAPostSuccess,
@@ -72,7 +74,10 @@ import {    //highlight posts
     get_RelativeSameCategoryPostsFailure,
     get_RelativeSameAuthorPostsReset,
     get_RelativeSameAuthorPostsSuccess,
-    get_RelativeSameAuthorPostsFailure
+    get_RelativeSameAuthorPostsFailure,
+    post_RejectAndFeedbackAPostSuccess,
+    post_RejectAndFeedbackAPostReset,
+    post_RejectAndFeedbackAPostFailure,
 
 } from "redux/actions/postAction.js";
 
@@ -84,12 +89,17 @@ import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export function createAPost(data) {
     return dispatch => {
+        dispatch(post_CreateAPostReset());
         dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
         request.post('/posts', JSON.stringify(data))
             .then(response => {
                 //handle success    
                 dispatch(closeModal());
                 dispatch(openBLModal({ text: "Tạo bài viết thành công!", icon: done_icon }));
+                dispatch(post_CreateAPostSuccess());
+            })
+            .catch(error => {
+                dispatch(post_CreateAPostReset())
             })
     }
 }
@@ -221,12 +231,12 @@ export function approveAPost(id) {
 
 export function rejectAPost(id) {
     return dispatch => {
-        dispatch(delete_RejectAPostReset());
-        request.delete(`/posts/${id}/approval`)
+        dispatch(post_RejectAPostReset());
+        request.post(`/posts/${id}/rejection`)
             .then(result => {
-                dispatch(delete_RejectAPostSuccess());
+                dispatch(post_RejectAPostSuccess());
             })
-            .catch(error => delete_RejectAPostFailure())
+            .catch(error => post_RejectAPostFailure())
     }
 }
 
@@ -240,7 +250,7 @@ export function getPostByID(id) {
 
                 dispatch(getSameAuthorPosts(_response.data.id, _response.data.authorID));
                 dispatch(getSameCategoryPosts(_response.data.id, _response.data.categoryID));
-                
+
                 request.get(`/posts/statistic?postIDs=${_response.data.id}`)
                     .then(response => {
                         dispatch(get_PostByIDSuccess({ ..._response.data, ...response.data[0] }))
@@ -338,16 +348,17 @@ export function rejectAndFeedbackAPost(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
         dispatch(openModal("loader", { text: "Đang xử lý" }))
-        request.post(`/posts/${id}/rejection`, JSON.stringify(reason))
+        dispatch(post_RejectAndFeedbackAPostReset());
+        request.post(`/posts/${id}/rejectionWithFeedback`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
-                //             dispatch(post_RejectAndFeedbackAPostSuccess());
+                dispatch(post_RejectAndFeedbackAPostSuccess());
                 dispatch(closeModal());
                 dispatch(openBLModal({ text: "Từ chối bài viết thành công!", icon: done_icon }));
 
             }
             ).catch(() => {
-                // dispatch(post_RejectAndFeedbackAPostFailure())
+                dispatch(post_RejectAndFeedbackAPostFailure())
             }
             )
     }

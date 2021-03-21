@@ -19,7 +19,7 @@ export default class ReportInfo extends React.PureComponent {
             this.type = resolveStatus.notResolved;
 
         return (
-            <div className="report-info">
+            <div className="report-info metadata">
                 <div className="activity-metadata"  >
                     <div>
                         <div className="d-flex">

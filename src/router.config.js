@@ -12,19 +12,18 @@ import {
   Statistic
 } from "utils/permissionUtils";
 import Home from 'pages/common/Home/Home'
-import NormalBlankLayout from 'layouts/NormalBlankLayout'
 import AdminLayout from 'layouts/AdminSidebar'
 //#endregion
 
 export const logoRouter = { path: "/", exact: true, title: "Trang chủ", label: "", permission: [], component: Home };
 
 export const headerMenuRouters = [
-  { path: "/posts", exact: true, title: "Bài viết", label: "BÀI VIẾT", permission: [], component: NormalBlankLayout },
-  { path: "/documents", exact: true, title: "Tài liệu", label: "TÀI LIỆU", permission: [], component: NormalBlankLayout },
-  { path: "/courses", exact: true, title: "Khoá học", label: "KHOÁ HỌC", permission: [], component: NormalBlankLayout },
-  { path: "/questions", exact: true, title: "Hỏi đáp", label: "HỎI ĐÁP", permission: [], component: NormalBlankLayout },
-  { path: "/admin", exact: true, title: "Quản lý", label: "QUẢN LÝ", permission: [ContentManagement.Admin], component: AdminLayout },
-  { path: "/collab", exact: true, title: "Cộng tác viên", label: "CỘNG TÁC", permission: [ContentManagement.Collaborator], component: AdminLayout },
+  { path: "/posts", exact: true, title: "Bài viết", label: "BÀI VIẾT", permission: [], },
+  { path: "/documents", exact: true, title: "Tài liệu", label: "TÀI LIỆU", permission: [], },
+  { path: "/courses", exact: true, title: "Khoá học", label: "KHOÁ HỌC", permission: [], },
+  // { path: "/questions", exact: true, title: "Hỏi đáp", label: "HỎI ĐÁP", permission: [], },
+  { path: "/admin/post-management", exact: true, title: "Quản lý", label: "QUẢN LÝ", permission: [ContentManagement.Admin], },
+  { path: "/collab", exact: true, title: "Cộng tác viên", label: "CỘNG TÁC", permission: [ContentManagement.Collaborator], },
 ]
 
 //tag search
@@ -44,17 +43,3 @@ export const userRouters = [
   { path: "/upload-document", exact: true, title: "Upload Tài liệu", label: "", permision: [] }
 ]
 
-export const appRouter =
-  [
-    logoRouter,
-    ...headerMenuRouters,
-    ...tagSearchRouters,
-    ...userRouters,
-    { path: "/posts", exact: true, title: "Bài viết", label: "", permision: [] },
-    { path: "/documents", exact: true, title: "Tài liệu", label: "", permision: [] },
-    { path: "/posts/:id", exact: true, title: "Bài viết", label: "", permision: [] },
-    { path: "/documents/:id", exact: true, title: "Tài liệu", label: "", permision: [] }
-
-
-
-  ]

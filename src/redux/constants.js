@@ -183,9 +183,9 @@ export const GET_TAG_QUICK_QUERY_RESET = "GET_TAG_QUICK_QUERY_RESET";
 //#endregion
 
 //#region create post
-export const POST_CREATE_POST_REQUEST = "POST_CREATE_POST_REQUEST";
-export const POST_CREATE_POST_SUCCESS = "POST_CREATE_POST_SUCCESS";
-export const POST_CREATE_POST_FAILURE = "POST_CREATE_POST_FAILURE";
+export const CREATE_A_POST_RESET = "CREATE_A_POST_RESET";
+export const CREATE_A_POST_SUCCESS = "CREATE_A_POST_SUCCESS";
+export const CREATE_A_POST_FAILURE = "CREATE_A_POST_FAILURE";
 //#endregion
 
 //#region course list

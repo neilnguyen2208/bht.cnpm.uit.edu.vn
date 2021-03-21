@@ -148,7 +148,7 @@ class PostDetail extends Component {
       <div className="metadata">
 
         {/* title */}
-        <Link to={"/post-content/" + this.props.id}>
+        <Link to={"/document-content/" + this.props.id}>
           <div className="title">
             {this.props.title}
           </div>

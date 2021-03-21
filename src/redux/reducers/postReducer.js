@@ -76,6 +76,9 @@ import {
     GET_RELATIVE_SAME_CATEGORY_POSTS_SUCCESS,
     GET_RELATIVE_SAME_CATEGORY_POSTS_FAILURE,
 
+    CREATE_A_POST_RESET,
+    CREATE_A_POST_SUCCESS
+
 } from '../constants.js'
 
 const initialState = {
@@ -104,7 +107,8 @@ const initialState = {
     isHaveRejected: false,
     isHaveReportedAndFeedbacked: false,
     isHaveApppoved: false,
-    isHaveResolved: false, //for reported post
+    isHaveResolved: false,
+    isHaveCreated: false, //for reported post
 
     //search post: use for search post and post list
     postsList: {
@@ -384,6 +388,10 @@ function PostReducer(state = initialState, action) {
                 }
             }
 
+        case CREATE_A_POST_RESET:
+            return { ...state, isHaveCreated: false }
+        case CREATE_A_POST_SUCCESS:
+            return { ...state, isHaveCreated: true }
 
         default:
             return state;

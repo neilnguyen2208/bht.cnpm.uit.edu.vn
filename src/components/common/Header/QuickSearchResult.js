@@ -44,7 +44,7 @@ class QuickSearchResult extends React.PureComponent {
                     <div className='w-100-percents' id="quick-search-document-result-port">
                         <div className="qs-type-title">TÀI LIỆU</div>
                         {this.props.quickSearchResultData.docQuickSearchResults.map(result =>
-                            <Link to={`/documents/${result.id}`}>
+                            <Link to={`/document-content/${result.id}`}>
                                 <div className="d-flex qs-result-item">
                                     <img alt="" src={result.imageURL} className="qs-result-image mg-right-5px" />
                                     <div className="qsr-title">{result.title}</div>

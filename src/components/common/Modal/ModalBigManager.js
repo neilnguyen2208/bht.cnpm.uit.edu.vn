@@ -15,7 +15,12 @@ class ModalBigManager extends React.Component {
         // voi form thi co title, onSubmitClick va onCancelClick va childrenProps (form ma nguoi dung tu thiet ke)
 
         const { currentModals } = this.props;
+
+
         const renderedModals = currentModals.map((modalDescription, index) => {
+            if (currentModals.length === 0)
+                document.querySelector("body").classList.remove("modal-open");
+            else document.querySelector("body").classList.add("modal-open");
 
             //create loader for handling api 
             const { modalType, modalProps = {} } = modalDescription;
@@ -28,7 +33,10 @@ class ModalBigManager extends React.Component {
                     return <></>;
             }
         });
-        return <span>{renderedModals}</span>
+        return <span>
+            {renderedModals}
+
+        </span>
     }
 }
 

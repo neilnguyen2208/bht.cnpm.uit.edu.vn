@@ -68,19 +68,3 @@ export default class RelativeTagSidebar extends Component {
 
 }
 
-
-
-// //#region for redux
-// const mapStateToProps = (state) => {
-//     // (state);
-//     return {
-//         accountInformation: state.user.account
-//     };
-// }
-
-// const mapDispatchToProps = (dispatch) => bindActionCreators({
-//     getCurrentUser
-// }, dispatch);
-
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlankLayout));
-// //#endregion

@@ -102,6 +102,9 @@ body {
     font-family: "BarlowSemiCondensed-Medium";
 }
 
+body.open-modal {
+    overflow: hidden;
+}
 
 
 img {
@@ -342,7 +345,7 @@ a:hover {
     margin-top: 15px !important;
 }
 
-.mg-top-20px{
+.mg-top-20px {
     margin-top: 20px;
 }
 

@@ -165,7 +165,7 @@ class PostSummary extends Component {
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>
-                  <div className="red-border-label">PENDING</div>
+                  <div className="gray-border-label">PENDING</div>
                 </div >
                 : <>
                   {this.props.approveState === "PENDING_FIX" ?
@@ -230,6 +230,14 @@ class PostSummary extends Component {
             </div>
           </div>
         </div>
+        {this.props.approveState === "PENDING_FIX" ?
+          <div className="feedback-container">
+            <div >Feedback:</div>
+            <div className="feedback-reason">
+              {this.props.feedback}
+            </div>
+          </div> : <></>}
+
         {summary}
       </div >
     );

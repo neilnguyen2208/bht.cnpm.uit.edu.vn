@@ -211,7 +211,8 @@ class DocumentSummary extends Component {
           {/* fake avatar */}
           < img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/document-content/" + this.props.id}>
+            {/* <Link to={"/document-content/" + this.props.id}> */}
+            <Link to={"/document-content/" + 151}>
               <div className="title">
                 {this.props.title}
               </div>
@@ -238,7 +239,8 @@ class DocumentSummary extends Component {
         <div className="file-name">{this.props.fileName}</div>
         {summary}
         <div className="j-c-end">
-          <Link to={`/documents/${this.props.id}`} className="continue-read mg-bottom-5px" >
+          {/* <Link to={`/document-content/${this.props.id}`} className="continue-read mg-bottom-5px" > */}
+          <Link to={`/document-content/${151}`} className="continue-read mg-bottom-5px" >
             Xem tài liệu >>
             </Link>
         </div>

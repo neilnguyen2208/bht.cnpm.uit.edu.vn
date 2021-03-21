@@ -69,38 +69,6 @@ class CourseSummaryItem extends Component {
 
   }
 
-  navigateToAuthorPersonalPage = () => {
-    window.location.href = "/user/" + this.authorID;
-  }
-
-  navigateToSameCategoryDocsPage = () => {
-    window.location.href = "/documents/category?id=" + this.requestedCategoryID;
-  }
-
-  handlerPreviewRequestedPost = () => {
-    if (window.location.pathname.substring(0, 6) === "/admin") {
-      window.location.href = "/admin/document-approval/" + this.id;
-      return;
-    }
-    if (window.location.pathname.substring(0, 5) === "/user")
-      window.location.href = "/user/document-approval/" + this.id;
-
-  }
-
-  handlerRejectRequestedPost = () => {
-    this.isRejectRequestedPopupOpen = true;
-    this.setState({});
-  }
-
-  handleCancelRejectRequestedPostConfirmation = () => {
-    this.isRejectRequestedPopupOpen = false;
-    this.setState({});
-  }
-
-  handlerVerifyRejectRequestedPostConfirmation = () => {
-    this.isRejectRequestedPopupOpen = false;
-    this.setState({});
-  }
 
 
 }

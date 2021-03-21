@@ -121,7 +121,6 @@ class EditPostModal extends React.Component {
 
         this.timeOut = null;
         this.isInstanceReady = false;
-
     }
 
     componentWillUnmount() {

@@ -1,5 +1,5 @@
 
-import { CKEToolbarConfiguration } from "./CKEditorConfiguration"
+import { CKEToolbarConfiguration, styleConfig } from "./CKEditorConfiguration"
 import Loader from 'components/common/Loader/Loader'
 import React, { Component } from 'react';
 import './CKEditor.scss'
@@ -17,6 +17,8 @@ class Editor extends Component {
 
     let configuration = {
       toolbar: toolbarConfig,
+      format_tags: 'p;h1;h2;h3;pre',
+      stylesSet: styleConfig
       // removeDialogTabs: 'image:advanced'
 
     };

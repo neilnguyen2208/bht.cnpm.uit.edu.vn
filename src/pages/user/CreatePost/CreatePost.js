@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
@@ -24,6 +24,7 @@ import SmallLoader from 'components/common/Loader/Loader_S'
 import { detailType } from 'constants.js'
 import NormalReactionbar from "components/post/NormalReactionbar";
 import HoverHint from "components/common/HoverHint/HoverHint"
+import { post_CreateAPostReset } from "redux/actions/postAction";
 
 const validationCondition = {
     form: '#create-post-form',
@@ -113,6 +114,7 @@ class CreatePost extends Component {
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
+        store.dispatch(post_CreateAPostReset());
     }
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
@@ -320,14 +322,15 @@ class CreatePost extends Component {
 
     //#endregion
     handleEditorChange = (value) => {
-        if (value.length < 160) {
-            this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } })
-            return;
-        }
-        else {
-            this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } });
-            return;
-        }
+        // if (value.length < 160) {
+        //     this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } })
+        //     return;
+        // }
+        // else {
+        this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } });
+        // console.log(this.state.CREATE_POST_DTO.content)
+        return;
+        // }
     };
 
     handleTitleChange = (e) => {
@@ -421,10 +424,7 @@ class CreatePost extends Component {
                         <div className="mg-top-10px" />
 
                         <div className="form-group">
-                            <div className="j-c-space-between">
-                                <label className="form-label-required">Tiêu đề:</label>
-                                <HoverHint message="Bạn đã gửi Hôm qua"   id="crphvh-1" />
-                            </div>
+                            <label className="form-label-required">Tiêu đề:</label>
                             <input className="text-input" id="cr-post-title"
                                 placeholder="Nhập tiêu đề bài viết ..." onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
@@ -435,7 +435,14 @@ class CreatePost extends Component {
 
                         {/* CKEditor */}
                         <div className="form-group">
-                            <div className="form-label-required">Nội dung:</div>
+                            <div className="j-c-space-between">
+                                <label className="form-label-required">Nội dung:</label>
+                                <HoverHint message={`
+                                - Sử dụng các Format Header để tạo ra mục lục. 
+                                - Sử dụng Style Computer Code để style được tên biến, tên hàm.
+                                - Sử dụng Format Formatted để style một đoạn code`}
+                                    id="crphvh-1" />
+                            </div>
                             <Editor
                                 id="cr-post-cke"
                                 placeholder='Start typing here...'
@@ -524,6 +531,8 @@ class CreatePost extends Component {
                     </div>
                 </div>
 
+
+                {this.props.isHaveCreated ? <Redirect to="/user/my-posts" /> : <></>}
                 {/* Custom for notifing success */}
 
             </div>
@@ -556,7 +565,10 @@ const mapStateToProps = (state) => {
         isCategoryLoading: state.post_category.categories.isLoading,
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
-        
+
+        //for redirect after create a post
+        isHaveCreated: state.post.isHaveCreated,
+
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
     };

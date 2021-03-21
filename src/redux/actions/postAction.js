@@ -31,9 +31,9 @@ import {
     GET_POST_SEARCH_SUCCESS,
     GET_POST_SEARCH_FAILURE,
 
-    POST_CREATE_POST_REQUEST,
-    POST_CREATE_POST_SUCCESS,
-    POST_CREATE_POST_FAILURE,
+    CREATE_A_POST_RESET,
+    CREATE_A_POST_SUCCESS,
+    CREATE_A_POST_FAILURE,
 
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
@@ -85,22 +85,22 @@ import {
 } from "../constants.js"
 
 //create a post 
-export function post_CreatePostRequest() {
+export function post_CreateAPostReset() {
     return {
-        type: POST_CREATE_POST_REQUEST
+        type: CREATE_A_POST_RESET
     }
 }
 
-export function post_CreatePostSuccess(notification) {
+export function post_CreateAPostSuccess(notification) {
     return {
-        type: POST_CREATE_POST_SUCCESS,
+        type: CREATE_A_POST_SUCCESS,
         payload: notification
     }
 }
 
 export function post_CreatePostFailure(notification) {
     return {
-        type: POST_CREATE_POST_FAILURE,
+        type: CREATE_A_POST_FAILURE,
         payload: notification
     }
 }
@@ -125,37 +125,37 @@ export function post_ApproveAPostFailure(notification) {
     }
 }
 
-export function delete_RejectAPostReset() {
+export function post_RejectAPostReset() {
     return {
         type: REJECT_A_POST_RESET
     }
 }
 
-export function delete_RejectAPostSuccess() {
+export function post_RejectAPostSuccess() {
     return {
         type: REJECT_A_POST_SUCCESS
     }
 }
 
-export function delete_RejectAPostFailure() {
+export function post_RejectAPostFailure() {
     return {
         type: REJECT_A_POST_FAILURE
     }
 }
 
-export function delete_RejectAndFeedbackAPostReset() {
+export function post_RejectAndFeedbackAPostReset() {
     return {
         type: REJECT_AND_FEEDBACK_A_POST_RESET
     }
 }
 
-export function delete_RejectAndFeedbackAPostSuccess() {
+export function post_RejectAndFeedbackAPostSuccess() {
     return {
         type: REJECT_AND_FEEDBACK_A_POST_SUCCESS
     }
 }
 
-export function delete_RejectAndFeedbackAPostFailure() {
+export function post_RejectAndFeedbackAPostFailure() {
     return {
         type: REJECT_AND_FEEDBACK_A_POST_FAILURE
     }

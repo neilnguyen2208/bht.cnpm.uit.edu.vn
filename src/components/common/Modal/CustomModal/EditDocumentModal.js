@@ -41,7 +41,7 @@ const validationCondition = {
         validation.noSpecialChar('ed-document-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
         validation.isRequired('ed-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
         validation.isRequired('ed-document-cke', 'ckeditor', 'Nội dung tài liệu không được để trống'),
-        validation.isRequired('ed-document-subject-combobox', 'combobox', 'Nội dung tài liệu không được để trống')
+        validation.isRequired('ed-document-subject-combobox', 'combobox', 'Môn học không được để trống')
 
     ],
 }
@@ -577,7 +577,7 @@ class EditDocumentModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Môn học:</label>
-                                                <Combobox id="ed-subject-subject-combobox"
+                                                <Combobox id="ed-document-subject-combobox"
                                                     selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.subjectID : 0}
                                                     options={this.subjectList}
                                                     onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}

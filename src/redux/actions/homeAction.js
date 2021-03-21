@@ -19,20 +19,20 @@ import {
 } from "../constants.js"
 
 //new document
-export function get_TrendingDocumentsListRequest() {
+export function get_TrendingDocumentsRequest() {
   return {
     type: GET_TRENDING_DOCUMENTS_LIST_REQUEST,
   }
 }
 
-export function get_TrendingDocumentsListSuccess(data) {
+export function get_TrendingDocumentsSuccess(data) {
   return {
     type: GET_TRENDING_DOCUMENTS_LIST_SUCCESS,
     payload: data
   }
 }
 
-export function get_TrendingDocumentsListFailure(error) {
+export function get_TrendingDocumentsFailure(error) {
   return {
     type: GET_TRENDING_DOCUMENTS_LIST_FAILURE,
     payload: error

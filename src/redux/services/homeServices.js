@@ -1,8 +1,8 @@
 
 import {
-    get_TrendingDocumentsListRequest,
-    get_TrendingDocumentsListSuccess,
-    get_TrendingDocumentsListFailure,
+    get_TrendingDocumentsRequest,
+    get_TrendingDocumentsSuccess,
+    get_TrendingDocumentsFailure,
 
     get_HighlightPostsRequest,
     get_HighlightPostsSuccess,
@@ -17,30 +17,27 @@ import {
     get_NewestActivitiesFailure,
 
 } from "redux/actions/homeAction.js";
-import { remoteServiceBaseUrl, request } from 'utils/requestUtils'
+import { request } from 'utils/requestUtils'
 
-export function getTrendingDocumentsList() {
-
+export function getTrendingDocuments() {
     return dispatch => {
-
-        var myHeaders = new Headers();
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        dispatch(get_TrendingDocumentsListRequest());
-
-        fetch(`${remoteServiceBaseUrl}documents/trending`, requestOptions)
-            .then(response => response.json())
-            .then(
-                result => {
-                    dispatch(get_TrendingDocumentsListSuccess(result));
-                }
-            )
+        dispatch(get_TrendingDocumentsRequest());
+        request.get(`/documents/trending`).then(
+            response => {
+                let result_1 = response.data;
+                let IDarr = '';
+                // response.data.map(item => IDarr += item.id + ","); //create id array
+                IDarr = "1,151";
+                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                    .then(result => {
+                        let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
+                        console.log(arr);
+                        dispatch(get_TrendingDocumentsSuccess(arr))
+                    }).catch(error => dispatch(get_TrendingDocumentsFailure(error)))
+            }
+        )
             .catch(error => {
-                dispatch(get_TrendingDocumentsListFailure(error)); //
+                dispatch(get_TrendingDocumentsFailure(error)); //
             })
     }
 }
@@ -58,7 +55,6 @@ export function getNewestPosts() {
                 request.get(`/posts/statistic?postIDs=${IDarr}`)
                     .then(result => {
                         let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
-                        console.log(arr);
                         dispatch(get_NewestPostsSuccess(arr))
                     }).catch(error => dispatch(get_NewestPostsFailure(error)))
             }
@@ -96,7 +92,7 @@ export function getHighlightPosts() {
 export function getNewestActivities() {
     return dispatch => {
         dispatch(get_NewestActivitiesRequest());
-        request.get(`/posts/newest`)
+        request.get(`/posts/newactivities`)
             .then(
                 response => {
                     let result_1 = response.data;

@@ -12,12 +12,13 @@ import './Home.scss'
 import { itemType } from 'constants.js'
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import HomePostItem from 'components/post/HomeInfo'
-import HomeDocumentItem from 'components/home/HomeDocumentItem'
+import HomeDocumentItem from 'components/document/HomeInfo'
+
 import Wallpage from 'components/home/Wallpage/Wallpage'
 
 //services
 import {
-    getTrendingDocumentsList,
+    getTrendingDocuments,
     getNewestPosts,
     getHighlightPosts,
     getNewestActivities
@@ -26,7 +27,6 @@ import {
 
 //components
 import Loader from 'components/common/Loader/Loader'
-import SubjectItem from 'components/course/SubjectItem'
 
 class Home extends Component {
     constructor(props) {
@@ -43,7 +43,7 @@ class Home extends Component {
     componentDidMount() {
         this.props.getNewestActivities();
         this.props.getNewestPosts();
-        this.props.getTrendingDocumentsList();
+        this.props.getTrendingDocuments();
         this.props.getHighlightPosts();
     }
 
@@ -56,7 +56,7 @@ class Home extends Component {
     render() {
 
         let newestPosts = <></>;
-        let trendingDocumentsList = <></>;
+        let TrendingDocuments = <></>;
         let newestActivitiesList = <></>;
         // let allSubjectList = <></>;
 
@@ -94,30 +94,25 @@ class Home extends Component {
         }
 
         if (!this.props.isTrendingDocumentLoading)
-            trendingDocumentsList = <div className="home-item-container-wrapper scroller-container">
-                <div className="home-item-container ">
-                    {this.props.trendingDocuments.map(item => {
-                        return <HomeDocumentItem
-                            id={item.id}
-                            authorID={item.authorID}
-                            authorName={item.authorName}
-                            categoryID={item.categoryID}
-                            categoryName={item.categoryName}
-                            imageURL={item.imageURL}
-                            publishDtm={item.publishDtm}
-                            readingTime={item.readingTime}
-                            summary={item.summary}
-                            title={item.title}
-                            downloads={item.downloads}
-                            views={item.views}
-                            documentSubject={item.documentSubject}
-                            documentSubjectID={item.documentSubjectID}
-                        ></HomeDocumentItem>
-                    })}
-                </div>
-            </div>
+            TrendingDocuments = this.props.trendingDocuments.map(item => {
+                return <HomeDocumentItem
+                    id={item.id}
+                    authorID={item.authorID}
+                    authorName={item.authorName}
+                    categoryID={item.categoryID}
+                    categoryName={item.category}
+                    imageURL={item.imageURL}
+                    publishDtm={item.publishDtm}
+                    description={item.description}
+                    title={item.title}
+                    downloadCount={item.downloads}
+                    viewCount={item.views}
+                    subjectName={item.docSubject}
+                    subjectID={item.docSubjectID}
+                ></HomeDocumentItem>
+            })
         else {
-            trendingDocumentsList = <Loader></Loader>
+            TrendingDocuments = <Loader></Loader>
         }
 
         if (!this.props.isNewActivitiesLoading) {
@@ -169,7 +164,7 @@ class Home extends Component {
                     <div className="mg-top-5px" />
                     <div className="flipped-container flipped home-item-container">
                         <div className="flipped-content">
-                            {trendingDocumentsList}
+                            {TrendingDocuments}
                         </div>
                     </div>
 
@@ -205,7 +200,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getTrendingDocumentsList,
+    getTrendingDocuments,
     getNewestPosts,
     getHighlightPosts,
     getNewestActivities

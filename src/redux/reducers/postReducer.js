@@ -15,12 +15,7 @@ import {
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
     GET_POST_BY_ID_RESET,
-
-    //post list
-    GET_POSTS_LIST_SUCCESS,
-    GET_POSTS_LIST_REQUEST,
-    GET_POSTS_LIST_FAILURE,
-
+    
     //my post
     GET_MY_POSTS_REQUEST,
     GET_MY_POSTS_SUCCESS,
@@ -206,12 +201,10 @@ function PostReducer(state = initialState, action) {
 
         //get post search result
         case GET_POST_SEARCH_REQUEST:
-        case GET_POSTS_LIST_REQUEST:
             return {
                 ...state, postsList: { isLoading: true }
             };
         case GET_POST_SEARCH_SUCCESS:
-        case GET_POSTS_LIST_SUCCESS:
             {
                 return {
                     ...state, postsList: {
@@ -223,7 +216,6 @@ function PostReducer(state = initialState, action) {
                 }
             }
         case GET_POST_SEARCH_FAILURE:
-        case GET_POSTS_LIST_FAILURE:
             return { ...state, postsList: { isLoading: false, data: [] } }
 
         //like post

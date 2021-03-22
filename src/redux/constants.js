@@ -85,10 +85,6 @@ export const GET_NEWEST_ACTIVITIES_LIST_FAILURE = "GET_NEWEST_ACTIVITIES_LIST_FA
 //#endregion
 
 //#region post
-//posts list
-export const GET_POSTS_LIST_REQUEST = "GET_POSTS_LIST_REQUEST";
-export const GET_POSTS_LIST_SUCCESS = "GET_POSTS_LIST_SUCCESS";
-export const GET_POSTS_LIST_FAILURE = "GET_POSTS_LIST_FAILURE";
 
 //my posts list:
 export const GET_MY_POSTS_REQUEST = "GET_MY_POSTS_REQUEST";

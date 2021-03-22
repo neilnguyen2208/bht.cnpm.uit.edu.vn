@@ -151,9 +151,11 @@ class Home extends Component {
                         BÀI VIẾT MỚI NHẤT
                     </div>
                     <div className="mg-top-5px" />
-                    <div className="flipped-container flipped home-item-container">
+                    <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            {newestPosts}
+                            <div className="home-item-container">
+                                {newestPosts}
+                            </div>
                         </div>
                     </div>
 
@@ -162,9 +164,11 @@ class Home extends Component {
                         TÀI LIỆU HAY:
                     </div>
                     <div className="mg-top-5px" />
-                    <div className="flipped-container flipped home-item-container">
+                    <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            {TrendingDocuments}
+                            <div className="home-item-container">
+                                {TrendingDocuments}
+                            </div>
                         </div>
                     </div>
 
@@ -173,9 +177,11 @@ class Home extends Component {
                         HOẠT ĐỘNG MỚI:
                     </div>
                     <div className="mg-top-5px" />
-                    <div className="flipped-container flipped home-item-container">
+                    <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            {newestActivitiesList}
+                            <div className="home-item-container">
+                                {newestActivitiesList}
+                            </div >
                         </div >
                     </div >
                     <div className="mg-top-10px" />

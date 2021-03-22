@@ -21,10 +21,6 @@ import {
     GET_MY_POSTS_SUCCESS,
     GET_MY_POSTS_FAILURE,
 
-    //pots list
-    GET_POSTS_LIST_REQUEST,
-    GET_POSTS_LIST_SUCCESS,
-    GET_POSTS_LIST_FAILURE,
 
     //post search result & post list
     GET_POST_SEARCH_REQUEST,
@@ -199,20 +195,6 @@ export function get_ReportedPostsFailure() {
     return {
         type: GET_REPORTED_POSTS_FAILURE
     }
-}
-
-
-//posts list 
-export function get_PostsListRequest() {
-    return { type: GET_POSTS_LIST_REQUEST }
-}
-
-export function get_PostsListSuccess(data) {
-    return { type: GET_POSTS_LIST_SUCCESS, payload: data }
-}
-
-export function get_PostsListFailure(error) {
-    return { type: GET_POSTS_LIST_FAILURE, error: error }
 }
 
 //post by IDarr

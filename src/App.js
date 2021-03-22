@@ -46,7 +46,7 @@ import DocumentManagement from 'pages/management/DocumentManagement/DocumentMana
 import DocumentReportManagement from "pages/management/DocumentManagement/DocumentReportManagement";
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
-
+import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -77,6 +77,7 @@ const App = () => {
 
                         {/* Search Tag */}
                         <Route path="/tags/posts/" exact component={SearchPostByTag} />
+                        <Route path="/tags/documens/" exact component={SearchDocumentByTag} />
 
                         {/* user layout */}
                         <Route exact path="/user" component={AccountInformation} />

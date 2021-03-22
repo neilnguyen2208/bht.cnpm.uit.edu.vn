@@ -68,11 +68,8 @@ class Wallpage extends React.Component {
     render() {
         var style = {
             left: this.state.left,
-            width: 1000,
-            height: 240
         };
 
-        // let highlightView = <></>;
         if (!this.props.isLoading && this.props.highlightPosts.length !== 0 && !this.isLoadDone) {
             this.setState({
                 slider: this.props.highlightPosts
@@ -80,14 +77,13 @@ class Wallpage extends React.Component {
 
             this.isLoadDone = true;
         }
-        // else highlightView = < Loader />;
 
         return (
             <div className='i-h-slider-wrapper' >
                 {/* Show sliders */}
                 <div className="d-flex">
                     <div className="slider-wrapper">
-                        <ul className="slider">
+                        <ul className="slider" style={this.props.highlightPosts ? { width: `${this.props.highlightPosts.length * 1000}px` } : { width: "4900px" }} >
                             {
                                 this.state.slider.map(function (item, index) {
                                     return (<li key={index} style={style} className={index + 1 === this.state.activeIndex ? 'slider-item' : 'hide'}>
@@ -148,7 +144,7 @@ class Wallpage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    
+
     return {
         highlightPosts: state.home.highlightPosts.data,
         isLoading: state.home.highlightPosts.isLoading

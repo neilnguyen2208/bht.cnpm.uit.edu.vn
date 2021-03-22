@@ -58,9 +58,9 @@ class QuickSearchResult extends React.PureComponent {
                         <div className="qs-type-title mg-top-5px ">TAGS</div>
                         <div className="d-flex mg-top-5px">
                             {this.props.quickSearchResultData.tagQuickSearchResults.map(result =>
-                                <Link to={`/tags/${result.id}/post?page=1`} className="d-flex">
+                                <div className="d-flex">
                                     <Tag isReadOnly={true} tag={{ "id": result.id, "content": result.content }} />
-                                </Link>
+                                </div>
                             )
                             }
                         </div>

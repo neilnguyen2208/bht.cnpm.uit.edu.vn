@@ -5,147 +5,255 @@ import { connect } from "react-redux";
 import React, { Component } from 'react'
 
 //services
-import { getDocumentsList } from "redux/services/documentServices"
-import { getDocumentCategories } from "redux/services/documentCategoryServices"
+import { getDocumentSearch } from "redux/services/documentServices"
+import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices"
+import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices"
 
 //utils
-import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
-import { itemType } from 'constants.js'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 
 //components
-import Loader from "components/common/Loader/Loader"
-import Titlebar from 'components/common/Titlebar/Titlebar'
-import SummaryInfo from 'components/document/SummaryInfo'
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import ComboBox from 'components/common/Combobox/Combobox';
+import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
+import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
+import DocumentSummaryMetadata from 'components/document/SummaryInfo'
+import { publishedTimeOptions, itemType } from 'constants.js';
+
 
 class DocumentsList extends Component {
-    constructor(props) {
-        super();
-        this.maxItemPerPage = 5;
-
-        this.documentsList = [];
-
-        this.filter = [
-            { id: 1, name: "Tất cả" },
-            { id: 2, name: "Chưa phê duyệt" },
-            { id: 3, name: "Đã phê duyệt" },
-            { id: 4, name: "Cần xem lại" }
-        ]
-    }
 
     componentDidMount() {
-        this.props.getDocumentCategories()
+        this.searchParamObject = {
+            "paginator": 1,
+            "category.id": null,
+            // "docState": ''
+            sort: "Dtm,desc"
+        }
 
-        //get filter
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
+        this.queryParamObject = {
+            "category": 0,
+            "page": 1
+        }
 
-        this.props.getDocumentsList(page, category);
+        //force default properties, can't access by querry param
+        setQueryParam(this.queryParamObject);
+        this.props.getDocumentCategoriesHaveAll();
+        this.props.getDocumentSubjectsHaveAll();
+        this.props.getDocumentSearch(this.searchParamObject);
     }
 
     //server paginator
     onPageChange = (pageNumber) => {
-        setQueryParam("page", pageNumber);
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
-        this.props.getDocumentsList(page, category);
+        this.queryParamObject = {
+            ...this.queryParamObject,
+            "page": pageNumber
+        }
+        setQueryParam(this.queryParamObject);
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            paginator: getQueryParamByName('page')
+        }
+        this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
     }
 
+
     //combobox
-    onFilterOptionChanged = (selectedOption) => {
-        setQueryParam("category", selectedOption.id);
-        let page = getQueryParamByName('page');
-        let category = getQueryParamByName('category');
-        this.props.getDocumentsList(page, category);
+    onCategoryOptionChange = (selectedOption) => {
+        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id, page: 1 }
+        setQueryParam(this.queryParamObject);
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "category.id": selectedOption.id,
+            page: 1
+        }
+        this.props.getDocumentSearch(this.searchParamObject);
+        this.setState({});
+    }
+
+    onSubjectOptionChange = (selectedOption) => {
+        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id, page: 1 }
+        setQueryParam(this.queryParamObject);
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "category.id": selectedOption.id, // => change subject
+            page: 1
+        }
+        this.props.getDocumentSearch(this.searchParamObject);
+        this.setState({});
+
+    }
+
+    onTimeOptionChange = (selectedOption) => {
+        setQueryParam({ ...this.queryParamObject, "page": 1 });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            sortByPublishDtm: selectedOption.sort
+        }
+        this.props.getPostSearch(this.searchParamObject);
         this.setState({});
     }
 
     render() {
 
-        let documentsList = <></>;
+        if (!this.props.isSubjectLoading && this.props.subjects)
+            this.subjectCombobox = < div className="mg-top-10px" >
+                <div className="filter-label t-a-right mg-right-5px">Môn học: </div>
+                <div className="mg-left-5px">
+                    <ComboBox
+                        options={this.props.subjects}
+                        placeHolder="Tất cả"
+                        onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
+                        id="my-document-list-subject-filter-combobox"
+                    ></ComboBox>
+                </div>
+            </div >
+
+        if (!this.props.isCategoryLoading && this.props.categories) {
+            this.comboboxGroup =
+                <div className="j-c-space-between">
+                    <div>
+                        <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
+                        <div className="mg-left-5px">
+                            <ComboBox
+                                selectedOptionID={"0"}
+                                options={this.props.categories}
+                                onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
+                                id="my-document-list-category-filter-combobox"
+                            ></ComboBox>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
+                        <div className="mg-left-5px">
+                            <ComboBox
+                                options={publishedTimeOptions}
+                                selectedOptionID={1}
+                                placeHolder="Tất cả"
+                                onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
+                                id="pltf-combobox" //post list time filter 
+                            ></ComboBox>
+                        </div>
+                    </div>
+                </div >
+
+        }
+
+        else this.comboboxGroup = <div className="filter-container j-c-space-between ">
+            <div className="d-flex">
+                <div className="timeline-item d-flex">
+                    <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
+                </div>
+            </div>
+            <div className="timeline-item d-flex">
+                <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
+            </div>
+        </div>
+
 
         if (!this.props.isListLoading) {
-            if (this.props.documentsList) {
-                this.documentsList = this.props.documentsList;
+            if (this.props.documentsList.length !== 0)
+                this.documentsList = this.props.documentsList.map((item) => {
+                    return <div className="item-container" key={item.id}>
+                        <DocumentSummaryMetadata
+                            type={itemType.normal}
+                            id={item.id}
+                            authorName={item.authorName}
+                            authorID={item.authorID}
+                            publishDtm={item.publishDtm}
+                            categoryName={item.category}
+                            categoryID={item.categoryID}
+                            subjectName={item.docSubject}
+                            subjectID={item.docSubjectID}
 
-                documentsList = this.documentsList.map((documentItem) => (
-                    < SummaryInfo
-                        type={itemType.normal}
-                        key={documentItem.id}
-                        id={"document-item" + documentItem.id}
-                        authorName={documentItem.authorName}
-                        authorID={documentItem.authorID}
-                        publishDtm={documentItem.publishDtm}
-                        category={documentItem.category}
-                        categoryID={documentItem.categoryID}
-                        title={documentItem.title}
-                        views={documentItem.views}
-                        downloads={documentItem.downloads}
-                        subject={documentItem.subject}
-                        subjectID={documentItem.subjectID}
-                        likes={documentItem.likes}
-                        dislikes={documentItem.dislikes}
-                        description={documentItem.description}
-                        imageURL={documentItem.imageURL}
-
-                    ></SummaryInfo >)
-                )
-            }
+                            title={item.title}
+                            // fileName={item.fileName}
+                            fileName={"Demo file name.pdf"}
+                            description={item.description}
+                            imageURL={item.imageURL}
+                            readingTime={item.readingTime}
+                            approveState={item.docState}
+                            popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                            authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                            //
+                            reloadList={() => this.reloadList()}
+                        />
+                        <DocumentNormalReactionbar
+                            id={item.id}
+                            likeCount={item.likeCount ? item.likeCount : 2}
+                            dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                            docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
+                            commentCount={item.commentCount ? item.commentCount : 10}
+                            downloadCount={item.downloadCount ? item.downloadCount : 21}
+                            viewCount={item.viewCount ? item.viewCount : 1200}
+                        />
+                    </div >
+                })
+            else
+                this.documentsList = <div>Không có kết quả nào!</div>;
         }
+        else
+            this.documentsList = <div>
+                {DocPostSummaryLoader()}
+                {DocPostSummaryLoader()}
+                {DocPostSummaryLoader()}
+            </div>
         return (
-            <div className="nm-bl-layout">
-                <Titlebar title="TÀI LIỆU" />
-                <div className="content-container">
-                    <div className = "mg-bottom-10px j-c-space-between">
-
-                        <div className="filter-label d-flex">
-                            <div className="mg-right-5px">Tổng số:</div>
-                            <div>{this.documentsList.length}</div>
-                        </div>
-
-                        <div className = "d-flex">
-                            <div className="filter-label t-a-right mg-right-5px">Bộ lọc:</div>
-                            <div style={{ marginLeft: "5px" }}>
-                                <ComboBox
-                                    options={this.filter}
-                                    selectedOptionID={1}
-                                    onOptionChanged={(selectedOption) => this.onFilterOptionChanged(selectedOption)}
-                                    id="my-document-list-search-filter-combobox"
-                                ></ComboBox></div>
-                        </div>
-
-                    </div>
-                    {this.props.isListLoading ?
-                        < Loader /> :
-                        <>  {documentsList}
-                        </>
-                    }
-
-                    <Paginator config={{
-                        changePage: (pageNumber) => this.onPageChange(pageNumber),
-                        pageCount: 20,
-                        currentPage: getQueryParamByName('page')
-                    }}
-                    />
+            <div className="search-layout">
+                <div className="filter-container">
+                    {this.comboboxGroup}
+                    {this.subjectCombobox}
                 </div>
+                {!this.props.isListLoading && this.props.documentsList ?
+                    <>
+                        <div className="sum-item-label">
+                            <div className="mg-right-5px">Tổng số:</div>
+                            <div> {this.props.totalElements}</div>
+                        </div>
+                        <div >{this.documentsList}</div>
+                        <Paginator config={{
+                            changePage: (pageNumber) => this.onPageChange(pageNumber),
+                            pageCount: this.props.totalPages,
+                            currentPage: getQueryParamByName('page')
+                        }}
+                        />
+                    </>
+                    :
+                    <div>
+                        {DocPostSummaryLoader()}
+                        {DocPostSummaryLoader()}
+                        {DocPostSummaryLoader()}
+                    </div>
+                }
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    
+
     return {
-        documentsList: state.document.documentSearch.data,
-        isListLoading: state.document.documentSearch.isLoading,
-        isCategoryLoading: state.document_category.categories.isLoading
+        documentsList: state.document.documentsList.data,
+        isListLoading: state.document.documentsList.isLoading,
+
+        //category
+        isCategoryLoading: state.document_category.categories.isLoading,
+        categories: state.document_category.categories.searchData,
+
+        //pages and elements
+        totalPages: state.document.documentsList.totalPages,
+        totalElements: state.document.documentsList.totalElements,
+
+        //subject
+        isSubjectLoading: state.document_subject.subjects.isLoading,
+        subjects: state.document_subject.subjects.searchData
+
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentsList, getDocumentCategories
+    getDocumentSearch, getDocumentCategoriesHaveAll, getDocumentSubjectsHaveAll
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentsList));

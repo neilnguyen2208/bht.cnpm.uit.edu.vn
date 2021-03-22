@@ -2,8 +2,6 @@
 import {
   get_TagSearchResultRequest,
   get_TagSearchResultSuccess,
-  get_TagSearchResultFailure,
-  get_tagQuickQueryResultRequest,
   get_tagQuickQueryResultSuccess,
   get_tagQuickQueryResultFailure
 

@@ -7,10 +7,6 @@ import {    //highlight posts
 
     post_CreateAPostReset,
     post_CreateAPostSuccess,
-    //posts list 
-    // get_PostsListRequest,
-    // get_PostsListSuccess,
-    // get_PostsListFailure,
 
     get_ReportedPostsRequest,
     get_ReportedPostsSuccess,

@@ -5,16 +5,6 @@ import { Link } from 'react-router-dom'
 import HomeReactionbar from 'components/post/HomeReactionbar'
 
 class HomeInfo extends Component {
-
-  constructor(props) {
-    super(props);
-
-  }
-
-  componentDidMount() {
-
-  }
-
   render() {
 
     return (
@@ -47,8 +37,13 @@ class HomeInfo extends Component {
 
         {/* title */}
         <Link to={"/post-content/" + this.props.id}>
-          <div className="title">
+          <div className="title title-hv">
             {this.props.title}
+          </div>
+          <div className="title-hv-c">
+            <div className="title-hv-m">
+              {this.props.title}
+            </div>
           </div>
         </Link>
 

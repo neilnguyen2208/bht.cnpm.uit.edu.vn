@@ -26,13 +26,6 @@ export const headerMenuRouters = [
   { path: "/collab", exact: true, title: "Cộng tác viên", label: "CỘNG TÁC", permission: [ContentManagement.Collaborator], },
 ]
 
-//tag search
-export const tagSearchRouters = [
-  { path: "/tags/:id/posts", exact: true, title: "Tìm kiếm bài viết", label: "Bài viết", permission: [] },
-  { path: "/tags/:id/documents", exact: true, title: "Tìm kiếm tài liệu", label: "Tài liệu", permission: [] },
-  { path: "/tags/:id/courses", exact: true, title: "Tìm kiếm khoá học", label: "Khoá học", permission: [] },
-]
-
 export const userRouters = [
   { path: "/user", exact: true, title: "Quản lý người dùng", label: "", permission: [] },
   { path: "/user/update-password", exact: true, title: "Cập nhật mật khẩu", label: "", permission: [] },

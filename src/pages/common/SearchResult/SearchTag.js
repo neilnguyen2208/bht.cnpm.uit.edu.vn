@@ -46,6 +46,7 @@ class SearchTag extends Component {
                                     <div className="gray-label" >Tổng số kết quả: {this.props.itemCount}</div>
                                     <div className="decoration-line margin-bottom-10px"></div>
                                     {
+                                        //Kiểm tra cho document.
                                         this.props.tagsList.map(item =>
                                             <Link to={`/tags/posts?tag=${item.id}`} >
                                                 <Tag isReadOnly={true} tag={item} />

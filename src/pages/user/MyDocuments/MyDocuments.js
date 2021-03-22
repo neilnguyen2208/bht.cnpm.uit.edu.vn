@@ -24,9 +24,6 @@ import { delete_ADocumentReset, put_EditADocumentReset } from 'redux/actions/doc
 
 //Sample URL: http://localhost:3000/user/my-documents?page=3&category=1
 class MyDocuments extends Component {
-    constructor(props) {
-        super();
-    }
 
     componentDidMount() {
         this.searchParamObject = {
@@ -88,7 +85,18 @@ class MyDocuments extends Component {
         this.setState({});
     }
 
+    onSubjectOptionChange = (selectedOption) => {
+        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id, page: 1 }
+        setQueryParam(this.queryParamObject);
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "category.id": selectedOption.id, // => change subject
+            page: 1
+        }
+        this.props.getMyDocuments(this.searchParamObject);
+        this.setState({});
 
+    }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
@@ -103,19 +111,18 @@ class MyDocuments extends Component {
     }
 
 
-
     render() {
 
-        //reload the list when any item has been deleted or edited:
-        // if (this.props.isHaveDeleted) {
-        //     this.reloadList();
-        //     store.dispatch(delete_ADocumentReset())
-        // }
+        // reload the list when any item has been deleted or edited:
+        if (this.props.isHaveDeleted) {
+            this.reloadList();
+            store.dispatch(delete_ADocumentReset())
+        }
 
-        // if (this.props.isHaveEdited) {
-        //     this.reloadList();
-        //     store.dispatch(put_EditADocumentReset())
-        // }
+        if (this.props.isHaveEdited) {
+            this.reloadList();
+            store.dispatch(put_EditADocumentReset())
+        }
 
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.comboboxGroup =
@@ -164,7 +171,7 @@ class MyDocuments extends Component {
                     <ComboBox
                         options={this.props.subjects}
                         placeHolder="Tất cả"
-                        onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
+                        onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
                         id="my-document-list-subject-filter-combobox"
                     ></ComboBox>
                 </div>

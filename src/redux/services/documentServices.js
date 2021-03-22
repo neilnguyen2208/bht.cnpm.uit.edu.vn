@@ -71,22 +71,6 @@ export function management_approveADocument(docID) {
     }
 }
 
-export function getDocumentsList(page = 1, category = "", searchParam = "") { //this API to get all approved document of a specific user.
-    return dispatch => {
-        dispatch(get_DocumentsListRequest());
-        request.get(`https://5fca2bc63c1c220016441d27.mockapi.io/myDocuments`)
-            .then(
-                result => {
-                    dispatch(get_DocumentsListSuccess(JSON.parse(result)));
-                }
-            )
-            .catch(error => {
-                dispatch(get_DocumentsListFailure(JSON.parse(error))); //
-            })
-
-    }
-}
-
 export function getDocumentSearch(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_DocumentSearchRequest());

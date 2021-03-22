@@ -49,6 +49,7 @@ const initialState = {
         totalPages: 0,
         totalElements: 0
     },
+
     myDocuments: {
         isLoading: false,
         data: [],
@@ -56,6 +57,7 @@ const initialState = {
         totalPages: 0,
         totalElements: 0
     },
+
     currentDocument: {
         isLoading: false, data: {}, isLoadDone: false,
     },
@@ -67,6 +69,7 @@ const initialState = {
         totalPages: 0,
         totalElements: 0
     },
+    
     reportedDocuments: {
         isLoading: false,
         data: [],
@@ -74,6 +77,7 @@ const initialState = {
         totalPages: 0,
         totalElements: 0
     },
+
     isHaveUploaded: false,
     isHaveApproved: false,
     isHaveRejected: false,

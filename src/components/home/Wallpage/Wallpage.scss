@@ -149,9 +149,9 @@
     background: var(--blue);
     padding: 2px;
     padding-left: 30px;
-    // height: 26px;
     padding-right: 20px;
     color: white;
+
 }
 
 .hightlight-icon {
@@ -170,13 +170,14 @@
 }
 
 .slider {
-    width: 4900px;
+    min-width: fit-content;
 }
 
 .slider-item {
     float: left;
     position: relative;
-    line-height: 220px;
+    // line-height: 220px;
+    // min-width: 1000px;
     transition: all .2s linear;
 }
 
@@ -209,7 +210,7 @@
     outline: none;
     transition: all 0.2s linear;
     transform: rotate(90deg);
-    
+
     padding-top: 3px;
     padding-left: 4px;
     margin-left: 20px;
@@ -222,7 +223,7 @@
     padding-top: 3px;
     padding-left: 4px;
     margin-left: 5px;
-    
+
 }
 
 .buttons-wrapper button:hover {

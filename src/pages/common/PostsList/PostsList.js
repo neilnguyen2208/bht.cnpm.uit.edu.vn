@@ -26,7 +26,7 @@ class PostsList extends Component {
 
         this.searchParamObject = {
             "page": 1,
-            "categoryID": null,
+            "postCategoryID": null,
             "sortByPublishDtm": "publishDtm,desc",
             searchTerm: ''
         }
@@ -61,7 +61,7 @@ class PostsList extends Component {
         setQueryParam({ ...this.queryParamObject, "page": 1, "category": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "categoryID": selectedOption.id,
+            "postCategoryID": selectedOption.id,
             "page": 1
         }
         this.props.getPostSearch(this.searchParamObject);

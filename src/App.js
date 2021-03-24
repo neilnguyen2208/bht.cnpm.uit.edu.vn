@@ -77,7 +77,7 @@ const App = () => {
 
                         {/* Search Tag */}
                         <Route path="/tags/posts/" exact component={SearchPostByTag} />
-                        <Route path="/tags/documens/" exact component={SearchDocumentByTag} />
+                        <Route path="/tags/documents/" exact component={SearchDocumentByTag} />
 
                         {/* user layout */}
                         <Route exact path="/user" component={AccountInformation} />

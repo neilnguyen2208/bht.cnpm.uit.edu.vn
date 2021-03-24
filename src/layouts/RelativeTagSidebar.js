@@ -10,7 +10,6 @@ import 'layouts/LeftSidebarLayout.scss'
 import 'components/styles/Label.scss'
 
 //import components
-import SearchPostByTag from 'pages/common/SearchResult/SearchPostByTag'
 
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -18,7 +17,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCurrentUser } from 'redux/services/userServices'
 
-import Tag from 'components/post/Tag'
+import PostTag from 'components/post/Tag'
+import DocumentTag from 'components/document/Tag'
 import "components/common/Titlebar/Titlebar.scss"
 import "layouts/Layout.scss"
 import "layouts/Search.scss"
@@ -47,6 +47,20 @@ export default class RelativeTagSidebar extends Component {
 
     componentDidMount() {
         //get danh sách các tag liên quan.
+
+    }
+
+    renderTag = () => {
+        if (window.location.pathname === "/tags/posts") {
+            return this.tags = this.state.tags.map(item =>
+                <PostTag isReadOnly={true} tag={item} />
+            )
+        }
+        if (window.location.pathname === "/tags/documents") {
+            return this.state.tags.map(item =>
+                <DocumentTag isReadOnly={true} tag={item} />
+            )
+        }
     }
 
     render() {
@@ -55,10 +69,7 @@ export default class RelativeTagSidebar extends Component {
                 <div className="search-tag-side-bar">
                     Tag liên quan:
                             <div className="mg-top-10px">
-                        {this.state.tags.map(item =>
-                            <Tag isReadOnly={true} tag={item} />
-                        )
-                        }
+                        {this.renderTag()}
                     </div>
                 </div>
             </div>

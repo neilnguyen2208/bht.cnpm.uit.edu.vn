@@ -249,7 +249,7 @@
     font-size: 1.1rem;
 }
 
-.vertical-menu-item {
+.vertical-m-i {
     box-sizing: border-box;
     display: flex;
     font-family: "BarlowCondensed-Medium";
@@ -303,7 +303,7 @@
     margin-top: 11px;
 }
 
-.Parent_Dropdown_Menu_Item {
+.pr-drop-down-m-i {
     width: 100%;
     user-select: none;
     display: flex;
@@ -321,7 +321,7 @@
     margin-top: 11px;
 }
 
-.vertical-sub-menu-item {
+.vertical-sub-m-i {
     box-sizing: border-box;
     font-family: "BarlowCondensed-Medium";
     font-size: 1.02rem;
@@ -338,17 +338,17 @@
     line-height: 1.5rem;
 }
 
-.Parent_Dropdown_Menu_Item:hover,
-.vertical-menu-item:hover,
-.vertical-sub-menu-item:hover {
+.pr-drop-down-m-i:hover,
+.vertical-m-i:hover,
+.vertical-sub-m-i:hover {
     background: var(--grayish);
     cursor: pointer;
     border-right: 4px var(--gray) solid;
 }
 
-.Parent_Dropdown_Menu_Item:active,
-.vertical-menu-item:active,
-.vertical-sub-menu-item:active {
+.pr-drop-down-m-i:active,
+.vertical-m-i:active,
+.vertical-sub-m-i:active {
     background: #dedede;
     border: none;
     border-right: 4px var(--blue) solid;
@@ -356,19 +356,19 @@
     outline: none;
 }
 
-.vertical-menu-item-icon {
+.vertical-m-i-icon {
     margin-left: 0.35rem;
     margin-top: 0.35rem;
     width: 1.2rem;
     height: 1.2rem;
 }
 
-.vertical-sub-menu-item .text {
+.vertical-sub-m-i .text {
     font-size: 1.02rem;
 }
 
 .main-interactive-menu-item-active {
-    @extend .vertical-menu-item;
+    @extend .vertical-m-i;
     background: #e5eeee;
     cursor: pointer;
     outline: 0px;

@@ -83,7 +83,8 @@ class DocumentReportManagement extends Component {
                         content={item.content}
                         imageURL={item.documentImageURL}
 
-                        reportTime={item.reportTime}
+                        reportTime={item.reportTime ? item.reportTime : "1994-11-05T13:15:30Z "}
+                        
                         resolvedTime={item.resolvedTime}
                         resolvedNote={item.resolvedNote}
                         actionTaken={item.actionTaken}

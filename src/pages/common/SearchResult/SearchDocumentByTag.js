@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getDocumentSearch } from "redux/services/documentServices"
 import { bindActionCreators } from 'redux';
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
@@ -12,19 +12,20 @@ import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import SearchTagHorizontalMenubar from './SearchTagHorizontalMenubar';
 import DocumentSummaryMetadata from 'components/document/SummaryInfo';
 import RelativeTagSidebar from 'layouts/RelativeTagSidebar';
+import search_icon from 'assets/icons/24x24/bg_search_icon_24x24.png'
 
 class SearchDocumentByTag extends Component {
-    
+
     componentDidMount() {
         this.queryParamObject = {
             "page": 1,
-            tag: getQueryParamByName('tag')
+            tag: getQueryParamByName('tag') !== "null" && getQueryParamByName('tag') ? getQueryParamByName('tag') : 1
 
         }
 
         this.searchParamObject = {
             "paginator": 1,
-            tags: getQueryParamByName('tag'),
+            // tags: getQueryParamByName('tag') !== "null" && getQueryParamByName('tag') ? getQueryParamByName('tag') : 1,
             searchTerm: ''
         }
 
@@ -50,39 +51,50 @@ class SearchDocumentByTag extends Component {
             documentSearchResult = this.props.documentSearchResult.map((item) => {
                 return < div className="item-container" >
                     <DocumentSummaryMetadata
-                        type={itemType.normal}
+                        type={itemType.mySelf}
                         id={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
-                        categoryName={item.categoryName}
+                        categoryName={item.category}
                         categoryID={item.categoryID}
+                        subjectName={item.docSubject}
+                        subjectID={item.docSubjectID}
+
                         title={item.title}
-                        summary={item.summary}
+                        // fileName={item.fileName}
+                        fileName={"Demo file name.pdf"}
+                        description={item.description}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
-                        approveState={item.documentState}
-                        popUpMenuPrefix="pmpu"   //stand for my document popup 
-                        authorAvatarURL={item.authorAvatarURL}
+                        approveState={item.docState}
+                        popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
                         //
                         reloadList={() => this.reloadList()}
                     />
                     <DocumentNormalReactionbar
                         id={item.id}
-                        likeCount={item.likeCount}
-                        commentCount={item.commentCount}
-                        likedStatus={item.likeStatus}
-                        savedStatus={item.savedStatus}
+                        likeCount={item.likeCount ? item.likeCount : 2}
+                        dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                        docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
+                        commentCount={item.commentCount ? item.commentCount : 10}
+                        downloadCount={item.downloadCount ? item.downloadCount : 21}
+                        viewCount={item.viewCount ? item.viewCount : 1200}
                     />
                 </div >
-
             })
         }
 
         return (
             <div className="search-layout">
-                <div className="current-tag">
-                    Tag:
+                <div className="current-tag-container">
+                    <Link to={"/search/tags"}>
+                        <img className="back-to-search-btn" src={search_icon} alt="" />
+                    </Link>
+                    <div className="current-tag">
+                        Tag:
+                    </div>
                 </div>
                 <div className="d-flex">
                     <RelativeTagSidebar />
@@ -108,7 +120,7 @@ class SearchDocumentByTag extends Component {
 
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }

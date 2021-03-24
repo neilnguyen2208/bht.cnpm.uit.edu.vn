@@ -19,13 +19,13 @@ export default class ReportInfo extends React.PureComponent {
             this.type = resolveStatus.notResolved;
 
         return (
-            <div className="report-info">
+            <div className="report-info metadata">
                 <div className="activity-metadata"  >
                     <div>
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
                             <Link className="link-label-s" to={`/user/${this.props.reporterID}`}>
-                                {this.props.reporterName}
+                                {this.props.reporterName} dong
                             </Link>
                             <div className="black-label-s">{`đã tố cáo tài liệu - `}</div>
                             {this.type === resolveStatus.resolved ?
@@ -34,8 +34,6 @@ export default class ReportInfo extends React.PureComponent {
                                 <div className="red-border-label">PENDING</div>
                             }
                         </div>
-
-                        {/* <Link className="activity-title" to={`/document-content/${this.props.id}`} >{this.props.title}</Link> */}
                         <Link className="activity-title" to={`/document-content/${151}`} >{this.props.title}</Link>
 
                     </div>
@@ -62,6 +60,7 @@ export default class ReportInfo extends React.PureComponent {
                 <label className="form-label" >Lý do tố cáo:</label>
                 <div className="report-reason">
                     {this.props.reason}
+                    Lý do dummy
                 </div>
                 <label className="form-label" >Mô tả tài liệu:</label>
 
@@ -77,8 +76,10 @@ export default class ReportInfo extends React.PureComponent {
                         :
                         <div className="summary-text">
                             {this.props.content}
+                            This profile does not specify how many digits may be used to represent the decimal fraction of a second. An adopting standard that permits fractions of a second must specify both the minimum number of digits (a number greater than or equal to one)
                         </div>
                 }
+                <div className="file-name mg-bottom-5px">{this.props.fileName}File name.pdf</div>
             </div >
         );
     }

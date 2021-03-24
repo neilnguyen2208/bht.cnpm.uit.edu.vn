@@ -15,6 +15,7 @@ import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 're
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
+import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 
 //styles
 import 'components/styles/Label.scss'
@@ -232,7 +233,10 @@ class PostSummary extends Component {
         </div>
         {this.props.approveState === "PENDING_FIX" ?
           <div className="feedback-container">
-            <div >Feedback:</div>
+            <div className="d-flex">
+              <img className="danger-icon" src={danger_icon} alt="!" />
+              <div>Feedback:</div>
+            </div>
             <div className="feedback-reason">
               {this.props.feedback}
             </div>

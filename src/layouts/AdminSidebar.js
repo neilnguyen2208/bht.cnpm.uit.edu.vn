@@ -90,11 +90,11 @@ class AdminSidebar extends Component {
                         <div>
                             {/* Quản lý nội dung */}
                             <div hidden={!this.isGrantedPermissions(ContentManagement.Management)}>
-                                <div className="Parent_Dropdown_Menu_Item"
+                                <div className="pr-drop-down-m-i"
                                     id="page-managent-parent-menu-item"
                                     onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e, "page-managent-parent-menu-item", "page-managent-parent-menu-item-text", "page-admin-dropdown-btn-element", "page-admin-menu-item-container")}>
                                     <div className="d-flex">
-                                        <img alt="*" className="vertical-menu-item-icon" src={content_management_icon} id="page-managent-btn-element" />
+                                        <img alt="*" className="vertical-m-i-icon" src={content_management_icon} id="page-managent-btn-element" />
                                         <div className="side-bar-menu-item-text" id="page-managent-parent-menu-item-text">
                                             Quản lý nội dung
                                         </div>
@@ -107,8 +107,8 @@ class AdminSidebar extends Component {
                                     {
                                         (this.isGrantedPermissions(ContentManagement.Management)
                                             && this.isGrantedPermissions(Post.Approve)) ?
-                                            <NavLink className="vertical-sub-menu-item"
-                                                activeClassName="main-interactive-menu-item-active vertical-sub-menu-item"
+                                            <NavLink className="vertical-sub-m-i"
+                                                activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
                                                 to={"/admin/post-management"} >
                                                 <div className="text" >
                                                     Quản lý bài viết
@@ -119,7 +119,7 @@ class AdminSidebar extends Component {
                                     {
                                         (this.isGrantedPermissions(ContentManagement.Management)
                                             && this.isGrantedPermissions(Document.Approve)) ?
-                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-menu-item" className="vertical-sub-menu-item"
+                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                                 to={"/admin/document-management"} >
                                                 <div className="text">
                                                     Quản lý tài liệu
@@ -131,7 +131,7 @@ class AdminSidebar extends Component {
                                     {
                                         (this.isGrantedPermissions(ContentManagement.Management)
                                             && this.isGrantedPermissions(Notification.ViewAll)) ?
-                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-menu-item" className="vertical-sub-menu-item"
+                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                                 to={"/admin/page-notification"}    >
                                                 <div className="text">
                                                     Thông báo trang
@@ -143,7 +143,7 @@ class AdminSidebar extends Component {
                                     {
                                         (this.isGrantedPermissions(ContentManagement.Management)
                                             && this.isGrantedPermissions(Category.View)) ?
-                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-menu-item" className="vertical-sub-menu-item"
+                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                                 to={"/admin/category-management"}
                                             >
                                                 <div className="text">
@@ -164,12 +164,12 @@ class AdminSidebar extends Component {
                                 (this.isGrantedPermissions(ContentManagement.Management) && this.isGrantedPermissions(User.All))
                                     ?
                                     <NavLink
-                                        className="vertical-menu-item"
+                                        className="vertical-m-i"
                                         activeClassName="main-interactive-menu-item-active"
                                         to={"/admin/user-management"}
                                     >
                                         <img alt="*"
-                                            className="vertical-menu-item-icon"
+                                            className="vertical-m-i-icon"
                                             src={user_management_icon}
                                             id="user-managent-btn-element" />
                                         <div className="side-bar-menu-item-text"  >
@@ -184,11 +184,11 @@ class AdminSidebar extends Component {
                             {
                                 (this.isGrantedPermissions(ContentManagement.Management)
                                     && this.isGrantedPermissions(User.All)) ?
-                                    <NavLink className="vertical-menu-item"
+                                    <NavLink className="vertical-m-i"
                                         activeClassName="main-interactive-menu-item-active"
                                         to={"/admin/activity-management"}
                                     >
-                                        <img alt="*" className="vertical-menu-item-icon"
+                                        <img alt="*" className="vertical-m-i-icon"
                                             src={activity_management_icon}
                                             id="activity-managent-btn-element" />
                                         <div className="side-bar-menu-item-text"  >
@@ -204,11 +204,11 @@ class AdminSidebar extends Component {
                                 (this.isGrantedPermissions(ContentManagement.Management)
                                     && this.isGrantedPermissions(Role.All))
                                     ?
-                                    <NavLink className="vertical-menu-item"
+                                    <NavLink className="vertical-m-i"
                                         activeClassName="main-interactive-menu-item-active"
                                         to={"/admin/user-role-management"}
                                     >
-                                        <img alt="*" className="vertical-menu-item-icon"
+                                        <img alt="*" className="vertical-m-i-icon"
                                             src={user_role_management_icon}
                                         />
                                         <div className="side-bar-menu-item-text"  >
@@ -224,11 +224,11 @@ class AdminSidebar extends Component {
                                 (this.isGrantedPermissions(ContentManagement.Management)
                                     && this.isGrantedPermissions(Role.All))
                                     ?
-                                    <NavLink className="vertical-menu-item"
+                                    <NavLink className="vertical-m-i"
                                         activeClassName="main-interactive-menu-item-active"
                                         to={"/admin/statistic"}
                                     >
-                                        <img alt="*" className="vertical-menu-item-icon"
+                                        <img alt="*" className="vertical-m-i-icon"
                                             src={statistic_management_icon} />
                                         <div className="side-bar-menu-item-text"  >
                                             Thống kê

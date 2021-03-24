@@ -166,7 +166,7 @@ class PostDetail extends Component {
             <div className="d-flex" style={{ marginTop: "-1px" }}>
               <div className="d-flex"  >
                 <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
+                  {this.props.subjectName}
                 </div>
               </div>
               <div className="d-flex" >

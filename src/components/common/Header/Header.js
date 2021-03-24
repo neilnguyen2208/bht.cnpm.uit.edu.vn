@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { Link, NavLink } from 'react-router-dom';
 import { ClickAwayListener } from '@material-ui/core';
@@ -41,9 +41,11 @@ class Header extends React.Component {
         this.isHaveClickAwayQuickSearhResult = false;// dung de kiem tra neu bam ra ngoai search result lan 1'
         this.quickSearchResultView = <></>;
         this.timeOut = null;
+        this.redirect = <></>;
     }
 
     componentDidMount() {
+        this.setState({ isHaveRedirect: false })
     }
 
     componentWillUnmount() {
@@ -72,13 +74,21 @@ class Header extends React.Component {
     keyHandler = (e) => {
         if (!e.target.value) return;
         if (e.charCode === 13) { //press Enter    
-            if (this.props.location.pathname.substring(0, 7) === '/search')
-                window.location.href = (`${this.props.location.pathname}?page=1&q=${e.target.value}&category=1`);
-            else
-                window.location.href = (`/search/posts?page=1&q=${e.target.value}&category=1`);
-            document.getElementById("qssr-container").style.display = "none";
-            document.getElementById("qsr-container-big").style.display = "none";
-            return;
+            if (this.props.location.pathname.substring(0, 7) === '/search') {
+                this.setState({ isHaveRedirect: true })
+                
+                this.redirect = <Redirect to={`${this.props.location.pathname}?page=1&q=${e.target.value}&category=1`} />
+                document.getElementById("qssr-container").style.display = "none";
+                document.getElementById("qsr-container-big").style.display = "none";
+                return;
+            }
+            else {
+                this.setState({ isHaveRedirect: true })
+                this.redirect = <Redirect to={`/search/posts?page=1&q=${e.target.value}&category=1`} />
+                document.getElementById("qssr-container").style.display = "none";
+                document.getElementById("qsr-container-big").style.display = "none";
+                return;
+            }
         }
     }
 
@@ -128,7 +138,7 @@ class Header extends React.Component {
                                         />
                                     </div>
                                 </div>
-
+                                {this.state.isHaveRedirect ? this.redirect : <></>}
                                 <ClickAwayListener onClickAway={() => this.handleClickAwayQuickSearchResult()}>
                                     <div className="qsr-container-big" id="qsr-container-big">
                                         <div className="qssr-container" id="qssr-container" >

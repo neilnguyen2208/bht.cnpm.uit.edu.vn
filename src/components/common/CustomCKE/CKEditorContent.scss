@@ -11,13 +11,15 @@
     color: var(--black);
     padding: 15px;
     padding-left: 0px;
-    font-size: 16x;
+    font-size: 1rem;
     padding-top: 0px;
-    // color: var(--light-black);
+    box-sizing: border-box;
+    height: fit-content;
+    white-space: normal;
 }
 
 .ck-editor-output p {
-    font-size: 16x;
+    font-size: 1rem;
     font-weight: 500;
     text-indent: 15px;
     margin-bottom: 10px;
@@ -61,10 +63,26 @@
     padding-left: 10px;
     padding-right: 10px;
     font-weight: 600;
+    white-space: pre;
+
+    overflow-x: auto;
+    word-wrap: normal;
+
 }
 
-.ck-editor-output pre code {
-    font-weight: 600;
+.ck-editor-output code,
+.ck-editor-output pre {
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: auto;
+  font-family: monospace;
+}
+
+.ck-editor-output code {
+    background-color: #f5f5f5;
+    color: #ff3860;
+    font-size: 1em;
+    font-weight: 400;
+    padding: .15em .25em .15em;
 }
 
 .ck-editor-output blockquote {
@@ -89,7 +107,7 @@
 
 .ck-editor-output li {
     margin-left: 30px;
-    font-size: 16px;
+    font-size: 1rem;
     margin-bottom: 10px;
 }
 

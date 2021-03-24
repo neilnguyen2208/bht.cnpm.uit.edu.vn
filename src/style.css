@@ -90,7 +90,10 @@
     --black: #363636;
     --gray: #c4c4c4;
     --green: #00fe3a;
-    --yellow: #fefe3a;
+    --yellow: #fff700;
+    --orange: #ffa500;
+    --light-orange: #ffe4b3;
+
     --grayish: #eeeeee;
     --light-gray: #fafafa;
     --light-black: #6b6b6b;
@@ -100,21 +103,74 @@ body {
     line-height: 1rem;
     color: var(--black) !important;
     font-family: "BarlowSemiCondensed-Medium";
+    margin: 0px;
+}
+
+input {
+    box-sizing: border-box;
+    display: block;
+}
+
+label {
+    box-sizing: border-box;
+}
+
+ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+textarea {
+    box-sizing: border-box;
 }
 
 body.open-modal {
     overflow: hidden;
 }
 
+iframe {
+    border: none;
+}
 
 img {
     color: var(--light-black);
     font: 14px "BarlowSemiCondensed-Medium";
     text-align: center;
+    display: block;
+    max-width: 100%;
+    box-sizing: border-box;
+
 }
 
 .title {
     font-weight: 400;
+    box-sizing: border-box;
+}
+
+li.hide::marker {
+    display: none;
+    opacity: 0;
+}
+
+
+
+div {
+    box-sizing: border-box;
+
+}
+
+.if-container {
+    height: 80vh;
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    background: #d1d1d1;
+    margin-bottom: 20px;
+    border-radius: 5px;
 }
 
 .j-c-space-between {

@@ -71,7 +71,7 @@ export function management_approveADocument(docID) {
     }
 }
 
-export function getDocumentSearch(searchParamObject) { //this API to get all approved document of a specific user.
+export function getDocumentSearch(searchParamObject) { 
     return dispatch => {
         dispatch(get_DocumentSearchRequest());
         request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents

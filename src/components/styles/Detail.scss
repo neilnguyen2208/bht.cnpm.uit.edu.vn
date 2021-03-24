@@ -25,6 +25,35 @@
 }
 
 
+.document-detail-container .file-name {
+    position: relative;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 18px;
+    line-height: 18px;
+    display: flex;
+    color: var(--blue);
+    user-select: none;
+    cursor: pointer;
+    height: fit-content;
+    border-radius: 0px;
+    border: none;
+    // background: green;
+    margin-top: 5px;
+}
+
+
+.file-name-container {
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    margin: auto;
+    max-width: 600px;
+    width: 90%;
+    border-bottom: 1px solid var(--gray);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
 .document-detail-container .continue-read,
 .post-detail-container .continue-read {
     display: none;

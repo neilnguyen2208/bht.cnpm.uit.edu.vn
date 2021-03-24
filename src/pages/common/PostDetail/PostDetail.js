@@ -22,7 +22,6 @@ import RelativePosts from 'components/post/RelativePosts'
 
 class PostDetail extends Component {
 
-
     componentDidMount() {
         this.props.getPostByID(this.props.match.params.id);
     }
@@ -31,6 +30,24 @@ class PostDetail extends Component {
         store.dispatch(get_PostByIDReset());
         store.dispatch(get_RelativeSameAuthorPostsReset());
         store.dispatch(get_RelativeSameCategoryPostsReset());
+    }
+
+    renderTableOfContent = () => {
+        let ToC = "<div>";
+        document.querySelectorAll(".ck-editor-output h1, .ck-editor-output h2, .ck-editor-output h3  ").forEach((item) => {
+            // if (item.childNodes.length !== 0) return;
+            console.log(item.tagName === 'H2')
+            if (item.tagName === "H1")
+                ToC += `<div className="lv1-toc" > ${item.innerText}</div>`;
+            if (item.tagName === "H2")
+                ToC += `<div className="lv2-toc" > ${item.innerText}</div>`;
+            if (item.tagName === "H3")
+                ToC += `<div className="lv3-toc" > ${item.innerText}</div>`;
+        })
+
+        ToC = ToC + "</div>";
+        // this.setState({ ToC: ToC });
+        return ToC;
     }
 
     render() {
@@ -77,6 +94,17 @@ class PostDetail extends Component {
                                 : <Loader />}
                         </div>
                         <div>
+                            {/* <div className="relative-sidebar">
+                                <div className="relative-title">
+                                    MỤC LỤC
+                                </div>
+                                <div style={{ padding: "5px" }} id="toc-container" dangerouslySetInnerHTML={{
+                                    __html:
+                                        this.renderTableOfContent()
+                                }}>
+                                </div >
+                            </div > */}
+
                             {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
                                 <RelativePosts title={"CÙNG TÁC GIẢ"} items={
                                     this.props.sameAuthor} />

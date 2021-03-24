@@ -12,7 +12,7 @@
     border: 1px solid var(--gray);
     font-size: 18px;
     position: relative;
-    min-width: 240px;
+    min-width: 200px;
     width: fit-content;
     user-select: none;
     cursor: pointer;
@@ -21,8 +21,6 @@
     height: 30px;
     line-height: 24px;
 }
-
-// .combox.invalid
 
 .combox:hover {
     box-shadow: 0px 0px 2px 0px var(--light-blue);
@@ -60,7 +58,7 @@
     display: none;
     user-select: none;
     padding: 5px;
-    min-width: 240px;
+    min-width: 200px;
     width: fit-content;
     background: white;
     z-index: 1;
@@ -110,6 +108,6 @@
 .wrapper-combobox {
     position: relative;
     display: flex;
-    min-width: 240px;
+    min-width: 200px;
     width: fit-content;
 }

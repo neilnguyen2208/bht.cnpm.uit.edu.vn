@@ -3,6 +3,7 @@
     max-width: 600px;
     margin: auto;
     outline: none;
+    overflow-x: hidden;
 }
 
 .form-group {
@@ -195,6 +196,7 @@
 
 .file-input {
     cursor: pointer;
+    display: none;
 }
 
 .validation {

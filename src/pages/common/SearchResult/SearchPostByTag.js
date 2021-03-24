@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getPostSearch } from "redux/services/postServices"
 import { bindActionCreators } from 'redux';
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
@@ -12,12 +12,14 @@ import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import SearchTagHorizontalMenubar from './SearchTagHorizontalMenubar';
 import PostSummaryMetadata from 'components/post/SummaryInfo';
 import RelativeTagSidebar from 'layouts/RelativeTagSidebar';
+import search_icon from 'assets/icons/24x24/bg_search_icon_24x24.png'
+
 
 class SearchPostByTag extends Component {
     componentDidMount() {
         this.queryParamObject = {
             "page": 1,
-            tag: getQueryParamByName('tag')
+            tag: getQueryParamByName('tag') ? getQueryParamByName('tag') : 1
 
         }
 
@@ -80,8 +82,13 @@ class SearchPostByTag extends Component {
 
         return (
             <div className="search-layout">
-                <div className="current-tag">
-                    Tag:
+                <div className="current-tag-container">
+                    <Link to={"/search/tags"}>
+                        <img className="back-to-search-btn" src={search_icon} alt="" />
+                    </Link>
+                    <div className="current-tag">
+                        Tag:
+                    </div>
                 </div>
                 <div className="d-flex">
                     <RelativeTagSidebar />

@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 
 import 'components/styles/Metadata.scss'
-import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
-
-import { isGrantedPermissions } from "utils/permissionUtils"
 import { getPostByID } from "redux/services/postServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import 'components/styles/Detail.scss'
-import PDFViewer from 'pdf-viewer-reactjs'
 import Metadata from "components/document/DetailInfo"
 import Loader from 'components/common/Loader/Loader'
-import Tag from 'components/post/Tag'
+import Tag from 'components/document/Tag'
 
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import store from 'redux/store/index.js';
@@ -24,51 +20,12 @@ import {
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
-
-//import for pdf viewer:
-
+import { itemType } from 'constants.js';
 
 class DocumentDetail extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.documentID = "";
-        this.isGrantedPermissions = isGrantedPermissions.bind(this);
-
-        this.id = "";
-        this.authorName = "Huỳnh Thị Kim Thảo";
-        this.authorID = "authorID";
-        this.requestedDate = "requestedDate";
-        this.requestedTime = "requestedTime";
-        this.category = "category";
-        this.categoryID = "categoryID";
-        this.semesterName = "semesterName";
-        this.year = "year";
-        this.subject = "subject";
-        this.title = "Sức mạnh của người hướng nội";
-        this.content = `This book is so much more than I had originally anticipated when beginning to outline it
-            in October 2007. It started out simple: I was going to talk about the 1980s and everything
-        that influenced me like comics, television, movies and videogames.I started by writing
-        down what videogames I felt were notable enough that I played in that decade and found
-        out I had well over 100. I decided to keep going and write all of them down that were
-        released through October 2007(when I started this book) and found out I had well over
-        500 total.It dawned on me that the idea of covering comics, television and movies
-        needed to be passed over.I also started planning on how to split all those games up and
-        decided on doing so via decades.`;
-        this.image = "image";
-        this.tags = "tags";
-        this.uploadedTime = "22-08-2020";
-        this.viewCount = "1000";
-        this.downloadCount = "200";
-        this.avartarUrl = 'https://i.imgur.com/SZJgL6C.jpg';
-        this.fileName = "Suy tưởng - Marcus Antonius Arellius.pdf";
-        this.linkFile = "";
-    }
-
     componentDidMount() {
         this.props.getPostByID(this.props.match.params.id);
-
     }
 
     componentWillUnmount() {
@@ -78,42 +35,60 @@ class DocumentDetail extends Component {
     }
 
     render() {
-
         return (
             <div className="d-flex">
                 <div className="mg-auto">
                     <div className="d-flex">
-                        <div className="post-detail-container" >
+                        <div className="document-detail-container" >
                             {this.props.isLoadDone ?
                                 <div>
                                     <Metadata
-                                        id={this.props.currentPost.id}
-                                        title={this.props.currentPost.title}
-                                        categoryName={this.props.currentPost.categoryName}
-                                        categoryID={this.props.currentPost.categoryID}
-                                        readingTime={this.props.currentPost.readingTime}
-                                        authorName={this.props.currentPost.authorName}
-                                        authorAvatarURL={this.props.currentPost.authorAvatarURL}
-                                        publishDtm={this.props.currentPost.publishDtm}
+                                        type={itemType.normal}
+                                        id={this.props.currentDocument.id}
+                                        authorName={this.props.currentDocument.authorName}
+                                        authorID={this.props.currentDocument.authorID}
+                                        publishDtm={this.props.currentDocument.publishDtm}
+                                        categoryName={this.props.currentDocument.categoryName}
+                                        categoryID={this.props.currentDocument.categoryID}
+                                        subjectName={this.props.currentDocument.docSubject ? this.props.currentDocument.docSubject : "Cấu trúc dữ liệu & giải thuật"}
+                                        subjectID={this.props.currentDocument.docSubjectID}
+
+                                        title={this.props.currentDocument.title}
+                                        fileName={this.props.currentDocument.fileName ? this.props.currentDocument.fileName : "Tài liệu Cấu trúc dữ liệu và giải thuật nâng cao."}
+                                        description={this.props.currentDocument.description}
+                                        imageURL={this.props.currentDocument.imageURL}
+                                        readingTime={this.props.currentDocument.readingTime}
+                                        approveState={this.props.currentDocument.docState}
+                                        popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                                        //
+                                        reloadList={() => this.reloadList()}
 
                                     />
 
                                     {/* content here */}
                                     <div className="ck-editor-output" dangerouslySetInnerHTML={{
                                         __html:
-                                            this.props.currentPost.content
+                                            this.props.currentDocument.content
                                     }} />
 
                                     <div className="mg-top-10px mg-bottom-10px" >
-                                        {this.props.currentPost.tags.map(item =>
+                                        {this.props.currentDocument.tags.map(item =>
                                             <Tag isReadOnly={true} tag={item} />
                                         )}
                                     </div>
-                                    <div className="d-flex mg-bottom-10px">
-                                        <iframe style={{ height: "500px", width: "80%", margin: "auto" }}
-                                            src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
-                                            width="100%" height="100%"></iframe>
+                                    <div className="file-name-container">
+                                        <div className="file-name">{this.props.currentDocument.fileName ? this.props.currentDocument.fileName : "Tài liệu giải thuật nâng cao.pdf"}</div>
+                                        <button className="white-button">Tải xuống</button>
                                     </div>
+                                    <div className="d-flex">
+                                        <iframe className="if-container"
+                                            src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
+                                            title={`doc-if-${this.props.match.params.id}`}
+                                            sandbox="allow-scripts allow-same-origin"
+                                        ></iframe>
+                                    </div>
+
                                     <DocumentNormalReactionbar
                                         id={this.props.id}
                                         likeCount={this.props.likeCount ? this.props.likeCount : 2}
@@ -129,7 +104,7 @@ class DocumentDetail extends Component {
                         </div>
                         <div>
                             {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
-                                <RelativePosts title={"CÙNG TÁC GIẢ"} items={
+                                <RelativePosts title={"TÀI LIỆU LIÊN QUAN"} items={
                                     this.props.sameAuthor} />
                                 : <Loader />}
                             {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
@@ -145,7 +120,7 @@ class DocumentDetail extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        currentPost: state.post.currentPost.data,
+        currentDocument: state.post.currentPost.data,
         isLoadDone: state.post.currentPost.isLoadDone,
         sameCategory: state.post.sameCategory.data,
         isSameCategoryLoadDone: state.post.sameCategory.isLoadDone,

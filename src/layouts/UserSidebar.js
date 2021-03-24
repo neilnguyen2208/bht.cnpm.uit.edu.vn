@@ -99,11 +99,11 @@ class UserSidebar extends Component {
           < div className="vertical-menu-container"  >
             <div style={{ display: "block" }}>
               {/* Quan ly tai khoan menu item*/}
-              <div className="Parent_Dropdown_Menu_Item" id="account-managent-parent-menu-item"
+              <div className="pr-drop-down-m-i" id="account-managent-parent-menu-item"
                 onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e, "account-managent-parent-menu-item", "account-managent-parent-menu-item-text", "account-admin-dropdown-btn-element", "account-admin-menu-item-container")
                 }>
                 <div className="d-flex">
-                  <img alt="*" className="vertical-menu-item-icon"
+                  <img alt="*" className="vertical-m-i-icon"
                     src={account_management_icon} />
                   <div className="side-bar-menu-item-text"
                     id="account-managent-parent-menu-item-text">
@@ -118,22 +118,22 @@ class UserSidebar extends Component {
               <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container"
                 id="account-admin-menu-item-container">
                 <div className="mg-bottom-5px"></div>
-                <NavLink className="vertical-sub-menu-item"
-                  activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                <NavLink className="vertical-sub-m-i"
+                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to="/user" exact
                   onClick={() => this.setState({})}> Thông tin tài khoản
                       </NavLink>
 
-                <NavLink className="vertical-sub-menu-item"
-                  activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                <NavLink className="vertical-sub-m-i"
+                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
 
                   to="/user/update-password"
                   onClick={() => this.setState({})}>
                   Cập nhật mật khẩu
                       </NavLink>
 
-                <NavLink className="vertical-sub-menu-item"
-                  activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                <NavLink className="vertical-sub-m-i"
+                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to={"/user/notification"}
                   onClick={() => this.setState({})}>
                   Thông báo
@@ -145,7 +145,7 @@ class UserSidebar extends Component {
 
               {/* Bai viet*/}
               <div style={{ display: "block" }}>
-                <div className="Parent_Dropdown_Menu_Item" id="user-post-managent-parent-menu-item"
+                <div className="pr-drop-down-m-i" id="user-post-managent-parent-menu-item"
                   onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e,
                     "user-post-management-parent-menu-item",
                     "user-post-management-parent-menu-item-text",
@@ -153,7 +153,7 @@ class UserSidebar extends Component {
                     "user-post-management-menu-item-container")
                   }>
                   <div className="d-flex">
-                    <img alt="*" className="vertical-menu-item-icon"
+                    <img alt="*" className="vertical-m-i-icon"
                       src={gray_nb_write_icon} />
                     <div className="side-bar-menu-item-text"
                       id="user-post-managent-parent-menu-item-text">
@@ -169,15 +169,15 @@ class UserSidebar extends Component {
                   id="user-post-management-menu-item-container">
                   <div className="mg-bottom-5px"></div>
 
-                  <NavLink className="vertical-sub-menu-item"
-                    activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                  <NavLink className="vertical-sub-m-i"
+                    activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                     to={"/user/my-posts?page=1&category=0"}
                     onClick={() => this.setState({})}>
                     Bài viết của tôi
                         </NavLink>
 
-                  <NavLink className="vertical-sub-menu-item"
-                    activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                  <NavLink className="vertical-sub-m-i"
+                    activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                     to={"/user/saved-posts?page=1"}
                     onClick={() => this.setState({})}>
                     Đã lưu
@@ -185,8 +185,8 @@ class UserSidebar extends Component {
 
 
 
-                  <NavLink className="vertical-sub-menu-item"
-                    activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                  <NavLink className="vertical-sub-m-i"
+                    activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
 
                     to={"/create-post"}
                     onClick={() => this.setState({})}>
@@ -198,7 +198,7 @@ class UserSidebar extends Component {
 
 
               <div style={{ display: "block" }}>
-                <div className="Parent_Dropdown_Menu_Item" id="user-document-managent-parent-menu-item"
+                <div className="pr-drop-down-m-i" id="user-document-managent-parent-menu-item"
                   onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e,
                     "user-document-management-parent-menu-item",
                     "user-document-management-parent-menu-item-text",
@@ -206,7 +206,7 @@ class UserSidebar extends Component {
                     "user-document-management-menu-item-container")
                   }>
                   <div className="d-flex">
-                    <img alt="*" className="vertical-menu-item-icon"
+                    <img alt="*" className="vertical-m-i-icon"
                       src={gray_nb_write_icon} />
                     <div className="side-bar-menu-item-text"
                       id="user-document-managent-parent-menu-item-text">
@@ -222,16 +222,16 @@ class UserSidebar extends Component {
                   id="user-document-management-menu-item-container">
                   <div className="mg-bottom-5px"></div>
 
-                  <NavLink className="vertical-sub-menu-item"
-                    activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
+                  <NavLink className="vertical-sub-m-i"
+                    activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                     to={"/user/my-documents?page=1&category=1"}
                     onClick={() => this.setState({})}>
                     Tài liệu của tôi
                         </NavLink>
 
                   <NavLink
-                    activeClassName="vertical-sub-menu-item main-interactive-menu-item-active"
-                    className="vertical-sub-menu-item"
+                    activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
+                    className="vertical-sub-m-i"
                     to={"/upload-document"}>
                     Upload tài liệu
                         </NavLink>

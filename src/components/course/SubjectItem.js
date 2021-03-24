@@ -23,15 +23,7 @@ class CourseSummaryItem extends Component {
     this.image = this.props.image;
 
 
-    this.normalMenuItemList = [
-      { id: 3, name: "Report", icon: trash_icon },
-    ]
 
-    this.mySelfMenuItemList = [
-      { id: 1, name: "Xoá", icon: trash_icon },
-      { id: 2, name: "Chỉnh sửa", icon: trash_icon },
-      { id: 3, name: "Report", icon: trash_icon },
-    ]
   }
 
   onSaveBtnClick = () => {
@@ -70,10 +62,10 @@ class CourseSummaryItem extends Component {
           </Link>
           <div className="save-btn-container">
             <div className="save-btn">
-            {!this.props.isSaved?
-              <img alt="save_btn" className="save-btn-img" src={graySaveIcon} />:
-              <img alt="save_btn" className="save-btn-img" src={blueSaveIcon} />
-            }
+              {!this.props.isSaved ?
+                <img alt="save_btn" className="save-btn-img" src={graySaveIcon} /> :
+                <img alt="save_btn" className="save-btn-img" src={blueSaveIcon} />
+              }
             </div>
           </div>
         </div>

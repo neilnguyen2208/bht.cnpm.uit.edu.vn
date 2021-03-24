@@ -1,22 +1,21 @@
-/* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType, userApproveStatusOptions } from 'constants.js';
+import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
-import { getMyPosts } from "redux/services/postServices";
-import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
+import { getSavedPosts } from "redux/services/postServices";
 import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
+import { delete_UnSaveAPostReset } from 'redux/actions/postAction'
 import UserSidebar from 'layouts/UserSidebar'
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
+import store from 'redux/store/index'
 
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
 class SavedPosts extends Component {
@@ -27,24 +26,19 @@ class SavedPosts extends Component {
     componentDidMount() {
         this.searchParamObject = {
             "page": 1,
-            "category.id": null,
+            "userID": 1
+
         }
 
         this.queryParamObject = {
-            "category": 0,
-            "page": 1
+            "page": 1,
+
         }
 
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
 
-        this.props.getPostCategoriesHaveAll();
-        this.searchParamObject = {
-            page: getQueryParamByName('page'),
-            "category.id": getQueryParamByName('category') && getQueryParamByName('category') !== "0" ? getQueryParamByName('category') : null,
-            sort: 'publishDtm,desc',
-        }
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getSavedPosts(this.searchParamObject);
     }
 
     //server paginator
@@ -58,69 +52,22 @@ class SavedPosts extends Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page')
         }
-        this.props.getMyPosts(this.searchParamObject);
+        this.props.getSavedPosts(this.searchParamObject);
         this.setState({});
-    }
-
-    //combobox
-    onCategoryOptionChange = (selectedOption) => {
-        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id, page: 1 }
-        setQueryParam(this.queryParamObject);
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            "category.id": selectedOption.id,
-            page: 1
-        }
-        this.props.getMyPosts(this.searchParamObject);
-        this.setState({});
-    }
-
-    reloadList = () => {
-        //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.myPostsList.length === 1 && this.searchParamObject.page > 1)
-            this.searchParamObject = {
-                ...this.searchParamObject,
-                page: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
-            }
-        setQueryParam(this.queryParamObject);
-
-        this.props.getMyPosts(this.searchParamObject);
     }
 
     render() {
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
-            this.comboboxGroup =
-                <div className="filter-container j-c-space-between">
-                    <div className="d-flex">
-                        <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
-                        <div className="mg-left-5px">
-                            <ComboBox
-                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
-                                options={this.props.postCategories}
-                                onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="my-post-list-category-filter-combobox"
-                            ></ComboBox>
-                        </div>
-                    </div>
-                </div>
+
+        if (this.props.isHaveUnSaved) {
+            this.reloadList();
+            store.dispatch(delete_UnSaveAPostReset())
         }
-        else this.comboboxGroup = <div className="filter-container j-c-space-between ">
-            <div className="d-flex">
-                <div className="timeline-item d-flex">
-                    <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
-                </div>
-            </div>
-            <div className="timeline-item d-flex">
-                <div className="animated-background" style={{ width: "240px", height: "20px" }}></div>
-            </div>
-        </div>
 
         if (!this.props.isListLoading) {
-            if (this.props.myPostsList.length !== 0)
-                this.myPostsList = this.props.myPostsList.map((item) => {
+            if (this.props.savedPosts.length !== 0)
+                this.savedPosts = this.props.savedPosts.map((item) => {
                     return <div className="item-container">
                         <PostSummaryMetadata
-                            type={itemType.normal}
                             id={item.id}
                             authorName={item.authorName}
                             authorID={item.authorID}
@@ -132,10 +79,8 @@ class SavedPosts extends Component {
                             imageURL={item.imageURL}
                             readingTime={item.readingTime}
                             approveState={item.postState}
-                            popUpMenuPrefix="mppu"   //stand for my post popup 
+                            popUpMenuPrefix="svppu"   //stand for my post popup 
                             authorAvatarURL={item.authorAvatarURL}
-                            //
-                            reloadList={() => this.reloadList()}
                         />
                         <PostNormalReactionbar
                             id={item.id}
@@ -147,10 +92,10 @@ class SavedPosts extends Component {
                     </div >
                 })
             else
-                this.myPostsList = <div>Không có kết quả nào!</div>;
+                this.savedPosts = <div>Không có kết quả nào!</div>;
         }
         else
-            this.myPostsList = <div>
+            this.savedPosts = <div>
                 {DocPostSummaryLoader()}
                 {DocPostSummaryLoader()}
                 {DocPostSummaryLoader()}
@@ -164,13 +109,13 @@ class SavedPosts extends Component {
                     <div className="content-container">
                         {this.comboboxGroup}
 
-                        {!this.props.isListLoading && this.props.myPostsList ?
+                        {!this.props.isListLoading && this.props.savedPosts ?
                             <>
-                                <div className="sum-item-label">
+                                {/* <div className="sum-item-label">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
-                                </div>
-                                <div >{this.myPostsList}</div>
+                                </div> */}
+                                <div >{this.savedPosts}</div>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,
@@ -194,17 +139,17 @@ class SavedPosts extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        myPostsList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.searchData,
-        totalPages: state.post.myPosts.totalPages,
-        totalElements: state.post.myPosts.totalElements,
-        isListLoading: state.post.myPosts.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading
+        savedPosts: state.post.savedPosts.data,
+        totalPages: state.post.savedPosts.totalPages,
+        totalElements: state.post.savedPosts.totalElements,
+        isListLoading: state.post.savedPosts.isLoading,
+
+        isHaveUnsaved: state.post.isHaveUnsaved,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPosts, getPostCategoriesHaveAll,
+    getSavedPosts,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SavedPosts));

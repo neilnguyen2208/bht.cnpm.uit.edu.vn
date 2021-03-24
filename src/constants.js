@@ -1,3 +1,7 @@
+import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
+import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
+import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
+
 export const itemType = { approval: "APPROVAL", normal: "NORMAL", mySelf: "MY_SELF", report: "REPORT" }
 export const componentType = { document: "DOCUMENT", post: "POST" }
 export const approvalStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED", waitingForFeedback: "PENDING_FIX" }
@@ -30,5 +34,67 @@ export const requestedTimeOptions = [
   { id: 1, name: "Mới nhất", sort: "publishDtm,desc" },
   { id: 2, name: "Cũ nhất", sort: "publishDtm,asc" }
 ]
+
+export const mySelfMenuItemList = [
+  { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
+  { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
+  {
+    id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
+    style: {
+      height: "26px",
+      paddingTop: "3px",
+      paddingBottom: "3px"
+    }
+  },
+]
+
+export const adminMenuItemList = [
+  { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
+  { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
+  {
+    id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
+    style: {
+      height: "26px",
+      paddingTop: "3px",
+      paddingBottom: "3px"
+    }
+  },
+  {
+    id: 4, text: "Ghim nội dung", value: "PIN_CONTENT", icon: report_icon,
+    style: {
+      height: "26px",
+      paddingTop: "3px",
+      paddingBottom: "3px"
+    }
+  },
+]
+
+export const highlightMenuItemList = [
+  { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
+  { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
+  {
+    id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
+    style: {
+      height: "26px",
+      paddingTop: "3px",
+      paddingBottom: "3px"
+    }
+  },
+  {
+    id: 4, text: "Bỏ ghim", value: "UNPIN_CONTENT", icon: report_icon,
+    style: {
+      height: "26px",
+      paddingTop: "3px",
+      paddingBottom: "3px"
+    }
+  },
+]
+
+
+export const normalMenuItemList = [
+  { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },
+]
+
+
 
 export const DELAY_TIME = 700;

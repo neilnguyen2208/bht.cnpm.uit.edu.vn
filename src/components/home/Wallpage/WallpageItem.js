@@ -14,7 +14,7 @@ import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 import NormalReactionbar from 'components/post/NormalReactionbar'
-
+import { highlightMenuItemList } from 'constants.js'
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
@@ -22,13 +22,6 @@ import 'components/styles/Metadata.scss'
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 class WallpageItem extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.menuItemList = [
-            { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },
-        ]
-    }
 
     onPopupMenuItemClick = (selectedItem) => {
         if (selectedItem.value === "REPORT_POST") {
@@ -103,7 +96,7 @@ class WallpageItem extends React.Component {
                                     {this.props.authorName}
                                 </Link>
                             </div>
-                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.menuItemList} id={`hipm-${this.props.id}`} />
+                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={highlightMenuItemList} id={`hipm-${this.props.id}`} />
 
                         </div>
 

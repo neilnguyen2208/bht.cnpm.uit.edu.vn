@@ -23,7 +23,7 @@ import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
 
 //constants
-import { itemType } from 'constants.js'
+import { itemType, mySelfMenuItemList, normalMenuItemList } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
@@ -32,21 +32,8 @@ class DocumentSummary extends Component {
 
   constructor(props) {
     super(props);
-    this.normalMenuItemList = [
+    normalMenuItemList = [
       { id: 3, text: "Report", icon: report_icon, value: "REPORT_DOC" },
-    ]
-
-    this.mySelfMenuItemList = [
-      { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
-      { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
-      {
-        id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
-        style: {
-          height: "26px",
-          paddingTop: "3px",
-          paddingBottom: "3px"
-        }
-      },
     ]
 
     this.id = this.props.id;
@@ -199,10 +186,10 @@ class DocumentSummary extends Component {
             }
           </div>
           {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for document item poupup menu
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for document item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
           }
         </div>
 

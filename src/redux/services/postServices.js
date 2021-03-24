@@ -13,9 +13,9 @@ import {    //highlight posts
     get_ReportedPostsFailure,
 
     //post search result 
-    get_PostSearchResultRequest,
-    get_PostSearchResultSuccess,
-    get_PostSearchResultFailure,
+    get_PostSearchRequest,
+    get_PostSearchSuccess,
+    get_PostSearchFailure,
 
     get_PostByIDReset,
     get_PostByIDSuccess,
@@ -38,7 +38,7 @@ import {    //highlight posts
     delete_UnLikeAPostFailure,
 
     post_SaveAPostRequest,
-    delete_UnSaveAPostRequest,
+    delete_UnSaveAPostReset,
     post_SaveAPostSuccess,
     post_SaveAPostFailure,
     delete_UnSaveAPostSuccess,
@@ -75,6 +75,10 @@ import {    //highlight posts
     post_RejectAndFeedbackAPostReset,
     post_RejectAndFeedbackAPostFailure,
 
+
+    get_SavedPostsRequest,
+    get_SavedPostsSuccess,
+    get_SavedPostsFailure
 } from "redux/actions/postAction.js";
 
 import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
@@ -185,7 +189,7 @@ export function resolveAPost(id, resolveDTO) {
 export function getPostSearch(searchParamObject) {
     return dispatch => {
 
-        dispatch(get_PostSearchResultRequest());
+        dispatch(get_PostSearchRequest());
         request.get(`/posts/searchFilter?${generateSearchParam(searchParamObject)}`)
             .then(response => {
 
@@ -205,12 +209,12 @@ export function getPostSearch(searchParamObject) {
                             }
                             );
                         }
-                        dispatch(get_PostSearchResultSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
-                    }).catch(() => get_PostSearchResultFailure())
+                        dispatch(get_PostSearchSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_PostSearchFailure())
 
 
             })
-            .catch(error => dispatch(get_PostSearchResultFailure(error)))
+            .catch(error => dispatch(get_PostSearchFailure(error)))
     }
 }
 
@@ -294,7 +298,7 @@ export function saveAPost(id) { //maybe use modal later
 
 export function unSaveAPost(id) { //maybe use modal later
     return dispatch => {
-        dispatch(delete_UnSaveAPostRequest(id))
+        dispatch(delete_UnSaveAPostReset(id))
         request.delete(`/posts/${id}/savedStatus`)
             .then(response => {
                 dispatch(delete_UnSaveAPostSuccess(id));
@@ -385,4 +389,34 @@ export function getSameAuthorPosts(postID, authorID) {
 
 
 
+export function getSavedPosts(searchParamObject) {
+    return dispatch => {
 
+        dispatch(get_SavedPostsRequest());
+        request.get(`/posts/savedBy?${generateSearchParam(searchParamObject)}`)
+            .then(response => {
+
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.postSummaryDTOs.length; i++) {
+                            finalResult.push({
+                                ...result_1.postSummaryDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
+                            }
+                            );
+                        }
+                        dispatch(get_SavedPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_SavedPostsFailure())
+
+
+            })
+            .catch(error => dispatch(get_SavedPostsFailure(error)))
+    }
+}

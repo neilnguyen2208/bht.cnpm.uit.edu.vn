@@ -15,7 +15,7 @@ import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 're
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
-import { detailType } from 'constants.js'
+import { detailType, normalMenuItemList } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
 
 //styles
@@ -34,30 +34,7 @@ class PostDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.normalMenuItemList = [
-      {
-        id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
-        style: {
-          height: "26px",
-          paddingTop: "3px",
-          paddingBottom: "3px"
-        }
-      },
-    ]
-
-    this.mySelfMenuItemList = [
-      { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
-      { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
-      {
-        id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
-        style: {
-          height: "26px",
-          paddingTop: "3px",
-          paddingBottom: "3px"
-        }
-      },
-    ]
-
+   
     this.id = this.props.id;
     this.title = this.props.title;
     this.image = this.props.image;
@@ -184,7 +161,7 @@ class PostDetail extends Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>
 
       </div >

@@ -43,8 +43,8 @@ import {
     LIKE_A_POST_FAILURE,
     UNLIKE_A_POST_FAILURE,
 
-    SAVE_A_POST_REQUEST,
-    UNSAVE_A_POST_REQUEST,
+    SAVE_A_POST_RESET,
+    UNSAVE_A_POST_RESET,
     SAVE_A_POST_SUCCESS,
     UNSAVE_A_POST_SUCCESS,
     UNSAVE_A_POST_FAILURE,
@@ -76,6 +76,9 @@ import {
     GET_RELATIVE_SAME_AUTHOR_POSTS_SUCCESS,
     GET_RELATIVE_SAME_AUTHOR_POSTS_RESET,
 
+    GET_SAVED_POSTS_REQUEST,
+    GET_SAVED_POSTS_SUCCESS,
+    GET_SAVED_POSTS_FAILURE
 
 
 } from "../constants.js"
@@ -212,19 +215,19 @@ export function get_PostByIDReset() {
 }
 
 //post search result
-export function get_PostSearchResultRequest() {
+export function get_PostSearchRequest() {
     return {
         type: GET_POST_SEARCH_REQUEST
     }
 }
 
-export function get_PostSearchResultSuccess(data) {
+export function get_PostSearchSuccess(data) {
     return {
         type: GET_POST_SEARCH_SUCCESS, payload: data
     }
 }
 
-export function get_PostSearchResultFailure(error) {
+export function get_PostSearchFailure(error) {
     return {
         type: GET_POST_SEARCH_FAILURE,
         payload: error
@@ -277,14 +280,14 @@ export function delete_UnLikeAPostFailure(data) {
 //post search result, phan dung toi id sau nay moi lam, gio chua lam ki
 export function post_SaveAPostRequest(data) {
     return {
-        type: SAVE_A_POST_REQUEST,
+        type: SAVE_A_POST_RESET,
         payload: data
     }
 }
 
-export function delete_UnSaveAPostRequest(data) {
+export function delete_UnSaveAPostReset(data) {
     return {
-        type: UNSAVE_A_POST_REQUEST,
+        type: UNSAVE_A_POST_RESET,
         payload: data
     }
 }
@@ -442,5 +445,26 @@ export function get_RelativeSameAuthorPostsSuccess(data) {
 export function get_RelativeSameAuthorPostsFailure() {
     return {
         type: GET_RELATIVE_SAME_AUTHOR_POSTS_FAILURE
+    }
+}
+
+
+//post search result
+export function get_SavedPostsRequest() {
+    return {
+        type: GET_SAVED_POSTS_REQUEST
+    }
+}
+
+export function get_SavedPostsSuccess(data) {
+    return {
+        type: GET_SAVED_POSTS_SUCCESS, payload: data
+    }
+}
+
+export function get_SavedPostsFailure(error) {
+    return {
+        type: GET_SAVED_POSTS_FAILURE,
+        payload: error
     }
 }

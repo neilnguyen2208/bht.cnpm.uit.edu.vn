@@ -15,7 +15,7 @@ import {
     GET_POST_BY_ID_SUCCESS,
     GET_POST_BY_ID_FAILURE,
     GET_POST_BY_ID_RESET,
-    
+
     //my post
     GET_MY_POSTS_REQUEST,
     GET_MY_POSTS_SUCCESS,
@@ -34,8 +34,8 @@ import {
     LIKE_A_POST_FAILURE,
     UNLIKE_A_POST_FAILURE,
 
-    SAVE_A_POST_REQUEST,
-    UNSAVE_A_POST_REQUEST,
+    SAVE_A_POST_RESET,
+    UNSAVE_A_POST_RESET,
     SAVE_A_POST_SUCCESS,
     UNSAVE_A_POST_SUCCESS,
     SAVE_A_POST_FAILURE,
@@ -72,7 +72,10 @@ import {
     GET_RELATIVE_SAME_CATEGORY_POSTS_FAILURE,
 
     CREATE_A_POST_RESET,
-    CREATE_A_POST_SUCCESS
+    CREATE_A_POST_SUCCESS,
+    GET_SAVED_POSTS_REQUEST,
+    GET_SAVED_POSTS_FAILURE,
+    GET_SAVED_POSTS_SUCCESS,
 
 } from '../constants.js'
 
@@ -95,7 +98,7 @@ const initialState = {
         error: ''
     },
 
-    //
+    //action for reload
     isHaveDeleted: false,
     isHaveEdited: false,
     isHaveReported: false,
@@ -103,10 +106,19 @@ const initialState = {
     isHaveReportedAndFeedbacked: false,
     isHaveApppoved: false,
     isHaveResolved: false,
-    isHaveCreated: false, //for reported post
+    isHaveCreated: false,
+    isHaveUnsaved: false,
+    isHaveSaved: false,
 
     //search post: use for search post and post list
     postsList: {
+        isLoading: false,
+        data: [],
+        totalPages: 1,
+        totalElements: 0
+    },
+
+    savedPosts: {
         isLoading: false,
         data: [],
         totalPages: 1,
@@ -234,21 +246,19 @@ function PostReducer(state = initialState, action) {
         case UNLIKE_A_POST_FAILURE:
             return { ...state, unLikePost: { isLoading: false } };
 
-        //like post
-        case SAVE_A_POST_REQUEST:
-            return { ...state, savePost: { isLoading: true } };//use for all post item
-        case SAVE_A_POST_SUCCESS:
-            return { ...state, savePost: { isLoading: false } };
+        //save post
+        case SAVE_A_POST_RESET:
         case SAVE_A_POST_FAILURE:
-            return { ...state, savePost: { isLoading: false } };
+            return { ...state, isHaveSaved: false };//use for all post item
+        case SAVE_A_POST_SUCCESS:
+            return { ...state, isHaveSaved: true };
 
         //unsave post
-        case UNSAVE_A_POST_REQUEST:
-            return { ...state, unSavePost: { isLoading: true } }; //true when any post is in the save request
-        case UNSAVE_A_POST_SUCCESS:
-            return { ...state, unSavePost: { isLoading: false } };
+        case UNSAVE_A_POST_RESET:
         case UNSAVE_A_POST_FAILURE:
-            return { ...state, unSavePost: { isLoading: false } };
+            return { ...state, isHaveUnsaved: false }; //true when any post is in the save request
+        case UNSAVE_A_POST_SUCCESS:
+            return { ...state, isHaveUnsaved: true };
 
         //delete
         case DELETE_A_POST_RESET:
@@ -384,6 +394,23 @@ function PostReducer(state = initialState, action) {
             return { ...state, isHaveCreated: false }
         case CREATE_A_POST_SUCCESS:
             return { ...state, isHaveCreated: true }
+        case GET_SAVED_POSTS_REQUEST:
+            return {
+                ...state, savedPosts: { isLoading: true }
+            };
+        case GET_SAVED_POSTS_SUCCESS:
+            {
+                return {
+                    ...state, savedPosts: {
+                        isLoading: false,
+                        data: action.payload.postSummaryWithStateDTOs,
+                        totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
+                        totalElements: action.payload.totalElements ? action.payload.totalElements : 0
+                    }
+                }
+            }
+        case GET_SAVED_POSTS_FAILURE:
+            return { ...state, savedPosts: { isLoading: false, data: [] } }
 
         default:
             return state;

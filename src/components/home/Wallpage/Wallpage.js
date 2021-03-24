@@ -10,7 +10,7 @@ import Loader from 'components/common/Loader/Loader'
 
 import WallpageItem from './WallpageItem'
 import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
-
+import { normalMenuItemList } from 'constants.js'
 class Wallpage extends React.Component {
     constructor(props) {
         super(props);
@@ -22,10 +22,6 @@ class Wallpage extends React.Component {
 
         this.isLoadDone = false;
 
-
-        this.normalMenuItemList = [
-            { id: 3, name: "Report" },
-        ]
     }
 
     componentDidMount() {

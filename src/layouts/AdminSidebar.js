@@ -128,6 +128,15 @@ class AdminSidebar extends Component {
                                             :
                                             <></>
                                     }
+
+
+                                    < NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                        to={"/admin/pinned-contents"}    >
+                                        <div className="text">
+                                            Nội dung đã ghim
+                                                </div>
+                                    </NavLink>
+
                                     {
                                         (this.isGrantedPermissions(ContentManagement.Management)
                                             && this.isGrantedPermissions(Notification.ViewAll)) ?

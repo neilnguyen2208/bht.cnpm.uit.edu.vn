@@ -39,11 +39,14 @@ class HomeInfo extends Component {
 
 
         {/* title */}
-        <Link to={"/document-content/" + 151}>
-
-          {/* <Link to={"/document-content/" + this.props.id}> */}
-          <div className="title">
+        <Link to={"/document-content/" + this.props.id}>
+          <div className="title title-hv">
             {this.props.title}
+          </div>
+          <div className="title-hv-c">
+            <div className="title-hv-m">
+              {this.props.title}
+            </div>
           </div>
         </Link>
 

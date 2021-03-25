@@ -72,25 +72,26 @@ class Header extends React.Component {
     }
 
     keyHandler = (e) => {
+        console.log(e.target.value)
         if (!e.target.value) return;
         if (e.charCode === 13) { //press Enter    
             if (this.props.location.pathname.substring(0, 7) === '/search') {
-                this.setState({ isHaveRedirect: true })
-                
                 this.redirect = <Redirect to={`${this.props.location.pathname}?page=1&q=${e.target.value}&category=1`} />
                 document.getElementById("qssr-container").style.display = "none";
                 document.getElementById("qsr-container-big").style.display = "none";
-                return;
             }
             else {
-                this.setState({ isHaveRedirect: true })
+                console.log("redirect 2");
                 this.redirect = <Redirect to={`/search/posts?page=1&q=${e.target.value}&category=1`} />
                 document.getElementById("qssr-container").style.display = "none";
                 document.getElementById("qsr-container-big").style.display = "none";
-                return;
             }
+
+            //re-render
+            this.setState({});
         }
     }
+
 
 
     render() {
@@ -138,7 +139,7 @@ class Header extends React.Component {
                                         />
                                     </div>
                                 </div>
-                                {this.state.isHaveRedirect ? this.redirect : <></>}
+                                {this.redirect}
                                 <ClickAwayListener onClickAway={() => this.handleClickAwayQuickSearchResult()}>
                                     <div className="qsr-container-big" id="qsr-container-big">
                                         <div className="qssr-container" id="qssr-container" >

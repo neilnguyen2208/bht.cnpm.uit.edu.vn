@@ -15,49 +15,31 @@ import 'components/styles/Label.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCurrentUser } from 'redux/services/userServices'
-
+import { getRelativeTags } from 'redux/services/tagServices'
 import PostTag from 'components/post/Tag'
 import DocumentTag from 'components/document/Tag'
 import "components/common/Titlebar/Titlebar.scss"
 import "layouts/Layout.scss"
 import "layouts/Search.scss"
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 
-export default class RelativeTagSidebar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tags:
-                [
-                    {
-                        id: 1,
-                        content: "no_luc"
-                    },
-                    {
-                        id: 51,
-                        content: "no_luc_2"
-                    },
-                    {
-                        id: 101,
-                        content: "no_luc_3"
-                    }
-                ],
-        }
-    }
 
+class RelativeTagSidebar extends Component {
     componentDidMount() {
         //get danh sách các tag liên quan.
-
+        if (Number.isNaN(getQueryParamByName('tag')))
+            setQueryParam({ tag: 1, page: 1 });
+        this.props.getRelativeTags(getQueryParamByName('tag'));
     }
 
     renderTag = () => {
         if (window.location.pathname === "/tags/posts") {
-            return this.tags = this.state.tags.map(item =>
+            return this.props.relativeTags.map(item =>
                 <PostTag isReadOnly={true} tag={item} />
             )
         }
         if (window.location.pathname === "/tags/documents") {
-            return this.state.tags.map(item =>
+            return this.props.relativeTags.map(item =>
                 <DocumentTag isReadOnly={true} tag={item} />
             )
         }
@@ -69,13 +51,23 @@ export default class RelativeTagSidebar extends Component {
                 <div className="search-tag-side-bar">
                     Tag liên quan:
                             <div className="mg-top-10px">
-                        {this.renderTag()}
+                        {(!this.props.isLoading && this.props.relativeTags) && this.renderTag()}
                     </div>
                 </div>
             </div>
         );
     }
-
-
 }
 
+const mapStateToProps = (state) => {
+    return {
+        relativeTags: state.tag.relativeTags.data,
+        isLoading: state.tag.relativeTags.isLoading,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    getRelativeTags
+}, dispatch);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RelativeTagSidebar));

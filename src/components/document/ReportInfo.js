@@ -7,6 +7,7 @@ import clock_icon from 'assets/icons/24x24/clock_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { resolveStatus } from 'constants.js'
 
+import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 import { Link } from 'react-router-dom'
 
 export default class ReportInfo extends React.PureComponent {
@@ -57,10 +58,14 @@ export default class ReportInfo extends React.PureComponent {
                         }
                     </div>
                 </div>
-                <label className="form-label" >Lý do tố cáo:</label>
-                <div className="report-reason">
-                    {this.props.reason}
-                    Lý do dummy
+                <div className="report-container">
+                    <div className="d-flex">
+                        <img className="danger-icon" src={danger_icon} alt="!" />
+                        <div>Lý do tố cáo:</div>
+                    </div>
+                    <div className="report-reason">
+                        {this.props.reason}
+                    </div>
                 </div>
                 <label className="form-label" >Mô tả tài liệu:</label>
 

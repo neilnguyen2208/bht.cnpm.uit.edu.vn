@@ -32,9 +32,6 @@ class DocumentSummary extends Component {
 
   constructor(props) {
     super(props);
-    normalMenuItemList = [
-      { id: 3, text: "Report", icon: report_icon, value: "REPORT_DOC" },
-    ]
 
     this.id = this.props.id;
     this.title = this.props.title;

@@ -344,6 +344,17 @@ export function reportAPost(id, reason) { //
     }
 }
 
+export function pinAPost(id, reason) { //
+    return dispatch => {
+        // dispatch(post_ReportAPostReset())
+        // request.post(`/post/${id}/report`, JSON.stringify(reason))
+        //     .then(response => {
+        //         dispatch(post_ReportAPostSuccess());
+        //     }
+        //     ).catch(() => dispatch(post_ReportAPostFailure()))
+    }
+}
+
 export function rejectAndFeedbackAPost(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
@@ -420,3 +431,4 @@ export function getSavedPosts(searchParamObject) {
             .catch(error => dispatch(get_SavedPostsFailure(error)))
     }
 }
+

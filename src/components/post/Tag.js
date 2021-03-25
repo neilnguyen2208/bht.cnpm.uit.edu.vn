@@ -3,6 +3,7 @@ import 'components/styles/Tag.scss';
 import { Link } from 'react-router-dom'
 import { setQueryParam } from 'utils/urlUtils';
 import { getPostSearch } from 'redux/services/postServices';
+import { getTagByID, getRelativeTags } from 'redux/services/tagServices'
 import store from 'redux/store/index'
 
 //Set text props for this component
@@ -34,9 +35,10 @@ export default class Tag extends Component {
 
             setQueryParam(queryParamObject);
             store.dispatch(getPostSearch(searchParamObject));
+            store.dispatch(getTagByID(this.props.tag.id));
+            store.dispatch(getRelativeTags(this.props.tag.id));
         }
 
-        //
         if (this.props.onTagClick)
             this.props.onTagClick(this.props.tag.id);
     }

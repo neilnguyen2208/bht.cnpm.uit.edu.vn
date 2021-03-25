@@ -106,8 +106,13 @@ class WallpageItem extends React.Component {
                             <img className="avatar" src={this.props.authorAvatarURL} alt="" />
                             <div className="mg-left-5px j-c-space-between d-flex-vertical">
                                 <Link to={"/post-content/" + this.props.id}>
-                                    <div className="title">
+                                    <div className="title title-hv">
                                         {this.props.title}
+                                    </div>
+                                    <div className="title-hv-c">
+                                        <div className="title-hv-m">
+                                            {this.props.title}
+                                        </div>
                                     </div>
                                 </Link>
 

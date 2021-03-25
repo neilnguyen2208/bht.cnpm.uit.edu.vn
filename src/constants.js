@@ -1,8 +1,10 @@
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
+import pin_icon from 'assets/icons/24x24/pinned_icon_24x24.png'
+import unpin_icon from 'assets/icons/24x24/unpinned_icon_24x24.png'
 
-export const itemType = { approval: "APPROVAL", normal: "NORMAL", mySelf: "MY_SELF", report: "REPORT" }
+export const itemType = { approval: "APPROVAL", normal: "NORMAL", mySelf: "MYSELF", report: "REPORT", management: "MANAGEMENT" }
 export const componentType = { document: "DOCUMENT", post: "POST" }
 export const approvalStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED", waitingForFeedback: "PENDING_FIX" }
 export const resolveType = { keep: "KEEP", delete: "DELETE" }
@@ -60,11 +62,11 @@ export const adminMenuItemList = [
     }
   },
   {
-    id: 4, text: "Ghim nội dung", value: "PIN_CONTENT", icon: report_icon,
+    id: 4, text: "Ghim nội dung", value: "PIN_POST", icon: pin_icon, tip: "Hiển thị ở trang chủ.",
     style: {
       height: "26px",
-      paddingTop: "3px",
-      paddingBottom: "3px"
+      paddingTop: "1px",
+      paddingBottom: "5px"
     }
   },
 ]
@@ -81,15 +83,14 @@ export const highlightMenuItemList = [
     }
   },
   {
-    id: 4, text: "Bỏ ghim", value: "UNPIN_CONTENT", icon: report_icon,
+    id: 4, text: "Bỏ ghim", value: "UNPIN_POST", icon: unpin_icon,
     style: {
       height: "26px",
-      paddingTop: "3px",
-      paddingBottom: "3px"
+      paddingTop: "1px",
+      paddingBottom: "5px"
     }
   },
 ]
-
 
 export const normalMenuItemList = [
   { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },

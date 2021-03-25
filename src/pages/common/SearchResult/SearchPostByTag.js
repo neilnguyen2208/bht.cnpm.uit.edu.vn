@@ -12,8 +12,7 @@ import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import SearchTagHorizontalMenubar from './SearchTagHorizontalMenubar';
 import PostSummaryMetadata from 'components/post/SummaryInfo';
 import RelativeTagSidebar from 'layouts/RelativeTagSidebar';
-import search_icon from 'assets/icons/24x24/bg_search_icon_24x24.png'
-
+import SearchTagTopbar from 'layouts/SearchTagTopbar'
 
 class SearchPostByTag extends Component {
     componentDidMount() {
@@ -82,14 +81,7 @@ class SearchPostByTag extends Component {
 
         return (
             <div className="search-layout">
-                <div className="current-tag-container">
-                    <Link to={"/search/tags"}>
-                        <img className="back-to-search-btn" src={search_icon} alt="" />
-                    </Link>
-                    <div className="current-tag">
-                        Tag:
-                    </div>
-                </div>
+                <SearchTagTopbar /> 
                 <div className="d-flex">
                     <RelativeTagSidebar />
                     <div className="w-100-percents" >

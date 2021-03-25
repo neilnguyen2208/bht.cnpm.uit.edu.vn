@@ -205,17 +205,30 @@
 
 .qssr-container {
     position: relative;
+    overflow-x: hidden;
     overflow-y: auto;
-    overflow-x: auto;
     max-height: 60vh;
-    overflow: scroll;
     min-height: 20px;
     width: 100%;
     display: block;
     height: fit-content;
     box-sizing: border-box;
     -ms-overflow-style: none;
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--grayish) white;
+
+
+}
+
+.qssr-container::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background: var(--grayish);
+}
+
+.qssr-container::-webkit-scrollbar-thumb {
+    background: #bac9f1;
+
 }
 
 .sub-result-container {

@@ -114,11 +114,11 @@
 }
 
 .modal-hint {
-    padding-top: 0.1rem;
-
+    padding-top: 0.3rem;    
     height: fit-content;
-    font-family: 'Roboto-Medium', sans-serif;
-    font-size: 0.7rem;
+    font-family: 'Arial';
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--black);
     user-select: none;
     min-width: 80px;
@@ -127,10 +127,10 @@
 
 .modal-text {
     position: relative;
-    font-family: "BarlowCondensed-Medium";
-    line-height: 1em;
+    font-family: "BarlowCondensed-SemiBold";
     color: var(--black);
-    font-size: 18px;
+    font-size: 1.1rem;
+    line-height: 1.2rem;
 }
 
 //Footer area
@@ -150,7 +150,7 @@
 }
 
 .simple-modal-footer {
-    margin-top: 20px;
+    margin-top: 10px;
     border-top: 1px solid var(--gray);
     display: flex;
     justify-content: flex-end;

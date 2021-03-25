@@ -189,7 +189,7 @@ class PostApproving extends Component {
             this.postsList = this.props.postsList.map((item) => {
                 return <div className="item-container">
                     <PostSummaryMetadata
-                        type={itemType.mySelf}
+                        type={itemType.management}
                         id={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}

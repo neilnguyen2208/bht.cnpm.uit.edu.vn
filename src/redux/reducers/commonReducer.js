@@ -4,7 +4,9 @@ import {
     GET_QUICK_SEARCH_REQUEST,
     GET_QUICK_SEARCH_SUCCESS,
     GET_QUICK_SEARCH_FAILURE,
-    GET_QUICK_SEARCH_RESET
+    GET_QUICK_SEARCH_RESET,
+
+    SET_SEARCHING
 } from "../constants.js"
 
 
@@ -14,7 +16,8 @@ const initialState = {
         isLoading: false,
         data: {
         }
-    }
+    },
+    isSearching: false,
 }
 
 function CommonReducer(state = initialState, action) {
@@ -27,6 +30,10 @@ function CommonReducer(state = initialState, action) {
             return { ...state, quickSearchResult: { isLoading: false, isLoadDone: true, data: {} } }
         case GET_QUICK_SEARCH_RESET:
             return { ...state, quickSearchResult: { isLoadDone: false } }
+
+        case SET_SEARCHING:
+            return { ...state, isSearching: action.payload }
+
         default:
             return state;
     }

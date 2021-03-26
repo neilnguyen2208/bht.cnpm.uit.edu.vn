@@ -107,11 +107,6 @@ class UploadDocument extends Component {
     componentDidMount() {
         this.props.getDocumentCategories();
         this.props.getDocumentSubjects();
-
-        document.querySelector(".cr-document-form-container.preview").classList.remove("d-block");
-        document.querySelector(".cr-document-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-document-form-container.preview").classList.add("d-none");
-        document.querySelector(".cr-document-form-container.edit").classList.add("d-block");
         validation(validationCondition);
     }
 
@@ -386,26 +381,6 @@ class UploadDocument extends Component {
 
         let body =
             <div>
-                {/* Preview region */}
-                <div className="cr-document-form-container document-post-detail preview" >
-                    <Metadata title={this.state.UPLOAD_DOCUMENT_DTO.title}
-                        category={this.state.currentCategory}
-                        readingTime={this.state.UPLOAD_DOCUMENT_DTO.readingTime}
-                        authorName={this.state.author.displayName}
-                        authorAvartarURL={this.state.author.avatarURL}
-                        publishDtm={this.state.publishDtm}
-                    />
-                    <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.UPLOAD_DOCUMENT_DTO.content }} />
-
-                    <div className="mg-top-10px" >
-                        {this.shownTag.map(item =>
-                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
-                        )}
-                    </div>
-
-                    {/* Create Nomal Reactionbar for doc later */}
-                </div>
-
                 {/* Edit region */}
                 <div className="cr-document-form-container edit">
                     <div id="create-document-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
@@ -534,40 +509,12 @@ class UploadDocument extends Component {
                 <div className="content-layout">
                     <Titlebar title="UPLOAD TÀI LIỆU" />
                     <div className="content-container">
-                        <div className="form-container">
-                            <div className="j-c-end">
-                                <div className="j-c-end" >
-                                    <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Soạn tài liệu</button>
-                                    <div className="mg-right-5px" />
-                                    <button className="white-button" disabled={this.state.isPreview} onClick={this.onPreviewBtnClick} >Preview</button>
-                                </div>
-                            </div>
-                            <div className="mg-top-10px decoration-line" />
-                        </div>
                         {body}
-
                     </div>
                 </div >
             </div>
 
         );
-    }
-
-    onEditBtnClick = () => {
-        this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-document-form-container.preview").classList.remove("d-block");
-        document.querySelector(".cr-document-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-document-form-container.preview").classList.add("d-none");
-        document.querySelector(".cr-document-form-container.edit").classList.add("d-block");
-
-    }
-
-    onPreviewBtnClick = () => {
-        this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-document-form-container.preview").classList.add("d-block");
-        document.querySelector(".cr-document-form-container.edit").classList.add("d-none");
-        document.querySelector(".cr-document-form-container.preview").classList.remove("d-none");
-        document.querySelector(".cr-document-form-container.edit").classList.remove("d-block");
     }
 }
 

@@ -1,34 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { Link, NavLink } from 'react-router-dom';
 import { ClickAwayListener } from '@material-ui/core';
-//utils
-//styles
 import "./Header.scss";
 import "components/styles/Button.scss";
-
-//resource
 import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png';
-import search_icon from 'assets/icons/24x24/search_icon_24x24.png';
 import logo from 'assets/images/logo.png';
 import upload_icon from 'assets/icons/48x48/blue_upload_icon_48x48.png';
 import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
-
-//services
 import { getQuickSearchResult } from 'redux/services/commonServices';
-
-//components
-import Tag from "components/post/Tag";
 import SmallLoader from "components/common/Loader/Loader_S"
 import { logoRouter, headerMenuRouters } from "router.config"
-
 import store from 'redux/store/index'
 import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
-import { get_PostByIDReset } from 'redux/actions/postAction'
+import { getPostSearch } from 'redux/services/postServices'
 import { DELAY_TIME } from 'constants.js';
 import QuickSearchResult from './QuickSearchResult'
+import { getQueryParamByName } from 'utils/urlUtils'
 
 class Header extends React.Component {
     constructor(props) {
@@ -45,7 +35,11 @@ class Header extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ isHaveRedirect: false })
+        if (this.props.location.pathname.substring(0, 7) === '/search')
+            this.setState({ isHaveOut: false })
+        else
+            this.setState({ isHaveOut: true })
+
     }
 
     componentWillUnmount() {
@@ -72,27 +66,26 @@ class Header extends React.Component {
     }
 
     keyHandler = (e) => {
-        console.log(e.target.value)
         if (!e.target.value) return;
-        if (e.charCode === 13) { //press Enter    
+        if (e.charCode === 13) { //press Enter  
+            console.log('A')
             if (this.props.location.pathname.substring(0, 7) === '/search') {
-                this.redirect = <Redirect to={`${this.props.location.pathname}?page=1&q=${e.target.value}&category=1`} />
-                document.getElementById("qssr-container").style.display = "none";
-                document.getElementById("qsr-container-big").style.display = "none";
+                this.redirect = <Redirect to={`${this.props.location.pathname}?page=1&q=${e.target.value}&category=${getQueryParamByName('category')}`} />
+                if (this.props.location.pathname === "/search/posts") {
+                    store.dispatch(getPostSearch({ page: 1, searchTerm: e.target.value, postCategoryID: getQueryParamByName('category') }))
+                }
+                // this.setState({ isHaveOut: false })
             }
             else {
-                console.log("redirect 2");
-                this.redirect = <Redirect to={`/search/posts?page=1&q=${e.target.value}&category=1`} />
-                document.getElementById("qssr-container").style.display = "none";
-                document.getElementById("qsr-container-big").style.display = "none";
+                this.redirect = <Redirect to={`/search/posts?page=1&q=${e.target.value}&category=0'`} />
+                store.dispatch(getPostSearch({ page: 1, searchTerm: e.target.value, postCategoryID: 0 }))
+                // this.setState({ isHaveOut: false })
             }
-
+            document.getElementById("qssr-container").style.display = "none";
+            document.getElementById("qsr-container-big").style.display = "none";
             //re-render
-            this.setState({});
         }
     }
-
-
 
     render() {
 
@@ -139,7 +132,9 @@ class Header extends React.Component {
                                         />
                                     </div>
                                 </div>
-                                {this.redirect}
+                                {!this.state.isHaveOut &&
+                                    this.redirect
+                                }
                                 <ClickAwayListener onClickAway={() => this.handleClickAwayQuickSearchResult()}>
                                     <div className="qsr-container-big" id="qsr-container-big">
                                         <div className="qssr-container" id="qssr-container" >
@@ -157,16 +152,18 @@ class Header extends React.Component {
 
                     {/*  */}
                     <div className="Header_End_Lv1">
-                        <div className="Header_End_Lv2" >
+                        <div className="header-end-lv2" >
                             <Link to="/upload-document" className="d-flex">
                                 <img className="header-image-button" alt="" src={upload_icon} />
                             </Link>
                             <Link to="/create-post" className="d-flex">
                                 <img className="header-image-button" src={write_icon} alt="" />
                             </Link>
-                            <button className="blue-button mg-auto mi-w-fit-content" > Đăng nhập </button>
+                            <Link to="/login" className="blue-button mg-auto">
+                                Đăng nhập
+                            </Link>
                         </div>
-                        <div className="Header_End_Lv2_Collapse"
+                        <div className="header-end-lv2_Collapse"
                             onClick={this.state.isCollapsedUserMenuOpened ?
                                 () => this.handleCloseCollapsedUserMenu()
                                 : () => this.handleOpenCollapsedUserMenu()} >

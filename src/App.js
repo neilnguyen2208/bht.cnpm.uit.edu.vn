@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "pages/common/Home/Home";
 import PostDetail from "pages/common/PostDetail/PostDetail";
 import DocumentDetail from "pages/common/DocumentDetail/DocumentDetail";
-import Login from "pages/common/Login/Login";
-import Register from "pages/common/Register/Register";
+import Login from "pages/common/Login&Register/Login";
+import Register from "pages/common/Login&Register/Register";
 import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
 import AdminLayout from 'layouts/AdminSidebar'
@@ -114,6 +114,10 @@ const App = () => {
                         <Route exact path="/admin/user-management/:id" component={AdminLayout} />
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
+
+
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/register" component={Register} />
 
                     </Switch>
 

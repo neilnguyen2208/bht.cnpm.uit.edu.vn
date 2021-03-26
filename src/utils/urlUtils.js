@@ -44,20 +44,20 @@ export function generateSearchParam(searchParamObject) { //for generating search
     let searchParam = '';
     Object.keys(searchParamObject)
         .forEach(function eachKey(key) {
+            if ((key === "category.id" || key === "category" || key === "postCategoryID") && searchParamObject[key] === 0)
+                return;
+            if ((key === "category.id" || key === "category" || key === "postCategoryID") && searchParamObject[key] === "0")
+                return;
+            if (searchParamObject[key] === null) return;
 
-            if (
-                (((key === "category.id" || key === "category") && searchParamObject[key] !== 0)
-                    || (key !== "category.id" && key !== "category"))
-                && searchParamObject[key] !== null
-            ) {
-                //neu la category.id hoac category => value bang 0 thi khong them vao
-                //neu la page hoac paginator thi -1
-                if (key === "page" || key === "paginator") {
-                    searchParam = searchParam + key + '=' + (Number.parseInt(searchParamObject[key]) - 1) + "&";
-                } else
-                    searchParam = searchParam + key + '=' + searchParamObject[key] + "&";
-            }
-
+            //neu la category.id hoac category => value bang 0 thi khong them vao
+            //neu la page hoac paginator thi -1
+            console.log(key)
+            console.log(searchParamObject[key]);
+            if (key === "page" || key === "paginator") {
+                searchParam = searchParam + key + '=' + (Number.parseInt(searchParamObject[key]) - 1) + "&";
+            } else
+                searchParam = searchParam + key + '=' + searchParamObject[key] + "&";
         });
     return searchParam;
 }

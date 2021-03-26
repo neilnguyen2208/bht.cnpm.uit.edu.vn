@@ -40,6 +40,10 @@ class SearchPost extends Component {
         this.props.getPostSearch(this.searchParamObject);
     }
 
+    componentWillUnmount() {
+        // if()
+    }
+
     //server paginator
     onPageChange = (pageNumber) => {
         setQueryParam({ ...this.queryParamObject, "page": pageNumber });

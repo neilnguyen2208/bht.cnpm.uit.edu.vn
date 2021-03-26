@@ -6,9 +6,6 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
-import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
-import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
 import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'

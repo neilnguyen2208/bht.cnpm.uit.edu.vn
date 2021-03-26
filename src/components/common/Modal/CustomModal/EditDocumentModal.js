@@ -66,7 +66,6 @@ class EditDocumentModal extends React.Component {
             publishDtm: "",
 
             isUploading: false,
-            isPreview: false,
             isSearchingTag: false,
 
             EDIT_DOCUMENT_DTO: {
@@ -121,11 +120,6 @@ class EditDocumentModal extends React.Component {
         this.props.getDocumentSubjects();
 
         this.props.getDocumentByID(this.props.id);
-
-        document.querySelector(".ed-document-form-container.preview-modal").classList.remove("d-block");
-        document.querySelector(".ed-document-form-container.edit").classList.remove("d-none");
-        document.querySelector(".ed-document-form-container.preview-modal").classList.add("d-none");
-        document.querySelector(".ed-document-form-container.edit").classList.add("d-block");
         this.isFirstLoad = false;
 
         this.timeOut = null;
@@ -468,8 +462,6 @@ class EditDocumentModal extends React.Component {
         }
         //load xong thi cho hien thi body
         if (this.props.currentDocument && !this.props.isCurrentDocumentLoading && document.getElementById('edit-document-body')) {
-            document.getElementById('edit-document-body').classList.add("d-block");
-            document.getElementById('edit-document-body').classList.remove("d-none");
         }
 
         return (
@@ -480,52 +472,8 @@ class EditDocumentModal extends React.Component {
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
                         <ModalTitlebar title="CHỈNH SỬA TÀI LIỆU" />
                         <div className="scroller-container mg-bottom-10px">
-                            {/* <div className="modal-large-container"> */}
                             <div className="form-container">
-                                <div>
-                                    <div className="j-c-end " >
-                                        <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Chỉnh sửa</button>
-                                        <div className="mg-right-5px" />
-                                        <button className="white-button" disabled={this.state.isPreview} onClick={this.onPreviewBtnClick} >Preview</button>
-                                    </div>
-                                    <div className="decoration-line mg-top-10px" />
-                                </div>
-                                <div className="d-none" id="edit-document-body">
-                                    {/* Preview region */}
-                                    <div className="ed-document-form-container document-detail-container preview-modal d-none" >
-                                        <div style={{ marginTop: "20px" }} />
-                                        <Metadata
-                                            id={this.props.currentDocument.id}
-                                            title={this.state.EDIT_DOCUMENT_DTO.title}
-                                            categoryName={this.state.EDIT_DOCUMENT_DTO.categoryName}
-                                            categoryID={this.state.EDIT_DOCUMENT_DTO.categoryID}
-                                            readingTime={this.state.EDIT_DOCUMENT_DTO.readingTime}
-                                            authorName={this.state.EDIT_DOCUMENT_DTO.authorName}
-                                            authorAvatarURL={this.state.EDIT_DOCUMENT_DTO.authorAvatarURL}
-                                            authorID={this.state.EDIT_DOCUMENT_DTO.authorID}
-                                            publishDtm={this.state.EDIT_DOCUMENT_DTO.publishDtm}
-                                            type="PREVIEW"
-                                            popUpMenuPrefix="edpmd-"
-                                        />
-                                        <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_DOCUMENT_DTO.content }} />
-
-                                        <div className="mg-top-10px mg-bottom-10px" >
-                                            {this.shownTag.map(item =>
-                                                <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
-                                            )}
-                                        </div>
-                                        <NormalReactionbar
-                                            id={-1}
-                                            likeCount={0}
-                                            dislikeCount={0}
-                                            docReactionType={"NONE"}
-                                            commentCount={0}
-                                            downloadCount={0}
-                                            viewCount={0}
-                                            type="PREVIEW"
-                                        />
-                                    </div>
-
+                                <div id="edit-document-body">
                                     {/* Edit region */}
                                     <div className="ed-document-form-container edit">
                                         <div id="edit-document-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
@@ -637,24 +585,8 @@ class EditDocumentModal extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
-    }
-    onEditBtnClick = () => {
-        this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".ed-document-form-container.preview-modal").classList.remove("d-block");
-        document.querySelector(".ed-document-form-container.edit").classList.remove("d-none");
-        document.querySelector(".ed-document-form-container.preview-modal").classList.add("d-none");
-        document.querySelector(".ed-document-form-container.edit").classList.add("d-block");
-
-    }
-
-    onPreviewBtnClick = () => {
-        this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".ed-document-form-container.preview-modal").classList.add("d-block");
-        document.querySelector(".ed-document-form-container.edit").classList.add("d-none");
-        document.querySelector(".ed-document-form-container.preview-modal").classList.remove("d-none");
-        document.querySelector(".ed-document-form-container.edit").classList.remove("d-block");
     }
 }
 

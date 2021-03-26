@@ -104,6 +104,8 @@ body {
     color: var(--black) !important;
     font-family: "BarlowSemiCondensed-Medium";
     margin: 0px;
+    overflow-y: scroll;
+    overflow-x: auto;
 }
 
 input {

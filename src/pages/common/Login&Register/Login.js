@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import LoginForm from "components/common/Login/Login";
+import LoginModal from "components/common/Modal/CustomModal/LoginModal";
 class Login extends Component {
     render() {
         return (
             <div>
-                <LoginForm />
+                <LoginModal />
             </div>
         );
     }

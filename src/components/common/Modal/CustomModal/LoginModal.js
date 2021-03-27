@@ -20,7 +20,6 @@ class Login extends React.Component {
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper form login-modal">
-                        <div className="login-sidebar"></div>
                         <LoginForm />
                     </div>
                 </div>

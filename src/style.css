@@ -101,11 +101,12 @@
 
 body {
     line-height: 1rem;
-    color: var(--black) !important;
-    font-family: "BarlowSemiCondensed-Medium";
+    font-family: 'Arial';
+    font-size: 0.9rem;
+    color: var(--black);
     margin: 0px;
-    overflow-y: scroll;
-    overflow-x: auto;
+    /* overflow-y: scroll; */
+    /* overflow-x: auto; */
 }
 
 input {
@@ -320,12 +321,15 @@ a:hover {
     /* height: fit-content; */
     /* overflow-y: scroll; */
     overflow: auto;
+
+    overflow-x: hidden;
     max-height: 80vh;
     /* for firefox */
     scrollbar-color: var(--grayish) white;
     scrollbar-width: thin;
     padding: 10px;
-    padding-right: 5px;
+    padding-right: 8px;
+    box-sizing: border-box;
 }
 
 

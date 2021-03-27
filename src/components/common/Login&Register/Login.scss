@@ -1,8 +1,101 @@
 .login-sidebar {
-  width: 40%;
+  // width:calc();
+  width: 100%;
+
   background: var(--blue);
+  color: white;
+  font-family: Arial;
+  font-weight: 600;
+  display: block;
+  justify-content: space-between;
 }
 
 .login-form {
   padding: 10px;
+  min-width: 304px;
+  width: 304px;
+}
+
+.register-form {
+  min-width: 304px;
+  max-width: 400px;
+}
+
+.login-form-container {
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+}
+
+.login-icon {
+  width: 6.5rem;
+  height: 6.5rem;
+  margin: auto;
+}
+
+.login-title {
+  color: var(--black);
+  font-family: 'BarlowCondensed-SemiBold', 'sans-serif';
+  font-size: 24px;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.reCapcha-wrapper {
+  max-height: 80px;
+  overflow: hidden;
+}
+
+.reg-step-bar {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  margin-bottom: 1rem;
+}
+
+.reg-step-ind {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: var(--gray);
+  border-radius: 3px;
+  display: block;
+  font-size: 1rem;
+  line-height: 1.8rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.reg-step-ind.active {
+  background-color: var(--blue);
+}
+
+.reg-deco-bar-1 {
+  width: 12rem;
+  position: absolute;
+  height: 0.3rem;
+  background-color: var(--gray);
+  top: 1.1rem;
+}
+
+.reg-deco-bar-1.active {
+  background-color: var(--blue);
+}
+
+.reg-deco-bar-2 {
+  @extend .reg-deco-bar-1;
+  left: 12rem;
+}
+
+.reg-deco-bar-2.active {
+  background-color: var(--blue);
 }

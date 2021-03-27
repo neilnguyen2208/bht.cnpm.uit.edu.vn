@@ -47,6 +47,8 @@ import DocumentReportManagement from "pages/management/DocumentManagement/Docume
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
+import ForgotPassword from 'pages/common/Login&Register/ForgotPassword'
+
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -115,34 +117,23 @@ const App = () => {
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
 
-
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
+                        <Route exact path="/forgot-password" component={ForgotPassword} />
 
                     </Switch>
-
                     <Footer />
-
                 </div>
-
                 <Header />
-
                 <div>
-
                 </div>
-                {/* Thediv nay de can bang z index */}
                 <div>
                     <ModalBLManager />
                     <ModalBigManager />
                     <ModalManager />
                 </div>
-
                 <div className="App"></div>
-
-
-
             </Router >
-
         </div >
     );
 }

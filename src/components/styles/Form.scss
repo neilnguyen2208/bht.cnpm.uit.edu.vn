@@ -4,6 +4,7 @@
     margin: auto;
     outline: none;
     overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .form-group {
@@ -96,7 +97,17 @@
     color: var(--black);
     padding-left: 0px;
     position: relative;
+    font-family: 'Arial';
+    font-size: 0.9rem;
+}
 
+.form-tip-label-2 {
+    @extend .form-tip-label;
+    font-size: 0.875rem;
+    color: var(--light-black);
+    font-weight: 700;
+    margin-left: 5px;
+    line-height: 1.1rem;
 }
 
 .form-label-required {
@@ -261,5 +272,14 @@
 
 .form-radio {}
 
-.form-check-box {}
+.form-check-box {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0px;
+    border: 1px solid var(--gray);
+}
 
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}

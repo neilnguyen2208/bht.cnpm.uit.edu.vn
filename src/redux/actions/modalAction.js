@@ -10,7 +10,7 @@ import {
   MODAL_BIG_CLOSE
 } from "../constants";
 
-export function openModal(modalType, modalProps) {
+export function openModalAction(modalType, modalProps) {
   //type: alert, confirmation, form
   return {
     type: MODAL_OPEN,
@@ -18,13 +18,13 @@ export function openModal(modalType, modalProps) {
   };
 }
 
-export function closeModal() {
+export function closeModalAction() {
   return {
     type: MODAL_CLOSE
   };
 }
 
-export function openBLModal(modalProps) {
+export function openBLModalAction(modalProps) {
   //type: alert, confirmation, form
   return {
     type: MODAL_BL_OPEN,
@@ -32,14 +32,14 @@ export function openBLModal(modalProps) {
   };
 }
 
-export function closeBLModal(data) {
+export function closeBLModalAction(data) {
   return {
     type: MODAL_BL_CLOSE,
     payload: data
   };
 }
 
-export function openBigModal(modalType, modalProps) {
+export function openBigModalAction(modalType, modalProps) {
   //type: alert, confirmation, form
   return {
     type: MODAL_BIG_OPEN,
@@ -47,7 +47,7 @@ export function openBigModal(modalType, modalProps) {
   };
 }
 
-export function closeBigModal(data) {
+export function closeBigModalAction(data) {
   return {
     type: MODAL_BIG_CLOSE,
     payload: data

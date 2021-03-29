@@ -1,14 +1,10 @@
 import React from "react";
 import './ModalBL.scss'
 import gray_delete_icon from 'assets/icons/24x24/gray_delete_icon_24x24.png'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
-import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
-
-import { closeBLModal } from "redux/actions/modalAction";
+import { closeBLModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
-class ModalBL extends React.Component {
+
+export default class ModalBL extends React.Component {
     constructor(props) {
         super(props);
         this.timeOut = null;
@@ -17,17 +13,17 @@ class ModalBL extends React.Component {
     closeModal = () => {
         if (this.timeOut)
             clearTimeout(this.timeOut);
-        store.dispatch(closeBLModal(this.props.id));
+        closeBLModal(this.props.id);
     }
 
     onButtonClick = () => {
-        store.dispatch(closeBLModal(this.props.id));
+        closeBLModal(this.props.id);
         if (this.props.onBtnClick)
             this.props.onBtnClick();
     }
 
     componentDidMount() {
-        this.timeOut = setTimeout(() => this.props.closeBLModal(), 3000)
+        this.timeOut = setTimeout(() => closeBLModal(), 3000)
     }
 
     componentWillUnmount() {
@@ -43,7 +39,6 @@ class ModalBL extends React.Component {
                 <div className="bottom-left-modal j-c-space-between">
                     <div className="bl-modal-text-c">
                         {icon ? <img className="bl-modal-main-icon" src={icon} alt="icon" /> : <></>}
-                        {/* bl is stand for bottom-left */}
                         <div className="d-flex">
                             <div className="bl-modal-text">
                                 {text}
@@ -62,13 +57,3 @@ class ModalBL extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-    };
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    closeBLModal
-}, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModalBL));

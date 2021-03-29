@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Titlebar.scss'
 import store from 'redux/store/index.js'
-import { closeBigModal, closeModal } from 'redux/actions/modalAction'
+import { closeBigModal, closeModal } from 'redux/services/modalServices'
 import close_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
 
 class ModalTitlebar extends Component {

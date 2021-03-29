@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-import { closeModal } from "redux/actions/modalAction";
+import { closeModal } from "redux/services/modalServices";
 import Loader from 'components/common/Loader/Loader_S';
 class LoaderModal extends React.Component {
 

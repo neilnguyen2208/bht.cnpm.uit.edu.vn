@@ -1,6 +1,6 @@
 import React from "react";
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/actions/modalAction";
+import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import './Login.scss'
 import round_logo from 'assets/images/round_logo.png'
 import fb_icon from 'assets/icons/24x24/b_facebook_icon_24x24.png';
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
+import { login } from 'redux/services/authServices'
 
 const validationCondition = {
   form: '#login-form',
@@ -63,7 +64,7 @@ class Login extends React.Component {
 
   handleUploadBtnClick = () => {
     if (styleFormSubmit(validationCondition)) {
-      store.dispatch(openModal("confirmation",
+      openModal("confirmation",
         {
           title: "Thay đổi tài liệu",
           text: "Hành động này cần phê duyệt và không thể hoàn tác.",
@@ -74,7 +75,7 @@ class Login extends React.Component {
             store.dispatch(closeModal()); //close confimation popup
             this.closeModal(); //close edit document popup
           }
-        }))
+        })
     }
   }
 
@@ -85,11 +86,12 @@ class Login extends React.Component {
     }
   }
 
-  closeModal = () => {
-    store.dispatch(closeBigModal())
-  }
-
   render() {
+
+    if (this.props.isAuthenticated && !this.props.isLogingIn) {
+// store.dispatch
+    }
+
     return (
       <div className="login-form-container">
         <div className="scroller-container d-flex" style={{ padding: "0px" }} >
@@ -180,12 +182,15 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLogingIn: state.auth.isLogingIn,
+    isAuthenticated: state.auth.isAuthenticated,
+
 
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-
+  login
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

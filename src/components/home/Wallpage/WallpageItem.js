@@ -6,9 +6,8 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
+import { reportAPost } from 'redux/services/postServices'
+import { openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
@@ -25,7 +24,7 @@ class WallpageItem extends React.Component {
 
     onPopupMenuItemClick = (selectedItem) => {
         if (selectedItem.value === "REPORT_POST") {
-            store.dispatch(openModal("form", {
+            openModal("form", {
                 id: `hirpp-form-modal`,//high light item report post
                 title: `REPORT BÀI VIẾT`,
                 formId: `hirpp-form`,
@@ -60,8 +59,7 @@ class WallpageItem extends React.Component {
                     cancelText: "Huỷ",
                     onConfirm: DTO => this.onConfirmReport(DTO)
                 }
-            }
-            ));
+            });
         }
     }
 

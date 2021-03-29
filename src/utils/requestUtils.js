@@ -1,13 +1,9 @@
 import axios from 'axios';
-import { openModal, closeModal } from 'redux/actions/modalAction';
+import { openModal, closeModal } from 'redux/services/modalServices';
 import qs from 'qs';
 import store from 'redux/store/index';
 import FormData from 'form-data';
 import fs from 'fs';
-
-export function getToken() {
-  return localStorage.getItem('token');
-}
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
@@ -36,7 +32,7 @@ request.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      store.dispatch(openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" }));
+      openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" });
       // setTimeout(window.location.reload(), 500);
     }
     return Promise.reject(error);
@@ -69,7 +65,7 @@ multipartRequest.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      store.dispatch(openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" }));
+      openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" });
       // setTimeout(window.location.reload(), 500);
     }
     return Promise.reject(error);

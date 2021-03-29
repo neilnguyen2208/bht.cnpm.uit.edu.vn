@@ -81,7 +81,7 @@ import {    //highlight posts
     get_SavedPostsFailure
 } from "redux/actions/postAction.js";
 
-import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
+import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 
 import { request } from 'utils/requestUtils';
 import { generateSearchParam } from 'utils/urlUtils'

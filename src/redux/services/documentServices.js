@@ -53,7 +53,7 @@ import {
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam } from 'utils/urlUtils';
-import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
+import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 //upload new document

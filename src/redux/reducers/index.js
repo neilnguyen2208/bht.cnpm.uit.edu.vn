@@ -12,6 +12,7 @@ import HeadingReducer from "redux/reducers/headingReducer"
 import CommonReducer from "redux/reducers/commonReducer"
 import ModalReducer from "redux/reducers/modalReducer"
 import DocumentSubjectReducer from "redux/reducers/documentSubjectReducer"
+import AuthenticationReducer from "redux/reducers/authReducer"
 
 var RootReducer = combineReducers({
     home: HomeReducer,
@@ -26,7 +27,8 @@ var RootReducer = combineReducers({
     course_category: CourseCategoryReducer,
     heading: HeadingReducer,
     common: CommonReducer,
-    modal: ModalReducer
+    modal: ModalReducer,
+    auth: AuthenticationReducer
 });
 
 export default RootReducer;

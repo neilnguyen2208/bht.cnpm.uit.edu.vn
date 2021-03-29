@@ -13,7 +13,7 @@ import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
+import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
@@ -42,7 +42,7 @@ class DocumentSummary extends Component {
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_POST") {
       //show confirmation popup and detete id verify
-      store.dispatch(openModal("confirmation",
+      openModal("confirmation",
         {
           title: "Xoá bài viết",
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
@@ -52,7 +52,7 @@ class DocumentSummary extends Component {
             this.props.deleteADocument(this.props.id);
             store.dispatch(closeModal());
           }
-        }))
+        })
     }
 
     if (selectedItem.value === "EDIT_POST") {
@@ -60,7 +60,7 @@ class DocumentSummary extends Component {
     }
 
     if (selectedItem.value === "REPORT_POST") {
-      store.dispatch(openModal("form", {
+      openModal("form", {
         id: `rpdcm-form-modal`,//report document
         title: `REPORT BÀI VIẾT`,
         formId: `rpdcm-form`,
@@ -95,8 +95,7 @@ class DocumentSummary extends Component {
           cancelText: "Huỷ",
           onConfirm: DTO => this.onConfirmReport(DTO)
         }
-      }
-      ));
+      });
     }
   }
 

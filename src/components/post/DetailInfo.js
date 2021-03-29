@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/actions/modalAction'
+import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
@@ -40,14 +40,14 @@ class PostDetail extends Component {
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_POST") {
       //show confirmation popup and detete id verify
-      store.dispatch(openModal("confirmation",
+      openModal("confirmation",
         {
           title: "Xoá bài viết",
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
           onConfirm: () => { this.props.deleteAPost(this.props.id); store.dispatch(closeModal()); }
-        }))
+        })
     }
 
     if (selectedItem.value === "EDIT_POST") {
@@ -55,7 +55,7 @@ class PostDetail extends Component {
     }
 
     if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
-      store.dispatch(openModal("form", {
+      openModal("form", {
         id: `rpp-form-modal`,//report post
         title: `REPORT BÀI VIẾT`,
         formId: `rpp-form`,
@@ -90,8 +90,7 @@ class PostDetail extends Component {
           cancelText: "Huỷ",
           onConfirm: DTO => this.onConfirmReport(DTO)
         }
-      }
-      ));
+      });
     }
   }
 

@@ -17,7 +17,7 @@ import ReportReactionbar from 'components/post/ReportReactionbar'
 import store from 'redux/store/index'
 import { post_ResolveAPostReset } from 'redux/actions/postAction'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
-import { closeModal, openBLModal } from 'redux/actions/modalAction.js';
+import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 
 class PostReportManagement extends Component {
     constructor(props) {

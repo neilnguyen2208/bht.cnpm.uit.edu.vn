@@ -1,16 +1,13 @@
 import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/actions/modalAction";
+import { closeBigModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
-import { withRouter } from 'react-router-dom';
-import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import LoginForm from 'components/common/Login&Register/LoginForm'
 
-class Login extends React.Component {
+export default class Login extends React.Component {
     closeModal = () => {
         store.dispatch(closeBigModal())
     }
@@ -29,14 +26,3 @@ class Login extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-
-    };
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-
-}, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

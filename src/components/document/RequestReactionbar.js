@@ -6,19 +6,19 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { approveADocument, rejectADocument, rejectAndFeedbackADocument } from 'redux/services/documentServices'
-import { openModal, openBLModal, closeModal } from 'redux/actions/modalAction'
+import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 
 class RequestedSummary extends Component {
     
     handleApprove = () => {
-        store.dispatch(openModal("confirmation",
+        openModal("confirmation",
             {
                 title: "Duyệt bài viết",
                 text: "Bạn có chắc chắn muốn duyệt bài viết không?",
                 onConfirm: () => this.onConfirmApprove(),
-            }));
+            });
 
     }
 
@@ -27,12 +27,12 @@ class RequestedSummary extends Component {
     }
 
     handleReject = () => {
-        store.dispatch(openModal("confirmation",
+        openModal("confirmation",
             {
                 title: "Từ chối bài viết",
                 text: "Bạn có chắc chắn muốn từ chối bài viết này không?",
                 onConfirm: () => this.onConfirmReject(),
-            }));
+            });
     }
 
     onConfirmReject = () => {
@@ -40,7 +40,7 @@ class RequestedSummary extends Component {
     }
 
     handleRejectAndFeedback = () => {
-        store.dispatch(openModal("form", {
+        openModal("form", {
             id: `rjafbdcm-form-modal`,//reject and feed back
             title: `TỪ CHỐI BÀI VIẾT`,
             formId: `rjafbdcm-form`,
@@ -77,7 +77,7 @@ class RequestedSummary extends Component {
                 onConfirm: DTO => this.onConfirmRejectAndFeedback(DTO)
             }
         }
-        ));
+        );
     }
 
     handleReadMore = () => {

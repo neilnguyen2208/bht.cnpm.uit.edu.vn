@@ -19,7 +19,7 @@ import AdminSidebar from 'layouts/AdminSidebar'
 import PostManagementNavbar from './PostManagementNavbar'
 import RequestReactionbar from 'components/post/RequestReactionbar'
 import { post_ApproveAPostReset, post_RejectAPostReset, post_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
-import { openBLModal, closeModal } from 'redux/actions/modalAction'
+import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 

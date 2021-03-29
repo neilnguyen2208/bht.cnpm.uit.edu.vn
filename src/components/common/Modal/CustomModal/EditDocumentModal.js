@@ -1,7 +1,7 @@
 import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/actions/modalAction";
+import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -164,7 +164,7 @@ class EditDocumentModal extends React.Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            store.dispatch(openModal("confirmation",
+            openModal("confirmation",
                 {
                     title: "Thay đổi tài liệu",
                     text: "Hành động này cần phê duyệt và không thể hoàn tác.",
@@ -175,7 +175,7 @@ class EditDocumentModal extends React.Component {
                         store.dispatch(closeModal()); //close confimation popup
                         this.closeModal(); //close edit document popup
                     }
-                }))
+                })
 
 
         }

@@ -2,7 +2,7 @@ import React from "react";
 import './Modal.scss'
 import 'components/styles/Form.scss'
 import 'components/styles/Button.scss'
-import { closeModal, openModal } from "redux/actions/modalAction";
+import { closeModal, openModal } from "redux/services/modalServices";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -39,12 +39,12 @@ class FormModal extends React.Component {
         let { title, text, verifyText, cancelText, onConfirm } = this.props.confirmBox;
         if (this.props.validationCondition)
             if (styleFormSubmit(this.props.validationCondition)) {
-                this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onConfirm: () => onConfirm(this.DTO) });
+                openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onConfirm: () => onConfirm(this.DTO) });
                 return;
             } else return;
 
         else
-            this.props.openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onConfirm(this.DTO) })
+            openModal("confirmation", { title: title, verifyText: verifyText, text: text, cancelText: cancelText, onVerify: () => onConfirm(this.DTO) })
     }
 
     render() {
@@ -146,15 +146,4 @@ class FormModal extends React.Component {
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-
-    };
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    closeModal, openModal
-}, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormModal));
+export default FormModal;

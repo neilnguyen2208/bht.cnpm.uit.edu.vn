@@ -1,7 +1,7 @@
 import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/actions/modalAction";
+import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -22,8 +22,6 @@ import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';
 import Loader from 'components/common/Loader/Loader'
-import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
-import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //utils
 import { ClickAwayListener } from '@material-ui/core';
@@ -151,7 +149,7 @@ class EditPostModal extends React.Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            store.dispatch(openModal("confirmation",
+            openModal("confirmation",
                 {
                     title: "Thay đổi bài viết",
                     text: "Hành động này cần phê duyệt và không thể hoàn tác.",
@@ -162,7 +160,7 @@ class EditPostModal extends React.Component {
                         store.dispatch(closeModal()); //close confimation popup
                         this.closeModal(); //close edit post popup
                     }
-                }))
+                })
 
 
         }

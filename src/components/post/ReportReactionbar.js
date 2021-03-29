@@ -9,14 +9,14 @@ import { resolveAPost } from 'redux/services/postServices';
 import 'components/styles/Reactionbar.scss'
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
-import { openModal } from 'redux/actions/modalAction.js';
+import { openModal } from 'redux/services/modalServices.js';
 import store from 'redux/store/index.js';
 import { validation } from 'utils/validationUtils.js';
 
 class ReportReactionbar extends Component {
 
   handleResolve = () => {
-    store.dispatch(openModal("form", {
+    openModal("form", {
       id: `rsap-form-modal`,//resolve a post
       title: `XỬ LÝ BÀI VIẾT`,
       formId: `rsap-form`,
@@ -64,7 +64,7 @@ class ReportReactionbar extends Component {
         cancelText: "Huỷ",
         onConfirm: DTO => this.onConfirmResolve(DTO)
       }
-    }));
+    });
 
   }
 

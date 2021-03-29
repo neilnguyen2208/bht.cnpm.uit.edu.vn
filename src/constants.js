@@ -28,6 +28,7 @@ export const adminApproveStatusOptions = [
   { id: 3, name: "Chưa duyệt", postState: "PENDING_APPROVAL" }
 ];
 
+export const lS = localStorage;
 
 export const publishedTimeOptions = [
   { id: 1, name: "Mới nhất", sort: "publishDtm,desc" },

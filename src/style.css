@@ -84,7 +84,7 @@
 
 :root {
     --blue: #5279db;
-    --light-blue: #48bfff;
+    --light-blue: #bac9f1;
     --red: #fe3a3a;
     --light-red: #fd5959;
     --black: #363636;
@@ -314,6 +314,10 @@ a:hover {
 
 .pd-l-5px {
     padding-left: 5px;
+}
+
+.pd-top-10px {
+    padding-top: 10px;
 }
 
 .scroller-container {

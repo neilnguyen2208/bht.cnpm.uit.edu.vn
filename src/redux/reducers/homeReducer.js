@@ -59,7 +59,6 @@ function HomeReducer(state = initialState, action) {
         case GET_HIGHLIGHT_POSTS_LIST_REQUEST:
             return { ...state, highlightPosts: { isLoading: true } };
         case GET_HIGHLIGHT_POSTS_LIST_SUCCESS:
-            console.log(action.payload)
             return { ...state, highlightPosts: { isLoading: false, data: action.payload, error: '' } }
         case GET_HIGHLIGHT_POSTS_LIST_FAILURE:
             return { ...state, highlightPosts: { isLoading: false, error: action.payload, data: [] } }

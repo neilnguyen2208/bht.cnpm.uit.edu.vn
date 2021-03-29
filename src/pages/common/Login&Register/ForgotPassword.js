@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ForgotPasswordForm from 'components/common/Login&Register/ForgotPassword';
+import ForgotPasswordForm from 'components/common/Login&Register/ForgotPasswordForm';
 class ForgotPassword extends Component {
     render() {
         return (

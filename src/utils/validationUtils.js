@@ -1,7 +1,7 @@
 //#region validation html elements not 
 const errorSelector = '.form-error-label';
 const formGroupSelector = '.form-group';
-var ele;
+
 // Đối tượng `Validator`
 export function validation(conditions) {
     function getParent(element, selector) {
@@ -25,7 +25,6 @@ export function validation(conditions) {
         // Lặp qua từng rule & kiểm tra
         // Nếu có lỗi thì dừng việc kiểm
         for (var i = 0; i < rules.length; ++i) {
-
             if (element.classList.contains('text-input') || element.classList.contains('text-area')) {
                 errorMessage = rules[i](element.value);
                 if (errorMessage) break;
@@ -42,11 +41,15 @@ export function validation(conditions) {
                         if (errorMessage) break;
                     }
                     else
-                        if (element.classList.contains('form-radio') || element.classList.contains('form-check-box')) {
+                        if (element.classList.contains('form-radio') || element.classList.contains('form-checkbox')) {
                             errorMessage = rules[i](formElement.querySelector(rule.selector + ':checked'));
                         }
                         else if (element.classList.contains('file-input')) {
                             errorMessage = rules[i](element.files);
+                        }
+                        else if (element.classList.contains('ReCAP')) {
+                            document.getElementById("d-e-" + element.id).innerText = rules[i](false);
+
                         }
             if (errorMessage) break;
         }
@@ -79,7 +82,7 @@ export function validation(conditions) {
             var elements = formElement.querySelectorAll(rule.selector);
             Array.from(elements).forEach(function (element) {
                 if (element.classList.contains('text-input')
-                    || element.classList.contains('form-check-box')
+                    || element.classList.contains('form-checkbox')
                     || element.classList.contains('form-radio')
 
                     || element.classList.contains('text-area')) {
@@ -116,6 +119,12 @@ export function validation(conditions) {
                 }
 
                 if (element.classList.contains('ckeditor')
+                ) {
+                    validate(element, rule);
+                    return;
+                }
+
+                if (element.classList.contains('ReCAP')
                 ) {
                     validate(element, rule);
                     return;
@@ -171,6 +180,27 @@ validation.isRequired = function (selector, type, message) {
             }
         }
     }
+    if (type === 'checkbox') {
+        return {
+            selector: '#' + selector,
+            type: type,
+            test: function (value) {
+                //  kiem tra xem co file nao torng chuoi hay khong
+                return value ? undefined : message || 'Vui lòng xác nhận!'
+            }
+        }
+    }
+    if (type === "ReCAP") {
+        return {
+            selector: '#ReCAP-wrapper-' + selector,
+            type: type,
+            test: function (value) {
+
+                //  kiem tra xem co file nao torng chuoi hay khong
+                return value ? undefined : message || 'Vui lòng xác nhận captcha!'
+            }
+        }
+    }
 }
 
 //chua check
@@ -197,12 +227,12 @@ validation.minLength = function (selector, type, min, message) {
 }
 
 //chua check
-validation.isConfirmed = function (selector, type, getConfirmValue, message) {
+validation.isSameContent = function (selector, type, confirmID, message) {
     return {
-        selector: selector,
+        selector: '#' + selector,
         type: type,
         test: function (value) {
-            return value === getConfirmValue() ? undefined : message || 'Giá trị nhập vào không chính xác';
+            return value === document.getElementById(confirmID).value ? undefined : message || 'Giá trị nhập vào không chính xác';
         }
     }
 }
@@ -274,13 +304,20 @@ export function styleFormSubmit(conditions) {
                         }
                     }
                     else
-                        if (element.classList.contains('form-radio') || element.classList.contains('form-check-box')) {
+                        if (element.classList.contains('form-radio') || element.classList.contains('form-checkbox')) {
+                            // console.log()
                             errorMessage = rules[i](formElement.querySelector(rule.selector + ':checked'));
                             if (errorMessage) break;
                         }
                         else
                             if (element.classList.contains('file-input')) {
                                 errorMessage = rules[i](element.files);
+                                if (errorMessage) break;
+                            }
+                            else if (element.classList.contains('ReCAP')) {
+                                if (element.classList.contains("dummy-invalid")) {
+                                    errorMessage = rules[i](false);
+                                }
                                 if (errorMessage) break;
                             }
             if (errorMessage) break;
@@ -309,7 +346,7 @@ export function styleFormSubmit(conditions) {
 
         Array.from(elements).forEach(function (element) {
             if (element.classList.contains('text-input')
-                || element.classList.contains('form-check-box')
+                || element.classList.contains('form-checkbox')
                 || element.classList.contains('form-radio')
                 || element.classList.contains('file-input')
                 || element.classList.contains('text-area')
@@ -323,6 +360,11 @@ export function styleFormSubmit(conditions) {
             if (element.classList.contains('combobox')
             ) {
                 validate(element, rule);
+            }
+            if (element.classList.contains('ReCAP')
+            ) {
+                validate(element, rule);
+                return;
             }
         });
     });

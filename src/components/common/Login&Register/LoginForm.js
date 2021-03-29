@@ -11,7 +11,8 @@ import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { Link } from 'react-router-dom'
 import './Login.scss'
 import round_logo from 'assets/images/round_logo.png'
-import ReCAPTCHA from "react-google-recaptcha";
+import fb_icon from 'assets/icons/24x24/b_facebook_icon_24x24.png';
+import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 
 const validationCondition = {
   form: '#login-form',
@@ -20,12 +21,24 @@ const validationCondition = {
     validation.isRequired('login-form-username', 'text-input', 'Vui lòng nhập username!'),
     validation.noSpecialChar('login-form-username', 'text-input', 'Tên đăng nhập không được chứa ký tự đặc biệt!'),
     validation.isRequired('login-form-password', 'text-input', 'Vui lòng nhập password!'),
-
+    validation.minLength('login-form-password', 'text-input', 6, 'Nhập tối thiểu 6 ký tự!'),
+    validation.isRequired('login-form-ReCAP', 'ReCAP')
 
   ],
 }
 
 class Login extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      LOGIN_DTO: {
+        username: '',
+        password: '',
+        token: ''
+      }
+    }
+  }
 
   componentDidMount() {
     validation(validationCondition);
@@ -36,6 +49,17 @@ class Login extends React.Component {
 
   }
 
+  onUsernameChange = (e) => {
+    this.setState({ LOGIN_DTO: { ...this.state.LOGIN_DTO, username: e.target.value } });
+  }
+
+  onPasswordChange = (e) => {
+    this.setState({ LOGIN_DTO: { ...this.state.LOGIN_DTO, password: e.target.value } });
+  }
+
+  onTokenChange = (e) => {
+    this.setState({ LOGIN_DTO: { ...this.state.LOGIN_DTO, password: e.value.value } });
+  }
 
   handleUploadBtnClick = () => {
     if (styleFormSubmit(validationCondition)) {
@@ -54,6 +78,12 @@ class Login extends React.Component {
     }
   }
 
+  onLoginClick = (e) => {
+    e.preventDefault();
+    if (styleFormSubmit(validationCondition)) {
+
+    }
+  }
 
   closeModal = () => {
     store.dispatch(closeBigModal())
@@ -61,11 +91,24 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="login-form-container ">
+      <div className="login-form-container">
         <div className="scroller-container d-flex" style={{ padding: "0px" }} >
           <div className="login-sidebar">
-            {/* Chào mừng đến với */}
-            <img alt="" />
+            <div>
+              Chào mừng đến với
+            <br />
+              <div className="sidebar-bht-name"> BHT Đoàn khoa Công nghệ phần mềm.</div>
+            </div>
+            <img alt="" className="mg-top-5px" src={fb_icon} />
+            <br />
+            <div style={{ borderBottom: "1px white solid", paddingBottom: "0.1rem", marginTop: "0.625rem", marginBottom: "10px" }}> Đăng nhập để trải nghiệm: </div>
+            <div style={{ lineHeight: "1.2rem" }}>
+              - Tương tác với các bài viết và tài liệu. <br />
+          - Chia sẻ các tài liệu và bài viết của riêng mình. <br />
+          - Chia sẻ và tận dụng nguồn bài tập. <br />
+          - Tải tài liệu. <br />
+          ...
+            </div>
           </div>
 
           <form className="login-form" id="login-form">
@@ -88,29 +131,35 @@ class Login extends React.Component {
                   <span className="form-error-label" ></span>
                 </div>
               </div>
-              <div className="d-flex form-group">
-                <input type="checkbox" className="form-check-box mg-top-5px" onClick={(e) => {
-                  let passwordField = document.getElementById("login-form-password");
-                  if (e.target.checked) {
-                    passwordField.type = "text";
-                  }
-                  else {
-                    passwordField.type = "password";
-                  }
-                }} />
-                <div className="form-tip-label-2 mg-top-5px" > Hiện mật khẩu</div>
+              <div className="d-flex form-group pd-top-5px">
+                <label className="form-checkbox-container" >
+                  <input type="checkbox" className="form-checkbox" onClick={(e) => {
+                    let passwordField = document.getElementById("login-form-password");
+                    if (e.target.checked) {
+                      passwordField.type = "text";
+                    }
+                    else {
+                      passwordField.type = "password";
+                    }
+                  }} />
+                  <span className="form-checkbox-style"></span>
+                  <div className="form-tip-label-2" > Hiện mật khẩu</div>
+                </label>
               </div>
+
               <div className="form-group">
-                <div className="reCapcha-wrapper">
-                  <ReCAPTCHA sitekey="6Lfz648aAAAAADzC-bW2K8CXpQ8ZEJETupqfHBe8"
-                    onChange={this.onReCAPCHATokenChange} />
+                <CustomReCAPTCHA id="login-form-ReCAP"
+                  onTokenChange={(value) => this.onReCAPCHATokenChange(value)} />
+                <div className="form-error-label-container">
+                  <span className="form-error-label" ></span>
                 </div>
               </div>
-              <div className="form-line" />
+
+              <div className="form-line pd-top-10px" />
               <div className="form-group mg-top-10px">
                 <div className="j-c-space-between">
                   <Link to="/forgot-password" className="forgot-password">Quên mật khẩu?</Link>
-                  <button className="blue-button">Đăng nhập</button>
+                  <button className="blue-button" onClick={(e) => { this.onLoginClick(e) }}>Đăng nhập</button>
                 </div>
 
               </div>

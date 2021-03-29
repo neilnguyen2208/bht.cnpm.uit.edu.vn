@@ -11,22 +11,73 @@ import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { Link } from 'react-router-dom'
 import './Login.scss'
 import round_logo from 'assets/images/round_logo.png'
-const validationCondition = {
-  form: '#register-form',
+import HoverHint from "../HoverHint/HoverHint";
+import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
+
+const validationCondition_1 = {
+  form: '#register-form-step-1',
   rules: [
     //truyen vao id, loai component, message
+    //username
     validation.isRequired('register-form-username', 'text-input', 'Tên đăng nhập không được để trống!'),
     validation.noSpecialChar('register-form-username', 'text-input', 'Tên đăng nhập không được chứa ký tự đặc biệt!'),
-    validation.minLength('register-form-username', 'text-input', 'Tên đăng nhập không được chứa ký tự đặc biệt!'),
+    validation.minLength('register-form-username', 'text-input', 6, 'Nhập tối thiểu 6 ký tự.'),
 
+    //password
+    validation.isRequired('register-form-password', 'text-input', 'Mật khẩu không được để trống!'),
+    validation.minLength('register-form-password', 'text-input', 6, 'Nhập tối thiểu 6 ký tự.'),
 
+    //confirmation password
+    validation.isRequired('register-form-confirm-password', 'text-input', 'Mật khẩu xác nhận không được để trống!'),
+    validation.isSameContent('register-form-confirm-password', 'text-input', 'register-form-password', 'Mật khẩu xác nhận không khớp!'),
   ],
 }
 
-class Login extends React.Component {
+const validationCondition_2 = {
+  form: '#register-form-step-2',
+  rules: [
+    //truyen vao id, loai component, message
+    //email
+    validation.isRequired('register-form-email', 'text-input', 'Email không được để trống!'),
+    validation.isEmail('register-form-email', 'text-input', 'Vui lòng nhập đúng email!'),
+
+    //email
+    validation.isRequired('register-form-confirm-email', 'text-input', 'Vui lòng xác nhận email!'),
+    validation.isSameContent('register-form-confirm-email', 'text-input', 'register-form-email', 'Email xác nhận không đúng!'),
+
+    //ten hien thi
+    validation.isRequired('register-form-displayname', 'text-input', 'Tên hiển thị không được để trống!'),
+    validation.minLength('register-form-displayname', 'text-input', 6, 'Nhập tối thiểu 6 ký tự.'),
+
+    //checkbox
+    validation.isRequired('register-form-confirm-tos', 'checkbox', 'Vui lòng xác nhận!'),
+
+
+    //reCAPTCHA
+    validation.isRequired('register-ReCAPTCHA', 'ReCAP')
+  ],
+}
+
+
+const validationCondition_3 = {
+  form: '#register-form-step-3',
+  rules: [
+    //truyen vao id, loai component, message
+    //email
+    validation.isRequired('register-form-confirm-code', 'text-input', '!'),
+    // validation.minLength('register-form-confirm-code', 'text-input', 6, 'Vui lòng nhập đủ 6 ký tự!'),
+  ],
+}
+
+
+class Register extends React.Component {
 
   componentDidMount() {
-    validation(validationCondition);
+    validation(validationCondition_1);
+    validation(validationCondition_2);
+    validation(validationCondition_3);
+
+
     this.renderStep(1);
 
   }
@@ -72,7 +123,7 @@ class Login extends React.Component {
   }
 
   handleUploadBtnClick = () => {
-    if (styleFormSubmit(validationCondition)) {
+    if (styleFormSubmit(validationCondition_1)) {
       store.dispatch(openModal("confirmation",
         {
           title: "Thay đổi tài liệu",
@@ -88,14 +139,46 @@ class Login extends React.Component {
     }
   }
 
+  handleFirstStep = () => {
+    if (styleFormSubmit(validationCondition_1)) { // thuc hien kiem tra va tra ve ket qua true hay false.
+
+      //check if username existed
+      this.renderStep(2);
+    }
+
+  }
+
+  handleSecondStep = () => {
+    if (styleFormSubmit(validationCondition_2)) { // thuc hien kiem tra va tra ve ket qua true hay false.
+
+      //check if username existed
+      this.renderStep(3);
+    }
+  }
+
+  handleThirdStep = () => {
+    if (styleFormSubmit(validationCondition_3)) {
+
+    }
+  }
+
+
 
   closeModal = () => {
     store.dispatch(closeBigModal())
   }
 
+  onReCAPCHATokenChange = (value) => {
+    if (value) {
+
+    }
+
+    //value chính là key
+  }
+
   render() {
     return (
-      <div >
+      <div style={{ borderBottom: "40px solid white" }}>
         <div className="mg-bottom-10px">
           <img alt="" src={round_logo} className="login-icon" />
           <div className="login-title">Welcome!</div>
@@ -103,7 +186,7 @@ class Login extends React.Component {
         </div>
 
         <div className="register-form-c">
-          <form className="register-form  mg-auto" id="register-form">
+          <div className="register-form mg-auto">
             <div className="reg-step-bar">
               <div className="reg-deco-bar-1" />
               <div className="reg-deco-bar-2" />
@@ -113,100 +196,143 @@ class Login extends React.Component {
             </div>
             <div className="form-line mg-bottom-10px" />
             {/* Step 1 */}
-            <div className="form-container o-f-hidden" id="reg-step-1">
-              <div className="form-group">
-                <label className="form-label-required">Tên đăng nhập:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập username ..." />
-                <div className="form-error-label-container">
-                  <span className="form-error-label" ></span>
+            <form id="register-form-step-1" >
+              <div className="form-container " id="reg-step-1">
+                <div className="form-group">
+                  <label className="form-label-required">Tên đăng nhập:</label>
+                  <input type="text" className="text-input" id="register-form-username" placeholder="Nhập username ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="form-label-required" >Mật khẩu:</label>
+                  <input type="text" className="text-input" id="register-form-password" type="password" placeholder="Nhập mật khẩu ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="form-label-required" >Xác nhận mật khẩu:</label>
+                  <input type="text" className="text-input" id="register-form-confirm-password" type="password" placeholder="Nhập lại mật khẩu ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
+                </div>
+                <div className="form-line pd-top-5px" />
+                <div className="form-group mg-top-10px">
+                  <div className="j-c-end">
+                    <button className="blue-button" onClick={(e) => {
+                      e.preventDefault();
+                      this.handleFirstStep();
+                    }}>Tiếp theo</button>
+                  </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label-required" >Mật khẩu:</label>
-                <input type="text" className="text-input" id="register-form-password" type="password" placeholder="Nhập password ..." />
-                <div className="form-error-label-container">
-                  <span className="form-error-label" ></span>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="form-label-required" >Xác nhận mật khẩu:</label>
-                <input type="text" className="text-input" id="register-form-confirm-password" type="password" placeholder="Nhập password ..." />
-                <div className="form-error-label-container">
-                  <span className="form-error-label" ></span>
-                </div>
-              </div>
-              <div className="form-line" />
-              <div className="form-group mg-top-10px">
-                <div className="j-c-end">
-                  <button className="blue-button" onClick={(e) => {
-                    e.preventDefault();
-                    this.renderStep(2);
-                  }}>Tiếp theo</button>
-                </div>
-              </div>
-            </div>
+            </form>
+
             {/* Step 2 */}
-            <div className="form-container o-f-hidden" id="reg-step-2">
-              <div className="form-group">
-                <label className="form-label-required">Email:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập username ..." />
-                <div className="form-error-label-container">
-                  <span className="form-error-label" ></span>
+            <form id="register-form-step-2">
+              <div className="form-container" id="reg-step-2">
+                <div className="form-group">
+                  <label className="form-label-required">Email:</label>
+                  <input type="text" className="text-input" id="register-form-email" placeholder="Nhập email ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="form-label-required">Tên hiển thị:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập username ..." />
-                <div className="form-error-label-container">
-                  <span className="form-error-label" ></span>
+
+                <div className="form-group">
+                  <label className="form-label-required">Xác nhận email:</label>
+                  <input type="text" className="text-input" id="register-form-confirm-email" placeholder="Nhập lại email ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
                 </div>
-              </div>
-              <div className="form-line" />
-              <div className="form-group mg-top-10px">
-                <div className="j-c-space-between">
-                  <div className="link-label-s" style={{ color: "var(--light-black)" }} onClick={(e) => {
-                    e.preventDefault();
-                    this.renderStep(1);
-                  }}>{"<< Quay lại"}</div>
-                  <button className="blue-button" onClick={(e) => {
-                    e.preventDefault();
-                    this.renderStep(3);
-                  }}>Tiếp theo</button>
+
+                <div className="form-group">
+                  <div className="j-c-space-between">
+                    <label className="form-label-required">Tên hiển thị:</label>
+                    <HoverHint message="Tên này sẽ đại diện cho bạn và hiển thị với người dùng khác."></HoverHint>
+                  </div>
+                  <input type="text" className="text-input" id="register-form-displayname" placeholder="Nhập tên hiển thị ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
                 </div>
-              </div>
-            </div >
+
+                {/* Custom checkbox */}
+                <div className="form-group pd-top-10px">
+
+                  <CustomReCAPTCHA
+                    id="register-ReCAPTCHA"
+                    onTokenChange={value => this.onReCAPCHATokenChange(value)}
+                  />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
+                </div>
+
+                <div className="form-line pd-top-10px mg-bottom-10px" />
+
+                <div className="form-group ">
+                  <label className="form-checkbox-container" >
+                    <input type="checkbox" className="form-checkbox" id="register-form-confirm-tos" />
+                    <span className="form-checkbox-style"></span>
+                    <div className="d-flex">
+                      <div className="form-checkbox-label"> Đồng ý với </div>
+                      <Link to="/login" className="link-label-s" style={{ marginTop: "0.05rem" }}>Điều khoản và dịch vụ</Link>
+                    </div>
+                  </label>
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
+                </div>
+
+                <div className="form-group mg-top-10px pd-top-10px">
+                  <div className="j-c-space-between">
+                    <div className="link-label-s" style={{ color: "var(--light-black)" }} onClick={(e) => {
+                      e.preventDefault();
+                      this.renderStep(1);
+                    }}>{"<< Quay lại"}</div>
+                    <button className="blue-button" onClick={(e) => {
+                      e.preventDefault();
+                      this.handleSecondStep();
+                    }}>Đăng ký</button>
+                  </div>
+                </div>
+              </div >
+            </form>
 
             {/* Step 3 */}
-            <div className="form-container o-f-hidden" id="reg-step-3">
-              <div className="form-group">
-                <label className="form-label-required">Xác nhận email:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập mã xác nhận ..." />
-                <div className="form-error-label-container">
-                  <span className="form-error-label" ></span>
+            <form id="register-form-step-3">
+              <div className="form-container o-f-hidden" id="reg-step-3">
+                <div className="form-group">
+                  <label className="form-label-required">Xác nhận email:</label>
+                  <input type="text" className="text-input" maxLength={6} id="register-form-confirm-code" placeholder="Nhập mã xác nhận ..." />
+                  <div className="form-error-label-container">
+                    <span className="form-error-label" ></span>
+                  </div>
                 </div>
-              </div>
-              <div className="form-line" />
-              <div className="form-group mg-top-10px">
-                <div className="d-flex" >
-                  <input type="checkbox" className="form-check-box " />
-                  <div style={{ marginTop: "3px", marginLeft: "4px", marginRight: "4px" }}> Đồng ý với </div> <Link to="/login" className="link-label-m">Điều khoản và dịch vụ</Link>
+                <div className="form-line mg-top-10px" />
+                <div className="form-group mg-top-10px">
+
+                  <div className="j-c-end mg-top-10px">
+                    <button className="blue-button" onClick={(e) => {
+                      e.preventDefault();
+                      this.handleThirdStep();
+                      //Đăng ký
+                    }}>Xác nhận</button>
+                  </div>
                 </div>
-                <div className="j-c-space-between mg-top-10px">
-                  <div className="link-label-s" style={{ color: "var(--light-black)" }} onClick={(e) => {
-                    e.preventDefault();
-                    this.renderStep(2);
-                  }}>{"<< Quay lại"}</div>
-                  <button className="blue-button" onClick={(e) => {
-                    //Đăng ký
-                  }}>Đăng ký</button>
-                </div>
-              </div>
-            </div >
+              </div >
+            </form>
 
             <div className="mg-top-10px d-flex">
               <div style={{ marginTop: "3px", marginRight: "4px" }}> Nếu đã có tài khoản, bạn có thể</div> <Link to="/login" className="link-label-m">đăng nhập</Link>
             </div>
-          </form>
+            {/* </form> */}
+          </div >
         </div >
       </div >
     );
@@ -224,4 +350,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

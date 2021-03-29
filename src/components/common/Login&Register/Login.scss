@@ -5,7 +5,8 @@
   background: var(--blue);
   color: white;
   font-family: Arial;
-  font-weight: 600;
+  padding: 10px;
+  font-weight: 400;
   display: block;
   justify-content: space-between;
 }
@@ -32,6 +33,13 @@
   width: 6.5rem;
   height: 6.5rem;
   margin: auto;
+}
+
+.sidebar-bht-name {
+  font-weight: 600;
+  margin-top: 0.4rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid white;
 }
 
 .login-title {
@@ -79,7 +87,8 @@
   background-color: var(--blue);
 }
 
-.reg-deco-bar-1 {
+.reg-deco-bar-1,
+.forgot-pass-deco-bar-1 {
   width: 12rem;
   position: absolute;
   height: 0.3rem;
@@ -87,15 +96,18 @@
   top: 1.1rem;
 }
 
-.reg-deco-bar-1.active {
+.reg-deco-bar-1.active,
+.forgot-pass-deco-bar-1.active {
   background-color: var(--blue);
 }
 
-.reg-deco-bar-2 {
+.reg-deco-bar-2,
+.forgot-pass-deco-bar-2 {
   @extend .reg-deco-bar-1;
   left: 12rem;
 }
 
-.reg-deco-bar-2.active {
+.reg-deco-bar-2.active,
+.forgot-pass-deco-bar-2.active {
   background-color: var(--blue);
 }

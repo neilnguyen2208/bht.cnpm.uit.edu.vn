@@ -161,8 +161,6 @@ class EditPostModal extends React.Component {
                         this.closeModal(); //close edit post popup
                     }
                 })
-
-
         }
     }
 
@@ -463,7 +461,7 @@ class EditPostModal extends React.Component {
                                     </div>
                                     <div className="decoration-line mg-top-10px" />
                                 </div>
-                                <div className="d-none" id="edit-post-body">
+                                <div id="edit-post-body" >
                                     {/* Preview region */}
                                     <div className="ed-post-form-container post-detail-container preview-modal d-none" >
                                         <div style={{ marginTop: "20px" }} />
@@ -498,8 +496,8 @@ class EditPostModal extends React.Component {
                                     </div>
 
                                     {/* Edit region */}
-                                    <div className="ed-post-form-container edit">
-                                        <div id="edit-post-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
+                                    <div className="ed-post-form-container edit d-none">
+                                        <div id="edit-post-form" className="form-container" onSubmit={this.handleUpload}>
                                             <div className="mg-top-10px" />
 
                                             <div className="form-group">
@@ -595,6 +593,7 @@ class EditPostModal extends React.Component {
             </div>
         );
     }
+
     onEditBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
         document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-block");

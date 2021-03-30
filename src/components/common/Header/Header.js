@@ -19,6 +19,7 @@ import { getPostSearch } from 'redux/services/postServices'
 import { DELAY_TIME } from 'constants.js';
 import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
+import UserMenu from '../../user/UserMenu'
 
 class Header extends React.Component {
     constructor(props) {
@@ -85,6 +86,10 @@ class Header extends React.Component {
             document.getElementById("qsr-container-big").style.display = "none";
             //re-render
         }
+    }
+
+    openUserMenu = (e) => {
+
     }
 
     render() {
@@ -159,9 +164,14 @@ class Header extends React.Component {
                             <Link to="/create-post" className="d-flex">
                                 <img className="header-image-button" src={write_icon} alt="" />
                             </Link>
-                            <Link to="/login" className="blue-button mg-auto">
-                                Đăng nhập
+
+                            {this.props.isAuthenticated ?
+                                <UserMenu />
+                                :
+                                <Link to="/login" className="blue-button mg-auto">
+                                    Đăng nhập
                             </Link>
+                            }
                         </div>
                         <div className="header-end-lv2_Collapse"
                             onClick={this.state.isCollapsedUserMenuOpened ?
@@ -258,6 +268,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
 
     return {
+        isAuthenticated: state.auth.isAuthenticated,
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,
         isQuickSearchLoadDone: state.common.quickSearchResult.isLoadDone

@@ -18,9 +18,6 @@ class ModalBigManager extends React.Component {
 
 
         const renderedModals = currentModals.map((modalDescription, index) => {
-            if (currentModals.length === 0)
-                document.querySelector("body").classList.remove("modal-open");
-            else document.querySelector("body").classList.add("modal-open");
 
             //create loader for handling api 
             const { modalType, modalProps = {} } = modalDescription;

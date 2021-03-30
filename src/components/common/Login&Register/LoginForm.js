@@ -1,19 +1,20 @@
 import React from "react";
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
+import { closeModal, openModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
-import { withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import { Link } from 'react-router-dom'
 import './Login.scss'
 import round_logo from 'assets/images/round_logo.png'
 import fb_icon from 'assets/icons/24x24/b_facebook_icon_24x24.png';
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 import { login } from 'redux/services/authServices'
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
+import { openBLModal } from 'redux/services/modalServices'
 
 const validationCondition = {
   form: '#login-form',
@@ -32,34 +33,18 @@ class Login extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      LOGIN_DTO: {
-        username: '',
-        password: '',
-        token: ''
-      }
+    this.LOGIN_DTO = {
+      username: '',
+      password: '',
     }
   }
 
   componentDidMount() {
     validation(validationCondition);
-    this.setState({ isViewPass: false })
   }
 
   componentWillUnmount() {
 
-  }
-
-  onUsernameChange = (e) => {
-    this.setState({ LOGIN_DTO: { ...this.state.LOGIN_DTO, username: e.target.value } });
-  }
-
-  onPasswordChange = (e) => {
-    this.setState({ LOGIN_DTO: { ...this.state.LOGIN_DTO, password: e.target.value } });
-  }
-
-  onTokenChange = (e) => {
-    this.setState({ LOGIN_DTO: { ...this.state.LOGIN_DTO, password: e.value.value } });
   }
 
   handleUploadBtnClick = () => {
@@ -81,19 +66,27 @@ class Login extends React.Component {
 
   onLoginClick = (e) => {
     e.preventDefault();
+    this.LOGIN_DTO = {
+      username: document.getElementById('login-form-username').value,
+      password: document.getElementById('login-form-password').value
+    }
     if (styleFormSubmit(validationCondition)) {
-
+      this.props.login(this.LOGIN_DTO)
     }
   }
 
   render() {
 
-    if (this.props.isAuthenticated && !this.props.isLogingIn) {
-// store.dispatch
+    if (this.props.isAuthenticated) {
+      openBLModal({ icon: done_icon, text: "Đăng nhập thành công!" });
+
     }
 
     return (
       <div className="login-form-container">
+
+        {this.props.isAuthenticated ? <Redirect to="/" /> : <></>}
+
         <div className="scroller-container d-flex" style={{ padding: "0px" }} >
           <div className="login-sidebar">
             <div>
@@ -120,15 +113,15 @@ class Login extends React.Component {
             </div>
             <div className="form-container o-f-hidden">
               <div className="form-group">
-                <label className="form-label-required"  >Tên đăng nhập:</label>
-                <input type="text" className="text-input" id="login-form-username" placeholder="Nhập username ..." />
+                <label className="form-label-required"  >Tên đăng nhập/Email:</label>
+                <input type="text" className="text-input" id="login-form-username" placeholder="Nhập username hoặc email ..." />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
               </div>
               <div className="form-group">
                 <label className="form-label-required" >Mật khẩu:</label>
-                <input type="text" className="text-input" id="login-form-password" type="password" placeholder="Nhập password ..." />
+                <input className="text-input" id="login-form-password" type="password" placeholder="Nhập password ..." />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
@@ -173,7 +166,6 @@ class Login extends React.Component {
           </form>
         </div >
       </div >
-
 
     );
   }

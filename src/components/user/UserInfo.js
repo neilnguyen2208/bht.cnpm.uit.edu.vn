@@ -22,11 +22,11 @@ class UserInfo extends Component {
 
             <div className="reputation-sub-container">
               <img alt="" src={gray_write_icon} className="user-info-icon" />
-              <div className="reputaion-label">  2000</div>
+              <div className="reputation-label">  2000</div>
             </div>
             <div className="reputation-sub-container">
               <img alt="" src={gray_upload_icon} className="user-info-icon" />
-              <div className="reputaion-label">   2000</div>
+              <div className="reputation-label">   2000</div>
             </div>
           </div>
         </div>

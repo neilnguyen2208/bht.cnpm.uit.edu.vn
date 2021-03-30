@@ -7,6 +7,7 @@ import {
   loginFailure,
   loginRequest,
   loginSuccess,
+  logoutSuccess
 } from '../actions/authAction';
 
 export function login(loginDTO) {
@@ -31,11 +32,12 @@ export function register(registerDTO) {
 
 export function logout() {
   return dispatch => {
+    dispatch(logoutSuccess());
     dispatch(logoutRequest());
-    request.post('/user/logout', JSON.stringify()).then(response =>
-      dispatch(loginSuccess(response.data))
-    )
-      .catch();
+    // request.post('/user/logout', JSON.stringify()).then(response =>
+    //   dispatch(loginSuccess(response.data))
+    // )
+    //   .catch();
   }
 }
 

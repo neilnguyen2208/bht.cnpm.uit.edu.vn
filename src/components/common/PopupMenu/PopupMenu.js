@@ -37,15 +37,16 @@ export default class PopupMenu extends React.Component {
         let popup_menu = document.getElementById(popup_menu_id);
         let dropdown = document.getElementById(dropdown_id);
 
-        if (this.isDropdownOpen) {
-            dropdown.style.display = "none";
-            popup_menu.style.background = "white";
-        }
-        else {
-            popup_menu.style.background = "var(--grayish)";
-            dropdown.style.left = "-136px";
-        }
-        this.setState({ isDropdownOpen: true });
+        // if (this.isDropdownOpen) {
+        //     dropdown.style.display = "none";
+        //     popup_menu.style.background = "white";
+        // }
+        // else {
+        popup_menu.style.background = "var(--grayish)";
+        dropdown.style.left = "-136px";
+        // }
+        this.setState({ isDropdownOpen: !this.state.isDropdownOpen });
+
     }
 
     handleMenuItemClick = (menuItem) => {

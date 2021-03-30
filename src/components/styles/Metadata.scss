@@ -24,8 +24,8 @@
 .metadata .title {
   padding-bottom: 5px;
   font-family: "RobotoSlab-Regular";
-  font-size: 24px;
-  line-height: 24px;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
   display: flex;
   align-items: center;
   color: var(--black);
@@ -91,7 +91,7 @@
 .document-detail-container .metadata-label,
 .post-detail-container .metadata-label {
   @extend .metadata-label;
-  height: 24px;
+  height: 1.5rem;
   font-size: 18px;
   font-family: "BarlowCondensed-Regular";
 
@@ -133,19 +133,12 @@
 }
 
 .activity-metadata .avatar {
-  border-radius: 50%;
   width: 30px;
   height: 30px;
   box-shadow: 0px 0px 2px 0px var(--grayish);
   border: 1px solid var(--gray);
-  object-fit: cover;
-  cursor: pointer;
 }
 
-.avatar:hover {
-  box-shadow: 0px 0px 0px 3px var(--blue);
-
-}
 
 .activity-metadata .icon {
   width: 20px;

@@ -6,7 +6,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
-  
+
   LOGOUT_SUCCESS,
 
 } from 'redux/constants.js';
@@ -16,9 +16,9 @@ import { lS } from 'constants.js'
 const initialState = {
   token: lS.getItem('token'),
   isAuthenticated: null, //true khi da dang nhap
-  isLogingIn: false,
+  isLogingIn: false, //true khi da dang nhap
   currentUser: null,
-  isSigningUp: false,
+  isSignedUp: false, //true khi da dang ky xong
 };
 
 export default function AuthReducer(state = initialState, action) {
@@ -31,15 +31,16 @@ export default function AuthReducer(state = initialState, action) {
     case REGISTER_REQUEST:
       return {
         ...state,
-        isSigningUp: true
+        isSignedUp: false
       }
     case LOGIN_SUCCESS:
       lS.setItem('token', action.payload.token);
       return {
         ...state,
+        isSignedUp: false,
         ...action.payload,
         currentUser: {}, //chac la lay ra tu token
-        isAuthenticated: false,
+        isAuthenticated: true,
         isLogingIn: false,
       };
     case REGISTER_SUCCESS:
@@ -47,7 +48,7 @@ export default function AuthReducer(state = initialState, action) {
         ...state,
         currentUser: null, //chac la lay ra tu token
         isAuthenticated: false,
-        isSigningUp: false
+        isSignedUp: true
       };
     case LOGIN_FAILURE:
     case LOGOUT_SUCCESS:

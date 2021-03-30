@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { openModal, closeModal } from 'redux/services/modalServices';
+import { openBLModal, closeModal } from 'redux/services/modalServices';
 import qs from 'qs';
 import store from 'redux/store/index';
 import FormData from 'form-data';
 import fs from 'fs';
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
@@ -32,7 +33,7 @@ request.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" });
+      openBLModal( {  text: "Có lôi xảy ra!" });
       // setTimeout(window.location.reload(), 500);
     }
     return Promise.reject(error);
@@ -65,7 +66,7 @@ multipartRequest.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      openModal("alert", { title: "Lỗi", text: `Error code: ${error.status} <br> Error content: ${error.statusText} `, type: "Fail" });
+      openBLModal("", { text: "Có lỗi xảy ra" });
       // setTimeout(window.location.reload(), 500);
     }
     return Promise.reject(error);

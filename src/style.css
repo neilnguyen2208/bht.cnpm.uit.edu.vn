@@ -128,10 +128,6 @@ textarea {
     box-sizing: border-box;
 }
 
-body.open-modal {
-    overflow: hidden;
-}
-
 iframe {
     border: none;
 }
@@ -257,8 +253,8 @@ a:hover {
 }
 
 .icon-24x24 {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .vertical-line {

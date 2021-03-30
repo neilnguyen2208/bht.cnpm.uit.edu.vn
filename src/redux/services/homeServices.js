@@ -89,7 +89,7 @@ export function getNewestPosts() {
 export function getHighlightPosts() {
     return dispatch => {
         dispatch(get_HighlightPostsRequest());
-        request.get(`/posts/newest`)
+        request.get(`/posts/highlightPosts`)
             .then(
                 response => {
                     let result_1 = response.data;

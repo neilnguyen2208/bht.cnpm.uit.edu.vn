@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import 'components/styles/Button.scss'
 import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
@@ -13,6 +14,9 @@ import './Login.scss'
 import round_logo from 'assets/images/round_logo.png'
 import HoverHint from "../HoverHint/HoverHint";
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
+import { register } from 'redux/services/authServices'
+import Loader_S from 'components/common/Loader/Loader_S'
+import { registerRequest } from 'redux/actions/authAction'
 
 const validationCondition_1 = {
   form: '#register-form-step-1',
@@ -47,7 +51,7 @@ const validationCondition_2 = {
 
     //ten hien thi
     validation.isRequired('register-form-displayname', 'text-input', 'Tên hiển thị không được để trống!'),
-    validation.minLength('register-form-displayname', 'text-input', 6, 'Nhập tối thiểu 6 ký tự.'),
+    validation.minLength('register-form-displayname', 'text-input', 8, 'Nhập tối thiểu 8 ký tự.'),
 
     //checkbox
     validation.isRequired('register-form-confirm-tos', 'checkbox', 'Vui lòng xác nhận!'),
@@ -64,13 +68,24 @@ const validationCondition_3 = {
   rules: [
     //truyen vao id, loai component, message
     //email
-    validation.isRequired('register-form-confirm-code', 'text-input', '!'),
-    // validation.minLength('register-form-confirm-code', 'text-input', 6, 'Vui lòng nhập đủ 6 ký tự!'),
+    validation.isRequired('register-form-confirm-code', 'text-input', 'Vui lòng nhập đủ 6 ký tự'),
+    validation.minLength('register-form-confirm-code', 'text-input', 6, 'Vui lòng nhập đủ 6 ký tự!'),
   ],
 }
 
 
 class Register extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.REGISTER_DTO = {
+      "name": "",
+      "displayName": "",
+      "email": "",
+      "password": "",
+      "avatarURL": "https://i.imgur.com/SZJgL6C.png"
+    }
+  }
 
   componentDidMount() {
     validation(validationCondition_1);
@@ -83,7 +98,7 @@ class Register extends React.Component {
   }
 
   componentWillUnmount() {
-
+    store.dispatch(registerRequest());
   }
 
   renderStep = (step) => {
@@ -142,6 +157,13 @@ class Register extends React.Component {
   handleFirstStep = () => {
     if (styleFormSubmit(validationCondition_1)) { // thuc hien kiem tra va tra ve ket qua true hay false.
 
+      //gán data cho hai field là password và username.
+      this.REGISTER_DTO = {
+        ...this.REGISTER_DTO,
+        "name": document.getElementById('register-form-username').value,
+        "password": document.getElementById('register-form-password').value
+      }
+
       //check if username existed
       this.renderStep(2);
     }
@@ -151,8 +173,15 @@ class Register extends React.Component {
   handleSecondStep = () => {
     if (styleFormSubmit(validationCondition_2)) { // thuc hien kiem tra va tra ve ket qua true hay false.
 
+      this.REGISTER_DTO = {
+        ...this.REGISTER_DTO,
+        "email": document.getElementById('register-form-email').value,
+        "displayName": document.getElementById('register-form-displayname').value
+      }
+      this.props.register(this.REGISTER_DTO);
+      openModal("loader", { text: "Đang tạo thông tin tài khoản" });
+
       //check if username existed
-      this.renderStep(3);
     }
   }
 
@@ -162,21 +191,21 @@ class Register extends React.Component {
     }
   }
 
-
-
-  closeModal = () => {
-    store.dispatch(closeBigModal())
-  }
-
   onReCAPCHATokenChange = (value) => {
     if (value) {
 
     }
-
     //value chính là key
   }
 
   render() {
+    console.log(this.props.isSignedUp)
+    if (this.props.isSignedUp) {
+      closeModal();
+      this.renderStep(3);
+      store.dispatch(registerRequest());
+    }
+
     return (
       <div style={{ borderBottom: "40px solid white" }}>
         <div className="mg-bottom-10px">
@@ -195,6 +224,7 @@ class Register extends React.Component {
               <div className="reg-step-ind" id="reg-step-3-ind" >3</div>
             </div>
             <div className="form-line mg-bottom-10px" />
+            
             {/* Step 1 */}
             <form id="register-form-step-1" >
               <div className="form-container " id="reg-step-1">
@@ -207,14 +237,14 @@ class Register extends React.Component {
                 </div>
                 <div className="form-group">
                   <label className="form-label-required" >Mật khẩu:</label>
-                  <input type="text" className="text-input" id="register-form-password" type="password" placeholder="Nhập mật khẩu ..." />
+                  <input className="text-input" id="register-form-password" type="password" placeholder="Nhập mật khẩu ..." />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="form-label-required" >Xác nhận mật khẩu:</label>
-                  <input type="text" className="text-input" id="register-form-confirm-password" type="password" placeholder="Nhập lại mật khẩu ..." />
+                  <input className="text-input" id="register-form-confirm-password" type="password" placeholder="Nhập lại mật khẩu ..." />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
@@ -321,7 +351,6 @@ class Register extends React.Component {
                     <button className="blue-button" onClick={(e) => {
                       e.preventDefault();
                       this.handleThirdStep();
-                      //Đăng ký
                     }}>Xác nhận</button>
                   </div>
                 </div>
@@ -331,7 +360,7 @@ class Register extends React.Component {
             <div className="mg-top-10px d-flex">
               <div style={{ marginTop: "3px", marginRight: "4px" }}> Nếu đã có tài khoản, bạn có thể</div> <Link to="/login" className="link-label-m">đăng nhập</Link>
             </div>
-            {/* </form> */}
+
           </div >
         </div >
       </div >
@@ -341,13 +370,14 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.auth);
   return {
-
+    isSignedUp: state.auth.isSignedUp,
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-
+  register
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

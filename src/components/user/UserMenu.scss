@@ -1,0 +1,136 @@
+.user-menu {
+    display: flex;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: all 0.2;
+    font-family: "BarlowCondensed-SemiBold";
+
+}
+
+.user-menu .display-name {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.5rem;
+    font-family: "RobotoSlab-Regular";
+    font-weight: 400;
+    margin-top: 3px;
+    font-size: 19px;
+    color: var(--black);
+    line-height: 1.5rem;
+    margin-bottom: 0.5rem !important;
+}
+
+.user-menu-dropdown {
+    margin-top: 0.8rem;
+    position: absolute;
+    transition: all 0.5;
+    box-sizing: border-box;
+    border-radius: 0.2rem;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border: 1px solid var(--gray);
+    user-select: none;
+    min-width: 12rem;
+    width: fit-content;
+    background: white;
+    border-top: 0.3rem solid var(--blue);
+    box-shadow: 0px 0px 1px 0px var(--gray);
+    padding: 0.3rem;
+}
+
+
+.avatar {
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.avatar:hover {
+    box-shadow: 0px 0px 0px 3px var(--blue);
+    opacity: 80%;
+}
+
+.user-menu .avatar {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 2.2rem;
+    height: 2.2rem;
+    box-shadow: 0px 0px 2px 0px var(--blue);
+}
+
+.user-menu .user-menu-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+    opacity: 80%;
+    border-radius: 10%;
+    padding: 0.3rem;
+    margin-left: 0.5rem;
+    border: 1px solid var(--gray);
+    margin-top: 0.8rem;
+    margin-bottom: auto;
+    box-shadow: 0px 0px 0.1rem 0px var(--gray);
+    cursor: pointer;
+    background: white;
+}
+
+
+.user-menu .user-menu-btn:hover {
+    opacity: 100%;
+    box-shadow: 0px 0px 0.2rem 0px var(--gray);
+}
+
+.user-menu-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+.user-menu .reputation-sub-container {
+    display: flex;
+    min-width: 70px;
+    width: fit-content;
+    cursor: pointer;
+    max-width: 5rem;
+    margin-right: 0.25rem;
+    margin-left: 0.15rem;
+}
+
+.user-menu .reputation-label {
+    margin-top: 0.15rem;
+    font-size: 1.125rem;
+    padding-left: 0.3rem;
+    color: var(--light-black)
+}
+
+.user-menu-text {}
+
+
+.header-user-menu-item {
+    position: relative;
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    user-select: none;
+    height: fit-content;
+    box-sizing: border-box;
+    color: var(--black);
+    padding-left: 0.2rem;
+    text-decoration: none !important;
+    outline: 0px;
+    margin-top: 0.1rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.2rem;
+    cursor: pointer;
+    margin-bottom: 0.2rem;
+    transition: all 0.2s ease;
+}
+
+.header-user-menu-item:hover {
+    background: #eee;
+    color: var(--blue);
+}

@@ -254,7 +254,7 @@
     font-family: "BarlowCondensed-SemiBold";
     font-size: 18px;
     border-bottom: 1px solid var(--gray);
-    line-height: 24px;
+    line-height: 1.5rem;
     vertical-align: middle;
     height: fit-content;
     min-width: 100%;
@@ -335,7 +335,6 @@
 
 }
 
-
 .header-end-lv2 {
     box-sizing: border-box;
     position: relative;
@@ -369,6 +368,7 @@
     height: 0vh;
 }
 
+
 .Collapsed_User_Menu_Item {
     display: none;
     width: fit-content;
@@ -399,15 +399,15 @@
 .Collapsed_User_Menu_Image_Button {
     object-fit: cover;
     margin-right: 5px;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     display: none;
 }
 
 .Collapsed_User_Menu_Button {
     box-sizing: border-box;
     width: fit-content;
-    height: 24px;
+    height: 1.5rem;
     vertical-align: auto;
     border-radius: 5px;
     background: var(--blue);
@@ -431,8 +431,8 @@
 .header-image-button {
     object-fit: cover;
     margin: auto;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     margin-right: 5px;
     cursor: pointer;
 }

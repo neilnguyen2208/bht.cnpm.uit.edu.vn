@@ -13,10 +13,10 @@
 .deactivated-page {
     background: white;
     width: fit-content;
-    min-width: 24px;
+    min-width: 1.5rem;
     padding-left: 4px;
     padding-right: 4px;
-    height: 24px;
+    height: 1.5rem;
     border: 1px var(--gray) solid;
     border-radius: 4px;
     color: var(--blue);
@@ -42,10 +42,10 @@
 .activated-page {
     background: var(--blue);
     width: fit-content;
-    height: 24px;
+    height: 1.5rem;
     padding-left: 4px;
     padding-right: 4px;
-    min-width: 24px;
+    min-width: 1.5rem;
     border: 1px var(--blue) solid;
     border-radius: 4px;
     color: white;
@@ -56,7 +56,7 @@
 
 .disabled-page {
     background: var(--gray);
-    height: 24px;
+    height: 1.5rem;
     border: 1px var(--gray) solid;
     border-radius: 4px;
     color: var(--blue);
@@ -93,7 +93,7 @@
 .prev-page {
     margin-right: 4px;
     width: 40px;
-    height: 24px;
+    height: 1.5rem;
     border-radius: 4px;
     background: white;
     border: 1px var(--gray) solid;
@@ -106,8 +106,8 @@
 
 .first-page,
 .last-page {
-    min-width: 24px;
-    height: 24px;
+    min-width: 1.5rem;
+    height: 1.5rem;
     padding-left: 4px;
     padding-right: 4px;
     border: 1px var(--gray) solid;

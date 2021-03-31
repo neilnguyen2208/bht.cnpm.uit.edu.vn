@@ -7,14 +7,20 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { deleteAPost, editAPost, reportAPost, pinAPost } from 'redux/services/postServices'
+import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
+import { highlightAPost, deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
-import { mySelfMenuItemList, normalMenuItemList, adminMenuItemList } from 'constants.js'
+import {
+  mySelfMenuItemList,
+  normalMenuItemList,
+  highlightAdminMenuItemList,
+  unHighlightAdminMenuItemList
+} from 'constants.js'
 
 //styles
 import 'components/styles/Label.scss'
@@ -31,11 +37,9 @@ class PostSummary extends Component {
   constructor(props) {
     super(props);
 
-
     this.id = this.props.id;
     this.title = this.props.title;
     this.image = this.props.image;
-
   }
 
   onPopupMenuItemClick = (selectedItem) => {
@@ -97,20 +101,39 @@ class PostSummary extends Component {
       });
     }
 
-    if (selectedItem.value === "PIN_POST") {
+    if (selectedItem.value === "HIGHLIGHT_POST") {
       openModal("confirmation", {
         title: "Ghim bài viết",
         text: "Xác nhận ghim bài viết?",
         onConfirm: () => {
-          this.props.pinAPost(this.props.id);
+          this.props.highlightAPost(this.props.id);
           store.dispatch(closeModal());
         }
       });
     }
 
+    if (selectedItem.value === "UNHIGHLIGHT_POST") {
+      openModal("confirmation", {
+        title: "Bỏ ghim bài viết",
+        text: "Xác nhận bỏ ghim bài viết?",
+        onConfirm: () => {
+          this.props.deleteHighlightAPost(this.props.id);
+          store.dispatch(closeModal());
+        }
+      });
+    }
 
+    if (selectedItem.value === "STICK_TO_TOP_POST") {
+      openModal("confirmation", {
+        title: "Ghim bài viết lên đầu",
+        text: "Xác nhận ghim bài viết lên đâu?",
+        onConfirm: () => {
+          this.props.stickAPostToTop(this.props.id);
+          store.dispatch(closeModal());
+        }
+      });
+    }
   }
-
 
   onConfirmReport = (DTO) => {
     store.dispatch(closeModal());
@@ -146,7 +169,6 @@ class PostSummary extends Component {
           __html:
             this.props.content
         }} />
-
 
     return (
       <div className="metadata" >
@@ -198,8 +220,13 @@ class PostSummary extends Component {
           {this.props.type === itemType.mySelf &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
           }
-          {this.props.type === itemType.management &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={adminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+          {console.log(this.props.isHighlighted)}
+          {this.props.type === itemType.management && this.props.isHighlighted &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={unHighlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+          }
+
+          {this.props.type === itemType.management && !this.props.isHighlighted &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={highlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
@@ -259,7 +286,12 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPost, editAPost, reportAPost, pinAPost
+  deleteAPost,
+  editAPost,
+  reportAPost,
+  highlightAPost,
+  deleteHighlightAPost,
+  stickAPostToTop
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostSummary));

@@ -19,9 +19,13 @@ import PostSummaryMetadata from 'components/post/SummaryInfo'
 import PostManagementNavbar from './PostManagementNavbar'
 import store from 'redux/store/index'
 import { put_EditAPostReset, delete_APostReset } from 'redux/actions/postAction'
+import { highlight_APostReset, delete_HighlightAPostReset, stick_APostToTopReset } from 'redux/actions/homeAction';
+import done_icon from 'assets/icons/24x24/done_icon_24x24.png';
+import { openBLModal } from 'redux/services/modalServices';
+
 import 'layouts/Layout.scss'
 
-class PostApproving extends Component {
+class PostManagement extends Component {
 
     componentDidMount() {
 
@@ -91,6 +95,10 @@ class PostApproving extends Component {
         this.setState({});
     }
 
+    compoenentWillUnmount() {
+        store.dispatch(stick_APostToTopReset())
+    }
+
     onSearchTermChange = () => {
 
         this.searchParamObject = { ...this.searchParamObject, page: 1, searchTerm: document.querySelector('.pm.p-searchbar-input').value };
@@ -122,6 +130,19 @@ class PostApproving extends Component {
             this.reloadList();
             store.dispatch(put_EditAPostReset())
         }
+
+        if (this.props.isHaveHighlighted) {
+            this.reloadList();
+            openBLModal({ icon: done_icon, text: "Ghim bài viết thành công!" });
+            store.dispatch(highlight_APostReset())
+        }
+
+        if (this.props.isHaveUnHighlighted) {
+            this.reloadList();
+            openBLModal({ icon: done_icon, text: "Đã huỷ ghim bài viết!" });
+            store.dispatch(delete_HighlightAPostReset())
+        }
+
         //combobox
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
             this.comboboxGroup =
@@ -203,6 +224,8 @@ class PostApproving extends Component {
                         approveState={item.postState}
                         popUpMenuPrefix="pmpu"   //stand for my post popup 
                         authorAvatarURL={item.authorAvatarURL}
+                        isHighlighted={item.isHighlighted}
+
                         //
                         reloadList={() => this.reloadList()}
                     />
@@ -218,7 +241,6 @@ class PostApproving extends Component {
             )
         }
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
-
             this.filter = this.props.postCategories;
         }
         return (
@@ -273,6 +295,9 @@ const mapStateToProps = (state) => {
         //handle 2 actions: delete and edit
         isHaveDeleted: state.post.isHaveDeleted,
         isHaveEdited: state.post.isHaveEdited,
+        isHaveHighlighted: state.home.highlightPosts.isHaveHighlighted,
+        isHaveUnHighlighted: state.home.highlightPosts.isHaveUnHighlighted
+
 
     };
 }
@@ -281,4 +306,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostSearch, getPostCategoriesHaveAll
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostApproving));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostManagement));

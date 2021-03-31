@@ -13,7 +13,9 @@ import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 import NormalReactionbar from 'components/post/NormalReactionbar'
-import { highlightMenuItemList } from 'constants.js'
+import { wallPageAdminMenuItemList } from 'constants.js'
+import { deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
+
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
@@ -61,6 +63,40 @@ class WallpageItem extends React.Component {
                 }
             });
         }
+
+        if (selectedItem.value === "HIGHLIGHT_POST") {
+            openModal("confirmation", {
+                title: "Ghim bài viết",
+                text: "Xác nhận ghim bài viết?",
+                onConfirm: () => {
+                    this.props.highlightAPost(this.props.id);
+                    store.dispatch(closeModal());
+                }
+            });
+        }
+
+        if (selectedItem.value === "UNHIGHLIGHT_POST") {
+            openModal("confirmation", {
+                title: "Bỏ ghim bài viết",
+                text: "Xác nhận bỏ ghim bài viết?",
+                onConfirm: () => {
+                    this.props.deleteHighlightAPost(this.props.id);
+                    store.dispatch(closeModal());
+                }
+            });
+        }
+
+        if (selectedItem.value === "STICK_TO_TOP_POST") {
+            openModal("confirmation", {
+                title: "Ghim bài viết lên đầu",
+                text: "Xác nhận ghim bài viết lên đâu?",
+                onConfirm: () => {
+                    this.props.stickAPostToTop(this.props.id);
+                    store.dispatch(closeModal());
+                }
+            });
+        }
+
     }
 
     onConfirmReport = (DTO) => {
@@ -94,7 +130,8 @@ class WallpageItem extends React.Component {
                                     {this.props.authorName}
                                 </Link>
                             </div>
-                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={highlightMenuItemList} id={`hipm-${this.props.id}`} />
+
+                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={wallPageAdminMenuItemList} id={`hipm-${this.props.id}`} />
 
                         </div>
 
@@ -161,7 +198,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    reportAPost
+    stickAPostToTop,
+    reportAPost,
+    deleteHighlightAPost,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WallpageItem));

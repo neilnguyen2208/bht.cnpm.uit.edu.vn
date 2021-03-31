@@ -42,10 +42,10 @@ const initialState = {
         error: ""
     },
     highlightPosts: {
-        isLoading: false,
+        isLoadDone: false,
         data: [],
         error: "",
-        isHaveDeleted: false,
+        isHaveUnHighlighted: false,
         isHaveHighlighted: false,
         isHaveStickedToTop: false
     },
@@ -81,17 +81,17 @@ function HomeReducer(state = initialState, action) {
         case GET_NEWEST_POSTS_FAILURE:
             return { ...state, newPosts: { isLoading: false, error: action.payload, data: [] } }
         case GET_HIGHLIGHT_POSTS_REQUEST:
-            return { ...state, highlightPosts: { isLoading: true } };
+            return { ...state, highlightPosts: { isLoadDone: false, data: [...state.highlightPosts.data], error: '' } };
         case GET_HIGHLIGHT_POSTS_SUCCESS:
-            return { ...state, highlightPosts: { isLoading: false, data: action.payload, error: '' } }
+            return { ...state, highlightPosts: { isLoading: true, data: action.payload, error: '' } }
         case GET_HIGHLIGHT_POSTS_FAILURE:
-            return { ...state, highlightPosts: { isLoading: false, error: action.payload, data: [] } }
+            return { ...state, highlightPosts: { isLoading: true, error: action.payload, data: [] } }
         case DELETE_HIGHLIGHT_A_POST_RESET:
         case DELETE_HIGHLIGHT_A_POST_FAILURE: {
             return {
                 ...state, highlightPosts: {
                     ...state.highlightPosts,
-                    isHaveDeleted: false
+                    isHaveUnHighlighted: false
                 }
             }
         }
@@ -99,7 +99,7 @@ function HomeReducer(state = initialState, action) {
             return {
                 ...state, highlightPosts: {
                     ...state.highlightPosts,
-                    isHaveDeleted: true
+                    isHaveUnHighlighted: true
                 }
             }
         }

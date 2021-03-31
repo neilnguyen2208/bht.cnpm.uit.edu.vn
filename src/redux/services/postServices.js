@@ -61,7 +61,6 @@ import {    //highlight posts
     post_ReportAPostSuccess,
     post_ReportAPostFailure,
 
-
     post_ResolveAPostReset,
     post_ResolveAPostSuccess,
     post_ResolveAPostFailure,
@@ -75,11 +74,16 @@ import {    //highlight posts
     post_RejectAndFeedbackAPostReset,
     post_RejectAndFeedbackAPostFailure,
 
-
     get_SavedPostsRequest,
     get_SavedPostsSuccess,
     get_SavedPostsFailure
 } from "redux/actions/postAction.js";
+
+import {
+    get_HighlightPostsIdsRequest,
+    get_HighlightPostsIdsSuccess,
+    get_HighlightPostsIdsFailure
+} from "redux/actions/homeAction.js";
 
 import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 
@@ -191,25 +195,35 @@ export function getPostSearch(searchParamObject) {
 
         dispatch(get_PostSearchRequest());
         request.get(`/posts/searchFilter?${generateSearchParam(searchParamObject)}`)
-            .then(response => {
+            .then(response_1 => {
 
-                let result_1 = response.data;
+                let result_1 = response_1.data;
                 let IDarr = '';
-                response.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
                 request.get(`/posts/statistic?postIDs=${IDarr}`)
-                    .then(result => {
+                    .then(response_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
 
                         for (let i = 0; i < result_1.postSummaryDTOs.length; i++) {
                             finalResult.push({
                                 ...result_1.postSummaryDTOs[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
+                                isHighlighted: false
                             }
                             );
                         }
-                        dispatch(get_PostSearchSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+
+                        request.get(`/posts/highlightPosts/ids`)
+                            .then(response_3 => {
+                                for (let i = 0; i < response_3.data.length; i++) {
+                                    for (let j = 0; j < finalResult.length; j++) {
+                                        if (finalResult[j].id === response_3.data[i]) { finalResult[j] = { ...finalResult[j], isHighlighted: true } }
+                                    }
+                                }
+                                dispatch(get_PostSearchSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                            }).catch(error => { dispatch(get_PostSearchFailure()(error)) })
                     }).catch(() => get_PostSearchFailure())
 
 
@@ -344,17 +358,6 @@ export function reportAPost(id, reason) { //
     }
 }
 
-export function pinAPost(id, reason) { //
-    return dispatch => {
-        // dispatch(post_ReportAPostReset())
-        // request.post(`/post/${id}/report`, JSON.stringify(reason))
-        //     .then(response => {
-        //         dispatch(post_ReportAPostSuccess());
-        //     }
-        //     ).catch(() => dispatch(post_ReportAPostFailure()))
-    }
-}
-
 export function rejectAndFeedbackAPost(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
@@ -432,3 +435,13 @@ export function getSavedPosts(searchParamObject) {
     }
 }
 
+
+export function getHighlightPostsIds() {
+    return dispatch => {
+        dispatch(get_HighlightPostsIdsRequest());
+        request.delete(`/posts/highlightPosts/ids`)
+            .then(response => {
+                dispatch(get_HighlightPostsIdsSuccess(response.data));
+            }).catch(error => { dispatch(get_HighlightPostsIdsFailure(error)) })
+    }
+}

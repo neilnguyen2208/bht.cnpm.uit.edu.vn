@@ -3,6 +3,7 @@ import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import pin_icon from 'assets/icons/24x24/pinned_icon_24x24.png'
 import unpin_icon from 'assets/icons/24x24/unpinned_icon_24x24.png'
+import stick_to_top from 'assets/icons/24x24/stick_to_top_icon_24x24.png'
 
 export const itemType = { approval: "APPROVAL", normal: "NORMAL", mySelf: "MYSELF", report: "REPORT", management: "MANAGEMENT" }
 export const componentType = { document: "DOCUMENT", post: "POST" }
@@ -53,7 +54,7 @@ export const mySelfMenuItemList = [
   },
 ]
 
-export const adminMenuItemList = [
+export const baseAdminMenuItemList = [
   { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
   { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
   {
@@ -64,8 +65,12 @@ export const adminMenuItemList = [
       paddingBottom: "3px"
     }
   },
+]
+
+export const highlightAdminMenuItemList = [
+  ...baseAdminMenuItemList,
   {
-    id: 4, text: "Ghim nội dung", value: "PIN_POST", icon: pin_icon, tip: "Hiển thị ở trang chủ.",
+    id: 4, text: "Ghim nội dung", value: "HIGHLIGHT_POST", icon: pin_icon, tip: "Hiển thị ở trang chủ.",
     style: {
       height: "26px",
       paddingTop: "1px",
@@ -73,20 +78,17 @@ export const adminMenuItemList = [
     }
   },
 ]
-
-export const highlightMenuItemList = [
-  { id: 1, text: "Xoá", value: "DELETE_POST", icon: trash_icon, tip: "Không cần duyệt.", hasLine: true },
-  { id: 2, text: "Chỉnh sửa", value: "EDIT_POST", icon: edit_icon, tip: "Cần chờ kiểm duyệt." },
+export const wallPageAdminActions = [
   {
-    id: 3, text: "Report", value: "REPORT_POST", icon: report_icon,
+    id: 4, text: "Bỏ ghim", value: "UNHIGHLIGHT_POST", icon: unpin_icon,
     style: {
       height: "26px",
-      paddingTop: "3px",
-      paddingBottom: "3px"
+      paddingTop: "1px",
+      paddingBottom: "5px"
     }
   },
   {
-    id: 4, text: "Bỏ ghim", value: "UNPIN_POST", icon: unpin_icon,
+    id: 5, text: "Ghim lên đầu", value: "STICK_TO_TOP_POST", icon: stick_to_top,
     style: {
       height: "26px",
       paddingTop: "1px",
@@ -98,6 +100,17 @@ export const highlightMenuItemList = [
 export const normalMenuItemList = [
   { id: 3, text: "Report", icon: report_icon, value: "REPORT_POST" },
 ]
+
+export const wallPageAdminMenuItemList = [
+  ...normalMenuItemList,
+  ...wallPageAdminActions
+]
+
+export const unHighlightAdminMenuItemList = [
+  ...baseAdminMenuItemList,
+  ...wallPageAdminActions
+]
+
 
 
 

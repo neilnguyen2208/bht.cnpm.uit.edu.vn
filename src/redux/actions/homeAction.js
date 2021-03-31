@@ -119,7 +119,7 @@ export function get_NewestActivitiesFailure(error) {
   }
 }
 
-export function highlight_APostRequest() {
+export function highlight_APostReset() {
   return {
     type: HIGHLIGHT_A_POST_RESET
   }
@@ -140,7 +140,7 @@ export function highlight_APostFailure(data) {
 }
 
 
-export function delete_HighlightAPostRequest() {
+export function delete_HighlightAPostReset() {
   return {
     type: DELETE_HIGHLIGHT_A_POST_RESET
   }
@@ -180,7 +180,7 @@ export function get_HighlightPostsIdsFailure() {
   }
 }
 
-export function stick_APostToTopRequest() {
+export function stick_APostToTopReset() {
   return {
     type: STICK_A_POST_TO_TOP_REQUEST
   }

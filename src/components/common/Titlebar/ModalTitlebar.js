@@ -8,7 +8,7 @@ class ModalTitlebar extends Component {
 
     closeModal = () => {
         if (this.props.form)
-            store.dispatch(closeModal())
+            closeModal()
         else
             store.dispatch(closeBigModal())
     }

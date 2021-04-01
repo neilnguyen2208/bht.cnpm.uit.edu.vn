@@ -1,0 +1,115 @@
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  font-family: "BarlowCondensed-Medium";
+  color: var(--black);
+}
+
+table caption {
+  font-size: 1.5rem;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  border: none;
+  border: 1px solid #ddd;
+  padding: .1rem;
+  font-size: 1.1rem;
+}
+
+table th,
+table td {
+  padding: .3rem;
+  padding-left: 1rem;
+
+  text-align: left;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+
+table td {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+
+.table-label {
+  background: var(--blue);
+  margin-right: 0.4rem;
+  border-radius: 0.2rem;
+  padding: 0.1rem 0.7rem;
+  padding-bottom: 0.2rem;
+  font-size: 1rem;
+  color: white;
+}
+
+.gray-table-label {
+  @extend .table-label;
+  background: var(--gray);
+}
+
+th.fit-width {
+  width: fit-content;
+}
+
+table th {
+  font-size: 1.2rem;
+  font-family: "BarlowCondensed-SemiBold";
+  background: var(--blue);
+  border: var(--blue) 1px solid;
+  color: white;
+
+}
+
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3rem;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625rem;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1rem;
+    text-align: right;
+  }
+
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}

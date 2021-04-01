@@ -70,7 +70,7 @@ class WallpageItem extends React.Component {
                 text: "Xác nhận ghim bài viết?",
                 onConfirm: () => {
                     this.props.highlightAPost(this.props.id);
-                    store.dispatch(closeModal());
+                    closeModal();
                 }
             });
         }
@@ -81,7 +81,7 @@ class WallpageItem extends React.Component {
                 text: "Xác nhận bỏ ghim bài viết?",
                 onConfirm: () => {
                     this.props.deleteHighlightAPost(this.props.id);
-                    store.dispatch(closeModal());
+                    closeModal();
                 }
             });
         }
@@ -92,7 +92,7 @@ class WallpageItem extends React.Component {
                 text: "Xác nhận ghim bài viết lên đâu?",
                 onConfirm: () => {
                     this.props.stickAPostToTop(this.props.id);
-                    store.dispatch(closeModal());
+                    closeModal();
                 }
             });
         }
@@ -100,14 +100,14 @@ class WallpageItem extends React.Component {
     }
 
     onConfirmReport = (DTO) => {
-        store.dispatch(closeModal());
-        store.dispatch(closeModal());
+        closeModal();
+        closeModal();
         this.props.reportAPost(DTO.id, { "reason": DTO.reason });
     }
 
     render() {
         if (this.props.isHaveReported) {
-            store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
+            openBLModal({ text: "Report bài viết thành công!", icon: done_icon });
             store.dispatch(post_ReportAPostReset())
         }
         return (

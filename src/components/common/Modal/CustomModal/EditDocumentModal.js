@@ -172,7 +172,7 @@ class EditDocumentModal extends React.Component {
                     cancelText: "Huỷ",
                     onConfirm: () => {
                         this.props.editADocument(this.props.id, { ...this.state.EDIT_DOCUMENT_DTO, summary: tmpSummary + "..." });
-                        store.dispatch(closeModal()); //close confimation popup
+                        closeModal(); //close confimation popup
                         this.closeModal(); //close edit document popup
                     }
                 })

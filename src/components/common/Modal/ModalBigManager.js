@@ -2,6 +2,8 @@ import React from "react"
 
 import EditPostModal from './CustomModal/EditPostModal'
 import EditDocumentModal from './CustomModal/EditDocumentModal'
+import AddRoleModal from './CustomModal/AddRoleModal'
+
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -26,6 +28,8 @@ class ModalBigManager extends React.Component {
                     return <EditPostModal {...modalProps} key={modalType + index} />
                 case "edit-document":
                     return <EditDocumentModal {...modalProps} key={modalType + index} />
+                case "add-role":
+                    return <AddRoleModal {...modalProps} key={modalType + index} />
                 default:
                     return <></>;
             }

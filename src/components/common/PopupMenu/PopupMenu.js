@@ -99,7 +99,6 @@ export default class PopupMenu extends React.Component {
 
         return (
             <div className='d-flex pos-relative' >
-
                 < ClickAwayListener onClickAway={() => { this.closeMenu() }}>
                     <div>
                         <div className="popup-menu" id={"pm-" + this.props.id} //pm: popup menu

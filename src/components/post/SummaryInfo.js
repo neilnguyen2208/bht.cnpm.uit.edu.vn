@@ -53,13 +53,13 @@ class PostSummary extends Component {
           cancelText: "Huỷ",
           onConfirm: () => {
             this.props.deleteAPost(this.props.id);
-            store.dispatch(closeModal());
+            closeModal();
           }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      store.dispatch(openBigModal("edit-post", { id: this.props.id }));
+      openBigModal("edit-post", { id: this.props.id });
     }
 
     if (selectedItem.value === "REPORT_POST") {
@@ -107,7 +107,7 @@ class PostSummary extends Component {
         text: "Xác nhận ghim bài viết?",
         onConfirm: () => {
           this.props.highlightAPost(this.props.id);
-          store.dispatch(closeModal());
+          closeModal();
         }
       });
     }
@@ -118,7 +118,7 @@ class PostSummary extends Component {
         text: "Xác nhận bỏ ghim bài viết?",
         onConfirm: () => {
           this.props.deleteHighlightAPost(this.props.id);
-          store.dispatch(closeModal());
+          closeModal();
         }
       });
     }
@@ -129,15 +129,15 @@ class PostSummary extends Component {
         text: "Xác nhận ghim bài viết lên đâu?",
         onConfirm: () => {
           this.props.stickAPostToTop(this.props.id);
-          store.dispatch(closeModal());
+          closeModal();
         }
       });
     }
   }
 
   onConfirmReport = (DTO) => {
-    store.dispatch(closeModal());
-    store.dispatch(closeModal());
+    closeModal();
+    closeModal();
     this.props.reportAPost(DTO.id, { "reason": DTO.reason });
   }
 
@@ -145,7 +145,7 @@ class PostSummary extends Component {
 
     //only set for report.
     if (this.props.isHaveReported) {
-      store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
+      openBLModal({ text: "Report bài viết thành công!", icon: done_icon });
       store.dispatch(post_ReportAPostReset())
     }
 

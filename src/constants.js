@@ -32,8 +32,8 @@ export const adminApproveStatusOptions = [
 export const lS = localStorage;
 
 export const publishedTimeOptions = [
-  { id: 1, name: "Mới nhất", sort: "publishDtm,desc" },
-  { id: 2, name: "Cũ nhất", sort: "publishDtm,asc" }
+  { id: 1, name: "Mới nhất", sort: "DESC" },
+  { id: 2, name: "Cũ nhất", sort: "ASC" }
 ]
 
 export const requestedTimeOptions = [
@@ -110,7 +110,6 @@ export const unHighlightAdminMenuItemList = [
   ...baseAdminMenuItemList,
   ...wallPageAdminActions
 ]
-
 
 
 

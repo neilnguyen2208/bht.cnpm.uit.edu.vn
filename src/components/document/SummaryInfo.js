@@ -50,13 +50,13 @@ class DocumentSummary extends Component {
           cancelText: "Huỷ",
           onConfirm: () => {
             this.props.deleteADocument(this.props.id);
-            store.dispatch(closeModal());
+            closeModal();
           }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      store.dispatch(openBigModal("edit-document", { id: this.props.id }));
+      openBigModal("edit-document", { id: this.props.id });
     }
 
     if (selectedItem.value === "REPORT_POST") {
@@ -100,8 +100,8 @@ class DocumentSummary extends Component {
   }
 
   onConfirmReport = (DTO) => {
-    store.dispatch(closeModal());
-    store.dispatch(closeModal());
+    closeModal();
+    closeModal();
     this.props.reportADocument(DTO.id, { "reason": DTO.reason });
   }
 
@@ -109,7 +109,7 @@ class DocumentSummary extends Component {
 
     //only set for report.
     if (this.props.isHaveReported) {
-      store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
+      openBLModal({ text: "Report bài viết thành công!", icon: done_icon });
     }
 
     let summary = <></>;

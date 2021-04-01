@@ -18,11 +18,11 @@ class AlertModal extends React.Component {
     }
 
     closeModal = () => {
-        store.dispatch(closeModal())
+        closeModal()
     }
 
     onOKClick = () => {
-        store.dispatch(closeModal())
+        closeModal()
         if (this.props.onOKClick)
             this.props.onOKClick();
     }

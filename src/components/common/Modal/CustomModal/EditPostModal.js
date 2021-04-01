@@ -157,7 +157,7 @@ class EditPostModal extends React.Component {
                     cancelText: "Huỷ",
                     onConfirm: () => {
                         this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
-                        store.dispatch(closeModal()); //close confimation popup
+                        closeModal(); //close confimation popup
                         this.closeModal(); //close edit post popup
                     }
                 })

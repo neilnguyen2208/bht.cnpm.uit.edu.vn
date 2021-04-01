@@ -81,7 +81,7 @@ class ForgotPasswordForm extends React.Component {
           cancelText: "Huỷ",
           onConfirm: () => {
             this.props.editADocument(this.props.id, {});
-            store.dispatch(closeModal()); //close confimation popup
+            closeModal(); //close confimation popup
             this.closeModal(); //close edit document popup
           }
         })

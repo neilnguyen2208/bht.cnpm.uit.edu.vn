@@ -21,6 +21,11 @@ import {
     GET_MY_POSTS_SUCCESS,
     GET_MY_POSTS_FAILURE,
 
+    //management post
+    GET_MANAGEMENT_POSTS_REQUEST,
+    GET_MANAGEMENT_POSTS_SUCCESS,
+    GET_MANAGEMENT_POSTS_FAILURE,
+
     //search post 
     GET_POST_SEARCH_REQUEST,
     GET_POST_SEARCH_SUCCESS,
@@ -157,6 +162,13 @@ const initialState = {
         totalPages: 1,
         totalElements: 0
     },
+
+    managementPosts: {
+        isLoading: false,
+        data: [],
+        totalPages: 1,
+        totalElements: 0
+    }
 };
 
 function PostReducer(state = initialState, action) {
@@ -229,6 +241,26 @@ function PostReducer(state = initialState, action) {
             }
         case GET_POST_SEARCH_FAILURE:
             return { ...state, postsList: { isLoading: false, data: [] } }
+
+
+        //get post search result
+        case GET_MANAGEMENT_POSTS_REQUEST:
+            return {
+                ...state, managementPosts: { isLoading: true }
+            };
+        case GET_MANAGEMENT_POSTS_SUCCESS:
+            {
+                return {
+                    ...state, managementPosts: {
+                        isLoading: false,
+                        data: action.payload.postSummaryWithStateDTOs,
+                        totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
+                        totalElements: action.payload.totalElements ? action.payload.totalElements : 0
+                    }
+                }
+            }
+        case GET_MANAGEMENT_POSTS_FAILURE:
+            return { ...state, managementPosts: { isLoading: false, data: [] } }
 
         //like post
         case LIKE_A_POST_REQUEST:

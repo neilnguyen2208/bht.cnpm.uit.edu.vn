@@ -76,7 +76,10 @@ import {    //highlight posts
 
     get_SavedPostsRequest,
     get_SavedPostsSuccess,
-    get_SavedPostsFailure
+    get_SavedPostsFailure,
+    get_ManagementPostsRequest,
+    get_ManagementPostsSuccess,
+    get_ManagementPostsFailure
 } from "redux/actions/postAction.js";
 
 import {
@@ -94,12 +97,12 @@ import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 export function createAPost(data) {
     return dispatch => {
         dispatch(post_CreateAPostReset());
-        dispatch(openModal("loader", { text: "Đang upload bài viết ..." }));
+        openModal("loader", { text: "Đang upload bài viết ..." });
         request.post('/posts', JSON.stringify(data))
             .then(response => {
                 //handle success    
                 dispatch(closeModal());
-                dispatch(openBLModal({ text: "Tạo bài viết thành công!", icon: done_icon }));
+                openBLModal({ text: "Tạo bài viết thành công!", icon: done_icon });
                 dispatch(post_CreateAPostSuccess());
             })
             .catch(error => {
@@ -232,6 +235,48 @@ export function getPostSearch(searchParamObject) {
     }
 }
 
+export function getManagementPosts(searchParamObject) {
+    return dispatch => {
+
+        dispatch(get_ManagementPostsRequest());
+        request.get(`/posts/getManagementPost?${generateSearchParam(searchParamObject)}`)
+            .then(response_1 => {
+
+                let result_1 = response_1.data;
+                let IDarr = '';
+                response_1.data.postSummaryWithStateDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                    .then(response_2 => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.postSummaryWithStateDTOs.length; i++) {
+                            finalResult.push({
+                                ...result_1.postSummaryWithStateDTOs[i],
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryWithStateDTOs[i].id)),
+                                isHighlighted: false
+                            }
+                            );
+                        }
+
+                        request.get(`/posts/highlightPosts/ids`)
+                            .then(response_3 => {
+                                for (let i = 0; i < response_3.data.length; i++) {
+                                    for (let j = 0; j < finalResult.length; j++) {
+                                        if (finalResult[j].id === response_3.data[i]) { finalResult[j] = { ...finalResult[j], isHighlighted: true } }
+                                    }
+                                }
+                                dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                            }).catch(error => { dispatch(get_ManagementPostsFailure()(error)) })
+                    }).catch((error) => get_ManagementPostsFailure(error))
+
+
+            })
+            .catch(error => dispatch(get_ManagementPostsFailure(error)))
+    }
+}
+
 export function approveAPost(id) {
     return dispatch => {
         dispatch(post_ApproveAPostReset());
@@ -327,7 +372,7 @@ export function deleteAPost(id) { //maybe use modal later
         dispatch(delete_APostReset(id))
         request.delete(`/posts/${id}`).then(response => {
             dispatch(delete_APostSuccess())
-            dispatch(openBLModal({ text: "Xoá bài viết thành công!", icon: done_icon }))
+            openBLModal({ text: "Xoá bài viết thành công!", icon: done_icon });
 
         }).catch(error => { dispatch(delete_APostFailure(id)) })
     }
@@ -336,11 +381,11 @@ export function deleteAPost(id) { //maybe use modal later
 export function editAPost(id, newPostContent, reloadList) { //
     return dispatch => {
         dispatch(put_EditAPostReset())
-        dispatch(openModal("loader", { text: "Đang xử lý" }))
+        openModal("loader", { text: "Đang xử lý" });
         request.put(`/posts/${id}`, JSON.stringify(newPostContent))
             .then(response => {
                 dispatch(closeModal());
-                dispatch(openBLModal({ text: "Chỉnh sửa bài viết thành công!", icon: done_icon }));
+                openBLModal({ text: "Chỉnh sửa bài viết thành công!", icon: done_icon });
                 dispatch(put_EditAPostSuccess(id, newPostContent));
             }
             ).catch(() => dispatch(put_EditAPostFailure()))
@@ -361,14 +406,14 @@ export function reportAPost(id, reason) { //
 export function rejectAndFeedbackAPost(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
-        dispatch(openModal("loader", { text: "Đang xử lý" }))
+        openModal("loader", { text: "Đang xử lý" });
         dispatch(post_RejectAndFeedbackAPostReset());
         request.post(`/posts/${id}/rejectionWithFeedback`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
                 dispatch(post_RejectAndFeedbackAPostSuccess());
                 dispatch(closeModal());
-                dispatch(openBLModal({ text: "Từ chối bài viết thành công!", icon: done_icon }));
+                openBLModal({ text: "Từ chối bài viết thành công!", icon: done_icon });
 
             }
             ).catch(() => {

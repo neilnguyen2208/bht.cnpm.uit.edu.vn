@@ -209,8 +209,8 @@ validation.isEmail = function (selector, type, message) {
         selector: '#' + selector,
         type: type,
         test: function (value) {
-            var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            return regex.test(value) ? undefined : message || 'Trường này phải là email';
+            var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regex.test(String(value).toLowerCase()) ? undefined : message || 'Trường này phải là email';
         }
     };
 }

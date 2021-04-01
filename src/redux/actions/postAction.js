@@ -21,6 +21,10 @@ import {
     GET_MY_POSTS_SUCCESS,
     GET_MY_POSTS_FAILURE,
 
+    //management post
+    GET_MANAGEMENT_POSTS_REQUEST,
+    GET_MANAGEMENT_POSTS_SUCCESS,
+    GET_MANAGEMENT_POSTS_FAILURE,
 
     //post search result & post list
     GET_POST_SEARCH_REQUEST,
@@ -179,6 +183,28 @@ export function get_MyPostsFailure() {
         type: GET_MY_POSTS_FAILURE
     }
 }
+
+
+//management posts
+export function get_ManagementPostsRequest() {
+    return {
+        type: GET_MANAGEMENT_POSTS_REQUEST,
+    }
+}
+
+export function get_ManagementPostsSuccess(data) {
+    return {
+        type: GET_MANAGEMENT_POSTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ManagementPostsFailure() {
+    return {
+        type: GET_MANAGEMENT_POSTS_FAILURE
+    }
+}
+
 
 //reported post
 export function get_ReportedPostsRequest() {

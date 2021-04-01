@@ -46,12 +46,12 @@ class PostDetail extends Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPost(this.props.id); store.dispatch(closeModal()); }
+          onConfirm: () => { this.props.deleteAPost(this.props.id); closeModal(); }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      store.dispatch(openBigModal("edit-post", { id: this.props.id }));
+      openBigModal("edit-post", { id: this.props.id });
     }
 
     if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
@@ -95,8 +95,8 @@ class PostDetail extends Component {
   }
 
   onConfirmReport = (DTO) => {
-    store.dispatch(closeModal());
-    store.dispatch(closeModal());
+    closeModal();
+    closeModal();
     this.props.reportAPost(DTO.id, { "reason": DTO.reason });
   }
 
@@ -112,7 +112,7 @@ class PostDetail extends Component {
     }
 
     if (this.props.isHaveReported) {
-      store.dispatch(openBLModal({ text: "Report bài viết thành công!", icon: done_icon }));
+      openBLModal({ text: "Report bài viết thành công!", icon: done_icon });
       store.dispatch(post_ReportAPostReset())
     }
 

@@ -63,11 +63,11 @@ class DocumentReportManagement extends Component {
     render() {
 
         if (this.props.isHaveResolved) {
-            store.dispatch(closeModal());
-            store.dispatch(closeModal());
+            closeModal();
+            closeModal();
             this.reloadList();
             store.dispatch(post_ResolveADocumentReset());
-            store.dispatch(openBLModal({ icon: done_icon, text: "Xử lý bài viết thành công!" }))
+            openBLModal({ icon: done_icon, text: "Xử lý bài viết thành công!" });
         }
         if (!this.props.isListLoading && this.props.documentsList) {
             this.documentsList = this.props.documentsList.map((item) => (

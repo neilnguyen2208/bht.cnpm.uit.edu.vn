@@ -12,7 +12,6 @@
 .left-sidebar-layout {
     background: var(--white);
     margin: auto;
-    margin-top: 20px;
     position: relative;
     height: fit-content;
     background-repeat: no-repeat;
@@ -40,6 +39,7 @@
     height: fit-content;
     border-top: 0px;
     padding: 10px;
+    padding-top: 0px;
     padding-right: 0px;
     min-height: 700px;
     padding-bottom: 40px;

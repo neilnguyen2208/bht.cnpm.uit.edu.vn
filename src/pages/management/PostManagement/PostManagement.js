@@ -4,7 +4,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
-import { getPostSearch } from "redux/services/postServices";
+import { getManagementPosts } from "redux/services/postServices";
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -36,14 +36,15 @@ class PostManagement extends Component {
 
         this.searchParamObject = {
             "page": 1,
-            "category": null,
-            "postState": '',
+            "postCategoryID": null,
+            // "postState": '',
             "searchTerm": '',
+            "sortByPublishDtm": "DESC"
         }
 
         setQueryParam(this.queryParamObject)
         this.props.getPostCategoriesHaveAll();
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
     }
 
     //server paginator
@@ -53,7 +54,7 @@ class PostManagement extends Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
         }
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -64,10 +65,10 @@ class PostManagement extends Component {
         });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category": selectedOption.id,
+            "postCategoryID ": selectedOption.id,
             page: 1
         }
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -80,7 +81,7 @@ class PostManagement extends Component {
             postState: selectedOption.postState,
             "page": 1
         }
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -88,10 +89,10 @@ class PostManagement extends Component {
         setQueryParam({ ...this.queryParamObject, "page": 1 });
         this.searchParamObject = {
             ...this.searchParamObject,
-            sort: selectedOption.sort,
+            sortByPublishDtm: selectedOption.sort,
             "page": 1
         }
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
         this.setState({});
     }
 
@@ -102,20 +103,20 @@ class PostManagement extends Component {
     onSearchTermChange = () => {
 
         this.searchParamObject = { ...this.searchParamObject, page: 1, searchTerm: document.querySelector('.pm.p-searchbar-input').value };
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
         this.setState({});
     }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
+        if (this.props.managementPosts.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
                 page: this.searchParamObject.page,
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getManagementPosts(this.searchParamObject);
     }
 
     render() {
@@ -206,8 +207,8 @@ class PostManagement extends Component {
             </div>
         </div>
 
-        if (!this.props.isListLoading && this.props.postsList) {
-            this.postsList = this.props.postsList.map((item) => {
+        if (!this.props.isListLoading && this.props.managementPosts) {
+            this.managementPosts = this.props.managementPosts.map((item) => {
                 return <div className="item-container">
                     <PostSummaryMetadata
                         type={itemType.management}
@@ -253,13 +254,13 @@ class PostManagement extends Component {
 
                         {this.comboboxGroup}
 
-                        {!this.props.isListLoading && this.props.postsList ?
+                        {!this.props.isListLoading && this.props.managementPosts ?
                             <>
                                 <div className="sum-item-label">
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
-                                <div>{this.postsList}</div>
+                                <div>{this.managementPosts}</div>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,
@@ -281,12 +282,13 @@ class PostManagement extends Component {
     }
 }
 const mapStateToProps = (state) => {
+    console.log(state.post.managementPosts)
     return {
         //pending posts list
-        postsList: state.post.postsList.data,
-        isListLoading: state.post.postsList.isLoading,
-        totalPages: state.post.postsList.totalPages,
-        totalElements: state.post.postsList.totalElements,
+        managementPosts: state.post.managementPosts.data,
+        isListLoading: state.post.managementPosts.isLoading,
+        totalPages: state.post.managementPosts.totalPages,
+        totalElements: state.post.managementPosts.totalElements,
 
         //category
         postCategories: state.post_category.categories.searchData,
@@ -303,7 +305,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostSearch, getPostCategoriesHaveAll
+    getManagementPosts, getPostCategoriesHaveAll
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostManagement));

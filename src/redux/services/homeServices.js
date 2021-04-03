@@ -44,22 +44,19 @@ export function getTrendingDocuments() {
             response => {
                 let result_1 = response.data;
                 let IDarr = '';
-                // response.data.map(item => IDarr += item.id + ","); //create id array
-                IDarr = "1,151";
+                response.data.map(item => IDarr += item.id + ","); //create id array
+
                 request.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
-                        let arr = result_1.map((item, i) => Object.assign({}, item, result.data[i]));
-
                         let finalResult = [];
 
                         for (let i = 0; i < result_1.length; i++) {
                             finalResult.push({
                                 ...result_1[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1[i].id)),
                             }
                             );
                         }
-
                         dispatch(get_TrendingDocumentsSuccess(finalResult))
                     }).catch(error => dispatch(get_TrendingDocumentsFailure(error)))
             }

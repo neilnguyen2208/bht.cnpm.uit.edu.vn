@@ -220,7 +220,6 @@ class PostSummary extends Component {
           {this.props.type === itemType.mySelf &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
           }
-          {console.log(this.props.isHighlighted)}
           {this.props.type === itemType.management && this.props.isHighlighted &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={unHighlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
           }

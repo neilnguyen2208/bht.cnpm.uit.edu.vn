@@ -105,6 +105,8 @@ class Home extends Component {
                     publishDtm={item.publishDtm}
                     description={item.description}
                     title={item.title}
+                    likeCount = {item.likeCount}
+                    dislikeCount = {item.dislikeCount}
                     downloadCount={item.downloads}
                     viewCount={item.views}
                     subjectName={item.docSubject}

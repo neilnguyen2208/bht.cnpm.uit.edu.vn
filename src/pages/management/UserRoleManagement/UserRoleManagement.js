@@ -1,23 +1,18 @@
 /* eslint-disable react/jsx-pascal-case */
-
 import React, { Component } from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import './UserRoleManagement.scss'
 import Table from 'components/common/Table/Table'
-
-//import for redux
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { management_getAllUsers, management_getAllRoles } from 'redux/services/userServices'
-
 import AdminSidebar from 'layouts/AdminSidebar'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import plus_icon from 'assets/icons/svg/plus_icon.svg'
-import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import {openBigModal, openModal} from 'redux/services/modalServices'
+import { openBigModal } from 'redux/services/modalServices'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 
 export const roleActionList = [
@@ -25,6 +20,7 @@ export const roleActionList = [
     { id: 2, text: "Chỉnh sửa", icon: edit_icon, value: "EDIT_ROLE" },
 ]
 
+export const setAsDefaultMenuItem = { id: 3, text: "Đặt làm mặc định.", icon: edit_icon, value: "SET_AS_DEFAULT" };
 
 
 class UserRoleManagement extends Component {
@@ -44,10 +40,10 @@ class UserRoleManagement extends Component {
             <div className="left-sidebar-layout">
                 <AdminSidebar />
                 <div className="content-layout" >
-                    <Titlebar title="QUẢN LÝ ROLE" />
+                    <Titlebar title="QUẢN LÝ PHÂN QUYỀN" />
                     <div className="content-container">
                         <div className="j-c-end">
-                            <button className="blue-button " onClick={openBigModal("add-role", {})} >
+                            <button className="blue-button " onClick={() => openBigModal("add-role", {})} >
                                 <div className="d-flex">
                                     <img src={plus_icon} alt="" className="btn-icon" />
                                 Thêm role
@@ -60,17 +56,23 @@ class UserRoleManagement extends Component {
                                 <tr>
                                     <th scope="col" style={{ borderRight: "1px white solid" }}>Tên Role</th>
                                     <th scope="col">Ngày tạo</th>
-                                    <th scope="col" style={{ textAlign: "right" }}></th>
-
+                                    <th scope="col" className="dummy-th"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.map(item => {
                                     return <tr key={item.id}>
-
                                         <td data-label="Tên Role">
-                                            {item.roleName}
+                                            <div className="j-c-space-between">
+                                                <div className="mg-left-5px">
+                                                    {item.roleName}
+                                                </div>
+                                                
+                                                <PopupMenu id={"r-pu" + item.id} items={ //role popup
+                                                    [...roleActionList, setAsDefaultMenuItem]
+                                                } />
 
+                                            </div>
                                             <div className="d-flex mg-top-5px">
                                                 {item.labels.map(label => {
                                                     if (label === "Default")
@@ -80,20 +82,15 @@ class UserRoleManagement extends Component {
                                                     return <div className="table-label">
                                                         {label}
                                                     </div>
-
                                                 })}
                                             </div>
                                         </td>
                                         <td data-label="Ngày tạo">
                                             {item.creationTime}
                                         </td>
-                                        <td >
-                                            <div className="">
-                                                <PopupMenu id={"r-pu" + item.id} items={ //role popup
-                                                    roleActionList
-                                                } />
-                                            </div>
+                                        <td data-label="">
                                         </td>
+
                                     </tr>
                                 })}
 

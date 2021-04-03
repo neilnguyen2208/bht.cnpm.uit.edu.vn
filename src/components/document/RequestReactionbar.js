@@ -6,12 +6,11 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { approveADocument, rejectADocument, rejectAndFeedbackADocument } from 'redux/services/documentServices'
-import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
-import store from 'redux/store/index'
+import { openModal } from 'redux/services/modalServices'
 import { validation } from 'utils/validationUtils'
 
 class RequestedSummary extends Component {
-    
+
     handleApprove = () => {
         openModal("confirmation",
             {
@@ -89,7 +88,7 @@ class RequestedSummary extends Component {
     }
 
     render() {
-  
+
 
         return (
             <div >

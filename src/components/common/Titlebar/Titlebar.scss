@@ -1,5 +1,5 @@
 /* Menu bar */
-.title-bar {
+.c-title-bar {
     display: flex;
     border-bottom: 5px var(--blue) solid;
     width: 100%;
@@ -17,12 +17,12 @@
     color: var(--blue);
 }
 
-.title-bar+.scroller-container {
+.c-title-bar+.scroller-container {
     border-bottom: 50px solid white; //fake size for scroller
 
 }
 
-.title-bar .modal-close-icon {
+.c-title-bar .modal-close-icon {
     position: absolute;
     right: 12px;
     width: 16px;
@@ -31,6 +31,6 @@
     cursor: pointer;
 }
 
-.title-bar .modal-close-icon:hover{
+.c-title-bar .modal-close-icon:hover{
     opacity: 80%;
 }

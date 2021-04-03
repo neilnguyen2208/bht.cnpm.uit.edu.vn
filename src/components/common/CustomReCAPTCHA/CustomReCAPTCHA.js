@@ -1,10 +1,8 @@
 
-import Loader from 'components/common/Loader/Loader'
 import React, { Component } from 'react';
 import './CustomReCAPTCHA.scss'
 import ReCAPTCHA from 'react-google-recaptcha';
 import { RECAPTCHA_CLIENT_SIDE_KEY } from 'constants.js';
-import CourseSummaryItem from 'components/home/HomeDocumentItem';
 
 class CustomReCAPTCHA extends Component {
 

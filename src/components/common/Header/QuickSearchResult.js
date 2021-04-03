@@ -7,7 +7,6 @@ import "components/styles/Button.scss";
 
 //components
 import Tag from "components/post/Tag";
-import store from 'redux/store/index'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';

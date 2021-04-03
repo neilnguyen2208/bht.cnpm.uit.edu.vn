@@ -14,7 +14,7 @@ class ModalTitlebar extends Component {
     }
     render() {
         return (
-            <div className="title-bar">
+            <div className="c-title-bar">
                 <div className="main-title">{this.props.title}</div>
                 <div className="modal-close-icon">
                     <img src={close_icon} alt="x" onClick={() => this.closeModal()} />

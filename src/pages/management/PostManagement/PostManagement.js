@@ -37,7 +37,7 @@ class PostManagement extends Component {
         this.searchParamObject = {
             "page": 1,
             "postCategoryID": null,
-            // "postState": '',
+            "postState": null,
             "searchTerm": '',
             "sortByPublishDtm": "DESC"
         }

@@ -56,7 +56,7 @@ class CourseSummaryItem extends Component {
         <div className="image-container">
           <img className="image" alt={"...loading"} src={this.props.image} />
         </div>
-        <div className="title-bar">
+        <div className="c-title-bar">
           <Link className="title" to={"/courses/:id"}>
             {this.props.name}
           </Link>

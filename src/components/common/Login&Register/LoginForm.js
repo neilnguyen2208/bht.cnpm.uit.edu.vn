@@ -99,7 +99,7 @@ class Login extends React.Component {
             <div style={{ borderBottom: "1px white solid", paddingBottom: "0.1rem", marginTop: "0.625rem", marginBottom: "10px" }}> Đăng nhập để trải nghiệm: </div>
             <div style={{ lineHeight: "1.2rem" }}>
               - Tương tác với các bài viết và tài liệu. <br />
-          - Chia sẻ các tài liệu và bài viết của riêng mình. <br />
+          - Chia sẻ các tài liệu và bài viết. <br />
           - Chia sẻ và tận dụng nguồn bài tập. <br />
           - Tải tài liệu. <br />
           ...

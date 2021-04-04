@@ -203,7 +203,7 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
 export function uploadADocument(data, files) {
     return dispatch => {
         dispatch(post_UploadDocumentRequest());
-        openModal("loader", { text: "Đang upload tài liệu ..." });
+        openModal("loader", { text: "Đang upload tài liệu " });
 
         let fileData = new FormData();
         // files.forEach(file => {

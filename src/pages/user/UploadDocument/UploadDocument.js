@@ -389,7 +389,7 @@ class UploadDocument extends Component {
                         <div className="form-group">
                             <label className="form-label-required">Tiêu đề:</label>
                             <input className="text-input" id="cr-document-title"
-                                placeholder="Nhập tiêu đề tài liệu ..." onChange={e => this.handleTitleChange(e)}
+                                placeholder="Nhập tiêu đề tài liệu " onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
@@ -449,7 +449,7 @@ class UploadDocument extends Component {
                             <input onChange={(e) => this.quickSearchTags(e)} id="cr-document-tag-input"
                                 onKeyPress={(this.state.UPLOAD_DOCUMENT_DTO.tags.length < 5) && this.keyHandler}
                                 className="text-input"
-                                placeholder="Nhập tag ..." />
+                                placeholder="Nhập tag " />
 
                             <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                 {/* khi load xong thi ntn */}

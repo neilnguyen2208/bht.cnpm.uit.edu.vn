@@ -143,7 +143,7 @@ class DocumentApproving extends Component {
                         {/* page search bar */}
                         <div className="filter-label t-a-right mg-right-5px">Từ khoá tìm kiếm:</div>
                         <div className="d-flex">
-                            <input type="text" className="p-searchbar-input mg-left-5px dm" placeholder="Nhập từ khoá ..." />
+                            <input type="text" className="p-searchbar-input mg-left-5px dm" placeholder="Nhập từ khoá " />
                             <button className="p-searchbar-btn" onClick={() => { this.onSearchTermChange() }}>
                                 <div className="d-flex">
                                     Tìm kiếm

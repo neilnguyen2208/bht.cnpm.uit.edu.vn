@@ -51,7 +51,7 @@ class RequestedSummary extends Component {
                         isRequired: true,
                         label: "Lý do từ chối:",
                         type: 'text-area',
-                        placeHolder: "Nhập lý do từ chối ...",
+                        placeHolder: "Nhập lý do từ chối ",
                         validation: true,
                         key: "reason"
                     },

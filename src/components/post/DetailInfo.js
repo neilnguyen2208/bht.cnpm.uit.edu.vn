@@ -66,7 +66,7 @@ class PostDetail extends Component {
               isRequired: true,
               label: "Lý do tố cáo:",
               type: 'text-area',
-              placeHolder: "Nhập lý do tố cáo ...",
+              placeHolder: "Nhập lý do tố cáo ",
               validation: true,
               key: "reason"
             },

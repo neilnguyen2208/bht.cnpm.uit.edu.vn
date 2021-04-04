@@ -10,11 +10,11 @@ import TreeView from 'components/common/TreeView/TreeView'
 import { styleFormSubmit, validation } from 'utils/validationUtils'
 
 const validationCondition = {
-    form: '#add-role-form',
+    form: '#edit-role-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('add-role-name-input', 'text-input', 'Tên role không được để trống!'),
-        validation.noSpecialChar('add-role-name-input', 'text-input', 'Tên role không được chứa ký tự đặc biệt!'),
+        validation.isRequired('edit-role-name-input', 'text-input', 'Tên role không được để trống!'),
+        validation.noSpecialChar('edit-role-name-input', 'text-input', 'Tên role không được chứa ký tự đặc biệt!'),
     ],
 }
 
@@ -37,7 +37,7 @@ export default class AddRoleModal extends React.Component {
         if (styleFormSubmit(validationCondition)) {
             openModal("confirmation",
                 {
-                    title: "Tạo role mới",
+                    title: "Cập nhật role.",
                     text: "Hành động có thể cần refresh để hiệu lực các thay đổi.",
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
@@ -65,7 +65,7 @@ export default class AddRoleModal extends React.Component {
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
-                        <ModalTitlebar title="THÊM PHÂN QUYỀN" />
+                        <ModalTitlebar title="CHỈNH SỬA PHÂN QUYỀN" />
                         <div className="scroller-container mg-bottom-10px">
                             <div className="form-container">
                                 <div>
@@ -76,10 +76,10 @@ export default class AddRoleModal extends React.Component {
                                     </div>
                                     <div className="decoration-line mg-top-10px" />
                                 </div>
-                                <div className="add-role" id="add-role-form">
+                                <div className="edit-role" id="edit-role-form">
                                     <div className="form-group mg-top-10px">
                                         <label className="form-label-required">Tên role:</label>
-                                        <input className="text-input" id="add-role-name-input"
+                                        <input className="text-input" id="edit-role-name-input"
                                             placeholder="Nhập tên role "
                                             onChange={e => this.onRoleNameChanged(e)}
                                             type="text"
@@ -121,20 +121,21 @@ export default class AddRoleModal extends React.Component {
 
                                     <TreeView
                                         onNodeChecked={this.onNodeChecked}
+                                        onNodeSelected={this.onNodeSelected}
                                         defaultExpandedKeys={['0-0', '0-1', '0-2']}
                                         data={
                                             [
                                                 {
                                                     title: 'Adminstration',
-                                                    key: '1-2',
+                                                    key: '0-0',
                                                     children: [
                                                         {
                                                             title: 'Admin.Edit',
-                                                            key: '1',
+                                                            key: '0-0-0',
                                                         },
                                                         {
                                                             title: 'Admin.Delete',
-                                                            key: '2',
+                                                            key: '0-0-1',
                                                         },
                                                     ],
                                                 },
@@ -211,18 +212,18 @@ export default class AddRoleModal extends React.Component {
     onAddRoleBtnClick = () => {
         this.setState({ isAddRole: !this.state.isAddRole });
         document.querySelector(".set-permission").classList.remove("d-block");
-        document.querySelector(".add-role").classList.remove("d-none");
-        document.querySelector(".set-permission").classList.add("d-none");
-        document.querySelector(".add-role").classList.add("d-block");
+        document.querySelector(".edit-role").classList.remove("d-none");
+        document.querySelector(".set-permission").classList.edit("d-none");
+        document.querySelector(".edit-role").classList.edit("d-block");
 
     }
 
     onSetPermissionBtnClick = () => {
         this.setState({ isAddRole: !this.state.isAddRole });
         document.querySelector(".set-permission").classList.remove("d-none");
-        document.querySelector(".add-role").classList.remove("d-block");
-        document.querySelector(".set-permission").classList.add("d-block");
-        document.querySelector(".add-role").classList.add("d-none");
+        document.querySelector(".edit-role").classList.remove("d-block");
+        document.querySelector(".set-permission").classList.edit("d-block");
+        document.querySelector(".edit-role").classList.edit("d-none");
     }
 }
 

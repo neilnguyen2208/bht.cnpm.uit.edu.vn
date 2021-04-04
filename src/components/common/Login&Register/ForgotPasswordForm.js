@@ -117,7 +117,7 @@ class ForgotPasswordForm extends React.Component {
             <div className="form-container o-f-hidden" id="forgot-pass-step-1">
               <div className="form-group">
                 <label className="form-label-required">Email:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập email ..." />
+                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập email " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
@@ -137,7 +137,7 @@ class ForgotPasswordForm extends React.Component {
             <div className="form-container o-f-hidden" id="forgot-pass-step-2">
               <div className="form-group">
                 <label className="form-label-required">Nhập mã xác nhận:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập mã xác nhận ..." />
+                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập mã xác nhận " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
@@ -162,14 +162,14 @@ class ForgotPasswordForm extends React.Component {
             <div className="form-container o-f-hidden" id="forgot-pass-step-3">
               <div className="form-group">
                 <label className="form-label-required">Nhập mật khẩu mới:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập mật khẩu mới ..." />
+                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập mật khẩu mới " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
               </div>
               <div className="form-group">
                 <label className="form-label-required">Xác nhận mật khẩu:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập lại mật khẩu ..." />
+                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập lại mật khẩu " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>

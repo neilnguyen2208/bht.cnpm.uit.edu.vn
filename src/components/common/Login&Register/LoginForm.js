@@ -114,14 +114,14 @@ class Login extends React.Component {
             <div className="form-container o-f-hidden">
               <div className="form-group">
                 <label className="form-label-required"  >Tên đăng nhập/Email:</label>
-                <input type="text" className="text-input" id="login-form-username" placeholder="Nhập username hoặc email ..." />
+                <input type="text" className="text-input" id="login-form-username" placeholder="Nhập username hoặc email " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
               </div>
               <div className="form-group">
                 <label className="form-label-required" >Mật khẩu:</label>
-                <input className="text-input" id="login-form-password" type="password" placeholder="Nhập password ..." />
+                <input className="text-input" id="login-form-password" type="password" placeholder="Nhập password " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>

@@ -136,7 +136,7 @@ class CreatePost extends Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            this.props.createAPost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary + "..." });
+            this.props.createAPost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary + "" });
         }
     }
 
@@ -426,7 +426,7 @@ class CreatePost extends Component {
                         <div className="form-group">
                             <label className="form-label-required">Tiêu đề:</label>
                             <input className="text-input" id="cr-post-title"
-                                placeholder="Nhập tiêu đề bài viết ..." onChange={e => this.handleTitleChange(e)}
+                                placeholder="Nhập tiêu đề bài viết " onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
@@ -477,7 +477,7 @@ class CreatePost extends Component {
                             <input onChange={(e) => this.quickSearchTags(e)} id="cr-post-tag-input"
                                 onKeyPress={(this.state.CREATE_POST_DTO.tags.length < 5) && this.keyHandler}
                                 className="text-input"
-                                placeholder="Nhập tag ..." />
+                                placeholder="Nhập tag " />
 
                             <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                 {/* khi load xong thi ntn */}

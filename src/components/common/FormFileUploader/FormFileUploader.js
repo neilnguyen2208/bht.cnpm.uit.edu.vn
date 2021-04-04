@@ -42,7 +42,7 @@ class FormFileUploader extends Component {
             <div className="file-input-wrapper">
                 <label className="file-input-label" id={'file-input-label-' + this.props.id} for={'file-input-' + this.props.id}>
                     <div className="c-pointer">
-                        <img alt="...loading..." className='file-input-image' src={upload_icon} />
+                        <img alt="...loading" className='file-input-image' src={upload_icon} />
                         <div className="form-tip-label t-a-center">Định dạng {this.props.fileType}
                             <br></br>Dung lượng không quá {Math.round(this.props.maxSize / 1048576 * 100) / 100 + "MB"}
                         </div>

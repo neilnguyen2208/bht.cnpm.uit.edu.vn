@@ -230,21 +230,21 @@ class Register extends React.Component {
               <div className="form-container " id="reg-step-1">
                 <div className="form-group">
                   <label className="form-label-required">Tên đăng nhập:</label>
-                  <input type="text" className="text-input" id="register-form-username" placeholder="Nhập username ..." />
+                  <input type="text" className="text-input" id="register-form-username" placeholder="Nhập username " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="form-label-required" >Mật khẩu:</label>
-                  <input className="text-input" id="register-form-password" type="password" placeholder="Nhập mật khẩu ..." />
+                  <input className="text-input" id="register-form-password" type="password" placeholder="Nhập mật khẩu " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="form-label-required" >Xác nhận mật khẩu:</label>
-                  <input className="text-input" id="register-form-confirm-password" type="password" placeholder="Nhập lại mật khẩu ..." />
+                  <input className="text-input" id="register-form-confirm-password" type="password" placeholder="Nhập lại mật khẩu " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
@@ -266,7 +266,7 @@ class Register extends React.Component {
               <div className="form-container" id="reg-step-2">
                 <div className="form-group">
                   <label className="form-label-required">Email:</label>
-                  <input type="text" className="text-input" id="register-form-email" placeholder="Nhập email ..." />
+                  <input type="text" className="text-input" id="register-form-email" placeholder="Nhập email " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
@@ -274,7 +274,7 @@ class Register extends React.Component {
 
                 <div className="form-group">
                   <label className="form-label-required">Xác nhận email:</label>
-                  <input type="text" className="text-input" id="register-form-confirm-email" placeholder="Nhập lại email ..." />
+                  <input type="text" className="text-input" id="register-form-confirm-email" placeholder="Nhập lại email " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
@@ -285,7 +285,7 @@ class Register extends React.Component {
                     <label className="form-label-required">Tên hiển thị:</label>
                     <HoverHint message="Tên này sẽ đại diện cho bạn và hiển thị với người dùng khác."></HoverHint>
                   </div>
-                  <input type="text" className="text-input" id="register-form-displayname" placeholder="Nhập tên hiển thị ..." />
+                  <input type="text" className="text-input" id="register-form-displayname" placeholder="Nhập tên hiển thị " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>
@@ -339,7 +339,7 @@ class Register extends React.Component {
               <div className="form-container o-f-hidden" id="reg-step-3">
                 <div className="form-group">
                   <label className="form-label-required">Xác nhận email:</label>
-                  <input type="text" className="text-input" maxLength={6} id="register-form-confirm-code" placeholder="Nhập mã xác nhận ..." />
+                  <input type="text" className="text-input" maxLength={6} id="register-form-confirm-code" placeholder="Nhập mã xác nhận " />
                   <div className="form-error-label-container">
                     <span className="form-error-label" ></span>
                   </div>

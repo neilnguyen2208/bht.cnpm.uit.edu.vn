@@ -40,7 +40,7 @@ class ReportReactionbar extends Component {
             isRequired: true,
             label: "Ghi chú:",
             type: 'text-area',
-            placeHolder: "Nhập ghi chú xử lý bài viết ...",
+            placeHolder: "Nhập ghi chú xử lý bài viết ",
             validation: true,
             key: "resolvedNote"
           },

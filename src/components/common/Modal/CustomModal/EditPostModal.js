@@ -156,7 +156,7 @@ class EditPostModal extends React.Component {
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "..." });
+                        this.props.editAPost(this.props.id, { ...this.state.EDIT_POST_DTO, summary: tmpSummary + "" });
                         closeModal(); //close confimation popup
                         this.closeModal(); //close edit post popup
                     }
@@ -503,7 +503,7 @@ class EditPostModal extends React.Component {
                                             <div className="form-group">
                                                 <label className="form-label-required">Tiêu đề:</label>
                                                 <input className="text-input" id="ed-post-title"
-                                                    placeholder="Nhập tiêu đề bài viết ..."
+                                                    placeholder="Nhập tiêu đề bài viết "
                                                     onChange={e => this.handleTitleChange(e)}
                                                     type="text" defaultValue={
                                                         !this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.title : ''} ></input>
@@ -550,7 +550,7 @@ class EditPostModal extends React.Component {
                                                 <input onChange={(e) => this.quickSearchTags(e)} id="ed-post-tag-input"
                                                     onKeyPress={(this.state.EDIT_POST_DTO.tags.length < 5) && this.keyHandler}
                                                     className="text-input"
-                                                    placeholder="Nhập tag ..." />
+                                                    placeholder="Nhập tag " />
 
                                                 <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                                     {/* khi load xong thi ntn */}

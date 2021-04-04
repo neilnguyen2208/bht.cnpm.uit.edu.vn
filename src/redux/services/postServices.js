@@ -97,7 +97,7 @@ import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 export function createAPost(data) {
     return dispatch => {
         dispatch(post_CreateAPostReset());
-        openModal("loader", { text: "Đang upload bài viết ..." });
+        openModal("loader", { text: "Đang upload bài viết " });
         request.post('/posts', JSON.stringify(data))
             .then(response => {
                 //handle success    

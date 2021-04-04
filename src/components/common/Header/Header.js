@@ -99,11 +99,11 @@ class Header extends React.Component {
             if (this.props.quickSearchResultData)
                 this.quickSearchResultView = <QuickSearchResult quickSearchResultData={this.props.quickSearchResultData} />
             else {
-                this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />
+                this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm " />
             }
         }
         else
-            this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm ..." />;
+            this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm " />;
 
         return (
 
@@ -131,7 +131,7 @@ class Header extends React.Component {
                                     <div className="sb-text-field-container">
                                         <input className="sb-text-field"
                                             id="sb-text-field-big"
-                                            type="text" placeholder="Search..."
+                                            type="text" placeholder="Search"
                                             onChange={(e) => this.onSearchTextFieldChange(e)}
                                             onKeyPress={(e) => { this.keyHandler(e) }}
                                         />

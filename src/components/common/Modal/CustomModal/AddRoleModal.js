@@ -2,7 +2,6 @@ import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
 import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
-import store from 'redux/store/index.js'
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import ModalTitlebar from "components/common/Titlebar/ModalTitlebar";

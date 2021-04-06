@@ -29,7 +29,7 @@ export const adminApproveStatusOptions = [
   { id: 3, name: "Chưa duyệt", postState: "PENDING_APPROVAL" }
 ];
 
-export const lS = localStorage;
+export const sS = sessionStorage;
 
 export const publishedTimeOptions = [
   { id: 1, name: "Mới nhất", sort: "DESC" },
@@ -85,7 +85,8 @@ export const wallPageAdminActions = [
       height: "26px",
       paddingTop: "1px",
       paddingBottom: "5px"
-    }
+    },
+    permissions: ["Page.Highlight.Unhighlight"]
   },
   {
     id: 5, text: "Ghim lên đầu", value: "STICK_TO_TOP_POST", icon: stick_to_top,
@@ -93,7 +94,8 @@ export const wallPageAdminActions = [
       height: "26px",
       paddingTop: "1px",
       paddingBottom: "5px"
-    }
+    },
+    permissions: ["Page.Highlight.StickToTop"]
   },
 ]
 

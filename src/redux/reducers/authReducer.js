@@ -11,14 +11,15 @@ import {
 
 } from 'redux/constants.js';
 
-import { lS } from 'constants.js'
+import { sS } from 'constants.js'
 
 const initialState = {
-  token: lS.getItem('token'),
+  token: sS.getItem('token'),
   isAuthenticated: null, //true khi da dang nhap
   isLogingIn: false, //true khi da dang nhap
   currentUser: null,
   isSignedUp: false, //true khi da dang ky xong
+  allPermission: []
 };
 
 export default function AuthReducer(state = initialState, action) {
@@ -34,7 +35,7 @@ export default function AuthReducer(state = initialState, action) {
         isSignedUp: false
       }
     case LOGIN_SUCCESS:
-      lS.setItem('token', action.payload.token);
+      sS.setItem('token', action.payload.token);
       return {
         ...state,
         isSignedUp: false,
@@ -42,6 +43,10 @@ export default function AuthReducer(state = initialState, action) {
         currentUser: {}, //chac la lay ra tu token
         isAuthenticated: true,
         isLogingIn: false,
+        allPermissions: [
+          "Page.Highlight.Unhighlight",
+          "Page.Highlight.StickToTop"
+        ]
       };
     case REGISTER_SUCCESS:
       return {
@@ -53,7 +58,7 @@ export default function AuthReducer(state = initialState, action) {
     case LOGIN_FAILURE:
     case LOGOUT_SUCCESS:
     case REGISTER_FAILURE:
-      lS.removeItem('token');
+      sS.removeItem('token');
       return {
         ...state,
         token: null,

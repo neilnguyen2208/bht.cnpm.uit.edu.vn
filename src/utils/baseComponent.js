@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { isGrantedPermissions } from 'utils/permissionUtils';
+import { isGrantedPermissions } from 'utils/authUtils';
 
 class BaseComponent extends React.Component {
 

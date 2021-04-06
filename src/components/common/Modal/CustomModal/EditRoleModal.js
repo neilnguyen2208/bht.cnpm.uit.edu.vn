@@ -2,7 +2,6 @@ import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
 import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
-import store from 'redux/store/index.js'
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import ModalTitlebar from "components/common/Titlebar/ModalTitlebar";
@@ -213,8 +212,8 @@ export default class AddRoleModal extends React.Component {
         this.setState({ isAddRole: !this.state.isAddRole });
         document.querySelector(".set-permission").classList.remove("d-block");
         document.querySelector(".edit-role").classList.remove("d-none");
-        document.querySelector(".set-permission").classList.edit("d-none");
-        document.querySelector(".edit-role").classList.edit("d-block");
+        document.querySelector(".set-permission").classList.add("d-none");
+        document.querySelector(".edit-role").classList.add("d-block");
 
     }
 
@@ -222,8 +221,8 @@ export default class AddRoleModal extends React.Component {
         this.setState({ isAddRole: !this.state.isAddRole });
         document.querySelector(".set-permission").classList.remove("d-none");
         document.querySelector(".edit-role").classList.remove("d-block");
-        document.querySelector(".set-permission").classList.edit("d-block");
-        document.querySelector(".edit-role").classList.edit("d-none");
+        document.querySelector(".set-permission").classList.add("d-block");
+        document.querySelector(".edit-role").classList.add("d-none");
     }
 }
 

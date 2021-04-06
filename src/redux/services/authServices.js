@@ -10,11 +10,14 @@ import {
   logoutSuccess
 } from '../actions/authAction';
 
+import store from 'redux/store/index'
+
 export function login(loginDTO) {
   return dispatch => {
     dispatch(loginRequest());
-    request.post('/user/login', JSON.stringify(loginDTO)).then(response =>
-      dispatch(loginSuccess(response.data))
+    request.post('/user/login', JSON.stringify(loginDTO)).then(response => {
+      dispatch(loginSuccess(response.data));
+    }
     )
       .catch(error => dispatch(loginFailure(error)));
   }
@@ -42,4 +45,14 @@ export function logout() {
 }
 
 
+//#region auth services
 
+export function authServices() {
+}
+
+authServices.isGranted = function (permissionName) {
+  let state = store.getState().auth.allPermissions;
+  return state && state.includes(permissionName);
+}
+
+//#region

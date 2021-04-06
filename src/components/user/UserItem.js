@@ -14,7 +14,7 @@ import 'components/styles/Label.scss'
 
 
 import { ClickAwayListener } from '@material-ui/core';
-import { getRoleNameByName, getRoleNamebyID } from 'utils/permissionUtils'
+import { getRoleNameByName, getRoleNamebyID } from 'utils/authUtils'
 
 class UserItem extends Component {
 

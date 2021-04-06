@@ -1,3 +1,5 @@
+import { authServices } from 'redux/services/authServices'
+
 const PermissionList = {
     ContentManagement: {
         Collaborator: { Collaborator: "COLLABORATOR" },
@@ -222,15 +224,15 @@ export const isGrantedPermissions = function (permissionList) {
 
 export function logAllPermissionByRoleName(roleName) {
     if (roleName === "ADMIN") {
-     
+
         return;
     }
     if (roleName === "USER") {
-      
+
         return;
     }
     if (roleName === "COLLABORATOR") {
-       
+
         return;
     }
 
@@ -303,3 +305,35 @@ export const {
     ContentManagement,
     Statistic
 } = PermissionList;
+
+
+export function isGranted(permissionName) { //for permission of view (show an element or not)
+    return authServices.isGranted(permissionName);
+}
+
+export function isGrantedAny(permissionList) {
+    if (!permissionList || permissionList.length <= 0) {
+        return true;
+    }
+
+    for (var i = 0; i < permissionList.length; i++) {
+        if (isGranted(permissionList[i])) {
+            return true;
+        }
+    }
+    return false;
+};
+
+export function isGrantedAll(permissionList) {
+    if (!permissionList || permissionList.length <= 0) {
+        return true;
+    }
+
+    for (var i = 0; i < permissionList.length; i++) {
+        if (!isGranted(permissionList[i])) {
+            return false;
+        }
+    }
+    return true;
+};
+

@@ -12,7 +12,7 @@ import AdminSidebar from 'layouts/AdminSidebar'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import plus_icon from 'assets/icons/svg/plus_icon.svg'
-import { openBigModal } from 'redux/services/modalServices'
+import { closeModal, openBigModal, openModal } from 'redux/services/modalServices'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 
 export const roleActionList = [
@@ -26,17 +26,51 @@ export const setAsDefaultMenuItem = { id: 3, text: "Đặt làm mặc định.",
 class UserRoleManagement extends Component {
 
     componentDidMount() {
+    }
+
+    onMenuItemClick = (item) => {
+        if (item.value === "EDIT_ROLE") {
+            openBigModal('edit-role', {});
+            return;
+        }
+        if (item.value === "DELETE_ROLE") {
+            openModal("confirmation",
+                {
+                    title: "Xoá phân quyền",
+                    text: "Hành động này cần  refresh để có hiệu lực.",
+                    confirmText: "Xác nhận",
+                    cancelText: "Huỷ",
+                    onConfirm: () => {
+                        this.props.deleteARole(this.props.id, {});
+                        closeModal(); //close confimation popup
+                        this.closeModal(); //close edit document popup
+                    }
+                })
+            return;
+        }
+        if (item.value === "SET_AS_DEFAULT") {
+            openModal("confirmation",
+                {
+                    title: "Đặt phân quyền làm mặc định",
+                    text: "Hành động này cần refresh để có hiệu lực.",
+                    confirmText: "Xác nhận",
+                    cancelText: "Huỷ",
+                    onConfirm: () => {
+                        this.props.setARoleAsDefault(this.props.id, {});
+                        closeModal(); //close confimation popup
+                        this.closeModal(); //close edit document popup
+                    }
+                })
+            return;
+        }
 
     }
 
-
-    
     render() {
         let data = [
             { id: 1, roleName: "Admin", labels: ["Static"], creationTime: "4/1/2021, 8:07:33 AM" },
             { id: 2, roleName: "User", labels: ["Static", "Default"], creationTime: "4/1/2021, 8:07:33 AM" },
             { id: 3, roleName: "Moderator", labels: ["Static"], creationTime: "4/1/2021, 8:07:33 AM" }
-
         ]
         return (
             <div className="left-sidebar-layout">
@@ -69,10 +103,10 @@ class UserRoleManagement extends Component {
                                                 <div className="mg-left-5px">
                                                     {item.roleName}
                                                 </div>
-                                                
+
                                                 <PopupMenu id={"r-pu" + item.id} items={ //role popup
                                                     [...roleActionList, setAsDefaultMenuItem]
-                                                } />
+                                                } onMenuItemClick={this.onMenuItemClick} />
 
                                             </div>
                                             <div className="d-flex mg-top-5px">

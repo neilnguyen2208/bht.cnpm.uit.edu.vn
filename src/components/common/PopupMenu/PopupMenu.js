@@ -1,7 +1,7 @@
 import React from "react";
 import { ClickAwayListener } from '@material-ui/core';
 import "./PopupMenu.scss"
-
+import { ShowForPermission } from 'components/common/BaseComponents/ShowForPermission'
 export default class PopupMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -65,6 +65,38 @@ export default class PopupMenu extends React.Component {
 
     render() {
         let items = this.props.items.map(menuItem => {
+            if (menuItem.permissions)
+                return <ShowForPermission permission={menuItem.permissions}>
+                    <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
+                        id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
+                        key={menuItem.id}
+                        onClick={() => this.handleMenuItemClick(menuItem)}>
+                        <div className='d-flex'>
+                            {menuItem.tip ?
+                                <div className='d-flex'>
+                                    {menuItem.icon ? <img className='popup-menu-icon' style={{
+                                        height: "27px",
+                                        paddingTop: "7px"
+                                    }} alt="" src={menuItem.icon} /> : <></>}
+                                    < div >
+                                        <div className='popup-menu-text'>{menuItem.text}</div>
+                                        <div className='popup-menu-tip'>{menuItem.tip}</div>
+                                    </div>
+                                </div>
+                                :
+                                <div className='d-flex'>
+                                    {menuItem.icon ? <img className='popup-menu-icon' style={menuItem.style ? menuItem.style : {
+                                        height: "23px",
+                                        paddingTop: "0px",
+                                        paddingBottom: "3px"
+                                    }} alt="" src={menuItem.icon} /> : <></>}
+                                    <div className='popup-menu-text'>{menuItem.text}</div>
+                                </div>
+                            }
+                        </div>
+                    </div >
+                </ShowForPermission>
+
             return <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                 id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
                 key={menuItem.id}
@@ -92,7 +124,6 @@ export default class PopupMenu extends React.Component {
                         </div>
                     }
                 </div>
-
             </div >
         }
         )

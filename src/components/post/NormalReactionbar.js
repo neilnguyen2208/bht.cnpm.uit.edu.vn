@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
+import { RequireLogin } from 'components/common/BaseComponents/RequireLogin'
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -116,10 +117,14 @@ class NormalReactionbar extends Component {
     return (
       <div className="reaction-bar">
         <div className="d-flex mg-top-5px">
-          <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-            <div className="d-flex"> {likeBtn}</div>
-            <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
-          </div>
+
+          <RequireLogin>
+            <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+              <div className="d-flex"> {likeBtn}</div>
+              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+            </div>
+          </RequireLogin>
+
           <div className="vertical-line" />
           <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
             {saveBtn}

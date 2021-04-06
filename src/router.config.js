@@ -1,18 +1,9 @@
 //#region import
 import {
-  Account,
-  Document,
-  Activity,
-  Notification,
-  Role,
-  Category,
-  Post,
-  User,
+
   ContentManagement,
-  Statistic
-} from "utils/permissionUtils";
+} from "utils/authUtils";
 import Home from 'pages/common/Home/Home'
-import AdminLayout from 'layouts/AdminSidebar'
 //#endregion
 
 export const logoRouter = { path: "/", exact: true, title: "Trang chủ", label: "", permission: [], component: Home };

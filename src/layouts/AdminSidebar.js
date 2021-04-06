@@ -27,7 +27,7 @@ import { withRouter } from "react-router-dom";
 import {
     getRoleNameByName,
     isGrantedPermissions
-} from 'utils/permissionUtils'
+} from 'utils/authUtils'
 
 import {
     Document,
@@ -37,7 +37,7 @@ import {
     Category,
     User,
     Role
-} from 'utils/permissionUtils'
+} from 'utils/authUtils'
 
 class AdminSidebar extends Component {
     constructor(props) {

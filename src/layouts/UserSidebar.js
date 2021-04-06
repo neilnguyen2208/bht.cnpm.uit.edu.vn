@@ -27,7 +27,7 @@ import { getCurrentUser } from 'redux/services/userServices'
 import {
   getRoleNameByName,
   isGrantedPermissions
-} from 'utils/permissionUtils'
+} from 'utils/authUtils'
 
 class UserSidebar extends Component {
   constructor(props) {

@@ -185,7 +185,7 @@ export function stickAPostToTop(id) {
         dispatch(stick_APostToTopReset());
         request.post(`/posts/highlightPosts/stickToTop?id=${id}`)
             .then(response => {
-                openBLModal({ icon: done_icon, text: "Bài viết đã được ghim lên đầu!" })
+                openBLModal({ type: "success", text: "Bài viết đã được ghim lên đầu!" })
                 dispatch(stick_APostToTopSuccess(response.data));
             }).catch(error => { dispatch(stick_APostToTopFailure(error)) })
     }

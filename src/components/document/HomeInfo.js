@@ -12,7 +12,7 @@ class HomeInfo extends Component {
 
     return (
       <div className="home-item" >
-        <img className="cover-image" style={{ border: "1px var(--grayish) solid" }} alt='cover' src={this.props.imageURL} />
+        <img className="document-cover-image" alt='cover' src={this.props.imageURL} />
         <div className="metadata" >
 
           <div className="j-c-space-between mg-top-10px">

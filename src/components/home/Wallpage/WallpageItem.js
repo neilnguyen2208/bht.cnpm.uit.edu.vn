@@ -107,7 +107,7 @@ class WallpageItem extends React.Component {
 
     render() {
         if (this.props.isHaveReported) {
-            openBLModal({ text: "Report bài viết thành công!", icon: done_icon });
+            openBLModal({ text: "Report bài viết thành công!", type: "success" });
             store.dispatch(post_ReportAPostReset())
         }
         return (

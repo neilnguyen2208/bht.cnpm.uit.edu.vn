@@ -128,9 +128,10 @@ const App = () => {
                 <div>
                 </div>
                 <div>
-                    <ModalBLManager />
                     <ModalBigManager />
                     <ModalManager />
+                    <ModalBLManager />
+
                 </div>
                 <div className="App"></div>
             </Router >

@@ -13,7 +13,6 @@
 }
 
 .modal-fixed-layout {
-    // z-index: 1000000000;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -28,7 +27,6 @@
 
 .modal-wrapper {
     border-radius: 3px;
-    // z-index: 1000000001;
     background: white;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 0px 3px 0 rgba(0, 0, 0, 0.17);
     height: fit-content;
@@ -39,6 +37,19 @@
     margin: auto;
     width: fit-content;
     max-height: 80vh;
+
+    animation-name: modal-wrapper-animation;
+    animation-duration: 0.5s;
+}
+
+@keyframes modal-wrapper-animation {
+    0% {
+        top: -10vh;
+    }
+
+    100% {
+        top: 0vh;
+    }
 }
 
 .modal-wrapper.form {
@@ -166,15 +177,6 @@
     padding-left: 4px;
 }
 
-
-.modal-large-container {
-    height: fit-content;
-    overflow: auto;
-    max-width: 800px;
-    width: 100%;
-    margin: auto;
-
-}
 
 .preview-modal.document-post-detail {
     width: 100%;

@@ -75,7 +75,7 @@ class Wallpage extends React.Component {
             this.reloadList();
             if (this.state.activeIndex === this.props.highlightPosts.length)
                 this.prevSlide();
-            openBLModal({ icon: done_icon, text: "Đã huỷ ghim bài viết!" });
+            openBLModal({ type: "success", text: "Đã huỷ ghim bài viết!" });
             store.dispatch(delete_HighlightAPostReset())
         }
 

@@ -154,21 +154,21 @@ class PostApproving extends Component {
         if (this.props.isHaveApproved) {
             closeModal();
             store.dispatch(post_ApproveAPostReset());
-            openBLModal({ icon: done_icon, text: "Duyệt bài viết thành công!" });
+            openBLModal({ type: "success", text: "Duyệt bài viết thành công!" });
             this.reloadList();
         }
 
         if (this.props.isHaveRejectedAndFeedbacked) {
             closeModal();
             store.dispatch(post_RejectAndFeedbackAPostReset());
-            openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" });
+            openBLModal({ type: "success", text: "Từ chối bài viết thành công!" });
             this.reloadList();
         }
 
         if (this.props.isHaveRejected) {
             closeModal();
             store.dispatch(post_RejectAPostReset());
-            openBLModal({ icon: done_icon, text: "Từ chối bài viết thành công!" });
+            openBLModal({ type: "success", text: "Từ chối bài viết thành công!" });
             this.reloadList();
         }
         return (

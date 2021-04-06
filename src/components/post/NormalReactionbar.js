@@ -27,7 +27,7 @@ class NormalReactionbar extends Component {
     super(props);
 
     this.likeCount = -1; //dummy for change
-    this.state = { isLiked: 0, isSaved: 0 }
+    this.state = { isLiked: 0, isSaved: 0 };
   }
 
   toggleLikeImage = () => {
@@ -58,7 +58,6 @@ class NormalReactionbar extends Component {
         this.likeCount = this.props.likeCount;
       }
     }
-
     this.setState({ isLiked: tmpLike });
   }
 
@@ -118,17 +117,23 @@ class NormalReactionbar extends Component {
       <div className="reaction-bar">
         <div className="d-flex mg-top-5px">
 
-          <RequireLogin>
-            <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+          <RequireLogin permissions={["Page.Post.Like"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+            <div className="like-btn-container"
+            // onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage}
+            >
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
             </div>
           </RequireLogin>
 
           <div className="vertical-line" />
-          <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
-            {saveBtn}
-          </div>
+
+          <RequireLogin permissions={["Page.Post.Save"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
+            <div className="save-btn-container"  >
+              {saveBtn}
+            </div>
+          </RequireLogin>
+
           <div className="vertical-line" />
           <div className="comment-count-container">
             <div className="comment-btn-text">

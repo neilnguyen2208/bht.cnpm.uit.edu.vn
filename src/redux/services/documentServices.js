@@ -219,7 +219,7 @@ export function uploadADocument(data, files) {
                 request.post('/documents', JSON.stringify(data)).then(response => {
                     dispatch(post_UploadDocumentSuccess(response));
                     dispatch(closeModal());
-                    openBLModal({ icon: done_icon, text: "Tài liệu được tạo thành công!" });
+                    openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
                 })
                     .catch(error => {
                         dispatch(post_UploadDocumentFailure(error)); //
@@ -240,7 +240,7 @@ export function reactionADocument(docID, reactionType) {
         dispatch(post_ReactionADocumentRequest());
         request.put("/documents/reactions", JSON.stringify({ docID: docID, docReactionType: reactionType }))
             .then(response => {
-                openBLModal({ icon: done_icon, text: "Cảm ơn bạn đã đưa cảm nhận về tài liệu!" });
+                openBLModal({ type: "success", text: "Cảm ơn bạn đã đưa cảm nhận về tài liệu!" });
                 dispatch(post_ReactionADocumentSuccess(response))
             })
             .catch(error => {
@@ -298,7 +298,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
                 dispatch(closeModal());
                 //             dispatch(post_RejectAndFeedbackADocumentSuccess());
                 dispatch(closeModal());
-                openBLModal({ text: "Từ chối tài liệu thành công!", icon: done_icon });
+                openBLModal({ text: "Từ chối tài liệu thành công!", type: "success" });
 
             }
             ).catch(() => {
@@ -326,7 +326,7 @@ export function deleteADocument(id) { //maybe use modal later
         dispatch(delete_ADocumentReset(id))
         request.delete(`/posts/${id}`).then(response => {
             dispatch(delete_ADocumentSuccess())
-            openBLModal({ text: "Xoá tài liệu thành công!", icon: done_icon });
+            openBLModal({ text: "Xoá tài liệu thành công!", type: "success" });
 
         }).catch(error => { dispatch(delete_ADocumentFailure(id)) })
     }
@@ -339,7 +339,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
         request.put(`/posts/${id}`, JSON.stringify(newDocumentContent))
             .then(response => {
                 dispatch(closeModal());
-                openBLModal({ text: "Chỉnh sửa tài liệu thành công!", icon: done_icon });
+                openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
                 dispatch(put_EditADocumentSuccess(id, newDocumentContent));
             }
             ).catch(() => dispatch(put_EditADocumentFailure()))

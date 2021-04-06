@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import graySaveIcon from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 import blueSaveIcon from 'assets/icons/24x24/bfbookmark_icon_24x24.png'
 
-import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 
 //styles
 import 'components/styles/Button.scss'

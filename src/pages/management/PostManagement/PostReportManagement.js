@@ -67,7 +67,7 @@ class PostReportManagement extends Component {
             closeModal();
             this.reloadList();
             store.dispatch(post_ResolveAPostReset());
-            openBLModal({ icon: done_icon, text: "Xử lý bài viết thành công!" });
+            openBLModal({ type: "success", text: "Xử lý bài viết thành công!" });
         }
         if (!this.props.isListLoading && this.props.postsList) {
             this.postsList = this.props.postsList.map((item) => (

@@ -1,7 +1,4 @@
 .login-sidebar {
-  // width:calc();
-  width: 100%;
-
   background: var(--blue);
   color: white;
   font-family: Arial;
@@ -13,13 +10,30 @@
 
 .login-form {
   padding: 10px;
-  min-width: 304px;
-  width: 304px;
+  min-width: fit-content;
 }
 
 .register-form {
   min-width: 304px;
   max-width: 400px;
+}
+
+
+
+.close-login-modal {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  right: 0.5rem;
+  top: 0.5rem;
+  opacity: 60%;
+  cursor: pointer;
+}
+
+.close-login-modal:hover,
+.close-login-modal:active {
+  opacity: 80%;
+
 }
 
 .login-form-container {
@@ -39,6 +53,7 @@
   font-weight: 600;
   margin-top: 0.4rem;
   padding-bottom: 0.2rem;
+  line-height: 1.1rem;
   border-bottom: 1px solid white;
 }
 

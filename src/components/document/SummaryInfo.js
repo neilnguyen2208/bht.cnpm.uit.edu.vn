@@ -109,7 +109,7 @@ class DocumentSummary extends Component {
 
     //only set for report.
     if (this.props.isHaveReported) {
-      openBLModal({ text: "Report bài viết thành công!", icon: done_icon });
+      openBLModal({ text: "Report bài viết thành công!", type: "success" });
     }
 
     let summary = <></>;

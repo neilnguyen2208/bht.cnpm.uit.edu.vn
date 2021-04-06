@@ -45,7 +45,9 @@ export default function AuthReducer(state = initialState, action) {
         isLogingIn: false,
         allPermissions: [
           "Page.Highlight.Unhighlight",
-          "Page.Highlight.StickToTop"
+          "Page.Highlight.StickToTop",
+          "Page.Post.Like",
+          "Page.Post.Save",
         ]
       };
     case REGISTER_SUCCESS:
@@ -65,7 +67,8 @@ export default function AuthReducer(state = initialState, action) {
         currentUser: null,
         isAuthenticated: false,
         isLogingIn: false,
-        isSigningUp: false
+        isSigningUp: false,
+        allPermissions: []
       };
     default:
       return state;

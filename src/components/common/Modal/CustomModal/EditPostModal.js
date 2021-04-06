@@ -451,7 +451,6 @@ class EditPostModal extends React.Component {
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
                         <ModalTitlebar title="CHỈNH SỬA BÀI VIẾT" />
                         <div className="scroller-container mg-bottom-10px">
-                            {/* <div className="modal-large-container"> */}
                             <div className="form-container">
                                 <div>
                                     <div className="j-c-end " >

@@ -1,23 +1,27 @@
-import { connect } from "react-redux";
-import PropTypes from 'prop-types';
 import { isGrantedAll } from 'utils/authUtils';
-import { openBigModal } from 'redux/services/modalServices'
+import { openBigModal, openBLModal } from 'redux/services/modalServices'
+import React from "react";
 
-const RequireLoginComponent = (props) => {
-  const couldAction = isGrantedAll(props.permission);
-  if (!couldAction) {
-    openBigModal('login-modal', {});
+export class RequireLogin extends React.Component {
+
+  handleClick = () => {
+    if (isGrantedAll(this.props.permissions)) {
+      this.props.expectedEvent();
+    }
+    else {
+      openBigModal("login-modal", {});
+      openBLModal({ type: "warning", text: "Hành động này cần đăng nhập nhậpnhậpnhập!" });
+
+    }
   }
-  return props.children;
+  render() {
+
+    return (
+      <div onClick={this.handleClick}>
+        {this.props.children}
+      </div>
+    );
+  }
 };
 
-RequireLoginComponent.propTypes = {
-  permission: PropTypes.string.isRequired,
-  userPermissions: PropTypes.array.isRequired
-};
 
-const mapStateToProps = state => ({
-  userPermissions: state.user.allPermissions //<--- here you will get permissions for your user from Redux store
-});
-
-export const RequireLogin = connect(mapStateToProps)(RequireLoginComponent);

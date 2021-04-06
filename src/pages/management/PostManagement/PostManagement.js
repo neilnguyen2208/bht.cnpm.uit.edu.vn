@@ -134,13 +134,13 @@ class PostManagement extends Component {
 
         if (this.props.isHaveHighlighted) {
             this.reloadList();
-            openBLModal({ icon: done_icon, text: "Ghim bài viết thành công!" });
+            openBLModal({ type: "success", text: "Ghim bài viết thành công!" });
             store.dispatch(highlight_APostReset())
         }
 
         if (this.props.isHaveUnHighlighted) {
             this.reloadList();
-            openBLModal({ icon: done_icon, text: "Đã huỷ ghim bài viết!" });
+            openBLModal({ type: "success", text: "Đã huỷ ghim bài viết!" });
             store.dispatch(delete_HighlightAPostReset())
         }
 

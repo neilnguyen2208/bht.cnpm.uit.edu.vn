@@ -6,18 +6,17 @@ import store from 'redux/store/index.js'
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import LoginForm from 'components/common/Login&Register/LoginForm'
+import close_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
 
 export default class Login extends React.Component {
-    closeModal = () => {
-        store.dispatch(closeBigModal())
-    }
     render() {
         return (
             <div>
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper form login-modal">
-                        <LoginForm />
+                        {!this.props.hideClose && <img className="close-login-modal" alt="x" src={close_icon} onClick={closeBigModal} />}
+                        < LoginForm />
                     </div>
                 </div>
             </div>

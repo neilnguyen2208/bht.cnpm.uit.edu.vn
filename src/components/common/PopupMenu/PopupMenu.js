@@ -66,7 +66,7 @@ export default class PopupMenu extends React.Component {
     render() {
         let items = this.props.items.map(menuItem => {
             if (menuItem.permissions)
-                return <ShowForPermission permission={menuItem.permissions}>
+                return <ShowForPermission permissions={menuItem.permissions}>
                     <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                         id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
                         key={menuItem.id}

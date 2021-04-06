@@ -102,7 +102,7 @@ export function createAPost(data) {
             .then(response => {
                 //handle success    
                 dispatch(closeModal());
-                openBLModal({ text: "Tạo bài viết thành công!", icon: done_icon });
+                openBLModal({ text: "Tạo bài viết thành công!", type: "success" });
                 dispatch(post_CreateAPostSuccess());
             })
             .catch(error => {
@@ -372,7 +372,7 @@ export function deleteAPost(id) { //maybe use modal later
         dispatch(delete_APostReset(id))
         request.delete(`/posts/${id}`).then(response => {
             dispatch(delete_APostSuccess())
-            openBLModal({ text: "Xoá bài viết thành công!", icon: done_icon });
+            openBLModal({ text: "Xoá bài viết thành công!", type: "success" });
 
         }).catch(error => { dispatch(delete_APostFailure(id)) })
     }
@@ -385,7 +385,7 @@ export function editAPost(id, newPostContent, reloadList) { //
         request.put(`/posts/${id}`, JSON.stringify(newPostContent))
             .then(response => {
                 dispatch(closeModal());
-                openBLModal({ text: "Chỉnh sửa bài viết thành công!", icon: done_icon });
+                openBLModal({ text: "Chỉnh sửa bài viết thành công!", type: "success" });
                 dispatch(put_EditAPostSuccess(id, newPostContent));
             }
             ).catch(() => dispatch(put_EditAPostFailure()))
@@ -413,7 +413,7 @@ export function rejectAndFeedbackAPost(id, reason) { //
                 dispatch(closeModal());
                 dispatch(post_RejectAndFeedbackAPostSuccess());
                 dispatch(closeModal());
-                openBLModal({ text: "Từ chối bài viết thành công!", icon: done_icon });
+                openBLModal({ text: "Từ chối bài viết thành công!", type: "success" });
 
             }
             ).catch(() => {

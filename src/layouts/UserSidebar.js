@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // import resource image, icon
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'

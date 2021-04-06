@@ -193,21 +193,21 @@ class DocumentApproving extends Component {
         if (this.props.isHaveApproved) {
             closeModal();
             store.dispatch(post_ApproveADocumentReset());
-            openBLModal({ icon: done_icon, text: "Duyệt tài liệu thành công!" });
+            openBLModal({ type: "success", text: "Duyệt tài liệu thành công!" });
             this.reloadList();
         }
 
         if (this.props.isHaveRejectedAndFeedbacked) {
             closeModal();
             store.dispatch(post_RejectAndFeedbackADocumentReset());
-            openBLModal({ icon: done_icon, text: "Từ chối tài liệu thành công!" });
+            openBLModal({ type: "success", text: "Từ chối tài liệu thành công!" });
             this.reloadList();
         }
 
         if (this.props.isHaveRejected) {
             closeModal();
             store.dispatch(delete_RejectADocumentReset());
-            openBLModal({ icon: done_icon, text: "Từ chối tài liệu thành công!" });
+            openBLModal({ type: "success", text: "Từ chối tài liệu thành công!" });
             this.reloadList();
         }
 

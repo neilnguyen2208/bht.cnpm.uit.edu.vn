@@ -3,7 +3,6 @@ import AlertModal from './AlertModal';
 import ConfirmationModal from './ConfirmationModal';
 import FormModal from './FormModal'
 import LoaderModal from './LoaderModal'
-import EditPostModal from './CustomModal/EditPostModal'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';

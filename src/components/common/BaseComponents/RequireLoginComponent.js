@@ -10,7 +10,7 @@ export class RequireLogin extends React.Component {
     }
     else {
       openBigModal("login-modal", {});
-      openBLModal({ type: "warning", text: "Hành động này cần đăng nhập nhậpnhậpnhập!" });
+      openBLModal({ type: "warning", text: "Hành động này cần đăng nhập!" });
 
     }
   }

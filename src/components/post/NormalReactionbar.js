@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
-import { RequireLogin } from 'components/common/BaseComponents/RequireLogin'
+import { RequireLogin } from 'components/common/BaseComponents/RequireLoginComponent'
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'

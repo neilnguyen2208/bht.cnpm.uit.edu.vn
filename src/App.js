@@ -55,6 +55,8 @@ import ModalManager from 'components/common/Modal/ModalManager'
 import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
+import RequireLoginRoute from 'components/common/BaseComponents/RequireLoginRoute'
+
 const App = () => {
     return (
         <div style={{ minWidth: "320px", width: "100%", background: "white" }}>
@@ -96,13 +98,13 @@ const App = () => {
 
                         {/* for admin only */}
                         {/* Admin and collab page content admin */}
-                        <Route exact path="/admin-sidebar" component={AdminSidebar} />
+                        {/* <Route exact path="/admin-sidebar" component={AdminSidebar} /> */}
 
                         {/* for admin */}
 
-                        <Route exact path="/admin/post-management" component={PostManagement} />
-                        <Route exact path="/admin/post-management/report" component={PostReportManagement} />
-                        <Route exact path="/admin/post-management/approval" component={PostApproving} />
+                        <RequireLoginRoute exact path="/admin/post-management" component={PostManagement} permissions={["Page.Post.Management"]} />
+                        <RequireLoginRoute exact path="/admin/post-management/report" component={PostReportManagement} permissions={["Page.Post.ReportManagement"]} />
+                        <RequireLoginRoute exact path="/admin/post-management/approval" component={PostApproving} permissions={["Page.Post.Approval"]} />
 
                         <Route exact path="/admin/document-management/approval" component={DocumentApproving} />
                         <Route exact path="/admin/document-management" component={DocumentManagement} />

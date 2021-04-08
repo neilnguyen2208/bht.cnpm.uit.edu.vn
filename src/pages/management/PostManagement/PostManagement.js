@@ -20,7 +20,6 @@ import PostManagementNavbar from './PostManagementNavbar'
 import store from 'redux/store/index'
 import { put_EditAPostReset, delete_APostReset } from 'redux/actions/postAction'
 import { highlight_APostReset, delete_HighlightAPostReset, stick_APostToTopReset } from 'redux/actions/homeAction';
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png';
 import { openBLModal } from 'redux/services/modalServices';
 
 import 'layouts/Layout.scss'

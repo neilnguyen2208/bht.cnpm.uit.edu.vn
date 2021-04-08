@@ -54,7 +54,6 @@
     object-fit: cover;
 }
 
-
 .decoration-underline {
     height: 3px;
     width: 100%;
@@ -67,17 +66,7 @@
     background: var(--grayish);
 }
 
-.number-of-item {
-    margin-bottom: 10px;
-    font-family: "BarlowCondensed-SemiBold";
-    display: flex;
-    font-size: 16;
-    color: var(--black);
-}
-
-
 /*This port contain Management info and vertical menu below Management info*/
-
 .left-sidebar {
     position: relative;
     width: 250px;
@@ -129,7 +118,7 @@
 .user-info-layout .Gmail {
     width: 100px;
     position: relative;
-    font-family: "Rosario-Bold";
+    font-family: "Rosario";
     font-size: 16px;
     line-height: 22px;
     align-items: center;

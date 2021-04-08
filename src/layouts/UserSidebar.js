@@ -7,10 +7,7 @@ import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
 import account_management_icon from 'assets/icons/24x24/account_management_icon_24x24.png'
-// import gray_nb_upload_icon from 'assets/images/gray_nb_upload_icon.png'
 import gray_nb_write_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
-
-//import pages
 
 //import scss
 import 'layouts/LeftSidebarLayout.scss'
@@ -321,7 +318,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getCurrentUser
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserSidebar));

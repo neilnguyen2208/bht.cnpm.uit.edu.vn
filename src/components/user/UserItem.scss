@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&family=Rosario:wght@300&display=swap');
+
 .user-item {
     position: relative;
     height: fit-content;
@@ -7,8 +9,6 @@
     width: 100%;
     background-repeat: no-repeat;
     border: 1px var(--gray) solid;
-    border-top: 3px var(--grayish) solid;
-    border-radius: 5px;
     display: flex;
     user-select: none;
 }
@@ -26,7 +26,6 @@
 .user-info .post-count-container,
 .user-info .document-count-container {
     height: 1.5rem;
-
 }
 
 .reputation-container {
@@ -49,66 +48,46 @@
     color: var(--light-black)
 }
 
-.user-item:hover,
-.user-itemL:active {
-    border: 1px white solid;
-    border-top: 3px var(--blue) solid;
-    box-shadow: 0px 0px 5px 1px var(--gray);
+.user-item .avatar {
+    width: 4.5rem;
+    height: 4.5rem;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 0px;
+    margin-right: 0.5rem;
 }
 
-.user-item-name {
+.user-item .display-name {
+    display: -webkit-box;
     width: fit-content;
-    height: 25px;
-    font-family: "RobotoSlab-Bold";
-    font-size: 20px;
-    line-height: 26px;
-    display: flex;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.5rem;
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.3rem;
     color: var(--black);
-    padding-right: 20px;
+    line-height: 1.4rem;
+    margin-bottom: 0px !important;
 }
 
-.user-item_Edit_Btn {
-    width: 140px;
-    display: flex;
-    background: #dddddd;
-    padding: 3px;
-    border-radius: 5px;
-}
-
-.user-item_Edit_Btn_Element {
-    position: relative;
-    padding-top: 2px;
-    padding-left: 2px;
-    width: 25px;
-    height: 25px;
-}
-
-.user-item_Edit_Btn:hover {
-    opacity: 90%;
-    cursor: pointer;
-}
-
-.user-item_Edit_Btn:active {
-    opacity: 80%;
-}
-
-.user-item_Email {
-    height: 20px;
+.user-item .email {
     font-family: "Rosario";
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 1rem;
+    line-height: 1em;
+    height: 1em;
+
     display: flex;
     color: rgba(0, 0, 0, 0.5);
+
 }
 
 .user-item-icon {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     padding: 2px;
 }
-
 
 .user-info-icon {
     width: 1.5rem;
@@ -116,32 +95,26 @@
     padding: 2px;
 }
 
-.user-item_Score {
+.user-item .score {
     position: relative;
-    width: 150px;
-    height: 30px;
-    align-items: center;
+    width: 8rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
 }
 
+.user-item .document-count,
 .user-item .post-count {
     position: relative;
-    width: 60px;
-    height: 30px;
-    padding-left: 5px;
+    width: 2.4rem;
+    height: 1.5rem;
+    padding-left: 0.25rem;
+    line-height: 1.5rem;
+
 }
 
-.user-item .document-count {
-    position: relative;
-    width: 60px;
-    height: 30px;
-    padding-left: 5px;
-}
-
-.user-item_Statusbar {
+.user-item .achievement-bar {
     display: flex;
-    font-family: "BarlowCondensed-SemiBold";
-    font-size: 18px;
-    line-height: 28px;
-    margin-top: 5px;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1rem;
     justify-content: space-between;
 }

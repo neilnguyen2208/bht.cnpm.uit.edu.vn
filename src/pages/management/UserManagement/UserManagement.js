@@ -3,252 +3,162 @@
 import React, { Component } from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
-import Paginator from 'components/common/Paginator/ClientPaginator'
+import Paginator from 'components/common/Paginator/ServerPaginator'
 import UserItem from 'components/user/UserItem'
-// import { ClickAwayListener } from '@material-ui/core'
-// import { getRoleNameByName, getRoleNameFilterByName } from 'utils/PermissionManagement'
-import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
-
 
 //import for redux
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-// import { getAllUsers, getAllRoles } from 'redux/services/userServices'
+import { getAllUsers } from 'redux/services/userServices'
+import { getAllRoles } from 'redux/services/roleServices'
+
 import AdminSidebar from 'layouts/AdminSidebar'
+import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
+import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
+import Combobox from 'components/common/Combobox/Combobox'
+
 class UserManagement extends Component {
-    constructor(props) {
-        super();
-        this.maxItemPerPage = 10;
-        this.usersList = [];
-        this.roleList = [];
-
-        this.roleNameFilter = "All";
-        this.roleFilterList = [
-            {
-                UserGroupID: 0,
-                UserGroupName: "All"
-            }
-        ]
-
-        this.isTheFirstTimeLoad = true;
-
-        this.isChangeRoleConfirmationPopupOpen = false;
-        this.isAnyChangeRoleFilterDropdownComboboxOpen = false;
-
-        this.state = {
-            currentInteractList: []
-        }
-    }
 
     componentDidMount() {
-        // this.props.management_getAllUsers();
-        // this.props.management_getAllRoles();
+        this.props.getAllUsers();
+        this.props.getAllRoles();
+
+        this.queryParamObject = {
+            "page": 1,
+        }
+
+        this.searchParamObject = {
+            "page": 1,
+        }
+
+        setQueryParam(this.queryParamObject);
     }
 
-    //client
-    // onPageChangeClient = (currentInteractList) => {
-    //     this.setState({ currentInteractList: currentInteractList })
-    // }
+    //server paginator
+    onPageChange = (pageNumber) => {
+        setQueryParam({ ...this.queryParamObject, "page": pageNumber });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            page: getQueryParamByName('page'),
+        }
+        this.props.getAllUsers(this.searchParamObject);
+        this.setState({});
+    }
+
+    onRoleOptionChange = (selectedOption) => {
+        setQueryParam({
+            ...this.queryParamObject, "page": 1, "roleID": selectedOption.id
+        });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "roleID ": selectedOption.id,
+            page: 1
+        }
+        this.props.getAllUsers(this.searchParamObject);
+        this.setState({});
+    }
 
     render() {
+        console.log(this.props.rolesList);
+        if (!this.props.isRoleLoading && this.props.rolesListHaveAll) {
+            this.comboboxGroup =
+                <div className="filter-container">
+                    <div className="p-searchbar-container">
+                        {/* page search bar */}
+                        <div className="d-flex">
+                            <input type="text" className="p-searchbar-input mg-left-5px pm" placeholder="Nhập từ khoá " />
+                            <button className="p-searchbar-btn" onClick={() => { this.onSearchTermChange() }}>
+                                <div className="d-flex">
+                                    Tìm kiếm
+                                </div>
+                            </button>
+                        </div>
+                    </div>
 
-        let userItemList = <></>;
-        // let searchDropdown = <></>;
-
-        if (this.props.userList !== null && this.props.userList !== undefined
-            && this.props.roleList !== null && this.props.roleList !== undefined) {
-            this.usersList = this.props.userList;
-            this.roleList = this.props.roleList;
-
-
-            if (this.isTheFirstTimeLoad && this.roleList) {
-                this.usersList = [...this.usersList];
-                this.roleFilterList = this.roleFilterList.concat(...this.roleList)
-                this.isTheFirstTimeLoad = false;
-            }
-
-            // searchDropdown = this.roleFilterList.map(role =>
-            //     this.roleNameFilter === role.UserGroupName ?
-            //         <div className="activated-combox-option"
-            //             name="User_Role_Filter_Combobox_Item"
-            //             id={"role-filter-dropdown-combobox-sub-item-" + role.UserGroupName}
-            //             value={getRoleNameFilterByName(role.UserGroupName)}
-            //             onClick={() => this.handleDropDownMenuItemClick(role.UserGroupName)}
-            //             key={role.UserGroupID}>
-            //             {getRoleNameFilterByName(role.UserGroupName)}
-
-            //         </div>
-            //         :
-            //         <div className="combox-option"
-            //             name="User_Role_Filter_Combobox_Item"
-            //             id={"role-filter-dropdown-combobox-sub-item-" + role.UserGroupName}
-            //             value={getRoleNameFilterByName(role.UserGroupName)}
-            //             key={role.UserGroupID}
-            //             onClick={() => this.handleDropDownMenuItemClick(role.UserGroupName)}>
-            //             {getRoleNameFilterByName(role.UserGroupName)}
-            //         </div>
-            // )
-            this.isTheFirstTimeLoad = false;
-
-
-            userItemList = this.state.currentInteractList.map((userItem) =>
+                    <div>
+                        <div className="filter-label t-a-right mg-right-5px">Role:</div>
+                        <div className="mg-left-5px">
+                            <Combobox
+                                options={this.props.rolesListHaveAll}
+                                selectedOptionID={0}
+                                onOptionChanged={(selectedOption) => this.onRoleOptionChange(selectedOption)}
+                                id="umrf-combobox" //user management role filter
+                            ></Combobox>
+                        </div>
+                    </div>
+                </div>
+        }
+        if (!this.props.isListLoading && this.props.usersList && !this.props.isRoleLoading && this.props.rolesList) {
+            this.listView = this.props.usersList.map((userItem) =>
                 <UserItem
-                    key={userItem.userID}
-                    roleName={userItem.roleName}
-                    roleID={userItem.roleId}
+                    key={userItem.id}
+                    roleID={userItem.role.id}
+                    roleName={userItem.role.name}
                     userID={userItem.id}
-                    name={userItem.displayName}
-                    username={userItem.username}
-                    // nickName={userItem.displayName}
-                    avatarUrl={userItem.avatar}
-                    // avatarUrl='https://i.imgur.com/SZJgL6C.jpg'
+                    displayName={userItem.displayName}
+                    avatarURL={userItem.avatarURL}
                     email={userItem.email}
                     postCount={userItem.postCount}
                     docCount={userItem.documentCount}
                     score={userItem.score}
-
-                    roleList={this.roleList}
+                    rolesList={this.props.rolesList}
                 >
                 </UserItem>
             )
         }
-
         return (
-
-
-            <div className="management-layout">
+            <div className="left-sidebar-layout" >
                 <AdminSidebar />
-                <div className="content-container">
+                <div className="content-layout">
                     <Titlebar title="QUẢN LÝ NGƯỜI DÙNG" />
                     <div className="content-container">
-
-                        <div className="d-flex j-c-space-between mg-top-10px"  >
-                            <div className="number-of-item">
-                                Tổng số:
-                                &nbsp;
-                            {this.usersList.length}
+                        {(!this.props.isRoleLoading) ? this.comboboxGroup : <></>}
+                        {!this.props.isListLoading && this.props.usersList ?
+                            <>
+                                <div className="sum-item-label">
+                                    <div className="mg-right-5px">Tổng số:</div>
+                                    <div> {this.props.totalElements}</div>
+                                </div>
+                                <div>{this.listView}</div>
+                                <Paginator config={{
+                                    changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                    pageCount: this.props.totalPages,
+                                    currentPage: getQueryParamByName('page')
+                                }}
+                                />
+                            </>
+                            :
+                            <div>
+                                {DocPostSummaryLoader()}
+                                {DocPostSummaryLoader()}
+                                {DocPostSummaryLoader()}
                             </div>
-                            < div className="pos-relative d-flex">
-                                {/* <div className="gray-label" style={{ paddingTop: "5px" }}>
-                                Filter:
-                            </div> */}
-                                {/* &nbsp; */}
-                                {/* <div style={{ position: "relative", display: "flex", width: "120px" }}>
-                                <ClickAwayListener onClickAway={() => { this.closeChangeRoleFilterDropdownCombobox() }}>
-
-                                    <div style={{ position: "relative", display: "flex", width: "100%", zIndex: 1000000 }}>
-                                        <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                                            <div style={{ position: "absolute", width: "140px" }}>
-                                                <div className="combox" id={"role-filter-parent-dropdown-combobox"}
-                                                    onClick={(e) => this.handleDropDownMenuClick(e, "role-filter-parent-dropdown-combobox", "role-filter-parent-dropdown-combobox-text", "role-filter-dropdown-btn-element", "role-filter-dropdown-combobox-container")}>
-                                                    <div className="d-flex">
-                                                        <div className="side-bar-menu-item-text" id={"role-filter-parent-dropdown-combobox-text"}>
-                                                            {this.roleList ?
-                                                                getRoleNameFilterByName(this.roleNameFilter)
-                                                                : ""
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id={"role-filter-dropdown-btn-element"} />
-                                                </div>
-
-                                                {this.isAnyChangeRoleFilterDropdownComboboxOpen ? (
-                                                    <div className="combox-container" id={"role-filter-dropdown-combobox-container"}>
-                                                        {searchDropdown}
-                                                        <div className="mg-bottom-5px" />
-                                                        <div className="mg-bottom-5px" />
-                                                    </div>
-                                                ) : <div id={"role-filter-dropdown-combobox-container"}></div>}
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ClickAwayListener>
-                            </div> */}
-                            </div>
-                        </div>
-
-                        {/* <div className="mg-bottom-20px" /> */}
-
-                        {userItemList}
-
-                        {/* <Paginator config={{
-                        changePage: (currentInteractList) => this.onPageChangeClient(currentInteractList),
-                        rawData: this.usersList,
-                        maxItemPerPage: this.maxItemPerPage,
-                        numShownPage: 5,
-                        bottom: "31px"
-                    }}
-                    /> */}
-                    </div>
-                </div >
+                        }
+                    </div >
+                </div>
             </div>
         );
     }
-
-    handleDropDownMenuItemClick = (roleName) => {
-        let sub_dropdown_item_index = document.getElementsByName("User_Role_Filter_Combobox_Item");
-        sub_dropdown_item_index.forEach.className = "combox-option";
-        this.roleNameFilter = roleName;
-        // if (roleName === "All") {
-        //     this.currentInteractList = this.usersList;
-        //     this.closeChangeRoleFilterDropdownCombobox();
-        //     return;
-        // }
-        // this.currentInteractList.splice(0, this.currentInteractList.length);
-        // for (let i = 0; i < this.usersList.length; i++) {
-        //     if (this.usersList[i].roleName === roleName)
-        //         
-        //         this.currentInteractList.push(this.usersList[i])
-        // }
-        this.closeChangeRoleFilterDropdownCombobox();
-    }
-
-    closeChangeRoleFilterDropdownCombobox = () => {
-        this.isAnyChangeRoleFilterDropdownComboboxOpen = false; this.setState({});
-    }
-
-    handleDropDownMenuClick = (e, parent_id, show_text_id, dropdown_element_id, container_id) => {
-        e.preventDefault();
-
-        let parent_menu_item = document.getElementById(parent_id);
-        let dropdown_element = document.getElementById(dropdown_element_id);
-        let show_text = document.getElementById(show_text_id);
-        let dropdown_container = document.getElementById(container_id);
-
-        if (dropdown_container.style.display === "block") {
-            dropdown_container.style.display = "none";
-            parent_menu_item.style.background = "white";
-            parent_menu_item.style.paddingLeft = "0px";
-            show_text.style.color = "var(--black)";
-            dropdown_element.src = dropdown_btn;
-        }
-        if (dropdown_container.style.display !== "block") {
-            parent_menu_item.style.background = "#5279DB"
-            dropdown_container.style.display = "block";
-            parent_menu_item.style.paddingLeft = "10px";
-            show_text.style.color = "white";
-            
-        }
-
-        this.isAnyChangeRoleFilterDropdownComboboxOpen = true;
-        this.setState({});
-    }
 }
 
-//#region for Redux
 const mapStateToProps = (state) => {
-
+    console.log(state.role.allRoles);
     return {
-        // userList: state.user.allUsers.accounts,
-        // roleList: state.user.allRoles
+        usersList: state.user.allUsers.data,
+        isListLoading: state.user.allUsers.isLoading,
+        totalPages: state.user.allUsers.totalPages,
+        totalElements: state.user.allUsers.totalElements,
+
+        isRoleLoading: state.role.allRoles.isLoading,
+        rolesList: state.role.allRoles.data,
+        rolesListHaveAll: state.role.allRoles.searchData,
+
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    // management_getAllUsers, management_getAllRoles
+    getAllUsers, getAllRoles
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserManagement));
-//#endregion

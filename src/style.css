@@ -35,11 +35,6 @@
 }
 
 @font-face {
-    font-family: "Rosario-Bold";
-    src: local("Rosario"), url(./assets/fonts/Rosario-Bold.ttf) format("truetype");
-}
-
-@font-face {
     font-family: "Roboto-Regular";
     src: local("Roboto"), url(./assets/fonts/Roboto-Regular.ttf) format("truetype");
 }
@@ -235,7 +230,6 @@ a:hover {
     display: flex;
     justify-content: flex-end;
 }
-
 
 .mg-0px {
     margin: 0px;

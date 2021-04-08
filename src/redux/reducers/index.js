@@ -13,6 +13,7 @@ import CommonReducer from "redux/reducers/commonReducer"
 import ModalReducer from "redux/reducers/modalReducer"
 import DocumentSubjectReducer from "redux/reducers/documentSubjectReducer"
 import AuthenticationReducer from "redux/reducers/authReducer"
+import RoleReducer from "redux/reducers/roleReducer"
 
 var RootReducer = combineReducers({
     home: HomeReducer,
@@ -28,7 +29,8 @@ var RootReducer = combineReducers({
     heading: HeadingReducer,
     common: CommonReducer,
     modal: ModalReducer,
-    auth: AuthenticationReducer
+    auth: AuthenticationReducer,
+    role: RoleReducer,
 });
 
 export default RootReducer;

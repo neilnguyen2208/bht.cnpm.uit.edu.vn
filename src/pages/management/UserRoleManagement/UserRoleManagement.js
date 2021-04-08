@@ -7,7 +7,7 @@ import Table from 'components/common/Table/Table'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { management_getAllUsers, management_getAllRoles } from 'redux/services/userServices'
+import { getAllRoles } from 'redux/services/roleServices'
 import AdminSidebar from 'layouts/AdminSidebar'
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
@@ -151,7 +151,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    management_getAllUsers, management_getAllRoles
+    getAllRoles
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserRoleManagement));

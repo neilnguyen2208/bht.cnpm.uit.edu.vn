@@ -10,7 +10,6 @@ import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { management_getAllUsers, management_getAllRoles } from 'redux/services/userServices'
 import AdminSidebar from 'layouts/AdminSidebar'
 class Statistic extends Component {
     constructor(props) {
@@ -112,7 +111,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    management_getAllUsers, management_getAllRoles
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Statistic));

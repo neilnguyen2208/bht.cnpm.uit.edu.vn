@@ -1,61 +1,49 @@
-// import {
-//     USER_POST_LOGIN,
-//     USER_POST_REGISTER,
-//     USER_GET_CURRENT_USER,
-//     USER_GET_LOGOUT,
-//     GET_ALL_USERS,
-//     GET_ALL_ROLES
-// } from '../constants.js'
+import {
+  GET_ALL_USERS_REQUEST,
+  GET_ALL_USERS_SUCCESS,
+  GET_ALL_USERS_FAILURE,
+
+  BAN_A_USER_REQUEST,
+  BAN_A_USER_SUCCESS,
+  BAN_A_USER_FAILURE
+
+} from '../constants.js'
 
 
-// export function managementGetAllUsers(allUsers) {
-//     return {
-//         type: GET_ALL_USERS,
-//         payload: allUsers
-//     }
-// }
+export function get_AllUsersRequest() {
+  return {
+    type: GET_ALL_USERS_REQUEST,
+  }
+}
 
-// export function managementGetAllRoles(allRoles) {
+export function get_AllUsersSuccess(data) {
+  return {
+    type: GET_ALL_USERS_SUCCESS,
+    payload: data
+  }
+}
 
-//     return {
-//         type: GET_ALL_ROLES,
-//         payload: allRoles
-//     }
-// }
-// export function userPostLogin(account, statusLoginCode) {
-//     return {
-//         type: USER_POST_LOGIN,
-//         payload: {
-//             account: account,
-//             statusLoginCode: statusLoginCode,
-//         }
-//     }
-// }
 
-// export function userGetLogout(statusLogoutCode) {
-//     return {
-//         type: USER_GET_LOGOUT,
-//         payload: {
-//             statusLogoutCode: statusLogoutCode,
-//         }
-//     }
-// }
+export function get_AllUsersFailure() {
+  return {
+    type: GET_ALL_USERS_FAILURE,
+  }
+}
 
-// export function userPostRegister(statusRegisterCode) {
-//     return {
-//         type: USER_POST_REGISTER,
-//         payload: {
-//             statusRegisterCode: statusRegisterCode,
-//         }
-//     }
-// }
-
-// export function userGetCurrentUser(account, statusGetCurrentUserCode) {
-//     return {
-//         type: USER_GET_CURRENT_USER,
-//         payload: {
-//             account: account,
-//             statusGetCurrentUserCode: statusGetCurrentUserCode,
-//         }
-//     }
-// }
+export function ban_AUserRequest() {
+  return {
+    type: BAN_A_USER_REQUEST,
+  }
+}
+export function ban_AUserSuccess(data) {
+  return {
+    type: BAN_A_USER_SUCCESS,
+    payload: data
+  }
+}
+export function ban_AUserFailure(error) {
+  return {
+    type: BAN_A_USER_FAILURE,
+    payload: error
+  }
+}

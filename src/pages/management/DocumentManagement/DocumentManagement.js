@@ -4,7 +4,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
-import { getDocumentSearch } from "redux/services/documentServices";
+import { getManagementDocuments } from "redux/services/documentServices";
 import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -23,7 +23,7 @@ import store from 'redux/store/index'
 // import { put_EditADocumentReset, delete_ADocumentReset } from 'redux/actions/documentAction'
 import 'layouts/Layout.scss'
 
-class DocumentApproving extends Component {
+class DocumentManagement extends Component {
 
     componentDidMount() {
 
@@ -33,27 +33,27 @@ class DocumentApproving extends Component {
         }
 
         this.searchParamObject = {
-            "paginator": 1,
-            "category": null,
+            "page": 1,
+            "categoryID": null,
             // "documentState": '',
             // "searchTerm": '',
         }
 
-        setQueryParam(this.queryParamObject)
+        setQueryParam(this.queryParamObject);
         this.props.getDocumentCategoriesHaveAll();
         this.props.getDocumentSubjectsHaveAll();
 
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.props.getManagementDocuments(this.searchParamObject);
     }
 
-    //server paginator
+    //server page
     onPageChange = (pageNumber) => {
         setQueryParam({ ...this.queryParamObject, "page": pageNumber });
         this.searchParamObject = {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
         }
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.props.getManagementDocuments(this.searchParamObject);
         this.setState({});
     }
 
@@ -64,10 +64,10 @@ class DocumentApproving extends Component {
         });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category": selectedOption.id,
-            paginator: 1
+            "categoryID": selectedOption.id,
+            page: 1
         }
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.props.getManagementDocuments(this.searchParamObject);
         this.setState({});
     }
 
@@ -80,7 +80,7 @@ class DocumentApproving extends Component {
             documentState: selectedOption.documentState,
             "page": 1
         }
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.props.getManagementDocuments(this.searchParamObject);
         this.setState({});
     }
 
@@ -89,24 +89,24 @@ class DocumentApproving extends Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             sort: selectedOption.sort,
-            "paginator": 1
+            "page": 1
         }
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.props.getManagementDocuments(this.searchParamObject);
         this.setState({});
     }
 
     onSearchTermChange = () => {
 
-        this.searchParamObject = { ...this.searchParamObject, paginator: 1, searchTerm: document.querySelector('.dm.p-searchbar-input').value };
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.searchParamObject = { ...this.searchParamObject, page: 1, searchTerm: document.querySelector('.dm.p-searchbar-input').value };
+        this.props.getManagementDocuments(this.searchParamObject);
         this.setState({});
     }
     onSubjectOptionChange = (selectedOption) => {
-        // setQueryParam({ ...this.queryParamObject, paginator: 1, "category": selectedOption.id });
+        // setQueryParam({ ...this.queryParamObject, page: 1, "category": selectedOption.id });
         // this.searchParamObject = {
         //     ...this.searchParamObject,
         //     "category": selectedOption.id,
-        //     paginator: 1
+        //     page: 1
         // }
         // this.props.getPendingDocuments(this.searchParamObject);
         // this.setState({});
@@ -116,11 +116,11 @@ class DocumentApproving extends Component {
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
-                paginator: this.searchParamObject.page,
+                page: this.searchParamObject.page,
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getDocumentSearch(this.searchParamObject);
+        this.props.getManagementDocuments(this.searchParamObject);
     }
 
     render() {
@@ -231,8 +231,8 @@ class DocumentApproving extends Component {
                         publishDtm={item.publishDtm}
                         categoryName={item.category}
                         categoryID={item.categoryID}
-                        subjectName={item.docSubject}
-                        subjectID={item.docSubjectID}
+                        subjectName={item.subject}
+                        subjectID={item.subjectID}
 
                         title={item.title}
                         // fileName={item.fileName}
@@ -305,10 +305,10 @@ class DocumentApproving extends Component {
 const mapStateToProps = (state) => {
     return {
         //pending documents list
-        documentsList: state.document.documentsList.data,
-        isListLoading: state.document.documentsList.isLoading,
-        totalPages: state.document.documentsList.totalPages,
-        totalElements: state.document.documentsList.totalElements,
+        documentsList: state.document.managementDocuments.data,
+        isListLoading: state.document.managementDocuments.isLoading,
+        totalPages: state.document.managementDocuments.totalPages,
+        totalElements: state.document.managementDocuments.totalElements,
 
         //subject
         subjects: state.document_subject.subjects.searchData,
@@ -327,8 +327,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getDocumentSubjectsHaveAll,
-    getDocumentSearch,
+    getManagementDocuments,
     getDocumentCategoriesHaveAll,
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentApproving));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentManagement));

@@ -115,7 +115,7 @@ class DocumentSummary extends Component {
     let summary = <></>;
     if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
       summary = <div>
-        <div className="decoration-line mg-top-10px" />
+        <div className="decoration-line mg-top-5px" />
         <img className="image" src={this.props.imageURL} alt="" />
         <div className="summary-text mg-bottom-5px">
           {this.props.description}
@@ -204,7 +204,6 @@ class DocumentSummary extends Component {
             <div className="d-flex" style={{ marginTop: "-5px" }}>
               <div className="d-flex"  >
                 <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {/* {Math.ceil(this.props.readingTime / 60) + " phút đọc"} */}
                   {this.props.subjectName}
                 </div>
               </div>

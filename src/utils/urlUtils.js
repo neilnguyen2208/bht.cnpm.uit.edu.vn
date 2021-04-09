@@ -44,9 +44,9 @@ export function generateSearchParam(searchParamObject) { //for generating search
     let searchParam = '';
     Object.keys(searchParamObject)
         .forEach(function eachKey(key) {
-            if ((key === "category.id" || key === "category" || key === "postCategoryID") && searchParamObject[key] === 0)
+            if ((key === "categoryID" || key === "category.id" || key === "category" || key === "postCategoryID") && searchParamObject[key] === 0)
                 return;
-            if ((key === "category.id" || key === "category" || key === "postCategoryID") && searchParamObject[key] === "0")
+            if ((key === "categoryID" || key === "category" || key === "postCategoryID") && searchParamObject[key] === "0")
                 return;
             if (searchParamObject[key] === null) return;
 

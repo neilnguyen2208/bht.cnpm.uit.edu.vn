@@ -54,6 +54,10 @@ import {
     GET_DOCUMENT_BY_ID_SUCCESS,
     GET_DOCUMENT_BY_ID_FAILURE,
     GET_DOCUMENT_BY_ID_RESET,
+    GET_MANAGEMENT_DOCUMENTS_FAILURE,
+    GET_MANAGEMENT_DOCUMENTS_SUCCESS,
+    GET_MANAGEMENT_DOCUMENTS_REQUEST,
+
 
 } from "../constants.js"
 
@@ -99,8 +103,26 @@ export function get_PendingDocumentsFailure(error) {
     }
 }
 
+export function get_ManagementDocumentsRequest() {
+    return {
+        type: GET_MANAGEMENT_DOCUMENTS_REQUEST,
+    }
+}
 
-//my documents
+export function get_ManagementDocumentsSuccess(data) {
+    return {
+        type: GET_MANAGEMENT_DOCUMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ManagementDocumentsFailure(error) {
+    return {
+        type: GET_MANAGEMENT_DOCUMENTS_FAILURE,
+        payload: error
+    }
+}
+
 export function get_ReportedDocumentsRequest() {
     return {
         type: GET_REPORTED_DOCUMENTS_REQUEST,

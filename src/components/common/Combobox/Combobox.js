@@ -36,7 +36,12 @@ export default class Combobox extends React.Component {
             document.getElementById("combobox-wrapper-" + this.props.id).classList.remove("dummy-have-click");
         }
         if (this.props.validation) {
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.add("validation")
+            document.getElementById("combobox-wrapper-" + this.props.id).classList.add("validation");
+        }
+        if (this.props.type === "small") {
+            document.getElementById("combobox-" + this.props.id).classList.add("small");
+            document.getElementById("combobox-wrapper-" + this.props.id).classList.add("small");
+
         }
     }
 
@@ -229,7 +234,7 @@ export default class Combobox extends React.Component {
                             </div>
 
                             {/* dropdown-icon */}
-                            <img alt="v" className="Dropdown_Btn_Element" style={{ marginLeft: "10px", userSelect: "none" }} src={dropdown_btn} id={"combobox-btn-element-" + this.props.id} />
+                            <img alt="v" className="dropdown-element" src={dropdown_btn} id={"combobox-btn-element-" + this.props.id} />
                         </div>
 
                         {/* dropdown */}

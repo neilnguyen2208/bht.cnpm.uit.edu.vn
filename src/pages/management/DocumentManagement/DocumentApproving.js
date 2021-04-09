@@ -161,7 +161,7 @@ class DocumentApproving extends Component {
                         publishDtm={item.publishDtm}
                         categoryName={item.category}
                         categoryID={item.categoryID}
-                        subjectName={item.docSubject}
+                        subjectName={item.subject}
                         subjectID={item.documentSubjectID}
 
                         title={item.title}

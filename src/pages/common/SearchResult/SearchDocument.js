@@ -168,8 +168,8 @@ class DocumentsList extends Component {
                             publishDtm={item.publishDtm}
                             categoryName={item.category}
                             categoryID={item.categoryID}
-                            subjectName={item.docSubject}
-                            subjectID={item.docSubjectID}
+                            subjectName={item.subject}
+                            subjectID={item.subjectID}
 
                             title={item.title}
                             // fileName={item.fileName}

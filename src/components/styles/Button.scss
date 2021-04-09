@@ -2,7 +2,7 @@
     display: inline-block;
     box-sizing: border-box;
     width: fit-content;
-    height: 25px;
+    height: 1.5rem;
     text-align: center;
     border-radius: 5px;
     background: white;
@@ -21,7 +21,8 @@
     cursor: pointer;
 }
 
-.white-button:hover {
+.white-button:hover,
+.white-button:focus {
     background: var(--gray);
     box-shadow: 0px 0px 2px 0px var(--gray);
     opacity: 80%;
@@ -30,7 +31,7 @@
 .white-button:active {
     background: var(--gray);
     border: white 1px solid;
-    opacity: 80%;
+    opacity: 60%;
 }
 
 .white-button:disabled {

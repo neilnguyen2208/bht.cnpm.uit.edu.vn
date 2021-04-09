@@ -320,8 +320,14 @@
     background-color: var(--grayish);
 }
 
-.form-checkbox-container:hover input~.form-checkbox-style {
+.form-checkbox-container input:hover~.form-checkbox-style {
     border: 1px solid var(--blue);
+    box-shadow: 0px 0px 2px 0px var(--light-blue);
+}
+
+.form-checkbox-container input:focus~.form-checkbox-style {
+    border: 1px solid var(--blue);
+    opacity: 80%;
     box-shadow: 0px 0px 2px 0px var(--light-blue);
 }
 

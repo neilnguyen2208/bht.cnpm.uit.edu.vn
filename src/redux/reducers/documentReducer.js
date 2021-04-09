@@ -37,7 +37,10 @@ import {
     REPORT_A_DOCUMENT_FAILURE,
     RESOLVE_A_DOCUMENT_RESET,
     RESOLVE_A_DOCUMENT_SUCCESS,
-    RESOLVE_A_DOCUMENT_FAILURE
+    RESOLVE_A_DOCUMENT_FAILURE,
+    GET_MANAGEMENT_DOCUMENTS_REQUEST,
+    GET_MANAGEMENT_DOCUMENTS_SUCCESS,
+    GET_MANAGEMENT_DOCUMENTS_FAILURE
 
 } from '../constants.js'
 
@@ -69,7 +72,7 @@ const initialState = {
         totalPages: 0,
         totalElements: 0
     },
-    
+
     reportedDocuments: {
         isLoading: false,
         data: [],
@@ -85,7 +88,15 @@ const initialState = {
     isHaveDeleted: false,
     isHaveEdited: false,
     isHaveReported: false,
-    isHaveResolved: false
+    isHaveResolved: false,
+
+    managementDocuments: {
+        isLoading: false,
+        data: [],
+        error: "",
+        totalPages: 0,
+        totalElements: 0
+    }
 }
 
 function DocReducer(state = initialState, action) {
@@ -190,6 +201,26 @@ function DocReducer(state = initialState, action) {
         case GET_DOCUMENTS_LIST_FAILURE:
             {
                 return { ...state, documentsList: { isLoading: false, error: action.payload, data: [] } }
+            }
+
+        case GET_MANAGEMENT_DOCUMENTS_REQUEST:
+            return {
+                ...state, managementDocuments: { isLoading: true }
+            };
+        case GET_MANAGEMENT_DOCUMENTS_SUCCESS:
+            {
+                return {
+                    ...state, managementDocuments: {
+                        isLoading: false,
+                        data: action.payload.docSummaryWithStateDTOs,
+                        totalElements: action.payload.totalElements,
+                        totalPages: action.payload.totalPages, error: ''
+                    }
+                }
+            }
+        case GET_MANAGEMENT_DOCUMENTS_FAILURE:
+            {
+                return { ...state, managementDocuments: { isLoading: false, error: action.payload, data: [] } }
             }
 
         //appvove  

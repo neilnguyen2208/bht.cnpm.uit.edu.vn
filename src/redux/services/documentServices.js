@@ -50,6 +50,9 @@ import {
     get_DocumentByIDReset,
     get_DocumentByIDSuccess,
     get_DocumentByIDFailure,
+    get_ManagementDocumentsRequest,
+    get_ManagementDocumentsSuccess,
+    get_ManagementDocumentsFailure,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam } from 'utils/urlUtils';
@@ -65,13 +68,37 @@ export function getNotApprovedDocumentsList() {
     }
 }
 
-export function management_approveADocument(docID) {
+export function getManagementDocuments(searchParamObject) {
     return dispatch => {
+        dispatch(get_ManagementDocumentsRequest());
+        request.get(`/documents/getManagementDoc?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+            .then(response => {
+                //statistic
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.docSummaryWithStateDTOs.docSummary.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+                        for (let i = 0; i < result_1.docSummary.length; i++) {
+                            finalResult.push({
+                                ...result_1.docSummary[i],
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummary[i].id)),
+                            }
+                            );
+                        }
 
+                        dispatch(get_ManagementDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                    }).catch(() => get_ManagementDocumentsFailure())
+            })
+            .catch(error => {
+                dispatch(get_ManagementDocumentsFailure(error))
+            })
     }
 }
 
-export function getDocumentSearch(searchParamObject) { 
+export function getDocumentSearch(searchParamObject) {
     return dispatch => {
         dispatch(get_DocumentSearchRequest());
         request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
@@ -79,8 +106,7 @@ export function getDocumentSearch(searchParamObject) {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                IDarr = "1,151";
+                response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 request.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
@@ -171,13 +197,12 @@ export function getReportedDocuments(searchParamObject) {
 export function getMyDocuments(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyDocumentsRequest());
-        request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        request.get(`/documents/myDocuments?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                IDarr = "1,151";
+                response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 request.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
@@ -192,7 +217,6 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
 
                         dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_MyDocumentsFailure())
-                // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
             })
             .catch(error => {
                 dispatch(get_MyDocumentsFailure(error))

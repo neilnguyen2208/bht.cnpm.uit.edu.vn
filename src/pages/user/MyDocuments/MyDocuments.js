@@ -27,7 +27,7 @@ class MyDocuments extends Component {
 
     componentDidMount() {
         this.searchParamObject = {
-            "paginator": 1,
+            "page": 1,
             "category.id": null,
             // "docState": ''
             sort: "Dtm,asc"
@@ -45,7 +45,7 @@ class MyDocuments extends Component {
         this.props.getMyDocuments(this.searchParamObject);
     }
 
-    //server paginator
+    //server page
     onPageChange = (pageNumber) => {
         this.queryParamObject = {
             ...this.queryParamObject,
@@ -54,7 +54,7 @@ class MyDocuments extends Component {
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
-            paginator: getQueryParamByName('page')
+            page: getQueryParamByName('page')
         }
         this.props.getMyDocuments(this.searchParamObject);
         this.setState({});
@@ -189,8 +189,8 @@ class MyDocuments extends Component {
                             publishDtm={item.publishDtm}
                             categoryName={item.category}
                             categoryID={item.categoryID}
-                            subjectName={item.docSubject}
-                            subjectID={item.docSubjectID}
+                            subjectName={item.subject}
+                            subjectID={item.subjectID}
 
                             title={item.title}
                             // fileName={item.fileName}

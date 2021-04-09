@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import "./UserMenu.scss";
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
@@ -10,7 +10,7 @@ import { ClickAwayListener } from "@material-ui/core";
 import { logout } from 'redux/services/authServices'
 
 const userMenuOptions = [
-    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true },
+    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, link: "/user" },
     { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
     {
         id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '',
@@ -37,6 +37,8 @@ const userMenuOptions = [
         }
     },
 ]
+
+
 
 class UserMenu extends React.Component {
 
@@ -93,6 +95,9 @@ class UserMenu extends React.Component {
         this.setState({});
 
         //Event handlers
+        if (menuItem.value === "PROFILE") {
+            return <Redirect to="/user" />;
+        }
         if (menuItem.value === "LOGOUT") {
             this.props.logout();
             return;
@@ -108,25 +113,52 @@ class UserMenu extends React.Component {
                 onClick={() => this.handleMenuItemClick(menuItem)}>
                 <div className='d-flex'>
                     {menuItem.tip ?
-                        <div className='d-flex'>
-                            {menuItem.icon ? <img className='user-menu-icon' style={{
-                                height: "27px",
-                                paddingTop: "7px"
-                            }} alt="" src={menuItem.icon} /> : <></>}
-                            < div >
-                                <div className='user-menu-text'>{menuItem.text}</div>
-                                <div className='user-menu-tip'>{menuItem.tip}</div>
+
+                        <>{menuItem.link ?
+                            <Link className='d-flex' to={menuItem.link}>
+                                {menuItem.icon ? <img className='user-menu-icon' style={{
+                                    height: "27px",
+                                    paddingTop: "7px"
+                                }} alt="" src={menuItem.icon} /> : <></>}
+                                < div >
+                                    <div className='user-menu-text'>{menuItem.text}</div>
+                                    <div className='user-menu-tip'>{menuItem.tip}</div>
+                                </div>
+                            </Link>
+                            :
+                            <div className='d-flex'>
+                                {menuItem.icon ? <img className='user-menu-icon' style={{
+                                    height: "27px",
+                                    paddingTop: "7px"
+                                }} alt="" src={menuItem.icon} /> : <></>}
+                                < div >
+                                    <div className='user-menu-text'>{menuItem.text}</div>
+                                    <div className='user-menu-tip'>{menuItem.tip}</div>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        </>
                         :
-                        <div className='d-flex'>
+
+                        <>{menuItem.link ? <Link className='d-flex' to={menuItem.link}>
                             {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
                                 height: "23px",
                                 paddingTop: "0px",
                                 paddingBottom: "3px"
                             }} alt="" src={menuItem.icon} /> : <></>}
-                            <div className='user-menu-text'>{menuItem.text}</div>
-                        </div>
+                            <div className='user-menu-text'>{menuItem.text}
+                            </div>
+                        </Link> :
+                            <div className='d-flex'>
+                                {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
+                                    height: "23px",
+                                    paddingTop: "0px",
+                                    paddingBottom: "3px"
+                                }} alt="" src={menuItem.icon} /> : <></>}
+                                <div className='user-menu-text'>{menuItem.text}</div>
+                            </div>
+                        }
+                        </>
                     }
                 </div>
 

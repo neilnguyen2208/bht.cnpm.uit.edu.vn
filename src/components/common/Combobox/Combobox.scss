@@ -10,16 +10,32 @@
     padding-bottom: 1px;
     border-radius: 5px;
     border: 1px solid var(--gray);
-    font-size: 18px;
+    font-size: 1.125rem;
     position: relative;
     min-width: 200px;
     width: fit-content;
     user-select: none;
     cursor: pointer;
-    height: fit-content;
     box-sizing: border-box;
-    height: 30px;
+    height: 1.8rem;
     line-height: 1.5rem;
+}
+
+.combox.small {
+    height: 1.5rem;
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid var(--gray);
+    font-size: 1rem;
+    line-height: 1.1rem;
+    min-width: 160px;
+    width: fit-content;
+}
+
+.combox.small:hover {
+    border: none;
+    border-bottom: 1px solid var(--blue);
+    box-shadow: 0px 2px 2px 0px var(--light-blue);
 }
 
 .combox:hover {
@@ -32,15 +48,21 @@
     position: relative;
     box-sizing: border-box;
     font-family: "BarlowCondensed-Regular";
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: 1.5rem;
     color: var(--black);
     padding: 2px;
     padding-left: 4px;
     user-select: none;
     z-index: 2;
-    border-radius: 3px;
+    border-radius: 2px;
     cursor: pointer;
+}
+
+.wrapper-combobox.small .combox-option {
+    line-height: 1.3rem;
+    height: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .activated-combox-option {
@@ -53,7 +75,7 @@
     position: absolute;
     border: 1px var(--grayish) solid;
     border-bottom: 3px var(--blue) solid;
-    border-radius: 5px;
+    border-radius: 2px;
     box-shadow: 0px 0px 2px 0px var(--grayish);
     display: none;
     user-select: none;
@@ -62,6 +84,25 @@
     width: fit-content;
     background: white;
     z-index: 1;
+}
+
+.wrapper-combobox.small .dropdown-container {
+    min-width: 160px;
+    width: fit-content;
+}
+
+.combox .dropdown-element {
+    width: 0.625rem;
+    height: 0.625rem;
+    vertical-align: auto;
+    margin-top: 0.573rem;
+}
+
+.combox.small .dropdown-element {
+    width: 0.5rem;
+    height: 0.5rem;
+    vertical-align: auto;
+    margin-top: 0.45rem;
 }
 
 .combox-option:hover {
@@ -110,4 +151,19 @@
     display: flex;
     min-width: 200px;
     width: fit-content;
+    max-width: 300px;
+}
+
+.wrapper-combobox {
+    position: relative;
+    display: flex;
+    min-width: 200px;
+    width: fit-content;
+    max-width: 300px;
+}
+
+.wrapper-combobox.small {
+    min-width: 160px;
+    width: fit-content;
+    max-width: 200px;
 }

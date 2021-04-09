@@ -20,7 +20,6 @@ import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import { publishedTimeOptions, itemType } from 'constants.js';
 
-
 class DocumentsList extends Component {
 
     componentDidMount() {
@@ -28,7 +27,7 @@ class DocumentsList extends Component {
             "paginator": 1,
             "category.id": null,
             // "docState": ''
-            sort: "Dtm,desc"
+            sortByPublishDtm: "DESC"
         }
 
         this.queryParamObject = {
@@ -91,7 +90,7 @@ class DocumentsList extends Component {
             ...this.searchParamObject,
             sortByPublishDtm: selectedOption.sort
         }
-        this.props.getPostSearch(this.searchParamObject);
+        this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
     }
 
@@ -164,11 +163,9 @@ class DocumentsList extends Component {
                             publishDtm={item.publishDtm}
                             categoryName={item.category}
                             categoryID={item.categoryID}
-                            subjectName={item.docSubject}
-                            subjectID={item.docSubjectID}
-
+                            subjectName={item.subject}
+                            subjectID={item.subjectID}
                             title={item.title}
-                            // fileName={item.fileName}
                             fileName={"Demo file name.pdf"}
                             description={item.description}
                             imageURL={item.imageURL}
@@ -176,7 +173,6 @@ class DocumentsList extends Component {
                             approveState={item.docState}
                             popUpMenuPrefix="mdpu"   //stand for my doc popup 
                             authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
-                            //
                             reloadList={() => this.reloadList()}
                         />
                         <DocumentNormalReactionbar

@@ -247,7 +247,7 @@
 }
 
 .metadata .file-name {
-  margin-top: 15px;
+  margin-top: 1rem;
   width: fit-content;
   display: flex;
   position: relative;
@@ -257,7 +257,6 @@
   line-height: 18px;
   color: var(--blue);
   user-select: none;
-  cursor: pointer;
   border: none;
   padding-left: 0px;
 }

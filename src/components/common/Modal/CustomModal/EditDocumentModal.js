@@ -41,8 +41,10 @@ const validationCondition = {
         validation.noSpecialChar('ed-document-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
         validation.isRequired('ed-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
         validation.isRequired('ed-document-cke', 'ckeditor', 'Nội dung tài liệu không được để trống'),
-        validation.isRequired('ed-document-subject-combobox', 'combobox', 'Môn học không được để trống')
-
+        validation.isRequired('ed-document-subject-combobox', 'combobox', 'Môn học không được để trống'),
+        validation.isRequired('cr-document-file-input', 'file-input', 'Tài liệu không được để trống!'),
+        validation.maxFileCount('cr-document-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
+        validation.maxFileSize('cr-document-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
     ],
 }
 

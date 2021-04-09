@@ -109,8 +109,8 @@ class Home extends Component {
                     dislikeCount = {item.dislikeCount}
                     downloadCount={item.downloads}
                     viewCount={item.views}
-                    subjectName={item.docSubject}
-                    subjectID={item.docSubjectID}
+                    subjectName={item.subject}
+                    subjectID={item.subjectID}
                 ></HomeDocumentItem>
             })
         else {

@@ -16,11 +16,12 @@ const data = [
     docCount: 2,
     postCount: 3,
     role: {
-      name: "User", id: 2,
+      name: "User",
+      id: 2,
     }
   },
   {
-    id: 1,
+    id: 2,
     avatarURL: "https://i.imgur.com/SZJgL6C.png",
     displayName: "Lưu Biêu Nghị",
     email: "vegknight@gmail.com",
@@ -28,7 +29,21 @@ const data = [
     docCount: 2,
     postCount: 6,
     role: {
-      name: "Admin", id: 2,
+      name: "Admin",
+      id: 1,
+    }
+  },
+  {
+    id: 3,
+    avatarURL: "https://i.imgur.com/SZJgL6C.png",
+    displayName: "Nguyễn Du Lịch",
+    email: "lichnd@gmail.com",
+    score: 340,
+    docCount: 3,
+    postCount: 2,
+    role: {
+      name: "Collaborator",
+      id: 3,
     }
   }
 ]

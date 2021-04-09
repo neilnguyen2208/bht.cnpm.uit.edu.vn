@@ -64,28 +64,24 @@ class UserManagement extends Component {
         if (!this.props.isRoleLoading && this.props.rolesListHaveAll) {
             this.comboboxGroup =
                 <div className="filter-container">
-                    <div className="p-searchbar-container">
-                        {/* page search bar */}
-                        <div className="d-flex">
-                            <input type="text" className="p-searchbar-input mg-left-5px pm" placeholder="Nhập từ khoá " />
-                            <button className="p-searchbar-btn" onClick={() => { this.onSearchTermChange() }}>
-                                <div className="d-flex">
-                                    Tìm kiếm
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="filter-label t-a-right mg-right-5px">Role:</div>
+                    {/* page search bar */}
+                    <div className="d-flex">
+                        <input type="text" className="p-searchbar-input um" placeholder="Nhập từ khoá " />
+                        <div className="filter-label t-a-right mg-right-5px mg-left-10px">Role:</div>
                         <div className="mg-left-5px">
                             <Combobox
                                 options={this.props.rolesListHaveAll}
-                                selectedOptionID={0}
+                                selectedOptionID={"0"}
                                 onOptionChanged={(selectedOption) => this.onRoleOptionChange(selectedOption)}
                                 id="umrf-combobox" //user management role filter
                             ></Combobox>
                         </div>
+
+                        <button className="p-searchbar-btn" onClick={() => { this.onSearchTermChange() }}>
+                            <div className="d-flex">
+                                Tìm kiếm
+                                </div>
+                        </button>
                     </div>
                 </div>
         }
@@ -100,7 +96,7 @@ class UserManagement extends Component {
                     avatarURL={userItem.avatarURL}
                     email={userItem.email}
                     postCount={userItem.postCount}
-                    docCount={userItem.documentCount}
+                    docCount={userItem.docCount}
                     score={userItem.score}
                     rolesList={this.props.rolesList}
                 >

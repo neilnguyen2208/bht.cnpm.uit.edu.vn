@@ -23,6 +23,23 @@
     color: var(--black);
 }
 
+.user-item .edit-icon {
+    height: 1.4rem;
+    margin-left: 0.6rem;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.user-item .edit-icon:hover {
+    background: var(--light-gray);
+    border: 1px solid var(--blue);
+}
+
 .user-info .post-count-container,
 .user-info .document-count-container {
     height: 1.5rem;
@@ -49,12 +66,15 @@
 }
 
 .user-item .avatar {
+    min-width: 4.5rem;
+    min-height: 4.5rem;
+    overflow: hidden;
     width: 4.5rem;
     height: 4.5rem;
-    overflow: hidden;
     object-fit: cover;
-    border-radius: 0px;
+    border-radius: 0.25rem;
     margin-right: 0.5rem;
+    border: 1px solid var(--grayish);
 }
 
 .user-item .display-name {

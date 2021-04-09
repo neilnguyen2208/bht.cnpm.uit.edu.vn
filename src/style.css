@@ -210,10 +210,14 @@ a:hover {
     display: flex;
 }
 
-
 .d-flex-vertical {
     display: flex;
     flex-direction: column;
+}
+
+.d-flex-horizontal {
+    display: flex;
+    flex-direction: row;
 }
 
 .flex-container {

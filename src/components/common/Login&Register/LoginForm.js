@@ -13,7 +13,6 @@ import round_logo from 'assets/images/round_logo.png'
 import fb_icon from 'assets/icons/24x24/b_facebook_icon_24x24.png';
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 import { login } from 'redux/services/authServices'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import { openBLModal } from 'redux/services/modalServices'
 
 const validationCondition = {

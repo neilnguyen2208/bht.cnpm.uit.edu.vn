@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { reportAPost } from 'redux/services/postServices'
 import { openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { post_ReportAPostReset } from 'redux/actions/postAction'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 import NormalReactionbar from 'components/post/NormalReactionbar'

@@ -35,7 +35,7 @@ import {
 } from "redux/actions/homeAction.js";
 import { request } from 'utils/requestUtils'
 import { openBLModal } from "./modalServices";
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png';
+import done_icon from 'assets/icons/svg/success_icon.svg';
 
 export function getTrendingDocuments() {
     return dispatch => {

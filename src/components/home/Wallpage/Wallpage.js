@@ -10,7 +10,6 @@ import { delete_HighlightAPostReset, get_HighlightPostsRequest, stick_APostToTop
 import WallpageItem from './WallpageItem'
 import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
 import store from 'redux/store/index';
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png';
 import Loader from 'components/common/Loader/Loader_T';
 
 class Wallpage extends React.Component {

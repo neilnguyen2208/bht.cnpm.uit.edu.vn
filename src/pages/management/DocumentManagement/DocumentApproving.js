@@ -23,7 +23,6 @@ import RequestReactionbar from 'components/document/RequestReactionbar'
 import { post_ApproveADocumentReset, delete_RejectADocumentReset, post_RejectAndFeedbackADocumentReset } from 'redux/actions/documentAction'
 import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 class DocumentApproving extends Component {
     constructor(props) {

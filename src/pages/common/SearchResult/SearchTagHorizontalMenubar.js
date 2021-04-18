@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getQueryParamByName } from 'utils/urlUtils'
 import { NavLink } from 'react-router-dom'
 import 'layouts/Search.scss'
 

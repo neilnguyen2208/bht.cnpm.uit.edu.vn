@@ -2,7 +2,7 @@ import React from "react";
 import './ModalBL.scss'
 import gray_delete_icon from 'assets/icons/24x24/gray_delete_icon_24x24.png'
 import { closeBLModal } from "redux/services/modalServices";
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
+import done_icon from 'assets/icons/svg/success_icon.svg'
 import warning_icon from 'assets/icons/svg/bg_o_warning_icon.svg'
 import error_icon from 'assets/icons/svg/bg_r_warning_icon.svg'
 

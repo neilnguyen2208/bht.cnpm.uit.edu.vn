@@ -9,13 +9,8 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
-import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
-import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
-import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 
 //styles

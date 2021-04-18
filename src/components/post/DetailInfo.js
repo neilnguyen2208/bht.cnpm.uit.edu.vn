@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 import { detailType } from 'constants.js'

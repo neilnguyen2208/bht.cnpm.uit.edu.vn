@@ -30,7 +30,7 @@ import Statistic from 'pages/management/Statistic/Statistic'
 import UserRoleManagement from 'pages/management/UserRoleManagement/UserRoleManagement'
 import UserManagement from 'pages/management/UserManagement/UserManagement'
 import PostManagement from 'pages/management/PostManagement/PostManagement'
-import AdminSidebar from 'layouts/AdminSidebar'
+import VerifyRegisterMail from 'pages/common/VerifyEmailPages/VerifyRegisterMail'
 import SearchCourses from 'pages/common/SearchResult/SearchCourses'
 import UploadDocument from 'pages/user/UploadDocument/UploadDocument'
 import CreatePost from 'pages/user/CreatePost/CreatePost'
@@ -122,6 +122,10 @@ const App = () => {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/forgot-password" component={ForgotPassword} />
+
+                        {/* verify email url */}
+                        <Route exact path="/verify" component={VerifyRegisterMail} />
+    "
 
                     </Switch>
                     <Footer />

@@ -92,7 +92,6 @@ import { openModal, openBLModal, closeModal } from 'redux/services/modalServices
 
 import { request } from 'utils/requestUtils';
 import { generateSearchParam } from 'utils/urlUtils'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 
 export function createAPost(data) {
     return dispatch => {

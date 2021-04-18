@@ -8,7 +8,6 @@ import {
   REGISTER_REQUEST,
 
   LOGOUT_SUCCESS,
-
 } from 'redux/constants.js';
 
 import { sS } from 'constants.js'

@@ -11,7 +11,7 @@ import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { highlightAPost, deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
 import { post_ReportAPostReset } from 'redux/actions/postAction'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
+import done_icon from 'assets/icons/svg/success_icon.svg'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'

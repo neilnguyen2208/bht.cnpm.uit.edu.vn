@@ -16,7 +16,6 @@ import DocumentManagementNavbar from './DocumentManagementNavbar'
 import ReportReactionbar from 'components/document/ReportReactionbar'
 import store from 'redux/store/index'
 import { post_ResolveADocumentReset } from 'redux/actions/documentAction'
-import done_icon from 'assets/icons/24x24/done_icon_24x24.png'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 
 class DocumentReportManagement extends Component {

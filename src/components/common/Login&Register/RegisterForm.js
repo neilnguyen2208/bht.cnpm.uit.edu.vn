@@ -15,8 +15,8 @@ import round_logo from 'assets/images/round_logo.png'
 import HoverHint from "../HoverHint/HoverHint";
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 import { register } from 'redux/services/authServices'
-import Loader_S from 'components/common/Loader/Loader_S'
 import { registerRequest } from 'redux/actions/authAction'
+import danger_icon from 'assets/icons/svg/nb_danger_icon.svg';
 
 const validationCondition_1 = {
   form: '#register-form-step-1',
@@ -91,9 +91,7 @@ class Register extends React.Component {
     validation(validationCondition_1);
     validation(validationCondition_2);
     validation(validationCondition_3);
-
-
-    this.renderStep(1);
+    this.renderStep(3);
 
   }
 
@@ -102,6 +100,9 @@ class Register extends React.Component {
   }
 
   renderStep = (step) => {
+    document.getElementById("reg-title").innerText = "Welcome!";
+    document.getElementById("reg-sub-title").innerText = "Đăng ký tài khoản của bạn!";
+
     if (step === 1) {
       document.querySelector(`.reg-deco-bar-2`).classList.remove("active");
       document.querySelector(`#reg-step-3-ind`).classList.remove("active");
@@ -134,6 +135,9 @@ class Register extends React.Component {
     document.querySelector("#reg-step-1-ind").classList.add("active");
     document.querySelector("#reg-step-1").style.display = "none";
     document.querySelector("#reg-step-2").style.display = "none";
+    document.getElementById("reg-title").innerText = "Thành công!"
+    document.getElementById("reg-sub-title").innerText = "Kiểm tra email của bạn."
+
     document.querySelector("#reg-step-3").style.display = "block";
   }
 
@@ -208,10 +212,11 @@ class Register extends React.Component {
 
     return (
       <div style={{ borderBottom: "40px solid white" }}>
+
         <div className="mg-bottom-10px">
           <img alt="" src={round_logo} className="login-icon" />
-          <div className="login-title">Welcome!</div>
-          <div className="w-100-percents t-a-center mg-top-10px">Đăng ký tài khoản của bạn</div>
+          <div className="login-title" id="reg-title">Welcome!</div>
+          <div className="w-100-percents t-a-center mg-top-10px" id="reg-sub-title">Đăng ký tài khoản của bạn</div>
         </div>
 
         <div className="register-form-c">
@@ -224,9 +229,10 @@ class Register extends React.Component {
               <div className="reg-step-ind" id="reg-step-3-ind" >3</div>
             </div>
             <div className="form-line mg-bottom-10px" />
-            
+
             {/* Step 1 */}
             <form id="register-form-step-1" >
+
               <div className="form-container " id="reg-step-1">
                 <div className="form-group">
                   <label className="form-label-required">Tên đăng nhập:</label>
@@ -258,11 +264,15 @@ class Register extends React.Component {
                     }}>Tiếp theo</button>
                   </div>
                 </div>
+                <div className="mg-top-10px d-flex">
+                  <div style={{ marginTop: "3px", marginRight: "4px" }}> Nếu đã có tài khoản, bạn có thể</div> <Link to="/login" className="link-label-m">đăng nhập</Link>
+                </div>
               </div>
             </form>
 
             {/* Step 2 */}
             <form id="register-form-step-2">
+
               <div className="form-container" id="reg-step-2">
                 <div className="form-group">
                   <label className="form-label-required">Email:</label>
@@ -337,7 +347,7 @@ class Register extends React.Component {
             {/* Step 3 */}
             <form id="register-form-step-3">
               <div className="form-container o-f-hidden" id="reg-step-3">
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label className="form-label-required">Xác nhận email:</label>
                   <input type="text" className="text-input" maxLength={6} id="register-form-confirm-code" placeholder="Nhập mã xác nhận " />
                   <div className="form-error-label-container">
@@ -353,13 +363,14 @@ class Register extends React.Component {
                       this.handleThirdStep();
                     }}>Xác nhận</button>
                   </div>
-                </div>
+                </div> */}
+                  Vui lòng xác nhận email trong hòm thư của bạn.
+                Sau <strong>2 giờ</strong> mail xác nhận của bạn sẽ bị vô hiệu.
               </div >
+              
             </form>
 
-            <div className="mg-top-10px d-flex">
-              <div style={{ marginTop: "3px", marginRight: "4px" }}> Nếu đã có tài khoản, bạn có thể</div> <Link to="/login" className="link-label-m">đăng nhập</Link>
-            </div>
+
 
           </div >
         </div >

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './UserItem.scss'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
-import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
+import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 import pencil_icon from 'assets/icons/svg/pencil_icon.svg'
 
 //combobox
@@ -41,7 +41,7 @@ class UserItem extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="j-c-end 2-2-m">
+                <div className="j-c-end">
                     <div className="d-flex-vertical j-c-space-between">
                         <div></div>
                         <div className="d-flex">

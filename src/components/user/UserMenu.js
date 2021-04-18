@@ -10,7 +10,7 @@ import { ClickAwayListener } from "@material-ui/core";
 import { logout } from 'redux/services/authServices'
 
 const userMenuOptions = [
-    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, link: "/user" },
+    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: "/user", isLink: true },
     { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
     {
         id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '',
@@ -96,7 +96,7 @@ class UserMenu extends React.Component {
 
         //Event handlers
         if (menuItem.value === "PROFILE") {
-            return <Redirect to="/user" />;
+            // return <Redirect to="/user" />;
         }
         if (menuItem.value === "LOGOUT") {
             this.props.logout();
@@ -114,8 +114,8 @@ class UserMenu extends React.Component {
                 <div className='d-flex'>
                     {menuItem.tip ?
 
-                        <>{menuItem.link ?
-                            <Link className='d-flex' to={menuItem.link}>
+                        <>{menuItem.isLink ?
+                            <Link className='d-flex' to={menuItem.to} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={{
                                     height: "27px",
                                     paddingTop: "7px"
@@ -140,15 +140,17 @@ class UserMenu extends React.Component {
                         </>
                         :
 
-                        <>{menuItem.link ? <Link className='d-flex' to={menuItem.link}>
-                            {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
-                                height: "23px",
-                                paddingTop: "0px",
-                                paddingBottom: "3px"
-                            }} alt="" src={menuItem.icon} /> : <></>}
-                            <div className='user-menu-text'>{menuItem.text}
-                            </div>
-                        </Link> :
+                        <>{menuItem.isLink ?
+                            <Link className='d-flex' to={menuItem.to} style={{ color: "var(--black)" }}>
+                                {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
+                                    height: "23px",
+                                    paddingTop: "0px",
+                                    paddingBottom: "3px"
+                                }} alt="" src={menuItem.icon} /> : <></>}
+                                <div className='user-menu-text'>{menuItem.text}
+                                </div>
+                            </Link>
+                            :
                             <div className='d-flex'>
                                 {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
                                     height: "23px",

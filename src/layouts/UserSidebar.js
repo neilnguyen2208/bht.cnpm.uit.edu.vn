@@ -56,11 +56,8 @@ class UserSidebar extends Component {
         <div className="left-sidebar" id="user-left-sidebar">
           {/* Hien thi avatar, thanh tich va ten role */}
           <div>
-            {/* Management Infor Layout */}
-            < div className="user-info-layout" >
+            {/* < div className="user-info-layout" >
               <div className="Avatar_Layout">
-                {/* This is the way to set avatar from a online server via Google Drive */}
-                {/* <img alt="avatar" className="side-bar-avatar" src={"https://cfaevjuhwlpmr2dgadvijg-on.drv.tw/BHTWeb/Avatar/" + this.username + ".png'} /> */}
                 <img alt="avatar" className="side-bar-avatar" src={avatarURL} />
               </div>
               <div className="achivement-layout">
@@ -77,21 +74,18 @@ class UserSidebar extends Component {
                   </div>
                 </div>
               </div>
-            </div >
+            </div > */}
 
             {/* Role and achivement port */}
-            <div className="Role_achivement-layout">
+            {getRoleNameByName(roleName) !== "User" && getRoleNameByName(roleName) !== "Guest" &&
               <div className="user-role">
                 {getRoleNameByName(roleName)}
               </div>
-            </div >
+            }
 
           </div>
 
-          {this.isTheFirstTimeLoaded ? <></> : <>:</>
-            //Trong tuong lai se check them role
-            //Hanh dong se lam trong lan render thanh cong dau tien
-          }
+
 
           < div className="vertical-menu-container"  >
             <div style={{ display: "block" }}>
@@ -118,15 +112,13 @@ class UserSidebar extends Component {
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to="/user" exact
-                  onClick={() => this.setState({})}> Thông tin tài khoản
+                  onClick={() => this.setState({})}> Trang cá nhân
                       </NavLink>
 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-
-                  to="/user/update-password"
-                  onClick={() => this.setState({})}>
-                  Cập nhật mật khẩu
+                  to={"/user/edit-info"} exact
+                  onClick={() => this.setState({})}>Thay đổi thông tin
                       </NavLink>
 
                 <NavLink className="vertical-sub-m-i"
@@ -134,6 +126,14 @@ class UserSidebar extends Component {
                   to={"/user/notification"}
                   onClick={() => this.setState({})}>
                   Thông báo
+                      </NavLink>
+
+
+                <NavLink className="vertical-sub-m-i"
+                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
+                  to={"/user/email-management"}
+                  onClick={() => this.setState({})}>
+                  Quản lý email
                       </NavLink>
 
                 <div className="decoration-underline" style={{ marginTop: "5px", marginBottom: "10px" }} />

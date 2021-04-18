@@ -42,21 +42,6 @@
 
 
 
-.blue-label {
-    width: 100%;
-    height: fit-content;
-    vertical-align: auto;
-    text-align: left;
-    font-family: "BarlowCondensed-Medium";
-    font-size: 1.1rem;
-    line-height: 100%;
-    color: var(--blue);
-    user-select: none;
-    min-width: 80px;
-    width: 100%;
-    margin-bottom: 5px;
-    margin-top: 2px;
-}
 
 .filter-label {
     margin-top: 2px;
@@ -231,4 +216,17 @@ label {
 .link-label-s:active,
 .link-label-m:active {
     opacity: 60%;
+}
+
+
+.blue-label-s {
+    @extend .link-label-s;
+    cursor: normal;
+    user-select: none;
+
+}
+
+
+.blue-label-s:hover {
+    opacity: 100%;
 }

@@ -91,8 +91,8 @@ class UserRoleManagement extends Component {
                             <thead>
                                 <tr>
                                     <th scope="col" style={{ borderRight: "1px white solid" }}>Tên Role</th>
-                                    <th scope="col">Ngày tạo</th>
-                                    <th scope="col" className="dummy-th"></th>
+                                    <th scope="col" style={{ borderRight: "1px white solid" }}>Mô tả</th>
+                                    <th scope="col">Ngày cập nhật</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,19 +112,20 @@ class UserRoleManagement extends Component {
                                             <div className="d-flex mg-top-5px">
                                                 {item.labels.map(label => {
                                                     if (label === "Default")
-                                                        return <div className="gray-table-label">
+                                                        return <div className="table-label">
                                                             {label}
                                                         </div>
-                                                    return <div className="table-label">
-                                                        {label}
-                                                    </div>
+                                                    // return <div className="table-label">
+                                                    //     {label}
+                                                    // </div>
                                                 })}
                                             </div>
                                         </td>
-                                        <td data-label="Ngày tạo">
-                                            {item.creationTime}
+                                        <td data-label="Mô tả">
+                                            Tạo ngày {item.creationTime}
                                         </td>
-                                        <td data-label="">
+                                        <td data-label="Ngày cập nhật">
+                                            {item.creationTime}
                                         </td>
 
                                     </tr>

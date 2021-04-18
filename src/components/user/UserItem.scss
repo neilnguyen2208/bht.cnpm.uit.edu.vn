@@ -35,7 +35,21 @@
     border: 1px solid white;
 }
 
-.user-item .edit-icon:hover {
+.user-profile .edit-icon {
+    height: 1.7rem;
+    width: 1.7rem;
+    margin-left: 0.6rem;
+    width: auto;
+    margin-top: -2px;
+    margin-bottom: auto;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.user-item .edit-icon:hover,
+.user-profile .edit-icon:hover {
     background: var(--light-gray);
     border: 1px solid var(--blue);
 }
@@ -92,7 +106,8 @@
     margin-bottom: 0px !important;
 }
 
-.user-item .email {
+.user-item .email,
+.user-profile .email {
     font-family: "Rosario";
     font-size: 1rem;
     line-height: 1em;
@@ -103,7 +118,8 @@
 
 }
 
-.user-item-icon {
+.user-item-icon,
+.user-profile-icon {
     width: 24px;
     height: 24px;
     padding: 2px;
@@ -122,6 +138,14 @@
     line-height: 1.5rem;
 }
 
+.user-profile .score {
+    position: relative;
+    width: 8rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-family: "BarlowCondensed-Medium";
+}
+
 .user-item .document-count,
 .user-item .post-count {
     position: relative;
@@ -132,9 +156,25 @@
 
 }
 
-.user-item .achievement-bar {
-    display: flex;
+.user-profile .document-count,
+.user-profile .post-count {
+    position: relative;
+    width: 2.4rem;
+    height: 1.5rem;
+    padding-left: 0.25rem;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+    font-family: "BarlowCondensed-Semibold";
+}
+
+.achievement-bar {
     font-family: "BarlowCondensed-Medium";
     font-size: 1rem;
     justify-content: space-between;
+
+}
+
+.user-item .achievement-bar {
+    @extend .achievement-bar;
+    display: flex;
 }

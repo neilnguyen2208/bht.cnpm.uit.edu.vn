@@ -8,13 +8,13 @@ export default class SearchHorizontalMenubar extends Component {
     return (
       <div>
         <div className="h-menu-bar">
-          <NavLink to="/tags/posts" className="h-menu-item" activeClassName='h-menu-item a-h-menu-item'>
+          <NavLink to="/tags/posts" className="h-menu-item" activeClassName='h-menu-item active'>
             Bài viết
           </NavLink>
-          <NavLink to="/tags/documents" className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
+          <NavLink to="/tags/documents" className="h-menu-item " activeClassName='h-menu-item active'>
             Tài liệu
           </NavLink>
-          <NavLink to="/tags/courses" className="h-menu-item " activeClassName='h-menu-item a-h-menu-item'>
+          <NavLink to="/tags/courses" className="h-menu-item " activeClassName='h-menu-item active'>
             Bài tập
           </NavLink>
         </div>

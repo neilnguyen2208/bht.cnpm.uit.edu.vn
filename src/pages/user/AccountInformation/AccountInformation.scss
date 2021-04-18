@@ -1,103 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
 
-.Show_Layout_Bounding_Layout {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
+.user-profile {
+    position: relative;
     // background: green;
 }
 
-.Account_Information_Bounding_Layout {
-    width: 60%;
-    padding: 5px;
-}
-
-.Account_Information_Layout {
-    border: 1px var(--gray) solid;
-    border-radius: 5px;
-    border-top: 5px solid var(--blue);
-    // background: pink;
-    padding: 10px;
-    width: 100%;
-}
-
-.Account_Information_Update_Password_Layout {
-    border: 1px var(--gray) solid;
-    border-radius: 5px;
-    border-top: 5px solid var(--blue);
-    width: 100%;
-}
-
-.Account_Information_Avatar_Layout {
-    display: flex;
-    justify-content: space-between;
-}
-
-.Account_Information_Avatar_Image {
-    margin: auto;
-    width: 250px;
-    height: 250px;
+.user-profile .cover-image {
+    height: 10rem;
     object-fit: cover;
-    border-radius: 5px;
-}
 
-// Role and achivement port:
-.Account_Information_Role_achivement-layout {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.Account_Information_achivement-layout {
-    user-select: none;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'BarlowCondensed-Medium';
-    font-size: 18px;
-    line-height: 30px;
-    color: var(--black);
     width: 100%;
 }
 
-.Account_Information_Achivement_Post_Doc_Count_Layout {
-    display: flex;
-    // width: 50%;
-    width: 200px;
-    justify-content: space-between;
+.profile-cover {
+    height: 7.5rem;
+    background: #f1f4fc;
+    width: 100%;
+    border-bottom: 1px solid var(--gray);
+    object-fit: cover;
 }
 
-//exclusive for update avatar
-.fileContainer p {
+.base-info-sub-container {
+    padding: 2rem;
+    padding-top: 0rem;
+    height: 9rem;
+    display: flex;
+    margin-top: -6.5rem;
+    position: relative;
+
+}
+
+.user-profile .base-info-container {
+    position: relative;
+    top: 0px;
+    left: 0px;
     margin: auto;
-    text-align: center;
-    font-size: 16px !important;
+    margin-bottom: 10px;
 }
 
-.fileUploader .fileContainer .chooseFileButton {
-    background: var(--blue) !important;
-    font-family: "BarlowCondensed-Medium";
-    font-weight: 600 !important;
-    font-size: 16px !important;
-    line-height: 22px;
-    height: 25px;
-    padding: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-    min-width: 80px;
-    border-radius: 5px !important;
+.info-sub-container {
+    display: flex;
+    width: 100%;
+    padding: 0.5rem;
+    margin-left: 10px;
+    height: fit-content;
+
 }
 
-.fileContainer .deleteImage {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #fff;
-    background: var(--red);
+.user-profile .avatar {
+    position: relative;
+    min-width: 8rem;
+    width: 8rem;
+    min-height: 8rem;
+    height: 8rem;
     border-radius: 50%;
-    text-align: center;
+    border: 0.25rem white solid;
+    box-shadow: 0px 0px 0.2rem 0px var(--gray);
+}
+
+.user-profile .info-sub-container-left {
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex
+}
+
+.follow-btn {
+    display: flex;
+    overflow: hidden;
+    margin-top: 1rem;
+    border: rgba(white, 0.8);
+    box-sizing: border-box;
+}
+
+.follow-btn-left {
+    display: flex;
+    background: white;
+    padding: 0.3rem;
+    padding-top: 0.1rem;
+    padding-left: 0.6rem;
+    padding-bottom: 0.1rem;
+    border: 1px solid var(--blue);
+
+}
+
+.follow-btn-left-text {
+    display: flex;
+    background: white;
+    padding: 0.3rem;
+    padding-left: 0px;
+    padding-top: 0.15rem;
+    color: var(--blue);
+
+    padding-bottom: 0.15rem;
+    font-family: "BarlowCondensed-SemiBold";
+    font-size: 1rem;
+
+}
+
+.follow-btn-right {
+    @extend .follow-btn-left-text;
+    background: var(--blue);
+    color: white;
+    padding: 0.6rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.user-profile .avatar:hover {
+    box-shadow: none;
+    opacity: 100%;
+}
+
+.avatar-container .avatar-overlay {
+    opacity: 0%;
+    position: absolute;
+    margin-top: -3rem;
+    height: 3rem;
+    width: 6rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    font-weight: bold;
-    line-height: 1.5rem !important;
-    width: 1.5rem !important;
-    font-size: 12px !important;
-    height: 1.5rem !important;
+    color: white;
+    text-align: center;
+    line-height: 3rem;
+    font-family: "BarlowCondensed-Medium";
+
+}
+
+.avatar-container.view .avatar-overlay {}
+
+.avatar-container.edit .avatar-overlay {
+    background: var(--black);
+    cursor: pointer;
+}
+
+.avatar-container.edit:hover .avatar-overlay {
+    opacity: 80%;
+}
+
+.user-profile .display-name {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.8rem;
+    margin-top: -0.2rem;
+    font-family: "RobotoSlab-Medium";
+    font-size: 1.5rem;
+    color: var(--black);
+    line-height: 1.8rem;
+}
+
+.about-me {
+    font-family: "BarlowCondensed-SemiBold";
+    margin-bottom: 0.6rem;
+    font-size: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--gray);
+}
+
+.followed-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.2rem;
+    margin-right: 0.2rem;
+}
+
+.followed-button {
+    border-radius: 0.25rem;
+    border: 1px solid var(--gray);
+    width: 7rem;
+    display: flex;
+    padding: 0.2rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    margin-top: 1rem;
+}
+
+
+.followed-button.active {
+    background-color: var(--light-gray);
+}
+
+
+.account-information-follow-dropdown {
+    margin-top: 0.2rem;
+    position: absolute;
+    transition: all 0.5;
+    box-sizing: border-box;
+    border-radius: 0.2rem;
+    border: 1px solid var(--gray);
+    user-select: none;
+    background: white;
+    box-shadow: 0px 0px 1px 0px var(--gray);
+    width: 7rem;
+}
+
+.about-me-detail {
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+    padding-bottom: 0.6rem;
+    line-height: 1.2rem;
+}
+
+.follow-menu-item {
+    position: relative;
+    box-sizing: border-box;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1rem;
+    user-select: none;
+    box-sizing: border-box;
+    color: var(--black);
+    text-decoration: none !important;
+    outline: 0px;
+    line-height: 1rem;
+    margin-top: 0.1rem;
+    cursor: pointer;
+    margin-bottom: 0.2rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    padding: 0.1rem;
+    padding-left: 0.2rem;
+
+}
+
+.follow-menu-item:hover {
+    color: var(--blue);
 }

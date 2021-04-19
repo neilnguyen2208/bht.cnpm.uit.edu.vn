@@ -17,7 +17,7 @@ class VerifyRegisterMail extends Component {
         message: <></>
     }
     confirmRegisterEmail(email, token) {
-        request.get(`/verify?email=${email}&token${token}`).then(
+        request.get(`/user/verify?email=${email}&token${token}`).then(
             response => {
                 this.setState({
                     message: <div className="mg-bottom-10px">

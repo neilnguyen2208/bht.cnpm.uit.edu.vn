@@ -1,32 +1,29 @@
 import React from "react";
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
-import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import { Link } from 'react-router-dom'
+import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 import './Login.scss'
 import round_logo from 'assets/images/round_logo.png'
-const validationCondition = {
-  form: '#register-form',
+
+const validationCondition_1 = {
+  form: '#forgot-pass-form',
   rules: [
     //truyen vao id, loai component, message
-    validation.isRequired('register-form-username', 'text-input', 'Tên đăng nhập không được để trống!'),
-    validation.noSpecialChar('register-form-username', 'text-input', 'Tên đăng nhập không được chứa ký tự đặc biệt!'),
-    validation.minLength('register-form-username', 'text-input', 'Tên đăng nhập không được chứa ký tự đặc biệt!'),
-
-
+    validation.isRequired('forgot-pass-email', 'text-input', 'Email không được để trống!'),
+    validation.isEmail('forgot-pass-email', 'text-input', 'Email không đúng định dạng!'),
+    validation.isRequired('forgot-pass-ReCAPTCHA', 'ReCAP')
   ],
 }
 
 class ForgotPasswordForm extends React.Component {
 
   componentDidMount() {
-    validation(validationCondition);
+    validation(validationCondition_1);
     this.renderStep(1);
 
   }
@@ -71,26 +68,40 @@ class ForgotPasswordForm extends React.Component {
     document.querySelector("#forgot-pass-step-3").style.display = "block";
   }
 
-  handleUploadBtnClick = () => {
-    if (styleFormSubmit(validationCondition)) {
-      openModal("confirmation",
-        {
-          title: "Thay đổi tài liệu",
-          text: "Hành động này cần phê duyệt và không thể hoàn tác.",
-          confirmText: "Xác nhận",
-          cancelText: "Huỷ",
-          onConfirm: () => {
-            this.props.editADocument(this.props.id, {});
-            closeModal(); //close confimation popup
-            this.closeModal(); //close edit document popup
-          }
-        })
+  handleFirstStep = () => {
+    if (styleFormSubmit(validationCondition_1)) { // thuc hien kiem tra va tra ve ket qua true hay false.
+
+      //gán data cho hai field là password và username.
+      this.FORGOT_PASS_DTO = {
+        ...this.FORGOT_PASS_DTO,
+        "email": document.getElementById('forgot-pass-email').value,
+      }
+
+      //check if username existed
+      this.renderStep(2);
     }
+
   }
 
+  handleSecondStep = () => {
+    // if (styleFormSubmit(validationCondition_2)) { // thuc hien kiem tra va tra ve ket qua true hay false.
 
-  closeModal = () => {
-    store.dispatch(closeBigModal())
+    //   this.FORGOT_PASS_DTO = {
+    //     ...this.FORGOT_PASS_DTO,
+    //     "email": document.getElementById('register-form-email').value,
+    //     "displayName": document.getElementById('register-form-displayname').value
+    //   }
+    //   this.props.register(this.FORGOT_PASS_DTO);
+    //   openModal("loader", { text: "Đang tạo thông tin tài khoản" });
+
+    //   //check if username existed
+    // }
+  }
+
+  handleThirdStep = () => {
+    // if (styleFormSubmit(validationCondition_3)) {
+
+    // }
   }
 
   render() {
@@ -117,17 +128,33 @@ class ForgotPasswordForm extends React.Component {
             <div className="form-container o-f-hidden" id="forgot-pass-step-1">
               <div className="form-group">
                 <label className="form-label-required">Email:</label>
-                <input type="text" className="text-input" id="register-form-username" placeholder="Nhập email " />
+                <input type="text" className="text-input" id="forgot-pass-email" placeholder="Nhập email " />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
               </div>
-              <div className="form-line" />
+
+              <div className="form-tip-label">
+                Nếu email hợp lệ bạn sẽ nhận được mã xác nhận trong email của mình.
+              </div>
+
+              <div className="form-group pd-top-10px">
+                <CustomReCAPTCHA
+                  id="forgot-pass-ReCAPTCHA"
+                  onTokenChange={value => this.onReCAPCHATokenChange(value)}
+                />
+
+                <div className="form-error-label-container">
+                  <span className="form-error-label" ></span>
+                </div>
+              </div>
+
+              <div className="form-line pd-top-10px" />
               <div className="form-group mg-top-10px">
                 <div className="j-c-end">
                   <button className="blue-button" onClick={(e) => {
                     e.preventDefault();
-                    this.renderStep(2);
+                    this.handleFirstStep();
                   }}>Tiếp theo</button>
                 </div>
               </div>

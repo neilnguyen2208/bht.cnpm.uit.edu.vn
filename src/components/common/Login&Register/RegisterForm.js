@@ -16,7 +16,6 @@ import HoverHint from "../HoverHint/HoverHint";
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 import { register } from 'redux/services/authServices'
 import { registerRequest } from 'redux/actions/authAction'
-import danger_icon from 'assets/icons/svg/nb_danger_icon.svg';
 
 const validationCondition_1 = {
   form: '#register-form-step-1',
@@ -91,7 +90,7 @@ class Register extends React.Component {
     validation(validationCondition_1);
     validation(validationCondition_2);
     validation(validationCondition_3);
-    this.renderStep(3);
+    this.renderStep(1);
 
   }
 

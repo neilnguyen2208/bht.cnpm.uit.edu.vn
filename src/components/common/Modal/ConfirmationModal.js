@@ -1,7 +1,6 @@
 import React from "react";
 import './Modal.scss'
 import 'components/styles/Button.scss'
-import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png'
 import confirmation_icon from 'assets/icons/300x300/confirmation_icon.png'
 import { closeModal } from "redux/services/modalServices";
 import question_icon from 'assets/icons/24x24/question_icon_24x24.png'

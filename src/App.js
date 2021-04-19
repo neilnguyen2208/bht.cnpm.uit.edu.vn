@@ -124,7 +124,7 @@ const App = () => {
                         <Route exact path="/forgot-password" component={ForgotPassword} />
 
                         {/* verify email url */}
-                        <Route exact path="/user/verify" component={VerifyRegisterMail} />
+                        <Route exact path="/verify" component={VerifyRegisterMail} />
     "
 
                     </Switch>

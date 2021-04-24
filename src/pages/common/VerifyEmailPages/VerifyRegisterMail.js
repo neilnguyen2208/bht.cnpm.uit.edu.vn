@@ -16,7 +16,7 @@ class VerifyRegisterMail extends Component {
     state = {
         message: <></>
     }
-    confirmRegisterEmail(email, token) {
+    confirmRegisterEmail = (email, token) => {
         request.get(`/user/verify?email=${email}&token${token}`).then(
             response => {
                 this.setState({

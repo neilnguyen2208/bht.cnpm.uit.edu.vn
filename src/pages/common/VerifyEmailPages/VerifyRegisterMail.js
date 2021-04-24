@@ -13,11 +13,13 @@ class VerifyRegisterMail extends Component {
         this.confirmRegisterEmail(this.email, this.token);
         this.timeOut = null;
     }
+
     state = {
         message: <></>
     }
+
     confirmRegisterEmail = (email, token) => {
-        request.get(`/user/verify?email=${email}&token${token}`).then(
+        request.get(`/user/verify?email=${email}&token=${token}`).then(
             response => {
                 this.setState({
                     message: <div className="mg-bottom-10px">
@@ -32,10 +34,10 @@ class VerifyRegisterMail extends Component {
                         <div style={{ marginTop: "0.6rem", marginLeft: "0.2rem" }} ></div>
                     </div>
                 });
-                this.timeOut = setTimeout(() => { window.location.href = appBaseUrl }, 3000);
+                // this.timeOut = setTimeout(() => { window.location.href = appBaseUrl }, 3000);
             }
         ).catch(error => {
-            this.timeOut = setTimeout(() => { window.location.href = appBaseUrl }, 1000);
+            // this.timeOut = setTimeout(() => { window.location.href = appBaseUrl }, 1000);
         }
         )
     }

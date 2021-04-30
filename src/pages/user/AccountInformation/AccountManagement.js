@@ -6,6 +6,9 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserSidebar from "layouts/UserSidebar"
 import { formatNumber } from 'utils/miscUtils'
+import Editor from 'components/common/CustomCKE/CKEditor';
+import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
+import image_icon from 'assets/icons/svg/white_image_icon.svg';
 
 class UpdatePassword extends Component {
     constructor(props) {
@@ -21,73 +24,65 @@ class UpdatePassword extends Component {
             <div className="left-sidebar-layout">
                 <UserSidebar />
                 <div className="content-layout">
-                    <Titlebar title="CHỈNH SỬA THÔNG TIN " />
+                    <Titlebar />
                     <div className="content-container">
-
-                        <div className="base-info-container">
-                            <div className="profile-cover" />
-
-                            <div className="base-info-sub-container" >
-                                <div className="avatar-container view">
-                                    <img className="avatar" src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="cover" />
-                                    {this.isFollowed ?
-                                        <div className="avatar-overlay" >Followed</div>
-                                        :
-                                        <></>}
+                        <div className="setting-title">Cập nhật thông tin</div>
+                        <div style={{ marginTop: "2rem", marginLeft: "1rem", marginRight: "1rem", display: "flex" }} >
+                            <div className="edit-profile-avatar-container">
+                                <img className="edit-profile-avatar" src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="cover" />
+                                <div className="overlay">
+                                    <div className="mg-auto flex">
+                                        <img style={{ width: "1.25rem", height: "1.65rem", paddingTop: "0.4rem", marginRight: "0.3rem" }} src={image_icon} alt="" />
+                                        <div>
+                                            Cập nhật avatar
+                                    </div>
+                                    </div>
                                 </div>
-                                <div className="info-sub-container">
-                                    <div className="info-sub-container-left" >
-                                        <div >
-                                            <div className="j-c-space-between">
-                                                <div className="display-name">Nguyễn Văn Đông</div>
-                                            </div>
-                                            <div className="email">dongnv.since1999@gmail.com</div>
-                                        </div>
-                                        <div className="d-flex-vertical j-c-space-between">
 
-                                        </div>
+                            </div>
+                            <form className="form-container" style={{ marginTop: "0px" }} id="edit-profile">
+                                <div className="form-group" >
+                                    <label className="form-label">Tên hiển thị:</label>
+                                    <div className="d-flex">
+                                        <input type="text" className="text-input" onChange={() => this.setState({ isShowreCapcha: true })} id="register-form-confirm-email" placeholder="Email của bạn" />
                                     </div>
-                                    <div className="j-c-end">
-                                        <div className="achievement-bar" >
-                                            <div style={{ borderBottom: "var(--gray) 1px solid" }}>
-                                                <div className="d-flex">
-                                                    <div className="score">Score: {formatNumber(260)}</div>
-                                                    <div className="score">Followers: {formatNumber(2000)}</div>
-                                                </div>
-                                                <div className="d-flex">
-                                                    <div className="score"> Bài viết: {formatNumber(2)} </div>
-                                                    <div className="score"> Tài liệu: {formatNumber(6)}</div>
-                                                </div>
-                                            </div>
-                                            <div className="score" >
-
-                                            </div>
-                                        </div>
+                                    <div className="form-error-label-container">
+                                        <span className="form-error-label" ></span>
                                     </div>
-                                </div >
+                                </div>
 
+                                {/* CKEditor */}
+                                <div className="form-group">
+                                    <div className="form-label">Giới thiệu về tôi:</div>
+                                    <Editor
+                                        config={SimpleCKEToolbarConfiguration}
+                                        id="cr-document-description"
+                                        placeholder='Start typing here...'
+                                        onChange={this.handleEditorChange}
+                                        data="<p>Nhập nội dung tài liệu ...</p>"
+                                        validation
+                                    />
+                                    <div className="form-error-label-container">
+                                        <span className="form-error-label" ></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-
+                        <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+                            <div className="form-line pd-top-10px mg-bottom-10px" />
+                            <div className="d-flex">
+                                <button className="blue-button">Lưu</button>
+                                <button className="white-button mg-left-10px">Huỷ</button>
                             </div>
                         </div>
 
-
-                        <div className="about-me">
-                            About me
-                                    </div>
-                        <div className="about-me-detail">
-                            Hi all!
-                            I am a UIT - VNUHCM, Vietnam University student. Skepticism, nihilism, purism and communism are of special concern to me. Functional programming, quantum computing, generative model (GAN) are the fields in which I work. I really enjoyed Haskell, JavaScript, and Python.
-                                    </div>
-                    </div >
+                    </div>
                 </div >
             </div >
         );
     }
 
-    //#endregion
-
-    //#region main handler to call APIs
     handlerUpdatePassword = (e) => {
         e.preventDefault();
 

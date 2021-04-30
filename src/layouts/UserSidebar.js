@@ -117,8 +117,8 @@ class UserSidebar extends Component {
 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to={"/user/edit-info"} exact
-                  onClick={() => this.setState({})}>Thay đổi thông tin
+                  to={"/user/account-management"} exact
+                  onClick={() => this.setState({})}>Cập nhật thông tin
                       </NavLink>
 
                 <NavLink className="vertical-sub-m-i"

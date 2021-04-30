@@ -20,6 +20,35 @@
     object-fit: cover;
 }
 
+.edit-profile-avatar-container {
+    margin-right: 1rem;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    height: fit-content;
+    height: 12rem;
+    width: 12rem;
+}
+
+.edit-profile-avatar {
+    width: 12rem;
+    height: 12rem;
+    margin-bottom: 1rem;
+}
+
+.edit-profile-avatar-container .overlay {
+    background: #535A60;
+    height: 2rem;
+    color: white;
+    width: 100%;
+    text-align: center;
+    line-height: 2rem;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    cursor: pointer;
+}
+
 .base-info-sub-container {
     padding: 2rem;
     padding-top: 0rem;

@@ -24,7 +24,7 @@ class VerifyRegisterMail extends Component {
                 this.setState({
                     message: <div className="mg-bottom-10px">
                         <img alt="" src={round_logo} className="login-icon" />
-                        <div className="login-title" >Success!</div>
+                        <div className="gray-form-title" >Success!</div>
                         <div className="d-flex">
                             <div className="d-flex" style={{ margin: "auto", marginTop: "1rem", borderTop: "1px solid #c4c4c4" }}  >
                                 <img style={{ width: "1.3rem", marginTop: "0.5rem", height: "1.3rem" }} src={success_icon} alt="" />

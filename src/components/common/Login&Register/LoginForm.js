@@ -93,7 +93,7 @@ class Login extends React.Component {
           <form className="login-form" id="login-form">
             <div className="mg-bottom-10px">
               <img alt="" src={round_logo} className="login-icon" />
-              <div className="login-title">Welcome!</div>
+              <div className="gray-form-title">Welcome!</div>
             </div>
             <div className="form-container">
               <div className="form-group">

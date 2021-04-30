@@ -15,6 +15,60 @@
 
 }
 
+.h-filter-c {
+    right: 0px;
+    position: absolute;
+    margin-top: -1.5rem;
+}
+
+
+.h-filter-c+div {
+    margin-top: 1.5rem;
+}
+
+.h-filter {
+    justify-content: flex-end;
+    border-radius: 0.3rem;
+    display: flex;
+    width: fit-content;
+    box-sizing: border-box;
+}
+
+.h-filter-item {
+    padding: 0.25rem 0.5rem;
+    font-family: "BarlowCondensed-Medium";
+    font-size: 1.1rem;
+    border: 1px solid var(--gray);
+    background: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+.h-filter-item:hover {
+    box-shadow: 0px 0px 0.2rem 0px var(--gray);
+    border: 1px var(--blue) solid;
+}
+
+.h-filter-item.first {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+
+.h-filter-item.last {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+}
+
+.h-filter-item+.h-filter-item {
+    border-left: none;
+}
+
+.h-filter-item.active {
+    background: var(--blue);
+    color: white;
+    border: 1px solid var(--blue);
+}
+
 .current-tag {
     position: relative;
     display: flex;

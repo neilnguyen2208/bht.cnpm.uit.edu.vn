@@ -84,24 +84,11 @@ class ForgotPasswordForm extends React.Component {
   }
 
   handleSecondStep = () => {
-    // if (styleFormSubmit(validationCondition_2)) { // thuc hien kiem tra va tra ve ket qua true hay false.
-
-    //   this.FORGOT_PASS_DTO = {
-    //     ...this.FORGOT_PASS_DTO,
-    //     "email": document.getElementById('register-form-email').value,
-    //     "displayName": document.getElementById('register-form-displayname').value
-    //   }
-    //   this.props.register(this.FORGOT_PASS_DTO);
-    //   openModal("loader", { text: "Đang tạo thông tin tài khoản" });
-
-    //   //check if username existed
-    // }
+  
   }
 
   handleThirdStep = () => {
-    // if (styleFormSubmit(validationCondition_3)) {
-
-    // }
+  
   }
 
   render() {
@@ -109,7 +96,7 @@ class ForgotPasswordForm extends React.Component {
       <div >
         <div className="mg-bottom-10px">
           <img alt="" src={round_logo} className="login-icon" />
-          <div className="login-title">Welcome!</div>
+          <div className="gray-form-title">Welcome!</div>
           <div className="w-100-percents t-a-center mg-top-10px">Lấy lại mật khẩu của bạn</div>
         </div>
 

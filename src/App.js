@@ -10,7 +10,9 @@ import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
 import AdminLayout from 'layouts/AdminSidebar'
 import SearchPostByTag from "pages/common/SearchResult/SearchPostByTag";
-import AccountInformation from "pages/user/AccountInformation/AccountInformation";
+import ProfilePost from "pages/user/AccountInformation/Profile_Post";
+import ProfileDocument from "pages/user/AccountInformation/Profile_Document";
+
 import UpdatePassword from "pages/user/AccountInformation/UpdatePassword";
 import MyDocuments from "pages/user/MyDocuments/MyDocuments";
 import MyPosts from "pages/user/MyPosts/MyPosts";
@@ -48,7 +50,9 @@ import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
 import ForgotPassword from 'pages/common/Login&Register/ForgotPassword'
-
+import VerifyMailForgotPassword from 'pages/common/VerifyEmailPages/VerifyMailForgotPassword'
+import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
+import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -84,7 +88,12 @@ const App = () => {
                         <Route path="/tags/documents/" exact component={SearchDocumentByTag} />
 
                         {/* user layout */}
-                        <Route exact path="/user" component={AccountInformation} />
+                        <Route exact path="/user" component={ProfilePost} />
+                        <Route exact path="/user/post" component={ProfilePost} />
+                        <Route exact path="/user/document" component={ProfileDocument} />
+                        <Route exact path="/user/email-management" component={EmailManagement} />
+                        <Route exact path="/user/account-management" component={AccountManagement} />
+
                         <Route exact path="/user/update-password" component={UpdatePassword} />
                         <Route exact path="/user/my-documents" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
@@ -96,12 +105,8 @@ const App = () => {
                         <Route exact path="/courses/:id/video" component={Video} />
                         <Route exact path="/courses/:id/exercise" component={Exercise} />
 
-                        {/* for admin only */}
-                        {/* Admin and collab page content admin */}
-                        {/* <Route exact path="/admin-sidebar" component={AdminSidebar} /> */}
 
                         {/* for admin */}
-
                         <RequireLoginRoute exact path="/admin/post-management" component={PostManagement} permissions={["Page.Post.Management"]} />
                         <RequireLoginRoute exact path="/admin/post-management/report" component={PostReportManagement} permissions={["Page.Post.ReportManagement"]} />
                         <RequireLoginRoute exact path="/admin/post-management/approval" component={PostApproving} permissions={["Page.Post.Approval"]} />
@@ -125,6 +130,8 @@ const App = () => {
 
                         {/* verify email url */}
                         <Route exact path="/verify" component={VerifyRegisterMail} />
+                        <Route exact path="/verify-forgot-password" component={VerifyMailForgotPassword} />
+
     "
 
                     </Switch>

@@ -214,7 +214,7 @@ class Register extends React.Component {
 
         <div className="mg-bottom-10px">
           <img alt="" src={round_logo} className="login-icon" />
-          <div className="login-title" id="reg-title">Welcome!</div>
+          <div className="gray-form-title" id="reg-title">Welcome!</div>
           <div className="w-100-percents t-a-center mg-top-10px" id="reg-sub-title">Đăng ký tài khoản của bạn</div>
         </div>
 
@@ -346,27 +346,11 @@ class Register extends React.Component {
             {/* Step 3 */}
             <form id="register-form-step-3">
               <div className="form-container o-f-hidden" id="reg-step-3">
-                {/* <div className="form-group">
-                  <label className="form-label-required">Xác nhận email:</label>
-                  <input type="text" className="text-input" maxLength={6} id="register-form-confirm-code" placeholder="Nhập mã xác nhận " />
-                  <div className="form-error-label-container">
-                    <span className="form-error-label" ></span>
-                  </div>
-                </div>
-                <div className="form-line mg-top-10px" />
-                <div className="form-group mg-top-10px">
 
-                  <div className="j-c-end mg-top-10px">
-                    <button className="blue-button" onClick={(e) => {
-                      e.preventDefault();
-                      this.handleThirdStep();
-                    }}>Xác nhận</button>
-                  </div>
-                </div> */}
-                  Vui lòng xác nhận email trong hòm thư của bạn.
+                Vui lòng xác nhận email trong hòm thư của bạn.
                 Sau <strong>2 giờ</strong> mail xác nhận của bạn sẽ bị vô hiệu.
               </div >
-              
+
             </form>
 
 

@@ -22,6 +22,18 @@
 
 }
 
+.setting-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    margin-top: 1rem;
+    padding-bottom: 0.3rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    width: calc(100%-1rem);
+    border-bottom: 1px solid var(--gray);
+}
+
 .c-title-bar .modal-close-icon {
     position: absolute;
     right: 12px;
@@ -31,6 +43,6 @@
     cursor: pointer;
 }
 
-.c-title-bar .modal-close-icon:hover{
+.c-title-bar .modal-close-icon:hover {
     opacity: 80%;
 }

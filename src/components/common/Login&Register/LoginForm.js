@@ -1,7 +1,6 @@
 import React from "react";
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
-import store from 'redux/store/index.js'
+import { closeBigModal } from "redux/services/modalServices";
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';

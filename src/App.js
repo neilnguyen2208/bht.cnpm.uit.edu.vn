@@ -13,7 +13,6 @@ import SearchPostByTag from "pages/common/SearchResult/SearchPostByTag";
 import ProfilePost from "pages/user/AccountInformation/Profile_Post";
 import ProfileDocument from "pages/user/AccountInformation/Profile_Document";
 
-import UpdatePassword from "pages/user/AccountInformation/UpdatePassword";
 import MyDocuments from "pages/user/MyDocuments/MyDocuments";
 import MyPosts from "pages/user/MyPosts/MyPosts";
 import SearchTag from "pages/common/SearchResult/SearchTag";
@@ -53,6 +52,7 @@ import ForgotPassword from 'pages/common/Login&Register/ForgotPassword'
 import VerifyMailForgotPassword from 'pages/common/VerifyEmailPages/VerifyMailForgotPassword'
 import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
+import Security from "pages/user/AccountInformation/Sercurity";
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -60,6 +60,7 @@ import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 import RequireLoginRoute from 'components/common/BaseComponents/RequireLoginRoute'
+
 
 const App = () => {
     return (
@@ -94,7 +95,6 @@ const App = () => {
                         <Route exact path="/user/email-management" component={EmailManagement} />
                         <Route exact path="/user/account-management" component={AccountManagement} />
 
-                        <Route exact path="/user/update-password" component={UpdatePassword} />
                         <Route exact path="/user/my-documents" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
@@ -127,12 +127,14 @@ const App = () => {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/forgot-password" component={ForgotPassword} />
+                        <Route exact path="/user/sercurity" component={Security} />
+
 
                         {/* verify email url */}
                         <Route exact path="/verify" component={VerifyRegisterMail} />
                         <Route exact path="/verify-forgot-password" component={VerifyMailForgotPassword} />
 
-    "
+    
 
                     </Switch>
                     <Footer />

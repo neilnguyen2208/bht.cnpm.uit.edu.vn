@@ -4,21 +4,15 @@ import { NavLink } from "react-router-dom";
 
 // import resource image, icon
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
-import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
-import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
 import account_management_icon from 'assets/icons/24x24/account_management_icon_24x24.png'
 import gray_nb_write_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 
-//import scss
 import 'layouts/LeftSidebarLayout.scss'
 import 'components/styles/Label.scss'
 import 'layouts/Layout.scss'
-
-//import for Redux
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCurrentUser } from 'redux/services/userServices'
 
 //import for permission
 import {
@@ -119,6 +113,13 @@ class UserSidebar extends Component {
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to={"/user/account-management"} exact
                   onClick={() => this.setState({})}>Cập nhật thông tin
+                      </NavLink>
+
+                <NavLink className="vertical-sub-m-i"
+                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
+                  to={"/user/sercurity"} exact
+                  onClick={() => this.setState({})}>
+                  Cài đặt bảo mật
                       </NavLink>
 
                 <NavLink className="vertical-sub-m-i"

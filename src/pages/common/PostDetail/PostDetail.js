@@ -19,6 +19,7 @@ import {
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
+import CommentSection from 'components/comment/CommentSection'
 
 class PostDetail extends Component {
 
@@ -52,49 +53,53 @@ class PostDetail extends Component {
 
     render() {
         return (
-            <div className="d-flex">
-                <div className="mg-auto">
-                    <div className="d-flex">
-                        <div className="post-detail-container" >
-                            {this.props.isLoadDone ?
-                                <div>
-                                    <Metadata
-                                        id={this.props.currentPost.id}
-                                        title={this.props.currentPost.title}
-                                        categoryName={this.props.currentPost.categoryName}
-                                        categoryID={this.props.currentPost.categoryID}
-                                        readingTime={this.props.currentPost.readingTime}
-                                        authorName={this.props.currentPost.authorName}
-                                        authorAvatarURL={this.props.currentPost.authorAvatarURL}
-                                        publishDtm={this.props.currentPost.publishDtm}
+            <div>
+                <div className="d-flex">
+                    <div className="mg-auto">
+                        <div className="d-flex">
+                            <div className="post-detail-container" >
+                                {this.props.isLoadDone ?
+                                    <div>
+                                        <Metadata
+                                            id={this.props.currentPost.id}
+                                            title={this.props.currentPost.title}
+                                            categoryName={this.props.currentPost.categoryName}
+                                            categoryID={this.props.currentPost.categoryID}
+                                            readingTime={this.props.currentPost.readingTime}
+                                            authorName={this.props.currentPost.authorName}
+                                            authorAvatarURL={this.props.currentPost.authorAvatarURL}
+                                            publishDtm={this.props.currentPost.publishDtm}
 
-                                    />
+                                        />
 
-                                    {/* content here */}
-                                    <div className="ck-editor-output" dangerouslySetInnerHTML={{
-                                        __html:
-                                            this.props.currentPost.content
-                                    }} />
+                                        {/* content here */}
+                                        <div className="ck-editor-output" dangerouslySetInnerHTML={{
+                                            __html:
+                                                this.props.currentPost.content
+                                        }} />
 
-                                    <div className="mg-top-10px mg-bottom-10px" >
-                                        {this.props.currentPost.tags.map(item =>
-                                            <Tag isReadOnly={true} tag={item} />
-                                        )}
+                                        <div className="mg-top-10px mg-bottom-10px" >
+                                            {this.props.currentPost.tags.map(item =>
+                                                <Tag isReadOnly={true} tag={item} />
+                                            )}
+                                        </div>
+                                        <NormalReactionbar
+                                            id={this.props.currentPost.id}
+                                            likeCount={this.props.currentPost.likeCount}
+                                            commentCount={this.props.currentPost.commentCount}
+                                            likedStatus={this.props.currentPost.likeStatus}
+                                            savedStatus={this.props.currentPost.savedStatus}
+                                        // type="PREVIEW"
+                                        />
+                                        {/* <Comment></Comment> */}
                                     </div>
-                                    <NormalReactionbar
-                                        id={this.props.currentPost.id}
-                                        likeCount={this.props.currentPost.likeCount}
-                                        commentCount={this.props.currentPost.commentCount}
-                                        likedStatus={this.props.currentPost.likeStatus}
-                                        savedStatus={this.props.currentPost.savedStatus}
-                                    // type="PREVIEW"
-                                    />
-                                    {/* <Comment></Comment> */}
-                                </div>
-                                : <Loader />}
-                        </div>
-                        <div>
-                            {/* <div className="relative-sidebar">
+                                    : <Loader />}
+
+                                <CommentSection />
+
+                            </div>
+                            <div>
+                                {/* <div className="relative-sidebar">
                                 <div className="relative-title">
                                     MỤC LỤC
                                 </div>
@@ -105,14 +110,15 @@ class PostDetail extends Component {
                                 </div >
                             </div > */}
 
-                            {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
-                                <RelativePosts title={"CÙNG TÁC GIẢ"} items={
-                                    this.props.sameAuthor} />
-                                : <Loader />}
-                            {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
-                                <RelativePosts title={"CÙNG DANH MỤC"}
-                                    items={this.props.sameCategory} /> : <Loader />
-                            }
+                                {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
+                                    <RelativePosts title={"CÙNG TÁC GIẢ"} items={
+                                        this.props.sameAuthor} />
+                                    : <Loader />}
+                                {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
+                                    <RelativePosts title={"CÙNG DANH MỤC"}
+                                        items={this.props.sameCategory} /> : <Loader />
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

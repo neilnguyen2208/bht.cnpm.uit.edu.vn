@@ -5,12 +5,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserSidebar from "layouts/UserSidebar"
-import { formatNumber } from 'utils/miscUtils'
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
 import image_icon from 'assets/icons/svg/white_image_icon.svg';
 
-class UpdatePassword extends Component {
+class AccountManagement extends Component {
     constructor(props) {
         super();
     }
@@ -31,7 +30,7 @@ class UpdatePassword extends Component {
                             <div className="edit-profile-avatar-container">
                                 <img className="edit-profile-avatar" src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="cover" />
                                 <div className="overlay">
-                                    <div className="mg-auto flex">
+                                    <div className="mg-auto d-flex">
                                         <img style={{ width: "1.25rem", height: "1.65rem", paddingTop: "0.4rem", marginRight: "0.3rem" }} src={image_icon} alt="" />
                                         <div>
                                             Cập nhật avatar
@@ -83,11 +82,6 @@ class UpdatePassword extends Component {
         );
     }
 
-    handlerUpdatePassword = (e) => {
-        e.preventDefault();
-
-    }
-
 }
 
 //#region for Redux
@@ -99,5 +93,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UpdatePassword));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountManagement));
  //#endregion

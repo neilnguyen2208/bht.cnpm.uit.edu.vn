@@ -1,6 +1,5 @@
 
 import {
-    get_QuickSearchResultRequest,
     get_QuickSearchResultSuccess,
     get_QuickSearchResultFailure,
 } from "redux/actions/commonAction.js";

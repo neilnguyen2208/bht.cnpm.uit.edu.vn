@@ -48,7 +48,8 @@ export default function AuthReducer(state = initialState, action) {
           "Page.Post.Like",
           "Page.Post.Save",
           "Page.Post.Management",
-          "Page.Post.ReportManagement"
+          "Page.Post.ReportManagement", 
+          "Page.Post.Comment"
         ]
       };
     case REGISTER_SUCCESS:

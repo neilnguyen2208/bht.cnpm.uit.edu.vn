@@ -72,6 +72,7 @@ class PostDetail extends Component {
 
                                         />
 
+
                                         {/* content here */}
                                         <div className="ck-editor-output" dangerouslySetInnerHTML={{
                                             __html:
@@ -83,15 +84,15 @@ class PostDetail extends Component {
                                                 <Tag isReadOnly={true} tag={item} />
                                             )}
                                         </div>
+                                        
                                         <NormalReactionbar
                                             id={this.props.currentPost.id}
                                             likeCount={this.props.currentPost.likeCount}
                                             commentCount={this.props.currentPost.commentCount}
                                             likedStatus={this.props.currentPost.likeStatus}
                                             savedStatus={this.props.currentPost.savedStatus}
-                                        // type="PREVIEW"
+                                        // type="DETAIL"
                                         />
-                                        {/* <Comment></Comment> */}
                                     </div>
                                     : <Loader />}
 

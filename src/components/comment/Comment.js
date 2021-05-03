@@ -7,55 +7,23 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-import { post_ReportAPostReset } from 'redux/actions/postAction'
-import store from 'redux/store/index'
+import { openModal} from 'redux/services/modalServices'
 import { validation } from 'utils/validationUtils'
-import {
-  mySelfMenuItemList,
-  unHighlightAdminMenuItemList
-} from 'constants.js'
 
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
 
-//constants
-import { itemType } from 'constants.js'
-
 //components
-import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+import Reply from './Reply.js'
+import CommentReactionbar from './CommentReactionbar';
+
+import { commentMenuItems } from 'constants.js';
+import PopupMenu from 'components/common/PopupMenu/PopupMenu.js';
 
 class Comment extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.id = this.props.id;
-    this.title = this.props.title;
-    this.image = this.props.image;
-  }
-
   onPopupMenuItemClick = (selectedItem) => {
-    if (selectedItem.value === "DELETE_POST") {
-      //show confirmation popup and detete id verify
-      openModal("confirmation",
-        {
-          title: "Xoá bài viết",
-          text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
-          confirmText: "Xác nhận",
-          cancelText: "Huỷ",
-          onConfirm: () => {
-            this.props.deleteAPost(this.props.id);
-            closeModal();
-          }
-        })
-    }
-
-    if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-post", { id: this.props.id });
-    }
-
     if (selectedItem.value === "REPORT_POST") {
       openModal("form", {
         id: `rpp-form-modal`,//report post
@@ -94,108 +62,44 @@ class Comment extends Component {
         }
       });
     }
-
-    if (selectedItem.value === "HIGHLIGHT_POST") {
-      openModal("confirmation", {
-        title: "Ghim bài viết",
-        text: "Xác nhận ghim bài viết?",
-        onConfirm: () => {
-          this.props.highlightAPost(this.props.id);
-          closeModal();
-        }
-      });
-    }
-
-    if (selectedItem.value === "UNHIGHLIGHT_POST") {
-      openModal("confirmation", {
-        title: "Bỏ ghim bài viết",
-        text: "Xác nhận bỏ ghim bài viết?",
-        onConfirm: () => {
-          this.props.deleteHighlightAPost(this.props.id);
-          closeModal();
-        }
-      });
-    }
-
-    if (selectedItem.value === "STICK_TO_TOP_POST") {
-      openModal("confirmation", {
-        title: "Ghim bài viết lên đầu",
-        text: "Xác nhận ghim bài viết lên đâu?",
-        onConfirm: () => {
-          this.props.stickAPostToTop(this.props.id);
-          closeModal();
-        }
-      });
-    }
   }
 
-  onConfirmReport = (DTO) => {
-    closeModal();
-    closeModal();
-    this.props.reportAPost(DTO.id, { "reason": DTO.reason });
-  }
 
   render() {
 
-    //only set for report.
-    if (this.props.isHaveReported) {
-      openBLModal({ text: "Report bài viết thành công!", type: "success" });
-      store.dispatch(post_ReportAPostReset())
-    }
+    //cipm: comment item popup menu
 
     return (
-      <div className="metadata" >
-        <div className="j-c-space-between"  >
-          <div className="d-flex">
-            <div className="d-flex">
-              <div className="category">
-                {this.props.categoryName}
+      <li>
+        <div className="comment-main-level">
+          <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+          <div className="comment-box">
+            <div className="comment-head">
+              <div>
+                <h6 className={this.props.isContentAuthor ? "comment-name by-author" : "comment-name"} >
+                  <Link>{this.props.cmtAuthorName}</Link>
+                </h6>
+                <span>{this.props.createdTime}</span>
+              </div>
+              <div>
+                <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}  items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`    }  />
               </div>
             </div>
-            <div className="light-black-label">bởi</div>
-            <Link className="link-label-s" to={/user/}>
-              {this.props.authorName}
-            </Link>
-
-          </div>
-          {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
-          }
-          {this.props.type === itemType.management && this.props.isHighlighted &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={unHighlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
-          }
-        </div>
-
-        {/* title */}
-        <div className="d-flex mg-top-5px" >
-          {/* fake avatar */}
-          < img className="avatar" src={this.props.authorAvatarURL} alt="" />
-          <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/post-content/" + this.props.id}>
-              <div className="title">
-                {this.props.title}
-              </div>
-            </Link>
-
-            <div className="d-flex" style={{ marginTop: "-5px" }}>
-              <div className="d-flex"  >
-                <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {Math.ceil(this.props.readingTime / 60) + " phút đọc"}
-                </div>
-              </div>
-
-              <div className="d-flex" >
-                {this.props.publishDtm ?
-                  <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                    {this.props.publishDtm.substring(0, 10)}
-                  </div>
-                  : <></>}
-              </div>
+            <div className="comment-content">
+              {this.props.content}
             </div>
+
+            <CommentReactionbar likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
           </div>
+
         </div>
 
-      </div >
+        {/* Replies of this comment */}
+        <ul className="comments-list reply-list">
+          <Reply likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
+          <Reply likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
+        </ul>
+      </li>
     );
   }
 }

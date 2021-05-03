@@ -114,7 +114,7 @@ class NormalReactionbar extends Component {
     }
 
     return (
-      <div className="reaction-bar">
+      <div className="reaction-bar" style={this.props.type === "DETAIL"? { borderTop: "none", borderBottom: "1px var(--grayish) solid" }:{}}>
         <div className="d-flex mg-top-5px">
 
           <RequireLogin permissions={["Page.Post.Like"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >

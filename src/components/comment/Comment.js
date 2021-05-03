@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { openModal} from 'redux/services/modalServices'
+import { openModal } from 'redux/services/modalServices'
 import { validation } from 'utils/validationUtils'
 
 //styles
@@ -20,6 +20,7 @@ import CommentReactionbar from './CommentReactionbar';
 
 import { commentMenuItems } from 'constants.js';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu.js';
+import { timeAgo } from 'utils/miscUtils'
 
 class Comment extends Component {
 
@@ -76,14 +77,15 @@ class Comment extends Component {
           <div className="comment-box">
             <div className="comment-head">
               <div>
-                <h6 className={this.props.isContentAuthor ? "comment-name by-author" : "comment-name"} >
-                  <Link>{this.props.cmtAuthorName}</Link>
-                </h6>
-                <span>{this.props.createdTime}</span>
+                <div className="d-flex" >
+                  <Link className="comment-name">{this.props.cmtAuthorName}</Link>
+                  {this.props.isContentAuthor && <div className="by-author-label">
+                    Tác giả
+                  </div>}
+                </div>
+                <div className="comment-time">{timeAgo(this.props.createdTime)}</div>
               </div>
-              <div>
-                <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}  items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`    }  />
-              </div>
+              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`} />
             </div>
             <div className="comment-content">
               {this.props.content}
@@ -99,7 +101,7 @@ class Comment extends Component {
           <Reply likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
           <Reply likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
         </ul>
-      </li>
+      </li >
     );
   }
 }

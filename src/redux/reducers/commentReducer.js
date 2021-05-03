@@ -12,7 +12,7 @@ const commentDTOs = [
       cmtAuthorName: "Nguyễn Văn Đông",
       idCmtAuthorName: 1,
       isContentAuthor: true,
-      createdTime: "20:20:20",
+      createdTime: "2021-05-03T03:24:00",
       likeCount: 2,
       isLiked: false,
   

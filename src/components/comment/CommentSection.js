@@ -43,9 +43,9 @@ class CommentSection extends Component {
       })}
     </ul >
     return (
-
+      // cst:comment section title
       <div className="comments-container">
-        <strong> {this.props.totalElements} Bình luận</strong>
+        <div className="section-title" id={"cst-" + this.props.match.params.id}> {this.props.totalElements} Bình luận</div>
         <div>
         </div>
         {commentsList}

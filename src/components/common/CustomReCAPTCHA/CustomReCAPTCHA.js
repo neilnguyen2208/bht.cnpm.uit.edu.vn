@@ -21,33 +21,11 @@ class CustomReCAPTCHA extends Component {
     let wrapper = this.getParent(document.getElementById("ReCAP-wrapper-" + this.props.id), '.form-group');
     wrapper.classList.remove('invalid');
     this.getParent(document.getElementById("ReCAP-wrapper-" + this.props.id), '.form-group').querySelector('.form-error-label').innerText = '';
-    console.log(token);
 
-    if (this.state.onTokenChange)
+    if (this.props.onTokenChange)
       this.props.onTokenChange(token);
     this.setState({});
   }
-
-  // validate = () => {
-
-  //   //lay element ngoai cung cua editor hien tai
-  //   this.errorMessage = document.getElementById("d-e-ReCAP-wrapper-" + this.props.id).innerText;
-  //   let wrapperReCAP = document.getElementById("ReCAP-wrapper-" + this.props.id);
-
-  //   //lay element error 
-  //   this.errorElement = this.getParent(wrapperReCAP, '.form-group').querySelector('.form-error-label');
-
-  //   if (this.errorMessage && !this.token) {
-  //     this.errorElement.innerText = this.errorMessage;
-  //     this.getParent(wrapperReCAP, '.form-group').classList.add('invalid');
-  //     document.getElementById("ReCAP-wrapper-" + this.props.id).classList.add("invalid");
-
-  //   } else {
-  //     this.errorElement.innerText = '';
-  //     this.getParent(wrapperReCAP, '.form-group').classList.remove('invalid');
-  //     document.getElementById("ReCAP-wrapper-" + this.props.id).classList.remove("invalid");
-  //   }
-  // }
 
   //lay form
   getParent = (wrapperReCAP, selector) => {

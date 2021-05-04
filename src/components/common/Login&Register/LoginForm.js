@@ -34,6 +34,7 @@ class Login extends React.Component {
     this.LOGIN_DTO = {
       username: '',
       password: '',
+      captcha: ''
     }
   }
 
@@ -47,14 +48,24 @@ class Login extends React.Component {
 
   onLoginClick = (e) => {
     e.preventDefault();
-    this.LOGIN_DTO = {
-      username: document.getElementById('login-form-username').value,
-      password: document.getElementById('login-form-password').value
-    }
-    if (styleFormSubmit(validationCondition)) {
-      this.props.login(this.LOGIN_DTO);
 
+    this.LOGIN_DTO = {
+      ...this.LOGIN_DTO,
+      username: document.getElementById('login-form-username').value,
+      password: document.getElementById('login-form-password').value,
     }
+
+
+    if (styleFormSubmit(validationCondition)) {
+
+      this.props.login(this.LOGIN_DTO);
+      console.log(this.LOGIN_DTO);
+    }
+  }
+
+  onReCAPCHATokenChange = (value) => {
+    console.log(value);
+    this.LOGIN_DTO = { ...this.LOGIN_DTO, captcha: value }
   }
 
   render() {
@@ -137,7 +148,7 @@ class Login extends React.Component {
               <div className="form-group mg-top-10px">
                 <div className="j-c-space-between">
                   <Link to="/forgot-password" className="forgot-password">Quên mật khẩu?</Link>
-                  <button className="blue-button" onClick={(e) => { this.onLoginClick(e) }}>Đăng nhập</button>
+                  <button className="blue-button" onClick={(e) => this.onLoginClick(e)}> Đăng nhập</button>
                 </div>
 
               </div>

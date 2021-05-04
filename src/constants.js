@@ -14,7 +14,7 @@ export const courseContentType = { video: "VIDEO", artical: "ARTICAL", exercise:
 export const detailType = { preview: "PREVIEW", normal: "NORMAL" }
 export const docReactionType = { like: "LIKE", dislike: "DISLIKE", none: "NONE" }
 
-export const RECAPTCHA_CLIENT_SIDE_KEY = "6Lfz648aAAAAADzC-bW2K8CXpQ8ZEJETupqfHBe8";
+export const RECAPTCHA_CLIENT_SIDE_KEY = "6LcENcUaAAAAACyhhPZ8CXHOOMJ-c-TL5LrDxzcc";
 
 export const userApproveStatusOptions = [
   { id: 1, name: "Tất cả", postState: "" },

@@ -16,31 +16,49 @@ import { commentMenuItems } from 'constants.js'
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import ReplyReactionbar from './ReplyReactionbar';
+import createDOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 class Reply extends Component {
+  componentDidMount() {
+    const window = new JSDOM('').window;
+    const DOMPurify = createDOMPurify(window);
 
+    const clean = DOMPurify.sanitize(this.props.content);
+    if (document.querySelector(`#rp-ctnt-${this.props.id}.comment-content`))
+      document.querySelector(`#rp-ctnt-${this.props.id}.comment-content`).innerHTML = clean;
+
+  }
   render() {
 
     return (
-      <li>
-        <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="" /></div>
-        <div className="comment-box">
-          <div className="comment-head">
-            <div>
-              <h6 className={this.props.isContentAuthor ? "comment-name by-author" : "comment-name"} >
-                <Link>{this.props.cmtAuthorName}</Link>
-              </h6>
-              <span>{this.props.createdTime}</span>
-            </div>
-            <div>
+      <li >
+        <div className="d-flex">
+          <div className="comment-avatar reply"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+
+          <div className="comment-box">
+            <div className="comment-head">
+              <div>
+                <div className="d-flex" >
+                  <Link className="comment-name">{this.props.cmtAuthorName}</Link>
+                  {this.props.isContentAuthor && <div className="by-author-label">
+                    Tác giả
+               </div>}
+                </div>
+                {/* <div className="comment-time">{timeAgo(this.props.createdTime)}</div> */}
+              </div>
               <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`} />
             </div>
+            <div>
+              {/* comment content */}
+              <div><div className="comment-content ck-editor-output" id={"rp-ctnt-" + this.props.id} />
+                <ReplyReactionbar likeCount={this.props.likeCount} isLiked={this.props.isLiked} createdTime={this.props.createdTime} />
+              </div>
+            </div>
           </div>
-          <div className="comment-content">
-            {this.props.content}
-          </div>
-
-          <ReplyReactionbar likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
+        </div>
+        <div style={{ height: "0px", width: "0px" }} >
+          <div className="triangle-with-shadow reply" />
         </div>
 
 

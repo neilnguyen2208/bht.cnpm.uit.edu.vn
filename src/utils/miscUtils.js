@@ -43,16 +43,16 @@ function getFormattedDate(date, prefomattedDate = false, hideYear = false) {
     if (prefomattedDate) {
         // Today at 10:20
         // Yesterday at 10:20
-        return `${prefomattedDate} vào lúc ${hours}h${minutes}`;
+        return `${prefomattedDate} vào lúc ${hours}:${minutes}`;
     }
 
     if (hideYear) {
         // 10. January at 10:20
-        return `${day}. ${month} vào lúc ${hours}h${minutes}`;
+        return `${day}. ${month} vào lúc ${hours}:${minutes}`;
     }
 
     // 10. January 2017. at 10:20
-    return `${day}. ${month} ${year}. vào lúc ${hours}h${minutes}`;
+    return `${day}. ${month} ${year}. vào lúc ${hours}:${minutes}`;
 }
 
 export function timeAgo(dateParam) {
@@ -72,7 +72,7 @@ export function timeAgo(dateParam) {
 
 
     if (seconds < 5) {
-        return 'vữa xong';
+        return 'vừa xong';
     } else if (seconds < 60) {
         return `${seconds} giây trước`;
     } else if (seconds < 90) {
@@ -80,9 +80,9 @@ export function timeAgo(dateParam) {
     } else if (minutes < 60) {
         return `${minutes} phút trước`;
     } else if (isToday) {
-        return getFormattedDate(date, 'Hôm nay'); // Today at 10:20
+        return getFormattedDate(date, 'Hôm nay,'); // Today at 10:20
     } else if (isYesterday) {
-        return getFormattedDate(date, 'Hôm qua'); // Yesterday at 10:20
+        return getFormattedDate(date, 'Hôm qua,'); // Yesterday at 10:20
     } else if (isThisYear) {
         return getFormattedDate(date, false, true); // 10. January at 10:20
     }

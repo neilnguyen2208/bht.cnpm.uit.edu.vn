@@ -19,8 +19,6 @@ class Editor extends Component {
       toolbar: toolbarConfig,
       format_tags: 'p;h1;h2;h3;pre',
       stylesSet: styleConfig
-      // removeDialogTabs: 'image:advanced'
-
     };
 
     window.CKEDITOR.replace(this.editorID, configuration);

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import 'components/styles/Button.scss'
 
 import { bindActionCreators } from 'redux';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //services
@@ -55,7 +55,6 @@ class CommentSection extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.comment);
   return {
     totalPages: state.comment.currentPostComments.totalPages,
     totalElements: state.comment.currentPostComments.totalElements,

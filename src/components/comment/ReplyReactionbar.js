@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,7 +16,7 @@ import 'components/styles/Button.scss'
 import './Comment.scss'
 
 //utils
-import { formatNumber } from 'utils/miscUtils.js'
+import { formatNumber, timeAgo } from 'utils/miscUtils.js'
 
 class ReplyReactionbar extends Component {
 
@@ -85,17 +84,17 @@ class ReplyReactionbar extends Component {
               </div>
             </RequireLogin>
           </div>
-
-        </div>
-        <div className="comment-count-container">
-          <div className="comment-btn-text">
-            {this.props.replyCount} Trả lời
+          <div className="vertical-line" />
+          <div className="comment-count-container">
+            <div className="comment-btn-text">
+              Trả lời
             </div>
-          <div className="comment-btn-number">
-            {this.props.commentCount && formatNumber(this.props.commentCount)}
           </div>
         </div>
-      </div >
+
+        <div className="comment-time">{timeAgo(this.props.createdTime)}</div>
+
+      </div>
     );
   }
 

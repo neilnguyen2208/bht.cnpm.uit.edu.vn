@@ -20,9 +20,25 @@ import CommentReactionbar from './CommentReactionbar';
 
 import { commentMenuItems } from 'constants.js';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu.js';
-import { timeAgo } from 'utils/miscUtils'
+import createDOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 class Comment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowAllReply: false
+    }
+  }
+  componentDidMount() {
+    const window = new JSDOM('').window;
+    const DOMPurify = createDOMPurify(window);
+
+    const clean = DOMPurify.sanitize(this.props.content);
+    if (document.querySelector(`#cmt-ctnt-${this.props.id}.comment-content`))
+      document.querySelector(`#cmt-ctnt-${this.props.id}.comment-content`).innerHTML = clean;
+
+  }
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "REPORT_POST") {
@@ -70,10 +86,50 @@ class Comment extends Component {
 
     //cipm: comment item popup menu
 
+    let replyList = <></>;
+    if (this.props.replyArray.lenght <= 3 || this.state.isShowAllReply)
+      replyList = <div> {this.props.replyArray.map(reply => {
+        return <Reply id={reply.id}
+          cmtAuthorName={reply.cmtAuthorName}
+          idCmtAuthor={reply.isCmtAuthorName}
+          isContentAuthor={reply.isContentAuthor}
+          createdTime={reply.createdTime}
+          likeCount={reply.likeCount}
+          isLiked={reply.isLiked}
+          replyCount={reply.replyCount}
+          replyArray={reply.replyArray}
+          content={reply.content}
+        />
+      })}
+
+      </div>
+    else {
+      let subReplyList = this.props.replyArray.slice(0, 3).map(reply => {
+        return <Reply id={reply.id}
+          cmtAuthorName={reply.cmtAuthorName}
+          idCmtAuthor={reply.isCmtAuthorName}
+          isContentAuthor={reply.isContentAuthor}
+          createdTime={reply.createdTime}
+          likeCount={reply.likeCount}
+          isLiked={reply.isLiked}
+          replyCount={reply.replyCount}
+          replyArray={reply.replyArray}
+          content={reply.content}
+        />
+      })
+
+      replyList = <div>
+        {subReplyList}
+        <div className="link-label-s" onClick={() => { }}>Xem thêm {this.props.replyCount - 3} câu trả lời</div>
+      </div>
+    }
+
+
     return (
       <li>
         <div className="comment-main-level">
           <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+
           <div className="comment-box">
             <div className="comment-head">
               <div>
@@ -83,23 +139,25 @@ class Comment extends Component {
                     Tác giả
                   </div>}
                 </div>
-                <div className="comment-time">{timeAgo(this.props.createdTime)}</div>
+                {/* <div className="comment-time">{timeAgo(this.props.createdTime)}</div> */}
               </div>
               <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`} />
             </div>
-            <div className="comment-content">
-              {this.props.content}
+            <div>
+              {/* comment content */}
+              <div><div className="comment-content ck-editor-output" id={"cmt-ctnt-" + this.props.id} />
+                <CommentReactionbar likeCount={this.props.likeCount} createdTime={this.props.createdTime} />
+              </div>
             </div>
-
-            <CommentReactionbar likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
           </div>
-
+          <div style={{ height: "0px", width: "0px" }} >
+            <div className="triangle-with-shadow comment" />
+          </div>
         </div>
 
         {/* Replies of this comment */}
         <ul className="comments-list reply-list">
-          <Reply likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
-          <Reply likeCount={this.props.likeCount} replyCount={this.props.replyCount} />
+          {replyList}
         </ul>
       </li >
     );

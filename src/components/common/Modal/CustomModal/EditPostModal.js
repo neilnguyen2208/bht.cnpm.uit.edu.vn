@@ -20,7 +20,9 @@ import 'components/styles/Detail.scss'
 import Tag from "components/post/Tag";
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
-import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';
+import Editor from 'components/common/CustomCKE/CKEditor.js';
+import { getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+
 import Loader from 'components/common/Loader/Loader'
 
 //utils
@@ -126,8 +128,8 @@ class EditPostModal extends React.Component {
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(get_PostByIDReset());
         store.dispatch(put_EditAPostReset());
-        if (getInstance('ed-post-cke'))
-            getInstance('ed-post-cke').destroy();
+        if (getCKEInstance('ed-post-cke'))
+            getCKEInstance('ed-post-cke').destroy();
     }
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
@@ -419,7 +421,7 @@ class EditPostModal extends React.Component {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
-            getInstance('ed-post-cke').setData(this.props.currentPost.content)
+            getCKEInstance('ed-post-cke').setData(this.props.currentPost.content)
             this.setState({
                 EDIT_POST_DTO: {
                     title: this.props.currentPost.title,

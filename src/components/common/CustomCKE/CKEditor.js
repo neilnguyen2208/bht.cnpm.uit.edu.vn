@@ -1,9 +1,8 @@
 
-import { CKEToolbarConfiguration, styleConfig } from "./CKEditorConfiguration"
+import { CKEToolbarConfiguration, codeSnippet_languages, codeSnippet_theme, styleConfig } from "./CKEditorConfiguration"
 import Loader from 'components/common/Loader/Loader'
 import React, { Component } from 'react';
-import './CKEditor.scss'
-
+import './CKEditor.scss';
 class Editor extends Component {
 
   constructor(props) {
@@ -13,15 +12,32 @@ class Editor extends Component {
   }
 
   componentDidMount() {
+
+    //import CKEditor from external location
+    const script = document.createElement("script");
+    script.src = '../../../../public/ckeditor/ckeditor.js';
+    script.async = true;
+    script.onload = () => this.scriptCKELoaded();
+    document.body.appendChild(script);
+  }
+
+  scriptCKELoaded = () => {
+
+    //bhtConfiguration
     let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
 
-    let configuration = {
+    let bhtConfiguration = {
       toolbar: toolbarConfig,
       format_tags: 'p;h1;h2;h3;pre',
-      stylesSet: styleConfig
+      stylesSet: styleConfig,
+      codeSnippet_theme: codeSnippet_theme,
+      codeSnippet_languages: codeSnippet_languages
     };
 
-    window.CKEDITOR.replace(this.editorID, configuration);
+    //inject bhtConfiguration to external file
+    window.createCKEInstance(this.editorID, this.props.config ? this.props.config : bhtConfiguration)();
+
+    // window.CKEDITOR.replace(this.editorID, configuration);
 
     window.CKEDITOR.instances[this.editorID].on('change', function () {
       let data = window.CKEDITOR.instances[this.editorID].getData();
@@ -87,6 +103,15 @@ class Editor extends Component {
         infoTab.get('txtHSpace').style = 'display: none';
         infoTab.get('txtVSpace').style = 'display: none';
         infoTab.get('htmlPreview').style = 'display: none';
+      }
+
+
+      if (dialogName === 'codeSnippet') {
+        let infoTab = dialogDefinition.getContents('info');
+        dialogDefinition.title = "ĐỊNH DẠNG CODE";
+
+        infoTab.get('lang').label = 'Chọn ngôn ngữ lập trình:';
+        infoTab.get('code').label = `Nội dung code:`;
 
 
 
@@ -169,11 +194,11 @@ class Editor extends Component {
         {this.props.validation ? <div>
           <div id={"d-e-cke-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
         </div> : <></>}
+
       </div>
     );
   }
 }
-export function getInstance(id) {
-  return window.CKEDITOR.instances['ck-editor-' + id];
-}
+
+
 export default Editor;

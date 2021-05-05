@@ -21,17 +21,14 @@ import 'components/styles/Detail.scss'
 import Tag from "components/document/Tag";
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
-import Editor, { getInstance } from 'components/common/CustomCKE/CKEditor.js';
+import Editor from 'components/common/CustomCKE/CKEditor.js';
+import { getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import Loader from 'components/common/Loader/Loader'
-import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
-import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
 
 //utils
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
-import Metadata from 'components/document/DetailInfo'
 import SmallLoader from 'components/common/Loader/Loader_S'
-import NormalReactionbar from 'components/document/NormalReactionbar'
 
 const validationCondition = {
     form: '#edit-document-form',
@@ -134,8 +131,8 @@ class EditDocumentModal extends React.Component {
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(get_DocumentByIDReset());
         store.dispatch(put_EditADocumentReset());
-        if (getInstance('ed-document-cke'))
-            getInstance('ed-document-cke').destroy();
+        if (getCKEInstance('ed-document-cke'))
+            getCKEInstance('ed-document-cke').destroy();
     }
 
     onCategoryOptionChanged = (selectedOption) => {
@@ -442,7 +439,7 @@ class EditDocumentModal extends React.Component {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
-            getInstance('ed-document-cke').setData(this.props.currentDocument.content)
+            getCKEInstance('ed-document-cke').setData(this.props.currentDocument.content)
             this.setState({
                 EDIT_DOCUMENT_DTO: {
                     title: this.props.currentDocument.title,

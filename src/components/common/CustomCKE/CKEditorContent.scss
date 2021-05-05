@@ -3,87 +3,87 @@
 
 //for content
 .ck-editor-output {
-    margin-top: 30px;
-    text-justify: inter-word;
-    text-align: justify;
-    font-family: 'Raleway', sans-serif;
-    line-height: 1.5rem;
-    color: var(--black);
-    padding: 15px;
-    padding-left: 0px;
-    font-size: 1rem;
-    padding-top: 0px;
-    box-sizing: border-box;
-    height: fit-content;
-    white-space: normal;
+  margin-top: 30px;
+  text-justify: inter-word;
+  text-align: justify;
+  font-family: 'Raleway', sans-serif;
+  line-height: 1.5rem;
+  color: var(--black);
+  padding: 15px;
+  padding-left: 0px;
+  font-size: 1rem;
+  padding-top: 0px;
+  box-sizing: border-box;
+  height: fit-content;
+  white-space: normal;
 }
 
 
-.ck-editor-output.comment-content{
-    margin-top: 0px;
-    text-justify: inter-word;
-    text-align: justify;
-    font-family: 'Raleway', sans-serif;
-    line-height: 1.2rem;
-    color: var(--black);
-    padding: 15px;
-    padding-left: 0px;
-    font-size: 0.7rem;
-    padding-top: 0px;
-    box-sizing: border-box;
-    height: fit-content;
-    white-space: normal;
+.ck-editor-output.comment-content {
+  margin-top: 0px;
+  text-justify: inter-word;
+  text-align: justify;
+  font-family: 'Raleway', sans-serif;
+  line-height: 1.2rem;
+  color: var(--black);
+  padding: 15px;
+  padding-left: 0px;
+  font-size: 0.7rem;
+  padding-top: 0px;
+  box-sizing: border-box;
+  height: fit-content;
+  white-space: normal;
 }
 
 .ck-editor-output p {
-    font-size: 1em;
-    font-weight: 500;
-    text-indent: 1em;
-    margin-bottom: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  text-indent: 1em;
+  margin-bottom: 10px;
 }
 
 .ck-editor-output h1 {
-    margin-left: 15px;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    margin-top: 10px;
+  margin-left: 15px;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  margin-top: 10px;
 
 }
 
 .ck-editor-output h2 {
-    font-size: 1.625em;
-    font-weight: 600;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 15px;
+  font-size: 1.625em;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 15px;
 }
 
 .ck-editor-output h3 {
-    font-size: 1.5em;
-    font-weight: 500;
-    margin-top: 6px;
-    margin-bottom: 6px;
-    margin-left: 15px;
+  font-size: 1.5em;
+  font-weight: 500;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-left: 15px;
 }
 
 .ck-editor-output pre {
-    margin: 5px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    margin-left: 15px;
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    background: var(--light-gray);
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-weight: 600;
-    white-space: pre;
+  margin: 5px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  border-radius: 5px;
+  border: 1px solid var(--gray);
+  background: var(--light-gray);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 600;
+  white-space: pre;
 
-    overflow-x: auto;
-    word-wrap: normal;
+  overflow-x: auto;
+  word-wrap: normal;
 
 }
 
@@ -94,28 +94,119 @@
   font-family: monospace;
 }
 
-.ck-editor-output code {
-    background-color: #f5f5f5;
-    color: #ff3860;
-    font-size: 1em;
-    font-weight: 400;
-    padding: .15em .25em .15em;
+//except all style public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css 
+.ck-editor-output code :not(.hljs,
+  .hljs-comment,
+  .hljs-keyword,
+  .hljs-class,
+  .hljs-string,
+  .hljs-annotation,
+  .hljs-template_comment,
+  .hljs-javadoc,
+  .hljs-shebang,
+  .hljs-request,
+  .hljs-status,
+  .hljs-title,
+  .method,
+  .hljs-list,
+  .hljs-number,
+  .hljs-regexp,
+  .hljs-value,
+  .hljs-cdata,
+  .hljs-filter,
+  .hljs-argument,
+  .hljs-attr_selector,
+  .apache .hljs-cbracket,
+  .hljs-date,
+  .hljs-command,
+  .hljs-link_label,
+  .hljs-subst,
+  .hljs-tag,
+  .hljs-doctype,
+  .hljs-sub,
+  .hljs-identifier,
+  .hljs-pi,
+  .input_number,
+  .hljs-identifier,
+  .haskell, .hljs-type,
+  .smalltalk,
+  .hljs-javadoctag,
+  .hljs-yardoctag,
+  .hljs-phpdoc,
+  .hljs-constant,
+  .hljs-symbol,
+  .hljs-built_in,
+  .ruby,
+  .markdown,
+  .hljs-link_url,
+  .hljs-params,
+  .hljs-variable,
+  .clojure,
+  .hljs-property,
+  .hljs-pseudo,
+  .tex,
+  .hljs-special,
+  .hljs-annotation,
+  .apache .hljs-sqbracket,
+  .nginx,
+  .hljs-preprocessor,
+  .hljs-preprocessor *,
+  .hljs-pragma,
+  .hljs-hexcolor,
+  .css,
+  .hljs-rule,
+  .hljs-at_rule,
+  .hljs-operator,
+  .hljs-literal,
+  .hljs-value,
+  .hljs-number,
+  .hljs-title,
+  .hljs-decorator,
+  .hljs-function,
+  .hljs-rules,
+  .diff .hljs-header,
+  .hljs-chunk,
+  .hljs-attribute,
+  .hljs-addition,
+  .hljs-deletion,
+  .coffeescript,
+  .javascript,
+  .xml,
+  .hljs-id,
+  .tex .hljs-formula,
+  .xml .vbscript,
+  .hljs-cdata) {
+  background-color: #f5f5f5;
+  color: #ff3860;
+  font-size: 1em;
+  font-weight: 400;
+  padding: .15em .25em .15em;
 }
 
+
+.ck-editor-output code.hljs {
+  font-size: 0.9em;
+  font-weight: 400;
+  // background: none;
+  padding: .15em .25em .15em;
+  //same style of railcast in public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css 
+}
+
+
 .ck-editor-output blockquote {
-    background: var(--light-gray) !important;
-    padding: 5px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    margin: 10px !important;
-    margin-left: 15px !important;
-    margin-top: 10px !important;
-    margin-bottom: 15px !important;
-    border-left: solid var(--blue) 4px !important;
-    font-size: 0.875em;
-    font-family: 'Comfortaa', cursive;
-    font-style: italic;
-    font-weight: 500;
+  background: var(--light-gray) !important;
+  padding: 5px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin: 10px !important;
+  margin-left: 15px !important;
+  margin-top: 10px !important;
+  margin-bottom: 15px !important;
+  border-left: solid var(--blue) 4px !important;
+  font-size: 0.875em;
+  font-family: 'Comfortaa', cursive;
+  font-style: italic;
+  font-weight: 500;
 }
 
 
@@ -123,23 +214,23 @@
 .ck-editor-output blockquote p {}
 
 .ck-editor-output li {
-    margin-left: 30px;
-    font-size: 1em;
-    margin-bottom: 10px;
+  margin-left: 30px;
+  font-size: 1em;
+  margin-bottom: 10px;
 }
 
 .ck-editor-output hr {
-    background-color: var(--gray);
-    border: none;
-    display: block;
-    height: 1px;
-    margin-top: 5px;
-    margin-bottom: 15px;
+  background-color: var(--gray);
+  border: none;
+  display: block;
+  height: 1px;
+  margin-top: 5px;
+  margin-bottom: 15px;
 
 }
 
 .ck-editor-output ol {
-    margin-top: 10px;
-    line-height: 20px;
-    font-weight: 500;
+  margin-top: 10px;
+  line-height: 20px;
+  font-weight: 500;
 }

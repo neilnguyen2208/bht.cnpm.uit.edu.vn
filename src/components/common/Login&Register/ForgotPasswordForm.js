@@ -84,11 +84,11 @@ class ForgotPasswordForm extends React.Component {
   }
 
   handleSecondStep = () => {
-  
+
   }
 
   handleThirdStep = () => {
-  
+
   }
 
   render() {
@@ -114,15 +114,15 @@ class ForgotPasswordForm extends React.Component {
             {/* Step 1 */}
             <div className="form-container o-f-hidden" id="forgot-pass-step-1">
               <div className="form-group">
-                <label className="form-label-required">Email:</label>
-                <input type="text" className="text-input" id="forgot-pass-email" placeholder="Nhập email " />
+                <label className="form-label-required">Tên đăng nhập/email:</label>
+                <input type="text" className="text-input" id="forgot-pass-email" placeholder="Tên đăng nhập hoặc email" />
                 <div className="form-error-label-container">
                   <span className="form-error-label" ></span>
                 </div>
               </div>
 
               <div className="form-tip-label">
-                Nếu email hợp lệ bạn sẽ nhận được mã xác nhận trong email của mình.
+                Nếu yêu cầu của bạn hợp lệ bạn sẽ nhận được mã xác nhận trong email của mình.
               </div>
 
               <div className="form-group pd-top-10px">
@@ -159,7 +159,7 @@ class ForgotPasswordForm extends React.Component {
 
               <div className="form-line" />
               <div className="form-group mg-top-10px">
-                <div >Mã xác nhận được tới gmail của bạn chỉ có hiệu lực trong vòng <b>10 phút</b>.</div>
+                <div >Mã xác nhận được tới gmail của bạn chỉ có hiệu lực trong vòng <b>30 phút</b>.</div>
                 <div className="j-c-space-between mg-top-10px">
                   <div className="link-label-s" style={{ color: "var(--light-black)" }} onClick={(e) => {
                     e.preventDefault();
@@ -191,11 +191,8 @@ class ForgotPasswordForm extends React.Component {
               <div className="form-line" />
               <div className="form-group mg-top-10px">
 
-                <div className="j-c-space-between mg-top-10px">
-                  <div className="link-label-s" style={{ color: "var(--light-black)" }} onClick={(e) => {
-                    e.preventDefault();
-                    this.renderStep(2);
-                  }}>{"<< Quay lại"}</div>
+                <div className="j-c-end mg-top-10px">
+
                   <button className="blue-button" onClick={(e) => {
                     //Đăng ký
                   }}>Xác nhận</button>

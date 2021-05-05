@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -25,6 +25,7 @@ import { detailType } from 'constants.js'
 import NormalReactionbar from "components/post/NormalReactionbar";
 import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
+import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 
 const validationCondition = {
     form: '#create-post-form',
@@ -37,7 +38,7 @@ const validationCondition = {
     ],
 }
 
-class CreatePost extends Component {
+class CreatePost extends React.Component {
     constructor(props) {
         super(props);
         this.categoryList = [
@@ -109,6 +110,7 @@ class CreatePost extends Component {
         this.timeOut = null;
 
         validation(validationCondition);
+
     }
 
     componentWillUnmount() {
@@ -322,15 +324,8 @@ class CreatePost extends Component {
 
     //#endregion
     handleEditorChange = (value) => {
-        // if (value.length < 160) {
-        //     this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } })
-        //     return;
-        // }
-        // else {
         this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } });
-        // console.log(this.state.CREATE_POST_DTO.content)
         return;
-        // }
     };
 
     handleTitleChange = (e) => {
@@ -340,6 +335,7 @@ class CreatePost extends Component {
     }
 
     render() {
+        styleCodeSnippet();
 
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;

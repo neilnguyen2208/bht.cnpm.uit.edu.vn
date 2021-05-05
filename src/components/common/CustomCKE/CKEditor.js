@@ -31,11 +31,12 @@ class Editor extends Component {
       format_tags: 'p;h1;h2;h3;pre',
       stylesSet: styleConfig,
       codeSnippet_theme: codeSnippet_theme,
-      codeSnippet_languages: codeSnippet_languages
+      codeSnippet_languages: codeSnippet_languages,
+      extraPlugins: 'ckeditor_wiris',
     };
 
     //inject bhtConfiguration to external file
-    window.createCKEInstance(this.editorID, this.props.config ? this.props.config : bhtConfiguration)();
+    window.createCKEInstance(this.editorID)();
 
     // window.CKEDITOR.replace(this.editorID, configuration);
 

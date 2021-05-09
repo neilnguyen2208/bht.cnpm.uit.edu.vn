@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'components/styles/Tag.scss';
 import { Link } from 'react-router-dom'
 import { setQueryParam } from 'utils/urlUtils';
@@ -7,7 +7,7 @@ import { getTagByID, getRelativeTags } from 'redux/services/tagServices'
 import store from 'redux/store/index'
 
 //Set text props for this component
-export default class Tag extends Component {
+export default class Tag extends React.Component {
 
     //onDelete, tag: dmID, id, name/content
 

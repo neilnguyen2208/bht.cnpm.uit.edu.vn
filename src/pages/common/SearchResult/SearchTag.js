@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -12,7 +12,7 @@ import Loader from "components/common/Loader/Loader";
 import 'components/styles/Label.scss';
 import SearchHorizontalMenubar from "pages/common/SearchResult/SearchHorizontalMenubar"
 
-class SearchTag extends Component {
+class SearchTag extends React.Component {
     constructor(props) {
         super(props);
         this.tagSearchResult = [];

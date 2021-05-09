@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React from 'react'
 // import resource image, icon
 
 //import resource string
@@ -24,7 +23,7 @@ import "layouts/Search.scss"
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 
 
-class RelativeTagSidebar extends Component {
+class RelativeTagSidebar extends React.Component {
     componentDidMount() {
         //get danh sách các tag liên quan.
         if (Number.isNaN(getQueryParamByName('tag')))

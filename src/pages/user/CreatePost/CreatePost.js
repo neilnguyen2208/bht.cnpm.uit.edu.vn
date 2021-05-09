@@ -26,6 +26,8 @@ import NormalReactionbar from "components/post/NormalReactionbar";
 import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
 import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
+import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
+
 
 const validationCondition = {
     form: '#create-post-form',
@@ -117,7 +119,10 @@ class CreatePost extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(post_CreateAPostReset());
+        if (getCKEInstance('cr-post-cke'))
+            getCKEInstance('cr-post-cke').destroy();
     }
+
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
             CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, categoryID: selectedOption.id },
@@ -551,7 +556,7 @@ class CreatePost extends React.Component {
         document.querySelector(".cr-post-form-container.edit").classList.add("d-none");
         document.querySelector(".cr-post-form-container.preview").classList.remove("d-none");
         document.querySelector(".cr-post-form-container.edit").classList.remove("d-block");
-        console.log(this.state);
+        // console.log(this.state);
     }
 }
 

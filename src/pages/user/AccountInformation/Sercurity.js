@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import UserSidebar from "layouts/UserSidebar"
 import { Link } from '@material-ui/core';
 
-class Security extends Component {
+class Security extends React.Component {
     constructor(props) {
         super();
     }

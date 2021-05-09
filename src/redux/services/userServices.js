@@ -1,10 +1,10 @@
 import {
   get_AllUsersSuccess,
   get_AllUsersRequest,
-  get_AllUsersFailure
+  // get_AllUsersFailure
 } from "redux/actions/userAction.js";
 
-import { request } from 'utils/requestUtils';
+// import { request } from 'utils/requestUtils';
 
 const data = [
   {

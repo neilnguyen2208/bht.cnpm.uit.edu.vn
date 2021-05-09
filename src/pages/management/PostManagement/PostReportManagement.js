@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
@@ -18,7 +18,7 @@ import store from 'redux/store/index'
 import { post_ResolveAPostReset } from 'redux/actions/postAction'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 
-class PostReportManagement extends Component {
+class PostReportManagement extends React.Component {
     constructor(props) {
         super();
     }

@@ -1,9 +1,9 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
-import { NavLink } from 'react-router-dom'
+
 //import for redux
 import { getPendingDocuments } from "redux/services/documentServices";
 import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices";
@@ -24,7 +24,7 @@ import { post_ApproveADocumentReset, delete_RejectADocumentReset, post_RejectAnd
 import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
 
-class DocumentApproving extends Component {
+class DocumentApproving extends React.Component {
     constructor(props) {
         super();
     }

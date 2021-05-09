@@ -18,9 +18,7 @@ import MyPosts from "pages/user/MyPosts/MyPosts";
 import SearchTag from "pages/common/SearchResult/SearchTag";
 import SearchPost from "pages/common/SearchResult/SearchPost";
 import SearchDocument from "pages/common/SearchResult/SearchDocument";
-import Artical from "pages/common/ChapterDetail/Artical"
 import Exercise from "pages/common/ChapterDetail/Exercise"
-import Video from "pages/common/ChapterDetail/Video"
 import CoursesList from "pages/common/CoursesList/CoursesList"
 import ChaptersList from "pages/common/HeadingsList/HeadingsList"
 import PostsList from 'pages/common/PostsList/PostsList'
@@ -104,10 +102,7 @@ const App = () => {
                         <Route exact path="/create-post" component={CreatePost} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-document" component={UploadDocument} />
-                        <Route exact path="/courses/:id/artical" component={Artical} />
-                        <Route exact path="/courses/:id/video" component={Video} />
                         <Route exact path="/courses/:id/exercise" component={Exercise} />
-
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin/post-management" component={PostManagement} permissions={["Page.Post.Management"]} />

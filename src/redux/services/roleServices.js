@@ -1,10 +1,10 @@
 import {
   get_AllRolesSuccess,
   get_AllRolesRequest,
-  get_AllRolesFailure
+  // get_AllRolesFailure
 } from "redux/actions/roleAction.js";
 
-import { request } from 'utils/requestUtils';
+// import { request } from 'utils/requestUtils';
 const data = [
   {
     id: 1,

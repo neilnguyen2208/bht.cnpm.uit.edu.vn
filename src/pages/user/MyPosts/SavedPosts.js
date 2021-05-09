@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
@@ -18,7 +17,7 @@ import PostSummaryMetadata from 'components/post/SummaryInfo'
 import store from 'redux/store/index'
 
 //Sample URL: http://localhost:3000/user/my-posts?page=3&category=1
-class SavedPosts extends Component {
+class SavedPosts extends React.Component {
     constructor(props) {
         super();
     }

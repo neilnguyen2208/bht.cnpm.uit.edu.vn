@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
-import { NavLink, Link } from "react-router-dom";
+import React from 'react'
+import { NavLink } from "react-router-dom";
 
 // import resource image, icon
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
@@ -39,7 +39,7 @@ import {
     Role
 } from 'utils/authUtils'
 
-class AdminSidebar extends Component {
+class AdminSidebar extends React.Component {
     constructor(props) {
         super(props);
         this.accountInformation = {

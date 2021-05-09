@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { setQueryParam } from 'utils/urlUtils'
+import React from 'react'
+// import { setQueryParam } from 'utils/urlUtils'
 import 'components/common/Paginator/Paginator.scss'
 
 
-class Paginator extends Component {
+class Paginator extends React.Component {
     constructor(props) {
         super(props);
 

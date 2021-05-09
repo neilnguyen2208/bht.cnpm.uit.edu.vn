@@ -10,13 +10,9 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { closeModal } from "redux/services/modalServices";
-import store from 'redux/store/index.js'
 
 class AlertModal extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+   
     closeModal = () => {
         closeModal()
     }

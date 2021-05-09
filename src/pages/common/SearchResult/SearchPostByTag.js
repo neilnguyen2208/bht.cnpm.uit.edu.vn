@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from 'react';
 import { getPostSearch } from "redux/services/postServices"
 import { bindActionCreators } from 'redux';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
@@ -14,7 +14,7 @@ import PostSummaryMetadata from 'components/post/SummaryInfo';
 import RelativeTagSidebar from 'layouts/RelativeTagSidebar';
 import SearchTagTopbar from 'layouts/SearchTagTopbar'
 
-class SearchPostByTag extends Component {
+class SearchPostByTag extends React.Component {
     componentDidMount() {
         this.queryParamObject = {
             "page": 1,
@@ -81,7 +81,7 @@ class SearchPostByTag extends Component {
 
         return (
             <div className="search-layout">
-                <SearchTagTopbar /> 
+                <SearchTagTopbar />
                 <div className="d-flex">
                     <RelativeTagSidebar />
                     <div className="w-100-percents" >

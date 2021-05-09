@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 
@@ -20,7 +20,7 @@ import './Comment.scss'
 //components
 import Comment from './Comment.js'
 
-class CommentSection extends Component {
+class CommentSection extends React.Component {
 
   componentDidMount() {
     this.props.getAPostComments(1);

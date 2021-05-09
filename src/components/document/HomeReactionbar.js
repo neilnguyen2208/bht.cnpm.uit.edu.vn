@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -24,7 +22,7 @@ import { formatNumber } from 'utils/miscUtils.js'
 import { docReactionType } from 'constants.js'
 import { reactionADocument } from 'redux/services/documentServices'
 
-class NormalReactionbar extends Component {
+class NormalReactionbar extends React.Component {
 
   constructor(props) {
     super(props);

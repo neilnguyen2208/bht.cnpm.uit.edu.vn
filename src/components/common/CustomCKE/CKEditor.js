@@ -1,9 +1,9 @@
 
 import { CKEToolbarConfiguration, codeSnippet_languages, codeSnippet_theme, styleConfig } from "./CKEditorConfiguration"
 import Loader from 'components/common/Loader/Loader'
-import React, { Component } from 'react';
+import React from 'react';
 import './CKEditor.scss';
-class Editor extends Component {
+class Editor extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,19 +24,18 @@ class Editor extends Component {
   scriptCKELoaded = () => {
 
     //bhtConfiguration
-    let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
+    // let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
 
     let bhtConfiguration = {
-      toolbar: toolbarConfig,
+      // toolbar: toolbarConfig,
       format_tags: 'p;h1;h2;h3;pre',
       stylesSet: styleConfig,
       codeSnippet_theme: codeSnippet_theme,
       codeSnippet_languages: codeSnippet_languages,
-      extraPlugins: 'ckeditor_wiris',
     };
 
     //inject bhtConfiguration to external file
-    window.createCKEInstance(this.editorID)();
+    window.createCKEInstance(this.editorID, bhtConfiguration)();
 
     // window.CKEDITOR.replace(this.editorID, configuration);
 

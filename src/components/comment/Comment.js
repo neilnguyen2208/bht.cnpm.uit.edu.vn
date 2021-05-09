@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
@@ -23,7 +23,7 @@ import PopupMenu from 'components/common/PopupMenu/PopupMenu.js';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
-class Comment extends Component {
+class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

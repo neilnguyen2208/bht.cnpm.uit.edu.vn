@@ -1,10 +1,10 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import './CustomReCAPTCHA.scss'
 import ReCAPTCHA from 'react-google-recaptcha';
 import { RECAPTCHA_CLIENT_SIDE_KEY } from 'constants.js';
 
-class CustomReCAPTCHA extends Component {
+class CustomReCAPTCHA extends React.Component {
 
   constructor(props) {
     super(props);

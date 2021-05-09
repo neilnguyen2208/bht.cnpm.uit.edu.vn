@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from 'react';
 import round_logo from 'assets/images/round_logo.png';
 import { getQueryParamByName } from 'utils/urlUtils';
 import success_icon from 'assets/icons/svg/success_icon.svg';
-import { request, appBaseUrl } from 'utils/requestUtils';
+import { request } from 'utils/requestUtils';
 
-class VerifyRegisterMail extends Component {
+class VerifyRegisterMail extends React.Component {
 
     componentDidMount() {
 

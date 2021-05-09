@@ -9,11 +9,6 @@ import {
     get_PendingDocumentsSuccess,
     get_PendingDocumentsFailure,
 
-    //documents list
-    get_DocumentsListRequest,
-    get_DocumentsListSuccess,
-    get_DocumentsListFailure,
-
     //document search result
     get_DocumentSearchRequest,
     get_DocumentSearchSuccess,
@@ -48,8 +43,8 @@ import {
     post_ReportADocumentSuccess,
     post_ReportADocumentFailure,
     get_DocumentByIDReset,
-    get_DocumentByIDSuccess,
-    get_DocumentByIDFailure,
+    // get_DocumentByIDSuccess,
+    // get_DocumentByIDFailure,
     get_ManagementDocumentsRequest,
     get_ManagementDocumentsSuccess,
     get_ManagementDocumentsFailure,

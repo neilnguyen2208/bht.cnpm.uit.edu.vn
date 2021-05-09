@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import 'components/styles/Metadata.scss';
 import './Loader.scss';
 

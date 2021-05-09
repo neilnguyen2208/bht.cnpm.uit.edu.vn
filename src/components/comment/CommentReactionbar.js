@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -18,7 +18,7 @@ import './Comment.scss'
 //utils
 import { formatNumber, timeAgo } from 'utils/miscUtils.js'
 
-class CommentReactionbar extends Component {
+class CommentReactionbar extends React.Component {
 
   constructor(props) {
     super(props);

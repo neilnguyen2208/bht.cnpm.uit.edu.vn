@@ -77,10 +77,17 @@ div {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+[name^='CCEquationEditor'] .cke_dialog_ui_vbox_child {
+  background: white !important;
+}
+
+
+[name^='CCEquationEditor'] select {
+  padding-top: 3px !important;
+}
+
 #EqnEditor .top {
   padding: 2px 0;
-  /* overflow-x: auto; */
-  /* for firefox */
   scrollbar-color: #eee white;
   scrollbar-width: thin;
 
@@ -99,6 +106,7 @@ div {
 #EqnEditor .toolbar {
   position: relative;
   min-width: fit-content;
+  background: white;
   width: fit-content;
 }
 
@@ -126,6 +134,10 @@ div {
   color: #5279db !important;
 }
 
+#EqnEditor map {
+  border: 1px solid #c4c4c4;
+}
+
 #EqnEditor .panel {
   display: inline-block;
   padding: 0;
@@ -135,11 +147,11 @@ div {
   min-width: fit-content !important;
   overflow: hidden;
   vertical-align: top;
-  /* border-radifus: 3px; */
   border-bottom: 1px solid #c4c4c4;
   padding-bottom: 4px;
   margin-top: 4px !important;
   cursor: pointer !important;
+  height: 38px !important;
 }
 
 #EqnEditor .toolbar_wrapper:nth-child(4) {
@@ -154,16 +166,16 @@ div {
 #nvd_CCtoolbar1 {
   padding-bottom: 4px;
   position: relative;
-  top: -10px;
-  margin-top: -20px !important;
+  margin-top: -30px !important;
 }
 
 #EqnEditor .panel>img {
-  padding: 3px;
   box-sizing: border-box;
   background-color: white;
   box-sizing: border-box;
   border: 1px solid #c4c4c4;
+  /* margin: 3px; */
+  padding: 3px;
   border-radius: 0px;
   cursor: pointer;
 }
@@ -324,20 +336,22 @@ div {
 
 /* End first bar region */
 
-
+/* 
 #EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child {
   overflow-x: auto;
 
+} */
+
+#EqnEditor .tlbr-lbl:last-child {
+  margin-right: 0px;
 }
 
+
 #EqnEditor .toolbar_wrapper {
-  overflow-x: auto;
-  overflow-y: hidden;
 
   /* for firefox */
   scrollbar-color: #eee white;
   scrollbar-width: thin;
-  /* overflow-y: visible; */
   /* white-space: nowrap; */
 }
 
@@ -361,22 +375,19 @@ div {
 
 }
 
+.cke_dialog_ui_vbox_child {
+  background: transparent !important;
+}
+
 .dppr-whn-ld-dn {
   display: flex;
 }
-
 
 .dppr-whn-ld-dn.d-none {
   display: block;
 
   width: 0px;
   height: 0px;
-}
-
-#EqnEditor #panel14,
-#EqnEditor #panel5,
-#EqnEditor #panel11 {
-  height: 34px !important;
 }
 
 #EqnEditor #panel11>img {
@@ -425,6 +436,7 @@ div {
 }
 
 #EqnEditor div#panel8 {
+  margin-left: 29px !important;
   -webkit-order: 5;
   order: 5;
 }
@@ -433,6 +445,7 @@ div {
   -webkit-order: 6;
   order: 6;
 }
+
 
 #EqnEditor .toolbar_wrapper:nth-child(3) .toolbar:last-child {
   display: flex;
@@ -473,7 +486,7 @@ div {
 
 }
 
-.tlbr-lbl-2 {
+#EqnEditor .tlbr-lbl-2 {
   margin-right: 8px;
   position: relative;
   border-bottom: 1px solid #c4c4c4;

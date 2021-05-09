@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import upload_icon from 'assets/icons/64x64/b_nb_upload_icon_64x64.png'
 import 'components/styles/Form.scss'
 //Set text props for this component
-class FormFileUploader extends Component {
+class FormFileUploader extends React.Component {
 
     //onDelete, tag: dmID, id, name/content
     constructor(props) {

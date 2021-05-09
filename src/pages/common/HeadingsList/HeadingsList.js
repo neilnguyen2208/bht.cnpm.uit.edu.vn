@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -8,8 +8,6 @@ import { connect } from "react-redux";
 import 'layouts/Layout.scss';
 import './HeadingsList.scss';
 //utils
-import { courseContentType } from "constants.js"
-import { getQueryParamByName, setQueryParam } from 'utils/urlUtils';
 import dropdownIcon from 'assets/icons/12x12/dropdown_12x12.png'
 
 //services
@@ -17,10 +15,9 @@ import {  } from "redux/services/postServices";
 import { getPostCategories } from "redux/services/postCategoryServices";
 
 //components
-import Loader from 'components/common/Loader/Loader';
 import Titlebar from 'components/common/Titlebar/Titlebar';
 
-class PostsList extends Component {
+class PostsList extends React.Component {
     constructor(props) {
         super();
 

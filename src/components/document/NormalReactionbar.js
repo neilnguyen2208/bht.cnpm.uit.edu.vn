@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
 import unliked_icon from 'assets/icons/24x24/unliked_icon_24x24.png'
-import full_blue_bookmark_btn from 'assets/icons/24x24/b_blue_bookmark_icon_24x24.png'
-import gray_bookmark_btn from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
-import liked_btn from 'assets/icons/24x24/liked_icon_24x24.png'
-import unliked_btn from 'assets/icons/24x24/unliked_icon_24x24.png'
 import dislike_btn from 'assets/icons/24x24/disliked_icon_24x24.png'
 import undislike_btn from 'assets/icons/24x24/undisliked_icon_24x24.png'
 import download_btn from 'assets/icons/24x24/gray_download_icon_24x24.png'
@@ -28,7 +22,7 @@ import { formatNumber } from 'utils/miscUtils.js'
 import { docReactionType } from 'constants.js'
 import { reactionADocument } from 'redux/services/documentServices'
 
-class NormalReactionbar extends Component {
+class NormalReactionbar extends React.Component {
 
   constructor(props) {
     super(props);

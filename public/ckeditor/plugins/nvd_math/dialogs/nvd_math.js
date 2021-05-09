@@ -92,97 +92,7 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 				if (e.target.value) document.querySelector('#nvd-math-prvw').appendChild(node);
 			}
 
-			//title title to append
-			var title1Content = '<div style = "display: flex; "> ' +
-				'<div class = "tlbr-lbl" style = "width: 157px" >Trình bày bố cục:</div>' +
-				'<div  class = "tlbr-lbl" style =  "width: 76px">Nhị phân:</div> ' +
-				'<div  class = "tlbr-lbl" style = "width: 76px">Tập hợp: </div>' +
-				'<div  class = "tlbr-lbl" style = "width: 240px">Phép toán khác:</div> ' +
-				'</div>';
-
-			var title2Content = '<div style = "display: flex">' +
-				'<div  class = "tlbr-lbl-2" style = "width: 172px">Phép toán giải tích:</div>' +
-				'<div  class = "tlbr-lbl-2" style = "width: 106px">Ma trận:</div>' +
-				'<div  class = "tlbr-lbl-2" style = "width: 58px">So sánh:</div>' +
-				'<div  class = "tlbr-lbl-2" style = "width: 62px">Dấu ngoặc:</div>' +
-				'<div  class = "tlbr-lbl-2" style = "width: 122px">Ký tự đặc biệt:</div>' +
-				'</div>'
-
-			var loaderContent = '<div style = "display: flex;flex-direction: column;" class = "dppr-whn-ld-dn"> ' +
-				'<img src = "https://i.imgur.com/G6BCakp.gif" style = "margin: auto; width: 80px; height: 80px" alt = ""/> ' +
-				'<div class = "nvd-loader-text"> loading </div></div>';
-
-			var loaderDiv = document.createElement('div');
-			loaderDiv.innerHTML = loaderContent;
-
-			var title1Div = document.createElement("div");
-			title1Div.innerHTML = title1Content;
-			var title2Div = document.createElement("div");
-			title2Div.innerHTML = title2Content;
-
-			//#region simulate async
-			document.querySelector("[name^='CCEquationEditor']").prepend(loaderDiv);
-			console.log(document.querySelector("[name^='CCEquationEditor']"));
-
-
-
-			if (!document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child"))
-				setTimeout(function () {
-					if (!document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child"))
-						setTimeout(function () {
-							if (!document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child"))
-								setTimeout(function () {
-									if (!document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child"))
-										setTimeout(function () {
-											document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
-											document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
-											parent1.prepend(title1Div);
-											parent2.prepend(title2Div);
-										}, 3000)
-									else {
-										document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
-										document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
-
-										var parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
-										var parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
-										parent1.prepend(title1Div);
-										parent2.prepend(title2Div);
-									}
-								}, 2000)
-							else {
-								document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
-								document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
-
-								var parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
-								var parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
-								parent1.prepend(title1Div);
-								parent2.prepend(title2Div);
-							}
-						}, 2000)
-					else {
-						document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
-						document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
-
-						var parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
-						var parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
-						parent1.prepend(title1Div);
-						parent2.prepend(title2Div);
-					}
-				}, 3000);
-			else {
-				document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
-				document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
-
-				var parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
-				var parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
-				parent1.prepend(title1Div);
-				parent2.prepend(title2Div);
-				console.log("178");
-			}
-			//#endregion simulate async
-			console.log("Loaded");
 		},
-
 
 		onShow: function () {
 			var dialog = this;
@@ -195,12 +105,83 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 				if (sName != null) EqEditor.getTextArea().setText(sName[2]);
 				dialog.insertMode = true;
 			}
-			console.log("Shown");
 
 			// set-up the field values based on selected or newly created image
 			dialog.setupContent(dialog.image);
 
+			//create ui
+			var title1Content = '<div style = "display: flex; "> ' +
+				'<div class = "tlbr-lbl" style = "width: 157px" >Trình bày bố cục:</div>' +
+				'<div  class = "tlbr-lbl" style =  "width: 76px">Nhị phân:</div> ' +
+				'<div  class = "tlbr-lbl" style = "width: 76px">Tập hợp: </div>' +
+				'<div  class = "tlbr-lbl" style = "width: 240px">Phép toán khác:</div> ' +
+				'</div>';
 
+			var title2Content = '<div style = "display: flex; justify-content: space-between;">' +
+				'<div style = "display: flex">' +
+				'<div  class = "tlbr-lbl-2" style = "width: 172px">Phép toán giải tích:</div>' +
+				'<div  class = "tlbr-lbl-2" style = "width: 106px">Ma trận:</div>' +
+				'<div  class = "tlbr-lbl-2" style = "width: 58px">So sánh:</div>' +
+				'<div  class = "tlbr-lbl-2" style = "width: 62px">Dấu ngoặc:</div>' +
+				'</div>' +
+				'<div  class = "tlbr-lbl-2" style = "width: 122px; margin-right: 0px">Ký tự đặc biệt:</div>' +
+				'</div>'
+
+			var loaderContent = '<div style = "display: flex;flex-direction: column;" class = "dppr-whn-ld-dn"> ' +
+				'<img src = "https://i.imgur.com/G6BCakp.gif" style = "margin: auto; width: 80px; height: 80px" alt = ""/> ' +
+				'<div class = "nvd-loader-text"> loading </div></div>';
+
+			var loaderDiv = document.createElement('div');
+			loaderDiv.innerHTML = loaderContent;
+
+			var title1Div = document.createElement("div");
+			title1Div.innerHTML = title1Content;
+
+			var title2Div = document.createElement("div");
+			title2Div.innerHTML = title2Content;
+
+			//#region simulate async
+			document.querySelector("[name^='CCEquationEditor']").prepend(loaderDiv);
+			console.log("dm");
+			if (
+				document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:last-child") === null
+			)
+				setTimeout(function () {
+					if (document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:last-child") === null)
+						setTimeout(function () {
+							if (document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:last-child") === null)
+								setTimeout(function () {
+									document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
+									document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
+									let parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
+									let parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
+									parent1.prepend(title1Div);
+									parent2.prepend(title2Div);
+								}, 3000)
+							else {
+								document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
+								document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
+								let parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
+								let parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
+								parent1.prepend(title1Div);
+								parent2.prepend(title2Div);
+							}
+						}, 2000)
+					else {
+						document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
+						document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") })
+						let parent1 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(2)");
+						let parent2 = document.querySelector("#EqnEditor .top .toolbar_wrapper:nth-child(3)");
+						parent1.prepend(title1Div);
+						parent2.prepend(title2Div);
+					}
+				}, 3000);
+			else {
+				//show when loadeds :D
+				document.querySelectorAll(".ppr-whn-ld-dn").forEach(ele => { ele.classList.remove("ppr-whn-ld-dn") });
+				//hide loader
+				document.querySelectorAll(".dppr-whn-ld-dn").forEach(ele => { ele.classList.add("d-none") });
+			}
 		},
 
 		onOk: function () {
@@ -209,9 +190,7 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 			eqn.setAttribute('src', EqEditor.getTextArea().exportEquation('urlencoded'));
 			editor.insertElement(eqn);
 			EqEditor.Example.add_history(EqEditor.getTextArea().getLaTeX());
-			console.log(this.curTO);
-			if (this.curTO)
-				clearTimeout(this.curTO);
+		
 		},
 	};
 });

@@ -1,7 +1,7 @@
 
 
 
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
@@ -23,7 +23,7 @@ import { itemType, mySelfMenuItemList, normalMenuItemList } from 'constants.js'
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 
-class DocumentSummary extends Component {
+class DocumentSummary extends React.Component {
 
   constructor(props) {
     super(props);

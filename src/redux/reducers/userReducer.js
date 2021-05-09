@@ -9,12 +9,12 @@ import {
 
 } from '../constants.js'
 
-const allUsers = [
-  {
-    id: 1,
+// const allUsers = [
+//   {
+//     id: 1,
 
-  }
-]
+//   }
+// ]
 
 const initialState = {
   allUsers: {

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -25,7 +25,7 @@ import SubjectItem from 'components/course/SubjectItem'
 import dropdownIcon from 'assets/icons/12x12/dropdown_12x12.png'
 
 
-class CoursesList extends Component {
+class CoursesList extends React.Component {
     constructor(props) {
         super();
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
@@ -8,7 +8,7 @@ import './NotificationManagement.scss'
 
 import { ClickAwayListener } from '@material-ui/core';
 import AdminSidebar from 'layouts/AdminSidebar'
-class NotificationManagement extends Component {
+class NotificationManagement extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
@@ -15,7 +15,7 @@ import { withRouter } from "react-router-dom";
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
 
 //chuyen thanh chi xem nen chua co handle click cho cac item trong bang danh muc bai viet
-class CategoryManagement extends Component {
+class CategoryManagement extends React.Component {
     constructor(props) {
         super();
 

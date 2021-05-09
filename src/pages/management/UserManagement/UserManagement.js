@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import Paginator from 'components/common/Paginator/ServerPaginator'
@@ -18,7 +18,7 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Combobox from 'components/common/Combobox/Combobox'
 
-class UserManagement extends Component {
+class UserManagement extends React.Component {
 
     componentDidMount() {
         this.props.getAllUsers();

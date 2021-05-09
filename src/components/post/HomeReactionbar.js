@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
@@ -20,7 +20,7 @@ import 'components/styles/Button.scss'
 //utils
 import { formatNumber } from 'utils/miscUtils.js'
 
-class NormalReactionbar extends Component {
+class NormalReactionbar extends React.Component {
 
   constructor(props) {
     super(props);

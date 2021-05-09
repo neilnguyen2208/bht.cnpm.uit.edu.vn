@@ -27,7 +27,7 @@ class ConfirmationModal extends React.Component {
 
     render() {
 
-        let { title, text, confirmText, cancelText } = this.props;
+        let { confirmText, cancelText } = this.props;
 
         return (
             <div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -10,10 +10,9 @@ import 'components/styles/Reactionbar.scss'
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
 import { openModal } from 'redux/services/modalServices.js';
-import store from 'redux/store/index.js';
 import { validation } from 'utils/validationUtils.js';
 
-class ReportReactionbar extends Component {
+class ReportReactionbar extends React.Component {
 
   handleResolve = () => {
     openModal("form", {

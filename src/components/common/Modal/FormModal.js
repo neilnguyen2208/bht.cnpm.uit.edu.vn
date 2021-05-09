@@ -2,10 +2,7 @@ import React from "react";
 import './Modal.scss'
 import 'components/styles/Form.scss'
 import 'components/styles/Button.scss'
-import { closeModal, openModal } from "redux/services/modalServices";
-import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { openModal } from "redux/services/modalServices";
 import Editor from 'components/common/CustomCKE/CKEditor.js'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar'
@@ -30,7 +27,7 @@ class FormModal extends React.Component {
         this.props.inputs.forEach(element => {
             if (element.type === "text-area" || element.type === "text-input")
                 this.DTO[element.key] = document.querySelector('#' + element.id).value; //for text input and text area
-         
+
         });
         if (this.props.append) {
             Object.assign(this.DTO, this.props.append);
@@ -49,7 +46,7 @@ class FormModal extends React.Component {
 
     render() {
 
-        let { submitText, cancelText, id, title, inputs, formId } = this.props;
+        let { submitText, cancelText, title, inputs, formId } = this.props;
 
         return (
             <div>

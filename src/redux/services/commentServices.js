@@ -2,7 +2,6 @@
 import {
   get_APostCommentsSuccess
 } from "redux/actions/commentAction.js";
-import { request } from 'utils/requestUtils';
 
 
 export function getAPostComments(postID) {

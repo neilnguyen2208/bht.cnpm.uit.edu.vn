@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link,  withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import "./UserMenu.scss";
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'

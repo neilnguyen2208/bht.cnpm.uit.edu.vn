@@ -1,9 +1,9 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
-import { NavLink } from 'react-router-dom'
+
 //import for redux
 import { getPendingPosts } from "redux/services/postServices";
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices";
@@ -21,9 +21,8 @@ import RequestReactionbar from 'components/post/RequestReactionbar'
 import { post_ApproveAPostReset, post_RejectAPostReset, post_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
 import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
-import done_icon from 'assets/icons/svg/success_icon.svg'
 
-class PostApproving extends Component {
+class PostApproving extends React.Component {
     constructor(props) {
         super();
     }

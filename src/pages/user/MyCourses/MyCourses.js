@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import "./MyCoureses.scss";
 import "components/common/CustomCKE/CKEditorContent.scss";
 
@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
-class CreatePost extends Component {
+class CreatePost extends React.Component {
     constructor(props) {
 
     }

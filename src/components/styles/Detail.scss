@@ -166,7 +166,6 @@ div div div .ndfHFb-c4YZDc-i5oIFb.ndfHFb-c4YZDc-e1YmVc .ndfHFb-c4YZDc-Wrql6b {
     width: 240px;
     height: fit-content;
     border: 1px solid var(--gray);
-    // border-top: 5px var(--blue) solid;
     box-shadow: 0px 0px 2px 0px var(--grayish);
 
 }
@@ -177,7 +176,6 @@ div div div .ndfHFb-c4YZDc-i5oIFb.ndfHFb-c4YZDc-e1YmVc .ndfHFb-c4YZDc-Wrql6b {
 
 .relative-item {
     display: flex;
-    // height: fit-content;
     margin-bottom: 5px;
     color: var(--black);
 }
@@ -192,7 +190,6 @@ div div div .ndfHFb-c4YZDc-i5oIFb.ndfHFb-c4YZDc-e1YmVc .ndfHFb-c4YZDc-Wrql6b {
     min-width: 80px;
     vertical-align: middle;
     line-height: 22px;
-
     font-family: "BarlowCondensed-Medium";
     font-size: 18px;
     color: var(-black);
@@ -236,6 +233,6 @@ div div div .ndfHFb-c4YZDc-i5oIFb.ndfHFb-c4YZDc-e1YmVc .ndfHFb-c4YZDc-Wrql6b {
 
 .relative-see-more {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding: 5px;
 }

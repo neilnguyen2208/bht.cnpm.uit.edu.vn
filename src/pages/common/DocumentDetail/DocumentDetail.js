@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Metadata.scss'
 import { getPostByID } from "redux/services/postServices"
@@ -22,7 +22,7 @@ import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import { itemType } from 'constants.js';
 
-class DocumentDetail extends Component {
+class DocumentDetail extends React.Component {
 
     componentDidMount() {
         this.props.getPostByID(this.props.match.params.id);

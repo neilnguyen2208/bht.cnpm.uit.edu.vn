@@ -279,7 +279,7 @@ const USER = {
 }
 
 
-const getPermissionOfRoleByRoleName = function (roleName) {
+export const getPermissionOfRoleByRoleName = function (roleName) {
     switch (roleName) {
         case "ADMIN":
             return ADMIN;

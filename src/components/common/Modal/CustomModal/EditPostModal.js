@@ -21,7 +21,7 @@ import Tag from "components/post/Tag";
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
-import { getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 import Loader from 'components/common/Loader/Loader'
 

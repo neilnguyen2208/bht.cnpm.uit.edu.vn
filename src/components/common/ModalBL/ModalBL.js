@@ -34,7 +34,7 @@ export default class ModalBL extends React.Component {
     }
 
     render() {
-        let { type, text, btnText } = this.props;
+        let { type, text } = this.props;
 
         return (
             <div className="bl-modal-fixed-layout">

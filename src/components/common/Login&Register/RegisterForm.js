@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
+import { closeModal, openModal } from "redux/services/modalServices";
 import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";

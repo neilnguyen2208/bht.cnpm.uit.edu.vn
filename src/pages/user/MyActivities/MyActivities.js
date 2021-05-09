@@ -1,21 +1,16 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 //import for Redux
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { management_getAllRoles } from 'redux/services/userServices'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import UserSidebar from 'layouts/UserSidebar'
 
 //import for role config
 
-class MyActivities extends Component {
-    constructor(props) {
-        super(props);
-
-    }
+class MyActivities extends React.Component {
 
     componentDidMount() {
 

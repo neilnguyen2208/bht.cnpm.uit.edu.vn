@@ -1,18 +1,13 @@
-import React, { Component } from "react";
-import Tag from "components/post/Tag"
+import React from 'react';
 import { getPostSearch } from "redux/services/postServices"
 import { getPostCategories } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import ComboBox from 'components/common/Combobox/Combobox';
-import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
-import Paginator from 'components/common/Paginator/ServerPaginator'
-import Loader from 'components/common/Loader/Loader'
-import { itemType } from 'constants.js'
+import { getQueryParamByName,  setQueryParam } from 'utils/urlUtils'
 import SearchHorizontalMenubar from './SearchHorizontalMenubar'
-class SearchCourses extends Component {
+class SearchCourses extends React.Component {
     constructor(props) {
         super(props);
         this.postSearchResult = [];

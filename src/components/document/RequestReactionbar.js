@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Metadata.scss'
 import 'components/styles/Button.scss'
@@ -9,7 +9,7 @@ import { approveADocument, rejectADocument, rejectAndFeedbackADocument } from 'r
 import { openModal } from 'redux/services/modalServices'
 import { validation } from 'utils/validationUtils'
 
-class RequestedSummary extends Component {
+class RequestedSummary extends React.Component {
 
     handleApprove = () => {
         openModal("confirmation",

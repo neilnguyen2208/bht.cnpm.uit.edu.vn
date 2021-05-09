@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
@@ -13,7 +13,7 @@ import { getPostByID } from 'redux/services/postServices'
 //constants
 
 //components
-class RelativePosts extends Component {
+class RelativePosts extends React.Component {
   render() {
     return (
       <div className="relative-sidebar">

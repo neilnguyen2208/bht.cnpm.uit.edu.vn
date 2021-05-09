@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -6,7 +6,7 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { getTagByID } from 'redux/services/tagServices'
 import search_icon from 'assets/icons/24x24/bg_search_icon_24x24.png'
 
-class SearchTagTopbar extends Component {
+class SearchTagTopbar extends React.Component {
   componentDidMount() {
     if (Number.isNaN(getQueryParamByName('tag')) || getQueryParamByName('tag') === null) {
       setQueryParam({ tag: 1, page: 1 });

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 //resource
 import graySaveIcon from 'assets/icons/24x24/nb_gray_bookmark_icon_24x24.png'
@@ -12,7 +12,7 @@ import './SubjectItem.scss'
 //components
 import { Link } from 'react-router-dom'
 
-class CourseSummaryItem extends Component {
+class CourseSummaryItem extends React.Component {
 
   constructor(props) {
     super(props);
@@ -40,15 +40,15 @@ class CourseSummaryItem extends Component {
   render() {
 
     //initiate some element
-    let saveBtn = <div></div>;
+    // let saveBtn = <div></div>;
 
     //render likeBtn
-    if (!this.props.isSaved) {
-      saveBtn = <img className="" alt="like" src={graySaveIcon} onClick={this.onUnSaveBtnClick}></img>
-    }
-    else {
-      saveBtn = <img className="" alt="like" src={blueSaveIcon} onClick={this.onSaveBtnClick} ></img>
-    }
+    // if (!this.props.isSaved) {
+    // saveBtn = <img className="" alt="like" src={graySaveIcon} onClick={this.onUnSaveBtnClick}></img>
+    // }
+    // else {
+    // saveBtn = <img className="" alt="like" src={blueSaveIcon} onClick={this.onSaveBtnClick} ></img>
+    // }
 
     return (
       <div className="subject-item" >

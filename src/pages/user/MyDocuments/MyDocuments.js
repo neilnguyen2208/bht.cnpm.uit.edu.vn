@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType, userApproveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
@@ -23,7 +23,7 @@ import store from 'redux/store/index'
 import { delete_ADocumentReset, put_EditADocumentReset } from 'redux/actions/documentAction'
 
 //Sample URL: http://localhost:3000/user/my-documents?page=3&category=1
-class MyDocuments extends Component {
+class MyDocuments extends React.Component {
 
     componentDidMount() {
         this.searchParamObject = {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'components/styles/Tag.scss';
 import { Link } from 'react-router-dom'
 import { setQueryParam } from 'utils/urlUtils';
@@ -6,7 +6,7 @@ import store from 'redux/store/index'
 import { getTagByID, getRelativeTags } from 'redux/services/tagServices'
 
 //Set text props for this component
-export default class Tag extends Component {
+export default class Tag extends React.Component {
 
     //onDelete, tag: dmID, id, name/content
 
@@ -26,11 +26,6 @@ export default class Tag extends Component {
                 tag: this.props.tag.id
             }
 
-            let searchParamObject = {
-                "page": 1,
-                tags: this.props.tag.id,
-                searchTerm: ''
-            }
 
             setQueryParam(queryParamObject);
             // store.dispatch(getDocumentSearch(searchParamObject));

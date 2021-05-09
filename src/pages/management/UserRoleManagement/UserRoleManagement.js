@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import './UserRoleManagement.scss'
@@ -23,7 +23,7 @@ export const roleActionList = [
 export const setAsDefaultMenuItem = { id: 3, text: "Đặt làm mặc định.", icon: edit_icon, value: "SET_AS_DEFAULT" };
 
 
-class UserRoleManagement extends Component {
+class UserRoleManagement extends React.Component {
 
     componentDidMount() {
     }
@@ -115,9 +115,8 @@ class UserRoleManagement extends Component {
                                                         return <div className="table-label">
                                                             {label}
                                                         </div>
-                                                    // return <div className="table-label">
-                                                    //     {label}
-                                                    // </div>
+                                                    return <div className="table-label">
+                                                    </div>
                                                 })}
                                             </div>
                                         </td>

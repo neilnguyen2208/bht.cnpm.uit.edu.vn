@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
@@ -21,7 +21,7 @@ import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import CommentSection from 'components/comment/CommentSection'
 
-class PostDetail extends Component {
+class PostDetail extends React.Component {
 
     componentDidMount() {
         this.props.getPostByID(this.props.match.params.id);

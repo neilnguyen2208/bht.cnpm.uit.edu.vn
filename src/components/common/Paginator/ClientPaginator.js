@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 // import './PostBrowser.scss'
 import 'components/common/Paginator/Paginator.scss'
 
 
-class Paginator extends Component {
+class Paginator extends React.Component {
     constructor(props) {
         super(props);
         this.maxItemPerPage = this.props.config.maxItemPerPage; //số lượng tối đa item mỗi page

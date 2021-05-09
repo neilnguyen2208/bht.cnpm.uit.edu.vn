@@ -13,7 +13,7 @@ export function getPostCategories() { //co truong tat ca hay khong
             dispatch(get_PostCategoriesSuccess(response.data));
         })
             .catch(error => {
-                console.log(error);
+                
                 dispatch(get_PostCategoriesFailure());
             });
     }

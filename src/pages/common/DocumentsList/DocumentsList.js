@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import React, { Component } from 'react'
+import React from 'react'
 
 //services
 import { getDocumentSearch } from "redux/services/documentServices"
@@ -20,7 +20,7 @@ import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import { publishedTimeOptions, itemType } from 'constants.js';
 
-class DocumentsList extends Component {
+class DocumentsList extends React.Component {
 
     componentDidMount() {
         this.searchParamObject = {

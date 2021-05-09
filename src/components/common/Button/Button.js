@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'components/common/Button/Button.scss'
 
 //Set text props for this component
-export default class Button extends Component {
+export default class Button extends React.Component {
 
     //onDelete, tag: id, content
 

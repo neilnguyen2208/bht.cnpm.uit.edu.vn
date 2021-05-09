@@ -26,7 +26,7 @@ export function getDocumentCategoriesHaveAll() { //co truong tat ca hay khong
             dispatch(get_DocumentCategoriesHaveAllSuccess(response.data));
         })
             .catch(error => {
-                console.log(error);
+                
                 dispatch(get_DocumentCategoriesFailure());
             });
 

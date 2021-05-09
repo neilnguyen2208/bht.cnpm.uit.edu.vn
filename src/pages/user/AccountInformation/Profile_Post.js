@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 
 import './AccountInformation.scss'
@@ -20,13 +20,10 @@ import Paginator from 'components/common/Paginator/ServerPaginator'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
-import { itemType, userApproveStatusOptions } from 'constants.js';
+import { itemType } from 'constants.js';
 
 //import for role config
-class ProfilePost extends Component {
-    constructor(props) {
-        super(props);
-    }
+class ProfilePost extends React.Component {
 
     componentDidMount() {
 

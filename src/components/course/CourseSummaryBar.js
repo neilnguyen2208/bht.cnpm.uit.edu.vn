@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 //resource
 import gray_btn_element from 'assets/icons/24x24/gray_btn_element_24x24.png'
@@ -19,7 +19,7 @@ import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 
 
 
-class CourseSummaryBar extends Component {
+class CourseSummaryBar extends React.Component {
 
   constructor(props) {
     super(props);

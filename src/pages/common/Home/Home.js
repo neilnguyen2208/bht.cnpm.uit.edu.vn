@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -9,8 +9,7 @@ import 'layouts/Layout.scss'
 import './Home.scss'
 
 //utils
-import { itemType } from 'constants.js'
-import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
+import { setQueryParam } from 'utils/urlUtils'
 import HomePostItem from 'components/post/HomeInfo'
 import HomeDocumentItem from 'components/document/HomeInfo'
 
@@ -28,7 +27,7 @@ import {
 //components
 import Loader from 'components/common/Loader/Loader'
 
-class Home extends Component {
+class Home extends React.Component {
     constructor(props) {
         super();
         this.state = {
@@ -105,8 +104,8 @@ class Home extends Component {
                     publishDtm={item.publishDtm}
                     description={item.description}
                     title={item.title}
-                    likeCount = {item.likeCount}
-                    dislikeCount = {item.dislikeCount}
+                    likeCount={item.likeCount}
+                    dislikeCount={item.dislikeCount}
                     downloadCount={item.downloads}
                     viewCount={item.views}
                     subjectName={item.subject}

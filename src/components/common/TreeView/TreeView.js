@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
 
-class TreeView extends Component {
+class TreeView extends React.Component {
 
   onSelect = (selectedKeys, info) => {
     if (this.props.onNodeSelected)

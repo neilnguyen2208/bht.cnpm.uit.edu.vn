@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
@@ -20,13 +20,10 @@ import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
 
-//constants
-import { itemType } from 'constants.js'
-
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 
-class PostDetail extends Component {
+class PostDetail extends React.Component {
 
   constructor(props) {
     super(props);

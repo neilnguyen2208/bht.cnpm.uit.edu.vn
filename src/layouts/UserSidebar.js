@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink } from "react-router-dom";
 
 // import resource image, icon
@@ -20,7 +20,7 @@ import {
   isGrantedPermissions
 } from 'utils/authUtils'
 
-class UserSidebar extends Component {
+class UserSidebar extends React.Component {
   constructor(props) {
     super(props);
     this.isTheFirstTimeLoaded = true;
@@ -39,7 +39,7 @@ class UserSidebar extends Component {
 
     // if (this.props.accountInformation !== null && this.props.accountInformation !== undefined) {
 
-    let roleName, score, postCount, docCount, username, avatarURL = "https://i.imgur.com/SZJgL6C.png";
+    let roleName; //  score, postCount, docCount, username, avatarURL = "https://i.imgur.com/SZJgL6C.png";
     // = this.props.accountInformation;
 
     return (

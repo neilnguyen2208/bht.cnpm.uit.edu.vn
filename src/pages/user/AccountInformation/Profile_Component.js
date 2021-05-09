@@ -1,10 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
-import Titlebar from 'components/common/Titlebar/Titlebar'
-
-import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
-import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
+import React from 'react'
 
 import './AccountInformation.scss'
 import 'components/styles/Form.scss'
@@ -14,9 +10,7 @@ import 'components/styles/HomeItem.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { NavLink, withRouter } from "react-router-dom";
-import UserSidebar from 'layouts/UserSidebar';
 import tick_icon from 'assets/icons/svg/nb_tick_icon.svg'
-import { ClickAwayListener } from '@material-ui/core'
 import "components/user/UserMenu.scss";
 import { formatNumber } from 'utils/miscUtils'
 
@@ -31,7 +25,7 @@ export const unfollowMenu = [
 
 
 //import for role config
-class AccountInformation extends Component {
+class AccountInformation extends React.Component {
     constructor(props) {
         super(props);
         this.isFollowed = true;
@@ -53,7 +47,6 @@ class AccountInformation extends Component {
     handlePopupMenuClick = (e, user_menu_id, dropdown_id) => {
         e.preventDefault();
         let user_menu = document.getElementById(user_menu_id);
-        let dropdown = document.getElementById(dropdown_id);
         user_menu.style.background = "var(--grayish)";
 
         if (!this.state.isDropdownOpen) {

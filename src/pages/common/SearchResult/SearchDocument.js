@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import React, { Component } from 'react'
+import React from 'react'
 
 //services
 import { getDocumentSearch } from "redux/services/documentServices"
@@ -23,7 +23,7 @@ import SearchHorizontalMenubar from './SearchHorizontalMenubar';
 import Loader from 'components/common/Loader/Loader';
 
 
-class DocumentsList extends Component {
+class DocumentsList extends React.Component {
 
     componentDidMount() {
         this.queryParamObject = {

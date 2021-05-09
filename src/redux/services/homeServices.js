@@ -22,11 +22,6 @@ import {
 
     delete_HighlightAPostReset,
     delete_HighlightAPostSuccess,
-    delete_HighlightAPostFailure,
-
-    get_HighlightPostsIdsRequest,
-    get_HighlightPostsIdsSuccess,
-    get_HighlightPostsIdsFailure,
 
     stick_APostToTopReset,
     stick_APostToTopSuccess,
@@ -35,7 +30,6 @@ import {
 } from "redux/actions/homeAction.js";
 import { request } from 'utils/requestUtils'
 import { openBLModal } from "./modalServices";
-import done_icon from 'assets/icons/svg/success_icon.svg';
 
 export function getTrendingDocuments() {
     return dispatch => {

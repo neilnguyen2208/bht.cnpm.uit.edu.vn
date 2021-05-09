@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import './ActivityManagement.scss'
 import 'components/styles/Form.scss'
@@ -14,7 +14,7 @@ import { withRouter } from "react-router-dom";
 import AdminSidebar from 'layouts/AdminSidebar'
 //import for role config
 
-class ActivityManagement extends Component {
+class ActivityManagement extends React.Component {
     componentDidMount() {
 
     }

@@ -1,8 +1,8 @@
 
 import {
-  GET_A_POST_COMMENTS_REQUEST,
-  GET_A_POST_COMMENTS_SUCCESS,
-  GET_A_POST_COMMENTS_FAILURE
+  // GET_A_POST_COMMENTS_REQUEST,
+  // GET_A_POST_COMMENTS_SUCCESS,
+  // GET_A_POST_COMMENTS_FAILURE
 
 } from "../constants.js"
 
@@ -99,7 +99,7 @@ const commentDTOs = [
         isLiked: false,
         createdTime: "2020-03-21T07:11:06",
         likeCount: 2,
-        content: "Nước lọc ngon tuyệt!", 
+        content: "Nước lọc ngon tuyệt!",
       },
       {
         id: 2,
@@ -109,7 +109,7 @@ const commentDTOs = [
         isLiked: false,
         createdTime: "2021-03-21T07:11:06",
         likeCount: 10,
-        content: "Nước lọc ngon tuyệt!", 
+        content: "Nước lọc ngon tuyệt!",
       }
     ],
 

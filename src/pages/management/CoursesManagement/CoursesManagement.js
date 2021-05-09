@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType } from 'constants.js';
-import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
 import { getMyPosts } from "redux/services/postServices";
@@ -12,12 +10,8 @@ import AdminSidebar from "layouts/AdminSidebar"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import ComboBox from 'components/common/Combobox/Combobox';
-import { getQueryParamByName, isContainSpecialCharacter, setQueryParam } from 'utils/urlUtils'
 
-import Loader from 'components/common/Loader/Loader'
-
-class CoursesManagement extends Component {
+class CoursesManagement extends React.Component {
     constructor(props) {
         super();
 

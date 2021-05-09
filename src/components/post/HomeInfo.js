@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import 'components/styles/Button.scss'
 import 'components/styles/HomeItem.scss'
 import { Link } from 'react-router-dom'
 import HomeReactionbar from 'components/post/HomeReactionbar'
 
-class HomeInfo extends Component {
+class HomeInfo extends React.Component {
   render() {
 
     return (

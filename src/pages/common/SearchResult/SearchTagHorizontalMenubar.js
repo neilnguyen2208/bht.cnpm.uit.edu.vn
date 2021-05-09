@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from 'react';
 import { NavLink } from 'react-router-dom'
 import 'layouts/Search.scss'
 
-export default class SearchHorizontalMenubar extends Component {
+export default class SearchHorizontalMenubar extends React.Component {
   render() {
     return (
       <div>

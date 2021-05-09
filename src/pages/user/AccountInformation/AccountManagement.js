@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 //import for Redux
 import { bindActionCreators } from 'redux'
@@ -9,7 +9,7 @@ import Editor from 'components/common/CustomCKE/CKEditor';
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
 import image_icon from 'assets/icons/svg/white_image_icon.svg';
 
-class AccountManagement extends Component {
+class AccountManagement extends React.Component {
     constructor(props) {
         super();
     }

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -7,12 +7,9 @@ import { connect } from "react-redux";
 //styles
 import 'layouts/Layout.scss'
 
-//utils
-import { itemType } from 'constants.js'
-import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 //services
 //components
-class PostsList extends Component {
+class PostsList extends React.Component {
     constructor(props) {
         super();
 

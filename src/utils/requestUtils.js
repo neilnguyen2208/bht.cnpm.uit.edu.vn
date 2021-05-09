@@ -1,9 +1,5 @@
 import axios from 'axios';
 import { openBLModal } from 'redux/services/modalServices';
-import qs from 'qs';
-import store from 'redux/store/index';
-import FormData from 'form-data';
-import fs from 'fs';
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;

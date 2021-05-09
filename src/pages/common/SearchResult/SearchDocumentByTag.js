@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from 'react';
 import { getDocumentSearch } from "redux/services/documentServices"
 import { bindActionCreators } from 'redux';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import Paginator from 'components/common/Paginator/ServerPaginator'
@@ -12,10 +12,9 @@ import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import SearchTagHorizontalMenubar from './SearchTagHorizontalMenubar';
 import DocumentSummaryMetadata from 'components/document/SummaryInfo';
 import RelativeTagSidebar from 'layouts/RelativeTagSidebar';
-import search_icon from 'assets/icons/24x24/bg_search_icon_24x24.png'
 import SearchTagTopbar from "layouts/SearchTagTopbar";
 
-class SearchDocumentByTag extends Component {
+class SearchDocumentByTag extends React.Component {
 
     componentDidMount() {
         this.queryParamObject = {

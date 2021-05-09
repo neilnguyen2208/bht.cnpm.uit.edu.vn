@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import { getPostSearch } from "redux/services/postServices"
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices"
 
@@ -16,7 +16,7 @@ import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 
 import { publishedTimeOptions, itemType } from 'constants.js';
-class SearchPost extends Component {
+class SearchPost extends React.Component {
 
 
     componentDidMount() {

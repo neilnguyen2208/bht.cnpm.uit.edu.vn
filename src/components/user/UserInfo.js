@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './UserItem.scss'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 //combobox
 
-class UserInfo extends Component {
+class UserInfo extends React.Component {
 
   render() {
 

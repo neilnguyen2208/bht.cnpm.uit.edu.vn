@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 
 import './AccountInformation.scss'
@@ -23,10 +23,7 @@ import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import { itemType } from 'constants.js';
 
 //import for role config
-class ProfileDocument extends Component {
-    constructor(props) {
-        super(props);
-    }
+class ProfileDocument extends React.Component {
 
     componentDidMount() {
 
@@ -85,7 +82,7 @@ class ProfileDocument extends Component {
             if (this.props.userDocumentsList.length !== 0)
                 this.userDocumentsList = this.props.userDocumentsList.map((item) => {
                     return <div className="item-container">
-                         <DocumentSummaryMetadata
+                        <DocumentSummaryMetadata
                             type={itemType.mySelf}
                             id={item.id}
                             authorName={item.authorName}

@@ -1,6 +1,6 @@
 
 
-import React, { Component } from 'react'
+import React from 'react'
 import 'layouts/AdminSidebar'
 import Titlebar from 'components/common/Titlebar/Titlebar'
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import AdminSidebar from 'layouts/AdminSidebar'
-class Statistic extends Component {
+class Statistic extends React.Component {
     constructor(props) {
         super();
 

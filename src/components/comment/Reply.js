@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
@@ -19,7 +19,7 @@ import ReplyReactionbar from './ReplyReactionbar';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
-class Reply extends Component {
+class Reply extends React.Component {
   componentDidMount() {
     const window = new JSDOM('').window;
     const DOMPurify = createDOMPurify(window);

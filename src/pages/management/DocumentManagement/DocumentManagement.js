@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
@@ -19,11 +19,9 @@ import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import DocumentManagementNavbar from './DocumentManagementNavbar'
 import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
 
-import store from 'redux/store/index'
-// import { put_EditADocumentReset, delete_ADocumentReset } from 'redux/actions/documentAction'
 import 'layouts/Layout.scss'
 
-class DocumentManagement extends Component {
+class DocumentManagement extends React.Component {
 
     componentDidMount() {
 

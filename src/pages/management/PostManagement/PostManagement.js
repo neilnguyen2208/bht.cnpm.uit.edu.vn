@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
@@ -24,7 +24,7 @@ import { openBLModal } from 'redux/services/modalServices';
 
 import 'layouts/Layout.scss'
 
-class PostManagement extends Component {
+class PostManagement extends React.Component {
 
     componentDidMount() {
 

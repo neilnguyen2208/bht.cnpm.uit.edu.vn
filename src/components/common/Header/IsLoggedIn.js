@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import { Nav, Dropdown, OverlayTrigger, Popover, Badge } from "react-bootstrap";
 import "./IsLoggedIn.scss";
 import { Link } from "react-router-dom";
@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import avatar from 'assets/images/anh.jpg';
 import { getLogout } from "redux/services/userServices"
 import { redirect } from 'constants.js'
-class LoginStatus extends Component {
+class LoginStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

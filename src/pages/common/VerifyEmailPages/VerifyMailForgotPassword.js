@@ -1,20 +1,18 @@
-import React, { Component } from "react";
+import React from 'react';
 import round_logo from 'assets/images/round_logo.png';
 import { getQueryParamByName } from 'utils/urlUtils';
-import success_icon from 'assets/icons/svg/success_icon.svg';
-import { request, appBaseUrl } from 'utils/requestUtils';
-import { validation, styleFormSubmit } from 'utils/validationUtils'
+// import { validation, styleFormSubmit } from 'utils/validationUtils'
 
-const validationCondition = {
-    form: '#verify-forgot-pass-form',
-    rules: [
-        //truyen vao id, loai component, message
-        validation.isRequired('forgot-pass-email', 'text-input', 'Email không được để trống!'),
-        validation.isEmail('forgot-pass-email', 'text-input', 'Email không đúng định dạng!'),
-        validation.isRequired('forgot-pass-ReCAPTCHA', 'ReCAP')
-    ],
-}
-class VerifyMailForgotPassword extends Component {
+// const validationCondition = {
+//     form: '#verify-forgot-pass-form',
+//     rules: [
+//         //truyen vao id, loai component, message
+//         validation.isRequired('forgot-pass-email', 'text-input', 'Email không được để trống!'),
+//         validation.isEmail('forgot-pass-email', 'text-input', 'Email không đúng định dạng!'),
+//         validation.isRequired('forgot-pass-ReCAPTCHA', 'ReCAP')
+//     ],
+// }
+class VerifyMailForgotPassword extends React.Component {
 
     componentDidMount() {
 

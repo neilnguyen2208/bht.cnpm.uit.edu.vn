@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { Component } from 'react'
+import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
 
 //import for redux
@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import UserSidebar from 'layouts/UserSidebar'
 import CustomReCAPTCHA from 'components/common/CustomReCAPTCHA/CustomReCAPTCHA';
 
-class EmailManagement extends Component {
+class EmailManagement extends React.Component {
     constructor(props) {
         super();
         this.state = {

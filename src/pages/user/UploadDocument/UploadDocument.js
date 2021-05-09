@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -23,7 +23,6 @@ import SmallLoader from 'components/common/Loader/Loader_S'
 import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
-import Metadata from 'components/post/DetailInfo'
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import store from "redux/store/index.js"
@@ -45,7 +44,7 @@ const validationCondition = {
     ],
 }
 
-class UploadDocument extends Component {
+class UploadDocument extends React.Component {
     constructor(props) {
         super(props);
 

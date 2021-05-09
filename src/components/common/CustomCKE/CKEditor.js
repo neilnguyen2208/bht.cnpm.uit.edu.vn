@@ -3,6 +3,7 @@ import { CKEToolbarConfiguration, codeSnippet_languages, codeSnippet_theme, styl
 import Loader from 'components/common/Loader/Loader'
 import React, { Component } from 'react';
 import './CKEditor.scss';
+
 class Editor extends Component {
 
   constructor(props) {
@@ -27,18 +28,16 @@ class Editor extends Component {
     let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
 
     let bhtConfiguration = {
-      toolbar: toolbarConfig,
+      // toolbar: toolbarConfig,
       format_tags: 'p;h1;h2;h3;pre',
       stylesSet: styleConfig,
       codeSnippet_theme: codeSnippet_theme,
       codeSnippet_languages: codeSnippet_languages,
-      extraPlugins: 'ckeditor_wiris',
+
     };
 
     //inject bhtConfiguration to external file
-    window.createCKEInstance(this.editorID)();
-
-    // window.CKEDITOR.replace(this.editorID, configuration);
+    window.createCKEInstance(this.editorID, bhtConfiguration)();
 
     window.CKEDITOR.instances[this.editorID].on('change', function () {
       let data = window.CKEDITOR.instances[this.editorID].getData();
@@ -148,11 +147,14 @@ class Editor extends Component {
   }
 
   onFocus = () => {
-    let wrapperEditor = document.getElementById("cke-wrapper-" + this.props.id);
     document.getElementById("cke-wrapper-" + this.props.id).classList.add("focus");
-    this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label').innerText = '';
-    this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
-    document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
+
+    if (this.props.validation) {
+      let wrapperEditor = document.getElementById("cke-wrapper-" + this.props.id);
+      this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label').innerText = '';
+      this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
+      document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
+    }
     if (this.props.onFocus) {
       this.props.onFocus();
     }

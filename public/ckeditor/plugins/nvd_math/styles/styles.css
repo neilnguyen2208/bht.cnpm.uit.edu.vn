@@ -1,0 +1,566 @@
+div {
+  box-sizing: border-box;
+}
+
+.nvd-math-lbl {
+  width: fit-content;
+  height: fit-content;
+  min-width: 80px;
+  vertical-align: middle;
+  line-height: 22px;
+  font-size: 14px;
+  color: #363636;
+  user-select: none;
+  padding-right: 5px;
+}
+
+#EqnEditor .d-flex {
+  display: flex
+}
+
+#EqnEditor .nvd-nfr-lbl {
+  font-size: 14px;
+
+}
+
+.nvd-math-lbl.required:after {
+  content: "*";
+  margin-left: 2px;
+  color: #fe3a3a;
+}
+
+.nvd-math-txtr {
+  padding: 8px !important;
+  height: 70px !important;
+  min-height: 70px !important;
+  background: white !important;
+  resize: none;
+  font-size: 16px !important;
+  line-height: 18px !important;
+  color: #363636 !important;
+  border: #bbb 1px solid !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  border-radius: 4px !important;
+  outline: none !important;
+  position: relative !important;
+  margin: auto !important;
+  box-shadow: 0px 0px 2px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 2px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 2px 0px #c4c4c4;
+
+  box-sizing: border-box !important;
+
+}
+
+.nvd-math-txtr:focus {
+  border: 1px solid #5279db !important;
+  -webkit-box-shadow: 0px 0px 4px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 4px 0px #c4c4c4;
+  box-shadow: 0px 0px 4px 0px #c4c4c4;
+}
+
+/* The default text style used on every page */
+#EqnEditor #hover {
+  padding: 2px;
+  position: absolute;
+  display: none;
+  z-index: 50;
+  background-color: #ffc;
+  border: 1px solid #999999;
+}
+
+#EqnEditor {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#EqnEditor .top {
+  padding: 2px 0;
+  /* overflow-x: auto; */
+  /* for firefox */
+  scrollbar-color: #eee white;
+  scrollbar-width: thin;
+
+}
+
+#EqnEditor .bottom {
+  border-bottom: 1px solid #9a9a9a;
+  display: none;
+}
+
+
+#EqnEditor .toolbar_wrapper {
+  margin: 0 auto;
+}
+
+#EqnEditor .toolbar {
+  position: relative;
+  min-width: fit-content;
+  width: fit-content;
+}
+
+#EqnEditor .toolbar_space {
+  height: 38px;
+  margin: 0 auto;
+}
+
+.nvd-nfr-lnk {
+  display: flex;
+  cursor: pointer;
+
+}
+
+.question-icon:hover+.nvd-nfr-lnk-lbl {
+  color: #5279db !important;
+}
+
+.nvd-nfr-lnk-lbl {
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.nvd-nfr-lnk-lbl:hover {
+  color: #5279db !important;
+}
+
+#EqnEditor .panel {
+  display: inline-block;
+  padding: 0;
+  box-sizing: border-box !important;
+
+  width: fit-content !important;
+  min-width: fit-content !important;
+  overflow: hidden;
+  vertical-align: top;
+  /* border-radifus: 3px; */
+  border-bottom: 1px solid #c4c4c4;
+  padding-bottom: 4px;
+  margin-top: 4px !important;
+  cursor: pointer !important;
+}
+
+#EqnEditor .toolbar_wrapper:nth-child(4) {
+  display: none;
+}
+
+#EqnEditor .panel+.panel {
+  margin-left: 4px;
+
+}
+
+#nvd_CCtoolbar1 {
+  padding-bottom: 4px;
+  position: relative;
+  top: -10px;
+  margin-top: -20px !important;
+}
+
+#EqnEditor .panel>img {
+  padding: 3px;
+  box-sizing: border-box;
+  background-color: white;
+  box-sizing: border-box;
+  border: 1px solid #c4c4c4;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+#EqnEditor #font,
+#EqnEditor #fontsize,
+#EqnEditor #dpi,
+#EqnEditor #bg,
+#EqnEditor #compressed {
+  display: none !important;
+}
+
+#EqnEditor #compressed+label {
+  display: none;
+}
+
+#EqnEditor .panel {
+  min-width: fit-content !important;
+
+}
+
+#EqnEditor .panel>map {
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 0px #c4c4c4;
+}
+
+
+/* First bar region */
+
+#EqnEditor .panel:hover>img:not(#undobutton, #redobutton) {
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 3px 0px #c4c4c4;
+}
+
+#EqnEditor #undobutton {
+  float: left;
+}
+
+#EqnEditor [title^='Equation Color'] {
+  display: none;
+
+}
+
+#EqnEditor [title^='Functions'] {
+  border: 1px solid #C4C4C4;
+  padding: 2px;
+  border-radius: 4px;
+  position: sticky;
+
+  /* justify-self: end; */
+
+  /* position: absolute; */
+  right: 0px;
+  width: 160px;
+}
+
+#EqnEditor [title^='Functions']:hover {
+  border-radius: 4px;
+
+  box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 3px 0px #c4c4c4;
+
+}
+
+
+#EqnEditor .top .toolbar_wrapper:first-child .toolbar:first-child .panel:nth-child(3):before {
+  top: 1px;
+  content: "Chèn hàm số: ";
+  position: relative;
+}
+
+#EqnEditor .top .toolbar_wrapper:first-child .toolbar:first-child {
+  width: 100% !important;
+}
+
+
+#EqnEditor .top .toolbar_wrapper:first-child .panel:nth-child(3) {
+  float: right;
+  border-bottom: 0px;
+}
+
+
+
+#EqnEditor .top .toolbar_wrapper:first-child .panel:nth-child(4) {
+  display: none;
+}
+
+#EqnEditor [title^='Clear the editor window'] {
+  border: 1px solid #c4c4c4;
+  padding: 2px;
+  height: 21px;
+  margin-left: 4px !important;
+  box-sizing: border-box;
+  position: relative;
+  float: right;
+}
+
+#EqnEditor [title^='Clear the editor window']:hover {
+
+  box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 3px 0px #c4c4c4;
+  border-radius: 4px;
+}
+
+#EqnEditor .toolbar_wrapper:first-child {
+  width: 100%;
+  display: flex;
+  margin-top: 20px !important;
+  border-bottom: 1px #c4c4c4 solid !important;
+}
+
+#EqnEditor #redobutton {
+  float: left;
+  margin-left: 4px;
+}
+
+#EqnEditor #redobutton:hover,
+#EqnEditor #undobutton:hover {
+
+  box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 3px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 3px 0px #c4c4c4;
+
+}
+
+#EqnEditor [title^='help'] {
+  display: none;
+
+}
+
+.j-c-spc-btwn {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 18px;
+}
+
+.question-icon {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.d-flex {
+  position: relative;
+  display: flex;
+}
+
+.nsrt-fnctn-lbl {
+  position: absolute;
+  margin-top: -8px;
+  right: 174px;
+}
+
+/* End first bar region */
+
+
+#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child {
+  overflow-x: auto;
+
+}
+
+#EqnEditor .toolbar_wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* for firefox */
+  scrollbar-color: #eee white;
+  scrollbar-width: thin;
+  /* overflow-y: visible; */
+  /* white-space: nowrap; */
+}
+
+/* Second row */
+
+#EqnEditor [title^='Style'] {
+  padding-top: 11px !important;
+}
+
+
+#EqnEditor [title^='Operators'] {
+  padding-top: 10px !important;
+}
+
+#EqnEditor [title^='Brackets'] {
+  padding-top: 8px !important;
+}
+
+.ppr-whn-ld-dn {
+  display: none;
+
+}
+
+.dppr-whn-ld-dn {
+  display: flex;
+}
+
+
+.dppr-whn-ld-dn.d-none {
+  display: block;
+
+  width: 0px;
+  height: 0px;
+}
+
+#EqnEditor #panel14,
+#EqnEditor #panel5,
+#EqnEditor #panel11 {
+  height: 34px !important;
+}
+
+#EqnEditor #panel11>img {
+  min-width: 168px;
+}
+
+#EqnEditor #panel4,
+#EqnEditor #panel16,
+#EqnEditor #panel6,
+#EqnEditor #panel8,
+#EqnEditor #panel12,
+#EqnEditor #panel5,
+#EqnEditor #panel10 {
+  margin-left: 8px !important;
+}
+
+#EqnEditor div#panel10 {
+  -webkit-order: 2;
+  order: 2;
+  min-width: 106px !important;
+  width: 106px !important;
+
+}
+
+#EqnEditor div#panel11 {
+  -webkit-order: 1;
+  order: 1;
+  min-width: 172px !important;
+  width: 172px !important;
+}
+
+#EqnEditor div#panel5 {
+  -webkit-order: 4;
+  order: 4;
+
+  min-width: 62px !important;
+  width: 62px !important;
+}
+
+#EqnEditor div#panel12 {
+  -webkit-order: 3;
+  order: 3;
+
+  min-width: 58px !important;
+  width: 58px !important;
+}
+
+#EqnEditor div#panel8 {
+  -webkit-order: 5;
+  order: 5;
+}
+
+#EqnEditor div#panel9 {
+  -webkit-order: 6;
+  order: 6;
+}
+
+#EqnEditor .toolbar_wrapper:nth-child(3) .toolbar:last-child {
+  display: flex;
+}
+
+#EqnEditor .toolbar_wrapper:nth-child(3) .toolbar {
+  box-sizing: border-box;
+}
+
+#EqnEditor .toolbar_wrapper:nth-child(3) .toolbar:first-child .img {
+  padding: 3px;
+
+}
+
+#EqnEditor [title^='Binary']:before {
+  content: '';
+  height: 34px;
+  width: 1px;
+  background: #c4c4c4;
+  position: absolute;
+  right: 4px;
+}
+
+.nvd-math-tlbr {
+  position: absolute;
+  padding-bottom: 1px;
+  top: 36px;
+  height: 0px;
+}
+
+.nvd-math-tlbr-wrppr {
+  position: relative;
+}
+
+.tlbr-lbl {
+  margin-right: 8px;
+  border-bottom: 1px solid #c4c4c4;
+
+}
+
+.tlbr-lbl-2 {
+  margin-right: 8px;
+  position: relative;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+#EqnEditor .toolbar_wrapper:nth-child(2),
+#EqnEditor .toolbar_wrapper:nth-child(3) {
+  margin-top: 6px !important;
+  width: fit-content !important;
+}
+
+#nvd-math-prvw {
+  min-height: 60px;
+  height: fit-content;
+  padding: 4px;
+  border: 1px solid #C4C4C4;
+  background: #F5F5F5;
+
+}
+
+
+/* more than origin */
+
+#nvd-qck-dfntn-slct {
+  border: 1px solid #c4c4c4;
+  margin-top: -4px;
+  padding: 2px;
+  box-sizing: border-box;
+  margin-left: 4px;
+  position: relative;
+  cursor: pointer;
+  width: 140px;
+  border-radius: 4px;
+  max-height: 200px;
+}
+
+#nvd-qck-dfntn-slct:hover,
+#nvd-qck-dfntn-slct:active,
+#nvd-qck-dfntn-slct:focus {
+
+  box-shadow: 0px 0px 2px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 2px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 2px 0px #c4c4c4;
+
+}
+
+#EqnEditor [src^="http://latex.codecogs.com/gif.latex?"] {
+  opacity: 50%;
+}
+
+/* loader */
+@keyframes nvd-ldio-dko3k82fjf6 {
+  0% {
+    background: #5279db
+  }
+
+  12.5% {
+    background: #5279db
+  }
+
+  12.625% {
+    background: #c4c4c4
+  }
+
+  100% {
+    background: #c4c4c4
+  }
+}
+
+.nvd-loader-text {
+  color: #363636;
+  position: absolute;
+  margin-top: -20px;
+  padding-left: 0px;
+  height: 100%;
+  position: relative;
+  padding-top: 0.1rem;
+  height: fit-content;
+  font-family: 'Roboto-Medium', sans-serif;
+  font-size: 12px;
+  user-select: none;
+  min-width: 80px;
+  width: 100%;
+  text-align: center;
+}
+
+.d-none {
+  display: none;
+  visibility: hidden;
+}

@@ -60,12 +60,9 @@ import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 import RequireLoginRoute from 'components/common/BaseComponents/RequireLoginRoute'
-
-// import hljs from 'highlight.js';
+import DemoCKE from 'components/common/CustomCKE/DemoCKE'
 
 const App = () => {
-
-   
     return (
         <div style={{ minWidth: "320px", width: "100%", background: "white" }}>
             <Router>
@@ -136,7 +133,7 @@ const App = () => {
                         {/* verify email url */}
                         <Route exact path="/verify" component={VerifyRegisterMail} />
                         <Route exact path="/verify-forgot-password" component={VerifyMailForgotPassword} />
-
+                        <Route exact path="/demo-cke" component={DemoCKE} />
                     </Switch>
                     <Footer />
                 </div>

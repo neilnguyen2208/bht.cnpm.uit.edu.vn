@@ -1,4 +1,3 @@
-
 import React from 'react';
 import "./Loader_T.scss"
 import "./Loader.scss";

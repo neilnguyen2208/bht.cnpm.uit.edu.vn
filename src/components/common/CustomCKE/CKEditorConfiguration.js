@@ -7,7 +7,7 @@ export const CKEToolbarConfiguration = [
   { name: 'codesnippet', items: ['CodeSnippet'] },
 
   { name: 'styles', items: ['Styles', 'Format'] },
-  { name: 'ckeditor_wiris', items: ['ckeditor_wiris_formulaEditor'], },
+  // { name: 'nvd_math', items: ['nvd_math'], },
 
 
 ];

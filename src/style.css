@@ -100,8 +100,6 @@ body {
     font-size: 0.9rem;
     color: var(--black);
     margin: 0px;
-    /* overflow-y: scroll; */
-    /* overflow-x: auto; */
 }
 
 input {

@@ -150,9 +150,11 @@ class Editor extends Component {
   onFocus = () => {
     let wrapperEditor = document.getElementById("cke-wrapper-" + this.props.id);
     document.getElementById("cke-wrapper-" + this.props.id).classList.add("focus");
-    this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label').innerText = '';
-    this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
-    document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
+    if (this.props.validation) {
+      this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label').innerText = '';
+      this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
+      document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
+    } 
     if (this.props.onFocus) {
       this.props.onFocus();
     }

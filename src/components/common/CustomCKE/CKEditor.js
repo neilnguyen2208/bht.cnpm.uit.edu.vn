@@ -24,7 +24,7 @@ class Editor extends React.Component {
   scriptCKELoaded = () => {
 
     //bhtConfiguration
-    // let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
+    let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
 
     let bhtConfiguration = {
       // toolbar: toolbarConfig,
@@ -51,6 +51,11 @@ class Editor extends React.Component {
     //khong co ham on blur   
     window.CKEDITOR.instances[this.editorID].on('blur', function () {
       this.onBlur();
+    }.bind(this));
+
+    //goi khi instance bi huy
+    window.CKEDITOR.instances[this.editorID].on('destroy', function () {
+      this.onDestroy();
     }.bind(this));
 
     window.CKEDITOR.instances[this.editorID].on('instanceReady', function () {
@@ -125,6 +130,13 @@ class Editor extends React.Component {
     }
   }
 
+
+  onDestroy = () => {
+
+    if (this.props.onDestroy)
+      this.props.onDestroy();
+    console.log(this.editorID + " has been destroyed!");
+  }
   validate = () => {
 
     //lay element ngoai cung cua editor hien tai
@@ -153,7 +165,7 @@ class Editor extends React.Component {
       this.getParent(wrapperEditor, '.form-group').querySelector('.form-error-label').innerText = '';
       this.getParent(wrapperEditor, '.form-group').classList.remove('invalid');
       document.getElementById("cke-wrapper-" + this.props.id).classList.remove("invalid");
-    } 
+    }
     if (this.props.onFocus) {
       this.props.onFocus();
     }

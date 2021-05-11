@@ -48,6 +48,8 @@ CKEDITOR.plugins.add('nvd_math', {
 
 		// add context-menu entry
 		if (editor.contextMenu) {
+			console.log(editor.contextMenu);
+			// editor.contextMenu.remove();
 			editor.addMenuGroup(editor.lang.nvd_math.menu);
 			editor.addMenuItem('nvd_math', {
 				label: editor.lang.nvd_math.edit,
@@ -76,6 +78,7 @@ CKEDITOR.plugins.add('nvd_math', {
 			if (element && element.is('img')) {
 				var sName = element.getAttribute('src').match(/(gif|svg)\.latex\?(.*)/);
 				if (sName != null) {
+
 					evt.data.dialog = pluginCmd;
 					evt.cancelBubble = true;
 					evt.returnValue = false;

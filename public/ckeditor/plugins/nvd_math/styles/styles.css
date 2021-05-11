@@ -20,13 +20,48 @@ div {
 
 #EqnEditor .nvd-nfr-lbl {
   font-size: 14px;
+}
 
+#EqnEditor div.vertical-line {
+  /* display: none; */
 }
 
 .nvd-math-lbl.required:after {
   content: "*";
   margin-left: 2px;
   color: #fe3a3a;
+}
+
+.nvd-math-txt-inpt {
+  margin-top: -1px;
+  width: 24px;
+  height: 16px;
+  margin-bottom: 1px;
+  padding: 1px !important;
+
+  padding-left: 4px;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  color: #363636 !important;
+  border-bottom: #c4c4c4 1px solid;
+  outline: none !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  background: #f5f5f5;
+
+
+}
+
+
+.nvd-math-txt-inpt:focus {
+  background: #ddd;
+  border-bottom: 1px solid #5279db;
+
+}
+
+.nvd-math-txt-inpt::placeholder {
+  margin: auto;
+  font-size: 13px;
 }
 
 .nvd-math-txtr {
@@ -48,12 +83,13 @@ div {
   box-shadow: 0px 0px 2px 0px #c4c4c4;
   -moz-box-shadow: 0px 0px 2px 0px #c4c4c4;
   -webkit-box-shadow: 0px 0px 2px 0px #c4c4c4;
-
   box-sizing: border-box !important;
 
 }
 
-.nvd-math-txtr:focus {
+.nvd-math-txtr:focus,
+.nvd-math-txtr:hover,
+.nvd-math-txtr:active {
   border: 1px solid #5279db !important;
   -webkit-box-shadow: 0px 0px 4px 0px #c4c4c4;
   -moz-box-shadow: 0px 0px 4px 0px #c4c4c4;
@@ -77,12 +113,12 @@ div {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-[name^='CCEquationEditor'] .cke_dialog_ui_vbox_child {
+[name^='NVD_CCEquationEditor'] .cke_dialog_ui_vbox_child {
   background: white !important;
 }
 
 
-[name^='CCEquationEditor'] select {
+[name^='NVD_CCEquationEditor'] select {
   padding-top: 3px !important;
 }
 
@@ -132,10 +168,6 @@ div {
 
 .nvd-nfr-lnk-lbl:hover {
   color: #5279db !important;
-}
-
-#EqnEditor map {
-  border: 1px solid #c4c4c4;
 }
 
 #EqnEditor .panel {
@@ -254,6 +286,9 @@ div {
   width: 100% !important;
 }
 
+#EqnEditor .top .toolbar_wrapper:first-child .toolbar:first-child .panel {
+  height: 26px !important;
+}
 
 #EqnEditor .top .toolbar_wrapper:first-child .panel:nth-child(3) {
   float: right;
@@ -336,12 +371,6 @@ div {
 
 /* End first bar region */
 
-/* 
-#EqnEditor .top .toolbar_wrapper:nth-child(2) .toolbar:first-child {
-  overflow-x: auto;
-
-} */
-
 #EqnEditor .tlbr-lbl:last-child {
   margin-right: 0px;
 }
@@ -404,12 +433,28 @@ div {
   margin-left: 8px !important;
 }
 
+
+
 #EqnEditor div#panel10 {
   -webkit-order: 2;
   order: 2;
-  min-width: 106px !important;
-  width: 106px !important;
+}
 
+input[type^="number"]::-webkit-outer-spin-button,
+input[type^="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type^="number"] {
+  -moz-appearance: textfield;
+}
+
+
+#EqnEditor div#panel10 img {
+  padding: 0px 8px;
+  padding-top: 4px;
 }
 
 #EqnEditor div#panel11 {
@@ -436,7 +481,7 @@ div {
 }
 
 #EqnEditor div#panel8 {
-  margin-left: 29px !important;
+  margin-left: 15px !important;
   -webkit-order: 5;
   order: 5;
 }
@@ -483,12 +528,14 @@ div {
 .tlbr-lbl {
   margin-right: 8px;
   border-bottom: 1px solid #c4c4c4;
+  padding-bottom: 2px;
 
 }
 
 #EqnEditor .tlbr-lbl-2 {
   margin-right: 8px;
   position: relative;
+  padding-bottom: 2px;
   border-bottom: 1px solid #c4c4c4;
 }
 

@@ -3,15 +3,12 @@ div {
 }
 
 .nvd-math-lbl {
-  width: fit-content;
-  height: fit-content;
-  min-width: 80px;
   vertical-align: middle;
-  line-height: 22px;
-  font-size: 14px;
+  padding-bottom: 2px;
+  line-height: 20px !important;
+  font-size: 13px !important;
   color: #363636;
   user-select: none;
-  padding-right: 5px;
 }
 
 #EqnEditor .d-flex {
@@ -22,9 +19,6 @@ div {
   font-size: 14px;
 }
 
-#EqnEditor div.vertical-line {
-  /* display: none; */
-}
 
 .nvd-math-lbl.required:after {
   content: "*";
@@ -38,7 +32,7 @@ div {
   height: 16px;
   margin-bottom: 1px;
   padding: 1px !important;
-
+  text-align: center;
   padding-left: 4px;
   font-size: 13px !important;
   line-height: 16px !important;
@@ -52,6 +46,9 @@ div {
 
 }
 
+#EqnEditor .panel map area {
+  cursor: pointer !important;
+}
 
 .nvd-math-txt-inpt:focus {
   background: #ddd;
@@ -65,24 +62,20 @@ div {
 }
 
 .nvd-math-txtr {
-  padding: 8px !important;
-  height: 70px !important;
-  min-height: 70px !important;
-  background: white !important;
+  padding: 4px !important;
+  min-height: 100px !important;
+  background: white;
   resize: none;
-  font-size: 16px !important;
-  line-height: 18px !important;
-  color: #363636 !important;
+  font-size: 14px;
+  line-height: 18px;
+  color: #363636;
   border: #bbb 1px solid !important;
   width: 100% !important;
-  max-width: 600px !important;
-  border-radius: 4px !important;
-  outline: none !important;
-  position: relative !important;
-  margin: auto !important;
-  box-shadow: 0px 0px 2px 0px #c4c4c4;
-  -moz-box-shadow: 0px 0px 2px 0px #c4c4c4;
-  -webkit-box-shadow: 0px 0px 2px 0px #c4c4c4;
+  max-width: 600px;
+  border-radius: 2px;
+  outline: none;
+  position: relative;
+  margin: auto;
   box-sizing: border-box !important;
 
 }
@@ -91,9 +84,9 @@ div {
 .nvd-math-txtr:hover,
 .nvd-math-txtr:active {
   border: 1px solid #5279db !important;
-  -webkit-box-shadow: 0px 0px 4px 0px #c4c4c4;
-  -moz-box-shadow: 0px 0px 4px 0px #c4c4c4;
-  box-shadow: 0px 0px 4px 0px #c4c4c4;
+  -webkit-box-shadow: 0px 0px 2px 0px #c4c4c4;
+  -moz-box-shadow: 0px 0px 2px 0px #c4c4c4;
+  box-shadow: 0px 0px 2px 0px #c4c4c4;
 }
 
 /* The default text style used on every page */
@@ -174,9 +167,6 @@ div {
   display: inline-block;
   padding: 0;
   box-sizing: border-box !important;
-
-  width: fit-content !important;
-  min-width: fit-content !important;
   overflow: hidden;
   vertical-align: top;
   border-bottom: 1px solid #c4c4c4;
@@ -190,15 +180,13 @@ div {
   display: none;
 }
 
-#EqnEditor .panel+.panel {
-  margin-left: 4px;
-
+#EqnEditor .panel + .panel {
+  margin-left: 4px !important;
 }
 
-#nvd_CCtoolbar1 {
-  padding-bottom: 4px;
+#nvd_EquationToolbar {
+  padding-bottom: 8px;
   position: relative;
-  margin-top: -30px !important;
 }
 
 #EqnEditor .panel>img {
@@ -206,10 +194,8 @@ div {
   background-color: white;
   box-sizing: border-box;
   border: 1px solid #c4c4c4;
-  /* margin: 3px; */
   padding: 3px;
   border-radius: 0px;
-  cursor: pointer;
 }
 
 #EqnEditor #font,
@@ -224,19 +210,12 @@ div {
   display: none;
 }
 
-#EqnEditor .panel {
-  min-width: fit-content !important;
-
-}
-
 #EqnEditor .panel>map {
   border-radius: 5px;
   box-shadow: 0px 0px 3px 0px #c4c4c4;
 }
 
-
 /* First bar region */
-
 #EqnEditor .panel:hover>img:not(#undobutton, #redobutton) {
   border-radius: 5px;
   box-shadow: 0px 0px 3px 0px #c4c4c4;
@@ -244,42 +223,43 @@ div {
   -webkit-box-shadow: 0px 0px 3px 0px #c4c4c4;
 }
 
+/* First bar region */
+#EqnEditor .panel:hover {
+  overflow: visible !important;
+}
+
+
 #EqnEditor #undobutton {
   float: left;
 }
 
-#EqnEditor [title^='Equation Color'] {
-  display: none;
-
-}
-
-#EqnEditor [title^='Functions'] {
+#EqnEditor select[title^='Functions'] {
   border: 1px solid #C4C4C4;
   padding: 2px;
   border-radius: 4px;
-  position: sticky;
-
-  /* justify-self: end; */
-
-  /* position: absolute; */
-  right: 0px;
-  width: 160px;
+  width: 100px;
+  background: white;
 }
 
-#EqnEditor [title^='Functions']:hover {
-  border-radius: 4px;
+#EqnEditor select[title^='Color'] option,
+#EqnEditor select[title^='Functions'] option {
+  padding: 2px;
+}
 
+
+#EqnEditor select[title^='Color'] {
+  border: 1px solid #C4C4C4;
+  padding: 2px;
+  border-radius: 4px;
+  width: 100px;
+}
+
+#EqnEditor select[title^='Functions']:hover,
+#EqnEditor select[title^='Color']:hover {
+  border-radius: 4px;
   box-shadow: 0px 0px 3px 0px #c4c4c4;
   -moz-box-shadow: 0px 0px 3px 0px #c4c4c4;
   -webkit-box-shadow: 0px 0px 3px 0px #c4c4c4;
-
-}
-
-
-#EqnEditor .top .toolbar_wrapper:first-child .toolbar:first-child .panel:nth-child(3):before {
-  top: 1px;
-  content: "Chèn hàm số: ";
-  position: relative;
 }
 
 #EqnEditor .top .toolbar_wrapper:first-child .toolbar:first-child {
@@ -290,12 +270,9 @@ div {
   height: 26px !important;
 }
 
-#EqnEditor .top .toolbar_wrapper:first-child .panel:nth-child(3) {
-  float: right;
-  border-bottom: 0px;
+.bfr-slct-lbl {
+  padding: 3px;
 }
-
-
 
 #EqnEditor .top .toolbar_wrapper:first-child .panel:nth-child(4) {
   display: none;
@@ -322,7 +299,6 @@ div {
 #EqnEditor .toolbar_wrapper:first-child {
   width: 100%;
   display: flex;
-  margin-top: 20px !important;
   border-bottom: 1px #c4c4c4 solid !important;
 }
 
@@ -363,12 +339,6 @@ div {
   display: flex;
 }
 
-.nsrt-fnctn-lbl {
-  position: absolute;
-  margin-top: -8px;
-  right: 174px;
-}
-
 /* End first bar region */
 
 #EqnEditor .tlbr-lbl:last-child {
@@ -381,7 +351,6 @@ div {
   /* for firefox */
   scrollbar-color: #eee white;
   scrollbar-width: thin;
-  /* white-space: nowrap; */
 }
 
 /* Second row */
@@ -400,7 +369,7 @@ div {
 }
 
 .ppr-whn-ld-dn {
-  display: none;
+  display: none;  
 
 }
 
@@ -419,23 +388,23 @@ div {
   height: 0px;
 }
 
-#EqnEditor #panel11>img {
+#EqnEditor #nvd-operator-panel>img {
   min-width: 168px;
 }
 
-#EqnEditor #panel4,
-#EqnEditor #panel16,
-#EqnEditor #panel6,
+#EqnEditor #nvd-binary-panel,
+#EqnEditor #nvd-symbol-1-panel,
+#EqnEditor #nvd-symbol-2-panel,
 #EqnEditor #panel8,
-#EqnEditor #panel12,
-#EqnEditor #panel5,
-#EqnEditor #panel10 {
+#EqnEditor #nvd-relation-panel,
+#EqnEditor #nvd-brackets-panel,
+#EqnEditor #nvd-matrix-panel {
   margin-left: 8px !important;
 }
 
 
 
-#EqnEditor div#panel10 {
+#EqnEditor div#nvd-matrix-panel {
   -webkit-order: 2;
   order: 2;
 }
@@ -452,19 +421,19 @@ input[type^="number"] {
 }
 
 
-#EqnEditor div#panel10 img {
+#EqnEditor div#nvd-matrix-panel img {
   padding: 0px 8px;
   padding-top: 4px;
 }
 
-#EqnEditor div#panel11 {
+#EqnEditor div#nvd-operator-panel {
   -webkit-order: 1;
   order: 1;
   min-width: 172px !important;
   width: 172px !important;
 }
 
-#EqnEditor div#panel5 {
+#EqnEditor div#nvd-brackets-panel {
   -webkit-order: 4;
   order: 4;
 
@@ -472,7 +441,7 @@ input[type^="number"] {
   width: 62px !important;
 }
 
-#EqnEditor div#panel12 {
+#EqnEditor div#nvd-relation-panel {
   -webkit-order: 3;
   order: 3;
 
@@ -512,13 +481,6 @@ input[type^="number"] {
   background: #c4c4c4;
   position: absolute;
   right: 4px;
-}
-
-.nvd-math-tlbr {
-  position: absolute;
-  padding-bottom: 1px;
-  top: 36px;
-  height: 0px;
 }
 
 .nvd-math-tlbr-wrppr {
@@ -578,10 +540,6 @@ input[type^="number"] {
   -moz-box-shadow: 0px 0px 2px 0px #c4c4c4;
   -webkit-box-shadow: 0px 0px 2px 0px #c4c4c4;
 
-}
-
-#EqnEditor [src^="http://latex.codecogs.com/gif.latex?"] {
-  opacity: 50%;
 }
 
 /* loader */

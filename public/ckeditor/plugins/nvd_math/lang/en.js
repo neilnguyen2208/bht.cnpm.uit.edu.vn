@@ -1,8 +1,14 @@
 
-CKEDITOR.plugins.setLang('nvd_math', 'en',
-	{
-		title: 'CÔNG THỨC TOÁN HỌC',
-		menu: 'Maths',
-		toolbar: 'Chèn công thức toán học',
-		edit: 'Sửa công thức'
-	});
+CKEDITOR.plugins.setLang( 'nvd_math', 'en',
+{
+	title		: 'Equation Editor',
+	menu    : 'Maths',
+	toolbar	: 'Insert Equation',
+	edit		: 'Edit Equation',
+	button: 'Math',
+	dialogInput: 'Write your TeX here',
+	docLabel: 'TeX documentation',
+	loading: 'loading...',
+	pathName: 'math'
+} );
+

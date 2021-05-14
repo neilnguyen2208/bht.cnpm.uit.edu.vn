@@ -32,6 +32,8 @@ class Editor extends React.Component {
       stylesSet: styleConfig,
       codeSnippet_theme: codeSnippet_theme,
       codeSnippet_languages: codeSnippet_languages,
+      extraPlugins: 'nvd_math',
+      mathJaxLib: '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML'
     };
 
     //inject bhtConfiguration to external file

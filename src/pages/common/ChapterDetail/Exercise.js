@@ -13,35 +13,11 @@ class PostsList extends React.Component {
     constructor(props) {
         super();
 
-        this.maxItemPerPage = 5;
-        this.postsList = [];
-
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    //server paginator
-    onPageChange = (pageNumber) => {
-
-    }
-
-    //combobox
-    onFilterOptionChanged = (selectedOption) => {
 
     }
 
     render() {
-        if (this.props.postsList) {
-            this.postsList = this.props.postsList;
-        }
-        return (
-            <div className="nm-bl-layout">
-
-            </div>
-        );
+        return (<div></div>);
     }
 }
 

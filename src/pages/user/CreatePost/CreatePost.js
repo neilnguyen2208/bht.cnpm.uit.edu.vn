@@ -28,7 +28,6 @@ import { post_CreateAPostReset } from "redux/actions/postAction";
 import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
-
 const validationCondition = {
     form: '#create-post-form',
     rules: [
@@ -417,6 +416,7 @@ class CreatePost extends React.Component {
                         savedStatus={false}
                         type="PREVIEW"
                     />
+                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML"></script>
                 </div>
 
                 {/* Edit region */}
@@ -459,7 +459,7 @@ class CreatePost extends React.Component {
                         {/* Category */}
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
-                            <Combobox comboboxId = "cr-post-category-combobox"
+                            <Combobox comboboxId="cr-post-category-combobox"
                                 options={this.categoryList}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"

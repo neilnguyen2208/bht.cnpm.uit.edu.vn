@@ -5,7 +5,7 @@ if (CKEDITOR.env.ie && CKEDITOR.env.version < 9) CKEDITOR.tools.enableHtml5Eleme
 
 CKEDITOR.config.width = 'auto';
 
-function _createCKEInstance(instanceID, bhtConfiguration) {
+function _createCKEInstance(instanceID, bhtConfiguration, inline) {
   var wysiwygareaAvailable = isWysiwygareaAvailable(),
       isBBCodeBuiltIn = !!CKEDITOR.plugins.get('bbcode');
   return function () {
@@ -16,7 +16,7 @@ function _createCKEInstance(instanceID, bhtConfiguration) {
     } // Depending on the wysiwygarea plugin availability initialize classic or inline editor.
 
 
-    if (wysiwygareaAvailable) {
+    if (wysiwygareaAvailable && !inline) {
       CKEDITOR.replace(instanceID, bhtConfiguration);
     } else {
       editorElement.setAttribute('contenteditable', 'true');

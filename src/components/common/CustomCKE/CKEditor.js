@@ -33,11 +33,11 @@ class Editor extends React.Component {
     };
 
     //inject bhtConfiguration to external file
-    window.createCKEInstance(this.editorID, bhtConfiguration)();
+    if (this.props.inline)
+      window.createCKEInstance(this.editorID, bhtConfiguration, true)();
+    else
+      window.createCKEInstance(this.editorID, bhtConfiguration, false)();
 
-
-
-    console.log(window.CKEDITOR.config)
     window.CKEDITOR.instances[this.editorID].on('change', function () {
       let data = window.CKEDITOR.instances[this.editorID].getData();
       this.onEditorChange(data);
@@ -203,8 +203,8 @@ class Editor extends React.Component {
     return (
 
       <div className="cke-wrapper ckeditor" id={"cke-wrapper-" + this.props.editorId}>
-        <input type="text-area" className="fake-cke" id={this.editorID} name={this.editorID} cols="100" rows="6" defaultValue={this.props.myData}>
-        </input>
+        <textarea className="fake-cke" id={this.editorID} name={this.editorID} cols="100" rows="6" defaultValue={this.props.myData}>
+        </textarea>
         <div id={"ck-editor-loader" + this.props.editorId}>
           <Loader />
         </div>

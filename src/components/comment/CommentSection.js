@@ -23,7 +23,7 @@ import Comment from './Comment.js'
 class CommentSection extends React.Component {
 
   componentDidMount() {
-    this.props.getAPostComments(1);
+    this.props.getAPostComments(this.props.match.params.id);
   }
   handleEditorChange = () => { }
 

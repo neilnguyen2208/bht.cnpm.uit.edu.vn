@@ -154,6 +154,7 @@
       }, null, null, 1); // Add MathJax script to page preview.
 
       editor.on('contentPreview', function (evt) {
+        console.log('content previewed');
         evt.data.dataValue = evt.data.dataValue.replace(/<\/head>/, '<script src="' + CKEDITOR.getUrl(editor.config.mathJaxLib) + '"></script></head>');
       }); //MathJax
 

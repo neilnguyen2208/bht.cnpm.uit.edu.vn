@@ -5,7 +5,7 @@ export default class DemoCKE extends React.Component {
   render() {
     return (
       <div >
-        <CKEditor id="demo-asdf" />
+        <CKEditor id="demo-asdf"  inline/>
 
       </div>
     )

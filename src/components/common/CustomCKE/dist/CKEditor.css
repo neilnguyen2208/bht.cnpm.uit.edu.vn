@@ -1,0 +1,350 @@
+/* Menu bar */
+.c-title-bar {
+  display: flex;
+  border-bottom: 5px var(--blue) solid;
+  width: 100%;
+  user-select: none;
+}
+
+.main-title {
+  font-family: Cambria;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 35px;
+  width: 100%;
+  text-align: center;
+  color: var(--blue);
+}
+
+.c-title-bar + .scroller-container {
+  border-bottom: 50px solid white;
+}
+
+.setting-title {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  padding-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  width: calc(100%-1rem);
+  border-bottom: 1px solid var(--gray);
+}
+
+.c-title-bar .modal-close-icon {
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  top: 14px;
+  cursor: pointer;
+}
+
+.c-title-bar .modal-close-icon:hover {
+  opacity: 80%;
+}
+
+.cke-dummy-text-input {
+  width: 0px;
+  height: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: none;
+  background: green;
+  display: none;
+}
+
+.cke-wrapper {
+  border: 1px var(--gray) solid;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1px 0px var(--grayish);
+  overflow: hidden;
+}
+
+.cke-wrapper.invalid {
+  border: 1px var(--red) solid !important;
+  box-shadow: 0px 0px 2px var(--light-red);
+}
+
+.cke-wrapper.focus {
+  border: 1px var(--blue) solid !important;
+  box-shadow: 0px 0px 2px 0px var(--light-blue);
+}
+
+.cke_top {
+  border-bottom: 2px solid var(--gray) !important;
+  background: none !important;
+}
+
+.cke_bottom {
+  border-top: 1px solid var(--gray) !important;
+  background: none !important;
+}
+
+.cke_chrome {
+  border: 0px var(--gray) solid !important;
+  box-shadow: 0px 0px 1px 0px var(--grayish) !important;
+}
+
+.cke_editable {
+  font-family: "BarlowCondensed-Regular" !important;
+  font-size: 15px !important;
+}
+
+.a.cke_path_item,
+span.cke_path_empty {
+  font-weight: normal !important;
+}
+
+.cke_combo_button {
+  cursor: pointer !important;
+  border-radius: 5px !important;
+}
+
+.cke_combo_button:hover,
+.cke_combo_button:active {
+  box-shadow: 0px 0px 1px 0px var(--gray) !important;
+  background: none !important;
+}
+
+.cke_combo_on {
+  box-shadow: 0px 0px 1px 0px var(--gray) !important;
+  background: none !important;
+  border-radius: 5px !important;
+}
+
+.cke_combo_off {
+  border: 1px white !important;
+}
+
+.fake-cke {
+  width: 0px !important;
+  height: 0px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  border: 0px;
+  position: absolute;
+}
+
+.cke_dialog_body {
+  z-index: 1;
+  background: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.cke_dialog_title {
+  font-family: Cambria !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  font-size: 23px !important;
+  line-height: 35px !important;
+  width: 100% !important;
+  text-align: center !important;
+  color: var(--blue) !important;
+  padding: 0px !important;
+  background: white !important;
+  border-bottom: 5px var(--blue) solid !important;
+  padding-top: 5px !important;
+}
+
+.cke_combo_text {
+  color: var(--black) !important;
+  font-family: "BarlowCondensed-Regular" !important;
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  padding-bottom: 4px !important;
+}
+
+.cke_button_icon:hover {
+  border-radius: 2px !important;
+  overflow: hidden !important;
+}
+
+.cke_button__link_icon:hover {
+  border-radius: 2px !important;
+  overflow: hidden !important;
+}
+
+a.cke_button_off:hover,
+a.cke_button_off:focus,
+a.cke_button_off:active {
+  background: white !important;
+  border-radius: 5px !important;
+  overflow: hidden !important;
+  box-shadow: 0px 0px 1px 0px var(--gray) !important;
+  border: 1px var(--gray) solid !important;
+}
+
+.cke_dialog_ui_labeled_label {
+  width: fit-content !important;
+  height: fit-content !important;
+  min-width: 80px !important;
+  vertical-align: middle !important;
+  line-height: 22px !important;
+  padding-top: 3px !important;
+  font-family: "BarlowCondensed-Medium" !important;
+  font-size: 1.1rem !important;
+  color: var(--black) !important;
+  user-select: none !important;
+  margin-bottom: 5px !important;
+  padding-right: 5px !important;
+}
+
+input.cke_dialog_ui_input_text {
+  box-shadow: 0px 0px 2px 0px var(--grayish) !important;
+  padding: 2px !important;
+  padding-left: 10px !important;
+  height: 1.7rem !important;
+  text-align: left !important;
+  background: white !important;
+  font-family: "BarlowCondensed-Medium" !important;
+  font-size: 1.1rem !important;
+  line-height: 20px !important;
+  color: var(--black) !important;
+  border: var(--gray) 1px solid !important;
+  min-width: 180px !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  border-radius: 5px !important;
+  outline: none !important;
+  position: relative !important;
+  margin: auto !important;
+}
+
+input.cke_dialog_ui_input_text::placeholder {
+  font-family: "BarlowCondensed-Regular" !important;
+  font-size: 15px !important;
+}
+
+input.cke_dialog_ui_input_text:hover,
+input.cke_dialog_ui_input_text:focus {
+  border: var(--blue) 1px solid !important;
+  cursor: text !important;
+  opacity: 90% !important;
+  box-shadow: 0px 0px 2px 0px var(--light-blue) !important;
+  outline: none !important;
+}
+
+a.cke_dialog_close_button {
+  background-image: url(../../../assets/icons/24x24/red_delete_icon_16x16.png) !important;
+  height: 1.2rem !important;
+  width: 1.2rem !important;
+  top: 12px !important;
+  right: 10px !important;
+}
+
+select.cke_dialog_ui_input_select {
+  background: white !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  box-shadow: 0px 0px 2px 0px var(--grayish) !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  border-radius: 5px !important;
+  border: 1px solid var(--gray) !important;
+  position: relative !important;
+  min-width: 100px !important;
+  width: fit-content !important;
+  user-select: none !important;
+  cursor: pointer !important;
+  height: 28px !important;
+  line-height: 1.5rem !important;
+  box-sizing: border-box !important;
+  font-family: "BarlowCondensed-Regular" !important;
+  font-size: 1.1rem !important;
+  color: var(--black) !important;
+  padding-left: 0.35rem !important;
+  text-decoration: none !important;
+  outline: 0px !important;
+  overflow: hidden !important;
+  margin: 0px !important;
+}
+
+.cke_dialog_ui_button_ok {
+  color: var(--light-black) !important;
+  user-select: none !important;
+  min-width: 80px !important;
+  box-shadow: 0px 0px 1px 0px var(--blue) !important;
+  -webkit-transition: all 0.1s !important;
+  transition: all 0.1s !important;
+  cursor: pointer !important;
+  background: var(--blue) !important;
+  color: white !important;
+  border: var(--blue) solid 1px !important;
+}
+
+.cke_dialog_ui_button {
+  width: 80px !important;
+  font-family: "BarlowCondensed-SemiBold" !important;
+  font-size: 18px !important;
+  line-height: 22px !important;
+  user-select: none !important;
+  cursor: pointer !important;
+  color: var(--black) !important;
+  font-weight: 400 !important;
+  height: 25px !important;
+  border-radius: 5px !important;
+  box-sizing: border-box !important;
+}
+
+.cke_dialog_ui_button_ok span.cke_dialog_ui_button {
+  font-family: "BarlowCondensed-SemiBold" !important;
+  font-size: 18px !important;
+  line-height: 22px !important;
+  user-select: none !important;
+  cursor: pointer !important;
+  color: white !important;
+  width: 80px !important;
+}
+
+a.cke_dialog_ui_button {
+  padding: 1px !important;
+}
+
+a.cke_dialog_ui_button:hover {
+  box-shadow: 0px 0px 3px 0px var(--gray) !important;
+  opacity: 80% !important;
+}
+
+span.cke_dialog_ui_button {
+  width: 80px !important;
+}
+
+a.cke_dialog_ui_button:active {
+  border: 1px solid var(--gray) !important;
+  box-shadow: 0px 0px 3px 0px var(--gray) !important;
+}
+
+.cke_dialog_footer_buttons a.cke_dialog_ui_button span {
+  padding: 0px !important;
+}
+
+.cke_dialog_footer {
+  border-top: 1px solid var(--gray) !important;
+  background: white !important;
+}
+
+.cke_dialog_ui_button_ok:hover {
+  background: var(--blue) !important;
+  box-shadow: 0px 0px 3px 0px var(--blue) !important;
+  opacity: 80% !important;
+}
+
+.cke_dialog_ui_button_ok:active {
+  background: var(--gray) !important;
+  border: white 1px solid !important;
+  opacity: 80% !important;
+}
+
+.cke_dialog_ui_html.cke_dialog_image_ratiolock {
+  margin-top: 7px !important;
+  margin-left: 22px;
+}
+
+.cke_dialog_ui_labeled_label.cke_required:after {
+  content: "*";
+  margin-left: 2px;
+  color: var(--red);
+}

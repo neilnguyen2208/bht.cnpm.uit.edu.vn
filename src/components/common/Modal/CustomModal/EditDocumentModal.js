@@ -508,7 +508,7 @@ class EditDocumentModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Danh mục:</label>
-                                                <Combobox id="ed-document-category-combobox"
+                                                <Combobox comboboxId = "ed-document-category-combobox"
                                                     selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.categoryID : 0}
                                                     options={this.categoryList}
                                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
@@ -524,7 +524,7 @@ class EditDocumentModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Môn học:</label>
-                                                <Combobox id="ed-document-subject-combobox"
+                                                <Combobox comboboxId = "ed-document-subject-combobox"
                                                     selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.subjectID : 0}
                                                     options={this.subjectList}
                                                     onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}

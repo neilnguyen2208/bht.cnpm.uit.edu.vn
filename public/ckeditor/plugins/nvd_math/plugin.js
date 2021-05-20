@@ -12,19 +12,19 @@
 
 		init: function (editor) {
 			var pluginDirectory = this.path;
-
 			var cls = editor.config.mathJaxClass || 'math-tex';
 			if (!editor.config.mathJaxLib) {
 				CKEDITOR.error('nvd-mathjax-no-config');
 			};
 
-			editor.addContentsCss(pluginDirectory + 'styles/styles.css');
+			editor.addContentsCss(pluginDirectory + '/styles/styles.css');
 
 			// Load Additional CSS 
 			var fileref = document.createElement("link");
 			fileref.setAttribute("rel", "stylesheet");
 			fileref.setAttribute("type", "text/css");
-			fileref.setAttribute("href", pluginDirectory + 'styles/styles.css')
+			fileref.setAttribute("href", pluginDirectory + '/styles/styles.css')
+
 			document.getElementsByTagName("head")[0].appendChild(fileref);
 
 			var pluginCmd = 'nvd_mathDialog';
@@ -40,7 +40,7 @@
 			editor.widgets.add('nvd_math', {
 				inline: true,
 				dialog: pluginCmd,
-				button: editor.lang.nvd_math.button,
+				button: 'MathBtn',
 				mask: true,
 				allowedContent: 'span(!' + cls + ')',
 				// Allow style classes only on spans having mathjax class.
@@ -62,7 +62,7 @@
 				},
 
 				defaults: {
-					math: '\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}\\)'
+					math: ''
 				},
 
 				init: function () {
@@ -88,7 +88,6 @@
 						// Src attribute must be recreated to fix custom domain error after undo
 						// (see iFrame.removeAttribute( 'src' ) in frameWrapper.load).
 
-						console.log("Widget ready");
 						if (CKEDITOR.env.ie)
 							iframe.setAttribute('src', CKEDITOR.plugins.nvd_math.fixSrc);
 
@@ -141,33 +140,42 @@
 			}
 			);
 
+			// editor.execCommand('nvd_math');
+
+			editor.ui.addButton('MathBtn', {
+				label: editor.lang.nvd_math.toolbar,
+				command: 'nvd_math',
+				icon: this.path + 'icons/nvd_math.png',
+				toolbar: 'insert'
+			});
+
 			CKEDITOR.dialog.add(pluginCmd, this.path + "dialogs/nvd_math.js");
 
 			// add context-menu entry
-			if (editor.contextMenu) {
-				// editor.contextMenu.remove();
-				editor.addMenuGroup(editor.lang.nvd_math.menu);
-				editor.addMenuItem('nvd_math', {
-					label: editor.lang.nvd_math.edit,
-					icon: this.path + 'icons/nvd_math.png',
-					command: pluginCmd,
-					group: editor.lang.nvd_math.menu
-				});
+			// if (editor.contextMenu) {
+			// 	// editor.contextMenu.remove();
+			// 	editor.addMenuGroup(editor.lang.nvd_math.menu);
+			// 	editor.addMenuItem('nvd_math', {
+			// 		label: editor.lang.nvd_math.edit,
+			// 		icon: this.path + 'icons/nvd_math.png',
+			// 		command: pluginCmd,
+			// 		group: editor.lang.nvd_math.menu
+			// 	});
 
-				// if the selected item is image of class 'mathImg',
-				// we shold be interested in it
-				editor.contextMenu.addListener(function (element) {
-					var res = {};
-					if (element.getAscendant('img', true)) {
-						var sName = element.getAttribute('src').match(/(gif|svg)\.latex\?(.*)/);
-						if (sName != null) {
-							res['nvd_math'] = CKEDITOR.TRISTATE_OFF;
-							return res;
-						}
-					}
-				});
+			// 	// if the selected item is image of class 'mathImg',
+			// 	// we shold be interested in it
+			// 	editor.contextMenu.addListener(function (element) {
+			// 		var res = {};
+			// 		if (element.getAscendant('img', true)) {
+			// 			var sName = element.getAttribute('src').match(/(gif|svg)\.latex\?(.*)/);
+			// 			if (sName != null) {
+			// 				res['nvd_math'] = CKEDITOR.TRISTATE_OFF;
+			// 				return res;
+			// 			}
+			// 		}
+			// 	});
 
-			}
+			// }
 
 			editor.on('doubleclick', function (evt) {
 				var element = evt.data.element;

@@ -531,7 +531,7 @@ class EditPostModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Danh mục:</label>
-                                                <Combobox id="ed-post-category-combobox"
+                                                <Combobox comboboxId = "ed-post-category-combobox"
                                                     selectedOptionID={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.categoryID : 0}
                                                     options={this.categoryList}
                                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}

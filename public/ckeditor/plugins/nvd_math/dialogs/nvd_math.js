@@ -1,10 +1,9 @@
-'use strict';
 window.CCounter = 0;
+var preview;
 
 CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 
-	var preview,
-		lang = editor.lang.nvd_math;
+	var lang = editor.lang.nvd_math;
 	window.CCounter++;
 
 	return {
@@ -15,26 +14,20 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 		contents: [
 			{
 				id: 'NVD_CCEquationEditor',
-				label: 'EqnEditor',
-				elements: [
-					{
+				label: 'nvd-eqn-editor',
+				elements:
+					[{
 						//this element for embed toolbar
 						type: 'html',
 						html: '<div class="ppr-whn-ld-dn" id="nvd_EquationToolbar' + window.CCounter + '"></div>',
 					},
 
-					{
-						type: 'html',
-						html: '<textarea class="nvd-math-txtr" id="CClatex' + window.CCounter + '" ></textarea> ',
-						style: "display: none;"
-					}
-					,
 					(!(CKEDITOR.env.ie && CKEDITOR.env.version === 8)) && {
 						id: 'preview',
 						type: 'html',
 						html:
-							'<div class = "ppr-whn-ld-dn" style="width:100%;text-align:center;">' +
-							'<iframe style="border:0;width:0;height:0;font-size:20px" scrolling="no" frameborder="0" allowTransparency="true" src="' + CKEDITOR.plugins.nvd_math.fixSrc + '"></iframe>' +
+							'<div class = "nvd-math-prw" style="text-align:center;">' +
+							'<iframe style="border:0;width:0;height:0;font-size:16px; margin: auto" scrolling="no" frameborder="0" allowTransparency="true" src="' + CKEDITOR.plugins.nvd_math.fixSrc + '"></iframe>' +
 							'</div>',
 
 						onLoad: function () {
@@ -44,42 +37,53 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 
 						setup: function (widget) {
 							preview.setValue(widget.data.math);
+							console.log("preview setup");
+							console.log(widget);
 						}
+					},
+					{
+						//this element for embed toolbar
+						type: 'html',
+						html: '<label class="ppr-whn-ld-dn">Công thức (định dạng LaTeX):</div>',
 					},
 					//place to insert latex code.
 					{
 						type: 'textarea',
 						class: "nvd-math-txtr unique ppr-whn-ld-dn",
-						label: 'Công thức (định dạng LaTeX):',
+						label: '',
 						id: 'nvd-eqtn-txtr',
 
 						onLoad: function () {
 							var that = this;
-							console.log("LaTeX textarea loaded!");
+							console.log("txtr loaded!")
 							if (!(CKEDITOR.env.ie && CKEDITOR.env.version === 8)) {
 								this.getInputElement().on('input', function () {
 									// Add \( and \) for preview.
 									preview.setValue('\\(' + that.getInputElement().getValue() + '\\)');
 								});
 							}
-							// EqEditor.add(new EqTextArea('', 'CClatex' + window.CCounter), false);
+							EqEditor.add(new EqTextArea('', this.getInputElement().getAttribute('id')), false);
 
 						},
 
 						setup: function (widget) {
 							// Remove \( and \).
-							console.log("LaTeX textarea set up!");
 							this.setValue(CKEDITOR.plugins.nvd_math.trim(widget.data.math));
-
+							window._widget = widget;
+							console.log("setup");
+							console.log(widget);
 						},
 
 						commit: function (widget) {
-							console.log("LaTeX textarea commited!");
 							// Add \( and \) to make TeX be parsed by MathJax by default.
+							window._widget = widget;
+							console.log("commit");
+							console.log(widget);
 							widget.setData('math', '\\(' + this.getValue() + '\\)');
 						}
-					}
-				]
+					},
+
+					]
 			}
 		],
 		onLoad: function () {
@@ -87,7 +91,6 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 
 			//embed toolbar 
 			EqEditor.embed('nvd_EquationToolbar' + window.CCounter, '', 'efull');
-			EqEditor.add(new EqTextArea('', 'CClatex' + window.CCounter), false);
 
 			refineOnClickEvents();
 		},
@@ -98,13 +101,16 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 			var sel = editor.getSelection();
 			var image = sel.getStartElement().getAscendant('img', true);
 
-			var loaderContent = '<div style="display: flex;flex-direction: column;" class="dppr-whn-ld-dn"> ' +
-				'<img src="https://i.imgur.com/G6BCakp.gif" style="margin: auto; width: 80px; height: 80px" alt="" /> ' +
-				'<div class="nvd-loader-text"> loading </div></div>';
 
-			var loaderDiv = document.createElement('div');
-			loaderDiv.innerHTML = loaderContent;
-			document.querySelector("[name^='NVD_CCEquationEditor']").prepend(loaderDiv);
+			if (document.querySelectorAll(".ppr-whn-ld-dn").length !== 0) {
+				var loaderContent = '<div style="display: flex;flex-direction: column;" class="dppr-whn-ld-dn"> ' +
+					'<img src="https://i.imgur.com/G6BCakp.gif" style="margin: auto; width: 80px; height: 80px" alt="" /> ' +
+					'<div class="nvd-loader-text"> loading </div></div>';
+
+				var loaderDiv = document.createElement('div');
+				loaderDiv.innerHTML = loaderContent;
+				document.querySelector("[name^='NVD_CCEquationEditor']").prepend(loaderDiv);
+			}
 
 			//#region simulate async
 			setTimeout(function () {
@@ -135,6 +141,7 @@ function CConchange(n, fn) {
 	if (a) a.onchange = fn;
 }
 function CConclick(n, fn) {
+	console.log("CConlick initiated!", n, fn);
 	var a = CCgetId(n);
 	if (a) a.onclick = fn;
 }
@@ -649,7 +656,7 @@ function EqTextArea(preview, input, comment, download, intro) {
 		if (this.equation_comment) this.equation_comment.innerHTML = text;
 	};
 	this.renderEqn = function (callback) {
-		var val = this.equation_input.value;
+		/* var val = this.equation_input.value;
 		val = val.replace(/^\s+|\s+$/g, "");
 		if (val.length === 0) return true;
 		var bracket = 0;
@@ -691,7 +698,7 @@ function EqTextArea(preview, input, comment, download, intro) {
 		} else {
 			if (bracket < 0) this.setcomment("<br/><span class=\"orange\">You have more <strong>closed '}' brackets</strong> than open '{' brackets</span>");
 			else this.setcomment("<br/><span class=\"orange\">You have more <strong>open '{' brackets</strong> than closed '}' brackets</span>");
-		}
+		} */
 		this.changed = false;
 	};
 	this.clickval = 0;
@@ -709,6 +716,7 @@ function EqTextArea(preview, input, comment, download, intro) {
 		this.myRedo = 0;
 	};
 	this.undo = function (box) {
+		console.log("undo clicked!");
 		if (this.myRedo === 0) {
 			if (this.myUndo > 20) this.store_text.shift();
 			else this.myUndo++;
@@ -726,6 +734,7 @@ function EqTextArea(preview, input, comment, download, intro) {
 		this.equation_input.focus();
 	};
 	this.redo = function (box) {
+		console.log("redo clicked!");
 		if (this.myRedo > 0) {
 			this.myRedo--;
 			if (this.myRedo === 0 && CCgetId("redobutton")) CCgetId("redobutton").src = EDITOR_SRC + "/images/buttons/redo-x.gif";
@@ -1003,9 +1012,6 @@ var EqEditor = {
 			this.targetArea.insertText(txt, pos, inspos);
 			ExportButton.state(true);
 		}
-		else { console.log("No instance") }
-
-
 	},
 	getTextArea: function () {
 		if (this.targetArea !== null) return this.targetArea;
@@ -1278,7 +1284,6 @@ var EqEditor = {
 						eqi = eqi + "";
 					else
 						eqi = eqi + "= ";
-					console.log(i);
 					if (isConditional) {
 						eqi = eqi + 'f_{ ' + i + '}(x)\\ \\text{nếu} x <  x_{' + i + '}';
 					}
@@ -1579,7 +1584,7 @@ Scroll.prototype = {
 };
 
 var toolbarPlainText = `
-<div>
+	<div>
 		<div>
 			<div style="display: flex;flex-direction: column;" class="dppr-whn-ld-dn"> <img
 				src="https://imgur.com/G6BCakp.gif" style="margin: auto; width: 80px; height: 80px" alt="" />
@@ -1587,7 +1592,7 @@ var toolbarPlainText = `
 			</div>
 		</div>
 		<div class="ppr-whn-ld-dn" id="nvd_EquationToolbar" style="border-bottom: 1px solid #c4c4c4;">
-			<div id="EqnEditor">
+			<div id="nvd-eqn-editor">
 				<div id="hover">
 				</div>
 				<div id="bar1" class="top">
@@ -1595,29 +1600,28 @@ var toolbarPlainText = `
 						<div class="toolbar" style="display: flex; justify-content: space-between;" style="z-index:23;">
 							<div style="display: flex">
 								<div class="panel">
-									<img id="undobutton" src="https://latex.codecogs.com/legacy/eqneditor/images/buttons/undo-x.gif"
-										alt="undo" title="undo" />
+									<!--	<img id="undobutton" src="https://latex.codecogs.com/legacy/eqneditor/images/buttons/undo-x.gif" alt="undo" title="undo" onclick="onUndoClick()" />
 									<img id="redobutton" src="https://latex.codecogs.com/legacy/eqneditor/images/buttons/redo-x.gif"
-										alt="redo" title="redo" />
+										alt="redo" title="redo" onclick="EqEditor.targetArea.undo();" /> -->
 									<input type="button" class="lightbluebutton" onclick="EqEditor.clearText()" value="Clear" title="Clear the editor window" />
 								</div>
 								<div style="display: flex" class="panel">
-									<div class="bfr-slct-lbl" > Màu sắc: </div>
+									<div class="bfr-slct-lbl" > Chèn màu sắc: </div>
 									<select id="nvd-clr-slct" title="Color"
 										onchange='EqEditor.insert(this.value, this.value.length-1);
-										 document.getElementById("nvd-clr-slct").selectedIndex= "0"; '>
+										 document.getElementById("nvd-clr-slct").setAttribute("selectedIndex", 0); '>
 										<option value="" selected="true">
 											Màu ...
 										</option>
-										<option value="{\\color{Red} text}" >Red </option>
-										<option value="{\\color{Green} text}" >Green</option>
-										<option value="{\\color{Blue} text}" >Blue</option>
-										<option value="{\\color{Yellow} text}" >Yellow</option>
-										<option value="{\\color{Cyan} text}" >Cyan</option>
-										<option value="{\\color{Magenta} text}" >Magenta</option>
-										<option value="{\\color{Teal} text}" >Teal</option>
-										<option value="{\\color{Purple} text}">Purple</option>
-										<option value="{\\color{Orange} text}" >Orange</option>
+										<option value="{\\color{Red} {text}}" >Red </option>
+										<option value="{\\color{Green} {text}" >Green</option>
+										<option value="{\\color{Blue} {text}" >Blue</option>
+										<option value="{\\color{Yellow} {text}" >Yellow</option>
+										<option value="{\\color{Cyan} {text}" >Cyan</option>
+										<option value="{\\color{Magenta} {text}" >Magenta</option>
+										<option value="{\\color{Teal} {text}" >Teal</option>
+										<option value="{\\color{Purple} {text}">Purple</option>
+										<option value="{\\color{Orange} {text}" >Orange</option>
 									</select>
 								</div>
 							</div>
@@ -1684,266 +1688,245 @@ var toolbarPlainText = `
 							</div>
 						</div>
 					</div>
-					<div class="toolbar_wrapper">
-						<div>
-							<div style="display: flex; ">
-								<div class="tlbr-lbl" style="width: 157px">Trình bày bố cục:</div>
-								<div class="tlbr-lbl" style="width: 76px">Nhị phân:</div>
-								<div class="tlbr-lbl" style="width: 76px">Tập hợp: </div>
-								<div class="tlbr-lbl" style="width: 240px">Phép toán khác:</div>
+					<div class="toolbar_wrapper" >
+						<div style="display: flex; justify-content: space-between;">
+						<div style = "display: flex">
+							<div class="tlbr-lbl" style="width: 157px">Trình bày bố cục:</div>
+							<div class="tlbr-lbl" style="width: 76px">Nhị phân:</div>
+							<div class="tlbr-lbl" style="width: 76px">Tập hợp: </div>
 							</div>
+							<div>
+							<div class="tlbr-lbl" style="width: 202px">Phép toán khác:</div>
 						</div>
-						<div class="toolbar" style="z-index:22; display:flex">
-							<div class="panel" id="nvd-style-panel" style="height: 23px; overflow: hidden;">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/style.png" title="Style"
-									alt="Style Panel" usemap="#style_map" width="106" height="184" border="0" />
-								<map name="style_map" id="style_map">
-									<area shape="rect" alt="" title="Math Bold Greek" coords="0,0,50,20" />
-									<area shape="rect" alt="" title="Math Bold" coords="0,23,50,43" />
-									<area shape="rect" alt="" title="Math Italic" coords="0,46,50,66" />
-									<area shape="rect" alt="" title="Math Roman" coords="0,69,50,89" />
-									<area shape="rect" alt="" title="Math Fraktur" coords="0,92,50,112" />
-									<area shape="rect" alt="" title="Math Blackboard" coords="0,115,50,135" />
-									<area shape="rect" alt="" title="Text Upright" coords="53,0,103,20" />
-									<area shape="rect" alt="" title="Text Bold" coords="53,23,103,43" />
-									<area shape="rect" alt="" title="Text Italic" coords="53,46,103,66" />
-									<area shape="rect" alt="" title="Text Roman" coords="53,69,103,89" />
-									<area shape="rect" alt="" title="Text Slanted" coords="53,92,103,112" />
-									<area shape="rect" alt="" title="Text Typewriter" coords="53,115,103,135" />
-									<area shape="rect" alt="" title="Text Small Caps" coords="53,138,103,158" />
-									<area shape="rect" alt="" title="Text Emphasis" coords="53,161,103,181" />
-								</map>
-								<div class="vertical-line" style="height: 23px;">
-								</div>
-							</div>
-							<div class="panel" id="nvd-space-panel" style="height: 34px; overflow: hidden;">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/spaces.png" title="Spaces"
-									alt="Spaces Panel" usemap="#spaces_map" width="31" height="68" border="0" />
-								<map name="spaces_map" id="spaces_map">
-									<area shape="rect" alt="" title="thin space" coords="0,0,28,14" />
-									<area shape="rect" alt="" title="medium space" coords="0,17,28,31" />
-									<area shape="rect" alt="" title="thick space" coords="0,34,28,48" />
-									<area shape="rect" alt="" title="negative space" coords="0,51,28,65" />
-								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
-							</div>
-							<div class="panel" id="nvd-binary-panel" style="height: 34px; overflow: hidden;">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/binary.png" title="Binary"
-									alt="Binary Panel" usemap="#binary_map" width="68" height="238" border="0" />
-								<map name="binary_map" id="binary_map">
-									<area shape="rect" alt="" coords="0,0,14,14" title="\\pm" />
-									<area shape="rect" alt="" coords="0,17,14,31" title="\\mp" />
-									<area shape="rect" alt="" coords="0,34,14,48" title="\\times" />
-									<area shape="rect" alt="" coords="0,51,14,65" title="\\ast" />
-									<area shape="rect" alt="" coords="0,68,14,82" title="\\div" />
-									<area shape="rect" alt="" coords="0,85,14,99" title="\\setminus" />
-									<area shape="rect" alt="" coords="0,102,14,116" title="\\dotplus" />
-									<area shape="rect" alt="" coords="0,119,14,133" title="\\amalg" />
-									<area shape="rect" alt="" coords="0,136,14,150" title="\\dagger" />
-									<area shape="rect" alt="" coords="0,153,14,167" title="\\ddagger" />
-									<area shape="rect" alt="" coords="0,170,14,184" title="\\wr" />
-									<area shape="rect" alt="" coords="0,187,14,201" title="\\diamond" />
-									<area shape="rect" alt="" coords="0,204,14,218" title="\\circledcirc" />
-									<area shape="rect" alt="" coords="0,221,14,235" title="\\circledast" />
-									<area shape="rect" alt="" coords="17,0,31,14" title="\\cap" />
-									<area shape="rect" alt="" coords="17,17,31,31" title="\\Cap" />
-									<area shape="rect" alt="" coords="17,34,31,48" title="\\sqcap" />
-									<area shape="rect" alt="" coords="17,51,31,65" title="\\wedge" />
-									<area shape="rect" alt="" coords="17,68,31,82" title="\\barwedge" />
-									<area shape="rect" alt="" coords="17,85,31,99" title="\\triangleleft" />
-									<area shape="rect" alt="" coords="17,102,31,116" title="\\lozenge" />
-									<area shape="rect" alt="" coords="17,119,31,133" title="\\circ" />
-									<area shape="rect" alt="" coords="17,136,31,150" title="\\square" />
-									<area shape="rect" alt="" coords="17,153,31,167" title="\\triangle" />
-									<area shape="rect" alt="" coords="17,170,31,184" title="\\triangledown" />
-									<area shape="rect" alt="" coords="17,187,31,201" title="\\ominus" />
-									<area shape="rect" alt="" coords="17,204,31,218" title="\\oslash" />
-									<area shape="rect" alt="" coords="17,221,31,235" title="\\circleddash" />
-									<area shape="rect" alt="" coords="34,0,48,14" title="\\cup" />
-									<area shape="rect" alt="" coords="34,17,48,31" title="\\Cup" />
-									<area shape="rect" alt="" coords="34,34,48,48" title="\\sqcup" />
-									<area shape="rect" alt="" coords="34,51,48,65" title="\\vee" />
-									<area shape="rect" alt="" coords="34,68,48,82" title="\\veebar" />
-									<area shape="rect" alt="" coords="34,85,48,99" title="\\triangleright" />
-									<area shape="rect" alt="" coords="34,102,48,116" title="\\blacklozenge" />
-									<area shape="rect" alt="" coords="34,119,48,133" title="\\bullet" />
-									<area shape="rect" alt="" coords="34,136,48,150" title="\\blacksquare" />
-									<area shape="rect" alt="" coords="34,153,48,167" title="\\blacktriangle" />
-									<area shape="rect" alt="" coords="34,170,48,184" title="\\blacktriangledown" />
-									<area shape="rect" alt="" coords="34,187,48,201" title="\\oplus" />
-									<area shape="rect" alt="" coords="34,204,48,218" title="\\otimes" />
-									<area shape="rect" alt="" coords="34,221,48,235" title="\\odot" />
-									<area shape="rect" alt="" coords="51,0,65,14" title="\\cdot" />
-									<area shape="rect" alt="" coords="51,17,65,31" title="\\uplus" />
-									<area shape="rect" alt="" coords="51,34,65,48" title="\\bigsqcup" />
-									<area shape="rect" alt="" coords="51,51,65,65" title="\\bigtriangleup" />
-									<area shape="rect" alt="" coords="51,68,65,82" title="\\bigtriangledown" />
-									<area shape="rect" alt="" coords="51,85,65,99" title="\\star" />
-									<area shape="rect" alt="" coords="51,102,65,116" title="\\bigstar" />
-									<area shape="rect" alt="" coords="51,119,65,133" title="\\bigcirc" />
-									<area shape="rect" alt="" coords="51,136,65,150" title="\\bigoplus" />
-									<area shape="rect" alt="" coords="51,153,65,167" title="\\bigotimes" />
-									<area shape="rect" alt="" coords="51,170,65,184" title="\\bigodot" />
-								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
-							</div>
-							<div class="panel" id="nvd-symbol-1-panel" style="height: 34px; overflow: hidden;">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/symbols.png" title="Symbols"
-									alt="Symbols Panel" usemap="#symbols_map" width="68" height="136" border="0" />
-								<map name="symbols_map" id="symbols_map">
-									<area shape="rect" alt="" title="\\therefore" coords="0,0,14,14" />
-									<area shape="rect" alt="" title="\\because" coords="0,17,14,31" />
-									<area shape="rect" alt="" title="\\cdots" coords="0,34,14,48" />
-									<area shape="rect" alt="" title="\\ddots" coords="0,51,14,65" />
-									<area shape="rect" alt="" title="\\vdots" coords="0,68,14,82" />
-									<area shape="rect" alt="" title="\\S" coords="0,85,14,99" />
-									<area shape="rect" alt="" title="\\P" coords="0,102,14,116" />
-									<area shape="rect" alt="" title="\\copyright" coords="0,119,14,133" />
-									<area shape="rect" alt="" title="\\partial" coords="17,0,31,14" />
-									<area shape="rect" alt="" coords="17,17,31,31" title="\\imath" />
-									<area shape="rect" alt="" coords="17,34,31,48" title="\\jmath" />
-									<area shape="rect" alt="" title="\\Re" coords="17,51,31,65" />
-									<area shape="rect" alt="" title="\\Im" coords="17,68,31,82" />
-									<area shape="rect" alt="" coords="17,85,31,99" title="\\forall" />
-									<area shape="rect" alt="" coords="17,102,31,116" title="\\exists" />
-									<area shape="rect" alt="" coords="17,119,31,133" title="\\top" />
-									<area shape="rect" alt="" title="\\mathbb{P}" coords="34,0,48,14" />
-									<area shape="rect" alt="" title="\\mathbb{N}" coords="34,17,48,31" />
-									<area shape="rect" alt="" title="\\mathbb{Z}" coords="34,34,48,48" />
-									<area shape="rect" alt="" title="\\mathbb{I}" coords="34,51,48,65" />
-									<area shape="rect" alt="" title="\\mathbb{Q}" coords="34,68,48,82" />
-									<area shape="rect" alt="" title="\\mathbb{R}" coords="34,85,48,99" />
-									<area shape="rect" alt="" title="\\mathbb{C}" coords="34,102,48,116" />
-									<area shape="rect" alt="" coords="51,0,65,14" title="\\angle" />
-									<area shape="rect" alt="" coords="51,17,65,31" title="\\measuredangle" />
-									<area shape="rect" alt="" coords="51,34,65,48" title="\\sphericalangle" />
-									<area shape="rect" alt="" coords="51,51,65,65" title="\\varnothing" />
-									<area shape="rect" alt="" coords="51,68,65,82" title="\\infty" />
-									<area shape="rect" alt="" coords="51,85,65,99" title="\\mho" />
-									<area shape="rect" alt="" coords="51,102,65,116" title="\\wp" />
-								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
-							</div>
-							<div class="panel" id="nvd-symbol-2-panel" style="height: 34px; overflow: hidden;">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/foreign.png" title="Foreign"
-									alt="Foreign Panel" usemap="#foreign_map" width="34" height="136" border="0" />
-								<map name="foreign_map" id="foreign_map">
-									<area shape="rect" alt="" coords="0,0,14,14" title="\\aa" alt = "bug" />
-									<area shape="rect" alt="" coords="0,17,14,31" title="\\ae" alt = "bug"/>
-									<area shape="rect" alt="" coords="0,34,14,48" title="\\l" />
-									<area shape="rect" alt="" coords="0,51,14,65" title="\\o" />
-									<area shape="rect" alt="" coords="0,68,14,82" title="\\oe" />
-									<area shape="rect" alt="" coords="0,85,14,99" title="\\ss" />
-									<area shape="rect" alt="" title="\\$" coords="0,102,14,116" />
-									<area shape="rect" alt="" title="\\cent" coords="0,119,14,133" />
-									<area shape="rect" alt="" coords="17,0,31,14" title="\\AA" />
-									<area shape="rect" alt="" coords="17,17,31,31" title="\\AE" />
-									<area shape="rect" alt="" coords="17,34,31,48" title="\\L" />
-									<area shape="rect" alt="" coords="17,51,31,65" title="\\O" />
-									<area shape="rect" alt="" coords="17,68,31,82" title="\\OE" />
-									<area shape="rect" alt="" coords="17,85,31,99" title="\\SS" />
-									<area shape="rect" alt="" title="\\pounds" coords="17,102,31,116" />
-									<area shape="rect" alt="" title="\\euro" coords="17,119,31,133" />
-								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
-							</div>
-							<div class="panel" id="nvd-subsup-set-panel" style="height:34px">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/subsupset.png"
-									title="Subsupset" alt="Subsupset Panel" usemap="#subsupset_map" width="34" height="153"
-									border="0" />
-								<map name="subsupset_map" id="subsupset_map">
-									<area shape="rect" alt="" coords="0,0,14,14" title="\\sqsubset" />
-									<area shape="rect" alt="" coords="0,17,14,31" title="\\sqsubseteq" />
-									<area shape="rect" alt="" coords="0,34,14,48" title="\\subset" />
-									<area shape="rect" alt="" coords="0,51,14,65" title="\\subseteq" />
-									<area shape="rect" alt="" coords="0,68,14,82" title="\\nsubseteq" />
-									<area shape="rect" alt="" coords="0,85,14,99" title="\\subseteqq" />
-									<area shape="rect" alt="" coords="0,102,14,116" title="\\nsubseteq" />
-									<area shape="rect" alt="" coords="0,119,14,133" title="\\in" />
-									<area shape="rect" alt="" coords="0,136,14,150" title="\\notin" />
-									<area shape="rect" alt="" coords="17,0,31,14" title="\\sqsupset" />
-									<area shape="rect" alt="" coords="17,17,31,31" title="\\sqsupseteq" />
-									<area shape="rect" alt="" coords="17,34,31,48" title="\\supset" />
-									<area shape="rect" alt="" coords="17,51,31,65" title="\\supseteq" />
-									<area shape="rect" alt="" coords="17,68,31,82" title="\\nsupseteq" />
-									<area shape="rect" alt="" coords="17,85,31,99" title="\\supseteqq" />
-									<area shape="rect" alt="" coords="17,102,31,116" title="\\nsupseteqq" />
-									<area shape="rect" alt="" coords="17,119,31,133" title="\\ni" />
-								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
-							</div>
-							<div class="panel" id="nvd-accents-panel" style="height:34px">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/accents.png" title="Accents"
-									alt="Accents Panel" usemap="#accents_map" width="34" height="119" border="0" />
-								<map name="accents_map" id="accents_map">
-									<area shape="rect" alt="" coords="0,0,14,14" onclick="EqEditor.insert('{}\'')" title="a'" />
-									<area shape="rect" alt="" coords="0,17,14,31" onclick="EqEditor.insert('\\dot{}')" title="\\dot{a}" />
-									<area shape="rect" alt="" coords="0,34,14,48" title="\\hat{a}" />
-									<area shape="rect" alt="" coords="0,51,14,65"  title="\\grave{a}" />
-									<area shape="rect" alt="" coords="0,68,14,82" title="\\tilde{a}" />
-									<area shape="rect" alt="" coords="0,85,14,99" title="\\bar{a}" />
-									<area shape="rect" alt="" coords="0,102,14,116" title="\\not{a}" />
-									<area shape="rect" alt="" coords="17,0,31,14"title="{a}''" />
-									<area shape="rect" alt="" coords="17,17,31,31"  title="\\ddot{a}" />
-									<area shape="rect" alt="" coords="17,34,31,48"  title="\\check{a}" />
-									<area shape="rect" alt="" coords="17,51,31,65"title="\\acute{a}" />
-									<area shape="rect" alt="" coords="17,68,31,82" title="\\breve{a}" />
-									<area shape="rect" alt="" coords="17,85,31,99" " title="\\vec{a}" />
-									<area shape="rect" alt="" title="a^{\\circ}" coords="17,102,31,116" />
-								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
-							</div>
-							<div class="panel" id="panel2" style="height:34px">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/accents_ext.png"
-									title="Accents_ext" alt="Accents_ext Panel" usemap="#accents_ext_map" width="25" height="170"
-									border="0" />
-								<map name="accents_ext_map" id="accents_ext_map" >
-									<area shape="rect" alt="" coords="0,0,22,14"  title="\\widetilde{abc}" />
-									<area shape="rect" alt="" coords="0,17,22,31" title="\\widehat{abc}" />
-									<area shape="rect" alt="" coords="0,34,22,48"  title="\\overleftarrow{abc}" />
-									<area shape="rect" alt="" coords="0,51,22,65"  title="\\overrightarrow{abc}" />
-									<area shape="rect" alt="" coords="0,68,22,82"  title="\\overline{abc}" />
-									<area shape="rect" alt="" coords="0,85,22,99"  title="\\underline{abc}" />
-									<area shape="rect" alt="" coords="0,102,22,116"  title="\\overbrace{abc}" />
-									<area shape="rect" alt="" coords="0,119,22,133"  title="\\underbrace{abc}" />
-									<area shape="rect" alt="" coords="0,136,22,150"  title="\\overset{a}{abc}" />
-									<area shape="rect" alt="" coords="0,153,22,167"  title="\\underset{a}{abc}" />
+						</div>
 
+
+						<div class="toolbar" style="z-index:22; display:flex; justify-content: space-between;">
+							<div style =  "display:flex;" >
+								<div class="panel" id="nvd-style-panel" style="height: 23px; overflow: hidden;">
+									<img src="https://i.imgur.com/wVdR4DL.png" title="Style"
+										alt="Style Panel" usemap="#style_map" width="106" height="184" border="0" />
+									<map name="style_map" id="style_map">
+										<area shape="rect" alt="" title="Math Bold Greek" coords="0,0,50,20" />
+										<area shape="rect" alt="" title="Math Bold" coords="0,23,50,43" />
+										<area shape="rect" alt="" title="Math Italic" coords="0,46,50,66" />
+										<area shape="rect" alt="" title="Math Roman" coords="0,69,50,89" />
+										<area shape="rect" alt="" title="Math Fraktur" coords="0,92,50,112" />
+										<area shape="rect" alt="" title="Math Blackboard" coords="0,115,50,135" />
+										<area shape="rect" alt="" title="Text Upright" coords="53,0,103,20" />
+										<area shape="rect" alt="" title="Text Bold" coords="53,23,103,43" />
+										<area shape="rect" alt="" title="Text Italic" coords="53,46,103,66" />
+										<area shape="rect" alt="" title="Text Roman" coords="53,69,103,89" />
+										<area shape="rect" alt="" title="Text Typewriter" coords="53,92,103,112" />
+										<!--		<area shape="rect" alt="" title="Text Slanted" coords="53,92,103,112" />  -->
+									<!--			<area shape="rect" alt="" title="Text Typewriter" coords="53,115,103,135" />-->
+									<!--		<area shape="rect" alt="" title="Text Small Caps" coords="53,138,103,158" /> -->
+								<!--	<area shape="rect" alt="" title="Text Emphasis" coords="53,161,103,181" /> -->
 								</map>
-								<div class="vertical-line" style="height: 34px;">
+									<div class="vertical-line" style="height: 23px;">
+									</div>
+								</div>
+								<div class="panel" id="nvd-space-panel" style="height: 34px; overflow: hidden;">
+									<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/spaces.png" title="Spaces"
+										alt="Spaces Panel" usemap="#spaces_map" width="31" height="68" border="0" />
+									<map name="spaces_map" id="spaces_map">
+										<area shape="rect" alt="" title="thin space" coords="0,0,28,14" />
+										<area shape="rect" alt="" title="medium space" coords="0,17,28,31" />
+										<area shape="rect" alt="" title="thick space" coords="0,34,28,48" />
+										<area shape="rect" alt="" title="negative space" coords="0,51,28,65" />
+									</map>
+
+								</div>
+								<div class="panel" id="nvd-binary-panel" style="height: 34px; overflow: hidden;">
+									<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/binary.png" title="Binary"
+										alt="Binary Panel" usemap="#binary_map" width="68" height="238" border="0" />
+									<map name="binary_map" id="binary_map">
+										<area shape="rect" alt="" coords="0,0,14,14" title="\\pm" />
+										<area shape="rect" alt="" coords="0,17,14,31" title="\\mp" />
+										<area shape="rect" alt="" coords="0,34,14,48" title="\\times" />
+										<area shape="rect" alt="" coords="0,51,14,65" title="\\ast" />
+										<area shape="rect" alt="" coords="0,68,14,82" title="\\div" />
+										<area shape="rect" alt="" coords="0,85,14,99" title="\\setminus" />
+										<area shape="rect" alt="" coords="0,102,14,116" title="\\dotplus" />
+										<area shape="rect" alt="" coords="0,119,14,133" title="\\amalg" />
+										<area shape="rect" alt="" coords="0,136,14,150" title="\\dagger" />
+										<area shape="rect" alt="" coords="0,153,14,167" title="\\ddagger" />
+										<area shape="rect" alt="" coords="0,170,14,184" title="\\wr" />
+										<area shape="rect" alt="" coords="0,187,14,201" title="\\diamond" />
+										<area shape="rect" alt="" coords="0,204,14,218" title="\\circledcirc" />
+										<area shape="rect" alt="" coords="0,221,14,235" title="\\circledast" />
+										<area shape="rect" alt="" coords="17,0,31,14" title="\\cap" />
+										<area shape="rect" alt="" coords="17,17,31,31" title="\\Cap" />
+										<area shape="rect" alt="" coords="17,34,31,48" title="\\sqcap" />
+										<area shape="rect" alt="" coords="17,51,31,65" title="\\wedge" />
+										<area shape="rect" alt="" coords="17,68,31,82" title="\\barwedge" />
+										<area shape="rect" alt="" coords="17,85,31,99" title="\\triangleleft" />
+										<area shape="rect" alt="" coords="17,102,31,116" title="\\lozenge" />
+										<area shape="rect" alt="" coords="17,119,31,133" title="\\circ" />
+										<area shape="rect" alt="" coords="17,136,31,150" title="\\square" />
+										<area shape="rect" alt="" coords="17,153,31,167" title="\\triangle" />
+										<area shape="rect" alt="" coords="17,170,31,184" title="\\triangledown" />
+										<area shape="rect" alt="" coords="17,187,31,201" title="\\ominus" />
+										<area shape="rect" alt="" coords="17,204,31,218" title="\\oslash" />
+										<area shape="rect" alt="" coords="17,221,31,235" title="\\circleddash" />
+										<area shape="rect" alt="" coords="34,0,48,14" title="\\cup" />
+										<area shape="rect" alt="" coords="34,17,48,31" title="\\Cup" />
+										<area shape="rect" alt="" coords="34,34,48,48" title="\\sqcup" />
+										<area shape="rect" alt="" coords="34,51,48,65" title="\\vee" />
+										<area shape="rect" alt="" coords="34,68,48,82" title="\\veebar" />
+										<area shape="rect" alt="" coords="34,85,48,99" title="\\triangleright" />
+										<area shape="rect" alt="" coords="34,102,48,116" title="\\blacklozenge" />
+										<area shape="rect" alt="" coords="34,119,48,133" title="\\bullet" />
+										<area shape="rect" alt="" coords="34,136,48,150" title="\\blacksquare" />
+										<area shape="rect" alt="" coords="34,153,48,167" title="\\blacktriangle" />
+										<area shape="rect" alt="" coords="34,170,48,184" title="\\blacktriangledown" />
+										<area shape="rect" alt="" coords="34,187,48,201" title="\\oplus" />
+										<area shape="rect" alt="" coords="34,204,48,218" title="\\otimes" />
+										<area shape="rect" alt="" coords="34,221,48,235" title="\\odot" />
+										<area shape="rect" alt="" coords="51,0,65,14" title="\\cdot" />
+										<area shape="rect" alt="" coords="51,17,65,31" title="\\uplus" />
+										<area shape="rect" alt="" coords="51,34,65,48" title="\\bigsqcup" />
+										<area shape="rect" alt="" coords="51,51,65,65" title="\\bigtriangleup" />
+										<area shape="rect" alt="" coords="51,68,65,82" title="\\bigtriangledown" />
+										<area shape="rect" alt="" coords="51,85,65,99" title="\\star" />
+										<area shape="rect" alt="" coords="51,102,65,116" title="\\bigstar" />
+										<area shape="rect" alt="" coords="51,119,65,133" title="\\bigcirc" />
+										<area shape="rect" alt="" coords="51,136,65,150" title="\\bigoplus" />
+										<area shape="rect" alt="" coords="51,153,65,167" title="\\bigotimes" />
+										<area shape="rect" alt="" coords="51,170,65,184" title="\\bigodot" />
+									</map>
+
+								</div>
+								<div class="panel" id="nvd-symbol-1-panel" style="height: 34px; overflow: hidden;">
+									<img src="https://imgur.com/vgqOmV7.png" title="Symbols"
+										alt="Symbols Panel" usemap="#symbols_map" width="68" height="136" border="0" />
+									<map name="symbols_map" id="symbols_map">
+										<area shape="rect" alt="" title="\\therefore" coords="0,0,14,14" />
+										<area shape="rect" alt="" title="\\because" coords="0,17,14,31" />
+										<area shape="rect" alt="" title="\\cdots" coords="0,34,14,48" />
+										<area shape="rect" alt="" title="\\ddots" coords="0,51,14,65" />
+										<area shape="rect" alt="" title="\\vdots" coords="0,68,14,82" />
+										<area shape="rect" alt="" title="\\S" coords="0,85,14,99" />
+										<area shape="rect" alt="" title="\\top" coords="0,102,14,116" />
+
+										<area shape="rect" alt="" title="\\partial" coords="17,0,31,14" />
+										<area shape="rect" alt="" coords="17,17,31,31" title="\\imath" />
+										<area shape="rect" alt="" coords="17,34,31,48" title="\\jmath" />
+										<area shape="rect" alt="" title="\\Re" coords="17,51,31,65" />
+										<area shape="rect" alt="" title="\\Im" coords="17,68,31,82" />
+										<area shape="rect" alt="" coords="17,85,31,99" title="\\forall" />
+										<area shape="rect" alt="" coords="17,102,31,116" title="\\exists" />
+										<area shape="rect" alt="" title="\\mathbb{P}" coords="34,0,48,14" />
+										<area shape="rect" alt="" title="\\mathbb{N}" coords="34,17,48,31" />
+										<area shape="rect" alt="" title="\\mathbb{Z}" coords="34,34,48,48" />
+										<area shape="rect" alt="" title="\\mathbb{I}" coords="34,51,48,65" />
+										<area shape="rect" alt="" title="\\mathbb{Q}" coords="34,68,48,82" />
+										<area shape="rect" alt="" title="\\mathbb{R}" coords="34,85,48,99" />
+										<area shape="rect" alt="" title="\\mathbb{C}" coords="34,102,48,116" />
+										<area shape="rect" alt="" coords="51,0,65,14" title="\\angle" />
+										<area shape="rect" alt="" coords="51,17,65,31" title="\\measuredangle" />
+										<area shape="rect" alt="" coords="51,34,65,48" title="\\sphericalangle" />
+										<area shape="rect" alt="" coords="51,51,65,65" title="\\varnothing" />
+										<area shape="rect" alt="" coords="51,68,65,82" title="\\infty" />
+										<area shape="rect" alt="" coords="51,85,65,99" title="\\mho" />
+										<area shape="rect" alt="" coords="51,102,65,116" title="\\wp" />
+									</map>
+
 								</div>
 							</div>
-							<div class="panel" id="panel3" style="height:34px">
-								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/arrows.png" title="Arrows"
-									alt="Arrows Panel" usemap="#arrows_map" width="56" height="170" border="0" />
-								<map name="arrows_map" id="arrows_map">
-									<area shape="rect" alt="" title="x \\mapsto x^2" coords="0,0,25,14" />
-									<area shape="rect" alt="" coords="0,17,25,31" title="\\leftarrow" />
-									<area shape="rect" alt="" coords="0,34,25,48" title="\\Leftarrow" />
-									<area shape="rect" alt="" coords="0,51,25,65" title="\\leftrightarrow" />
-									<area shape="rect" alt="" coords="0,68,25,82" title="\\leftharpoonup" />
-									<area shape="rect" alt="" coords="0,85,25,99" title="\\leftharpoondown" />
-									<area shape="rect" alt="" coords="0,102,25,116" title="\\leftrightharpoons" />
-									<area shape="rect" alt="" coords="0,119,25,133"  title="\\xleftarrow[text]{long}" />
-									<area shape="rect" alt="" coords="0,136,25,150"  title="\\overset{a}{\\leftarrow}" />
-									<area shape="rect" alt="" coords="0,153,25,167"  title="\\underset{a}{\\leftarrow}" />
-									<area shape="rect" alt="" coords="28,0,53,14" title="n \\to" />
-									<area shape="rect" alt="" coords="28,17,53,31" title="\\rightarrow" />
-									<area shape="rect" alt="" coords="28,34,53,48" title="\\Rightarrow" />
-									<area shape="rect" alt="" coords="28,51,53,65" title="\\Leftrightarrow" />
-									<area shape="rect" alt="" coords="28,68,53,82" title="\\rightharpoonup" />
-									<area shape="rect" alt="" coords="28,85,53,99" title="\\rightharpoondown" />
-									<area shape="rect" alt="" coords="28,102,53,116" title="\\rightleftharpoons" />
-									<area shape="rect" alt="" coords="28,119,53,133"  title="\\xrightarrow[text]{long}" />
-									<area shape="rect" alt="" coords="28,136,53,150" title="\\overset{a}{\\rightarrow}" />
-									<area shape="rect" alt="" coords="28,153,53,167"  title="\\underset{a}{\\rightarrow}" />
-								</map>
+							<div>
+
+								<div class="panel" id="nvd-subsup-set-panel" style="height:34px">
+									<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/subsupset.png"
+										title="Subsupset" alt="Subsupset Panel" usemap="#subsupset_map" width="34" height="153"
+										border="0" />
+									<map name="subsupset_map" id="subsupset_map">
+										<area shape="rect" alt="" coords="0,0,14,14" title="\\sqsubset" />
+										<area shape="rect" alt="" coords="0,17,14,31" title="\\sqsubseteq" />
+										<area shape="rect" alt="" coords="0,34,14,48" title="\\subset" />
+										<area shape="rect" alt="" coords="0,51,14,65" title="\\subseteq" />
+										<area shape="rect" alt="" coords="0,68,14,82" title="\\nsubseteq" />
+										<area shape="rect" alt="" coords="0,85,14,99" title="\\subseteqq" />
+										<area shape="rect" alt="" coords="0,102,14,116" title="\\nsubseteq" />
+										<area shape="rect" alt="" coords="0,119,14,133" title="\\in" />
+										<area shape="rect" alt="" coords="0,136,14,150" title="\\notin" />
+										<area shape="rect" alt="" coords="17,0,31,14" title="\\sqsupset" />
+										<area shape="rect" alt="" coords="17,17,31,31" title="\\sqsupseteq" />
+										<area shape="rect" alt="" coords="17,34,31,48" title="\\supset" />
+										<area shape="rect" alt="" coords="17,51,31,65" title="\\supseteq" />
+										<area shape="rect" alt="" coords="17,68,31,82" title="\\nsupseteq" />
+										<area shape="rect" alt="" coords="17,85,31,99" title="\\supseteqq" />
+										<area shape="rect" alt="" coords="17,102,31,116" title="\\nsupseteqq" />
+										<area shape="rect" alt="" coords="17,119,31,133" title="\\ni" />
+									</map>
+
+								</div>
+								<div class="panel" id="nvd-accents-panel" style="height:34px">
+									<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/accents.png" title="Accents"
+										alt="Accents Panel" usemap="#accents_map" width="34" height="119" border="0" />
+									<map name="accents_map" id="accents_map">
+										<area shape="rect" alt="" coords="0,0,14,14" onclick="EqEditor.insert('{}\'')" title="a'" />
+										<area shape="rect" alt="" coords="0,17,14,31" onclick="EqEditor.insert('\\dot{}')" title="\\dot{a}" />
+										<area shape="rect" alt="" coords="0,34,14,48" title="\\hat{a}" />
+										<area shape="rect" alt="" coords="0,51,14,65" title="\\grave{a}" />
+										<area shape="rect" alt="" coords="0,68,14,82" title="\\tilde{a}" />
+										<area shape="rect" alt="" coords="0,85,14,99" title="\\bar{a}" />
+										<area shape="rect" alt="" coords="0,102,14,116" title="\\not{a}" />
+										<area shape="rect" alt="" coords="17,0,31,14" title="{a}''" />
+										<area shape="rect" alt="" coords="17,17,31,31" title="\\ddot{a}" />
+										<area shape="rect" alt="" coords="17,34,31,48" title="\\check{a}" />
+										<area shape="rect" alt="" coords="17,51,31,65" title="\\acute{a}" />
+										<area shape="rect" alt="" coords="17,68,31,82" title="\\breve{a}" />
+										<area shape="rect" alt="" coords="17,85,31,99" title="\\vec{a}" />
+										<area shape="rect" alt="" title="a^{\\circ}" coords="17,102,31,116" />
+									</map>
+
+								</div>
+								<div class="panel" id="panel2" style="height:34px">
+									<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/accents_ext.png"
+										title="Accents_ext" alt="Accents_ext Panel" usemap="#accents_ext_map" width="25" height="170"
+										border="0" />
+									<map name="accents_ext_map" id="accents_ext_map" >
+										<area shape="rect" alt="" coords="0,0,22,14" title="\\widetilde{abc}" />
+										<area shape="rect" alt="" coords="0,17,22,31" title="\\widehat{abc}" />
+										<area shape="rect" alt="" coords="0,34,22,48" title="\\overleftarrow{abc}" />
+										<area shape="rect" alt="" coords="0,51,22,65" title="\\overrightarrow{abc}" />
+										<area shape="rect" alt="" coords="0,68,22,82" title="\\overline{abc}" />
+										<area shape="rect" alt="" coords="0,85,22,99" title="\\underline{abc}" />
+										<area shape="rect" alt="" coords="0,102,22,116" title="\\overbrace{abc}" />
+										<area shape="rect" alt="" coords="0,119,22,133" title="\\underbrace{abc}" />
+										<area shape="rect" alt="" coords="0,136,22,150" title="\\overset{a}{abc}" />
+										<area shape="rect" alt="" coords="0,153,22,167" title="\\underset{a}{abc}" />
+
+									</map>
+
+								</div>
+								<div class="panel" id="panel3" style="height:34px">
+									<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/arrows.png" title="Arrows"
+										alt="Arrows Panel" usemap="#arrows_map" width="56" height="170" border="0" />
+									<map name="arrows_map" id="arrows_map">
+										<area shape="rect" alt="" title="x \\mapsto x^2" coords="0,0,25,14" />
+										<area shape="rect" alt="" coords="0,17,25,31" title="\\leftarrow" />
+										<area shape="rect" alt="" coords="0,34,25,48" title="\\Leftarrow" />
+										<area shape="rect" alt="" coords="0,51,25,65" title="\\leftrightarrow" />
+										<area shape="rect" alt="" coords="0,68,25,82" title="\\leftharpoonup" />
+										<area shape="rect" alt="" coords="0,85,25,99" title="\\leftharpoondown" />
+										<area shape="rect" alt="" coords="0,102,25,116" title="\\leftrightharpoons" />
+										<area shape="rect" alt="" coords="0,119,25,133" title="\\xleftarrow[text]{long}" />
+										<area shape="rect" alt="" coords="0,136,25,150" title="\\overset{a}{\\leftarrow}" />
+										<area shape="rect" alt="" coords="0,153,25,167" title="\\underset{a}{\\leftarrow}" />
+										<area shape="rect" alt="" coords="28,0,53,14" title="n \\to" />
+										<area shape="rect" alt="" coords="28,17,53,31" title="\\rightarrow" />
+										<area shape="rect" alt="" coords="28,34,53,48" title="\\Rightarrow" />
+										<area shape="rect" alt="" coords="28,51,53,65" title="\\Leftrightarrow" />
+										<area shape="rect" alt="" coords="28,68,53,82" title="\\rightharpoonup" />
+										<area shape="rect" alt="" coords="28,85,53,99" title="\\rightharpoondown" />
+										<area shape="rect" alt="" coords="28,102,53,116" title="\\rightleftharpoons" />
+										<area shape="rect" alt="" coords="28,119,53,133" title="\\xrightarrow[text]{long}" />
+										<area shape="rect" alt="" coords="28,136,53,150" title="\\overset{a}{\\rightarrow}" />
+										<area shape="rect" alt="" coords="28,153,53,167" title="\\underset{a}{\\rightarrow}" />
+									</map>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1978,28 +1961,28 @@ var toolbarPlainText = `
 								<map name="operators_map" id="operators_map">
 									<area shape="rect" alt="" title="superscript" coords="0,0,25,25"" />
 									<area shape="rect" alt="" title="subscript" coords="0,28,25,53" " />
-									<area shape="rect" alt="" coords="0,56,25,81"  title="x_a^b" />
-									<area shape="rect" alt="" coords="0,84,25,109"  title="{x_a}^b" />
-									<area shape="rect" alt="" title="_{a}^{b}\\textrm{C}" coords="0,112,25,137"/>
+									<area shape="rect" alt="" coords="0,56,25,81" title="x_a^b" />
+									<area shape="rect" alt="" coords="0,84,25,109" title="{x_a}^b" />
+									<area shape="rect" alt="" title="_{a}^{b}\\textrm{C}" coords="0,112,25,137" />
 									<area shape="rect" alt="" title="fraction" coords="28,0,53,25" />
 									<area shape="rect" alt="" title="tiny fraction" coords="28,28,53,53" ư />
-									<area shape="rect" alt="" coords="28,56,53,81"  title="\\frac{\\partial }{\\partial x}" />
-									<area shape="rect" alt="" coords="28,84,53,109"  title="\\frac{\\partial^2 }{\\partial x^2}" />
+									<area shape="rect" alt="" coords="28,56,53,81" title="\\frac{\\partial }{\\partial x}" />
+									<area shape="rect" alt="" coords="28,84,53,109" title="\\frac{\\partial^2 }{\\partial x^2}" />
 									<area shape="rect" alt="" coords="28,112,53,137" title="\\frac{\\mathrm{d} }{\\mathrm{d} x}" />
 									<area shape="rect" alt="" coords="56,0,81,25" title="\\int" />
-									<area shape="rect" alt="" title="\\int_{}^{}" coords="56,28,81,53"  />
-									<area shape="rect" alt="" coords="56,56,81,81"  />
-									<area shape="rect" alt="" title="\\oint_{}^{}" coords="56,84,81,109"  />
-									<area shape="rect" alt="" title="\\iint_{}^{}" coords="56,112,81,137"  />
+									<area shape="rect" alt="" title="\\int_{}^{}" coords="56,28,81,53" />
+									<area shape="rect" alt="" title = "\\oint" coords="56,56,81,81" />
+									<area shape="rect" alt="" title="\\oint_{}^{}" coords="56,84,81,109" />
+									<area shape="rect" alt="" title="\\iint_{}^{}" coords="56,112,81,137" />
 									<area shape="rect" alt="" coords="84,0,109,25" title="\\bigcap" />
-									<area shape="rect" alt="" title="\\bigcap_{}^{}" coords="84,28,109,53"  />
-									<area shape="rect" alt="" coords="84,56,109,81"  title="\\bigcup" />
-									<area shape="rect" alt="" title="\\bigcup_{}^{}" coords="84,84,109,109"  />
-									<area shape="rect" alt="" title="\\lim_{x \\to 0}" coords="84,112,109,137"/>
+									<area shape="rect" alt="" title="\\bigcap_{}^{}" coords="84,28,109,53" />
+									<area shape="rect" alt="" coords="84,56,109,81" title="\\bigcup" />
+									<area shape="rect" alt="" title="\\bigcup_{}^{}" coords="84,84,109,109" />
+									<area shape="rect" alt="" title="\\lim_{x \\to 0}" coords="84,112,109,137" />
 									<area shape="rect" alt="" coords="112,0,137,25" title="\\sum" />
-									<area shape="rect" alt="" title="\\sum_{}^{}" coords="112,28,137,53"/>
+									<area shape="rect" alt="" title="\\sum_{}^{}" coords="112,28,137,53" />
 									<area shape="rect" alt="" title="\\sqrt{}" coords="112,56,137,81" />
-									<area shape="rect" alt="" title="\\sqrt[]{}" coords="112,84,137,109"  />
+									<area shape="rect" alt="" title="\\sqrt[]{}" coords="112,84,137,109" />
 									<area shape="rect" alt="" coords="140,0,165,25" title="\\prod" />
 									<area shape="rect" alt="" title="\\prod_{}^{}" coords="140,28,165,53" />
 									<area shape="rect" alt="" coords="140,56,165,81" title="\\coprod" />
@@ -2007,87 +1990,87 @@ var toolbarPlainText = `
 								</map>
 							</div>
 							<div class="panel" id="nvd-matrix-panel" style="height: 34px; overflow: hidden;">
-							<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/matrix.png" title="Matrix"
-								alt="Matrix Panel" usemap="#matrix_map" width="102" height="170" border="0" />
-							<map name="matrix_map" id="matrix_map">
-								<area shape="rect" alt="" title="\\begin{matrix} ... \\end{matrix}" coords="0,0,31,31" onclick="EqEditor.makeArrayMatrix('','','')" />
-								<area shape="rect" alt="" title="\\begin{pmatrix} ... \\end{pmatrix}" coords="0,34,31,65" onclick="EqEditor.makeArrayMatrix('p','','')" />
-								<area shape="rect" alt="" title="\\begin{vmatrix} ... \\end{vmatrix}" coords="0,68,31,99" onclick="EqEditor.makeArrayMatrix('v','','')" />
-								<area shape="rect" alt="" title="\\begin{Vmatrix} ... \\end{Vmatrix}" coords="0,102,31,133" onclick="EqEditor.makeArrayMatrix('V','','')" />
-								<area shape="rect" alt="" title="\\left.\\begin{matrix}... \\end{matrix}\\right|" coords="0,136,31,167" onclick="EqEditor.makeArrayMatrix('','\\left.','\\right|')" />
-								<area shape="rect" alt="" title="\\being{bmatrix} ... \\end{bmatrix}" coords="34,0,65,31" onclick="EqEditor.makeArrayMatrix('b','','')" />
-								<area shape="rect" alt="" title="\\bigl(\\begin{smallmatrix} ... \\end{smallmatrix}\\bigr)" coords="34,34,65,65" onclick="EqEditor.makeArrayMatrix('small','\\bigl(','\\bigr)')" />
-								<area shape="rect" alt="" title="\\begin{Bmatrix} ... \\end{Bmatrix}" coords="34,68,65,99" onclick="EqEditor.makeArrayMatrix('B','','')" />
-								<area shape="rect" alt="" title="\\begin{Bmatrix} ... \\end{matrix}" coords="34,102,65,133" onclick="EqEditor.makeArrayMatrix('','\\left\\{','\\right.')" />
-								<area shape="rect" alt="" title="\\begin{matrix} ... \\end{Bmatrix}" coords="34,136,65,167" onclick="EqEditor.makeArrayMatrix('','\\left.','\\right\\}')" />
-								<area shape="rect" alt="" coords="68,0,99,31" onclick="EqEditor.insert('\\binom{}{}')" title=" \\binom{n}{r}" />
-								<area shape="rect" alt="" title="\\begin{cases} ... \\end{cases}" coords="68,34,99,65" onclick="EqEditor.makeEquationsMatrix('cases', true, true)" />
-								<area shape="rect" alt="" title="\\begin{align} ... \\end{align}" coords="68,68,99,99" onclick="EqEditor.makeEquationsMatrix('align', false)" />
-							</map>
-						</div>
+								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/matrix.png" title="Matrix"
+									alt="Matrix Panel" usemap="#matrix_map" width="102" height="170" border="0" />
+								<map name="matrix_map" id="matrix_map">
+									<area shape="rect" alt="" title="\\begin{matrix} ... \\end{matrix}" coords="0,0,31,31" onclick="EqEditor.makeArrayMatrix('','','')" />
+									<area shape="rect" alt="" title="\\begin{pmatrix} ... \\end{pmatrix}" coords="0,34,31,65" onclick="EqEditor.makeArrayMatrix('p','','')" />
+									<area shape="rect" alt="" title="\\begin{vmatrix} ... \\end{vmatrix}" coords="0,68,31,99" onclick="EqEditor.makeArrayMatrix('v','','')" />
+									<area shape="rect" alt="" title="\\begin{Vmatrix} ... \\end{Vmatrix}" coords="0,102,31,133" onclick="EqEditor.makeArrayMatrix('V','','')" />
+									<area shape="rect" alt="" title="\\left.\\begin{matrix}... \\end{matrix}\\right|" coords="0,136,31,167" onclick="EqEditor.makeArrayMatrix('','\\left.','\\right|')" />
+									<area shape="rect" alt="" title="\\being{bmatrix} ... \\end{bmatrix}" coords="34,0,65,31" onclick="EqEditor.makeArrayMatrix('b','','')" />
+									<area shape="rect" alt="" title="\\bigl(\\begin{smallmatrix} ... \\end{smallmatrix}\\bigr)" coords="34,34,65,65" onclick="EqEditor.makeArrayMatrix('small','\\bigl(','\\bigr)')" />
+									<area shape="rect" alt="" title="\\begin{Bmatrix} ... \\end{Bmatrix}" coords="34,68,65,99" onclick="EqEditor.makeArrayMatrix('B','','')" />
+									<area shape="rect" alt="" title="\\begin{Bmatrix} ... \\end{matrix}" coords="34,102,65,133" onclick="EqEditor.makeArrayMatrix('','\\left\\{','\\right.')" />
+									<area shape="rect" alt="" title="\\begin{matrix} ... \\end{Bmatrix}" coords="34,136,65,167" onclick="EqEditor.makeArrayMatrix('','\\left.','\\right\\}')" />
+									<area shape="rect" alt="" coords="68,0,99,31" onclick="EqEditor.insert('\\binom{}{}')" title=" \\binom{n}{r}" />
+									<area shape="rect" alt="" title="\\begin{cases} ... \\end{cases}" coords="68,34,99,65" onclick="EqEditor.makeEquationsMatrix('cases', true, true)" />
+									<area shape="rect" alt="" title="\\begin{align} ... \\end{align}" coords="68,68,99,99" onclick="EqEditor.makeEquationsMatrix('align', false)" />
+								</map>
+							</div>
 
-						<div class="panel" id="nvd-relation-panel" style="height: 34px; overflow: hidden;">
-						<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/relations.png"
-							title="Relations" alt="Relations Panel" usemap="#relations_map" width="51" height="221"
-							border="0" />
-						<map name="relations_map" id="relations_map">
-							<area shape="rect" alt="" coords="0,0,14,14" title="<" />
-							<area shape="rect" alt="" coords="0,17,14,31" title="\\leq" />
-							<area shape="rect" alt="" coords="0,34,14,48" title="\\leqslant" />
-							<area shape="rect" alt="" coords="0,51,14,65" title="\\nless" />
-							<area shape="rect" alt="" coords="0,68,14,82" title="\\nleqslant" />
-							<area shape="rect" alt="" coords="0,85,14,99" title="\\prec" />
-							<area shape="rect" alt="" coords="0,102,14,116" title="\\preceq" />
-							<area shape="rect" alt="" coords="0,119,14,133" title="\\ll" />
-							<area shape="rect" alt="" coords="0,136,14,150" title="\\vdash" />
-							<area shape="rect" alt="" title="\\smile" coords="0,153,14,167" />
-							<area shape="rect" alt="" coords="0,170,14,184" title="\\models" />
-							<area shape="rect" alt="" coords="0,187,14,201" title="\\mid" />
-							<area shape="rect" alt="" coords="0,204,14,218" title="\\bowtie" />
-							<area shape="rect" alt="" coords="17,0,31,14" title=">" />
-							<area shape="rect" alt="" coords="17,17,31,31" title="\\geq" />
-							<area shape="rect" alt="" coords="17,34,31,48" title="\\geqslant" />
-							<area shape="rect" alt="" coords="17,51,31,65" title="\\ngtr" />
-							<area shape="rect" alt="" coords="17,68,31,82" title="\\ngeqslant" />
-							<area shape="rect" alt="" coords="17,85,31,99" title="\\succ" />
-							<area shape="rect" alt="" coords="17,102,31,116" title="\\succeq" />
-							<area shape="rect" alt="" coords="17,119,31,133" title="\\gg" />
-							<area shape="rect" alt="" coords="17,136,31,150" title="\\dashv" />
-							<area shape="rect" alt="" title="\\frown" coords="17,153,31,167" />
-							<area shape="rect" alt="" coords="17,170,31,184" title="\\perp" />
-							<area shape="rect" alt="" title="\\parallel" coords="17,187,31,201" />
-							<area shape="rect" alt="" coords="17,204,31,218" title="\\Join" />
-							<area shape="rect" alt="" coords="34,0,48,14" title="=" />
-							<area shape="rect" alt="" coords="34,17,48,31" title="\\doteq" />
-							<area shape="rect" alt="" title="\\equiv" coords="34,34,48,48" />
-							<area shape="rect" alt="" coords="34,51,48,65" title="\\neq" />
-							<area shape="rect" alt="" title="\\not\\equiv" coords="34,68,48,82" />
-							<area shape="rect" alt="" title="\\overset{\\underset{\\mathrm{def}}{}}{f(x)=g(x)} " coords="34,85,48,99" />
-							<area shape="rect" alt="" coords="34,102,48,116" title="\\sim" />
-							<area shape="rect" alt="" coords="34,119,48,133" title="\\approx" />
-							<area shape="rect" alt="" coords="34,136,48,150" title="\\simeq" />
-							<area shape="rect" alt="" coords="34,153,48,167" title="\\cong" />
-							<area shape="rect" alt="" coords="34,170,48,184" title="\\asymp" />
-							<area shape="rect" alt="" title="\\propto" coords="34,187,48,201" />
-						</map>
-						<div class="vertical-line" style="height: 34px;">
-						</div>
-					</div>
+							<div class="panel" id="nvd-relation-panel" style="height: 34px; overflow: hidden;">
+								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/relations.png"
+									title="Relations" alt="Relations Panel" usemap="#relations_map" width="51" height="221"
+									border="0" />
+								<map name="relations_map" id="relations_map">
+									<area shape="rect" alt="" coords="0,0,14,14" title="<" />
+									<area shape="rect" alt="" coords="0,17,14,31" title="\\leq" />
+									<area shape="rect" alt="" coords="0,34,14,48" title="\\leqslant" />
+									<area shape="rect" alt="" coords="0,51,14,65" title="\\nless" />
+									<area shape="rect" alt="" coords="0,68,14,82" title="\\nleqslant" />
+									<area shape="rect" alt="" coords="0,85,14,99" title="\\prec" />
+									<area shape="rect" alt="" coords="0,102,14,116" title="\\preceq" />
+									<area shape="rect" alt="" coords="0,119,14,133" title="\\ll" />
+									<area shape="rect" alt="" coords="0,136,14,150" title="\\vdash" />
+									<area shape="rect" alt="" title="\\smile" coords="0,153,14,167" />
+									<area shape="rect" alt="" coords="0,170,14,184" title="\\models" />
+									<area shape="rect" alt="" coords="0,187,14,201" title="\\mid" />
+									<area shape="rect" alt="" coords="0,204,14,218" title="\\bowtie" />
+									<area shape="rect" alt="" coords="17,0,31,14" title=">" />
+									<area shape="rect" alt="" coords="17,17,31,31" title="\\geq" />
+									<area shape="rect" alt="" coords="17,34,31,48" title="\\geqslant" />
+									<area shape="rect" alt="" coords="17,51,31,65" title="\\ngtr" />
+									<area shape="rect" alt="" coords="17,68,31,82" title="\\ngeqslant" />
+									<area shape="rect" alt="" coords="17,85,31,99" title="\\succ" />
+									<area shape="rect" alt="" coords="17,102,31,116" title="\\succeq" />
+									<area shape="rect" alt="" coords="17,119,31,133" title="\\gg" />
+									<area shape="rect" alt="" coords="17,136,31,150" title="\\dashv" />
+									<area shape="rect" alt="" title="\\frown" coords="17,153,31,167" />
+									<area shape="rect" alt="" coords="17,170,31,184" title="\\perp" />
+									<area shape="rect" alt="" title="\\parallel" coords="17,187,31,201" />
+									<area shape="rect" alt="" coords="17,204,31,218" title="\\Join" />
+									<area shape="rect" alt="" coords="34,0,48,14" title="=" />
+									<area shape="rect" alt="" coords="34,17,48,31" title="\\doteq" />
+									<area shape="rect" alt="" title="\\equiv" coords="34,34,48,48" />
+									<area shape="rect" alt="" coords="34,51,48,65" title="\\neq" />
+									<area shape="rect" alt="" title="\\not\\equiv" coords="34,68,48,82" />
+									<area shape="rect" alt="" title="\\overset{\\underset{\\mathrm{def}}{}}{f(x)=g(x)} " coords="34,85,48,99" />
+									<area shape="rect" alt="" coords="34,102,48,116" title="\\sim" />
+									<area shape="rect" alt="" coords="34,119,48,133" title="\\approx" />
+									<area shape="rect" alt="" coords="34,136,48,150" title="\\simeq" />
+									<area shape="rect" alt="" coords="34,153,48,167" title="\\cong" />
+									<area shape="rect" alt="" coords="34,170,48,184" title="\\asymp" />
+									<area shape="rect" alt="" title="\\propto" coords="34,187,48,201" />
+								</map>
+								<div class="vertical-line" style="height: 34px;">
+								</div>
+							</div>
 							<div class="panel" id="nvd-brackets-panel" style="height: 28px; overflow: hidden;">
 								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/brackets.png"
 									title="Brackets" alt="Brackets Panel" usemap="#brackets_map" width="56" height="140"
 									border="0" />
 								<map name="brackets_map" id="brackets_map">
 									<area shape="rect" alt="" title="\\left ( \\right )" coords="0,0,25,25" />
-									<area shape="rect" alt="" title="\\left ( \\right )" coords="0,28,25,53"  />
-									<area shape="rect" alt="" title="\\left\\{ \\right\\}" coords="0,56,25,81"  />
-									<area shape="rect" alt="" title="\\left | \\right |" coords="0,84,25,109"   />
-									<area shape="rect" alt="" title="\\left \\{ \\right." coords="0,112,25,137"   />
+									<area shape="rect" alt="" title="\\left ( \\right )" coords="0,28,25,53" />
+									<area shape="rect" alt="" title="\\left\\{ \\right\\}" coords="0,56,25,81" />
+									<area shape="rect" alt="" title="\\left | \\right |" coords="0,84,25,109" />
+									<area shape="rect" alt="" title="\\left \\{ \\right." coords="0,112,25,137" />
 									<area shape="rect" alt="" title="\\left \\| \\right \\|" coords="28,0,53,25" />
-									<area shape="rect" alt="" title="\\left \\langle \\right \\rangle" coords="28,28,53,53"  />
+									<area shape="rect" alt="" title="\\left \\langle \\right \\rangle" coords="28,28,53,53" />
 									<area shape="rect" alt="" title="\\left \\lfloor \\right \\rfloor" coords="28,56,53,81" />
-									<area shape="rect" alt="" title="\\left \\lceil \\right \\rceil" coords="28,84,53,109"  />
-									<area shape="rect" alt="" title="\\left. \\right \\}" coords="28,112,53,137"/>
+									<area shape="rect" alt="" title="\\left \\lceil \\right \\rceil" coords="28,84,53,109" />
+									<area shape="rect" alt="" title="\\left. \\right \\}" coords="28,112,53,137" />
 								</map>
 								<div class="vertical-line" style="height: 28px;">
 								</div>
@@ -2127,8 +2110,7 @@ var toolbarPlainText = `
 									<area shape="rect" alt="" coords="51,85,65,99" title="\\upsilon" />
 									<area shape="rect" alt="" coords="51,102,65,116" title="\\psi" />
 								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
+
 							</div>
 							<div class="panel" id="panel9" style="height: 34px; overflow: hidden;">
 								<img src="https://latex.codecogs.com/legacy/eqneditor/panels/cache/greekupper.png"
@@ -2147,29 +2129,28 @@ var toolbarPlainText = `
 									<area shape="rect" alt="" coords="17,51,31,65" title="\\Upsilon" />
 									<area shape="rect" alt="" coords="17,68,31,82" title="\\Psi" />
 								</map>
-								<div class="vertical-line" style="height: 34px;">
-								</div>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div style = "justify-content:space-between;display:flex; margin-top:5px;">
-			<div class="nvd-nfr-lbl">Chúng tôi sử dụng LaTeX để định dạng các công thức toán học.
+			<div style="justify-content:space-between;display:flex; margin-top:5px;">
+				<div class="nvd-nfr-lbl">Chúng tôi sử dụng LaTeX để định dạng các công thức toán học.
 						</div>
 				<a class="nvd-nfr-lnk">
-				<img src="https://imgur.com/8SIDk8H.png" alt="help" class="question-icon" />
-				<div class="nvd-nfr-lnk-lbl">Tìm hiểu thêm.</div>
-			</a>
+					<img src="https://imgur.com/8SIDk8H.png" alt="help" class="question-icon" />
+					<div class="nvd-nfr-lnk-lbl">Tìm hiểu thêm.</div>
+				</a>
+			</div>
 		</div>
-		</div>
-	</div>
+	</div >
 `
 
 //function contain all onClick of operator in toolbar except undo, redo, refresh, colors, functions
 var refineOnClickEvents = function () {
 	//add event for all element in panel_14 area
-	Array.from(document.querySelectorAll('#EqnEditor #nvd-style-panel area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #nvd-style-panel area')).forEach(r => {
 		r.onclick = function () {
 			switch (r.title) {
 				case "Math Bold Greek":
@@ -2222,7 +2203,7 @@ var refineOnClickEvents = function () {
 	})
 
 	//add event for all element in panel_13 area
-	Array.from(document.querySelectorAll('#EqnEditor #nvd-space-panel area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #nvd-space-panel area')).forEach(r => {
 		r.onclick = function () {
 			switch (r.title) {
 				case "thin space":
@@ -2247,7 +2228,7 @@ var refineOnClickEvents = function () {
 	})
 
 	//add event for all element in panel2 area
-	Array.from(document.querySelectorAll('#EqnEditor #panel2 area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #panel2 area')).forEach(r => {
 		r.onclick = function () {
 			switch (r.title) {
 				case "\\widetilde{abc}":
@@ -2290,7 +2271,7 @@ var refineOnClickEvents = function () {
 	})
 
 	//add event for all element in panel3 area arrow_map
-	Array.from(document.querySelectorAll('#EqnEditor #panel3 area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #panel3 area')).forEach(r => {
 		r.onclick = function () {
 			switch (r.title) {
 				case "x \\mapsto x^2":
@@ -2337,7 +2318,7 @@ var refineOnClickEvents = function () {
 	})
 
 	//add event for all element in nvd-operator-panel area arrow_map
-	Array.from(document.querySelectorAll('#EqnEditor #nvd-operator-panel area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #nvd-operator-panel area')).forEach(r => {
 		r.onclick = function () {
 			switch (r.title) {
 				case "superscript":
@@ -2434,7 +2415,7 @@ var refineOnClickEvents = function () {
 	})
 
 	//add event for all element in nvd-matrix-panel area matrix
-	Array.from(document.querySelectorAll('#EqnEditor #nvd-matrix-panel area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #nvd-matrix-panel area')).forEach(r => {
 		r.onclick = function () {
 			console.log('clicked');
 			switch (r.title) {
@@ -2487,7 +2468,7 @@ var refineOnClickEvents = function () {
 	})
 
 	//add event for all element in nvd-matrix-panel area matrix
-	Array.from(document.querySelectorAll('#EqnEditor #nvd-brackets-panel area')).forEach(r => {
+	Array.from(document.querySelectorAll('#nvd-eqn-editor #nvd-brackets-panel area')).forEach(r => {
 		r.onclick = function () {
 			switch (r.title) {
 				case "\\left ( \\right )":
@@ -2530,14 +2511,14 @@ var refineOnClickEvents = function () {
 
 	//These panel have title is the same as its own latex.
 	Array.from(document.querySelectorAll(`
-	#EqnEditor #nvd-accents-panel area,
-	#EqnEditor #nvd-binary-panel area,
-	#EqnEditor #nvd-symbol-2-panel area,
-	#EqnEditor #nvd-symbol-1-panel area,
-	#EqnEditor #nvd-relation-panel area,
-	#EqnEditor #nvd-subsup-set-panel area,
-	#EqnEditor #panel8 area,
-	#EqnEditor #panel9 area`)).forEach(r => {
+	#nvd-eqn-editor #nvd-accents-panel area,
+	#nvd-eqn-editor #nvd-binary-panel area,
+	#nvd-eqn-editor #nvd-symbol-2-panel area,
+	#nvd-eqn-editor #nvd-symbol-1-panel area,
+	#nvd-eqn-editor #nvd-relation-panel area,
+	#nvd-eqn-editor #nvd-subsup-set-panel area,
+	#nvd-eqn-editor #panel8 area,
+	#nvd-eqn-editor #panel9 area`)).forEach(r => {
 		r.onclick = function () {
 			EqEditor.insert(r.title);
 			previewFunction();
@@ -2556,143 +2537,5 @@ var onlyNumberKey = function (evt) {
 
 //call every time textarea input change or toolbar item click for update preview and widget.
 var previewFunction = function () {
-	console.log("Preview called!")
+	preview.setValue('\\(' + document.querySelector(".nvd-math-txtr.unique").value + '\\)');
 }
-
-// makeEquationsMatrix: function (type, isNumbered, isConditional) {
-// 	var xDim;
-// 	xDim = document.getElementById("nvd-mtrx-x-dmnsn").value;
-
-// 	if (xDim === '' || xDim === null || isNaN(xDim)) {
-// 		document.getElementById("nvd-mtrx-x-dmnsn").setAttribute("value", 2);
-// 		xDim = 2;
-// 	}
-
-// 	var dim = parseInt(xDim);
-// 	if (dim > 9) {
-// 		document.getElementById("nvd-mtrx-x-dmnsn").setAttribute("value", 9);
-// 		xDim = 9;
-// 		dim = 9;
-// 	}
-
-// 	if (isNumbered === undefined)
-// 		isNumbered = false;
-// 	if (isConditional === undefined) isNumbered = false;
-
-// 	var eqns = '';
-// 	var eqi = "\n&";
-// 	var eqEnd = '\\end{' + type;
-
-// 	if (isConditional) {
-// 		eqns = eqns + "f(x) = ";
-// 	}
-
-// 	eqns = eqns + "\\begin{" + type;
-// 	if (!isNumbered)
-// 		eqns = eqns + "*}";
-// 	else
-// 		eqns = eqns + "}";
-
-
-// 	if (!isNumbered)
-// 		eqEnd = eqEnd + "*}";
-// 	else
-// 		eqEnd = eqEnd + "}";
-
-// 	if (dim !== '' && dim !== null) {
-// 		var rows = parseInt(dim);
-// 		if (!isNaN(rows)) {
-// 			for (var i = 1; i <= rows; i++) {
-// 				eqi = "\n&";
-// 				if (isNumbered)
-// 					eqi = eqi + "";
-// 				else
-// 					eqi = eqi + "= ";
-// 				console.log(i);
-// 				if (isConditional) {
-// 					eqi = eqi + 'f_{ ' + i + '}(x)\\ \\text{nếu} x <  x_{' + i + '}';
-// 				}
-// 				eqns = eqns + (eqi + "\\\\ ");
-// 			}
-// 			eqns = eqns + eqEnd;
-// 			this.insert(eqns, type.length + ((isNumbered) ? 0 : 1) + 9);
-// 		}
-// 	}
-// },
-
-// //need to modify
-// makeArrayMatrix: function (type, start, end) {
-// 	var matr = start + '\\begin{' + type + 'matrix}';
-// 	var row = "\n";
-// 	var mend = "\n\\end{" + type + "matrix}" + end;
-
-
-// 	if (document.getElementById("nvd-mtrx-x-dmnsn") && document.getElementById("nvd-mtrx-x-dmnsn")) {
-// 		var xDim, yDim;
-
-// 		xDim = document.getElementById("nvd-mtrx-x-dmnsn").value;
-// 		yDim = document.getElementById("nvd-mtrx-y-dmnsn").value;
-
-// 		if (xDim === '' || xDim === null || isNaN(xDim)) {
-// 			document.getElementById("nvd-mtrx-x-dmnsn").setAttribute("value", 1);
-// 			xDim = 1;
-// 		}
-
-// 		if (yDim === '' || yDim === null || isNaN(yDim)) {
-// 			document.getElementById("nvd-mtrx-y-dmnsn").setAttribute("value", 1);
-// 			yDim = 1;
-// 		}
-
-// 		var m = parseInt(xDim);
-// 		var n = parseInt(yDim);
-
-// 		if (m > 9) {
-// 			document.getElementById("nvd-mtrx-x-dmnsn").setAttribute("value", 9);
-// 			xDim = 9;
-// 			m = 9;
-// 		}
-
-// 		if (n > 9) {
-// 			document.getElementById("nvd-mtrx-y-dmnsn").setAttribute("value", 9);
-// 			yDim = 9;
-// 			n = 9;
-// 		}
-
-// 		//check if user want to create system of linear equations
-// 		var isSOLE = false;
-// 		if (start === '\\left\\{' && end === '\\right.') {
-// 			isSOLE = true;
-// 		}
-
-
-// 		if (!isNaN(m) && !isNaN(n)) {
-// 			for (let mi = 1; mi <= m; mi++) {
-// 				for (let ni = 1; ni <= n; ni++) {
-// 					if (ni === 1) {
-// 						row = row + 'a_{' + mi + ni + '} ';
-// 						if (isSOLE) {
-// 							row += 'x_{' + (ni - 1) + '}';
-// 							if (ni !== n)
-// 								row = row + ' +';
-// 						}
-// 					}
-// 					else {
-// 						row = row + ' &a_{' + mi + ni + '} ';
-// 						if (isSOLE) {
-// 							row += 'x_{' + (ni - 1) + '}';
-// 							if (ni !== n)
-// 								row = row + '\\ +';
-// 						}
-// 					}
-// 				}
-// 				if (isSOLE)
-// 					row = row + ' = b_{' + mi + '} \\\\ \n';
-// 				else row = row + '\\\\ \n';
-
-// 			}
-// 			matr = matr + row + mend;
-// 		}
-// 		this.insert(matr, type.length + start.length + 15);
-
-// 	}
-// },

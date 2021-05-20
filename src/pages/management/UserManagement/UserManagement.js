@@ -73,7 +73,7 @@ class UserManagement extends React.Component {
                                 options={this.props.rolesListHaveAll}
                                 selectedOptionID={"0"}
                                 onOptionChanged={(selectedOption) => this.onRoleOptionChange(selectedOption)}
-                                id="umrf-combobox" //user management role filter
+                                comboboxId="umrf-combobox" //user management role filter
                             ></Combobox>
                         </div>
 

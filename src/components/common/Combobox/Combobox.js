@@ -32,22 +32,22 @@ export default class Combobox extends React.Component {
 
     componentDidMount() {
         if (!this.isAnyValueChanged && !this.props.selectedOptionID && this.props.placeHolder) {
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.add("dummy-invalid");
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.remove("dummy-have-click");
+            document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.add("dummy-invalid");
+            document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.remove("dummy-have-click");
         }
         if (this.props.validation) {
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.add("validation");
+            document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.add("validation");
         }
         if (this.props.type === "small") {
-            document.getElementById("combobox-" + this.props.id).classList.add("small");
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.add("small");
+            document.getElementById("combobox-" + this.props.comboboxId).classList.add("small");
+            document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.add("small");
 
         }
     }
 
     closeAllOption = () => {
-        let dropdown_element_id = "combobox-btn-element-" + this.props.id;
-        let container_id = "dropdown-container-" + this.props.id;
+        let dropdown_element_id = "combobox-btn-element-" + this.props.comboboxId;
+        let container_id = "dropdown-container-" + this.props.comboboxId;
         let dropdown_element = document.getElementById(dropdown_element_id);
         let dropdown_container = document.getElementById(container_id);
 
@@ -82,18 +82,18 @@ export default class Combobox extends React.Component {
         //cho nay can them vao mot doan xu ly cho props
         //...
 
-        document.getElementById("combobox-wrapper-" + this.props.id).classList.add("dummy-have-click");
+        document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.add("dummy-have-click");
 
         this.setState({ isDropdownOpen: true });
         this.isHaveFocus = true;
     }
 
     handleOptionClick = (id) => {
-        let item_id = "combobox-option-" + this.props.id + "-" + id;
+        let item_id = "combobox-option-" + this.props.comboboxId + "-" + id;
         let combobox_option = document.getElementById(item_id);
 
         for (let i = 1; i <= this.props.options; i++) {
-            let combobox_option_index_id = "combobox-option-" + this.props.id + "-" + this.props.options[i].id;
+            let combobox_option_index_id = "combobox-option-" + this.props.comboboxId + "-" + this.props.options[i].id;
             let combobox_option_index = document.getElementById(combobox_option_index_id);
             combobox_option_index.className = "combox-option";
         }
@@ -112,7 +112,7 @@ export default class Combobox extends React.Component {
         this.isAnyValueChanged = true;
 
         //for submit btn
-        document.getElementById("combobox-wrapper-" + this.props.id).classList.remove("dummy-invalid");
+        document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.remove("dummy-invalid");
 
         this.onBlur();
         this.setState({});
@@ -122,12 +122,12 @@ export default class Combobox extends React.Component {
         if (!this.isHaveFocus) return;
 
         //lay element ngoai cung cua editor hien tai
-        let wrapperCombobox = document.getElementById("combobox-wrapper-" + this.props.id);
-        this.errorMessage = document.getElementById("d-e-combobox-wrapper-" + this.props.id).innerText;
+        let wrapperCombobox = document.getElementById("combobox-wrapper-" + this.props.comboboxId);
+        this.errorMessage = document.getElementById("d-e-combobox-wrapper-" + this.props.comboboxId).innerText;
         this.errorElement = this.getParent(wrapperCombobox, '.form-group').querySelector('.form-error-label');
 
         if (this.errorMessage &&
-            document.getElementById("combobox-wrapper-" + this.props.id).classList.contains("dummy-invalid")) { //invalid nhung khong hien UI
+            document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.contains("dummy-invalid")) { //invalid nhung khong hien UI
             this.errorElement.innerText = this.errorMessage;
             this.getParent(wrapperCombobox, '.form-group').classList.add('invalid');
         } else {
@@ -157,20 +157,20 @@ export default class Combobox extends React.Component {
                 id: this.props.selectedOptionID,
                 name: this.props.options.filter(item => item.id === parseInt(this.props.selectedOptionID))[0].name
             }
-            if (document.getElementById("combobox-wrapper-" + this.props.id))
-                document.getElementById("combobox-wrapper-" + this.props.id).classList.remove('dummy-invalid');
+            if (document.getElementById("combobox-wrapper-" + this.props.comboboxId))
+                document.getElementById("combobox-wrapper-" + this.props.comboboxId).classList.remove('dummy-invalid');
         }
 
         let options = this.props.options.map(option =>
             this.selectedOption.id === option.id ?
                 <div className="activated-combox-option"
-                    id={"combobox-option-" + this.props.id + "-" + option.id}
+                    id={"combobox-option-" + this.props.comboboxId + "-" + option.id}
                     key={option.id}>
                     {option.name}
                 </div>
                 :
                 <div className="combox-option"
-                    id={"combobox-option-" + this.props.id + "-" + option.id}
+                    id={"combobox-option-" + this.props.comboboxId + "-" + option.id}
                     key={option.id}
                     onClick={() => this.handleOptionClick(option.id)}>
                     {option.name}
@@ -178,14 +178,14 @@ export default class Combobox extends React.Component {
         )
 
         return (
-            <div id={"combobox-wrapper-" + this.props.id} className='combobox wrapper-combobox' >
-                < ClickAwayListener id={"combobox-clickaway-wrapper-" + this.props.id} onClickAway={() => { this.onBlur() }}>
+            <div id={"combobox-wrapper-" + this.props.comboboxId} className='combobox wrapper-combobox' >
+                < ClickAwayListener id={"combobox-clickaway-wrapper-" + this.props.comboboxId} onClickAway={() => { this.onBlur() }}>
                     <div>
                         {/* select */}
-                        <div className="combox" id={"combobox-" + this.props.id}
-                            onClick={(e) => this.handleComboboxClick(e, "combobox-btn-element-" + this.props.id, "dropdown-container-" + this.props.id)}>
+                        <div className="combox" id={"combobox-" + this.props.comboboxId}
+                            onClick={(e) => this.handleComboboxClick(e, "combobox-btn-element-" + this.props.comboboxId, "dropdown-container-" + this.props.comboboxId)}>
                             <div className="d-flex">
-                                <div className="combox-text" id={"combobox-text-" + this.props.id}>
+                                <div className="combox-text" id={"combobox-text-" + this.props.comboboxId}>
                                     {
                                         this.props.placeHolder === "none" ? //neu khong dung placeHolder
                                             <div>
@@ -234,21 +234,21 @@ export default class Combobox extends React.Component {
                             </div>
 
                             {/* dropdown-icon */}
-                            <img alt="v" className="dropdown-element" src={dropdown_btn} id={"combobox-btn-element-" + this.props.id} />
+                            <img alt="v" className="dropdown-element" src={dropdown_btn} id={"combobox-btn-element-" + this.props.comboboxId} />
                         </div>
 
                         {/* dropdown */}
                         {this.state.isDropdownOpen ? (
-                            <div className="dropdown-container" id={"dropdown-container-" + this.props.id}>
+                            <div className="dropdown-container" id={"dropdown-container-" + this.props.comboboxId}>
                                 {options}
                                 <div className="mg-bottom-5px" />
                                 <div className="mg-bottom-5px" />
                             </div>
-                        ) : <div id={"dropdown-container-" + this.props.id}></div>}
+                        ) : <div id={"dropdown-container-" + this.props.comboboxId}></div>}
                     </div>
                 </ClickAwayListener >
                 {this.props.validation ? <div>
-                    <div id={"d-e-combobox-wrapper-" + this.props.id} style={{ "display": "none" }} ></div>
+                    <div id={"d-e-combobox-wrapper-" + this.props.comboboxId} style={{ "display": "none" }} ></div>
 
                 </div> : <></>
                 }

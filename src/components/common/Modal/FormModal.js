@@ -76,7 +76,7 @@ class FormModal extends React.Component {
                                                         <>
                                                             {input.type === "combobox" ?
                                                                 <> {input.selectedOptionID ?
-                                                                    <Combobox id={input.id}
+                                                                    <Combobox comboboxId = {input.id}
                                                                         selectedOptionID={input.selectedOptionID ?
                                                                             input.selectedOptionID
                                                                             : input.options[0].id}
@@ -89,7 +89,7 @@ class FormModal extends React.Component {
                                                                         validation={input.validation}
                                                                     >
                                                                     </Combobox> :
-                                                                    <Combobox id={input.id}
+                                                                    <Combobox comboboxId = {input.id}
                                                                         options={input.options}
                                                                         onOptionChanged={(selectedOption) => input.onOptionChanged(selectedOption)}
                                                                         placeHolder={input.placeHolder}

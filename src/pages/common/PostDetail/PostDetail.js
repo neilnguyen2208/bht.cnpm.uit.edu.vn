@@ -20,11 +20,13 @@ import {
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import CommentSection from 'components/comment/CommentSection'
+import Editor from 'components/common/CustomCKE/CKEditor.js'
 
 class PostDetail extends React.Component {
 
     componentDidMount() {
         this.props.getPostByID(this.props.match.params.id);
+
     }
 
     componentWillUnmount() {
@@ -36,8 +38,6 @@ class PostDetail extends React.Component {
     renderTableOfContent = () => {
         let ToC = "<div>";
         document.querySelectorAll(".ck-editor-output h1, .ck-editor-output h2, .ck-editor-output h3  ").forEach((item) => {
-            // if (item.childNodes.length !== 0) return;
-            console.log(item.tagName === 'H2')
             if (item.tagName === "H1")
                 ToC += `<div className="lv1-toc" > ${item.innerText}</div>`;
             if (item.tagName === "H2")
@@ -47,7 +47,6 @@ class PostDetail extends React.Component {
         })
 
         ToC = ToC + "</div>";
-        // this.setState({ ToC: ToC });
         return ToC;
     }
 
@@ -81,10 +80,10 @@ class PostDetail extends React.Component {
 
                                         <div className="mg-top-10px mg-bottom-10px" >
                                             {this.props.currentPost.tags.map(item =>
-                                                <Tag isReadOnly={true} tag={item} />
+                                                <Tag isReadOnly={true} key={item.id} tag={item} />
                                             )}
                                         </div>
-                                        
+
                                         <NormalReactionbar
                                             id={this.props.currentPost.id}
                                             likeCount={this.props.currentPost.likeCount}
@@ -96,7 +95,31 @@ class PostDetail extends React.Component {
                                     </div>
                                     : <Loader />}
 
-                                <CommentSection />
+                                <CommentSection >
+                                    <div>
+                                        <div className="form-group">
+                                            <div className="j-c-space-between">
+                                                {/* <label className="form-label-required">Nội dung:</label> */}
+                                                {/* <HoverHint message={`
+                                  - Sử dụng các Format Header để tạo ra mục lục. 
+                                  - Sử dụng Style Computer Code để style được tên biến, tên hàm.
+                                  - Sử dụng Format Formatted để style một đoạn code`}
+                id="crphvh-1" /> */}
+                                            </div>
+                                            Comment area
+                                            <Editor inline
+                                                // editorId="crt-cmmnt-cke"
+                                                // placeholder='Start typing here...'
+                                                // onChange={this.handleEditorChange}
+                                                // data="<p>Nhập nội dung bài viết ...</p>"
+                                                data="<p>Hello from CKEditor 4!</p>"
+                                            />
+                                            <div className="form-error-label-container">
+                                                <span className="form-error-label" ></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CommentSection >
 
                             </div>
                             <div>

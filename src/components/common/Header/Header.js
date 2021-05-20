@@ -119,7 +119,7 @@ class Header extends React.Component {
 
                         <div className="header-menu-bar" >
                             {headerMenuRouters.map(item => {
-                                return <NavLink exact activeClassName="activated-header-menu-item" to={item.path} className="header-menu-item" > {item.label} </NavLink>
+                                return <NavLink key = {item.id} exact activeClassName="activated-header-menu-item" to={item.path} className="header-menu-item" > {item.label} </NavLink>
                             })}
                         </div>
 

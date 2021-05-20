@@ -11,10 +11,10 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <title>Ban học tập Đoàn khoa Công nghệ phần mềm</title>
 
-  <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-  <script type="text/javascript" src="ckeditor/samples/js/bht_sample.js"></script>
-  <link href="ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css" rel="stylesheet">
-  <script src="ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="/ckeditor/samples/js/bht_sample.js"></script>
+  <link href="/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css" rel="stylesheet">
+  <script src="/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
@@ -23,7 +23,8 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <script>
-
+    CKEDITOR.config.extraPlugins = 'nvd_math';
+    CKEDITOR.config.mathJaxLib = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
   </script>
 </body>
 

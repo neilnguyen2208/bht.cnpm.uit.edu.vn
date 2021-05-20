@@ -5,11 +5,11 @@ export const CKEToolbarConfiguration = [
   { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
   { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',] },
   { name: 'codesnippet', items: ['CodeSnippet'] },
-  { name: 'nvd_math', items: ['NvdMath'] },
+  {
+    name: 'nvd_math', items: ['MathBtn']
+  },
 
   { name: 'styles', items: ['Styles', 'Format'] },
-
-
 ];
 
 export const SimpleCKEToolbarConfiguration = [

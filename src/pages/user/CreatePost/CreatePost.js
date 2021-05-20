@@ -445,7 +445,7 @@ class CreatePost extends React.Component {
                                     id="crphvh-1" />
                             </div>
                             <Editor
-                                id="cr-post-cke"
+                                editorId="cr-post-cke"
                                 placeholder='Start typing here...'
                                 onChange={this.handleEditorChange}
                                 data="<p>Nhập nội dung bài viết ...</p>"
@@ -459,7 +459,7 @@ class CreatePost extends React.Component {
                         {/* Category */}
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
-                            <Combobox id="cr-post-category-combobox"
+                            <Combobox comboboxId = "cr-post-category-combobox"
                                 options={this.categoryList}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"

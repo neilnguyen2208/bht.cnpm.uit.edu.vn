@@ -1,7 +1,7 @@
 
 CKEDITOR.plugins.setLang( 'nvd_math', 'en',
 {
-	title		: 'Equation Editor',
+	title		: 'Công thức toán học',
 	menu    : 'Maths',
 	toolbar	: 'Insert Equation',
 	edit		: 'Edit Equation',

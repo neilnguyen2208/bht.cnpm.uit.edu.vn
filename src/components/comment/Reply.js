@@ -40,7 +40,7 @@ class Reply extends React.Component {
             <div className="comment-head">
               <div>
                 <div className="d-flex" >
-                  <Link className="comment-name">{this.props.cmtAuthorName}</Link>
+                  <Link className="comment-name" to = {"user/1"}>{this.props.cmtAuthorName}</Link>
                   {this.props.isContentAuthor && <div className="by-author-label">
                     Tác giả
                </div>}

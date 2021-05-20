@@ -90,6 +90,7 @@ class Comment extends React.Component {
     if (this.props.replyArray.lenght <= 3 || this.state.isShowAllReply)
       replyList = <div> {this.props.replyArray.map(reply => {
         return <Reply id={reply.id}
+          key={reply.id}
           cmtAuthorName={reply.cmtAuthorName}
           idCmtAuthor={reply.isCmtAuthorName}
           isContentAuthor={reply.isContentAuthor}
@@ -106,6 +107,8 @@ class Comment extends React.Component {
     else {
       let subReplyList = this.props.replyArray.slice(0, 3).map(reply => {
         return <Reply id={reply.id}
+        key={reply.id}
+
           cmtAuthorName={reply.cmtAuthorName}
           idCmtAuthor={reply.isCmtAuthorName}
           isContentAuthor={reply.isContentAuthor}
@@ -134,7 +137,7 @@ class Comment extends React.Component {
             <div className="comment-head">
               <div>
                 <div className="d-flex" >
-                  <Link className="comment-name">{this.props.cmtAuthorName}</Link>
+                  <Link className="comment-name" to  = {"user/1"}>{this.props.cmtAuthorName}</Link>
                   {this.props.isContentAuthor && <div className="by-author-label">
                     Tác giả
                   </div>}

@@ -48,7 +48,7 @@ class UserItem extends React.Component {
                             <div className="gray-label" style={{ marginTop: "0px", lineHeight: "1rem" }} >
                                 Role:
                              </div>
-                            <Combobox type="small" id={"ui-" + this.props.userID} options={this.props.rolesList} selectedOptionID={this.props.roleID} onOptionChanged={() => this.onRoleOptionChanged()} />
+                            <Combobox type="small" comboboxId={"ui-" + this.props.userID} options={this.props.rolesList} selectedOptionID={this.props.roleID} onOptionChanged={() => this.onRoleOptionChanged()} />
                             <button className="red-button" style={{ marginLeft: "1rem" }}>Ban</button>
                         </div>
                     </div>

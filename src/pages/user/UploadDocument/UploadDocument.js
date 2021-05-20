@@ -414,7 +414,7 @@ class UploadDocument extends React.Component {
                         {/* Category */}
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
-                            <Combobox id="cr-document-category-combobox"
+                            <Combobox comboboxId = "cr-document-category-combobox"
                                 options={(!this.props.isCategoryLoading && this.props.categories) ? this.props.categories : [{ id: 1, name: "Chọn danh mục" }]}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"
@@ -429,7 +429,7 @@ class UploadDocument extends React.Component {
                         {/* Subject */}
                         <div className="form-group" >
                             <label className="form-label-required">Môn học:</label>
-                            <Combobox id="cr-document-subject-combobox"
+                            <Combobox comboboxId = "cr-document-subject-combobox"
                                 options={(!this.props.isSubjectLoading && this.props.subjects) ? this.props.subjects : [{ id: 1, name: "Chọn môn học" }]}
                                 onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
                                 placeHolder="Chọn môn học"

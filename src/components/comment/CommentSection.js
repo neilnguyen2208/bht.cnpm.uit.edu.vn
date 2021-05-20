@@ -25,11 +25,13 @@ class CommentSection extends React.Component {
   componentDidMount() {
     this.props.getAPostComments(1);
   }
+  handleEditorChange = () => { }
 
   render() {
     let commentsList = <ul id="comments-list" className="comments-list">
       {this.props.commentsList.map(comment => {
         return <Comment id={comment.id}
+          key={comment.id}
           cmtAuthorName={comment.cmtAuthorName}
           idCmtAuthor={comment.isCmtAuthorName}
           isContentAuthor={comment.isContentAuthor}
@@ -46,8 +48,7 @@ class CommentSection extends React.Component {
       // cst:comment section title
       <div className="comments-container">
         <div className="section-title" id={"cst-" + this.props.match.params.id}> {this.props.totalElements} Bình luận</div>
-        <div>
-        </div>
+        {this.props.children}
         {commentsList}
       </div >
     );

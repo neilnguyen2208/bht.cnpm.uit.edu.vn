@@ -292,7 +292,7 @@ class Register extends React.Component {
                 <div className="form-group">
                   <div className="j-c-space-between">
                     <label className="form-label-required">Tên hiển thị:</label>
-                    <HoverHint message="Tên này sẽ đại diện cho bạn và hiển thị với người dùng khác."></HoverHint>
+                    <HoverHint message="Tên này sẽ đại diện cho bạn và hiển thị với người dùng khác."  ></HoverHint>
                   </div>
                   <input type="text" className="text-input" id="register-form-displayname" placeholder="Nhập tên hiển thị " />
                   <div className="form-error-label-container">

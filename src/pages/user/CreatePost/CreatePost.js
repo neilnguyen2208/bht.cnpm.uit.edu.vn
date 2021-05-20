@@ -25,7 +25,7 @@ import { detailType } from 'constants.js'
 import NormalReactionbar from "components/post/NormalReactionbar";
 import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
-import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
+import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 const validationCondition = {
@@ -416,7 +416,8 @@ class CreatePost extends React.Component {
                         savedStatus={false}
                         type="PREVIEW"
                     />
-                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML"></script>
+
+                    {formatMathemicalFormulas()}
                 </div>
 
                 {/* Edit region */}
@@ -442,7 +443,7 @@ class CreatePost extends React.Component {
                                 - Sử dụng các Format Header để tạo ra mục lục. 
                                 - Sử dụng Style Computer Code để style được tên biến, tên hàm.
                                 - Sử dụng Format Formatted để style một đoạn code`}
-                                    id="crphvh-1" />
+                                />
                             </div>
                             <Editor
                                 editorId="cr-post-cke"

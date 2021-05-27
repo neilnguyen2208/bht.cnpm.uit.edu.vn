@@ -1,76 +1,116 @@
 import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGIN_REQUEST,
 
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
 
-  LOGOUT_SUCCESS,
-} from 'redux/constants.js';
+  AUTHENTICATE_REQUEST,
+  AUTHENTICATE_FAILURE,
 
-import { sS } from 'constants.js'
+
+
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+
+} from 'redux/constants.js';
+import { openBLModal } from 'redux/services/modalServices';
+// import keycloak, { lS } from 'keycloak.js'
 
 const initialState = {
-  token: sS.getItem('token'),
-  isAuthenticated: null, //true khi da dang nhap
-  isLogingIn: false, //true khi da dang nhap
-  currentUser: null,
-  isSignedUp: false, //true khi da dang ky xong
-  allPermission: []
+  authentication: {
+    isAuthenticating: false,
+    isAuthenticated: false
+  },
+
+  expireTime: null,
+  userInfo: null,
+  allPermissions: [],
+  logoutStatus: '',
+  token: null,
+  refreshToken: null
+
 };
 
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case LOGIN_SUCCESS:
+      console.log("We logged in for you!");
       return {
         ...state,
-        isLogingIn: true
-      }
+        authentication: {
+          isAuthenticating: false,
+          isAuthenticated: true
+        },
+
+        expireTime: action.payload.expireTime,
+        userInfo: action.payload.userInfo,
+        allPermissions: action.payload.keycloak.resourceAccess.account.roles,
+      };
     case REGISTER_REQUEST:
       return {
         ...state,
         isSignedUp: false
       }
-    case LOGIN_SUCCESS:
-      sS.setItem('token', action.payload.token);
-      return {
-        ...state,
-        isSignedUp: false,
-        ...action.payload,
-        currentUser: {}, //chac la lay ra tu token
-        isAuthenticated: true,
-        isLogingIn: false,
-        allPermissions: [
-          "Page.Highlight.Unhighlight",
-          "Page.Highlight.StickToTop",
-          "Page.Post.Like",
-          "Page.Post.Save",
-          "Page.Post.Management",
-          "Page.Post.ReportManagement", 
-          "Page.Post.Comment"
-        ]
-      };
+
     case REGISTER_SUCCESS:
       return {
-        ...state,
-        currentUser: null, //chac la lay ra tu token
-        isAuthenticated: false,
-        isSignedUp: true
+
       };
-    case LOGIN_FAILURE:
-    case LOGOUT_SUCCESS:
-    case REGISTER_FAILURE:
-      sS.removeItem('token');
+
+    case AUTHENTICATE_REQUEST: {
+      console.log("Authenticating!")
       return {
         ...state,
-        token: null,
-        currentUser: null,
-        isAuthenticated: false,
-        isLogingIn: false,
-        isSigningUp: false,
+        authentication: {
+          isAuthenticating: true,
+          isAuthenticated: false
+        },
+        expireTime: null,
+        userInfo: null,
         allPermissions: []
+      }
+    }
+
+    case AUTHENTICATE_FAILURE: {
+      // if (lS.getItem('kc_token') && lS.getItem('kc_token') !== "undefined")
+      // lS.removeItem('kc_token');
+      console.log("Authenticate failure")
+      return {
+        ...state,
+        authentication: {
+          isAuthenticating: false,
+          isAuthenticated: false
+        },
+        expireTime: null,
+        userInfo: null,
+        allPermissions: [],
+        token: null,
+        refreshToken: null
+      };
+    }
+    case LOGOUT_SUCCESS:
+      console.log("Logout success!");
+      return {
+        ...state,
+        authentication: {
+          isAuthenticating: false,
+          isAuthenticated: false
+        },
+        expireTime: null,
+        userInfo: null,
+        allPermissions: [],
+        token: null,
+        refreshToken: null
+      };
+
+    case LOGOUT_FAILURE:
+      console.log("Logout failure!");
+      return {
+        ...state,
+        logoutStatus: action.payload.error
       };
     default:
       return state;

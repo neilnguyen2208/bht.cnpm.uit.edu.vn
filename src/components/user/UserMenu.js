@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link,  withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import "./UserMenu.scss";
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
@@ -29,7 +29,7 @@ const userMenuOptions = [
         }
     },
     {
-        id: 5, text: "Đăng xuất", value: "LOGOUT", icon: '', tip: "",
+        id: 5, text: "Đăng xuất", value: "LOGOUT", icon: '', tip: "", to: "/logout", isLink: true,
         style: {
             height: "26px",
             paddingTop: "1px",
@@ -98,10 +98,7 @@ class UserMenu extends React.Component {
         if (menuItem.value === "PROFILE") {
             // return <Redirect to="/user" />;
         }
-        if (menuItem.value === "LOGOUT") {
-            this.props.logout();
-            return;
-        }
+
     }
 
 
@@ -110,7 +107,7 @@ class UserMenu extends React.Component {
             return <div className="header-user-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                 id={"header-user-menuItem-" + menuItem.id}
                 key={menuItem.id}
-                onClick={() => this.handleMenuItemClick(menuItem)}>
+            >
                 <div className='d-flex'>
                     {menuItem.tip ?
 
@@ -126,7 +123,7 @@ class UserMenu extends React.Component {
                                 </div>
                             </Link>
                             :
-                            <div className='d-flex'>
+                            <div className='d-flex' onClick={() => this.handleMenuItemClick(menuItem)}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={{
                                     height: "27px",
                                     paddingTop: "7px"
@@ -151,7 +148,7 @@ class UserMenu extends React.Component {
                                 </div>
                             </Link>
                             :
-                            <div className='d-flex'>
+                            <div className='d-flex' onClick={() => this.handleMenuItemClick(menuItem)}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
                                     height: "23px",
                                     paddingTop: "0px",
@@ -213,9 +210,8 @@ class UserMenu extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
     return {
-        isAuthenticated: state.auth.isAuthenticated,
+        isAuthenticated: state.auth.authentication.isAuthenticated,
     };
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({

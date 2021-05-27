@@ -20,8 +20,6 @@ class Wallpage extends React.Component {
             activeIndex: 1,
             left: 0
         }
-
-
     }
 
     componentDidMount() {
@@ -66,7 +64,9 @@ class Wallpage extends React.Component {
         this.setState({});
     }
 
-    componentWillUnmount() { store.dispatch(get_HighlightPostsRequest()) }
+    componentWillUnmount() {
+        store.dispatch(get_HighlightPostsRequest())
+    }
 
     render() {
 
@@ -78,11 +78,7 @@ class Wallpage extends React.Component {
             store.dispatch(delete_HighlightAPostReset())
         }
 
-        console.log(this.props.isHaveStickedToTop);
-        if (
-            this.props.isHaveStickedToTop) {
-
-
+        if (this.props.isHaveStickedToTop) {
             this.reloadList();
             store.dispatch(stick_APostToTopReset())
             this.setState({
@@ -148,7 +144,8 @@ class Wallpage extends React.Component {
                         <ul className="indicators">
                             {this.props.highlightPosts ? this.props.highlightPosts.map(function (item, index) {
                                 return (
-                                    <li className={index + 1 === this.state.activeIndex ? 'active-indicator' : ''} onClick={this.clickIndicator}>{index + 1}</li>
+                                    <li key = {item.id} className={index + 1 === this.state.activeIndex ? 'active-indicator' : ''}
+                                        onClick={this.clickIndicator}>{index + 1}</li>
                                 )
                             }, this)
                                 :

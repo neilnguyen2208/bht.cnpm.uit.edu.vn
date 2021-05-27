@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "pages/common/Home/Home";
 import PostDetail from "pages/common/PostDetail/PostDetail";
 import DocumentDetail from "pages/common/DocumentDetail/DocumentDetail";
-import Login from "pages/common/Login&Register/Login";
-import Register from "pages/common/Login&Register/Register";
+import Login from "pages/common/Authentication/Login";
+import Register from "pages/common/Authentication/Register";
 import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
 import AdminLayout from 'layouts/AdminSidebar'
@@ -46,7 +46,7 @@ import DocumentReportManagement from "pages/management/DocumentManagement/Docume
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
-import ForgotPassword from 'pages/common/Login&Register/ForgotPassword'
+import ForgotPassword from 'pages/common/Authentication/ForgotPassword'
 import VerifyMailForgotPassword from 'pages/common/VerifyEmailPages/VerifyMailForgotPassword'
 import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
@@ -58,12 +58,10 @@ import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 import RequireLoginRoute from 'components/common/BaseComponents/RequireLoginRoute'
-
-import DemoCKE from 'components/common/CustomCKE/DemoCKE';
+import Secured from 'components/common/BaseComponents/Sercured.js'
+import Logout from 'pages/common/Authentication/Logout'
 
 const App = () => {
-
-
     return (
         <div style={{ minWidth: "320px", width: "100%", background: "white" }}>
             <Router>
@@ -72,8 +70,10 @@ const App = () => {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route exact path="/login" component={Login} />
+                        {/* <Route exact path="/login" component={Login} /> */}
+                        <Route exact path="/logout" component={Logout} />
                         <Route exact path="/register" component={Register} />
+
                         <Route exact path="/posts" component={PostsList} />
                         <Route exact path="/documents" component={DocumentsList} />
                         <Route exact path="/post-content/:id" component={PostDetail} />
@@ -132,8 +132,7 @@ const App = () => {
                         <Route exact path="/verify" component={VerifyRegisterMail} />
                         <Route exact path="/verify-forgot-password" component={VerifyMailForgotPassword} />
 
-
-                        <Route exact path="/demo-cke" component={DemoCKE} />
+                        <Route exact path="/secured" component={Secured} />
                     </Switch>
                     <Footer />
                 </div>

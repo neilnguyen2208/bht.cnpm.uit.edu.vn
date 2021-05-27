@@ -24,5 +24,3 @@ export default class Loader extends React.Component {
     )
   }
 }
-
-//content loader will be set up later

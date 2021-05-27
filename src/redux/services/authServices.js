@@ -1,25 +1,21 @@
 import { request } from 'utils/requestUtils';
 import {
-  logoutRequest,
   registerFailure,
   registerRequest,
   registerSuccess,
-  loginFailure,
-  loginRequest,
   loginSuccess,
-  logoutSuccess
+  logoutSuccess,
+  logoutFailure,
+  authenticationRequest
 } from '../actions/authAction';
 
-import store from 'redux/store/index'
 
-export function login(loginDTO) {
+import store from 'redux/store/index'
+// import keycloak from 'keycloak.js'
+
+export function login() {
   return dispatch => {
-    dispatch(loginRequest());
-    request.post('/user/login', JSON.stringify(loginDTO)).then(response => {
-      dispatch(loginSuccess(response.data));
-    }
-    )
-      .catch(error => dispatch(loginFailure(error)));
+    // keycloak.login();
   }
 }
 
@@ -35,19 +31,23 @@ export function register(registerDTO) {
 
 export function logout() {
   return dispatch => {
-    dispatch(logoutSuccess());
-    dispatch(logoutRequest());
-    // request.post('/user/logout', JSON.stringify()).then(response =>
-    //   dispatch(loginSuccess(response.data))
-    // )
-    //   .catch();
+    // if (store.getState().auth.keycloak)
+    //   store.getState().auth.keycloak.logout().then(data => {
+    //     console.log("51");
+    //     dispatch(logoutSuccess())
+    //   }
+    //   ).catch(error => {
+    //     console.log("55");
+    //     dispatch(logoutFailure(error));
+    //   });
+    // else {
+    //   console.log("59");
+    //   dispatch(logoutFailure("keycloak_is_null"))
+    // }
   }
 }
 
-
-
 //#region auth services
-
 export function authServices() {
 }
 

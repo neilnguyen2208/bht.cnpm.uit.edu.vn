@@ -28,8 +28,21 @@ import 'assets/fonts/BarlowSemiCondensed-Bold.ttf'
 import 'assets/fonts/BarlowSemiCondensed-SemiBold.ttf'
 
 import 'style.css'
+import keycloakService from './keycloakServices.js'
 
-render(
+// render(
+//   <StrictMode>
+//     <Provider store={store}>
+//       <Router history={history}>
+//         <Route component={App} />
+//       </Router>
+//     </Provider>
+//   </StrictMode>,
+//   document.getElementById("root")
+// );
+
+
+const renderApp = () => render(
   <StrictMode>
     <Provider store={store}>
       <Router history={history}>
@@ -39,4 +52,8 @@ render(
   </StrictMode>,
   document.getElementById("root")
 );
+
+keycloakService.initKeycloak(renderApp);
+
+
 unregister();

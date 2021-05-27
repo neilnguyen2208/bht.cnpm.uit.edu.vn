@@ -26,6 +26,7 @@ import {
 
 //components
 import Loader from 'components/common/Loader/Loader'
+import Header from 'components/common/Header/Header';
 
 class Home extends React.Component {
     constructor(props) {
@@ -57,36 +58,28 @@ class Home extends React.Component {
         let newestPosts = <></>;
         let TrendingDocuments = <></>;
         let newestActivitiesList = <></>;
-        // let allSubjectList = <></>;
 
         if (!this.props.isNewPostsLoading) {
-            newestPosts =
-                //  <div className="home-item-container-wrapper">
-                // <div className="home-item-container">
-                // {
-                this.props.newPosts.map(postItem => {
-                    return <HomePostItem
-                        authorAvatarURL={postItem.authorAvatarURL}
-                        key={postItem.id}
-                        id={postItem.id}
-                        authorName={postItem.authorName}
-                        authorID={postItem.authorID}
-                        publishDtm={postItem.publishDtm}
-                        categoryName={postItem.categoryName}
-                        categoryID={postItem.categoryID}
-                        title={postItem.title}
-                        summary={postItem.summary}
-                        imageURL={postItem.imageURL}
-                        likeStatus={postItem.likeStatus}
-                        savedStatus={postItem.savedStatus}
-                        readingTime={postItem.readingTime}
-                        likeCount={postItem.likeCount}
-                        commentCount={postItem.commentCount}
-                    ></HomePostItem>
-                })
-            // }
-            // </div>
-            // </div>
+            newestPosts = this.props.newPosts.map(postItem => {
+                return <HomePostItem
+                    authorAvatarURL={postItem.authorAvatarURL}
+                    key={postItem.id}
+                    id={postItem.id}
+                    authorName={postItem.authorName}
+                    authorID={postItem.authorID}
+                    publishDtm={postItem.publishDtm}
+                    categoryName={postItem.categoryName}
+                    categoryID={postItem.categoryID}
+                    title={postItem.title}
+                    summary={postItem.summary}
+                    imageURL={postItem.imageURL}
+                    likeStatus={postItem.likeStatus}
+                    savedStatus={postItem.savedStatus}
+                    readingTime={postItem.readingTime}
+                    likeCount={postItem.likeCount}
+                    commentCount={postItem.commentCount}
+                ></HomePostItem>
+            })
         }
         else {
             newestPosts = <Loader />
@@ -95,6 +88,7 @@ class Home extends React.Component {
         if (!this.props.isTrendingDocumentLoading)
             TrendingDocuments = this.props.trendingDocuments.map(item => {
                 return <HomeDocumentItem
+                    key={item.id}
                     id={item.id}
                     authorID={item.authorID}
                     authorName={item.authorName}
@@ -143,7 +137,9 @@ class Home extends React.Component {
         }
 
         return (
+
             <div className="pr-layout">
+                <Header />
                 <Wallpage sliderWidth="1000" sliderHeight="250" />
                 <div className="home-layout" >
 

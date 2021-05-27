@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { isGrantedAny, isGrantedAll } from 'utils/authUtils';
 // import sS from 'constant.js';
 import store from 'redux/store/index'
-const AuthRoute = ({ path, component: Component, isAny, permissions, render, ...rest }) => {
+const RequireLoginRoute = ({ path, component: Component, isAny, permissions, render, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -31,11 +31,11 @@ const AuthRoute = ({ path, component: Component, isAny, permissions, render, ...
             />
           );
         }
-
+ 
         return Component ? <Component {...props} /> : render(props);
       }}
     />
   );
 };
 
-export default AuthRoute;
+export default RequireLoginRoute;

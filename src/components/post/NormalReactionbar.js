@@ -117,7 +117,7 @@ class NormalReactionbar extends React.Component {
       <div className="reaction-bar" style={this.props.type === "DETAIL"? { borderTop: "none", borderBottom: "1px var(--grayish) solid" }:{}}>
         <div className="d-flex mg-top-5px">
 
-          <RequireLogin permissions={["Page.Post.Like"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+          <RequireLogin permissions={["bhtPage.Post.setLikeStatus"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div className="like-btn-container"
             // onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage}
             >

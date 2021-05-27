@@ -1,5 +1,5 @@
 import React from 'react';
-import ForgotPasswordForm from 'components/common/Login&Register/ForgotPasswordForm';
+import ForgotPasswordForm from 'components/common/Authentication/ForgotPasswordForm';
 class ForgotPassword extends React.Component {
     render() {
         return (

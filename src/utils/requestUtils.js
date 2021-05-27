@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { openBLModal } from 'redux/services/modalServices';
+import keycloakService from 'keycloakServices.js'
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
-
 
 export const request = axios.create({
   baseURL: remoteServiceBaseUrl,
@@ -55,6 +55,36 @@ multipartRequest.interceptors.request.use(
 );
 
 multipartRequest.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.status !== 200) {
+      openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const springRequest = axios.create({
+  baseURL: remoteServiceBaseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
+);
+
+springRequest.interceptors.request.use((config) => {
+  if (keycloakService.isLoggedIn()) {
+    const callback = () => {
+      config.headers.Authorization = `Bearer ${keycloakService.getToken()}`;
+      return Promise.resolve(config);
+    };
+    return keycloakService.updateToken(callback);
+  }
+});
+
+springRequest.interceptors.response.use(
   response => {
     return response;
   },

@@ -20,6 +20,8 @@ import { DELAY_TIME } from 'constants.js';
 import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
 import UserMenu from '../../user/UserMenu'
+import { login } from 'redux/services/authServices'
+import keycloakService from 'keycloakServices.js';
 
 class Header extends React.Component {
     constructor(props) {
@@ -36,10 +38,13 @@ class Header extends React.Component {
     }
 
     componentDidMount() {
+
         if (this.props.location.pathname.substring(0, 7) === '/search')
             this.setState({ isHaveOut: false })
         else
             this.setState({ isHaveOut: true })
+
+
 
     }
 
@@ -88,9 +93,6 @@ class Header extends React.Component {
         }
     }
 
-    openUserMenu = (e) => {
-
-    }
 
     render() {
 
@@ -104,6 +106,21 @@ class Header extends React.Component {
         }
         else
             this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm " />;
+
+        let userMenu = <></>;
+        // if (this.props.isAuthenticated) {
+        if (keycloakService.isLoggedIn()) {
+            userMenu = <UserMenu />
+        }
+        // }
+        else {
+            userMenu = <button onClick={() => keycloakService.doLogin()} className="blue-button mg-auto">
+                Đăng nhập
+             </button>
+        }
+        //     //     // return <div style={{ position: "fixed", top: "0px" }} > Not authenticated</div>
+        // }
+        // return <div style={{ position: "fixed", top: "0px" }} > Authenticated</ div>
 
         return (
 
@@ -119,7 +136,7 @@ class Header extends React.Component {
 
                         <div className="header-menu-bar" >
                             {headerMenuRouters.map(item => {
-                                return <NavLink key = {item.id} exact activeClassName="activated-header-menu-item" to={item.path} className="header-menu-item" > {item.label} </NavLink>
+                                return <NavLink key={item.id} exact activeClassName="activated-header-menu-item" to={item.path} className="header-menu-item" > {item.label} </NavLink>
                             })}
                         </div>
 
@@ -165,13 +182,7 @@ class Header extends React.Component {
                                 <img className="header-image-button" src={write_icon} alt="" />
                             </Link>
 
-                            {this.props.isAuthenticated ?
-                                <UserMenu />
-                                :
-                                <Link to="/login" className="blue-button mg-auto">
-                                    Đăng nhập
-                            </Link>
-                            }
+                            {userMenu}
                         </div>
                         <div className="header-end-lv2_Collapse"
                             onClick={this.state.isCollapsedUserMenuOpened ?
@@ -184,7 +195,7 @@ class Header extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
             </div >
         );
     }
@@ -266,17 +277,18 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
     return {
-        isAuthenticated: state.auth.isAuthenticated,
+        isAuthenticated: state.auth.authentication.isAuthenticated,
+        isAuthenticating: state.auth.authentication.isAuthenticating,
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,
         isQuickSearchLoadDone: state.common.quickSearchResult.isLoadDone
 
     };
 };
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getQuickSearchResult
+    getQuickSearchResult, login
 }, dispatch);
 
 export default withRouter(

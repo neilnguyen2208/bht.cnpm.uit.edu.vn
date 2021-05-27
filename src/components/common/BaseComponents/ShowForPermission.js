@@ -16,3 +16,7 @@ const mapStateToProps = state => ({
 });
 
 export const ShowForPermission = connect(mapStateToProps)(ShowForPermissionComponent);
+ 
+//no match.
+//resource not found - bad request.
+//

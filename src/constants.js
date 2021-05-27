@@ -29,8 +29,6 @@ export const adminApproveStatusOptions = [
   { id: 3, name: "Chưa duyệt", postState: "PENDING_APPROVAL" }
 ];
 
-export const sS = sessionStorage;
-
 export const publishedTimeOptions = [
   { id: 1, name: "Mới nhất", sort: "DESC" },
   { id: 2, name: "Cũ nhất", sort: "ASC" }

@@ -1,23 +1,17 @@
 import {
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-
+  AUTHENTICATE_FAILURE,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
 
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 
+  AUTHENTICATE_REQUEST
 
 } from 'redux/constants.js';
-
-export function loginRequest() {
-  return {
-    type: LOGIN_REQUEST
-  }
-}
 
 export function loginSuccess(data) {
   return {
@@ -26,12 +20,13 @@ export function loginSuccess(data) {
   }
 }
 
-export function loginFailure(data) {
+
+export function authenticateFailure() {
   return {
-    type: LOGIN_FAILURE,
-    payload: data
+    type: AUTHENTICATE_FAILURE
   }
 }
+
 
 export function registerSuccess(data) {
   return {
@@ -63,3 +58,17 @@ export function logoutSuccess(data) {
     payload: data
   }
 }
+
+export function logoutFailure(error) {
+  return {
+    type: LOGOUT_FAILURE,
+    payload: error
+  }
+}
+
+export function authenticationRequest() {
+  return {
+    type: AUTHENTICATE_REQUEST,
+  }
+}
+

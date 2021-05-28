@@ -17,7 +17,6 @@ import {
 
 } from 'redux/constants.js';
 import { openBLModal } from 'redux/services/modalServices';
-// import keycloak, { lS } from 'keycloak.js'
 
 const initialState = {
   authentication: {

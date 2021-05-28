@@ -104,7 +104,7 @@ class DocumentsList extends React.Component {
                         options={this.props.subjects}
                         placeHolder="Tất cả"
                         onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
-                        id="my-document-list-subject-filter-combobox"
+                        comboboxId="my-document-list-subject-filter-combobox"
                     ></ComboBox>
                 </div>
             </div >
@@ -119,7 +119,7 @@ class DocumentsList extends React.Component {
                                 selectedOptionID={"0"}
                                 options={this.props.categories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="my-document-list-category-filter-combobox"
+                                comboboxId="my-document-list-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -131,7 +131,7 @@ class DocumentsList extends React.Component {
                                 selectedOptionID={1}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                id="pltf-combobox" //post list time filter 
+                                comboboxId="pltf-combobox" //post list time filter 
                             ></ComboBox>
                         </div>
                     </div>

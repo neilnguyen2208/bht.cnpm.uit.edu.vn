@@ -11,7 +11,6 @@ import {
 
 
 import store from 'redux/store/index'
-// import keycloak from 'keycloak.js'
 
 export function login() {
   return dispatch => {

@@ -1,19 +1,18 @@
 //#region import
 import {
-
-  ContentManagement,
-} from "utils/authUtils";
+  Access,
+} from "authentication/permission.config";
 import Home from 'pages/common/Home/Home'
 //#endregion
 
-export const logoRouter = { path: "/", exact: true, title: "Trang chủ", label: "", permission: [], component: Home };
+export const logoRouter = { path: "/", exact: true, title: "Trang chủ", label: "", permissions: [], component: Home };
 
 export const headerMenuRouters = [
-  { id: 1, path: "/posts", exact: true, title: "Bài viết", label: "BÀI VIẾT", permission: [], },
-  { id: 2,path: "/documents", exact: true, title: "Tài liệu", label: "TÀI LIỆU", permission: [], },
-  { id: 3,path: "/courses", exact: true, title: "Khoá học", label: "KHOÁ HỌC", permission: [], },
-  { id: 4,path: "/admin/post-management", exact: true, title: "Quản lý", label: "QUẢN LÝ", permission: [ContentManagement.Admin], },
-  { id: 5,path: "/collab", exact: true, title: "Cộng tác viên", label: "CỘNG TÁC", permission: [ContentManagement.Collaborator], },
+  { id: 1, path: "/posts", exact: true, title: "Bài viết", label: "BÀI VIẾT", permissions: [], },
+  { id: 2, path: "/documents", exact: true, title: "Tài liệu", label: "TÀI LIỆU", permissions: [], },
+  { id: 3, path: "/courses", exact: true, title: "Khoá học", label: "KHOÁ HỌC", permissions: [], },
+  { id: 4, path: "/admin/post-management", exact: true, title: "Quản lý", label: "QUẢN LÝ", permissions: [Access.Admin], },
+  { id: 5, path: "/collab", exact: true, title: "Cộng tác viên", label: "CỘNG TÁC", permissions: [Access.Collaborator], },
 ]
 
 export const userRouters = [

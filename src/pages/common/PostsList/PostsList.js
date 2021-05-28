@@ -71,7 +71,7 @@ class PostsList extends React.Component {
         let postSearchResult = <></>
         if (!this.props.isListLoading) {
             postSearchResult = this.props.postSearchResult.map((item) => {
-                return < div className="item-container" >
+                return < div className="item-container" key={item.id} >
                     <PostSummaryMetadata
                         type={itemType.normal}
                         id={item.id}
@@ -103,7 +103,7 @@ class PostsList extends React.Component {
         else
             postSearchResult = <Loader />
         let comboboxGroup = <></>;
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0)
+        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
             comboboxGroup =
                 <div className="j-c-space-between">
                     <div className="d-flex">
@@ -114,7 +114,7 @@ class PostsList extends React.Component {
                                 selectedOptionID={1}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                id="pltf-combobox" //post list time filter 
+                                comboboxId="pltf-combobox" //post list time filter 
                             ></ComboBox>
                         </div>
                     </div>
@@ -125,11 +125,12 @@ class PostsList extends React.Component {
                                 selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="plcf-combobox" //post search category filter
+                                comboboxId="plcf-combobox" //post search category filter
                             ></ComboBox>
                         </div>
                     </div>
-                </div>
+                </div >
+        }
         return (
             <div className="search-layout">
                 <div className="mg-top-10px" />

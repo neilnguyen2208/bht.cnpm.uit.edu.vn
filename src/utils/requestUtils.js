@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { openBLModal } from 'redux/services/modalServices';
-import keycloakService from 'keycloakServices.js'
+import authService from 'authentication/authServices.js'
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
@@ -75,12 +75,12 @@ export const springRequest = axios.create({
 );
 
 springRequest.interceptors.request.use((config) => {
-  if (keycloakService.isLoggedIn()) {
+  if (authService.isLoggedIn()) {
     const callback = () => {
-      config.headers.Authorization = `Bearer ${keycloakService.getToken()}`;
+      config.headers.Authorization = `Bearer ${authService.getToken()}`;
       return Promise.resolve(config);
     };
-    return keycloakService.updateToken(callback);
+    return authService.updateToken(callback);
   }
 });
 

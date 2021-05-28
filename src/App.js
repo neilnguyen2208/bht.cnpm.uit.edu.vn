@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "pages/common/Home/Home";
 import PostDetail from "pages/common/PostDetail/PostDetail";
 import DocumentDetail from "pages/common/DocumentDetail/DocumentDetail";
-import Login from "pages/common/Authentication/Login";
-import Register from "pages/common/Authentication/Register";
 import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
 import AdminLayout from 'layouts/AdminSidebar'
@@ -46,7 +44,7 @@ import DocumentReportManagement from "pages/management/DocumentManagement/Docume
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
-import ForgotPassword from 'pages/common/Authentication/ForgotPassword'
+// import ForgotPassword from 'pages/authentication/ForgotPassword'
 import VerifyMailForgotPassword from 'pages/common/VerifyEmailPages/VerifyMailForgotPassword'
 import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
@@ -57,9 +55,8 @@ import ModalManager from 'components/common/Modal/ModalManager'
 import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
-import RequireLoginRoute from 'components/common/BaseComponents/RequireLoginRoute'
-import Secured from 'components/common/BaseComponents/Sercured.js'
-import Logout from 'pages/common/Authentication/Logout'
+import RequireLoginRoute from 'components/base_components/RequireLoginRoute'
+import Secured from 'components/base_components/Sercured.js'
 
 const App = () => {
     return (
@@ -70,9 +67,6 @@ const App = () => {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        {/* <Route exact path="/login" component={Login} /> */}
-                        <Route exact path="/logout" component={Logout} />
-                        <Route exact path="/register" component={Register} />
 
                         <Route exact path="/posts" component={PostsList} />
                         <Route exact path="/documents" component={DocumentsList} />
@@ -122,9 +116,6 @@ const App = () => {
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
 
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/register" component={Register} />
-                        <Route exact path="/forgot-password" component={ForgotPassword} />
                         <Route exact path="/user/sercurity" component={Security} />
 
 

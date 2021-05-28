@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { RequireLogin } from 'components/common/BaseComponents/RequireLoginComponent'
+import { RequireLogin } from 'components/base_components/RequireLoginComponent'
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'

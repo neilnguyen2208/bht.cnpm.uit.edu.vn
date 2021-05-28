@@ -52,8 +52,8 @@ export function generateSearchParam(searchParamObject) { //for generating search
 
             //neu la category.id hoac category => value bang 0 thi khong them vao
             //neu la page hoac paginator thi -1
-            console.log(key)
-            console.log(searchParamObject[key]);
+            // console.log(key)
+            // console.log(searchParamObject[key]);
             if (key === "page" || key === "paginator") {
                 searchParam = searchParam + key + '=' + (Number.parseInt(searchParamObject[key]) - 1) + "&";
             } else

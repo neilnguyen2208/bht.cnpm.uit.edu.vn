@@ -17,12 +17,12 @@ const initKeycloak = (onAuthenticatedCallback) => {
             // if (authenticated) {
             onAuthenticatedCallback();
             if (_kc.token) {
-                console.log("Token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.tokenParsed.exp);
-                console.log(_kc.token);
-                console.log("Refresh token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.refreshTokenParsed.exp);
-                console.log("User name:", _kc.preferred_username);
+                // console.log("Token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.tokenParsed.exp);
+                // console.log(_kc.token);
+                // console.log("Refresh token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.refreshTokenParsed.exp);
+                // console.log("User name:", _kc.preferred_username);
                 console.log("Realm roles:", _kc.realmAccess.roles);
-                console.log("Resource roles:", _kc.resourceAccess.roles);
+                // console.log("Resource roles:", _kc.resourceAccess.roles);
 
             }// } else {
             //   doLogin();
@@ -65,11 +65,8 @@ _kc.onAuthLogout = () => {
 
 const getUsername = () => _kc.tokenParsed?.preferred_username;
 
-//realm role.
-//resource role.
-
 const isGranted = (permissionName) => {
-    _kc.hasRealmRole(permissionName);
+    return _kc.hasRealmRole(permissionName);
 }
 
 const isGrantedAny = (permissionsList) => {
@@ -77,7 +74,7 @@ const isGrantedAny = (permissionsList) => {
         return true;
     }
 
-    for (var i = 0; i < permissionsList.length; i++) {
+    for (let i = 0; i < permissionsList.length; i++) {
         if (isGranted(permissionsList[i])) {
             return true;
         }
@@ -95,12 +92,11 @@ const isGrantedAll = (permissionsList) => {
             return false;
         }
     }
+
     return true;
 }
 
-//isGrantedAll
-//isGrantedAny
-const keycloakService = {
+const authService = {
     initKeycloak,
     doLogin,
     doLogout,
@@ -113,4 +109,4 @@ const keycloakService = {
     isGrantedAny
 };
 
-export default keycloakService;
+export default authService;

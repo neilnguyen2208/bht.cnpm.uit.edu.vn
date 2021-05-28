@@ -28,7 +28,7 @@ import 'assets/fonts/BarlowSemiCondensed-Bold.ttf'
 import 'assets/fonts/BarlowSemiCondensed-SemiBold.ttf'
 
 import 'style.css'
-import keycloakService from './keycloakServices.js'
+import authService from 'authentication/authServices.js'
 
 // render(
 //   <StrictMode>
@@ -53,7 +53,6 @@ const renderApp = () => render(
   document.getElementById("root")
 );
 
-keycloakService.initKeycloak(renderApp);
-
+authService.initKeycloak(renderApp);
 
 unregister();

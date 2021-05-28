@@ -7,7 +7,7 @@ import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 import { ClickAwayListener } from "@material-ui/core";
-import { logout } from 'redux/services/authServices'
+import authService from "authentication/authServices.js";
 
 const userMenuOptions = [
     { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: "/user", isLink: true },
@@ -29,7 +29,7 @@ const userMenuOptions = [
         }
     },
     {
-        id: 5, text: "Đăng xuất", value: "LOGOUT", icon: '', tip: "", to: "/logout", isLink: true,
+        id: 5, text: "Đăng xuất", value: "LOGOUT", icon: '', tip: "",
         style: {
             height: "26px",
             paddingTop: "1px",
@@ -98,7 +98,8 @@ class UserMenu extends React.Component {
         if (menuItem.value === "PROFILE") {
             // return <Redirect to="/user" />;
         }
-
+        if (menuItem.value === "LOGOUT")
+            authService.doLogout();
     }
 
 
@@ -215,7 +216,6 @@ const mapStateToProps = (state) => {
     };
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    logout
 }, dispatch);
 
 export default withRouter(

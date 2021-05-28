@@ -1,7 +1,7 @@
 import React from "react";
 import { ClickAwayListener } from '@material-ui/core';
 import "./PopupMenu.scss"
-import { ShowForPermission } from 'components/common/BaseComponents/ShowForPermission'
+import ShowOnPermission from 'components/base_components/ShowOnPermission'
 export default class PopupMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -66,7 +66,7 @@ export default class PopupMenu extends React.Component {
     render() {
         let items = this.props.items.map(menuItem => {
             if (menuItem.permissions)
-                return <ShowForPermission permissions={menuItem.permissions}>
+                return <ShowOnPermission permissions={menuItem.permissions}>
                     <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                         id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
                         key={menuItem.id}
@@ -95,7 +95,7 @@ export default class PopupMenu extends React.Component {
                             }
                         </div>
                     </div >
-                </ShowForPermission>
+                </ShowOnPermission>
 
             return <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                 id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}

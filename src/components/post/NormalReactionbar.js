@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
-import { RequireLogin } from 'components/common/BaseComponents/RequireLoginComponent'
+import { RequireLogin } from 'components/base_components/RequireLoginComponent'
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -117,9 +117,8 @@ class NormalReactionbar extends React.Component {
       <div className="reaction-bar" style={this.props.type === "DETAIL"? { borderTop: "none", borderBottom: "1px var(--grayish) solid" }:{}}>
         <div className="d-flex mg-top-5px">
 
-          <RequireLogin permissions={["bhtPage.Post.setLikeStatus"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+          <RequireLogin permissions={["Post.SetLikeStatus"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div className="like-btn-container"
-            // onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage}
             >
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
@@ -128,7 +127,7 @@ class NormalReactionbar extends React.Component {
 
           <div className="vertical-line" />
 
-          <RequireLogin permissions={["Page.Post.Save"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
+          <RequireLogin permissions={["Post.Save"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
             <div className="save-btn-container"  >
               {saveBtn}
             </div>

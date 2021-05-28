@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { isGrantedAny, isGrantedAll } from 'utils/authUtils';
-// import sS from 'constant.js';
+import authService from 'authentication/authServices.js';
 import store from 'redux/store/index'
 const RequireLoginRoute = ({ path, component: Component, isAny, permissions, render, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props => {
-        if (!store.getState().auth.isAuthenticated)
+        if (authService.isLoggedIn())
           return (
             <Redirect
               to={{
@@ -19,8 +18,8 @@ const RequireLoginRoute = ({ path, component: Component, isAny, permissions, ren
           );
 
         if (permissions.length > 0 && !
-          ((!isAny && isGrantedAll(permissions))
-            || (isAny && isGrantedAny(permissions))
+          ((!isAny && authService.isGrantedAll(permissions))
+            || (isAny && authService.isGrantedAny(permissions))
           )) {
           return (
             <Redirect
@@ -31,7 +30,7 @@ const RequireLoginRoute = ({ path, component: Component, isAny, permissions, ren
             />
           );
         }
- 
+
         return Component ? <Component {...props} /> : render(props);
       }}
     />

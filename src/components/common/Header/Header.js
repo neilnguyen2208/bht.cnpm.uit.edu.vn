@@ -12,7 +12,7 @@ import upload_icon from 'assets/icons/48x48/blue_upload_icon_48x48.png';
 import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
 import { getQuickSearchResult } from 'redux/services/commonServices';
 import SmallLoader from "components/common/Loader/Loader_S"
-import { logoRouter, headerMenuRouters } from "router.config"
+import { logoRouter, headerMenuRouters } from "components/base_components/router.config.js"
 import store from 'redux/store/index'
 import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
 import { getPostSearch } from 'redux/services/postServices'
@@ -21,7 +21,8 @@ import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
 import UserMenu from '../../user/UserMenu'
 import { login } from 'redux/services/authServices'
-import keycloakService from 'keycloakServices.js';
+import authService from 'authentication/authServices.js';
+import ShowOnPermission from "components/base_components/ShowOnPermission";
 
 class Header extends React.Component {
     constructor(props) {
@@ -43,9 +44,6 @@ class Header extends React.Component {
             this.setState({ isHaveOut: false })
         else
             this.setState({ isHaveOut: true })
-
-
-
     }
 
     componentWillUnmount() {
@@ -109,21 +107,17 @@ class Header extends React.Component {
 
         let userMenu = <></>;
         // if (this.props.isAuthenticated) {
-        if (keycloakService.isLoggedIn()) {
+        if (authService.isLoggedIn()) {
             userMenu = <UserMenu />
         }
         // }
         else {
-            userMenu = <button onClick={() => keycloakService.doLogin()} className="blue-button mg-auto">
+            userMenu = <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
                 Đăng nhập
              </button>
         }
-        //     //     // return <div style={{ position: "fixed", top: "0px" }} > Not authenticated</div>
-        // }
-        // return <div style={{ position: "fixed", top: "0px" }} > Authenticated</ div>
 
         return (
-
             <div className="header-container" >
                 <div className="header"  >
 
@@ -136,7 +130,14 @@ class Header extends React.Component {
 
                         <div className="header-menu-bar" >
                             {headerMenuRouters.map(item => {
-                                return <NavLink key={item.id} exact activeClassName="activated-header-menu-item" to={item.path} className="header-menu-item" > {item.label} </NavLink>
+                                return <ShowOnPermission key={item.id} permissions={item.permissions}>
+                                    <NavLink
+                                        exact
+                                        activeClassName="activated-header-menu-item"
+                                        to={item.path} className="header-menu-item" >
+                                        {item.label}
+                                    </NavLink>
+                                </ShowOnPermission>
                             })}
                         </div>
 

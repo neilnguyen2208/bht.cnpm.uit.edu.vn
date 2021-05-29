@@ -33,6 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "keycloak": "react-scripts start && build-keycloak-theme",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

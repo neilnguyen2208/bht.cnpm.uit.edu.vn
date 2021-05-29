@@ -13,7 +13,6 @@
     src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-Medium.ttf) format("truetype");
 }
 
-
 @font-face {
     font-family: "BarlowCondensed-MediumItalic";
     src: local("BarlowCondensed"), url(./assets/fonts/BarlowCondensed-MediumItalic.ttf) format("truetype");
@@ -69,14 +68,12 @@
     src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-Bold.ttf) format("truetype");
 }
 
-
 @font-face {
     font-family: "BarlowSemiCondensed-SemiBold";
     src: local("BarlowSemiCondensed"), url(./assets/fonts/BarlowSemiCondensed-SemiBold.ttf) format("truetype");
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-
 :root {
     --blue: #5279db;
     --light-blue: #bac9f1;
@@ -88,7 +85,6 @@
     --yellow: #fff700;
     --orange: #fe6500;
     --light-orange: #ffe4b3;
-
     --grayish: #eeeeee;
     --light-gray: #f2f2f2;
     --light-black: #505050;
@@ -147,11 +143,8 @@ li.hide::marker {
     opacity: 0;
 }
 
-
-
 div {
     box-sizing: border-box;
-
 }
 
 .btn-icon {
@@ -284,7 +277,6 @@ a:hover {
 
 .margin-bottom-8px {
     margin-bottom: 8px;
-
 }
 
 .margin-bottom-10px {
@@ -297,12 +289,10 @@ a:hover {
 
 .t-a-center {
     text-align: center;
-
 }
 
 .o-f-scroll {
     overflow: scroll;
-
 }
 
 .pd-r-10px {
@@ -326,7 +316,6 @@ a:hover {
     /* height: fit-content; */
     /* overflow-y: scroll; */
     overflow: auto;
-
     overflow-x: hidden;
     max-height: 80vh;
     /* for firefox */
@@ -337,7 +326,6 @@ a:hover {
     box-sizing: border-box;
 }
 
-
 .pd-top-5px {
     padding-top: 5px;
 }
@@ -345,7 +333,6 @@ a:hover {
 .scroller-container::-webkit-scrollbar {
     width: 5px;
     height: 5px;
-
     /* height: 200px;  */
     /* or add it to the track */
 }
@@ -353,7 +340,6 @@ a:hover {
 .scroller-container::-webkit-scrollbar-thumb {
     background: var(--grayish);
     border-radius: 3px;
-
 }
 
 .scroller-container::-webkit-scrollbar-track {
@@ -449,6 +435,7 @@ a:hover {
 }
 
 /* border bottom */
+
 .decoration-line {
     height: 1px;
     width: 100%;

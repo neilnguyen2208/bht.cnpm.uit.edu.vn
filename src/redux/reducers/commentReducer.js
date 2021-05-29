@@ -15,7 +15,6 @@ const commentDTOs = [
     createdTime: "2021-05-03T03:24:00",
     likeCount: 2,
     isLiked: false,
-
     replyCount: 5,
     replyArray: [
       {

@@ -16,15 +16,15 @@ import { withRouter } from "react-router-dom";
 
 //import for permission
 import {
-  getRoleNameByName,
-  isGrantedPermissions
-} from 'utils/authUtils'
+  //suitable roles name 
+} from 'authentication/permission.config'
+
 
 class UserSidebar extends React.Component {
   constructor(props) {
     super(props);
     this.isTheFirstTimeLoaded = true;
-    this.isGrantedPermissions = isGrantedPermissions.bind(this); //bind check permission in PermissionManagement.js file
+    //bind check permission in PermissionManagement.js file
   }
 
   componentDidMount() {
@@ -37,8 +37,6 @@ class UserSidebar extends React.Component {
   }
   render() {
 
-    // if (this.props.accountInformation !== null && this.props.accountInformation !== undefined) {
-
     let roleName; //  score, postCount, docCount, username, avatarURL = "https://i.imgur.com/SZJgL6C.png";
     // = this.props.accountInformation;
 
@@ -50,36 +48,13 @@ class UserSidebar extends React.Component {
         <div className="left-sidebar" id="user-left-sidebar">
           {/* Hien thi avatar, thanh tich va ten role */}
           <div>
-            {/* < div className="user-info-layout" >
-              <div className="Avatar_Layout">
-                <img alt="avatar" className="side-bar-avatar" src={avatarURL} />
-              </div>
-              <div className="achivement-layout">
-                <div className="score">Scrore: {score}</div>
-                <div className="d-flex j-c-space-between">
-                  <div className="d-flex w-50-percents">
-                    <img alt="post count" src={gray_write_icon} className="user-item-icon" ></img>
-                    <div className="mg-left-5px">{postCount}</div>
-                  </div>
-
-                  <div className="d-flex w-50-percents">
-                    <img alt="upload count" src={gray_upload_icon} className="user-item-icon"></img>
-                    <div className="mg-left-5px"> {docCount}</div>
-                  </div>
-                </div>
-              </div>
-            </div > */}
 
             {/* Role and achivement port */}
-            {getRoleNameByName(roleName) !== "User" && getRoleNameByName(roleName) !== "Guest" &&
-              <div className="user-role">
-                {getRoleNameByName(roleName)}
+            <div className="user-role">
+              User
               </div>
-            }
 
           </div>
-
-
 
           < div className="vertical-menu-container"  >
             <div style={{ display: "block" }}>
@@ -180,8 +155,6 @@ class UserSidebar extends React.Component {
                     onClick={() => this.setState({})}>
                     Đã lưu
                         </NavLink>
-
-
 
                   <NavLink className="vertical-sub-m-i"
                     activeClassName="vertical-sub-m-i main-interactive-menu-item-active"

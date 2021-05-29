@@ -23,22 +23,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-//import for permission
-import {
-    getRoleNameByName,
-    isGrantedPermissions
-} from 'utils/authUtils'
-
-import {
-    Document,
-    Post,
-    ContentManagement,
-    Notification,
-    Category,
-    User,
-    Role
-} from 'utils/authUtils'
-
 class AdminSidebar extends React.Component {
     constructor(props) {
         super(props);
@@ -49,7 +33,6 @@ class AdminSidebar extends React.Component {
             username: "dongnvsince1999",
             avatarURL: "https://i.imgur.com/SZJgL6C.png"
         }
-        this.isGrantedPermissions = isGrantedPermissions.bind(this); //bind check permission in PermissionManagement.js file
     }
 
     componentDidMount() {
@@ -83,162 +66,100 @@ class AdminSidebar extends React.Component {
                         </div>
                     </div >
                     <div className="user-role">
-                        {getRoleNameByName(roleName)}
+                        Admin
                     </div>
 
                     <div className="vertical-menu-container"  >
                         <div>
-                            {/* Quản lý nội dung */}
-                            <div hidden={!this.isGrantedPermissions(ContentManagement.Management)}>
-                                <div className="pr-drop-down-m-i"
-                                    id="page-managent-parent-menu-item"
-                                    onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e, "page-managent-parent-menu-item", "page-managent-parent-menu-item-text", "page-admin-dropdown-btn-element", "page-admin-menu-item-container")}>
-                                    <div className="d-flex">
-                                        <img alt="*" className="vertical-m-i-icon" src={content_management_icon} id="page-managent-btn-element" />
-                                        <div className="side-bar-menu-item-text" id="page-managent-parent-menu-item-text">
-                                            Quản lý nội dung
-                                        </div>
-                                    </div>
-                                    <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-admin-dropdown-btn-element" />
-                                </div>
+                            <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container" id="page-admin-menu-item-container">
+                                <div className="mg-bottom-5px" />
+                                <NavLink className="vertical-sub-m-i"
+                                    activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
+                                    to={"/admin/post-management"} >
+                                    <div className="text" >
+                                        Quản lý bài viết
+                                                </div>
+                                </NavLink>
+                                <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                    to={"/admin/document-management"} >
+                                    <div className="text">
+                                        Quản lý tài liệu
+                                                </div>
+                                </NavLink>
 
-                                <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container" id="page-admin-menu-item-container">
-                                    <div className="mg-bottom-5px" />
-                                    {
-                                        (this.isGrantedPermissions(ContentManagement.Management)
-                                            && this.isGrantedPermissions(Post.Approve)) ?
-                                            <NavLink className="vertical-sub-m-i"
-                                                activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
-                                                to={"/admin/post-management"} >
-                                                <div className="text" >
-                                                    Quản lý bài viết
+                                <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                    to={"/admin/page-notification"}    >
+                                    <div className="text">
+                                        Thông báo trang
                                                 </div>
-                                            </NavLink>
-                                            : <></>
-                                    }
-                                    {
-                                        (this.isGrantedPermissions(ContentManagement.Management)
-                                            && this.isGrantedPermissions(Document.Approve)) ?
-                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
-                                                to={"/admin/document-management"} >
-                                                <div className="text">
-                                                    Quản lý tài liệu
-                                                </div>
-                                            </NavLink>
-                                            :
-                                            <></>
-                                    }
+                                </NavLink>
 
-                                    {
-                                        (this.isGrantedPermissions(ContentManagement.Management)
-                                            && this.isGrantedPermissions(Notification.ViewAll)) ?
-                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
-                                                to={"/admin/page-notification"}    >
-                                                <div className="text">
-                                                    Thông báo trang
-                                                </div>
-                                            </NavLink>
-                                            :
-                                            <></>
-                                    }
-                                    {
-                                        (this.isGrantedPermissions(ContentManagement.Management)
-                                            && this.isGrantedPermissions(Category.View)) ?
-                                            <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
-                                                to={"/admin/category-management"}
-                                            >
-                                                <div className="text">
-                                                    Quản lý danh mục
+                                <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                    to={"/admin/category-management"}
+                                >
+                                    <div className="text">
+                                        Quản lý danh mục
                                                             </div>
-                                            </NavLink>
-                                            : <></>
-                                    }
-                                    <div className="mg-bottom-5px" />
-                                    <div className="decoration-underline " />
-                                    <div className="mg-bottom-5px" />
-                                    <div className="mg-bottom-5px" />
-                                </div >
+                                </NavLink>
+                                <div className="mg-bottom-5px" />
+                                <div className="decoration-underline " />
+                                <div className="mg-bottom-5px" />
+                                <div className="mg-bottom-5px" />
                             </div >
-
-                            {/* Quan ly nguoi dung */}
-                            {
-                                (this.isGrantedPermissions(ContentManagement.Management) && this.isGrantedPermissions(User.All))
-                                    ?
-                                    <NavLink
-                                        className="vertical-m-i"
-                                        activeClassName="main-interactive-menu-item-active"
-                                        to={"/admin/user-management"}
-                                    >
-                                        <img alt="*"
-                                            className="vertical-m-i-icon"
-                                            src={user_management_icon}
-                                            id="user-managent-btn-element" />
-                                        <div className="side-bar-menu-item-text"  >
-                                            Quản lý người dùng
-                                    </div>
-                                    </NavLink>
-                                    :
-                                    <></>
-                            }
-
-                            {/* Quan ly hoat dong: các báo cáo người dùng  */}
-                            {
-                                (this.isGrantedPermissions(ContentManagement.Management)
-                                    && this.isGrantedPermissions(User.All)) ?
-                                    <NavLink className="vertical-m-i"
-                                        activeClassName="main-interactive-menu-item-active"
-                                        to={"/admin/activity-management"}
-                                    >
-                                        <img alt="*" className="vertical-m-i-icon"
-                                            src={activity_management_icon}
-                                            id="activity-managent-btn-element" />
-                                        <div className="side-bar-menu-item-text"  >
-                                            Quản lý hoạt động
-                                          </div>
-                                    </NavLink>
-                                    :
-                                    <></>
-                            }
-
-                            {/* Quan lý quyền truy cập: role */}
-                            {
-                                (this.isGrantedPermissions(ContentManagement.Management)
-                                    && this.isGrantedPermissions(Role.All))
-                                    ?
-                                    <NavLink className="vertical-m-i"
-                                        activeClassName="main-interactive-menu-item-active"
-                                        to={"/admin/user-role-management"}
-                                    >
-                                        <img alt="*" className="vertical-m-i-icon"
-                                            src={user_role_management_icon}
-                                        />
-                                        <div className="side-bar-menu-item-text"  >
-                                            Quản lý quyền truy cập
-                                                    </div>
-                                    </NavLink >
-                                    :
-                                    <></>
-                            }
-
-                            {/* Thong ke */}
-                            {
-                                (this.isGrantedPermissions(ContentManagement.Management)
-                                    && this.isGrantedPermissions(Role.All))
-                                    ?
-                                    <NavLink className="vertical-m-i"
-                                        activeClassName="main-interactive-menu-item-active"
-                                        to={"/admin/statistic"}
-                                    >
-                                        <img alt="*" className="vertical-m-i-icon"
-                                            src={statistic_management_icon} />
-                                        <div className="side-bar-menu-item-text"  >
-                                            Thống kê
-                                        </div>
-                                    </NavLink >
-                                    :
-                                    <></>
-                            }
                         </div >
+
+                        {/* Quan ly nguoi dung */}
+                        <NavLink
+                            className="vertical-m-i"
+                            activeClassName="main-interactive-menu-item-active"
+                            to={"/admin/user-management"}
+                        >
+                            <img alt="*"
+                                className="vertical-m-i-icon"
+                                src={user_management_icon}
+                                id="user-managent-btn-element" />
+                            <div className="side-bar-menu-item-text"  >
+                                Quản lý người dùng
+                                    </div>
+                        </NavLink>
+
+                        {/* Quan ly hoat dong: các báo cáo người dùng  */}
+                        <NavLink className="vertical-m-i"
+                            activeClassName="main-interactive-menu-item-active"
+                            to={"/admin/activity-management"}
+                        >
+                            <img alt="*" className="vertical-m-i-icon"
+                                src={activity_management_icon}
+                                id="activity-managent-btn-element" />
+                            <div className="side-bar-menu-item-text"  >
+                                Quản lý hoạt động
+                                          </div>
+                        </NavLink>
+
+                        {/* Quan lý quyền truy cập: role */}
+                        <NavLink className="vertical-m-i"
+                            activeClassName="main-interactive-menu-item-active"
+                            to={"/admin/user-role-management"}
+                        >
+                            <img alt="*" className="vertical-m-i-icon"
+                                src={user_role_management_icon}
+                            />
+                            <div className="side-bar-menu-item-text"  >
+                                Quản lý quyền truy cập
+                                                    </div>
+                        </NavLink >
+
+                        {/* Thong ke */}
+                        <NavLink className="vertical-m-i"
+                            activeClassName="main-interactive-menu-item-active"
+                            to={"/admin/statistic"}
+                        >
+                            <img alt="*" className="vertical-m-i-icon"
+                                src={statistic_management_icon} />
+                            <div className="side-bar-menu-item-text"  >
+                                Thống kê
+                                        </div>
+                        </NavLink >
                     </div >
                 </div >
             </div >

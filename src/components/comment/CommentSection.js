@@ -19,6 +19,7 @@ import './Comment.scss'
 
 //components
 import Comment from './Comment.js'
+import CreateComment from './CreateComment';
 
 class CommentSection extends React.Component {
 
@@ -49,6 +50,7 @@ class CommentSection extends React.Component {
       <div className="comments-container">
         <div className="section-title" id={"cst-" + this.props.match.params.id}> {this.props.totalElements} Bình luận</div>
         {this.props.children}
+        <CreateComment id={this.props.id} />
         {commentsList}
       </div >
     );

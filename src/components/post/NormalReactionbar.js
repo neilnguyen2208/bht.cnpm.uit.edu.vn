@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -20,6 +20,10 @@ import 'components/styles/Button.scss'
 
 //utils
 import { formatNumber } from 'utils/miscUtils.js'
+
+//permissions config
+import { Post } from 'authentication/permission.config.js'
+import authService from 'authentication/authServices';
 
 class NormalReactionbar extends React.Component {
 
@@ -85,6 +89,12 @@ class NormalReactionbar extends React.Component {
     this.setState({ isSaved: tmp });
   }
 
+  //handle if current route is post content
+  onCommentBtnClick = () => {
+    document.getElementById("cr-cmt") &&
+      document.getElementById("cr-cmt").scrollIntoView()
+  }
+
   render() {
     // 
     //#region like, unlike buttons
@@ -114,12 +124,11 @@ class NormalReactionbar extends React.Component {
     }
 
     return (
-      <div className="reaction-bar" style={this.props.type === "DETAIL"? { borderTop: "none", borderBottom: "1px var(--grayish) solid" }:{}}>
+      <div className="reaction-bar"  style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
         <div className="d-flex mg-top-5px">
 
-          <RequireLogin permissions={["Post.SetLikeStatus"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-            <div className="like-btn-container"
-            >
+          <RequireLogin permissions={[Post.SetLikeStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+            <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
             </div>
@@ -127,21 +136,41 @@ class NormalReactionbar extends React.Component {
 
           <div className="vertical-line" />
 
-          <RequireLogin permissions={["Post.Save"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
+          <RequireLogin permissions={[Post.SetSaveStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
             <div className="save-btn-container"  >
               {saveBtn}
             </div>
           </RequireLogin>
 
           <div className="vertical-line" />
-          <div className="comment-count-container">
-            <div className="comment-btn-text">
-              Bình luận
+
+          {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
+            <RequireLogin permissions={[Post.CreateComment]}
+              expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
+              <div className="comment-count-container">
+                <div className="comment-btn-text">
+                  Bình luận
             </div>
-            <div className="comment-btn-number">
-              {formatNumber(this.props.commentCount)}
-            </div>
-          </div>
+                <div className="comment-btn-number">
+                  {formatNumber(this.props.commentCount)}
+                </div>
+              </div>
+            </RequireLogin>
+            :
+            <RequireLogin permissions={[Post.CreateComment]}>
+              <Link to={"/post-content/" + this.props.id + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.CreateComment) && e.preventDefault()}>
+                <div className="comment-count-container">
+                  <div className="comment-btn-text">
+                    Bình luận
+                  </div>
+                  <div className="comment-btn-number">
+                    {formatNumber(this.props.commentCount)}
+                  </div>
+                </div>
+              </Link>
+            </RequireLogin>
+          }
+
         </div>
         <Link to={`/post-content/${this.props.id}`} className="continue-read mg-top-5px" >
           Đọc tiếp ...

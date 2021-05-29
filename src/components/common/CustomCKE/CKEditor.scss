@@ -1,4 +1,4 @@
-@import '../Titlebar/Titlebar.scss';
+@import "../Titlebar/Titlebar.scss";
 
 //for editor
 .cke-dummy-text-input {
@@ -7,7 +7,6 @@
     box-sizing: border-box;
     padding: 0px;
     border: none;
-    background: green;
     display: none;
 }
 
@@ -16,14 +15,11 @@
     border-radius: 5px;
     box-shadow: 0px 0px 1px 0px var(--grayish);
     overflow: hidden;
-
-
 }
 
 .cke-wrapper.invalid {
     border: 1px var(--red) solid !important;
     box-shadow: 0px 0px 2px var(--light-red);
-
 }
 
 .cke-wrapper.focus {
@@ -31,13 +27,13 @@
     box-shadow: 0px 0px 2px 0px var(--light-blue);
 }
 
-.cke_reset {}
+.cke_reset {
+}
 
 .cke_top {
     //style cho top cua CKEditor
     border-bottom: 2px solid var(--gray) !important;
     background: none !important;
-
 }
 
 .cke_bottom {
@@ -50,13 +46,13 @@
     //style cho toan bo cke
     border: 0px var(--gray) solid !important;
     box-shadow: 0px 0px 1px 0px var(--grayish) !important;
-
 }
 
 .cke_reset_all,
 .cke_reset_all *,
 .cke_reset_all a,
-.cke_reset_all textarea {}
+.cke_reset_all textarea {
+}
 
 .cke_editable {
     font-family: "BarlowCondensed-Regular" !important;
@@ -71,14 +67,12 @@ span.cke_path_empty {
 .cke_combo_button {
     cursor: pointer !important;
     border-radius: 5px !important;
-
 }
 
 .cke_combo_button:hover,
 .cke_combo_button:active {
     box-shadow: 0px 0px 1px 0px var(--gray) !important;
     background: none !important;
-
 }
 
 .cke_combo_on {
@@ -86,13 +80,10 @@ span.cke_path_empty {
     background: none !important;
     border-radius: 5px !important;
     // border: 1px var(--gray) solid !important;
-
 }
-
 
 .cke_combo_off {
     border: 1px white !important;
-
 }
 
 .fake-cke {
@@ -140,7 +131,6 @@ span.cke_path_empty {
 }
 
 .cke_button__link_icon:hover {
-
     border-radius: 2px !important;
     overflow: hidden !important;
 }
@@ -169,7 +159,6 @@ a.cke_button_off:active {
     user-select: none !important;
     margin-bottom: 5px !important;
     padding-right: 5px !important;
-
 }
 
 input.cke_dialog_ui_input_text {
@@ -213,7 +202,6 @@ a.cke_dialog_close_button {
     width: 1.2rem !important;
     top: 12px !important;
     right: 10px !important;
-
 }
 
 select.cke_dialog_ui_input_select {
@@ -256,7 +244,6 @@ select.cke_dialog_ui_input_select {
     border: var(--blue) solid 1px !important;
 }
 
-
 // span.cke_dialog_ui_button
 .cke_dialog_ui_button {
     width: 80px !important;
@@ -270,7 +257,6 @@ select.cke_dialog_ui_input_select {
     height: 25px !important;
     border-radius: 5px !important;
     box-sizing: border-box !important;
-
 }
 
 .cke_dialog_ui_button_ok span.cke_dialog_ui_button {
@@ -281,19 +267,16 @@ select.cke_dialog_ui_input_select {
     cursor: pointer !important;
     color: white !important;
     width: 80px !important;
-
 }
 
 a.cke_dialog_ui_button {
     padding: 1px !important;
-
 }
 
 a.cke_dialog_ui_button:hover {
     box-shadow: 0px 0px 3px 0px var(--gray) !important;
     opacity: 80% !important;
 }
-
 
 span.cke_dialog_ui_button {
     width: 80px !important;
@@ -302,7 +285,6 @@ span.cke_dialog_ui_button {
 a.cke_dialog_ui_button:active {
     border: 1px solid var(--gray) !important;
     box-shadow: 0px 0px 3px 0px var(--gray) !important;
-
 }
 
 .cke_dialog_footer_buttons a.cke_dialog_ui_button span {
@@ -337,6 +319,12 @@ a.cke_dialog_ui_button:active {
     color: var(--red);
 }
 
-.cke_textarea_inline{
-    
-} 
+.cke_textarea_inline {
+    border-radius: 0px !important;
+}
+
+#cke-wrapper-crt-cmmnt-cke {
+    border-radius: 3px !important;
+    height: 100px;
+    border: none;
+}

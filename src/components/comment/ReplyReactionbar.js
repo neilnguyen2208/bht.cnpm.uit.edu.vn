@@ -84,7 +84,6 @@ class ReplyReactionbar extends React.Component {
               </div>
             </RequireLogin>
           </div>
-          <div className="vertical-line" />
           <div className="comment-count-container">
             <div className="comment-btn-text">
               Trả lời

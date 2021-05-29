@@ -6,13 +6,12 @@ import {
 export function getAPostComments(postID) {
   return dispatch => {
     dispatch(get_APostCommentsSuccess());
-    //   request.get(`/posts/getComments?postID=${postID}`)
-    //       .then(response => {
+      // request.get(`/posts/getComments?postID=${postID}`)
+          // .then(response => {
 
-
-    //       })
-    //       .catch(error => {
-    //       })
+          // })
+          // .catch(error => {
+          // })
   }
 }
 

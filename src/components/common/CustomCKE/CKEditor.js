@@ -32,11 +32,9 @@ class Editor extends React.Component {
       autoEmbed_widget: 'nvd_math'
     };
 
+
     //inject bhtConfiguration to external file
-    if (this.props.inline)
-      window.createCKEInstance(this.editorID, bhtConfiguration, true)();
-    else
-      window.createCKEInstance(this.editorID, bhtConfiguration, false)();
+    window.createCKEInstance(this.editorID, bhtConfiguration, false)();
 
     window.CKEDITOR.instances[this.editorID].on('change', function () {
       let data = window.CKEDITOR.instances[this.editorID].getData();
@@ -184,7 +182,7 @@ class Editor extends React.Component {
 
   onInstanceReady = () => {
     document.getElementById('ck-editor-loader' + this.props.editorId).style.display = "none";
-    document.getElementById("cke-wrapper-" + this.props.editorId).style.border = "1px solid var(--gray)";
+    if (!this.props.inline) document.getElementById("cke-wrapper-" + this.props.editorId).style.border = "1px solid var(--gray)";
     if (this.props.onInstanceReady)
       this.props.onInstanceReady();
   }

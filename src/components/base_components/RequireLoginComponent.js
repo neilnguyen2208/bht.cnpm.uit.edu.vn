@@ -6,10 +6,12 @@ import React from "react";
 export class RequireLogin extends React.Component {
 
   handleClick = () => {
-    console.log(this.props.permissions)
-    authService.isGrantedAll(this.props.permissions)
-    if (authService.isGrantedAll(this.props.permissions)) {
-      this.props.expectedEvent();
+    if (
+      (this.props.isAny && authService.isGrantedAny(this.props.permissions))
+      || (authService.isGrantedAll(this.props.permissions))
+    ) {
+      if (this.props.expectedEvent)
+        this.props.expectedEvent();
     }
     else {
       openModal("confirmation",

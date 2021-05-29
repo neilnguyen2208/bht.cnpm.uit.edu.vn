@@ -83,9 +83,8 @@ class CommentReactionbar extends React.Component {
               </div>
             </RequireLogin>
           </div>
-          <div className="vertical-line" />
           <div className="comment-count-container">
-            <div className="comment-btn-texwt">
+            <div className="comment-btn-text">
               Trả lời
             </div>
             <div className="comment-btn-number">

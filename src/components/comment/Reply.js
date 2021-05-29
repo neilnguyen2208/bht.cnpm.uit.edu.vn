@@ -45,7 +45,6 @@ class Reply extends React.Component {
                     Tác giả
                </div>}
                 </div>
-                {/* <div className="comment-time">{timeAgo(this.props.createdTime)}</div> */}
               </div>
               <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`} />
             </div>

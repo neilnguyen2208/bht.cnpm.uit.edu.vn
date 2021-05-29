@@ -20,13 +20,14 @@ import {
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import CommentSection from 'components/comment/CommentSection'
-import Editor from 'components/common/CustomCKE/CKEditor.js'
 
 class PostDetail extends React.Component {
 
     componentDidMount() {
         this.props.getPostByID(this.props.match.params.id);
-
+        if (window.location.hash === "#cr-cmt") {
+            document.getElementById("cr-cmt").scrollIntoView();
+        }
     }
 
     componentWillUnmount() {
@@ -49,7 +50,6 @@ class PostDetail extends React.Component {
         ToC = ToC + "</div>";
         return ToC;
     }
-
     render() {
         return (
             <div>
@@ -90,14 +90,12 @@ class PostDetail extends React.Component {
                                             commentCount={this.props.currentPost.commentCount}
                                             likedStatus={this.props.currentPost.likeStatus}
                                             savedStatus={this.props.currentPost.savedStatus}
-                                        // type="DETAIL"
                                         />
                                     </div>
                                     : <Loader />}
-
-                                <CommentSection >
-                              
-                                </CommentSection >
+                                <div id="cr-cmt" />
+                                    <CommentSection
+                                        id={this.props.currentPost.id} />
 
                             </div>
                             <div>
@@ -112,14 +110,17 @@ class PostDetail extends React.Component {
                                 </div >
                             </div > */}
 
-                                {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
-                                    <RelativePosts title={"CÙNG TÁC GIẢ"} items={
-                                        this.props.sameAuthor} />
-                                    : <Loader />}
-                                {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
-                                    <RelativePosts title={"CÙNG DANH MỤC"}
-                                        items={this.props.sameCategory} /> : <Loader />
-                                }
+                                <div className="fake-relative-sidebar"></div>
+                                <div style={{ position: "fixed" }}>
+                                    {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
+                                        <RelativePosts title={"CÙNG TÁC GIẢ"} items={
+                                            this.props.sameAuthor} />
+                                        : <Loader />}
+                                    {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
+                                        <RelativePosts title={"CÙNG DANH MỤC"}
+                                            items={this.props.sameCategory} /> : <Loader />
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

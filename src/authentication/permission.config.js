@@ -5,5 +5,7 @@ export const Access = {
 //Post permission
 export const Post = {
     SetSaveStatus: "Post.SetSaveStatus",
-    SetLikeStatus: "Post.SetLikeStatus"
+    SetLikeStatus: "Post.SetLikeStatus",
+    CreateComment: "Post.CreateComment",
+    
 }

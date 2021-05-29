@@ -22,7 +22,6 @@
   padding-right: 3px;
   padding-left: 3px;
   cursor: pointer;
-
 }
 
 .like-btn-container:hover,
@@ -155,7 +154,6 @@
   height: 3px;
   margin-top: 2px;
   position: relative;
-
 }
 
 .like-rate-percent {
@@ -218,3 +216,13 @@
   width: auto;
   height: 16px;
 }
+
+.comment-count-container {
+  cursor: pointer;
+}
+
+.comment-count-container:hover {
+  opacity: 80%;
+}
+
+

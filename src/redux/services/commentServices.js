@@ -4,15 +4,15 @@ import {
 } from "redux/actions/commentAction.js";
 
 export function getAPostComments(postID) {
-  // return dispatch => {
-  //   dispatch(get_APostCommentsSuccess());
-  //   request.get(`/posts/getComments?postID=${postID}`)
-  //       .then(response => {
+  return dispatch => {
+    dispatch(get_APostCommentsSuccess());
+    //   request.get(`/posts/getComments?postID=${postID}`)
+    //       .then(response => {
 
 
-  //       })
-  //       .catch(error => {
-  //       })
-  // }
+    //       })
+    //       .catch(error => {
+    //       })
+  }
 }
 

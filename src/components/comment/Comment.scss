@@ -17,9 +17,9 @@
 /**
 * Lineas / Detalles
 -----------------------*/
-.comments-list:before {
+.comment-item:before {
   content: "";
-  width: 2px;
+  // width: 2px;
   height: 100%;
   background: var(--gray);
   position: absolute;
@@ -43,18 +43,6 @@
   border: none;
 }
 
-.comments-list:after {
-  content: "";
-  width: 16px;
-  height: 16px;
-  background: white;
-  position: absolute;
-  left: 17px;
-  top: 100%;
-  border-radius: 50%;
-  border: 2px solid var(--gray);
-}
-
 .reply-list:before,
 .reply-list:after {
   display: none;
@@ -70,13 +58,13 @@
   left: -3rem;
 }
 
-.comments-list li {
-  margin-bottom: 15px;
+.comments-list .reply-item {
+  margin-bottom: 8px;
   display: block;
   position: relative;
 }
 
-.comments-list li:after {
+.comments-list .reply-item:after {
   content: "";
   display: block;
   clear: both;
@@ -136,9 +124,9 @@
   border: 1px solid var(--gray);
 }
 
-.comments-list.cr .comment-box {
+.comments-list.cr .comment-box,
+.reply-item.cr .comment-box {
   border: none;
-
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -224,10 +212,9 @@
 
 .comment-box .comment-time {
   color: rgba(#363636, 0.6);
-  font-size: 0.8rem;
-  font-weight: 700;
   position: relative;
   padding: 0.25rem;
+  font-size: 0.8rem;
   padding-left: 0rem;
   font-family: "Arial";
   letter-spacing: -0.2px;
@@ -246,8 +233,9 @@
   content: "Tác giả";
   background: var(--blue);
   color: white;
+  height: fit-content;
   font-size: 0.7rem;
-  padding: 0.125rem 0.625rem;
+  padding: 0.1rem 0.6rem;
   font-weight: 700;
   border-radius: 3px;
   margin-left: 0.625rem;
@@ -282,12 +270,54 @@
 .comment.reaction-bar {
   padding-top: 0.25rem;
   padding-bottom: 0.625rem;
-border-top: 0px;
+  border-top: 0px;
   margin: auto;
   width: calc(100% - 20px);
 }
 
 .comment-content.ck-editor-output {
   padding: 10px;
+  padding-top: 5px;
+}
 
+#cke-wrapper-crt-cmmnt-cke {
+  border-radius: 3px !important;
+  border: none;
+}
+
+.comment-box .cke-wrapper.ckeditor {
+  border-radius: 3px !important;
+}
+
+.hs-label-container {
+  border-bottom: 1px solid var(--gray);
+  width: fit-content;
+  margin-bottom: 10px;
+  display: flex;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+.hs-label-container:hover {
+  opacity: 80%;
+}
+
+.hs-label {
+  color: var(--light-black);
+  font-family: "BarlowCondensed-Medium";
+  font-size: 1rem;
+  width: fit-content;
+  padding-bottom: 5px;
+  margin-right: 5px;
+}
+
+.hs-label-img {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+}
+
+.comment-box.edit {
+  border: none;
 }

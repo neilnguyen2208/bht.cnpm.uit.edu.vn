@@ -6,6 +6,22 @@ export const Access = {
 export const Post = {
     SetSaveStatus: "Post.SetSaveStatus",
     SetLikeStatus: "Post.SetLikeStatus",
-    CreateComment: "Post.CreateComment",
-    
+    Comment: {
+        Create: "Post.Comment.Create",
+        Edit: "Post.Comment.Edit",
+        Delete: "Post.Comment.Delete",
+        Reply: {
+            Create: "Post.Comment.Reply.Create",
+            Edit: "Post.Comment.Reply.Edit",
+            Delete: "Post.Comment.Reply.Delete",
+            SetLikeStatus: "Post.Comment.Reply.SetLikeStatus",
+        },
+        SetLikeStatus: "Post.Comment.SetLikeStatus",
+    }
+}
+
+export const PostFixedStatus = {
+    Deleted: "POST_DELETED",
+    Public: "POST_PUBLIC",
+    Private: "POST_PRIVATE",
 }

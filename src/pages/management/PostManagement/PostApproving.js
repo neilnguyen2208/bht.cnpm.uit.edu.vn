@@ -70,7 +70,6 @@ class PostApproving extends React.Component {
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        console.log("reload");
         if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,

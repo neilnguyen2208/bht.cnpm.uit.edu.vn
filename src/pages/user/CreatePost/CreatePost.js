@@ -447,9 +447,7 @@ class CreatePost extends React.Component {
                             </div>
                             <Editor
                                 editorId="cr-post-cke"
-                                placeholder='Start typing here...'
                                 onChange={this.handleEditorChange}
-                                data="<p>Nhập nội dung bài viết ...</p>"
                                 validation
                             />
                             <div className="form-error-label-container">

@@ -13,19 +13,19 @@
 
 @keyframes loader-qqa1psw9t4 {
   0% {
-    background: #5279db
+    background: #5279db;
   }
 
   12.5% {
-    background: #5279db
+    background: #5279db;
   }
 
   12.625% {
-    background: var(--gray)
+    background: var(--gray);
   }
 
   100% {
-    background: var(--gray)
+    background: var(--gray);
   }
 }
 
@@ -59,7 +59,6 @@
   box-sizing: content-box;
 }
 
-
 //content loader
 .timeline-item {
   background: #fff;
@@ -67,7 +66,6 @@
   border-radius: 3px;
   // margin: 0 auto;
   max-width: 100%;
-
 }
 
 .timeline-wrapper {
@@ -77,11 +75,11 @@
 
 @keyframes placeHolderShimmer {
   0% {
-    background-position: 0px 0
+    background-position: 0px 0;
   }
 
   100% {
-    background-position: 600px 0
+    background-position: 600px 0;
   }
 }
 
@@ -91,11 +89,12 @@
   animation-iteration-count: infinite;
   animation-name: placeHolderShimmer;
   animation-timing-function: linear;
-  background: #CCD1D9;
-  background: linear-gradient(to right, #f5f5f4 8%, #E7E6E6 18%, #f5f5f4 33%);
+  background: #ccd1d9;
+  background: linear-gradient(to right, #f5f5f4 8%, #e7e6e6 18%, #f5f5f4 33%);
   background-size: 800px 104px;
   height: 100%;
   position: relative;
+  border-radius: 5px;
 }
 
 .background-masker {
@@ -110,7 +109,7 @@
   position: relative;
   padding-top: 0.1rem;
   height: fit-content;
-  font-family: 'Roboto-Medium', sans-serif;
+  font-family: "Roboto-Medium", sans-serif;
   font-size: 0.7rem;
   user-select: none;
   min-width: 80px;

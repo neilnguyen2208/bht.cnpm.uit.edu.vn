@@ -13,7 +13,7 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 		resizable: CKEDITOR.DIALOG_RESIZE_NONE,
 		contents: [
 			{
-				id: 'NVD_CCEquationEditor',
+				id: 'NVD_CCEquationEditor' ,
 				label: 'nvd-eqn-editor',
 				elements:
 					[{
@@ -37,8 +37,6 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 
 						setup: function (widget) {
 							preview.setValue(widget.data.math);
-							console.log("preview setup");
-							console.log(widget);
 						}
 					},
 					{
@@ -51,11 +49,10 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 						type: 'textarea',
 						class: "nvd-math-txtr unique ppr-whn-ld-dn",
 						label: '',
-						id: 'nvd-eqtn-txtr',
+						id: 'nvd-eqtn-txtr' + window.CCounter,
 
 						onLoad: function () {
 							var that = this;
-							console.log("txtr loaded!")
 							if (!(CKEDITOR.env.ie && CKEDITOR.env.version === 8)) {
 								this.getInputElement().on('input', function () {
 									// Add \( and \) for preview.
@@ -70,15 +67,11 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 							// Remove \( and \).
 							this.setValue(CKEDITOR.plugins.nvd_math.trim(widget.data.math));
 							window._widget = widget;
-							console.log("setup");
-							console.log(widget);
 						},
 
 						commit: function (widget) {
 							// Add \( and \) to make TeX be parsed by MathJax by default.
 							window._widget = widget;
-							console.log("commit");
-							console.log(widget);
 							widget.setData('math', '\\(' + this.getValue() + '\\)');
 						}
 					},
@@ -87,8 +80,6 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 			}
 		],
 		onLoad: function () {
-			console.log("Dialog loaded!");
-
 			//embed toolbar 
 			EqEditor.embed('nvd_EquationToolbar' + window.CCounter, '', 'efull');
 
@@ -96,7 +87,6 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 		},
 
 		onShow: function () {
-			console.log("Dialog shown!");
 			var dialog = this;
 			var sel = editor.getSelection();
 			var image = sel.getStartElement().getAscendant('img', true);
@@ -141,7 +131,6 @@ function CConchange(n, fn) {
 	if (a) a.onchange = fn;
 }
 function CConclick(n, fn) {
-	console.log("CConlick initiated!", n, fn);
 	var a = CCgetId(n);
 	if (a) a.onclick = fn;
 }
@@ -716,7 +705,6 @@ function EqTextArea(preview, input, comment, download, intro) {
 		this.myRedo = 0;
 	};
 	this.undo = function (box) {
-		console.log("undo clicked!");
 		if (this.myRedo === 0) {
 			if (this.myUndo > 20) this.store_text.shift();
 			else this.myUndo++;
@@ -734,7 +722,6 @@ function EqTextArea(preview, input, comment, download, intro) {
 		this.equation_input.focus();
 	};
 	this.redo = function (box) {
-		console.log("redo clicked!");
 		if (this.myRedo > 0) {
 			this.myRedo--;
 			if (this.myRedo === 0 && CCgetId("redobutton")) CCgetId("redobutton").src = EDITOR_SRC + "/images/buttons/redo-x.gif";
@@ -2417,7 +2404,6 @@ var refineOnClickEvents = function () {
 	//add event for all element in nvd-matrix-panel area matrix
 	Array.from(document.querySelectorAll('#nvd-eqn-editor #nvd-matrix-panel area')).forEach(r => {
 		r.onclick = function () {
-			console.log('clicked');
 			switch (r.title) {
 				case "\\begin{matrix} ... \\end{matrix}":
 					EqEditor.makeArrayMatrix('', '', '')

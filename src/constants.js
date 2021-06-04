@@ -111,14 +111,4 @@ export const unHighlightAdminMenuItemList = [
   ...wallPageAdminActions
 ]
 
-
-//comment
-export const commentMenuItems = [
-  { id: 1, text: "Report", icon: report_icon, value: "REPORT_COMMENT" },
-  { id: 2, text: "Xoá", icon: trash_icon, value: "DELETE_COMMENT" },
-  { id: 1, text: "Chỉnh sửa", icon: edit_icon, value: "EDIT_COMMENT" },
-
-]
-
-
 export const DELAY_TIME = 700;

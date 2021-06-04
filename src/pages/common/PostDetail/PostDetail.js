@@ -20,6 +20,8 @@ import {
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import CommentSection from 'components/comment/CommentSection'
+import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
+import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 class PostDetail extends React.Component {
 
@@ -27,6 +29,10 @@ class PostDetail extends React.Component {
         this.props.getPostByID(this.props.match.params.id);
         if (window.location.hash === "#cr-cmt") {
             document.getElementById("cr-cmt").scrollIntoView();
+            if (getCKEInstance('crt-cmmnt-cke'))
+                getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
+                    getCKEInstance('crt-cmmnt-cke').focus();
+                })
         }
     }
 
@@ -92,10 +98,10 @@ class PostDetail extends React.Component {
                                             savedStatus={this.props.currentPost.savedStatus}
                                         />
                                     </div>
-                                    : <Loader />}
+                                    : <DocPostDetailLoader />}
                                 <div id="cr-cmt" />
-                                    <CommentSection
-                                        id={this.props.currentPost.id} />
+                                <CommentSection
+                                    id={this.props.currentPost.id} />
 
                             </div>
                             <div>

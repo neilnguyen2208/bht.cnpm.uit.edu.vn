@@ -1,8 +1,8 @@
-import React  from 'react';
+import React from 'react';
 import 'components/styles/Metadata.scss';
 import './Loader.scss';
 
-export function DocPostSummaryLoader() {
+export default function ReplyLoader() {
   return (
     <div className="item-container" >
       <div className="metadata" >

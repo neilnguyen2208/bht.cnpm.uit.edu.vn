@@ -90,7 +90,7 @@ import {
 
 import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 
-import { request } from 'utils/requestUtils';
+import { request, springAuthRequest } from 'utils/requestUtils';
 import { generateSearchParam } from 'utils/urlUtils'
 
 export function createAPost(data) {
@@ -304,12 +304,9 @@ export function getPostByID(id) {
         request.get(`/posts/${id}`)
             .then(response => {
                 let _response = response; //response without statistic
-
-
                 dispatch(getSameAuthorPosts(_response.data.id, _response.data.authorID));
                 dispatch(getSameCategoryPosts(_response.data.id, _response.data.categoryID));
-
-                request.get(`/posts/statistic?postIDs=${_response.data.id}`)
+                request.get(`/posts/statistics?postIDs=${_response.data.id}`)
                     .then(response => {
                         dispatch(get_PostByIDSuccess({ ..._response.data, ...response.data[0] }))
                     })
@@ -444,8 +441,6 @@ export function getSameAuthorPosts(postID, authorID) {
             .catch(error => { dispatch(get_RelativeSameAuthorPostsFailure(error)) })
     }
 }
-
-
 
 export function getSavedPosts(searchParamObject) {
     return dispatch => {

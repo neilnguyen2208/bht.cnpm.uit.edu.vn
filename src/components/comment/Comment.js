@@ -18,30 +18,52 @@ import 'components/styles/Metadata.scss'
 import Reply from './Reply.js'
 import CommentReactionbar from './CommentReactionbar';
 
-import { commentMenuItems } from 'constants.js';
+import commentMenu from './adapter/commentMenu';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu.js';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
+import CreateReply from './CreateReply'
+import down_arrow from 'assets/icons/12x12/dropdown_12x12.png'
+import Editor from 'components/common/CustomCKE/CKEditor.js';
+import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
+import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils.js';
+import authService from 'authentication/authServices.js';
+import { Post } from 'authentication/permission.config.js';
+import { request } from 'utils/requestUtils.js';
+const qs = require('qs');
+
 
 class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowAllReply: false
     }
+
+    //if isReplying true && replyindId null or not valid
+    this.replyId = null;
+    this.isReplying = false;
+    this.isEditMode = false;
+    this.isReplyLoadDone = false;
+    this.replyArray = [];
+    this.isShowAllReply = false;
+
+    this.commentMenu = commentMenu;
+    this.commentMenu[0].expectedEvent = this.props.type !== "PREVIEW" && this.onPopupMenuItemClick
+    this.commentMenu[1].expectedEvent = this.props.type !== "PREVIEW" && this.onPopupMenuItemClick
+    this.commentMenu[2].expectedEvent = this.props.type !== "PREVIEW" && this.onPopupMenuItemClick
   }
+
   componentDidMount() {
     const window = new JSDOM('').window;
     const DOMPurify = createDOMPurify(window);
-
     const clean = DOMPurify.sanitize(this.props.content);
-    if (document.querySelector(`#cmt-ctnt-${this.props.id}.comment-content`))
-      document.querySelector(`#cmt-ctnt-${this.props.id}.comment-content`).innerHTML = clean;
+    if (document.querySelector(`#cmt-ctnt-${this.props.commentId}.comment-content`))
+      document.querySelector(`#cmt-ctnt-${this.props.commentId}.comment-content`).innerHTML = clean;
 
   }
 
   onPopupMenuItemClick = (selectedItem) => {
-    if (selectedItem.value === "REPORT_POST") {
+    if (selectedItem.value === "REPORT_COMMENT") {
       openModal("form", {
         id: `rpp-form-modal`,//report post
         title: `REPORT BÀI VIẾT`,
@@ -58,7 +80,7 @@ class Comment extends React.Component {
               key: "reason"
             },
           ],
-        append: { id: this.props.id },
+        append: { id: this.props.commentId },
         validationCondition: {
           form: `#rpp-form`,
           rules: [
@@ -79,90 +101,285 @@ class Comment extends React.Component {
         }
       });
     }
+
+    if (selectedItem.value === "EDIT_COMMENT") {
+      if (!this.isEditMode) {
+        this.isEditMode = true;
+        this.setState({});
+      }
+
+    }
   }
 
+  createCommentReply = (replyId) => {
+    this.replyId = replyId ? replyId : null;
+    this.isReplying = true;
+    this.setState({});
+  }
+
+  onEditorReady = () => {
+    getCKEInstance("edit-comment-" + this.props.commentId).setData(this.props.content);
+  }
+
+  onEditorChange = () => {
+
+  }
+
+  onSubmitCommentClick = () => {
+
+  }
+
+  changeViewMode = () => {
+    //if current mode is edit mode => view mode.
+    if (this.isEditMode) {
+      const window = new JSDOM('').window;
+      const DOMPurify = createDOMPurify(window);
+      const clean = DOMPurify.sanitize(this.props.content);
+      if (document.querySelector(`#cmt-ctnt-${this.props.commentId}.comment-content`))
+        document.querySelector(`#cmt-ctnt-${this.props.commentId}.comment-content`).innerHTML = clean;
+      this.isEditMode = !this.isEditMode;
+      this.setState({});
+      return;
+    }
+    this.isEditMode = !this.isEditMode;
+    this.setState({});
+  }
+
+  onViewAllReplyClick = () => {
+
+    //if all reply is load
+    if (this.isReplyLoadDone) {
+      this.isShowAllReply = true;
+      this.setState({});
+      return;
+    }
+
+    //not use redux in this case
+    this.isReplyLoadDone = false;
+
+    request.get(`/posts/comments/${this.props.commentId}/children`)
+      .then(response_1 => {
+        let result_1 = response_1.data;
+        let IDarr = '';
+        result_1.map(item => IDarr += item.id + ",") //tao ra mang id moi
+        console.log(result_1);
+        request.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+          .then(result_2 => {
+            //merge summary array and statistic array
+            let finalResult = [];
+            this.isReplyLoadDone = true;
+            this.isShowAllReply = false;
+
+            for (let i = 0; i < result_1.length; i++) {
+              finalResult.push({
+                ...result_1[i],
+                ...(result_2.data.find((itmInner) => itmInner.id === result_1[i].id)),
+              }
+              );
+              //delete redundant key - value
+            }
+            this.replyArray = finalResult;
+            this.setState({});
+          }).catch((error) => {
+            this.isReplyLoadDone = false;
+            this.setState({});
+            console.log(error);
+          })
+
+      })
+      .catch(error => {
+        this.isReplyLoadDone = false;
+        this.setState({});
+        console.log(error);
+      })
+  }
 
   render() {
 
     //cipm: comment item popup menu
-
     let replyList = <></>;
-    if (this.props.replyArray.lenght <= 3 || this.state.isShowAllReply)
-      replyList = <div> {this.props.replyArray.map(reply => {
-        return <Reply id={reply.id}
+
+    //if replies has not been loaded && not click to show all reply
+    if ((!this.isReplyLoadDone || !this.isShowAllReply) && this.props.replyCount > 0)
+      replyList = <div className="hs-label-container" onClick={() => { this.onViewAllReplyClick() }}>
+        <div className="hs-label">Xem {this.props.replyCount} câu trả lời</div>
+        <img className="hs-label-img" src={down_arrow} alt="" />
+      </div>
+
+    //if load done and show all => show all comment's replies
+    if ((this.replyArray.length <= 3 || this.state.isShowAllReply) && this.isReplyLoadDone) {
+
+      //create a reply list on some condition
+      let subReplyList = <div> {this.replyArray.map(reply => {
+
+        // if user is creating a reply under this reply: show this reply and createReplyComponent under this reply
+        if (this.isReplying && this.replyId === reply.id)
+          return <div
+            key={reply.id}>
+            <Reply
+              replyId={reply.id}
+              authorDisplayName={reply.authorDisplayName}
+              authorAvatarURL={reply.authorAvatarURL}
+              idCmtAuthor={reply.isauthorDisplayName}
+              isContentAuthor={reply.isContentAuthor}
+              submitDtm={reply.submitDtm}
+              likeCount={reply.likeCount}
+              isLiked={reply.isLiked}
+              replyCount={reply.replyCount}
+              replyArray={reply.replyArray}
+              content={reply.content}
+              createReplyReply={(replyId) => this.createCommentReply(replyId)} />
+            <CreateReply replyId={reply.id} />
+          </div>
+
+        //if user is not creating a reply under this reply
+        return <Reply
+          replyId={reply.id}
           key={reply.id}
-          cmtAuthorName={reply.cmtAuthorName}
-          idCmtAuthor={reply.isCmtAuthorName}
+          authorDisplayName={reply.authorDisplayName}
+          authorAvatarURL={reply.authorAvatarURL}
+          idCmtAuthor={reply.isauthorDisplayName}
           isContentAuthor={reply.isContentAuthor}
-          createdTime={reply.createdTime}
+          submitDtm={reply.submitDtm}
           likeCount={reply.likeCount}
           isLiked={reply.isLiked}
           replyCount={reply.replyCount}
           replyArray={reply.replyArray}
           content={reply.content}
+          createReplyReply={(replyId) => this.createCommentReply(replyId)}
         />
       })}
-
       </div>
-    else {
-      let subReplyList = this.props.replyArray.slice(0, 3).map(reply => {
-        return <Reply id={reply.id}
-        key={reply.id}
 
-          cmtAuthorName={reply.cmtAuthorName}
-          idCmtAuthor={reply.isCmtAuthorName}
-          isContentAuthor={reply.isContentAuthor}
-          createdTime={reply.createdTime}
-          likeCount={reply.likeCount}
-          isLiked={reply.isLiked}
-          replyCount={reply.replyCount}
-          replyArray={reply.replyArray}
-          content={reply.content}
-        />
-      })
-
-      replyList = <div>
-        {subReplyList}
-        <div className="link-label-s" onClick={() => { }}>Xem thêm {this.props.replyCount - 3} câu trả lời</div>
-      </div>
+      //if is show all reply and reply array has length above 3
+      if (this.replyArray.length > 3)
+        replyList = <div>
+          {subReplyList}
+          <div className="hs-label-container" onClick={() => { this.setState({ isShowAllReply: false }) }}>
+            <div className="hs-label"> Ẩn bớt {this.props.replyCount - 3} câu trả lời </div>
+            <img className="hs-label-img" style={{ transform: "rotate(180deg)" }} src={down_arrow} alt="" />
+          </div>
+        </div>;
+      else
+        replyList = subReplyList;
     }
 
+    //if not show all reply and reply array has more than 3 replies
+    else {
+      if (this.isReplyLoadDone) {
+        let subReplyList = this.replyArray.slice(0, 3).map(reply => {
+          if (this.isReplying && this.replyId === reply.id)
+            return <div
+              key={reply.id}>
+              <Reply
+                replyId={reply.id}
+                authorDisplayName={reply.authorDisplayName}
+                authorAvatarURL={reply.authorAvatarURL}
+                idCmtAuthor={reply.isauthorDisplayName}
+                isContentAuthor={reply.isContentAuthor}
+                submitDtm={reply.submitDtm}
+                likeCount={reply.likeCount}
+                isLiked={reply.isLiked}
+                replyCount={reply.replyCount}
+                replyArray={reply.replyArray}
+                content={reply.content}
+                createReplyReply={(replyId) => this.createCommentReply(replyId)} />
+              <CreateReply replyId={reply.id} />
+            </div>
+
+          return <Reply
+            replyId={reply.id}
+            key={reply.id}
+            authorDisplayName={reply.authorDisplayName}
+            authorAvatarURL={reply.authorAvatarURL}
+
+            idCmtAuthor={reply.isauthorDisplayName}
+            isContentAuthor={reply.isContentAuthor}
+            submitDtm={reply.submitDtm}
+            likeCount={reply.likeCount}
+            isLiked={reply.isLiked}
+            replyCount={reply.replyCount}
+            replyArray={reply.replyArray}
+            content={reply.content}
+            createReplyReply={(replyId) => this.createCommentReply(replyId)}
+          />
+        })
+        replyList = <div>
+          {subReplyList}
+          <div className="hs-label-container" onClick={() => { this.setState({ isShowAllReply: true }) }}>
+            <div className="hs-label">Xem thêm {this.props.replyCount - 3} câu trả lời</div>
+            <img className="hs-label-img" src={down_arrow} alt="" />
+          </div>
+        </div>
+      }
+    }
 
     return (
-      <li>
+      <div className="comment-item" id={`comment-item-` + this.props.commentId}>
         <div className="comment-main-level">
           <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
-
-          <div className="comment-box">
-            <div className="comment-head">
-              <div>
-                <div className="d-flex" >
-                  <Link className="comment-name" to  = {"user/1"}>{this.props.cmtAuthorName}</Link>
-                  {this.props.isContentAuthor && <div className="by-author-label">
-                    Tác giả
-                  </div>}
-                </div>
-                {/* <div className="comment-time">{timeAgo(this.props.createdTime)}</div> */}
+          {/* On view condition */}
+          {this.isEditMode ?
+            <div className="comment-box edit">
+              <Editor editorId={"edit-comment-" + this.props.commentId}
+                onChange={() => this.onEditorChange()}
+                onInstanceReady={() => this.onEditorReady()}
+                height={120}
+                autoGrow_maxHeight={200}
+                autoGrow_minHeight={120}
+                config={CommentCKEToolbarConfiguration}
+              />
+              <div className="j-c-end mg-top-5px">
+                <button className="white-button mg-right-5px" onClick={() => { this.changeViewMode() }}>Huỷ</button>
+                <button className="blue-button" onClick={() => this.onSubmitCommentClick()}>Lưu</button>
               </div>
-              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenuItems} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.id}`} />
+            </div>
+            : <></>
+          }
+          <div className="comment-box" style={this.isEditMode ? { display: "none" } : { display: "block" }}>
+            <div className="comment-head">
+              <div className="d-flex" >
+                <Link className="comment-name" to={`user/${this.props.authorID}`}>{this.props.authorDisplayName}</Link>
+                {this.props.isContentAuthor && <div className="by-author-label">
+                  Tác giả
+                  </div>}
+              </div>
+              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.commentMenu} id={`cipm-${this.props.commentId}`} />
             </div>
             <div>
               {/* comment content */}
-              <div><div className="comment-content ck-editor-output" id={"cmt-ctnt-" + this.props.id} />
-                <CommentReactionbar likeCount={this.props.likeCount} createdTime={this.props.createdTime} />
-              </div>
+              <div className="comment-content ck-editor-output" id={"cmt-ctnt-" + this.props.commentId} />
+
+              {/* comment reaction bar */}
+              <CommentReactionbar
+                componentId={"cmmt-rctn-br" + this.props.commentId}
+                commentId={this.props.commentId}
+                likeCount={this.props.likeCount}
+                submitDtm={this.props.submitDtm}
+                createCommentReply={() => this.createCommentReply()}
+                viewAllReply={() => { this.viewAllReply() }}
+              />
             </div>
           </div>
-          <div style={{ height: "0px", width: "0px" }} >
-            <div className="triangle-with-shadow comment" />
-          </div>
-        </div>
+          {/* On edit condition */}
+
+        </div >
 
         {/* Replies of this comment */}
-        <ul className="comments-list reply-list">
+        {
+          (this.isReplying && this.replyId === null) ?
+            <div className="comments-list reply-list">
+              <CreateReply commentId={this.props.commentId} componentId={"cr-rpl-" + this.props.commentId} />
+            </div>
+            : <></>
+        }
+        <div className="comments-list reply-list">
           {replyList}
-        </ul>
-      </li >
+        </div>
+        <div style={{ height: "0px", width: "0px" }} >
+          <div className="triangle-with-shadow comment" />
+        </div>
+      </div >
     );
   }
 }
@@ -171,6 +388,8 @@ const mapStateToProps = (state) => {
   return {
     //report
     // isHaveReported: state.post.isHaveReported
+
+
   };
 }
 

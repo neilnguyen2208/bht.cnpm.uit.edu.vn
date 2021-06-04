@@ -21,7 +21,7 @@ const initKeycloak = (onAuthenticatedCallback) => {
                 // console.log(_kc.token);
                 // console.log("Refresh token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.refreshTokenParsed.exp);
                 // console.log("User name:", _kc.preferred_username);
-                console.log("Realm roles:", _kc.realmAccess.roles);
+                // console.log("Realm roles:", _kc.realmAccess.roles);
                 // console.log("Resource roles:", _kc.resourceAccess.roles);
 
             }// } else {

@@ -3,6 +3,7 @@ import { CKEToolbarConfiguration, codeSnippet_languages, codeSnippet_theme, styl
 import Loader from 'components/common/Loader/Loader'
 import React from 'react';
 import './CKEditor.scss';
+import { getCKEInstance } from "./CKEditorUtils";
 
 class Editor extends React.Component {
 
@@ -29,7 +30,11 @@ class Editor extends React.Component {
       stylesSet: styleConfig,
       codeSnippet_theme: codeSnippet_theme,
       codeSnippet_languages: codeSnippet_languages,
-      autoEmbed_widget: 'nvd_math'
+      autoEmbed_widget: 'nvd_math',
+      height: this.props.height ? this.props.height : 400,
+      autoGrow_maxHeight: this.props.autoGrow_maxHeight ? this.props.autoGrow_maxHeight : 400,
+      autoGrow_minHeight: this.props.autoGrow_minHeight ? this.props.autoGrow_minHeight : 400,
+      autoGrow_bottomSpace: 30
     };
 
 
@@ -135,7 +140,6 @@ class Editor extends React.Component {
 
     if (this.props.onDestroy)
       this.props.onDestroy();
-    console.log(this.editorID + " has been destroyed!");
   }
   validate = () => {
 
@@ -183,6 +187,7 @@ class Editor extends React.Component {
   onInstanceReady = () => {
     document.getElementById('ck-editor-loader' + this.props.editorId).style.display = "none";
     if (!this.props.inline) document.getElementById("cke-wrapper-" + this.props.editorId).style.border = "1px solid var(--gray)";
+
     if (this.props.onInstanceReady)
       this.props.onInstanceReady();
   }
@@ -204,7 +209,7 @@ class Editor extends React.Component {
         <textarea className="fake-cke" id={this.editorID} name={this.editorID} cols="100" rows="6" defaultValue={this.props.myData}>
         </textarea>
         <div id={"ck-editor-loader" + this.props.editorId}>
-          <Loader />
+          {/* <Loader /> */}
         </div>
         {this.props.validation ? <div>
           <div id={"d-e-cke-wrapper-" + this.props.editorId} style={{ "display": "none" }} ></div>

@@ -24,6 +24,7 @@ import { formatNumber } from 'utils/miscUtils.js'
 //permissions config
 import { Post } from 'authentication/permission.config.js'
 import authService from 'authentication/authServices';
+import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 class NormalReactionbar extends React.Component {
 
@@ -93,6 +94,9 @@ class NormalReactionbar extends React.Component {
   onCommentBtnClick = () => {
     document.getElementById("cr-cmt") &&
       document.getElementById("cr-cmt").scrollIntoView()
+    if (getCKEInstance('crt-cmmnt-cke')) {
+      getCKEInstance('crt-cmmnt-cke').focus()
+    }
   }
 
   render() {
@@ -124,7 +128,7 @@ class NormalReactionbar extends React.Component {
     }
 
     return (
-      <div className="reaction-bar"  style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
+      <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
         <div className="d-flex mg-top-5px">
 
           <RequireLogin permissions={[Post.SetLikeStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
@@ -145,7 +149,7 @@ class NormalReactionbar extends React.Component {
           <div className="vertical-line" />
 
           {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
-            <RequireLogin permissions={[Post.CreateComment]}
+            <RequireLogin permissions={[Post.Comment.Create]}
               expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
               <div className="comment-count-container">
                 <div className="comment-btn-text">
@@ -157,8 +161,8 @@ class NormalReactionbar extends React.Component {
               </div>
             </RequireLogin>
             :
-            <RequireLogin permissions={[Post.CreateComment]}>
-              <Link to={"/post-content/" + this.props.id + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.CreateComment) && e.preventDefault()}>
+            <RequireLogin permissions={[Post.Comment.Create]}>
+              <Link to={"/post-content/" + this.props.id + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.Comment.Create) && e.preventDefault()}>
                 <div className="comment-count-container">
                   <div className="comment-btn-text">
                     Bình luận

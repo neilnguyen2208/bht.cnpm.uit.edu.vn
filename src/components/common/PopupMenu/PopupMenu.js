@@ -2,6 +2,7 @@ import React from "react";
 import { ClickAwayListener } from '@material-ui/core';
 import "./PopupMenu.scss"
 import ShowOnPermission from 'components/base_components/ShowOnPermission'
+import { RequireLogin } from "components/base_components/RequireLoginComponent";
 export default class PopupMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -51,8 +52,6 @@ export default class PopupMenu extends React.Component {
 
     handleMenuItemClick = (menuItem) => {
         //pass to parent
-
-
         let { id, value } = menuItem;
         if (this.props.onMenuItemClick)
             this.props.onMenuItemClick({ id, value });
@@ -65,8 +64,8 @@ export default class PopupMenu extends React.Component {
 
     render() {
         let items = this.props.items.map(menuItem => {
-            if (menuItem.permissions)
-                return <ShowOnPermission permissions={menuItem.permissions}>
+            if (menuItem.permissions && menuItem.showOnPermission)
+                return <ShowOnPermission permissions={menuItem.permissions} >
                     <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                         id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
                         key={menuItem.id}
@@ -96,6 +95,37 @@ export default class PopupMenu extends React.Component {
                         </div>
                     </div >
                 </ShowOnPermission>
+            if (menuItem.permissions && !menuItem.showOnPermission)
+                return <RequireLogin permissions={menuItem.permissions}
+                    expectedEvent={() => this.handleMenuItemClick(menuItem)}>
+                    <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
+                        id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
+                        key={menuItem.id}>
+                        <div className='d-flex'>
+                            {menuItem.tip ?
+                                <div className='d-flex'>
+                                    {menuItem.icon ? <img className='popup-menu-icon' style={{
+                                        height: "27px",
+                                        paddingTop: "7px"
+                                    }} alt="" src={menuItem.icon} /> : <></>}
+                                    < div >
+                                        <div className='popup-menu-text'>{menuItem.text}</div>
+                                        <div className='popup-menu-tip'>{menuItem.tip}</div>
+                                    </div>
+                                </div>
+                                :
+                                <div className='d-flex'>
+                                    {menuItem.icon ? <img className='popup-menu-icon' style={menuItem.style ? menuItem.style : {
+                                        height: "23px",
+                                        paddingTop: "0px",
+                                        paddingBottom: "3px"
+                                    }} alt="" src={menuItem.icon} /> : <></>}
+                                    <div className='popup-menu-text'>{menuItem.text}</div>
+                                </div>
+                            }
+                        </div>
+                    </div >
+                </RequireLogin>
 
             return <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                 id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
@@ -129,7 +159,7 @@ export default class PopupMenu extends React.Component {
         )
 
         return (
-            <div className='d-flex pos-relative' >
+            <div className='d-flex pos-relative' style = {{zIndex: 2}} >
                 < ClickAwayListener onClickAway={() => { this.closeMenu() }}>
                     <div>
                         <div className="popup-menu" id={"pm-" + this.props.id} //pm: popup menu

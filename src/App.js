@@ -58,6 +58,7 @@ import ModalBigManager from 'components/common/Modal/ModalBigManager'
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute'
 import Secured from 'components/base_components/Sercured.js'
 import { Access } from "authentication/permission.config";
+import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 const App = () => {
     return (
@@ -124,7 +125,7 @@ const App = () => {
                         {/* verify email url */}
                         <Route exact path="/verify" component={VerifyRegisterMail} />
                         <Route exact path="/verify-forgot-password" component={VerifyMailForgotPassword} />
-
+                        <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} />
                         <Route exact path="/secured" component={Secured} />
                     </Switch>
                     <Footer />

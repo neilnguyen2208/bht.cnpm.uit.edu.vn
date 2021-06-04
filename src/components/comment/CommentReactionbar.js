@@ -17,6 +17,7 @@ import './Comment.scss'
 
 //utils
 import { formatNumber, timeAgo } from 'utils/miscUtils.js'
+import { Post } from 'authentication/permission.config';
 
 class CommentReactionbar extends React.Component {
 
@@ -39,27 +40,33 @@ class CommentReactionbar extends React.Component {
     if (this.props.likedStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPost(this.props.id);
+        // this.props.unLikeAPost(this.props.id);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPost(this.props.id);
+        // this.props.likeAPost(this.props.id);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        this.props.likeAPost(this.props.id);
+        // this.props.likeAPost(this.props.id);
       } else {
-        this.props.unLikeAPost(this.props.id);
+        // this.props.unLikeAPost(this.props.id);
         this.likeCount = this.props.likeCount;
       }
     }
     this.setState({ isLiked: tmpLike });
   }
 
+  createCommentReply = () => {
+    // append create reply component via  
+    console.log("Create rpely in reactionbar called!");
+    this.props.createCommentReply();
+  }
+
   render() {
-    // 
+    //props.componentId: id of component; props.commentId: id of comment
     //#region like, unlike buttons
     let likeBtn = <div></div>;
 
@@ -74,27 +81,24 @@ class CommentReactionbar extends React.Component {
     return (
       <div className="comment reaction-bar" >
         <div style={{ display: "flex" }}>
-          < div >
-            <RequireLogin permissions={["Page.Post.Comment"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-              <div className="like-btn-container"
-              >
-                <div className="d-flex"> {likeBtn}</div>
-                <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+          <RequireLogin permissions={[Post.Comment.SetLikeStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+            <div className="like-btn-container">
+              <div className="d-flex"> {likeBtn}</div>
+              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+            </div>
+          </RequireLogin>
+          <RequireLogin permissions={[Post.Comment.Reply.Create]} expectedEvent={this.props.type !== "PREVIEW" && this.createCommentReply} >
+            <div className="comment-count-container">
+              <div className="comment-btn-text">
+                Trả lời
+            </div>
+              <div className="comment-btn-number">
+                {this.props.commentCount && formatNumber(this.props.commentCount)}
               </div>
-            </RequireLogin>
-          </div>
-          <div className="comment-count-container">
-            <div className="comment-btn-text">
-              Trả lời
             </div>
-            <div className="comment-btn-number">
-              {this.props.commentCount && formatNumber(this.props.commentCount)}
-            </div>
-          </div>
+          </RequireLogin>
         </div>
-
-        <div className="comment-time">{timeAgo(this.props.createdTime)}</div>
-
+        <div className="comment-time">{timeAgo(this.props.submitDtm)}</div>
       </div >
     );
   }

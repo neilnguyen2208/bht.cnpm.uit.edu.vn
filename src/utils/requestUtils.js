@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { openBLModal } from 'redux/services/modalServices';
 import authService from 'authentication/authServices.js'
+const qs = require('qs');
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;
 export const remoteServiceBaseUrl = process.env.REACT_APP_REMOTE_SERVICE_BASE_URL;
@@ -9,6 +10,11 @@ export const request = axios.create({
   baseURL: remoteServiceBaseUrl,
   headers: {
     'Content-Type': 'application/json',
+  },
+  paramsSerializer: function (params) {
+    return qs.stringify(params, {
+      encode: false,
+    });
   },
 }
 );
@@ -66,7 +72,7 @@ multipartRequest.interceptors.response.use(
   }
 );
 
-export const springRequest = axios.create({
+export const springAuthRequest = axios.create({
   baseURL: remoteServiceBaseUrl,
   headers: {
     'Content-Type': 'application/json',
@@ -74,17 +80,30 @@ export const springRequest = axios.create({
 }
 );
 
-springRequest.interceptors.request.use((config) => {
-  if (authService.isLoggedIn()) {
-    const callback = () => {
-      config.headers.Authorization = `Bearer ${authService.getToken()}`;
-      return Promise.resolve(config);
-    };
-    return authService.updateToken(callback);
-  }
-});
+springAuthRequest.interceptors.request.use(
+  (config) => {
+    //if logged in
+    if (authService.isLoggedIn()) {
+      const callback = () => {
+        config.headers.Authorization = `Bearer ${authService.getToken()}`;
+        return Promise.resolve(config);
+      };
 
-springRequest.interceptors.response.use(
+      //if token is expire
+      return authService.updateToken(callback);
+    }
+
+    //if not logged in => request without API
+    // config.headers.Authorization = `Bearer ${authService.getToken()}`;
+    // return Promise.resolve(config);
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+
+springAuthRequest.interceptors.response.use(
   response => {
     return response;
   },

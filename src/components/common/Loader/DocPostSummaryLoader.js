@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import 'components/styles/Metadata.scss';
 import './Loader.scss';
 
@@ -80,8 +80,6 @@ export function DocPostSummaryLoader() {
             <div className="animated-background" style={{ width: "60px", height: "20px" }}></div>
           </div>
         </div>
-            :
-            <></>
       </div>
     </div >
   );

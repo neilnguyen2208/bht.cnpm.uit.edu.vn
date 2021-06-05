@@ -25,6 +25,10 @@ import {
   RESOLVE_A_POST_COMMENT_RESET,
   RESOLVE_A_POST_COMMENT_SUCCESS,
   RESOLVE_A_POST_COMMENT_FAILURE,
+  CREATE_A_PC_REPLY_SUCCESS,
+  CREATE_A_PC_REPLY_RESET,
+  CREATE_A_PC_REPLY_FAILURE
+
 } from "../constants.js"
 
 //new document
@@ -56,6 +60,7 @@ export function create_APostCommentReset() {
 }
 
 export function create_APostCommentSuccess(data) {
+  console.log(data)
   return {
     type: CREATE_A_POST_COMMENT_SUCCESS,
     payload: data
@@ -69,6 +74,26 @@ export function create_APostCommentFailure(error) {
   }
 }
 
+export function create_APostCommentReplyReset() {
+  return {
+    type: CREATE_A_PC_REPLY_RESET
+  }
+}
+
+export function create_APostCommentReplySuccess(data) {
+  console.log(data)
+  return {
+    type: CREATE_A_PC_REPLY_SUCCESS,
+    payload: data
+  }
+}
+
+export function create_APostCommentReplyFailure(error) {
+  return {
+    type: CREATE_A_PC_REPLY_FAILURE,
+    payload: error
+  }
+}
 
 export function post_LikeAPostCommentRequest(data) {
   return {
@@ -113,89 +138,90 @@ export function delete_UnLikeAPostCommentFailure(data) {
 }
 
 
-export function delete_APostReset(data) {
+export function delete_APostCommentReset(data) {
   return {
     type: DELETE_A_POST_COMMENT_RESET,
     request: data
   }
 }
 
-export function delete_APostSuccess(data) {
+export function delete_APostCommentSuccess(data) {
   return {
     type: DELETE_A_POST_COMMENT_SUCCESS,
     payload: data
   }
 }
 
-export function delete_APostFailure() {
+export function delete_APostCommentFailure() {
   return {
     type: DELETE_A_POST_COMMENT_FAILURE
   }
 }
 
-export function put_EditAPostReset(data) {
+export function put_EditAPostCommentReset(data) {
   return {
     type: EDIT_A_POST_COMMENT_RESET
   }
 }
 
-export function put_EditAPostSuccess(data) {
+export function put_EditAPostCommentSuccess(data) {
+  console.log("action fired")
   return {
     type: EDIT_A_POST_COMMENT_SUCCESS,
     payload: data
   }
 }
 
-export function put_EditAPostFailure() {
+export function put_EditAPostCommentFailure() {
   return {
     type: EDIT_A_POST_COMMENT_FAILURE
   }
 }
 
 
-export function post_ReportAPostReset() {
+export function post_ReportAPostCommentReset() {
   return {
     type: REPORT_A_POST_COMMENT_RESET
   }
 }
 
-export function post_ReportAPostSuccess() {
+export function post_ReportAPostCommentSuccess() {
   return {
     type: REPORT_A_POST_COMMENT_SUCCESS
   }
 }
 
-export function post_ReportAPostFailure() {
+export function post_ReportAPostCommentFailure() {
   return {
     type: REPORT_A_POST_COMMENT_FAILURE
   }
 }
 
-// export function get_PendingPostsRequest() {
+// export function get_PendingPostCommentsRequest() {
 //   return { type: GET_PENDING_POSTS_REQUEST }
 // }
 
-// export function get_PendingPostsSuccess(data) {
+// export function get_PendingPostCommentsSuccess(data) {
 //   return { type: GET_PENDING_POSTS_SUCCESS, payload: data }
 // }
 
-// export function get_PendingPostsFailure(data) {
+// export function get_PendingPostCommentsFailure(data) {
 //   return { type: GET_PENDING_POSTS_FAILURE }
 // }
 
-export function post_ResolveAPostReset() {
+export function post_ResolveAPostCommentReset() {
   return {
     type: RESOLVE_A_POST_COMMENT_RESET
   }
 }
 
-export function post_ResolveAPostSuccess() {
+export function post_ResolveAPostCommentSuccess() {
   return {
     type: RESOLVE_A_POST_COMMENT_SUCCESS
   }
 }
 
-export function post_ResolveAPostFailure() {
+export function post_ResolveAPostCommentFailure() {
   return {
     type: RESOLVE_A_POST_COMMENT_FAILURE
   }

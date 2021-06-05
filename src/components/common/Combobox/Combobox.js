@@ -61,8 +61,8 @@ export default class Combobox extends React.Component {
     onBlur = () => {
         this.closeAllOption();
 
-        if (this.props.validation)
-            this.validate();
+        // if (this.props.validation)
+            // this.validate();
     }
 
     handleComboboxClick = (e, dropdown_element_id, container_id) => {

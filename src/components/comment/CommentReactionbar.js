@@ -18,6 +18,7 @@ import './Comment.scss'
 //utils
 import { formatNumber, timeAgo } from 'utils/miscUtils.js'
 import { Post } from 'authentication/permission.config';
+import { likeAPostComment, unLikeAPostComment } from 'redux/services/commentServices'
 
 class CommentReactionbar extends React.Component {
 
@@ -32,27 +33,27 @@ class CommentReactionbar extends React.Component {
     let tmpLike = this.state.isLiked;
 
     if (tmpLike === 0)
-      if (this.props.likedStatus) tmpLike = 1;
+      if (this.props.likeStatus) tmpLike = 1;
       else tmpLike = -1;
 
     tmpLike = - tmpLike;
 
-    if (this.props.likedStatus) {
+    if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        // this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPostComment(this.props.commentId);
       }
       else {
         this.likeCount = this.props.likeCount;
-        // this.props.likeAPost(this.props.id);
+        this.props.likeAPostComment(this.props.commentId);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        // this.props.likeAPost(this.props.id);
+        this.props.likeAPostComment(this.props.commentId);
       } else {
-        // this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPostComment(this.props.commentId);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -71,7 +72,7 @@ class CommentReactionbar extends React.Component {
     let likeBtn = <div></div>;
 
     //render likeBtn
-    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likedStatus)) {
+    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likeStatus)) {
       likeBtn = <img className="post-like-btn" alt="like" src={liked_icon}></img>
     }
     else {
@@ -107,10 +108,13 @@ class CommentReactionbar extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  likeAPostComment, unLikeAPostComment
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentReactionbar));

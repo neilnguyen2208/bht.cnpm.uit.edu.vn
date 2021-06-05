@@ -23,7 +23,10 @@ import {
   REPORT_A_POST_COMMENT_FAILURE,
   RESOLVE_A_POST_COMMENT_RESET,
   RESOLVE_A_POST_COMMENT_FAILURE,
-  RESOLVE_A_POST_COMMENT_SUCCESS
+  RESOLVE_A_POST_COMMENT_SUCCESS,
+  CREATE_A_PC_REPLY_FAILURE,
+  CREATE_A_PC_REPLY_SUCCESS,
+  CREATE_A_PC_REPLY_RESET
 
 } from "../constants.js"
 
@@ -142,13 +145,16 @@ const initialState = {
     data: commentDTOs,
     totalPages: 5,
     totalElements: 23,
-    isHaveDeleted: false,
-    isHaveEdited: false,
-    isHaveReported: false,
-    isHaveApppoved: false,
-    isHaveResolved: false,
-    isHaveCreated: false,
-  }
+  },
+  isHaveDeleted: false,
+  isHaveEdited: false,
+  isHaveReported: false,
+  isHaveApppoved: false,
+  isHaveResolved: false,
+  isHaveCreated: false,
+  createdCommentId: null,
+  editedCommentId: null,
+  
 }
 
 function CommentReducer(state = initialState, action) {
@@ -176,16 +182,36 @@ function CommentReducer(state = initialState, action) {
     }
 
     case CREATE_A_POST_COMMENT_RESET: return {
-      ...state, isHaveCreated: false
+      ...state, isHaveCreated: false,
     }
 
-    case CREATE_A_POST_COMMENT_SUCCESS: return {
-      ...state, isHaveCreated: true
+    case CREATE_A_POST_COMMENT_SUCCESS:
+      return {
+        ...state, isHaveCreated: true,
+        createdCommentId: action.payload,
+      }
 
-    }
-
+    // maybe use internal state to handle
     case CREATE_A_POST_COMMENT_FAILURE: return {
-      ...state, isHaveCreated: false
+      ...state, isHaveCreated: false,
+      createdCommentId: null,
+    }
+
+    case CREATE_A_PC_REPLY_RESET: return {
+      ...state,
+      isHaveCreated: false,
+    }
+
+    case CREATE_A_PC_REPLY_SUCCESS:
+      return {
+        ...state,
+        isHaveCreated: true,
+        createdCommentId: action.payload,
+      }
+
+    case CREATE_A_PC_REPLY_FAILURE: return {
+      ...state, isHaveCreated: false,
+      createdCommentId: null,
     }
 
     //like post comment

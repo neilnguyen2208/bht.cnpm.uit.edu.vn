@@ -179,8 +179,8 @@ class Editor extends React.Component {
   onBlur = () => {
     if (document.getElementById("cke-wrapper-" + this.props.editorId)) {
       document.getElementById("cke-wrapper-" + this.props.editorId).classList.remove("focus");
-      if (this.props.validation)
-        this.validate();
+      // if (this.props.validation)
+        // this.validate();
     }
   }
 

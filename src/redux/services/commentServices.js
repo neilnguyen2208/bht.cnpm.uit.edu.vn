@@ -14,20 +14,27 @@ import {
   delete_UnLikeAPostCommentSuccess,
   delete_UnLikeAPostCommentFailure,
 
+  delete_APostCommentReset,
+  delete_APostCommentSuccess,
+  delete_APostCommentFailure,
+  put_EditAPostCommentReset,
+  put_EditAPostCommentSuccess,
+  put_EditAPostCommentFailure
+
 } from "redux/actions/commentAction.js";
 import { request } from "utils/requestUtils";
+import { openBLModal } from "./modalServices";
 
 export function getAPostComments(postId, page) {
   return dispatch => {
     dispatch(get_APostCommentsRequest());
-    request.get(`/posts/${postId}/comments?page=${page}`)
+    request.get(`/posts/${postId}/comments?page=${page}&sort=submitDtm,desc`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
         result_1.postCommentDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
         request.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
           .then(result_2 => {
-            console.log(result_2);
             //merge summary array and statistic array
             let finalResult = [];
 
@@ -49,28 +56,25 @@ export function getAPostComments(postId, page) {
   }
 }
 
-export function editAPostComments(commentId) {
+export function editAPostComment(commentId, data) {
   return dispatch => {
-    dispatch(get_APostCommentsRequest());
-    request.put(`/posts/comments/${commentId}`)
+    dispatch(put_EditAPostCommentReset());
+    request.put(`/posts/comments/${commentId}`, JSON.stringify(data))
       .then(response => {
-        console.log(response)
-        dispatch(get_APostCommentsSuccess(response));
-
+        dispatch(put_EditAPostCommentSuccess(response.data.id));
       })
       .catch(error => {
-        dispatch(get_APostCommentFailure(error)); //
+        dispatch(put_EditAPostCommentFailure(error)); //
       })
   }
 }
 
-//if parentId !== null => create reply, else => create comment 
 export function createAPostComment(postId, content) {
   return dispatch => {
     dispatch(create_APostCommentReset());
     request.post(`/posts/` + postId + `/comments`, JSON.stringify(content))
       .then(response => {
-        dispatch(create_APostCommentSuccess(response));
+        dispatch(create_APostCommentSuccess(response.data.id));
       })
       .catch(error => {
         dispatch(create_APostCommentFailure(error)); //
@@ -81,7 +85,7 @@ export function createAPostComment(postId, content) {
 export function likeAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(post_LikeAPostCommentRequest(commentId))
-    request.post(`/posts/${commentId}/likeStatus`)
+    request.post(`/posts/comments/${commentId}/likeStatus`)
       .then(response => {
         // response.data khong co data gi nen thoi, 
         //do can cap nhat cac state khac nhau o cac trang khac nhau nen can them mot bien type
@@ -94,7 +98,7 @@ export function likeAPostComment(commentId) { //maybe use modal later
 export function unLikeAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(delete_UnLikeAPostCommentRequest())
-    request.delete(`/posts/${commentId}/likeStatus`)
+    request.delete(`/posts/comments/${commentId}/likeStatus`)
       .then(response => {
         dispatch(delete_UnLikeAPostCommentSuccess(response.data));
       }
@@ -102,3 +106,28 @@ export function unLikeAPostComment(commentId) { //maybe use modal later
   }
 }
 
+
+//chua co API cho viec xoa bai post
+export function deleteAPostComment(commentId) { //maybe use modal later
+  return dispatch => {
+    dispatch(delete_APostCommentReset(commentId))
+    request.delete(`/posts/comments/${commentId}`).then(response => {
+      dispatch(delete_APostCommentSuccess())
+      openBLModal({ text: "Xoá bình luận thành công!", type: "success" });
+    }).catch(error => { dispatch(delete_APostCommentFailure(commentId)) })
+  }
+}
+
+
+export function createReply(prCommentId, content) {
+  return dispatch => {
+    dispatch(create_APostCommentReset());
+    request.post(`/posts/comments/${prCommentId}`, JSON.stringify(content))
+      .then(response => {
+        dispatch(create_APostCommentSuccess(response.data.id));
+      })
+      .catch(error => {
+        dispatch(create_APostCommentFailure(error)); //
+      })
+  }
+}

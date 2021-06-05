@@ -71,7 +71,7 @@ export function getNewestPosts() {
                 let IDarr = '';
                 response.data.map(item => IDarr += item.id + ","); //create id array
 
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
 
@@ -100,11 +100,10 @@ export function getHighlightPosts() {
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = ''; response.data.map(item => IDarr += item.postSummaryDTO.id + ",")
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
                         for (let i = 0; i < result_1.length; i++) {
-
                             finalResult.push({
                                 ...result_1[i],
                                 ...result_1[i].postSummaryDTO,
@@ -112,7 +111,6 @@ export function getHighlightPosts() {
                             }
                             );
                         }
-
                         dispatch(get_HighlightPostsSuccess(finalResult))
                     }).catch(error => dispatch(get_HighlightPostsFailure(error)))
             }
@@ -131,7 +129,7 @@ export function getNewestActivities() {
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
 

@@ -154,7 +154,7 @@ class NormalReactionbar extends React.Component {
               <div className="comment-count-container">
                 <div className="comment-btn-text">
                   Bình luận
-            </div>
+                </div>
                 <div className="comment-btn-number">
                   {formatNumber(this.props.commentCount)}
                 </div>

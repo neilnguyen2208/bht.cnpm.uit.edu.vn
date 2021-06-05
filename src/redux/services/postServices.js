@@ -119,7 +119,7 @@ export function getMyPosts(searchParamObject) { //this API to get all approved d
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.dtos.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -157,7 +157,7 @@ export function getReportedPosts(searchParamObject) {
                 let IDarr = '';
                 response.data.userPostReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -203,7 +203,7 @@ export function getPostSearch(searchParamObject) {
                 let IDarr = '';
                 response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(response_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -245,7 +245,7 @@ export function getManagementPosts(searchParamObject) {
                 let IDarr = '';
                 response_1.data.postSummaryWithStateDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(response_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -453,7 +453,7 @@ export function getSavedPosts(searchParamObject) {
                 let IDarr = '';
                 response.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-                request.get(`/posts/statistic?postIDs=${IDarr}`)
+                request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];

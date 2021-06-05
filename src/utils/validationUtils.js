@@ -89,10 +89,11 @@ export function validation(conditions) {
 
                     //xu ly cac HTMLInputElement
                     // Xử lý trường hợp blur khỏi input
-
-                    document.getElementById(element.id).onblur = function () {
-                        validate(element, rule);
-                    }
+                    // if (conditions.blur) {
+                    // document.getElementById(element.id).onblur = function () {
+                    //     validate(element, rule);
+                    // }
+                    // }
 
                     // Xử lý mỗi khi người dùng nhập vào input
                     document.getElementById(element.id).oninput = function () {

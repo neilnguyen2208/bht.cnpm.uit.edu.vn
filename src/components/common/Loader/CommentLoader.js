@@ -80,8 +80,6 @@ export default function CommentLoader() {
             <div className="animated-background" style={{ width: "60px", height: "20px" }}></div>
           </div>
         </div>
-            :
-            <></>
       </div>
     </div >
   );

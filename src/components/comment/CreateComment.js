@@ -22,10 +22,12 @@ import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import store from 'redux/store';
 import { create_APostCommentReset } from 'redux/actions/commentAction'
-import { createAPostComment } from 'redux/services/commentServices'
+import { createAPostComment, getAPostComments } from 'redux/services/commentServices'
+import { openBLModal } from 'redux/services/modalServices';
 
 const validationCondition = {
   form: '#create-comment-form',
+
   rules: [
     //truyen vao id, loai component, message
     validation.isRequired('crt-cmmnt-cke', 'ckeditor', 'Nội dung bình luận không được để trống')
@@ -45,10 +47,14 @@ class CreateComment extends React.Component {
   }
 
   componentWillUnmount() {
-    store.dispatch(create_APostCommentReset())
+    store.dispatch(create_APostCommentReset());
+    if (getCKEInstance('crt-cmmnt-cke'))
+      getCKEInstance('crt-cmmnt-cke').destroy();
+
   }
 
   reloadList = () => {
+    openBLModal({ type: "success", text: "Tạo bình luận thành công!" });
     getCKEInstance("crt-cmmnt-cke").setData("");
     this.props.getAPostComments(this.props.postId);
     store.dispatch(create_APostCommentReset())
@@ -106,12 +112,12 @@ class CreateComment extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isHaveCreated: state.comment.currentPostComments.isHaveCreated
+    isHaveCreated: state.comment.isHaveCreated
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createAPostComment
+  createAPostComment, getAPostComments
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateComment));

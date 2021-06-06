@@ -97,7 +97,7 @@ class DocumentSummary extends React.Component {
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();
-    this.props.reportADocument(DTO.id, { "reason": DTO.reason });
+    this.props.reportADocument(DTO.id, { "reasonIds": [1], "feedback": DTO.reason  });
   }
 
   render() {

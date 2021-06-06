@@ -394,7 +394,7 @@ export function editAPost(id, newPostContent, reloadList) { //
 export function reportAPost(id, reason) { //
     return dispatch => {
         dispatch(post_ReportAPostReset())
-        request.post(`/post/${id}/report`, JSON.stringify(reason))
+        request.post(`/posts/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportAPostSuccess());
             }

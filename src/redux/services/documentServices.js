@@ -367,7 +367,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
 export function reportADocument(id, reason) { //
     return dispatch => {
         dispatch(post_ReportADocumentReset())
-        request.post(`/post/${id}/report`, JSON.stringify(reason))
+        request.post(`/posts/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportADocumentSuccess());
             }

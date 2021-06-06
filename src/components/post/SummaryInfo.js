@@ -159,7 +159,7 @@ class PostSummary extends React.Component {
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();
-    this.props.reportAPost(DTO.id, { "reason": DTO.reason });
+    this.props.reportAPost(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
   render() {

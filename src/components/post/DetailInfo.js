@@ -25,6 +25,7 @@ import { normalMenuItemList } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 
 class PostDetail extends React.Component {
 
@@ -63,7 +64,7 @@ class PostDetail extends React.Component {
             { //for rendering
               id: `rpp-form-input`,
               isRequired: true,
-              label: "Lý do tố cáo:",
+              label: "Lý do chi tiết:",
               type: 'text-area',
               placeHolder: "Nhập lý do tố cáo ",
               validation: true,
@@ -100,6 +101,7 @@ class PostDetail extends React.Component {
   }
 
   render() {
+    styleCodeSnippet();
 
     //reload the list when any item has been deleted or edited:
     if (this.props.isHaveDeleted) {
@@ -157,9 +159,9 @@ class PostDetail extends React.Component {
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>
+        { formatMathemicalFormulas()}
 
       </div >
-
     );
   }
 }

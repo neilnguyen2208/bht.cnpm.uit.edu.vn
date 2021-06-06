@@ -30,6 +30,7 @@ import { itemType } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 
 class PostSummary extends React.Component {
 
@@ -62,16 +63,35 @@ class PostSummary extends React.Component {
     }
 
     if (selectedItem.value === "REPORT_POST") {
+
+      //call API to get all post report reason 
+      //if success => open report modal
+
+      //map to array of reasons in UI
+      // this.props.getReportReasons();
+
+      //create new type of input un modal and validation for it
+
       openModal("form", {
         id: `rpp-form-modal`,//report post
         title: `REPORT BÀI VIẾT`,
         formId: `rpp-form`,
         inputs:
           [
+            // {
+            //   id: `rpp-checkbox-array-input`,
+            //   isRequired: true,
+            //   label: "Nguyên nhân tố cáo:",
+            //   type: 'array-checkbox',
+            //   placeHolder: "Lý do:",
+            //   validation: true,
+            //   key: "reason"
+            // }
+            // ,
             { //for rendering
               id: `rpp-form-input`,
               isRequired: true,
-              label: "Lý do tố cáo:",
+              label: "Mô tả vi phạm:",
               type: 'text-area',
               placeHolder: "Nhập lý do tố cáo ",
               validation: true,
@@ -84,7 +104,9 @@ class PostSummary extends React.Component {
           rules: [
             //truyen vao id, loai component, message
             validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
+            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!'),
+            // validation.RequiredExact(`rpp-checkbox-array-input`, 'checkbox-array', 1, 'Cần chọn một lý do input')
+
           ],
 
         },
@@ -141,7 +163,7 @@ class PostSummary extends React.Component {
   }
 
   render() {
-
+    styleCodeSnippet();
     //only set for report.
     if (this.props.isHaveReported) {
       openBLModal({ text: "Report bài viết thành công!", type: "success" });
@@ -271,6 +293,8 @@ class PostSummary extends React.Component {
           </div> : <></>}
 
         {summary}
+        {   formatMathemicalFormulas()}
+
       </div >
     );
   }

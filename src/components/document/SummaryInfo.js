@@ -64,7 +64,7 @@ class DocumentSummary extends React.Component {
             { //for rendering
               id: `rpdcm-form-input`,
               isRequired: true,
-              label: "Lý do tố cáo:",
+              label: "Lý do chi tiết:",
               type: 'text-area',
               placeHolder: "Nhập lý do tố cáo ",
               validation: true,

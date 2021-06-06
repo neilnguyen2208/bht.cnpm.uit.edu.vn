@@ -70,6 +70,17 @@ class AdminSidebar extends React.Component {
                     </div>
 
                     <div className="vertical-menu-container"  >
+                        <div className="pr-drop-down-m-i"
+                            id="page-managent-parent-menu-item"
+                            onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e, "page-managent-parent-menu-item", "page-managent-parent-menu-item-text", "page-admin-dropdown-btn-element", "page-admin-menu-item-container")}>
+                            <div className="d-flex">
+                                <img alt="*" className="vertical-m-i-icon" src={content_management_icon} id="page-managent-btn-element" />
+                                <div className="side-bar-menu-item-text" id="page-managent-parent-menu-item-text">
+                                    Quản lý nội dung
+                                        </div>
+                            </div>
+                            <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-admin-dropdown-btn-element" />
+                        </div>
                         <div>
                             <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container" id="page-admin-menu-item-container">
                                 <div className="mg-bottom-5px" />
@@ -86,11 +97,18 @@ class AdminSidebar extends React.Component {
                                         Quản lý tài liệu
                                                 </div>
                                 </NavLink>
-
+                                {/* 
                                 <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                     to={"/admin/page-notification"}    >
                                     <div className="text">
                                         Thông báo trang
+                                                </div>
+                                </NavLink> */}
+
+                                <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                    to={"/admin/report-comment-management"}    >
+                                    <div className="text">
+                                        Xử lý bình luận
                                                 </div>
                                 </NavLink>
 
@@ -124,7 +142,7 @@ class AdminSidebar extends React.Component {
                         </NavLink>
 
                         {/* Quan ly hoat dong: các báo cáo người dùng  */}
-                        <NavLink className="vertical-m-i"
+                        {/* <NavLink className="vertical-m-i"
                             activeClassName="main-interactive-menu-item-active"
                             to={"/admin/activity-management"}
                         >
@@ -134,7 +152,7 @@ class AdminSidebar extends React.Component {
                             <div className="side-bar-menu-item-text"  >
                                 Quản lý hoạt động
                                           </div>
-                        </NavLink>
+                        </NavLink> */}
 
                         {/* Quan lý quyền truy cập: role */}
                         <NavLink className="vertical-m-i"

@@ -64,7 +64,7 @@ class PostManagement extends React.Component {
         });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "postCategoryID ": selectedOption.id,
+            "postCategoryID": selectedOption.id,
             page: 1
         }
         this.props.getManagementPosts(this.searchParamObject);
@@ -169,7 +169,7 @@ class PostManagement extends React.Component {
                                     selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                     options={this.props.postCategories}
                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                    id="pmcf-combobox" //post management category filter
+                                    comboboxId="pmcf-combobox" //post management category filter
                                 ></ComboBox>
                             </div>
                         </div>
@@ -180,7 +180,7 @@ class PostManagement extends React.Component {
                                     options={adminApproveStatusOptions}
                                     placeHolder="Tất cả"
                                     onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
-                                    id="pmasf-combobox" //post management approval status filter 
+                                    comboboxId="pmasf-combobox" //post management approval status filter 
                                 ></ComboBox>
                             </div>
                         </div>
@@ -194,7 +194,7 @@ class PostManagement extends React.Component {
                                 selectedOptionID={1}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                id="pmtf-combobox" //post management time filter 
+                                comboboxId="pmtf-combobox" //post management time filter 
                             ></ComboBox>
                         </div>
                     </div>

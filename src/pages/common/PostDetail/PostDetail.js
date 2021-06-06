@@ -20,7 +20,7 @@ import {
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import CommentSection from 'components/comment/CommentSection'
-import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
+import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 class PostDetail extends React.Component {
@@ -57,6 +57,7 @@ class PostDetail extends React.Component {
         return ToC;
     }
     render() {
+        styleCodeSnippet();
         return (
             <div>
                 <div className="d-flex">
@@ -97,8 +98,10 @@ class PostDetail extends React.Component {
                                             likedStatus={this.props.currentPost.likeStatus}
                                             savedStatus={this.props.currentPost.savedStatus}
                                         />
+                                        {formatMathemicalFormulas()}
                                     </div>
-                                    : <DocPostDetailLoader />}
+                                    : <DocPostDetailLoader />
+                                }
                                 <div id="cr-cmt" />
                                 <CommentSection
                                     id={this.props.currentPost.id} />

@@ -57,7 +57,7 @@ import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute'
 import Secured from 'components/base_components/Sercured.js'
-import { Access } from "authentication/permission.config";
+import { Access, Post } from "authentication/permission.config";
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 const App = () => {
@@ -95,7 +95,7 @@ const App = () => {
                         <Route exact path="/user/my-documents" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
-                        <Route exact path="/create-post" component={CreatePost} />
+                        <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.Create]}/>
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-document" component={UploadDocument} />
                         <Route exact path="/courses/:id/exercise" component={Exercise} />

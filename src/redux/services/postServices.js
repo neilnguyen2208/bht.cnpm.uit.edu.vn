@@ -151,7 +151,7 @@ export function getPendingPosts(searchParamObject) {
 export function getReportedPosts(searchParamObject) {
     return dispatch => {
         dispatch(get_ReportedPostsRequest());
-        request.get(`/post/report?${generateSearchParam(searchParamObject)}`)
+        request.get(`/posts/report?${generateSearchParam(searchParamObject)}`)
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = '';
@@ -179,6 +179,8 @@ export function getReportedPosts(searchParamObject) {
             .catch(error => { get_ReportedPostsFailure(error) })
     }
 }
+
+
 
 export function resolveAPost(id, resolveDTO) {
     return dispatch => {

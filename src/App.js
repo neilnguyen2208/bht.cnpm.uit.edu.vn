@@ -101,10 +101,10 @@ const App = () => {
                         <Route exact path="/courses/:id/exercise" component={Exercise} />
 
                         {/* for admin */}
-                        <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={Access.Admin} />
-                        <RequireLoginRoute exact path="/admin/post-management" component={PostManagement} permissions={Access.Admin} />
-                        <RequireLoginRoute exact path="/admin/post-management/report" component={PostReportManagement} permissions={Access.Admin} />
-                        <RequireLoginRoute exact path="/admin/post-management/approval" component={PostApproving} permissions={Access.Admin} />
+                        <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/post-management" component={PostManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/post-management/report" component={PostReportManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/post-management/approval" component={PostApproving} permissions={[Access.Admin]} />
 
                         <Route exact path="/admin/document-management/approval" component={DocumentApproving} />
                         <Route exact path="/admin/document-management" component={DocumentManagement} />

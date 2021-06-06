@@ -7,7 +7,7 @@ const RequireLoginRoute = ({ path, component: Component, isAny, permissions, ren
     <Route
       {...rest}
       render={props => {
-        if (authService.isLoggedIn())
+        if (!authService.isLoggedIn())
           return (
             <Redirect
               to={{

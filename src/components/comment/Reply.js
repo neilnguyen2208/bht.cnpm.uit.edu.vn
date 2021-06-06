@@ -29,7 +29,7 @@ import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
-import {likeAPostComment, unLikeAPostComment} from 'redux/services/commentServices'
+import { likeAPostComment, unLikeAPostComment } from 'redux/services/commentServices'
 
 //NOTE: reply relative components only use internal state, not use redux for handle any event, reply redux code will be delete in the future
 class Reply extends React.Component {
@@ -43,11 +43,11 @@ class Reply extends React.Component {
   componentDidMount() {
     const window = new JSDOM('').window;
     const DOMPurify = createDOMPurify(window);
-
-    const clean = DOMPurify.sanitize(this.props.content);
+    this.content = this.props.content;
+    const clean = DOMPurify.sanitize(this.content);
     if (document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`))
       document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`).innerHTML = clean;
-
+    this.setState({});
   }
 
   //make current reply's reply component show to UI
@@ -155,7 +155,7 @@ class Reply extends React.Component {
   }
 
   onEditorReady = () => {
-    getCKEInstance("edit-comment-" + this.props.replyId).setData(this.props.content);
+    getCKEInstance("edit-comment-" + this.props.replyId).setData(this.content);
   }
 
   onEditorChange = () => {
@@ -164,12 +164,15 @@ class Reply extends React.Component {
 
   onSubmitReplyClick = () => {
     this.isHaveEdited = false;
-    request.put(`/posts/comments/${this.props.replyId}`, { "content": JSON.stringify(getCKEInstance("edit-comment-" + this.props.replyId).getData()) })
+    request.put(`/posts/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
       .then(response => {
         this.props.reloadList(this.props.replyId);
         openBLModal({ text: "Cập nhật bình luận thành công!", type: "success" });
         this.isHaveEdited = true;
-        this.changeViewMode();
+
+        //new content after edit (unsync with props)
+        this.content = response.data.content;
+        this.changeViewMode(this.content);
         this.setState({});
       })
       .catch(error => {
@@ -177,14 +180,14 @@ class Reply extends React.Component {
       })
   }
 
-  changeViewMode = () => {
+  changeViewMode = (content) => {
     //if current mode is edit mode => view mode.
     if (this.isEditMode) {
       const window = new JSDOM('').window;
       const DOMPurify = createDOMPurify(window);
-      const clean = DOMPurify.sanitize(this.props.content);
-      if (document.querySelector(`#cmt-ctnt-${this.props.commentId}.comment-content`))
-        document.querySelector(`#cmt-ctnt-${this.props.commentId}.comment-content`).innerHTML = clean;
+      const clean = DOMPurify.sanitize(content ? content : this.content);
+      if (document.querySelector(`#cmt-ctnt-${this.props.replyId}.comment-content`))
+        document.querySelector(`#cmt-ctnt-${this.props.replyId}.comment-content`).innerHTML = clean;
       this.isEditMode = !this.isEditMode;
       this.setState({});
       return;

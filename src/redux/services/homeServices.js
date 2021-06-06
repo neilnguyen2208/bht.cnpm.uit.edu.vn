@@ -152,7 +152,7 @@ export function getNewestActivities() {
 
 export function highlightAPost(id) {
     return dispatch => {
-        let tmp = { postId: id };
+        let tmp = { id: id };
         dispatch(highlight_APostReset());
         request.post('/posts/highlightPosts', JSON.stringify(tmp))
             .then(response => {
@@ -170,7 +170,6 @@ export function deleteHighlightAPost(id) {
             }).catch(error => { dispatch(highlight_APostFailure()) })
     }
 }
-
 
 export function stickAPostToTop(id) {
     return dispatch => {

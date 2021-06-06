@@ -43,7 +43,6 @@ class ProfilePost extends React.Component {
         this.props.getMyPosts(this.searchParamObject);
     }
 
-
     onFilterClick = (filter) => {
         switch (filter) {
             case "most-likes": {

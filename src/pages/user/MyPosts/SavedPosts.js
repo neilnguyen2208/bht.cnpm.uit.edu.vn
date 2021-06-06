@@ -25,7 +25,7 @@ class SavedPosts extends React.Component {
     componentDidMount() {
         this.searchParamObject = {
             "page": 1,
-            "userID": 1
+            "userID": "8460c6d8-d2c7-46b9-a64d-87f76fcf8b18"
 
         }
 

@@ -118,16 +118,16 @@ export function getMyPosts(searchParamObject) { //this API to get all approved d
             response => {
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.dtos.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response.data.postSummaryWithStateAndFeedbackDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
 
-                        for (let i = 0; i < result_1.dtos.length; i++) {
+                        for (let i = 0; i < result_1.postSummaryWithStateAndFeedbackDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.dtos[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1.dtos[i].id)),
+                                ...result_1.postSummaryWithStateAndFeedbackDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.postSummaryWithStateAndFeedbackDTOs[i].id)),
                             }
                             );
                             //delete redundant key - value  
@@ -470,13 +470,10 @@ export function getSavedPosts(searchParamObject) {
                         }
                         dispatch(get_SavedPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_SavedPostsFailure())
-
-
             })
             .catch(error => dispatch(get_SavedPostsFailure(error)))
     }
 }
-
 
 export function getHighlightPostsIds() {
     return dispatch => {

@@ -122,7 +122,7 @@ class MyPosts extends React.Component {
                                 selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : "0"}
                                 options={this.props.postCategories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="my-post-list-category-filter-combobox"
+                                comboboxId="my-post-list-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ class MyPosts extends React.Component {
                                 options={userApproveStatusOptions}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
-                                id="my-post-list-approve-status-filter-combobox"
+                                comboboxId="my-post-list-approve-status-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>

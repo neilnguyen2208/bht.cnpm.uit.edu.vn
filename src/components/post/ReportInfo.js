@@ -25,9 +25,12 @@ export default class ReportInfo extends React.PureComponent {
                     <div>
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
-                            <Link className="link-label-s" to={`/user/${this.props.reporterID}`}>
-                                {this.props.reporterName}
-                            </Link>
+                            {this.props.reporters.map(reporter =>
+                                <Link className="link-label-s" to={`/user/${reporter.id}`}>
+                                    {reporter.name}
+                                </Link>
+
+                            )}
                             <div className="black-label-s">{`đã tố cáo bài viết - `}</div>
                             {this.type === resolveStatus.resolved ?
                                 <div className="blue-border-label">RESOLVED</div>
@@ -64,7 +67,9 @@ export default class ReportInfo extends React.PureComponent {
                         <div>Lý do chi tiết:</div>
                     </div>
                     <div className="report-reason">
-                        {this.props.reason}
+                        {this.props.feedbacks.map(feedback=>{
+                            return <div style = {{width: "100%"}}>{feedback}</div>
+                        })}
                     </div>
                 </div>
                 <label className="form-label" >Nội dung bài viết:</label>

@@ -186,7 +186,7 @@ export function getReportedPosts(searchParamObject) {
 export function resolveAPost(id, resolveDTO) {
     return dispatch => {
         dispatch(post_ResolveAPostReset());
-        request.post(`/post/resolveReport/${id}`, JSON.stringify(resolveDTO))
+        request.post(`/posts/resolveReport/${id}`, JSON.stringify(resolveDTO))
             .then(result => {
                 dispatch(post_ResolveAPostSuccess());
             })

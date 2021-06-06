@@ -73,10 +73,8 @@ class PostReportManagement extends React.Component {
                 <div className="item-container">
                     <ReportInfo
                         id={item.id}
-                        reporterName={item.reporter.name}
-                        reporterID={item.reporter.id}
-                        reporterAvatarURL={item.reporter.id}
-                        reason={item.reason}
+                        reporters={item.reporters}
+                        reportReasons={item.reportReasons}
 
                         title={item.title}
                         content={item.content}
@@ -86,6 +84,8 @@ class PostReportManagement extends React.Component {
                         resolvedTime={item.resolvedTime}
                         resolvedNote={item.resolvedNote}
                         actionTaken={item.actionTaken}
+
+                        feedbacks = {item.feedbacks}
                     />
 
                     <ReportReactionbar type={itemType.mySelf}

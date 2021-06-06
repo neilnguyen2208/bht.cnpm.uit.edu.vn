@@ -5,9 +5,12 @@ export function getCKEInstance(id) {
 
 //run after code snippet output loaded
 export function styleCodeSnippet() {
-  document.querySelectorAll('pre code').forEach((block) => {
-    window.hljs.highlightBlock(block);
-  });
+  setTimeout(
+    document.querySelectorAll('pre code').forEach((block) => {
+      console.log("a")
+      window.hljs.highlightBlock(block);
+    }),
+    1000)
 }
 
 //run after code mathemical output loaded

@@ -6,6 +6,7 @@ export const Access = {
 export const Post = {
     SetSaveStatus: "Post.SetSaveStatus",
     SetLikeStatus: "Post.SetLikeStatus",
+    Create: "Post.Create",
     Comment: {
         Create: "Post.Comment.Create",
         Edit: "Post.Comment.Edit",

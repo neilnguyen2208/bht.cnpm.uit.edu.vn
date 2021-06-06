@@ -1,3 +1,4 @@
+import { styleCodeSnippet } from "components/common/CustomCKE/CKEditorUtils";
 import Keycloak from "keycloak-js";
 
 const _kc = new Keycloak('/keycloak.config.json');
@@ -30,9 +31,9 @@ const initKeycloak = (onAuthenticatedCallback) => {
         })
 };
 
-const doLogin = _kc.login;
+const doLogin = () => { _kc.login(); styleCodeSnippet(); }
 
-const doLogout = _kc.logout;
+const doLogout = () => { _kc.logout(); styleCodeSnippet(); }
 
 const getToken = () => _kc.token;
 

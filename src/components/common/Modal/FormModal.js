@@ -2,7 +2,7 @@ import React from "react";
 import './Modal.scss'
 import 'components/styles/Form.scss'
 import 'components/styles/Button.scss'
-import { openModal } from "redux/services/modalServices";
+import { openModal, closeModal } from "redux/services/modalServices";
 import Editor from 'components/common/CustomCKE/CKEditor.js'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar'
@@ -20,7 +20,7 @@ class FormModal extends React.Component {
     }
 
     onCancelClick = () => {
-        this.props.closeModal();
+        closeModal();
     }
 
     onSubmitClick = () => {
@@ -76,7 +76,7 @@ class FormModal extends React.Component {
                                                         <>
                                                             {input.type === "combobox" ?
                                                                 <> {input.selectedOptionID ?
-                                                                    <Combobox comboboxId = {input.id}
+                                                                    <Combobox comboboxId={input.id}
                                                                         selectedOptionID={input.selectedOptionID ?
                                                                             input.selectedOptionID
                                                                             : input.options[0].id}
@@ -89,7 +89,7 @@ class FormModal extends React.Component {
                                                                         validation={input.validation}
                                                                     >
                                                                     </Combobox> :
-                                                                    <Combobox comboboxId = {input.id}
+                                                                    <Combobox comboboxId={input.id}
                                                                         options={input.options}
                                                                         onOptionChanged={(selectedOption) => input.onOptionChanged(selectedOption)}
                                                                         placeHolder={input.placeHolder}

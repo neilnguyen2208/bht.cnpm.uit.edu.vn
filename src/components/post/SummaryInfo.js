@@ -163,8 +163,9 @@ class PostSummary extends React.Component {
   }
 
   render() {
-    styleCodeSnippet();
     //only set for report.
+
+    styleCodeSnippet()
     if (this.props.isHaveReported) {
       openBLModal({ text: "Report bài viết thành công!", type: "success" });
       store.dispatch(post_ReportAPostReset())
@@ -178,6 +179,7 @@ class PostSummary extends React.Component {
         <div className="summary-text mg-bottom-10px">
           {this.props.summary}
         </div>
+
       </div>
     }
     else
@@ -192,6 +194,7 @@ class PostSummary extends React.Component {
         }} />
 
     return (
+
       <div className="metadata" >
         <div className="j-c-space-between"  >
           <div className="d-flex">
@@ -293,7 +296,8 @@ class PostSummary extends React.Component {
           </div> : <></>}
 
         {summary}
-        {   formatMathemicalFormulas()}
+        {formatMathemicalFormulas()}
+        {styleCodeSnippet()}
 
       </div >
     );

@@ -57,7 +57,6 @@ class PostDetail extends React.Component {
         return ToC;
     }
     render() {
-        styleCodeSnippet();
         return (
             <div>
                 <div className="d-flex">
@@ -99,6 +98,7 @@ class PostDetail extends React.Component {
                                             savedStatus={this.props.currentPost.savedStatus}
                                         />
                                         {formatMathemicalFormulas()}
+                                        {styleCodeSnippet()}
                                     </div>
                                     : <DocPostDetailLoader />
                                 }
@@ -134,6 +134,8 @@ class PostDetail extends React.Component {
                         </div>
                     </div>
                 </div>
+                { formatMathemicalFormulas()}
+                {styleCodeSnippet()}
             </div>
         );
     }

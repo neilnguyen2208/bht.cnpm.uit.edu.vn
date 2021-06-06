@@ -21,6 +21,7 @@ import RequestReactionbar from 'components/post/RequestReactionbar'
 import { post_ApproveAPostReset, post_RejectAPostReset, post_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
 import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
+import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 
 class PostApproving extends React.Component {
     constructor(props) {
@@ -184,7 +185,8 @@ class PostApproving extends React.Component {
                                     <div className="mg-right-5px">Tổng số:</div>
                                     <div> {this.props.totalElements}</div>
                                 </div>
-                                <>{this.postsList}</>
+                                <>{this.postsList}
+                                </>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,

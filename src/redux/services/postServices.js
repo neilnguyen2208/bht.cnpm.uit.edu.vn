@@ -155,20 +155,21 @@ export function getReportedPosts(searchParamObject) {
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.userPostReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response.data.postReportDTOS.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
                 request.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
 
-                        for (let i = 0; i < result_1.userPostReportDTOs.length; i++) {
+                        for (let i = 0; i < result_1.postReportDTOS.length; i++) {
                             finalResult.push({
-                                ...result_1.userPostReportDTOs[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1.userPostReportDTOs[i].postID)),
+                                ...result_1.postReportDTOS[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.postReportDTOS[i].postID)),
                             }
                             );
                         }
+                        
                         dispatch(get_ReportedPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_ReportedPostsFailure())
 

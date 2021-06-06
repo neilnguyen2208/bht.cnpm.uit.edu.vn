@@ -159,8 +159,8 @@ class PostDetail extends React.Component {
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>
-        { formatMathemicalFormulas()}
-
+        {formatMathemicalFormulas()}
+        {styleCodeSnippet()}
       </div >
     );
   }

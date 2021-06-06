@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import calendar_icon from 'assets/icons/24x24/calendar_icon_24x24.png'
 import clock_icon from 'assets/icons/24x24/clock_icon_24x24.png'
 import post_approve_icon from 'assets/icons/24x24/post_approve_icon_24x24.png'
+import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 
 export default class RequestedSummary extends React.PureComponent {
     render() {
@@ -36,6 +37,7 @@ export default class RequestedSummary extends React.PureComponent {
                         </div>
                     </div>
                 </div>
+                {styleCodeSnippet()}
             </div>
         );
     }

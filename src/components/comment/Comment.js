@@ -26,7 +26,7 @@ import CreateReply from './CreateReply'
 import down_arrow from 'assets/icons/12x12/dropdown_12x12.png'
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
-import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils.js';
+import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils.js';
 import authService from 'authentication/authServices.js';
 import { request } from 'utils/requestUtils.js';
 import { deleteAPostComment, editAPostComment } from 'redux/services/commentServices'
@@ -530,6 +530,8 @@ class Comment extends React.Component {
         <div style={{ height: "0px", width: "0px" }} >
           <div className="triangle-with-shadow comment" />
         </div>
+        {formatMathemicalFormulas()}
+        {styleCodeSnippet()}
       </div >
     );
   }

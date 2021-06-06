@@ -28,7 +28,7 @@ import { closeModal, openBLModal, openModal } from 'redux/services/modalServices
 import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
-import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
+import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import { likeAPostComment, unLikeAPostComment } from 'redux/services/commentServices'
 
 //NOTE: reply relative components only use internal state, not use redux for handle any event, reply redux code will be delete in the future
@@ -279,6 +279,8 @@ class Reply extends React.Component {
         <div style={{ height: "0px", width: "0px" }} >
           <div className="triangle-with-shadow reply" />
         </div>
+        { formatMathemicalFormulas()}
+        {styleCodeSnippet()}
       </div>
     );
   }

@@ -80,7 +80,7 @@ class AccountInformation extends React.Component {
 
                     <div className="base-info-sub-container" >
                         <div className="avatar-container view">
-                            <img className="avatar" src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="cover" />
+                            <img className="avatar" src="https://i.imgur.com/SZJgL6C.png" alt="cover" />
                             {this.isFollowed ?
                                 <div className="avatar-overlay" >Followed</div>
                                 :

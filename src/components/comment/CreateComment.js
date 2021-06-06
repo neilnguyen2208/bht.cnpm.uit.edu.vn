@@ -70,7 +70,7 @@ class CreateComment extends React.Component {
       <ShowOnPermission permissions={[Post.Comment.Create]} >
         <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
           <div className="comment-main-level">
-            <div className="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+            <div className="comment-avatar"><img src="https://i.imgur.com/SZJgL6C.png" alt="" /></div>
             <div className="comment-box">
               <div id="create-comment-form" tabIndex="1">
                 <div className="form-group">

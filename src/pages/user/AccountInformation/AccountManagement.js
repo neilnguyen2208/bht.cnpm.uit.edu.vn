@@ -28,7 +28,7 @@ class AccountManagement extends React.Component {
                         <div className="setting-title">Cập nhật thông tin</div>
                         <div style={{ marginTop: "2rem", marginLeft: "1rem", marginRight: "1rem", display: "flex" }} >
                             <div className="edit-profile-avatar-container">
-                                <img className="edit-profile-avatar" src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="cover" />
+                                <img className="edit-profile-avatar" src="https://i.imgur.com/SZJgL6C.png" alt="cover" />
                                 <div className="overlay">
                                     <div className="mg-auto d-flex">
                                         <img style={{ width: "1.25rem", height: "1.65rem", paddingTop: "0.4rem", marginRight: "0.3rem" }} src={image_icon} alt="" />

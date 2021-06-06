@@ -66,7 +66,7 @@ class CreateReply extends React.Component {
         {/* <div style={this.isShow ? { display: "block" } : { display: "none" }}> */}
         <div style={{ width: '100%', marginTop: "10px" }} className="reply-item cr">
           <div className="comment-main-level">
-            <div className="comment-avatar reply"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" /></div>
+            <div className="comment-avatar reply"><img src="https://i.imgur.com/SZJgL6C.png" alt="" /></div>
             <div className="comment-box">
               <div className="form-group">
                 <Editor

@@ -29,6 +29,7 @@ import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
+import {likeAPostComment, unLikeAPostComment} from 'redux/services/commentServices'
 
 //NOTE: reply relative components only use internal state, not use redux for handle any event, reply redux code will be delete in the future
 class Reply extends React.Component {
@@ -43,9 +44,9 @@ class Reply extends React.Component {
     const window = new JSDOM('').window;
     const DOMPurify = createDOMPurify(window);
 
-    // const clean = DOMPurify.sanitize(this.props.content);
+    const clean = DOMPurify.sanitize(this.props.content);
     if (document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`))
-      document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`).innerHTML = this.props.content;
+      document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`).innerHTML = clean;
 
   }
 
@@ -58,27 +59,27 @@ class Reply extends React.Component {
     let tmpLike = this.state.isLiked;
 
     if (tmpLike === 0)
-      if (this.props.likedStatus) tmpLike = 1;
+      if (this.props.likeStatus) tmpLike = 1;
       else tmpLike = -1;
 
     tmpLike = - tmpLike;
 
-    if (this.props.likedStatus) {
+    if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        // this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPostComment(this.props.replyId);
       }
       else {
         this.likeCount = this.props.likeCount;
-        // this.props.likeAPost(this.props.id);
+        this.props.likeAPostComment(this.props.replyId);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        // this.props.likeAPost(this.props.id);
+        this.props.likeAPostComment(this.props.replyId);
       } else {
-        // this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPostComment(this.props.replyId);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -198,7 +199,7 @@ class Reply extends React.Component {
     let likeBtn = <div></div>;
 
     //render likeBtn
-    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likedStatus)) {
+    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likeStatus)) {
       likeBtn = <img className="post-like-btn" alt="like" src={liked_icon}></img>
     }
     else {
@@ -287,6 +288,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  likeAPostComment, unLikeAPostComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Reply));

@@ -278,7 +278,7 @@ class Comment extends React.Component {
       //     isContentAuthor={createdReply.isContentAuthor}
       //     submitDtm={createdReply.submitDtm}
       //     likeCount={createdReply.likeCount}
-      //     isLiked={createdReply.isLiked}
+      //     likeStatus={createdReply.likeStatus}
       //     replyCount={createdReply.replyCount}
       //     replyArray={createdReply.replyArray}
       //     content={createdReply.content}
@@ -320,7 +320,7 @@ class Comment extends React.Component {
       //       isContentAuthor={createdReply.isContentAuthor}
       //       submitDtm={createdReply.submitDtm}
       //       likeCount={createdReply.likeCount}
-      //       isLiked={createdReply.isLiked}
+      //       likeStatus={createdReply.likeStatus}
       //       replyCount={createdReply.replyCount}
       //       replyArray={createdReply.replyArray}
       //       content={createdReply.content}
@@ -345,7 +345,7 @@ class Comment extends React.Component {
               isContentAuthor={reply.isContentAuthor}
               submitDtm={reply.submitDtm}
               likeCount={reply.likeCount}
-              isLiked={reply.isLiked}
+              likeStatus={reply.likeStatus}
               replyCount={reply.replyCount}
               replyArray={reply.replyArray}
               content={reply.content}
@@ -372,7 +372,7 @@ class Comment extends React.Component {
           isContentAuthor={reply.isContentAuthor}
           submitDtm={reply.submitDtm}
           likeCount={reply.likeCount}
-          isLiked={reply.isLiked}
+          likeStatus={reply.likeStatus}
           replyCount={reply.replyCount}
           replyArray={reply.replyArray}
           content={reply.content}
@@ -418,7 +418,7 @@ class Comment extends React.Component {
     //         isContentAuthor={reply.isContentAuthor}
     //         submitDtm={reply.submitDtm}
     //         likeCount={reply.likeCount}
-    //         isLiked={reply.isLiked}
+    //         likeStatus={reply.likeStatus}
     //         replyCount={reply.replyCount}
     //         replyArray={reply.replyArray}
     //         content={reply.content}
@@ -435,7 +435,7 @@ class Comment extends React.Component {
     //     isContentAuthor={reply.isContentAuthor}
     //     submitDtm={reply.submitDtm}
     //     likeCount={reply.likeCount}
-    //     isLiked={reply.isLiked}
+    //     likeStatus={reply.likeStatus}
     //     replyCount={reply.replyCount}
     //     replyArray={reply.replyArray}
     //     content={reply.content}

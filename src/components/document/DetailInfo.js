@@ -52,42 +52,9 @@ class PostDetail extends React.Component {
     }
 
     if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
-      openModal("form", {
-        id: `rpp-form-modal`,//report post
-        title: `REPORT BÀI VIẾT`,
-        formId: `rpp-form`,
-        inputs:
-          [
-            { //for rendering
-              id: `rpp-form-input`,
-              isRequired: true,
-              label: "Lý do chi tiết:",
-              type: 'text-area',
-              placeHolder: "Nhập lý do tố cáo ",
-              validation: true,
-              key: "reason"
-            },
-          ],
-        append: { id: this.props.id },
-        validationCondition: {
-          form: `#rpp-form`,
-          rules: [
-            //truyen vao id, loai component, message
-            validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
-          ],
-
-        },
-        submitText: "Report",
-        cancelText: "Huỷ",
-        confirmBox: {
-          title: "Report bài viết",
-          text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
-          confirmText: "Xác nhận",
-          cancelText: "Huỷ",
-          onConfirm: DTO => this.onConfirmReport(DTO)
-        }
-      });
+      openBigModal("report-post", {
+        id: this.props.id
+      })
     }
   }
 

@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 import { reportAPost } from 'redux/services/postServices'
-import { openModal, closeModal, openBLModal } from 'redux/services/modalServices'
+import { openModal, closeModal, openBLModal, openBigModal } from 'redux/services/modalServices'
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
@@ -25,42 +25,9 @@ class WallpageItem extends React.Component {
 
     onPopupMenuItemClick = (selectedItem) => {
         if (selectedItem.value === "REPORT_POST") {
-            openModal("form", {
-                id: `hirpp-form-modal`,//high light item report post
-                title: `REPORT BÀI VIẾT`,
-                formId: `hirpp-form`,
-                inputs:
-                    [
-                        { //for rendering
-                            id: `hirpp-form-input`,
-                            isRequired: true,
-                            label: "Lý do chi tiết:",
-                            type: 'text-area',
-                            placeHolder: "Nhập lý do tố cáo ...",
-                            validation: true,
-                            key: "reason"
-                        },
-                    ],
-                append: { id: this.props.id },
-                validationCondition: {
-                    form: `#hirpp-form`,
-                    rules: [
-                        //truyen vao id, loai component, message
-                        validation.isRequired(`hirpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-                        validation.minLength(`hirpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
-                    ],
-
-                },
-                submitText: "Report",
-                cancelText: "Huỷ",
-                confirmBox: {
-                    title: "Report bài viết",
-                    text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
-                    confirmText: "Xác nhận",
-                    cancelText: "Huỷ",
-                    onConfirm: DTO => this.onConfirmReport(DTO)
-                }
-            });
+            openBigModal("report-post", {
+                id: this.props.id
+            })
         }
 
         if (selectedItem.value === "HIGHLIGHT_POST") {

@@ -18,7 +18,7 @@ export function get_ReportReasonsSuccess(data) {
     }
 }
 
-export function get_ReportreasonsFailure(error) {
+export function get_ReportReasonsFailure(error) {
     return {
         type: GET_REPORT_REASONS_FAILURE,
         payload: error

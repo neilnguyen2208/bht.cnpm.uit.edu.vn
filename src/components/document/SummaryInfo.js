@@ -91,13 +91,14 @@ class DocumentSummary extends React.Component {
           onConfirm: DTO => this.onConfirmReport(DTO)
         }
       });
+
     }
   }
 
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();
-    this.props.reportADocument(DTO.id, { "reasonIds": [1], "feedback": DTO.reason  });
+    this.props.reportADocument(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
   render() {
@@ -189,7 +190,6 @@ class DocumentSummary extends React.Component {
           {/* fake avatar */}
           < img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            {/* <Link to={"/document-content/" + this.props.id}> */}
             <Link to={"/document-content/" + 151}>
               <div className="title">
                 {this.props.title}

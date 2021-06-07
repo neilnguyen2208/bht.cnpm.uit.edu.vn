@@ -18,11 +18,10 @@ function ReportReducer(state = initialState, action) {
                 isLoading: true
             }
         case GET_REPORT_REASONS_SUCCESS:
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading: false,
-                data: action.payload,
+                data: [...action.payload],
             }
         case GET_REPORT_REASONS_FAILURE:
             return {

@@ -85,6 +85,7 @@ export const wallPageAdminActions = [
       paddingBottom: "5px"
     },
     // permissions: ["Page.Highlight.Unhighlight"]
+    // sameUser
   },
   {
     id: 5, text: "Ghim lên đầu", value: "STICK_TO_TOP_POST", icon: stick_to_top,

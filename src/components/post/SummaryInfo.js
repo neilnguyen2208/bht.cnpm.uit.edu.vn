@@ -72,90 +72,44 @@ class PostSummary extends React.Component {
 
       //create new type of input un modal and validation for it
 
-      openModal("form", {
-        id: `rpp-form-modal`,//report post
-        title: `REPORT BÀI VIẾT`,
-        formId: `rpp-form`,
-        inputs:
-          [
-            // {
-            //   id: `rpp-checkbox-array-input`,
-            //   isRequired: true,
-            //   label: "Nguyên nhân tố cáo:",
-            //   type: 'array-checkbox',
-            //   placeHolder: "Lý do:",
-            //   validation: true,
-            //   key: "reason"
-            // }
-            // ,
-            { //for rendering
-              id: `rpp-form-input`,
-              isRequired: true,
-              label: "Mô tả vi phạm:",
-              type: 'text-area',
-              placeHolder: "Nhập lý do tố cáo ",
-              validation: true,
-              key: "reason"
-            },
-          ],
-        append: { id: this.props.id },
-        validationCondition: {
-          form: `#rpp-form`,
-          rules: [
-            //truyen vao id, loai component, message
-            validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!'),
-            // validation.RequiredExact(`rpp-checkbox-array-input`, 'checkbox-array', 1, 'Cần chọn một lý do input')
+      openBigModal("report-post", {
+        id: this.props.id
+      })
 
-          ],
+      if (selectedItem.value === "HIGHLIGHT_POST") {
+        openModal("confirmation", {
+          title: "Ghim bài viết",
+          text: "Xác nhận ghim bài viết?",
+          onConfirm: () => {
+            this.props.highlightAPost(this.props.id);
+            closeModal();
+          }
+        });
+      }
 
-        },
-        submitText: "Report",
-        cancelText: "Huỷ",
-        confirmBox: {
-          title: "Report bài viết",
-          text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
-          confirmText: "Xác nhận",
-          cancelText: "Huỷ",
-          onConfirm: DTO => this.onConfirmReport(DTO)
-        }
-      });
-    }
+      if (selectedItem.value === "UNHIGHLIGHT_POST") {
+        openModal("confirmation", {
+          title: "Bỏ ghim bài viết",
+          text: "Xác nhận bỏ ghim bài viết?",
+          onConfirm: () => {
+            this.props.deleteHighlightAPost(this.props.id);
+            closeModal();
+          }
+        });
+      }
 
-    if (selectedItem.value === "HIGHLIGHT_POST") {
-      openModal("confirmation", {
-        title: "Ghim bài viết",
-        text: "Xác nhận ghim bài viết?",
-        onConfirm: () => {
-          this.props.highlightAPost(this.props.id);
-          closeModal();
-        }
-      });
-    }
-
-    if (selectedItem.value === "UNHIGHLIGHT_POST") {
-      openModal("confirmation", {
-        title: "Bỏ ghim bài viết",
-        text: "Xác nhận bỏ ghim bài viết?",
-        onConfirm: () => {
-          this.props.deleteHighlightAPost(this.props.id);
-          closeModal();
-        }
-      });
-    }
-
-    if (selectedItem.value === "STICK_TO_TOP_POST") {
-      openModal("confirmation", {
-        title: "Ghim bài viết lên đầu",
-        text: "Xác nhận ghim bài viết lên đâu?",
-        onConfirm: () => {
-          this.props.stickAPostToTop(this.props.id);
-          closeModal();
-        }
-      });
+      if (selectedItem.value === "STICK_TO_TOP_POST") {
+        openModal("confirmation", {
+          title: "Ghim bài viết lên đầu",
+          text: "Xác nhận ghim bài viết lên đâu?",
+          onConfirm: () => {
+            this.props.stickAPostToTop(this.props.id);
+            closeModal();
+          }
+        });
+      }
     }
   }
-
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();

@@ -2,10 +2,8 @@ import React from "react"
 
 import EditPostModal from './CustomModal/EditPostModal'
 import EditDocumentModal from './CustomModal/EditDocumentModal'
-import AddRoleModal from './CustomModal/AddRoleModal'
-import EditRoleModal from './CustomModal/EditRoleModal'
-import LoginModal from './CustomModal/LoginModal'
-import { connect } from "react-redux";
+import ReportModal from './CustomModal/ReportModal'
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
@@ -18,8 +16,6 @@ class ModalBigManager extends React.Component {
         // voi form thi co title, onSubmitClick va onCancelClick va childrenProps (form ma nguoi dung tu thiet ke)
 
         const { currentModals } = this.props;
-
-
         const renderedModals = currentModals.map((modalDescription, index) => {
 
             //create loader for handling api 
@@ -29,19 +25,16 @@ class ModalBigManager extends React.Component {
                     return <EditPostModal {...modalProps} key={modalType + index} />
                 case "edit-document":
                     return <EditDocumentModal {...modalProps} key={modalType + index} />
-                case "add-role":
-                    return <AddRoleModal {...modalProps} key={modalType + index} />
-                case "edit-role":
-                    return <EditRoleModal {...modalProps} key={modalType + index} />
-                case "login-modal":
-                    return <LoginModal {...modalProps} key={modalType + index} />
+                case "report-post":
+                    return <ReportModal {...modalProps} type="POST" key={modalType + index} />
+                case "report-comment":
+                    return <ReportModal {...modalProps} type="COMMENT" key={modalType + index} />
                 default:
                     return <></>;
             }
         });
         return <span>
             {renderedModals}
-
         </span>
     }
 }

@@ -27,7 +27,6 @@ import Statistic from 'pages/management/Statistic/Statistic'
 import UserRoleManagement from 'pages/management/UserRoleManagement/UserRoleManagement'
 import UserManagement from 'pages/management/UserManagement/UserManagement'
 import PostManagement from 'pages/management/PostManagement/PostManagement'
-import VerifyRegisterMail from 'pages/common/VerifyEmailPages/VerifyRegisterMail'
 import SearchCourses from 'pages/common/SearchResult/SearchCourses'
 import UploadDocument from 'pages/user/UploadDocument/UploadDocument'
 import CreatePost from 'pages/user/CreatePost/CreatePost'
@@ -45,7 +44,6 @@ import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
 // import ForgotPassword from 'pages/authentication/ForgotPassword'
-import VerifyMailForgotPassword from 'pages/common/VerifyEmailPages/VerifyMailForgotPassword'
 import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
@@ -123,8 +121,6 @@ const App = () => {
 
 
                         {/* verify email url */}
-                        <Route exact path="/verify" component={VerifyRegisterMail} />
-                        <Route exact path="/verify-forgot-password" component={VerifyMailForgotPassword} />
                         <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} />
                         <Route exact path="/secured" component={Secured} />
                     </Switch>

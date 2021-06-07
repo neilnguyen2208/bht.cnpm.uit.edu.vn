@@ -9,8 +9,23 @@ import { resolveStatus } from 'constants.js'
 
 import { Link } from 'react-router-dom'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
+import createDOMPurify from 'dompurify';
 
 export default class ReportInfo extends React.PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isShowMore: false
+        }
+    }
+    componentDidMount() {
+        const DOMPurify = createDOMPurify(window);
+        const clean = DOMPurify.sanitize(this.props.content);
+        if (document.querySelector(`#rprt-pst-ctnt-${this.props.postId}`))
+            document.querySelector(`#rprt-pst-ctnt-${this.props.postId}`).innerHTML = clean;
+    }
+
 
     render() {
 
@@ -67,28 +82,56 @@ export default class ReportInfo extends React.PureComponent {
                         <div>Lý do chi tiết:</div>
                     </div>
                     <div className="report-reason">
-                        {this.props.feedbacks.map(feedback=>{
-                            return <div style = {{width: "100%"}}>{feedback}</div>
+                        {this.props.feedbacks.map(feedback => {
+                            return <div style={{ width: "100%" }}>{feedback}</div>
                         })}
                     </div>
                 </div>
                 <label className="form-label" >Nội dung bài viết:</label>
 
-                {
-                    this.props.imageURL ?
-                        <div>
-                            <div className="decoration-line mg-top-10px" />
-                            <img className="image" src={this.props.imageURL} alt="" />
-                            <div className="summary-text mg-bottom-10px">
-                                {this.props.content}
-                            </div>
-                        </div>
-                        :
-                        <div className="summary-text">
-                            {this.props.content}
-                        </div>
+                {/*post-summary-show class to show post detail in summary, show-less: show less content */}
+
+                {this.state.isShowMore ?
+                    <div className="post-summary-show show-more">
+                        {
+                            this.props.imageURL ?
+                                <div >
+                                    <div className="decoration-line mg-top-10px" />
+                                    <img className="image" src={this.props.imageURL} alt="" />
+                                    <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                </div>
+                                :
+                                <div className="summary-text">
+                                    <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                </div>
+
+                        }
+                    </div>
+                    :
+                    <div className="post-summary-show show-less">
+                        {
+                            this.props.imageURL ?
+                                <div >
+                                    <div className="decoration-line mg-top-10px" />
+                                    <img className="image" src={this.props.imageURL} alt="" />
+                                    <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                </div>
+                                :
+                                <div className="summary-text">
+                                    <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                </div>
+
+                        }
+                    </div>
                 }
-            </div >
+
+                {this.state.isShowMore ?
+                    <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = false; this.setState({isShowMore: false}) }}>Ẩn bớt</div>
+                    :
+                    <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = true; this.setState({isShowMore: true}) }}>Xem thêm</div>}
+
+            </div>
+
         );
     }
 

@@ -72,7 +72,7 @@ class PostReportManagement extends React.Component {
             this.postsList = this.props.postsList.map((item) => (
                 <div className="item-container">
                     <ReportInfo
-                        id={item.id}
+                        postId={item.id}
                         reporters={item.reporters}
                         reportReasons={item.reportReasons}
 

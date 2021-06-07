@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { closeModal, openBLModal, openModal } from 'redux/services/modalServices'
+import { closeModal, openModal } from 'redux/services/modalServices'
 import { styleFormSubmit, validation } from 'utils/validationUtils'
 
 //styles

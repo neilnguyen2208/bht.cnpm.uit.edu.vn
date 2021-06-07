@@ -91,7 +91,7 @@ class SavedPosts extends React.Component {
                     </div >
                 })
             else
-                this.savedPosts = <div>Không có kết quả nào!</div>;
+                this.savedPosts = <div style={{ width: "100%", margin: "auto" }}>Bạn chưa lưu bài viết nào</div>;
         }
         else
             this.savedPosts = <div>
@@ -110,17 +110,17 @@ class SavedPosts extends React.Component {
 
                         {!this.props.isListLoading && this.props.savedPosts ?
                             <>
-                                {/* <div className="sum-item-label">
-                                    <div className="mg-right-5px">Tổng số:</div>
-                                    <div> {this.props.totalElements}</div>
-                                </div> */}
                                 <div >{this.savedPosts}</div>
-                                <Paginator config={{
-                                    changePage: (pageNumber) => this.onPageChange(pageNumber),
-                                    pageCount: this.props.totalPages,
-                                    currentPage: getQueryParamByName('page')
-                                }}
-                                />
+
+                                {this.props.savedPosts.length !== 0 ?
+                                    <Paginator config={{
+                                        changePage: (pageNumber) => this.onPageChange(pageNumber),
+                                        pageCount: this.props.totalPages,
+                                        currentPage: getQueryParamByName('page')
+                                    }}
+                                    />
+                                    : <></>
+                                }
                             </>
                             :
                             <div>

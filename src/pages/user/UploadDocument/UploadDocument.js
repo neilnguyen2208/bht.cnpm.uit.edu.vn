@@ -400,7 +400,7 @@ class UploadDocument extends React.Component {
                             <div className="form-label-required">Mô tả tài liệu:</div>
                             <Editor
                                 config={SimpleCKEToolbarConfiguration}
-                                id="cr-document-description"
+                                editorId="cr-document-description"
                                 placeholder='Start typing here...'
                                 onChange={this.handleEditorChange}
                                 data="<p>Nhập nội dung tài liệu ...</p>"

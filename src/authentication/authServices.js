@@ -39,6 +39,8 @@ const getToken = () => _kc.token;
 
 const isLoggedIn = () => !!_kc.token;
 
+const accountManagement = () => _kc.accountManagement()
+
 const updateToken = (successCallback) =>
     _kc.updateToken(5)
         .then(successCallback)
@@ -107,7 +109,8 @@ const authService = {
     getUsername,
     isGranted,
     isGrantedAll,
-    isGrantedAny
+    isGrantedAny,
+    accountManagement
 };
 
 export default authService;

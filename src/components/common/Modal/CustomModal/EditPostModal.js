@@ -421,7 +421,9 @@ class EditPostModal extends React.Component {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
-            getCKEInstance('ed-post-cke').setData(this.props.currentPost.content)
+
+            getCKEInstance('ed-post-cke').setData(this.props.currentPost.content);
+            
             this.setState({
                 EDIT_POST_DTO: {
                     title: this.props.currentPost.title,
@@ -447,7 +449,6 @@ class EditPostModal extends React.Component {
 
         return (
             <div>
-
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
@@ -517,7 +518,7 @@ class EditPostModal extends React.Component {
                                             <div className="form-group">
                                                 <div className="form-label-required">Nội dung:</div>
                                                 <Editor
-                                                    id={"ed-post-cke"}
+                                                    editorId={"ed-post-cke"}
                                                     onChange={this.handleEditorChange}
                                                     myData={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.content : ''}
                                                     validation

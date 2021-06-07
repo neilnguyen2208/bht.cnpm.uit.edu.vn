@@ -55,7 +55,7 @@ class AccountManagement extends React.Component {
                                     <div className="form-label">Giới thiệu về tôi:</div>
                                     <Editor
                                         config={SimpleCKEToolbarConfiguration}
-                                        id="cr-document-description"
+                                        editorId="cr-document-description"
                                         placeholder='Start typing here...'
                                         onChange={this.handleEditorChange}
                                         data="<p>Nhập nội dung tài liệu ...</p>"

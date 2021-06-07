@@ -102,7 +102,7 @@ class FormModal extends React.Component {
                                                                 <>
                                                                     {input.type === "ckeditor" ?
                                                                         <Editor
-                                                                            id={input.id}
+                                                                            editorId={input.id}
                                                                             validation={input.validation}
                                                                             data={input.defaultData}
                                                                         /> :

@@ -18,6 +18,7 @@ import { withRouter } from "react-router-dom";
 import {
   //suitable roles name 
 } from 'authentication/permission.config'
+import { authServices } from 'redux/services/authServices';
 
 
 class UserSidebar extends React.Component {
@@ -92,25 +93,26 @@ class UserSidebar extends React.Component {
 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to={"/user/sercurity"} exact
-                  onClick={() => this.setState({})}>
+                  to={"/user/sercurity"}
+                  exact
+                  onClick={() => { authServices.accountManagement(); this.setState({}) }}>
                   Cài đặt bảo mật
                       </NavLink>
-
+                {/* 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to={"/user/notification"}
                   onClick={() => this.setState({})}>
                   Thông báo
                       </NavLink>
+ */}
 
-
-                <NavLink className="vertical-sub-m-i"
+                {/* <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to={"/user/email-management"}
                   onClick={() => this.setState({})}>
                   Quản lý email
-                      </NavLink>
+                      </NavLink> */}
 
                 <div className="decoration-underline" style={{ marginTop: "5px", marginBottom: "10px" }} />
               </div>

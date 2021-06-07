@@ -494,7 +494,7 @@ class EditDocumentModal extends React.Component {
                                             <div className="form-group">
                                                 <div className="form-label-required">Nội dung:</div>
                                                 <Editor
-                                                    id={"ed-document-cke"}
+                                                    editorId={"ed-document-cke"}
                                                     onChange={this.handleEditorChange}
                                                     myData={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.content : ''}
                                                     validation

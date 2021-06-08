@@ -24,7 +24,7 @@ import CommentLoader from 'components/common/Loader/CommentLoader';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import store from 'redux/store';
 import { openBLModal } from 'redux/services/modalServices';
-import { delete_APostCommentReset, put_EditAPostCommentReset } from 'redux/actions/commentAction';
+import { delete_APostCommentReset, post_ReportAPostCommentReset, put_EditAPostCommentReset } from 'redux/actions/commentAction';
 
 class CommentSection extends React.Component {
 
@@ -54,10 +54,14 @@ class CommentSection extends React.Component {
     }
 
     if (this.props.isHaveEdited) {
-      console.log("is have edited!");
       this.reloadList();
       openBLModal({ type: "success", text: "Chỉnh sửa bình luận thành công!" });
       store.dispatch(put_EditAPostCommentReset())
+    }
+
+    if (this.props.isHaveReported) {
+      openBLModal({ type: "success", text: "Tố cáo bình luận thành công!" });
+      store.dispatch(post_ReportAPostCommentReset())
     }
 
     if (!this.props.isLoading && this.props.commentsList)
@@ -125,6 +129,7 @@ const mapStateToProps = (state) => {
     postData: state.post.currentPost.data,
     isHaveDeleted: state.comment.isHaveDeleted,
     isHaveEdited: state.comment.isHaveEdited,
+    isHaveReported: state.comment.isHaveReported
   };
 }
 

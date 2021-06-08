@@ -27,7 +27,10 @@ import {
   RESOLVE_A_POST_COMMENT_FAILURE,
   CREATE_A_PC_REPLY_SUCCESS,
   CREATE_A_PC_REPLY_RESET,
-  CREATE_A_PC_REPLY_FAILURE
+  CREATE_A_PC_REPLY_FAILURE,
+  GET_COMMENT_REPORT_REASONS_REQUEST,
+  GET_COMMENT_REPORT_REASONS_SUCCESS,
+  GET_COMMENT_REPORT_REASONS_FAILURE
 
 } from "../constants.js"
 
@@ -178,7 +181,6 @@ export function put_EditAPostCommentFailure() {
   }
 }
 
-
 export function post_ReportAPostCommentReset() {
   return {
     type: REPORT_A_POST_COMMENT_RESET
@@ -197,17 +199,17 @@ export function post_ReportAPostCommentFailure() {
   }
 }
 
-// export function get_PendingPostCommentsRequest() {
-//   return { type: GET_PENDING_POSTS_REQUEST }
-// }
+export function get_CommentReportReasonsRequest() {
+  return { type: GET_COMMENT_REPORT_REASONS_REQUEST }
+}
 
-// export function get_PendingPostCommentsSuccess(data) {
-//   return { type: GET_PENDING_POSTS_SUCCESS, payload: data }
-// }
+export function get_CommentReportReasonsSuccess(data) {
+  return { type: GET_COMMENT_REPORT_REASONS_SUCCESS, payload: data }
+}
 
-// export function get_PendingPostCommentsFailure(data) {
-//   return { type: GET_PENDING_POSTS_FAILURE }
-// }
+export function get_CommentReportReasonsFailure(data) {
+  return { type: GET_COMMENT_REPORT_REASONS_FAILURE }
+}
 
 export function post_ResolveAPostCommentReset() {
   return {

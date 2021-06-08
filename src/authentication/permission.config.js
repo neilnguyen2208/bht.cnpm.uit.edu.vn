@@ -18,6 +18,7 @@ export const Post = {
             SetLikeStatus: "Post.Comment.Reply.SetLikeStatus",
         },
         SetLikeStatus: "Post.Comment.SetLikeStatus",
+        Report: "Post.Comment.Report"
     }
 }
 

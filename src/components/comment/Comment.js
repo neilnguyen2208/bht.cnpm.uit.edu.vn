@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { closeModal, openModal } from 'redux/services/modalServices'
+import { closeModal, openBigModal, openModal } from 'redux/services/modalServices'
 import { styleFormSubmit, validation } from 'utils/validationUtils'
 
 //styles
@@ -76,42 +76,7 @@ class Comment extends React.Component {
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "REPORT_COMMENT") {
-      openModal("form", {
-        id: `rpp-form-modal`,//report post
-        title: `REPORT BÀI VIẾT`,
-        formId: `rpp-form`,
-        inputs:
-          [
-            { //for rendering
-              id: `rpp-form-input`,
-              isRequired: true,
-              label: "Lý do chi tiết:",
-              type: 'text-area',
-              placeHolder: "Nhập lý do tố cáo ",
-              validation: true,
-              key: "reason"
-            },
-          ],
-        append: { id: this.props.commentId },
-        validationCondition: {
-          form: `#rpp-form`,
-          rules: [
-            //truyen vao id, loai component, message
-            validation.isRequired(`rpp-form-input`, 'text-area', 'Lý do không được để trống!'),
-            validation.minLength(`rpp-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
-          ],
-
-        },
-        submitText: "Report",
-        cancelText: "Huỷ",
-        confirmBox: {
-          title: "Report bài viết",
-          text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
-          confirmText: "Xác nhận",
-          cancelText: "Huỷ",
-          onConfirm: DTO => this.onConfirmReport(DTO)
-        }
-      });
+      openBigModal("report-comment", { id: this.props.commentId })  
     }
 
     if (selectedItem.value === "EDIT_COMMENT") {

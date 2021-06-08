@@ -19,7 +19,13 @@ import {
   delete_APostCommentFailure,
   put_EditAPostCommentReset,
   put_EditAPostCommentSuccess,
-  put_EditAPostCommentFailure
+  put_EditAPostCommentFailure,
+  get_CommentReportReasonsSuccess,
+  get_CommentReportReasonsFailure,
+  get_CommentReportReasonsRequest,
+  post_ReportAPostCommentReset,
+  post_ReportAPostCommentSuccess,
+  post_ReportAPostCommentFailure
 
 } from "redux/actions/commentAction.js";
 import { request } from "utils/requestUtils";
@@ -69,6 +75,26 @@ export function editAPostComment(commentId, data) {
   }
 }
 
+export function getCommentReportReasons() {
+  return dispatch => {
+    dispatch(get_CommentReportReasonsRequest())
+    request.get(`/posts/comments/report`).then(response =>
+      dispatch(get_CommentReportReasonsSuccess(response.data))
+    ).catch(error => { dispatch(get_CommentReportReasonsFailure()) })
+  }
+}
+
+export function reportAPostComment(id, reason) { //
+  return dispatch => {
+    dispatch(post_ReportAPostCommentReset())
+    request.post(`/posts/comments/${id}/report`, JSON.stringify(reason))
+      .then(response => {
+        dispatch(post_ReportAPostCommentSuccess());
+      }
+      ).catch(() => dispatch(post_ReportAPostCommentFailure()))
+  }
+}
+
 export function createAPostComment(postId, content) {
   return dispatch => {
     dispatch(create_APostCommentReset());
@@ -106,7 +132,6 @@ export function unLikeAPostComment(commentId) { //maybe use modal later
   }
 }
 
-
 //chua co API cho viec xoa bai post
 export function deleteAPostComment(commentId) { //maybe use modal later
   return dispatch => {
@@ -117,7 +142,6 @@ export function deleteAPostComment(commentId) { //maybe use modal later
     }).catch(error => { dispatch(delete_APostCommentFailure(commentId)) })
   }
 }
-
 
 export function createReply(prCommentId, content) {
   return dispatch => {

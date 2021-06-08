@@ -26,7 +26,11 @@ import {
   RESOLVE_A_POST_COMMENT_SUCCESS,
   CREATE_A_PC_REPLY_FAILURE,
   CREATE_A_PC_REPLY_SUCCESS,
-  CREATE_A_PC_REPLY_RESET
+  CREATE_A_PC_REPLY_RESET,
+
+  GET_COMMENT_REPORT_REASONS_REQUEST,
+  GET_COMMENT_REPORT_REASONS_SUCCESS,
+  GET_COMMENT_REPORT_REASONS_FAILURE,
 
 } from "../constants.js"
 
@@ -146,6 +150,10 @@ const initialState = {
     totalPages: 5,
     totalElements: 23,
   },
+  reportReasons: {
+    isLoading: false,
+    data: []
+  },
   isHaveDeleted: false,
   isHaveEdited: false,
   isHaveReported: false,
@@ -154,7 +162,7 @@ const initialState = {
   isHaveCreated: false,
   createdCommentId: null,
   editedCommentId: null,
-  
+
 }
 
 function CommentReducer(state = initialState, action) {
@@ -274,6 +282,7 @@ function CommentReducer(state = initialState, action) {
     case RESOLVE_A_POST_COMMENT_FAILURE:
       return { ...state, isHaveResolved: false };
 
+    //report
     default:
       return state;
   }

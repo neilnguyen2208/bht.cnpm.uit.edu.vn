@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getReportReasons } from 'redux/services/reportServices'
 import { reportAPost } from 'redux/services/postServices'
+import { reportAPostComment } from 'redux/services/commentServices'
+
 class ReportModal extends React.Component {
 
   componentDidMount() {
@@ -16,9 +18,7 @@ class ReportModal extends React.Component {
       "feedback": "string"
     }
 
-    if (this.props.type !== "COMMENT")
-      this.props.getReportReasons();
-
+    this.props.getReportReasons();
   }
 
   handleSubmit = () => {
@@ -26,23 +26,32 @@ class ReportModal extends React.Component {
     document.querySelectorAll("#rpmd-rsns .form-checkbox-container input:checked").forEach(item =>
       this.REPORT_DTO.reasonIds.push(item.value)
     )
-
+    console.log(this.REPORT_DTO)
     if (this.REPORT_DTO.reasonIds.length === 0) {
       //set error message and return
-      document.querySelector(".form-error-label-container .form-error-label").innerText = "Chọn ít nhất một lý do."
+      document.querySelector("#rpmd-rsns .form-error-label-container .form-error-label").innerText = "Chọn ít nhất một lý do."
       return;
     }
-    console.log(this.REPORT_DTO);
     openModal("confirmation",
       {
         title: this.props.type === "POST" ?
-          "Báo cáo tố cáo"
+          "Báo cáo tài liệu"
           : this.props.type === "DOCUMENT" ? "Báo cáo tài liệu" : "Báo cáo bình luận",
-        text: "Báo cáo bài viết.",
+        text: this.props.type === "POST" ?
+          "Xác nhận báo cáo bài viết"
+          : this.props.type === "DOCUMENT" ? "Xác nhận báo cáo tài liệu" : "Xác nhận báo cáo bình luận",
         confirmText: "Xác nhận",
         cancelText: "Huỷ",
         onConfirm: () => {
-          this.props.reportAPost(this.props.id, this.REPORT_DTO);
+
+          if (this.props.type === "POST")
+            this.props.reportAPost(this.props.id, this.REPORT_DTO)
+          else
+            if (this.props.type === "DOCUMENT") { }
+            else
+              if (this.props.type === "COMMENT") {
+                this.props.reportAPostComment(this.props.id, this.REPORT_DTO)
+              }
           closeModal(); //close confimation popup
           closeBigModal(); //close edit post popup
         }
@@ -69,9 +78,9 @@ class ReportModal extends React.Component {
         <div className="modal-fixed-layout">
           <div className="modal-wrapper form o-f-hidden pd-top-5px">
             <ModalTitlebar title={this.props.type === "POST" ?
-              "BÁO CÁO BÀI VIẾT"
-              : this.props.type === "DOCUMENT" ? "BÁO CÁO TÀI LIỆU" : "BÁO CÁO BÌNH LUẬN"} />
-            <div className="form-container pd-10px" id="rpmd-rsns"            >
+              "TỐ CÁO BÀI VIẾT"
+              : this.props.type === "DOCUMENT" ? "TỐ CÁO TÀI LIỆU" : "TỐ CÁO BÌNH LUẬN"} />
+            <div className="form-container pd-10px" id="rpmd-rsns">
               <div className="form-group"
                 style={{ borderBottom: "1px solid var(--gray)", paddingBottom: "8px", marginBottom: "16px" }}>
                 <label className="form-label-required">Chọn ít nhất một lý do:</label>
@@ -89,15 +98,13 @@ class ReportModal extends React.Component {
                       </div>
                         ;
                     })
-
                     : <div style={{ height: "1rem" }} />
                   }
                 </div>
-                <div className="form-error-label-container ">
+                <div className="form-error-label-container">
                   <span className="form-error-label mg-top-10px" ></span>
                 </div>
               </div>
-
               <div className="form-group" style={{ marginTop: "3px" }}>
                 <label className="form-label">Bạn có thể làm rõ lý do báo cáo không?</label>
                 <textarea className="text-area" onChange={(e) => this.updateFeedback(e)} id="rpmd-txtr" placeholder="Thông tin thêm ... " />
@@ -112,21 +119,21 @@ class ReportModal extends React.Component {
           </div >
         </div >
       </div >
-
     );
   }
 }
 
-
 const mapStateToProps = (state) => {
+  console.log(state.comment.reportReasons.data)
   return {
     reportReasons: state.report.data,
-    isLoading: state.report.isLoading
+    isLoading: state.report.isLoading,
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getReportReasons, reportAPost
+  getReportReasons, reportAPost,
+  reportAPostComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportModal));

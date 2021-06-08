@@ -30,7 +30,10 @@ import {
   CREATE_A_PC_REPLY_FAILURE,
   GET_COMMENT_REPORT_REASONS_REQUEST,
   GET_COMMENT_REPORT_REASONS_SUCCESS,
-  GET_COMMENT_REPORT_REASONS_FAILURE
+  GET_COMMENT_REPORT_REASONS_FAILURE,
+  GET_REPORTED_POST_COMMENTS_REQUEST,
+  GET_REPORTED_POST_COMMENTS_SUCCESS,
+  GET_REPORTED_POST_COMMENTS_FAILURE
 
 } from "../constants.js"
 
@@ -209,6 +212,18 @@ export function get_CommentReportReasonsSuccess(data) {
 
 export function get_CommentReportReasonsFailure(data) {
   return { type: GET_COMMENT_REPORT_REASONS_FAILURE }
+}
+
+export function get_ReportedPostCommentsRequest() {
+  return { type: GET_REPORTED_POST_COMMENTS_REQUEST }
+}
+
+export function get_ReportedPostCommentsSuccess(data) {
+  return { type: GET_REPORTED_POST_COMMENTS_SUCCESS, payload: data }
+}
+
+export function get_ReportedPostCommentsFailure(error) {
+  return { type: GET_REPORTED_POST_COMMENTS_FAILURE, payload: error }
 }
 
 export function post_ResolveAPostCommentReset() {

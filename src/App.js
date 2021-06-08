@@ -24,8 +24,6 @@ import PostApproving from 'pages/management/PostManagement/PostApproving'
 import NotificationManagement from 'pages/management/NotificationManagement/NotificationManagement'
 import CategoryManagement from 'pages/management/NotificationManagement/NotificationManagement'
 import Statistic from 'pages/management/Statistic/Statistic'
-import UserRoleManagement from 'pages/management/UserRoleManagement/UserRoleManagement'
-import UserManagement from 'pages/management/UserManagement/UserManagement'
 import PostManagement from 'pages/management/PostManagement/PostManagement'
 import SearchCourses from 'pages/common/SearchResult/SearchCourses'
 import UploadDocument from 'pages/user/UploadDocument/UploadDocument'
@@ -43,10 +41,10 @@ import DocumentReportManagement from "pages/management/DocumentManagement/Docume
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
-// import ForgotPassword from 'pages/authentication/ForgotPassword'
 import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
+import PostCommentReport from 'pages/management/CommentManagement/PostCommentReport'
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -93,7 +91,7 @@ const App = () => {
                         <Route exact path="/user/my-documents" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
-                        <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.Create]}/>
+                        <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.Create]} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-document" component={UploadDocument} />
                         <Route exact path="/courses/:id/exercise" component={Exercise} />
@@ -108,15 +106,13 @@ const App = () => {
                         <Route exact path="/admin/document-management" component={DocumentManagement} />
                         <Route exact path="/admin/document-management/report" component={DocumentReportManagement} />
 
-                        <Route exact path="/admin/user-management" component={UserManagement} />
                         <Route exact path="/admin/page-notification" component={NotificationManagement} />
                         <Route exact path="/admin/category-management" component={CategoryManagement} />
                         <Route exact path="/admin/activity-management" component={ActivityManagement} />
-                        <Route exact path="/admin/user-role-management" component={UserRoleManagement} />
                         <Route exact path="/admin/user-management/:id" component={AdminLayout} />
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
-
+                        <Route exact path="/admin/comment-report-management" component = {PostCommentReport}/>
                         <Route exact path="/user/sercurity" component={Security} />
 
 

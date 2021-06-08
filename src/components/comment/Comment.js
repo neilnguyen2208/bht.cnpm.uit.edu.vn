@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 //resources
 
 import { closeModal, openBigModal, openModal } from 'redux/services/modalServices'
-import { styleFormSubmit, validation } from 'utils/validationUtils'
 
 //styles
 import 'components/styles/Label.scss'
@@ -27,11 +26,8 @@ import down_arrow from 'assets/icons/12x12/dropdown_12x12.png'
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils.js';
-import authService from 'authentication/authServices.js';
 import { request } from 'utils/requestUtils.js';
 import { deleteAPostComment, editAPostComment } from 'redux/services/commentServices'
-import store from 'redux/store/index.js';
-import { delete_APostCommentReset, put_EditAPostCommentReset } from 'redux/actions/commentAction.js';
 
 // const validationCondition = {
 //   form: '#create-comment-form',

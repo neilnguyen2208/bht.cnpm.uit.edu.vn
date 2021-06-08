@@ -181,8 +181,6 @@ export function getReportedPosts(searchParamObject) {
     }
 }
 
-
-
 export function resolveAPost(id, resolveDTO) {
     return dispatch => {
         dispatch(post_ResolveAPostReset());

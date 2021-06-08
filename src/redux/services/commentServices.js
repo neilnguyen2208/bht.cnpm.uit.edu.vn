@@ -25,10 +25,17 @@ import {
   get_CommentReportReasonsRequest,
   post_ReportAPostCommentReset,
   post_ReportAPostCommentSuccess,
-  post_ReportAPostCommentFailure
+  post_ReportAPostCommentFailure,
+  post_ResolveAPostCommentReset,
+  post_ResolveAPostCommentSuccess,
+  post_ResolveAPostCommentFailure,
+  get_ReportedPostCommentsRequest,
+  get_ReportedPostCommentsSuccess,
+  get_ReportedPostCommentsFailure
 
 } from "redux/actions/commentAction.js";
 import { request } from "utils/requestUtils";
+import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";
 
 export function getAPostComments(postId, page) {
@@ -108,6 +115,17 @@ export function createAPostComment(postId, content) {
   }
 }
 
+export function resolveAPost(id, resolveDTO) {
+  return dispatch => {
+    dispatch(post_ResolveAPostCommentReset());
+    request.post(`/posts/comments/  resolveReport/${id}`, JSON.stringify(resolveDTO))
+      .then(result => {
+        dispatch(post_ResolveAPostCommentSuccess());
+      })
+      .catch(error => post_ResolveAPostCommentFailure())
+  }
+}
+
 export function likeAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(post_LikeAPostCommentRequest(commentId))
@@ -153,5 +171,43 @@ export function createReply(prCommentId, content) {
       .catch(error => {
         dispatch(create_APostCommentFailure(error)); //
       })
+  }
+}
+
+export function getReportedPostComments(searchParamObject) {
+  return dispatch => {
+    dispatch(get_ReportedPostCommentsRequest());
+    request.get(`/posts/comments/report?${generateSearchParam(searchParamObject)}`)
+      .then(response => {
+        let result_1 = response.data;
+        let IDarr = '';
+        response.data.postCommentReportDTOs.map(item => IDarr += item.commentID + ",") //tao ra mang id moi
+
+        request.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+          .then(result => {
+            //merge summary array and statistic array
+            let finalResult = [];
+            for (let i = 0; i < result_1.postCommentReportDTOs.length; i++) {
+              finalResult.push({
+                ...result_1.postCommentReportDTOs[i],
+                ...(result.data.find((itmInner) => itmInner.id === result_1.postCommentReportDTOs[i].commentID)),
+              }
+              );
+            }
+            dispatch(get_ReportedPostCommentsSuccess({ postReportedCommentWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+          }).catch(() => get_ReportedPostCommentsFailure())
+      })
+      .catch(error => { get_ReportedPostCommentsFailure(error) })
+  }
+}
+
+export function resolveAPostComment(id, resolveDTO) {
+  return dispatch => {
+    dispatch(post_ResolveAPostCommentReset());
+    request.post(`/posts/resolveReport/${id}`, JSON.stringify(resolveDTO))
+      .then(result => {
+        dispatch(post_ResolveAPostCommentSuccess());
+      })
+      .catch(error => post_ResolveAPostCommentFailure())
   }
 }

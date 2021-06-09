@@ -1,100 +1,92 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { RequireLogin } from 'components/base_components/RequireLoginComponent'
-
-//resources
-import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
-import unliked_icon from 'assets/icons/24x24/unliked_icon_24x24.png'
+import { resolveAPostComment } from 'redux/services/commentServices';
 
 //styles
 import 'components/styles/Reactionbar.scss'
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
+import { openModal } from 'redux/services/modalServices.js';
+import { validation } from 'utils/validationUtils.js';
 
-//utils
-import { formatNumber } from 'utils/miscUtils.js'
+class ReportReactionbar extends React.Component {
+  handleResolve = () => {
+    openModal("form", {
+      id: `rsap-form-modal`,//resolve a post
+      title: `XỬ LÝ BÌNH LUẬN`,
+      formId: `rsap-form`,
+      inputs:
+        [
+          { //for rendering
+            id: `rsap-combobox`,
+            isRequired: true,
+            label: "Hỉnh thức xử lý:",
+            type: 'combobox',
+            options: [{ id: 1, name: "Giữ lại", value: "KEEP" }, { id: 2, name: "Xoá", value: "DELETE" }],
+            selectedOptionID: 1,
+            validation: true,
+            key: "postCommentReportActionType",
+            onOptionChanged: (option) => {
+              return option.value;
+            }
+          },
+          { //for rendering
+            id: `rsap-form-input`,
+            isRequired: true,
+            label: "Ghi chú:",
+            type: 'text-area',
+            placeHolder: "Nhập ghi chú xử lý bình luận ",
+            validation: true,
+            key: "resolvedNote"
+          },
+        ],
+      validationCondition: {
+        form: `#rsap-form`,
+        rules: [
+          validation.isRequired(`rsap-form-input`, 'text-area', 'Ghi chú không được để trống!'),
+          validation.isRequired(`rsap-combobox`, 'combobox', 'Hình thức xử lý không được để trống!'),
+          validation.minLength(`rsap-form-input`, 'text-area', 25, 'Ghi chú không được ít hơn 25 ký tự!'),
+        ],
 
-class NormalReactionbar extends React.Component {
+      },
+      submitText: "Xác nhận",
+      cancelText: "Huỷ",
+      confirmBox: {
+        title: "Xử lý bình luận",
+        text: "Bạn có chắc chắn muốn xử lý báo cáo bình luận này không?",
+        verifyText: "Xác nhận",
+        cancelText: "Huỷ",
+        onConfirm: DTO => this.onConfirmResolve(DTO)
+      }
+    });
 
-  constructor(props) {
-    super(props);
-
-    this.likeCount = -1; //dummy for change
-    this.state = { isLiked: 0 };
   }
 
-  toggleLikeImage = () => {
-    let tmpLike = this.state.isLiked;
-
-    if (tmpLike === 0)
-      if (this.props.likedStatus) tmpLike = 1;
-      else tmpLike = -1;
-
-    tmpLike = - tmpLike;
-
-    if (this.props.likedStatus) {
-      if ((tmpLike === -1)) {
-        this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPost(this.props.id);
-      }
-      else {
-        this.likeCount = this.props.likeCount;
-        this.props.likeAPost(this.props.id);
-      }
-    }
-    else {
-      if (tmpLike === 1) {
-        this.likeCount = this.props.likeCount + 1
-        this.props.likeAPost(this.props.id);
-      } else {
-        this.props.unLikeAPost(this.props.id);
-        this.likeCount = this.props.likeCount;
-      }
-    }
-    this.setState({ isLiked: tmpLike });
+  onConfirmResolve = (resolveDTO) => {
+    this.props.resolveAPostComment(this.props.id, resolveDTO)
   }
 
   render() {
-    // 
-    //#region like, unlike buttons
-    let likeBtn = <div></div>;
-
-    //render likeBtn
-    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likedStatus)) {
-      likeBtn = <img className="post-like-btn" alt="like" src={liked_icon}></img>
-    }
-    else {
-      likeBtn = <img className="post-like-btn" alt="like" src={unliked_icon} ></img>
-    }
-
     return (
-      <div className="reaction-bar">
-        <div className="d-flex mg-top-5px">
-          <RequireLogin permissions={["Page.Post.Like"]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-            <div className="like-btn-container">
-              <div className="d-flex"> {likeBtn}</div>
-              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
-            </div>
-          </RequireLogin>
-          <div className="vertical-line" />
-        </div>
+      <div className="reaction-bar j-c-end pd-top-5px">
+        <button className="blue-button" onClick={() => this.handleResolve()}>Xử lý bình luận</button>
       </div >
     );
   }
 
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  resolveAPostComment
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NormalReactionbar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportReactionbar));
 

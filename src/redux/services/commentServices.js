@@ -180,22 +180,7 @@ export function getReportedPostComments(searchParamObject) {
     request.get(`/posts/comments/report?${generateSearchParam(searchParamObject)}`)
       .then(response => {
         let result_1 = response.data;
-        let IDarr = '';
-        response.data.postCommentReportDTOs.map(item => IDarr += item.commentID + ",") //tao ra mang id moi
-
-        request.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
-          .then(result => {
-            //merge summary array and statistic array
-            let finalResult = [];
-            for (let i = 0; i < result_1.postCommentReportDTOs.length; i++) {
-              finalResult.push({
-                ...result_1.postCommentReportDTOs[i],
-                ...(result.data.find((itmInner) => itmInner.id === result_1.postCommentReportDTOs[i].commentID)),
-              }
-              );
-            }
-            dispatch(get_ReportedPostCommentsSuccess({ postReportedCommentWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
-          }).catch(() => get_ReportedPostCommentsFailure())
+        dispatch(get_ReportedPostCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.postCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
       })
       .catch(error => { get_ReportedPostCommentsFailure(error) })
   }
@@ -204,7 +189,7 @@ export function getReportedPostComments(searchParamObject) {
 export function resolveAPostComment(id, resolveDTO) {
   return dispatch => {
     dispatch(post_ResolveAPostCommentReset());
-    request.post(`/posts/resolveReport/${id}`, JSON.stringify(resolveDTO))
+    request.post(`/posts/comments/resolveReport/${id}`, JSON.stringify(resolveDTO))
       .then(result => {
         dispatch(post_ResolveAPostCommentSuccess());
       })

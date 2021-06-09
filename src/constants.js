@@ -23,6 +23,13 @@ export const userApproveStatusOptions = [
   { id: 4, name: "Cần xem lại", postState: "PENDING_FIX" }
 ];
 
+export const resolveStateOptions = [
+  { id: 1, name: "Tất cả", icon: report_icon, value: "REPORT_POST" },
+  { id: 2, name: "Chưa xử lý", icon: report_icon, value: "REPORT_POST" },
+  { id: 3, name: "Đã xử lý", icon: report_icon, value: "REPORT_POST" },
+
+]
+
 export const adminApproveStatusOptions = [
   { id: 1, name: "Tất cả", postState: "" },
   { id: 2, name: "Đã duyệt", postState: "APPROVED" },

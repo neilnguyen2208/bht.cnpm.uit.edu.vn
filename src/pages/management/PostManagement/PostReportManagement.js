@@ -17,6 +17,8 @@ import ReportReactionbar from 'components/post/ReportReactionbar'
 import store from 'redux/store/index'
 import { post_ResolveAPostReset } from 'redux/actions/postAction'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
+import Combobox from 'components/common/Combobox/Combobox';
+import { resolveStateOptions } from 'constants.js'
 
 class PostReportManagement extends React.Component {
     constructor(props) {
@@ -42,6 +44,19 @@ class PostReportManagement extends React.Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
+        }
+        this.props.getReportedPosts(this.searchParamObject);
+        this.setState({});
+    }
+
+    onStateOptionChange = (selectedOption) => {
+        setQueryParam({
+            ...this.queryParamObject, "page": 1
+        });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            postState: selectedOption.postState,
+            "page": 1
         }
         this.props.getReportedPosts(this.searchParamObject);
         this.setState({});
@@ -75,23 +90,18 @@ class PostReportManagement extends React.Component {
                         postId={item.id}
                         reporters={item.reporters}
                         reportReasons={item.reportReasons}
-
                         title={item.title}
                         content={item.content}
                         imageURL={item.postImageURL}
-
                         reportTime={item.reportTime}
                         resolvedTime={item.resolvedTime}
                         resolvedNote={item.resolvedNote}
                         actionTaken={item.actionTaken}
-
-                        feedbacks = {item.feedbacks}
+                        feedbacks={item.feedbacks}
                     />
 
                     <ReportReactionbar type={itemType.mySelf}
                         id={item.id} //report id, not post id
-                    // reloadList={() => this.reloadList()}
-
                     />
                 </div>
             ))
@@ -108,9 +118,23 @@ class PostReportManagement extends React.Component {
                         <div />
                         {!this.props.isListLoading ?
                             <>
-                                <div className="sum-item-label mg-top-10px">
-                                    <div className="mg-right-5px">Tổng số:</div>
-                                    <div> {this.props.totalElements}</div>
+                                <div className="filter-container j-c-space-between">
+                                    <div className="sum-item-label mg-top-10px">
+                                        <div className="mg-right-5px">Tổng số:</div>
+                                        <div> {this.props.totalElements}</div>
+                                    </div>
+                                    <div className="d-flex">
+                                        <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
+                                        <div className="mg-left-5px">
+                                            <Combobox
+                                                options={resolveStateOptions}
+                                                selectedOptionID={1}
+                                                placeHolder="Tất cả"
+                                                onOptionChanged={(selectedOption) => this.onStateOptionChange(selectedOption)}
+                                                comboboxId="prmrsf-combobox" //post report management resolve state filter 
+                                            ></Combobox>
+                                        </div>
+                                    </div>
                                 </div>
                                 <>{this.postsList}</>
                                 <Paginator config={{

@@ -5,7 +5,6 @@ import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
 import { getReportedPostComments } from 'redux/services/commentServices'
-import ReportInfo from 'components/post/ReportInfo'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -13,11 +12,11 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
 // import PostManagementNavbar from './PostManagementNavbar'
-import ReportReactionbar from 'components/post/ReportReactionbar'
+import PostCommentReportReactionbar from 'components/comment/PostReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 import { post_ResolveAPostCommentReset } from 'redux/actions/commentAction';
-import PostReportedComment from 'components/comment/PostReportedComment'
+import PostReportedCommentInfo from 'components/comment/PostReportedCommentInfo'
 
 class PostCommentReport extends React.Component {
     constructor(props) {
@@ -67,30 +66,35 @@ class PostCommentReport extends React.Component {
             closeModal();
             this.reloadList();
             store.dispatch(post_ResolveAPostCommentReset());
-            openBLModal({ type: "success", text: "Xử lý bài viết thành công!" });
+            openBLModal({ type: "success", text: "Xử lý bình luận thành công!" });
         }
         if (!this.props.isListLoading && this.props.reportedCommentsList) {
             this.reportedCommentsList = this.props.reportedCommentsList.map((reportedComment) => {
-                return <PostReportedComment
-                    id={reportedComment.id}
-                    commentId={reportedComment.commentID}
-                    postId={reportedComment.postID}
-                    postTitle={reportedComment.postTitle}
-                    content={reportedComment.content}
-                    reporters={reportedComment.reporters}
-                    reportReasons={reportedComment.reportReasons}
-                    feedbacks={reportedComment.feedbacks}
-                    reportTime={reportedComment.reportTime}
-                    resolvedTime={reportedComment.resolvedTime}
-                    resolvedNote={reportedComment.resolvedTime}
-                    resolvedBy={reportedComment.resolvedTime}
-                    actionTaken={reportedComment.actionTaken}
-                    replyCount={1}
-                    likeCount={reportedComment.likeCount}
-                    likeStatus={reportedComment.likeStatus}
-                />
-            }
-            )
+                return <div className="item-container">
+
+                    <PostReportedCommentInfo
+                        id={reportedComment.id}
+                        commentId={reportedComment.commentID}
+                        postId={reportedComment.postID}
+                        postTitle={reportedComment.postTitle}
+                        content={reportedComment.content}
+                        reporters={reportedComment.reporters}
+                        reportReasons={reportedComment.reportReasons}
+                        feedbacks={reportedComment.feedbacks}
+                        reportTime={reportedComment.reportTime}
+                        resolvedTime={reportedComment.resolvedTime}
+                        resolvedNote={reportedComment.resolvedTime}
+                        resolvedBy={reportedComment.resolvedTime}
+                        actionTaken={reportedComment.actionTaken}
+                        authorAvatarURL={"https://ziclife.com/wp-content/uploads/2020/08/cute-profile-picture-32.jpg"}
+                        authorID={""}
+                        authorDisplayName={"Nguyễn Văn Đông"}
+
+                    />
+
+                    <PostCommentReportReactionbar id={reportedComment.id} />
+                </div>
+            })
         }
 
         return (
@@ -103,10 +107,12 @@ class PostCommentReport extends React.Component {
 
                         <div />
                         {!this.props.isListLoading ?
-                            <>
-                                <div className="sum-item-label mg-top-10px">
-                                    <div className="mg-right-5px">Tổng số:</div>
-                                    <div> {this.props.totalElements}</div>
+                            <div>
+                                <div className="filter-container">
+                                    <div className="sum-item-label mg-top-10px">
+                                        <div className="mg-right-5px">Tổng số:</div>
+                                        <div> {this.props.totalElements}</div>
+                                    </div>
                                 </div>
                                 <>{this.reportedCommentsList}</>
                                 <Paginator config={{
@@ -115,7 +121,7 @@ class PostCommentReport extends React.Component {
                                     currentPage: getQueryParamByName('page')
                                 }}
                                 />
-                            </>
+                            </div>
                             :
                             <div>
                                 {DocPostSummaryLoader()}

@@ -1,7 +1,7 @@
 
 import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType } from 'constants.js';
+import { itemType, resolveStateOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
 import { getReportedPostComments } from 'redux/services/commentServices'
@@ -17,6 +17,8 @@ import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 import { post_ResolveAPostCommentReset } from 'redux/actions/commentAction';
 import PostReportedCommentInfo from 'components/comment/PostReportedCommentInfo'
+import PostManagementNavBar from './PostManagementNavbar';
+import Combobox from 'components/common/Combobox/Combobox';
 
 class PostCommentReport extends React.Component {
     constructor(props) {
@@ -57,6 +59,34 @@ class PostCommentReport extends React.Component {
         setQueryParam(this.queryParamObject);
 
         this.props.getReportedPostComments(this.searchParamObject);
+    }
+
+    onStateOptionChange = (selectedOption) => {
+        setQueryParam({
+            ...this.queryParamObject, "page": 1
+        });
+
+        //
+        switch (selectedOption.id) {
+            case 2:
+                this.searchParamObject = {
+                    ...this.searchParamObject,
+                    isResolvedReport: false
+                }
+                break;
+            case 3:
+                this.searchParamObject = {
+                    ...this.searchParamObject,
+                    isResolvedReport: true
+                }
+                break;
+            default:
+                this.searchParamObject = {
+                    page: "1"
+                }
+        }
+        this.props.getReportedPostComments(this.searchParamObject);
+        this.setState({});
     }
 
     render() {
@@ -101,19 +131,36 @@ class PostCommentReport extends React.Component {
             <div className="left-sidebar-layout" >
                 <AdminSidebar />
                 <div className="content-layout">
-                    <Titlebar title="QUẢN LÝ BÌNH LUẬN" />
+                    <Titlebar title="QUẢN LÝ BÀI VIẾT" />
                     <div className="content-container">
-                        {/* <PostManagementNavbar /> */}
+                        <PostManagementNavBar />
 
                         <div />
+                        <div className="filter-container j-c-space-between">
+                            {!this.props.isListLoading ?
+                                <div className="sum-item-label">
+                                    <div className="mg-right-5px">Tổng số:</div>
+                                    <div> {this.props.totalElements}</div>
+                                </div> :
+                                <div className="sum-item-label mg-top-10px">
+                                    <div className="mg-right-5px">Tổng số:</div>
+                                    <div> </div>
+                                </div>
+                            }
+                            <div className="d-flex">
+                                <div className="filter-label t-a-right mg-right-5px">Trạng thái xử lý:</div>
+                                <div className="mg-left-5px">
+                                    <Combobox
+                                        options={resolveStateOptions}
+                                        placeHolder="Tất cả"
+                                        onOptionChanged={(selectedOption) => this.onStateOptionChange(selectedOption)}
+                                        comboboxId="pcrmrsf-combobox" //post comment report management resolve state filter 
+                                    ></Combobox>
+                                </div>
+                            </div>
+                        </div>
                         {!this.props.isListLoading ?
                             <div>
-                                <div className="filter-container">
-                                    <div className="sum-item-label mg-top-10px">
-                                        <div className="mg-right-5px">Tổng số:</div>
-                                        <div> {this.props.totalElements}</div>
-                                    </div>
-                                </div>
                                 <>{this.reportedCommentsList}</>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),

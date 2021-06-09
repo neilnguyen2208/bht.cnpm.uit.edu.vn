@@ -61,7 +61,7 @@ export default class ReportInfo extends React.PureComponent {
             this.type = resolveStatus.notResolved;
         return (
             <div className="report-info metadata">
-                <div className="activity-metadata"  >
+                <div className="activity-metadata" style={{ borderBottom: "none", paddingBottom: "0px" }}  >
                     <div>
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
@@ -78,11 +78,11 @@ export default class ReportInfo extends React.PureComponent {
                                 <div className="red-border-label">PENDING</div>
                             }
                         </div>
-                        <Link className="activity-title" to={`/post-content/${this.props.id}`} >{this.props.title}</Link>
+                        <div className="black-label-s">thuộc bài viết:</div>
                     </div>
                     <div>
                         {this.props.reportTime ?
-                            <div>
+                            <div style={{ minWidth: "fit-content", display: "block" }}>
                                 <div className="d-flex">
                                     <img src={calendar_icon} alt="" className="calendar-icon" />
                                     <div className="black-label-m">
@@ -100,9 +100,9 @@ export default class ReportInfo extends React.PureComponent {
                         }
                     </div>
                 </div>
+                <Link className="activity-title" style={{ borderBottom: "1px solid var(--gray)", paddingTop: "0px", paddingBottom: "10px" }} to={`/post-content/${this.props.id}`} >{this.props.postTitle}</Link>
 
                 {/*  */}
-
                 <div className="report-container">
                     <div className="d-flex">
                         <img className="danger-icon" src={danger_icon} alt="!" />

@@ -44,7 +44,7 @@ import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
 import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
-import PostCommentReport from 'pages/management/CommentManagement/PostCommentReport'
+import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -112,9 +112,8 @@ const App = () => {
                         <Route exact path="/admin/user-management/:id" component={AdminLayout} />
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
-                        <Route exact path="/admin/comment-report-management" component = {PostCommentReport}/>
+                        <Route exact path="/admin/post-management/comment-report" component={PostCommentReport} />
                         <Route exact path="/user/sercurity" component={Security} />
-
 
                         {/* verify email url */}
                         <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} />

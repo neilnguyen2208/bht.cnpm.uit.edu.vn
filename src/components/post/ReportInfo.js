@@ -69,7 +69,11 @@ export default class ReportInfo extends React.PureComponent {
                                 reportersName
                             }
                             {/*  */}
-                            <div className="black-label-s">{`đã tố cáo bài viết - `}</div>
+                            <div className="black-label-s">{`đã tố cáo bài viết của  `}
+                                <Link className="link-label-s" to={`/user/${this.props.author.id}`}>
+                                    {this.props.author.displayName}
+                                </Link>
+                            </div>
                             {this.type === resolveStatus.resolved ?
                                 <div className="blue-border-label">RESOLVED</div>
                                 :
@@ -77,7 +81,11 @@ export default class ReportInfo extends React.PureComponent {
                             }
                         </div>
 
-                        <Link className="activity-title" to={`/post-content/${this.props.id}`} >{this.props.title}</Link>
+                        <div className="d-flex">
+                            <img className="avatar mg-top-10px" style ={{marginRight: "10px"}} src={this.props.author.avatarURL} alt="" />
+                            <Link className="activity-title" to={`/post-content/${this.props.id}`} >{this.props.title}</Link>
+                        </div>
+
                     </div>
                     <div>
                         {this.props.reportTime ?

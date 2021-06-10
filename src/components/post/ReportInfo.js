@@ -31,24 +31,24 @@ export default class ReportInfo extends React.PureComponent {
         let reportersName = <></>;
         if (this.props.reporters.length === 1)
             reportersName = <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                {this.props.reporters[0].name}
+                {this.props.reporters[0].displayName}
             </Link>
         else if (this.props.reporters.length === 2)
             reportersName = <div className="d-flex">
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name} và
+                    {this.props.reporters[0].displayName} và
             </Link>
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name} và
+                    {this.props.reporters[0].displayName} và
             </Link>
             </div>
         else if (this.props.reporters.length > 2)
             reportersName = <div className="d-flex">
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name}, {{}}
+                    {this.props.reporters[0].displayName},
                 </Link>
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name}
+                <Link className="link-label-s" to={`/user/${this.props.reporters[1].id}`}>
+                    {this.props.reporters[1].displayName}
                 </Link>
               và {this.props.reporters.length - 2} người khác
             </div>
@@ -69,11 +69,12 @@ export default class ReportInfo extends React.PureComponent {
                                 reportersName
                             }
                             {/*  */}
-                            <div className="black-label-s">{`đã tố cáo bài viết của  `}
-                                <Link className="link-label-s" to={`/user/${this.props.author.id}`}>
-                                    {this.props.author.displayName}
-                                </Link>
+                            <div className="black-label-s">{`đã tố cáo bài viết của `}
                             </div>
+                            <Link to={`/user/${this.props.author.id}`} style={{ fontSize: "17px", lineHeight: "18px", fontFamily: "BarlowCondensed-SemiBold" }}>
+                                {this.props.author.displayName + " "}
+                            </Link>
+                            <div className="black-label-s" style={{ marginLeft: "3px" }}>{" - "}</div>
                             {this.type === resolveStatus.resolved ?
                                 <div className="blue-border-label">RESOLVED</div>
                                 :
@@ -82,7 +83,7 @@ export default class ReportInfo extends React.PureComponent {
                         </div>
 
                         <div className="d-flex">
-                            <img className="avatar mg-top-10px" style ={{marginRight: "10px"}} src={this.props.author.avatarURL} alt="" />
+                            <img className="avatar mg-top-10px" style={{ marginRight: "10px" }} src={this.props.author.avatarURL} alt="" />
                             <Link className="activity-title" to={`/post-content/${this.props.id}`} >{this.props.title}</Link>
                         </div>
 

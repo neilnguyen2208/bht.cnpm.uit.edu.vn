@@ -72,7 +72,7 @@ multipartRequest.interceptors.response.use(
   }
 );
 
-export const springAuthRequest = axios.create({
+export const authRequest = axios.create({
   baseURL: remoteServiceBaseUrl,
   headers: {
     'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export const springAuthRequest = axios.create({
 }
 );
 
-springAuthRequest.interceptors.request.use(
+authRequest.interceptors.request.use(
   (config) => {
     //if logged in
     if (authService.isLoggedIn()) {
@@ -93,17 +93,15 @@ springAuthRequest.interceptors.request.use(
       return authService.updateToken(callback);
     }
 
-    //if not logged in => request without API
-    // config.headers.Authorization = `Bearer ${authService.getToken()}`;
-    // return Promise.resolve(config);
+    //if not logged in => request without token
+    return Promise.resolve(config);
   },
   (error) => {
     return Promise.reject(error);
   }
 );
 
-
-springAuthRequest.interceptors.response.use(
+authRequest.interceptors.response.use(
   response => {
     return response;
   },

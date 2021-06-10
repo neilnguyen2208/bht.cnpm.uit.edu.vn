@@ -33,24 +33,24 @@ export default class ReportInfo extends React.PureComponent {
         let reportersName = <></>;
         if (this.props.reporters.length === 1)
             reportersName = <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                {this.props.reporters[0].name}
+                {this.props.reporters[0].displayName}
             </Link>
         else if (this.props.reporters.length === 2)
             reportersName = <div className="d-flex">
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name} và
+                    {this.props.reporters[0].displayName} và
             </Link>
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name} và
+                    {this.props.reporters[0].displayName} và
             </Link>
             </div>
         else if (this.props.reporters.length > 2)
             reportersName = <div className="d-flex">
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name}, {{}}
+                    {this.props.reporters[0].displayName},
                 </Link>
                 <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].name}
+                    {this.props.reporters[0].displayName}
                 </Link>
               và {this.props.reporters.length - 2} người khác
             </div>
@@ -65,13 +65,9 @@ export default class ReportInfo extends React.PureComponent {
                     <div>
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
-
-                            {/*  */}
-                            {
-                                reportersName
-                            }
-                            {/*  */}
-                            <div className="black-label-s">{`đã tố cáo bình luận - `}</div>
+                            {reportersName}
+                            <div className="black-label-s">{`đã tố một bình luận`}</div>
+                            <div className="black-label-s" style={{ marginLeft: "3px" }}>{" - "}</div>
                             {this.type === resolveStatus.resolved ?
                                 <div className="blue-border-label">RESOLVED</div>
                                 :

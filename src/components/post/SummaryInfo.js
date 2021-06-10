@@ -12,7 +12,6 @@ import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services
 import { highlightAPost, deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
-import { validation } from 'utils/validationUtils'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 import {
   mySelfMenuItemList,
@@ -20,6 +19,8 @@ import {
   highlightAdminMenuItemList,
   unHighlightAdminMenuItemList
 } from 'constants.js'
+
+import allActionSummaryMenu from './adapter/allActionSummaryMenu'
 
 //styles
 import 'components/styles/Label.scss'
@@ -37,7 +38,7 @@ class PostSummary extends React.Component {
   constructor(props) {
     super(props);
 
-    this.id = this.props.id;
+    this.id = this.props.postId;
     this.title = this.props.title;
     this.image = this.props.image;
   }
@@ -52,14 +53,14 @@ class PostSummary extends React.Component {
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
           onConfirm: () => {
-            this.props.deleteAPost(this.props.id);
+            this.props.deleteAPost(this.props.postId);
             closeModal();
           }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-post", { id: this.props.id });
+      openBigModal("edit-post", { id: this.props.postId });
     }
 
     if (selectedItem.value === "REPORT_POST") {
@@ -73,7 +74,7 @@ class PostSummary extends React.Component {
       //create new type of input un modal and validation for it
 
       openBigModal("report-post", {
-        id: this.props.id
+        id: this.props.postId
       })
 
       if (selectedItem.value === "HIGHLIGHT_POST") {
@@ -81,7 +82,7 @@ class PostSummary extends React.Component {
           title: "Ghim bài viết",
           text: "Xác nhận ghim bài viết?",
           onConfirm: () => {
-            this.props.highlightAPost(this.props.id);
+            this.props.highlightAPost(this.props.postId);
             closeModal();
           }
         });
@@ -92,7 +93,7 @@ class PostSummary extends React.Component {
           title: "Bỏ ghim bài viết",
           text: "Xác nhận bỏ ghim bài viết?",
           onConfirm: () => {
-            this.props.deleteHighlightAPost(this.props.id);
+            this.props.deleteHighlightAPost(this.props.postId);
             closeModal();
           }
         });
@@ -103,7 +104,7 @@ class PostSummary extends React.Component {
           title: "Ghim bài viết lên đầu",
           text: "Xác nhận ghim bài viết lên đâu?",
           onConfirm: () => {
-            this.props.stickAPostToTop(this.props.id);
+            this.props.stickAPostToTop(this.props.postId);
             closeModal();
           }
         });
@@ -195,19 +196,20 @@ class PostSummary extends React.Component {
               <></>
             }
           </div>
-          {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+          {this.props.type !== itemType.normal &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions = {this.props.availableActions} items={allActionSummaryMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
           }
-          {this.props.type === itemType.management && this.props.isHighlighted &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={unHighlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+
+          {/* {this.props.type === itemType.management && this.props.isHighlighted &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={unHighlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
           }
 
           {this.props.type === itemType.management && !this.props.isHighlighted &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={highlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for post item poupup menu
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={highlightAdminMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
-          }
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
+          } */}
         </div>
 
         {/* title */}
@@ -215,7 +217,7 @@ class PostSummary extends React.Component {
           {/* fake avatar */}
           < img className="avatar" src={this.props.authorAvatarURL} alt="" />
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/post-content/" + this.props.id}>
+            <Link to={"/post-content/" + this.props.postId}>
               <div className="title">
                 {this.props.title}
               </div>

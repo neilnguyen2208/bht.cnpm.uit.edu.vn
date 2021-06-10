@@ -13,7 +13,7 @@ const userMenuOptions = [
     { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: "/user", isLink: true },
     { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
     {
-        id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '',
+        id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '', to: "/user/my-posts", isLink: true,
         style: {
             height: "26px",
             paddingTop: "3px",
@@ -21,7 +21,7 @@ const userMenuOptions = [
         }
     },
     {
-        id: 4, text: "Tài liệu của tôi", value: "MY_DOCUMENT", icon: '', tip: "", hasLine: true,
+        id: 4, text: "Tài liệu của tôi", value: "MY_DOCUMENT", icon: '', tip: "", hasLine: true, to: "/user/my-documents", isLink: true,
         style: {
             height: "26px",
             paddingTop: "1px",
@@ -37,8 +37,6 @@ const userMenuOptions = [
         }
     },
 ]
-
-
 
 class UserMenu extends React.Component {
 
@@ -88,10 +86,8 @@ class UserMenu extends React.Component {
     }
 
     handleMenuItemClick = (menuItem) => {
-        //UI
         document.getElementById("h-um-wrapper").style.background = "white";
         this.isAnyValueChanged = true;
-        this.closeMenu();
         this.setState({});
 
         //Event handlers
@@ -107,13 +103,11 @@ class UserMenu extends React.Component {
         let items = userMenuOptions.map(menuItem => {
             return <div className="header-user-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                 id={"header-user-menuItem-" + menuItem.id}
-                key={menuItem.id}
-            >
+                key={menuItem.id} >
                 <div className='d-flex'>
                     {menuItem.tip ?
-
                         <>{menuItem.isLink ?
-                            <Link className='d-flex' to={menuItem.to} style={{ color: "var(--black)" }}>
+                            <Link className='d-flex' to={menuItem.to} onClick={() => this.closeMenu()} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={{
                                     height: "27px",
                                     paddingTop: "7px"
@@ -134,12 +128,9 @@ class UserMenu extends React.Component {
                                     <div className='user-menu-tip'>{menuItem.tip}</div>
                                 </div>
                             </div>
-                        }
-                        </>
-                        :
-
+                        }</> :
                         <>{menuItem.isLink ?
-                            <Link className='d-flex' to={menuItem.to} style={{ color: "var(--black)" }}>
+                            <Link className='d-flex' onClick={() => this.closeMenu()} to={menuItem.to} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
                                     height: "23px",
                                     paddingTop: "0px",
@@ -156,15 +147,11 @@ class UserMenu extends React.Component {
                                     paddingBottom: "3px"
                                 }} alt="" src={menuItem.icon} /> : <></>}
                                 <div className='user-menu-text'>{menuItem.text}</div>
-                            </div>
-                        }
-                        </>
-                    }
+                            </div>}
+                        </>}
                 </div>
-
             </div >
-        }
-        )
+        })
 
         return (
             <div id="h-um-wrapper" className="user-menu">
@@ -172,8 +159,8 @@ class UserMenu extends React.Component {
                     <img className="avatar" src="https://i.imgur.com/SZJgL6C.png" alt="" />
                 </div>
 
-                <div className='d-flex pos-relative' >
-                    <ClickAwayListener onClickAway={() => { this.closeMenu() }}>
+                <ClickAwayListener onClickAway={() => { this.closeMenu() }}>
+                    <div className='d-flex pos-relative' >
                         <div>
                             <div className="d-flex">
                                 <img className="user-menu-btn" id={"h-um-btn"} //h-um: header user menu
@@ -201,8 +188,8 @@ class UserMenu extends React.Component {
                                     : <div id={"h-um-dropdown"}></div>}
                             </div>
                         </div>
-                    </ClickAwayListener >
-                </div>
+                    </div>
+                </ClickAwayListener >
             </div>
 
         );

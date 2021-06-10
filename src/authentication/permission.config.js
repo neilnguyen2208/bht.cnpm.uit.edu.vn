@@ -16,7 +16,7 @@ export const Post = {
             Edit: "Post.Comment.Reply.Edit",
             Delete: "Post.Comment.Reply.Delete",
             SetLikeStatus: "Post.Comment.Reply.SetLikeStatus",
-        }
+        }, Report: "Post.Comment.Report"
     },
     Report: "Post.Comment.Report",
     POST_DELETED_ALL_DELETE: "POST_DELETED_ALL_DELETE",
@@ -41,7 +41,13 @@ export const Post = {
     POST_UNLISTED_SELF_CREATE: "POST_UNLISTED_SELF_CREATE",
     POST_UNLISTED_SELF_DELETE: "POST_UNLISTED_SELF_DELETE",
     POST_UNLISTED_SELF_UPDATE: "POST_UNLISTED_SELF_UPDATE",
+}
 
-
+export const PostAction = {
+    Save: "save",
+    Like: "like",
+    Update: "update",
+    Delete: "delete",
+    Report: "report"
 }
 

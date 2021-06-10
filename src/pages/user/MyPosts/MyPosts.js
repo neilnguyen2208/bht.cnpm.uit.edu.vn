@@ -153,10 +153,11 @@ class MyPosts extends React.Component {
         if (!this.props.isListLoading) {
             if (this.props.myPostsList.length !== 0)
                 this.myPostsList = this.props.myPostsList.map((item) => {
-                    return <div className="item-container">
+                    return <div className="item-container" key={item.id}>
+                        {console.log(item)}
                         <PostSummaryMetadata
                             type={itemType.mySelf}
-                            id={item.id}
+                            postId={item.id}
                             authorName={item.authorName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
@@ -169,12 +170,13 @@ class MyPosts extends React.Component {
                             approveState={item.postState}
                             popUpMenuPrefix="mppu"   //stand for my post popup 
                             authorAvatarURL={item.authorAvatarURL}
-                            //
+                            availableActions={item.availableActions}
                             feedback={item.feedback}
                             reloadList={() => this.reloadList()}
                         />
                         <PostNormalReactionbar
-                            id={item.id}
+                            postId={item.id}
+                            availableActions={item.availableActions}
                             likeCount={item.likeCount}
                             commentCount={item.commentCount}
                             likedStatus={item.likeStatus}

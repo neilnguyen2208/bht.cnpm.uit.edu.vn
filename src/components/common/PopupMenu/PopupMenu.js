@@ -37,17 +37,9 @@ export default class PopupMenu extends React.Component {
         e.preventDefault();
         let popup_menu = document.getElementById(popup_menu_id);
         let dropdown = document.getElementById(dropdown_id);
-
-        // if (this.isDropdownOpen) {
-        //     dropdown.style.display = "none";
-        //     popup_menu.style.background = "white";
-        // }
-        // else {
         popup_menu.style.background = "var(--grayish)";
         dropdown.style.left = "-136px";
-        // }
         this.setState({ isDropdownOpen: !this.state.isDropdownOpen });
-
     }
 
     handleMenuItemClick = (menuItem) => {
@@ -97,6 +89,9 @@ export default class PopupMenu extends React.Component {
                 </ShowOnPermission>
             if (menuItem.permissions && !menuItem.showOnPermission)
                 return <RequireLogin permissions={menuItem.permissions}
+                    availableActions={this.props.availableActions}
+                    requiredAction={menuItem.requiredAction}
+                    showOnAction={menuItem.showOnAction}
                     expectedEvent={() => this.handleMenuItemClick(menuItem)}>
                     <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                         id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}
@@ -159,7 +154,7 @@ export default class PopupMenu extends React.Component {
         )
 
         return (
-            <div className='d-flex pos-relative' style = {{zIndex: 2}} >
+            <div className='d-flex pos-relative' style={{ zIndex: 2 }} >
                 < ClickAwayListener onClickAway={() => { this.closeMenu() }}>
                     <div>
                         <div className="popup-menu" id={"pm-" + this.props.id} //pm: popup menu

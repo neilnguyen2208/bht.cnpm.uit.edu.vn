@@ -22,7 +22,7 @@ import 'components/styles/Button.scss'
 import { formatNumber } from 'utils/miscUtils.js'
 
 //permissions config
-import { Post } from 'authentication/permission.config.js'
+import { Post, PostAction } from 'authentication/permission.config.js'
 import authService from 'authentication/authServices';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
@@ -47,19 +47,19 @@ class NormalReactionbar extends React.Component {
     if (this.props.likedStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPost(this.props.postId);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPost(this.props.id);
+        this.props.likeAPost(this.props.postId);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        this.props.likeAPost(this.props.id);
+        this.props.likeAPost(this.props.postId);
       } else {
-        this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPost(this.props.postId);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -71,17 +71,17 @@ class NormalReactionbar extends React.Component {
     if (tmp === 0) //neu la lan dau load component
       if (this.props.savedStatus) {
         tmp = 1;
-        this.props.unSaveAPost(this.props.id)
+        this.props.unSaveAPost(this.props.postId)
       }
       else {
         tmp = -1;
-        this.props.saveAPost(this.props.id)
+        this.props.saveAPost(this.props.postId)
       }
     else {
       if (tmp === 1)
-        this.props.unSaveAPost(this.props.id)
+        this.props.unSaveAPost(this.props.postId)
       else
-        this.props.saveAPost(this.props.id)
+        this.props.saveAPost(this.props.postId)
     }
 
     tmp = -tmp;
@@ -131,7 +131,10 @@ class NormalReactionbar extends React.Component {
       <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
         <div className="d-flex mg-top-5px">
 
-          <RequireLogin permissions={[Post.SetLikeStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+          <RequireLogin permissions={[Post.SetLikeStatus]}
+            availableActions={this.props.availableActions}
+            requiredAction={PostAction.Like}
+            expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
@@ -140,7 +143,10 @@ class NormalReactionbar extends React.Component {
 
           <div className="vertical-line" />
 
-          <RequireLogin permissions={[Post.SetSaveStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
+          <RequireLogin permissions={[Post.SetSaveStatus]}
+            availableActions={this.props.availableActions}
+            requiredAction={PostAction.Save}
+            expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
             <div className="save-btn-container"  >
               {saveBtn}
             </div>
@@ -162,7 +168,7 @@ class NormalReactionbar extends React.Component {
             </RequireLogin>
             :
             <RequireLogin permissions={[Post.Comment.Create]}>
-              <Link to={"/post-content/" + this.props.id + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.Comment.Create) && e.preventDefault()}>
+              <Link to={"/post-content/" + this.props.postId + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.Comment.Create) && e.preventDefault()}>
                 <div className="comment-count-container">
                   <div className="comment-btn-text">
                     Bình luận
@@ -176,7 +182,7 @@ class NormalReactionbar extends React.Component {
           }
 
         </div>
-        <Link to={`/post-content/${this.props.id}`} className="continue-read mg-top-5px" >
+        <Link to={`/post-content/${this.props.postId}`} className="continue-read mg-top-5px" >
           Đọc tiếp ...
             </Link>
       </div >

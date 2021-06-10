@@ -14,6 +14,10 @@
   margin-top: 1px;
 }
 
+.banned-action .like-btn-container {
+  cursor: not-allowed !important;
+}
+
 .like-btn-container {
   display: flex;
   min-width: 50px;
@@ -50,6 +54,9 @@
 }
 
 //saveBtn
+.banned-action .save-btn-container {
+  cursor: not-allowed !important;
+}
 
 .reaction-bar .save-btn-container {
   width: 55px;
@@ -224,5 +231,3 @@
 .comment-count-container:hover {
   opacity: 80%;
 }
-
-

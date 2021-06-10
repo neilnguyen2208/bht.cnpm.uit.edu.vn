@@ -20,7 +20,7 @@ import 'components/styles/Button.scss'
 //utils
 import { formatNumber } from 'utils/miscUtils.js'
 
-class NormalReactionbar extends React.Component {
+class HomeReactionbar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -118,7 +118,7 @@ class NormalReactionbar extends React.Component {
         <div className="d-flex">
           <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div> {likeBtn}</div>
-            <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+            <div className="like-count">{this.props.likeCount?formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount):0}</div>
           </div>
           <div className="vertical-line" />
           <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
@@ -152,5 +152,5 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   saveAPost, unSaveAPost, likeAPost, unLikeAPost
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NormalReactionbar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeReactionbar));
 

@@ -178,8 +178,6 @@ class NormalReactionbar extends React.Component {
         </div >
       </div>
 
-
-
     );
   }
 

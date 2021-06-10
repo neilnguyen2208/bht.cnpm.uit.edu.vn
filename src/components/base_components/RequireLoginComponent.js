@@ -28,7 +28,7 @@ export class RequireLogin extends React.Component {
 
   render() {
     //if logged in and props.availableAction => handle by action
-    if (authService.isLoggedIn() && this.props.availableActions) {
+    if (authService.isLoggedIn() && this.props.availableActions && this.props.requiredAction) {
       //if has required action
       if (this.props.availableActions.includes(this.props.requiredAction)) {
         return (

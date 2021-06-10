@@ -34,7 +34,6 @@ class HomeInfo extends React.Component {
           </div>
         </div>
 
-
         {/* title */}
         <Link to={"/post-content/" + this.props.id}>
           <div className="title title-hv">
@@ -48,8 +47,8 @@ class HomeInfo extends React.Component {
         </Link>
 
         <div className="d-flex mg-top-5px" >
-          <img className="avatar" src={this.props.authorAvatarURL} alt="" />
-          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={/user/}>
+          <Link>  <img style={{ marginLeft: "5px" }} to={`/user/${this.props.authorID}`} className="avatar" src={this.props.authorAvatarURL} alt="" /></Link>
+          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/${this.props.authorID}`}>
             {this.props.authorName}
           </Link>
         </div>
@@ -66,8 +65,6 @@ class HomeInfo extends React.Component {
           commentCount={this.props.commentCount}
         />
       </div>
-
-
     );
   }
 

@@ -97,6 +97,10 @@
   margin-right: 5px;
 }
 
+.banned-action .comment-count-container {
+  cursor: not-allowed !important;
+}
+
 //commentBtn
 .comment-count-container {
   min-width: 50px;

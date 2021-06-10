@@ -316,20 +316,21 @@ export function getPostByID(id) {
     return dispatch => {
         dispatch(get_PostByIDReset())
         authRequest.get(`/posts/${id}`)
-            .then(response => {
-                let _response = response; //response without statistic
-                dispatch(getSameAuthorPosts(_response.data.id, _response.data.authorID));
-                dispatch(getSameCategoryPosts(_response.data.id, _response.data.categoryID));
-                authRequest.get(`/posts/statistics?postIDs=${_response.data.id}`)
-                    .then(response => {
-                        dispatch(get_PostByIDSuccess({ ..._response.data, ...response.data[0] }))
-                    })
+            .then(response_1 => {
+                let result_1 = response_1.data; //response without statistic
+                dispatch(getSameAuthorPosts(result_1.id, result_1.authorID));
+                dispatch(getSameCategoryPosts(result_1.id, result_1.categoryID));
+                authRequest.get(`/posts/statistics?postIDs=${result_1.id}`)
+                    .then(response_2 => {
+                        authRequest.get(`/posts/actionAvailable?postIDs=${result_1.id}`).then(response_3 => {
+                            dispatch(get_PostByIDSuccess({ ...result_1, ...response_2.data[0], ...response_3.data[0] }))
+                        }).catch(error => { dispatch(get_PostByIDFailure(error)) }
+                        ).catch(error => { dispatch(get_PostByIDFailure(error)) })
+                    }).catch(error => { dispatch(get_PostByIDFailure(error)) })
             }
             )
-            .catch(error => { dispatch(get_PostByIDFailure(error)) })
     }
 }
-
 export function likeAPost(id) { //maybe use modal later
     return dispatch => {
         dispatch(post_LikeAPostRequest(id))

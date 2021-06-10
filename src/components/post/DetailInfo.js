@@ -10,7 +10,6 @@ import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
-import { validation } from 'utils/validationUtils'
 import { detailType } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
 
@@ -21,7 +20,7 @@ import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
 
 //constants
-import { normalMenuItemList } from 'constants.js'
+import allActionSummaryMenu from './adapter/allActionSummaryMenu'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
@@ -62,7 +61,7 @@ class PostDetail extends React.Component {
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();
-    this.props.reportAPost(DTO.id, { "reasonIds": [1], "feedback": DTO.reason  });
+    this.props.reportAPost(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
   render() {
@@ -122,7 +121,7 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={allActionSummaryMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}

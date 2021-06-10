@@ -197,7 +197,11 @@ class PostSummary extends React.Component {
             }
           </div>
           {this.props.type !== itemType.normal &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions = {this.props.availableActions} items={allActionSummaryMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={allActionSummaryMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
+          }
+          {console.log(this.props.postId)}
+          {(this.props.type === itemType.normal || !this.props.type) &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
           }
 
           {/* {this.props.type === itemType.management && this.props.isHighlighted &&

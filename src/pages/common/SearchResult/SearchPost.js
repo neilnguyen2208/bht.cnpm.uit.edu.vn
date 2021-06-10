@@ -81,9 +81,10 @@ class SearchPost extends React.Component {
         if (!this.props.isListLoading) {
             postSearchResult = this.props.postSearchResult.map((item) => {
                 return < div className="item-container" >
+                    {console.log(item)}
                     <PostSummaryMetadata
                         type={itemType.normal}
-                        id={item.id}
+                        postId={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -94,13 +95,13 @@ class SearchPost extends React.Component {
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.postState}
-                        popUpMenuPrefix="pmpu"   //stand for my post popup 
+                        popUpMenuPrefix="srchppu"   //stand for search post popup 
                         authorAvatarURL={item.authorAvatarURL}
                         //
                         reloadList={() => this.reloadList()}
                     />
                     <PostNormalReactionbar
-                        id={item.id}
+                        postId={item.id}
                         likeCount={item.likeCount}
                         commentCount={item.commentCount}
                         likedStatus={item.likeStatus}
@@ -122,7 +123,7 @@ class SearchPost extends React.Component {
                             selectedOptionID={1}
                             placeHolder="Tất cả"
                             onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                            id="pstf-combobox" //post seacrh time filter 
+                            comboboxId="pstf-combobox" //post seacrh time filter 
                         ></ComboBox>
                     </div>
                 </div>
@@ -133,7 +134,7 @@ class SearchPost extends React.Component {
                             selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                             options={this.props.postCategories}
                             onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                            id="spcf-combobox" //post search category filter
+                            comboboxId="spcf-combobox" //post search category filter
                         ></ComboBox>
                     </div>
                 </div>

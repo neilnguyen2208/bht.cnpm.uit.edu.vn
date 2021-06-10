@@ -8,6 +8,7 @@
     width: 100%;
     height: 100%;
     position: fixed;
+    z-index: 9999;
 }
 
 .modal-fixed-layout {
@@ -21,6 +22,7 @@
     background: none;
     padding-left: 10vw;
     padding-right: 10vw;
+    z-index: 10000;
 }
 
 .modal-wrapper {
@@ -124,7 +126,7 @@
 .modal-hint {
     padding-top: 0.3rem;
     height: fit-content;
-    font-family: 'Arial';
+    font-family: "Arial";
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--black);
@@ -174,7 +176,6 @@
     padding-top: 2px;
     padding-left: 4px;
 }
-
 
 .preview-modal.document-post-detail {
     width: 100%;

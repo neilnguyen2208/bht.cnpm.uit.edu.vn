@@ -126,7 +126,7 @@ class NormalReactionbar extends React.Component {
         <div className="save-btn-text">Lưu</div>
       </div >
     }
-
+    console.log(this.props.avail)
     return (
       <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
         <div className="d-flex mg-top-5px">
@@ -137,7 +137,7 @@ class NormalReactionbar extends React.Component {
             expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
-              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+              <div className="like-count">{this.props.likeCount?formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount):0}</div>
             </div>
           </RequireLogin>
 
@@ -156,6 +156,8 @@ class NormalReactionbar extends React.Component {
 
           {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
             <RequireLogin permissions={[Post.Comment.Create]}
+              availableActions={this.props.availableActions}
+              requiredAction={PostAction.Comment}
               expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
               <div className="comment-count-container">
                 <div className="comment-btn-text">
@@ -167,14 +169,17 @@ class NormalReactionbar extends React.Component {
               </div>
             </RequireLogin>
             :
-            <RequireLogin permissions={[Post.Comment.Create]}>
+            <RequireLogin permissions={[Post.Comment.Create]}
+              availableActions={this.props.availableActions}
+              requiredAction={PostAction.Comment}
+            >
               <Link to={"/post-content/" + this.props.postId + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.Comment.Create) && e.preventDefault()}>
                 <div className="comment-count-container">
                   <div className="comment-btn-text">
                     Bình luận
                   </div>
                   <div className="comment-btn-number">
-                    {formatNumber(this.props.commentCount)}
+                    {this.props.commentCount?formatNumber(this.props.commentCount):0}
                   </div>
                 </div>
               </Link>

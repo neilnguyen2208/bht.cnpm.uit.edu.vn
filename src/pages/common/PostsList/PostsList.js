@@ -74,7 +74,7 @@ class PostsList extends React.Component {
                 return < div className="item-container" key={item.id} >
                     <PostSummaryMetadata
                         type={itemType.normal}
-                        id={item.id}
+                        postId={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -91,7 +91,7 @@ class PostsList extends React.Component {
                         reloadList={() => this.reloadList()}
                     />
                     <PostNormalReactionbar
-                        id={item.id}
+                        postId={item.id}
                         likeCount={item.likeCount}
                         commentCount={item.commentCount}
                         likedStatus={item.likeStatus}

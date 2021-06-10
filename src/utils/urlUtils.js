@@ -59,6 +59,8 @@ export function generateSearchParam(searchParamObject) { //for generating search
             } else
                 searchParam = searchParam + key + '=' + searchParamObject[key] + "&";
         });
+    if (searchParam[searchParam.length - 1] === '&')
+        searchParam = searchParam.substring(0, searchParam.length - 1);
     return searchParam;
 }
 

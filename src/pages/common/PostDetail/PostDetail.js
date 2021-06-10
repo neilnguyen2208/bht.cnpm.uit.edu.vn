@@ -74,6 +74,7 @@ class PostDetail extends React.Component {
                                             authorName={this.props.currentPost.authorName}
                                             authorAvatarURL={this.props.currentPost.authorAvatarURL}
                                             publishDtm={this.props.currentPost.publishDtm}
+                                            availableActions={this.props.currentPost.availableActions}
 
                                         />
 
@@ -89,8 +90,9 @@ class PostDetail extends React.Component {
                                                 <Tag isReadOnly={true} key={item.id} tag={item} />
                                             )}
                                         </div>
-
-                                        <NormalReactionbar
+                                        {console.log(this.props.currentPost.availableActions)}
+                                        < NormalReactionbar
+                                            availableActions={this.props.currentPost.availableActions}
                                             id={this.props.currentPost.id}
                                             likeCount={this.props.currentPost.likeCount}
                                             commentCount={this.props.currentPost.commentCount}

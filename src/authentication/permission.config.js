@@ -1,7 +1,9 @@
 //Header
 export const Access = {
-    Admin: "Access.Admin",
+    Admin: "ACCESS_ADMIN",
+    User: "ACCESS_USER",
 }
+
 //Post permission
 export const Post = {
     SetSaveStatus: "Post.SetSaveStatus",
@@ -48,6 +50,7 @@ export const PostAction = {
     Like: "like",
     Update: "update",
     Delete: "delete",
-    Report: "report"
+    Report: "report",
+    Comment: "comment"
 }
 

@@ -284,7 +284,6 @@ const mapStateToProps = (state) => {
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,
         isQuickSearchLoadDone: state.common.quickSearchResult.isLoadDone
-
     };
 };
 

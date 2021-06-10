@@ -10,7 +10,6 @@ const commentMenu = [
     icon: report_icon,
     value: "REPORT_POST",
     permissions: [Post.Comment.Report], //base on permission
-    showOnPermission: false,
   },
   {
     id: 2,

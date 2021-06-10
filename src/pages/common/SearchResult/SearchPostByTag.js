@@ -51,7 +51,7 @@ class SearchPostByTag extends React.Component {
                 return < div className="item-container" >
                     <PostSummaryMetadata
                         type={itemType.normal}
-                        id={item.id}
+                        postId={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -68,7 +68,7 @@ class SearchPostByTag extends React.Component {
                         reloadList={() => this.reloadList()}
                     />
                     <PostNormalReactionbar
-                        id={item.id}
+                        postId={item.id}
                         likeCount={item.likeCount}
                         commentCount={item.commentCount}
                         likedStatus={item.likeStatus}

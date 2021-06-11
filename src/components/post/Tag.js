@@ -21,7 +21,7 @@ export default class Tag extends React.Component {
         //if the location is tags/... => recall API 
 
         //prevent search on create post
-        if (window.location.pathname === "/create-post") {
+        if (window.location.pathname === "/create-post" || window.location.pathname.substring(0, 13) === "/post-content") {
             e.preventDefault();
             return;
         }

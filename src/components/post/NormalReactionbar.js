@@ -133,7 +133,7 @@ class NormalReactionbar extends React.Component {
           <RequireLogin permissions={[Post.SetLikeStatus]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Like}
-            expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+            expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
@@ -145,7 +145,7 @@ class NormalReactionbar extends React.Component {
           <RequireLogin permissions={[Post.SetSaveStatus]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Save}
-            expectedEvent={this.props.type !== "PREVIEW" && this.toggleSaveImage}>
+            expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}>
             <div className="save-btn-container"  >
               {saveBtn}
             </div>
@@ -172,7 +172,8 @@ class NormalReactionbar extends React.Component {
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Comment}
             >
-              <Link to={"/post-content/" + this.props.postId + "#cr-cmt"} onClick={(e) => !authService.isGranted(Post.Comment.Create) && e.preventDefault()}>
+              <Link to={"/post-content/" + this.props.postId + "#cr-cmt"}
+                onClick={!authService.isGranted(Post.Comment.Create) ? (e) => e.preventDefault() : () => { }}>
                 <div className="comment-count-container">
                   <div className="comment-btn-text">
                     Bình luận
@@ -188,7 +189,7 @@ class NormalReactionbar extends React.Component {
         </div>
         <Link to={`/post-content/${this.props.postId}`} className="continue-read mg-top-5px" >
           Đọc tiếp ...
-            </Link>
+        </Link>
       </div >
     );
   }

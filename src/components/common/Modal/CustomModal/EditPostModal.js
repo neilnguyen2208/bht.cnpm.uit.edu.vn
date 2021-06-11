@@ -37,7 +37,7 @@ const validationCondition = {
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('ed-post-title', 'text-input', 'Tên bài viết không được để trống!'),
-        validation.noSpecialChar('ed-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
+        // validation.noSpecialChar('ed-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
         validation.isRequired('ed-post-category-combobox', 'combobox', 'Danh mục không được để trống'),
         validation.isRequired('ed-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống')
     ],
@@ -366,6 +366,14 @@ class EditPostModal extends React.Component {
 
     closeModal = () => {
         store.dispatch(closeBigModal())
+        if (window.location.pathname.substring(0, 13) === "/post-content")
+            window.location.reload()
+    }
+
+    handleImageURLChange = (e) => {
+        this.setState({
+            EDIT_POST_DTO: { ...this.state.EDIT_POST_DTO, imageURL: e.target.value }
+        })
     }
 
     render() {
@@ -386,7 +394,6 @@ class EditPostModal extends React.Component {
                     this.setState({ isSearchingTag: false })
                 }
                 if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
-
                     //truong hop khong co tag nao thoa man va chua du 5 tag
                     if (this.state.EDIT_POST_DTO.tags.length < 5) {
                         document.getElementById("ed-post-tag-input").classList.remove('invalid');
@@ -397,7 +404,6 @@ class EditPostModal extends React.Component {
                     }
                     else {
                         document.getElementById("ed-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        document.getElementById("ed-post-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
@@ -423,7 +429,7 @@ class EditPostModal extends React.Component {
             })
 
             getCKEInstance('ed-post-cke').setData(this.props.currentPost.content);
-            
+
             this.setState({
                 EDIT_POST_DTO: {
                     title: this.props.currentPost.title,
@@ -477,6 +483,7 @@ class EditPostModal extends React.Component {
                                             authorAvatarURL={this.state.EDIT_POST_DTO.authorAvatarURL}
                                             authorID={this.state.EDIT_POST_DTO.authorID}
                                             publishDtm={this.state.EDIT_POST_DTO.publishDtm}
+                                            imageURL={this.state.EDIT_POST_DTO.imageURL}
                                             type="PREVIEW"
                                             popUpMenuPrefix="edpmd-"
                                         />
@@ -514,6 +521,16 @@ class EditPostModal extends React.Component {
                                                 </div>
                                             </div>
 
+                                            <div className="form-group">
+                                                <label className="form-label-required">Link ảnh bìa:</label>
+                                                <input className="text-input" id="ed-post-imgurl"
+                                                    placeholder="Nhập link hình ảnh: " onChange={e => this.handleImageURLChange(e)}
+                                                    type="text" ></input>
+                                                <div className="form-error-label-container">
+                                                    <span className="form-error-label" ></span>
+                                                </div>
+                                            </div>
+
                                             {/* CKEditor */}
                                             <div className="form-group">
                                                 <div className="form-label-required">Nội dung:</div>
@@ -532,7 +549,7 @@ class EditPostModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Danh mục:</label>
-                                                <Combobox comboboxId = "ed-post-category-combobox"
+                                                <Combobox comboboxId="ed-post-category-combobox"
                                                     selectedOptionID={!this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.categoryID : 0}
                                                     options={this.categoryList}
                                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
@@ -544,6 +561,11 @@ class EditPostModal extends React.Component {
                                                     <span className="form-error-label" ></span>
                                                 </div>
                                             </div >
+                                            {/* 
+                                            <div className="form-group" style={{ zIndex: "4" }}>
+                                                <label className="form-label">Thời gian đăng:</label>
+                                                <JQDateTimePicker dtPickerId="cr-post" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
+                                            </div> */}
 
                                             {/* Tag */}
                                             <div className='form-group mg-bottom-10px'>

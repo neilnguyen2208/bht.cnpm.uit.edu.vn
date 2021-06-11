@@ -44,7 +44,7 @@ export class RequireLogin extends React.Component {
       //granted requiredAction => call event
       if (this.props.availableActions.includes(this.props.requiredAction)) {
         return (
-          <div onClick={() => this.props.expectedEvent()}>
+          <div onClick={this.props.expectedEvent ? () => this.props.expectedEvent() : () => { }}>
             {this.props.children}
           </div>
         );
@@ -67,7 +67,8 @@ export class RequireLogin extends React.Component {
 
     if ((authService.isLoggedIn() && !this.props.availableActions)) {
       return (
-        <div onClick={() => this.props.expectedEvent()}>
+
+        <div onClick={this.props.expectedEvent ? () => this.props.expectedEvent() : () => { }}>
           {this.props.children}
         </div>
       );

@@ -23,7 +23,7 @@ import { formatNumber, timeAgo } from 'utils/miscUtils';
 
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
 import unliked_icon from 'assets/icons/24x24/unliked_icon_24x24.png'
-import { request } from 'utils/requestUtils';
+import { authRequest, request } from 'utils/requestUtils';
 import { closeModal, openBLModal, openModal } from 'redux/services/modalServices';
 import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
@@ -146,7 +146,7 @@ class Reply extends React.Component {
 
   deleteAReply = () => {
     this.isHaveDeleted = false;
-    request.delete(`/posts/comments/${this.props.replyId}`).then(response => {
+    authRequest.delete(`/posts/comments/${this.props.replyId}`).then(response => {
       this.props.reloadList();
       openBLModal({ text: "Xoá bình luận thành công!", type: "success" });
       this.isHaveDeleted = true;
@@ -164,7 +164,7 @@ class Reply extends React.Component {
 
   onSubmitReplyClick = () => {
     this.isHaveEdited = false;
-    request.put(`/posts/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
+    authRequest.put(`/posts/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
       .then(response => {
         this.props.reloadList(this.props.replyId);
         openBLModal({ text: "Cập nhật bình luận thành công!", type: "success" });

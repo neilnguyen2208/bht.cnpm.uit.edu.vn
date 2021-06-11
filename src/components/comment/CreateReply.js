@@ -23,7 +23,7 @@ import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEd
 import ShowOnPermission from 'components/base_components/ShowOnPermission';
 import { Post } from 'authentication/permission.config';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
-import { request } from 'utils/requestUtils';
+import { authRequest, request } from 'utils/requestUtils';
 
 //TODO: - validation for multi-form => skip
 //TODO: - sort current created reply to first
@@ -40,7 +40,7 @@ class CreateReply extends React.Component {
 
   createReply = () => {
     if (getCKEInstance(this.props.componentId))
-      request.post(`/posts/comments/${this.props.commentId}`, {
+      authRequest.post(`/posts/comments/${this.props.commentId}`, {
         content: getCKEInstance(this.props.componentId).getData()
       }).then(response => {
 

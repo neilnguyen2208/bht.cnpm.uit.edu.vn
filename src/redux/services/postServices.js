@@ -383,8 +383,10 @@ export function deleteAPost(id) { //maybe use modal later
     return dispatch => {
         dispatch(delete_APostReset(id))
         authRequest.delete(`/posts/${id}`).then(response => {
-            dispatch(delete_APostSuccess())
+            dispatch(delete_APostSuccess());
             openBLModal({ text: "Xoá bài viết thành công!", type: "success" });
+            if (window.location.pathname.substring(0, 13) === "/post-content") //delete success on post detail
+                window.location.pathname = "/";
 
         }).catch(error => { dispatch(delete_APostFailure(id)) })
     }

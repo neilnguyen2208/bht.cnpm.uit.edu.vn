@@ -26,7 +26,7 @@ import down_arrow from 'assets/icons/12x12/dropdown_12x12.png'
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils.js';
-import { request } from 'utils/requestUtils.js';
+import { authRequest, request } from 'utils/requestUtils.js';
 import { deleteAPostComment, editAPostComment } from 'redux/services/commentServices'
 
 // const validationCondition = {
@@ -144,12 +144,12 @@ class Comment extends React.Component {
 
   loadAllReply = (createdReplyId) => {  //not use redux in this case
     this.isReplyLoadDone = false;
-    request.get(`/posts/comments/${this.props.commentId}/children`)
+    authRequest.get(`/posts/comments/${this.props.commentId}/children`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
         result_1.map(item => IDarr += item.id + ",") //tao ra mang id moi
-        request.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+        authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
           .then(result_2 => {
             //merge summary array and statistic array
             let finalResult = [];

@@ -135,7 +135,7 @@ class PostDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-                { formatMathemicalFormulas()}
+                {formatMathemicalFormulas()}
                 {styleCodeSnippet()}
             </div>
         );

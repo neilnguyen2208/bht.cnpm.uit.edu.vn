@@ -126,7 +126,6 @@ class NormalReactionbar extends React.Component {
         <div className="save-btn-text">Lưu</div>
       </div >
     }
-    console.log(this.props.avail)
     return (
       <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
         <div className="d-flex mg-top-5px">
@@ -137,7 +136,7 @@ class NormalReactionbar extends React.Component {
             expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
-              <div className="like-count">{this.props.likeCount?formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount):0}</div>
+              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
             </div>
           </RequireLogin>
 
@@ -179,7 +178,7 @@ class NormalReactionbar extends React.Component {
                     Bình luận
                   </div>
                   <div className="comment-btn-number">
-                    {this.props.commentCount?formatNumber(this.props.commentCount):0}
+                    {formatNumber(this.props.commentCount)}
                   </div>
                 </div>
               </Link>

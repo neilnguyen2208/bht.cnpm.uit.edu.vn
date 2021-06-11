@@ -225,7 +225,7 @@ class PostManagement extends React.Component {
                         popUpMenuPrefix="pmpu"   //stand for my post popup 
                         authorAvatarURL={item.authorAvatarURL}
                         isHighlighted={item.isHighlighted}
-
+                        availableActions={item.availableActions}
                         //
                         reloadList={() => this.reloadList()}
                     />
@@ -235,6 +235,7 @@ class PostManagement extends React.Component {
                         commentCount={item.commentCount}
                         likedStatus={item.likeStatus}
                         savedStatus={item.savedStatus}
+                        availableActions={item.availableActions}
                     />
                 </div >
             }

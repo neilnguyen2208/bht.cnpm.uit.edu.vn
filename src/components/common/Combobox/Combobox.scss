@@ -133,7 +133,6 @@
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
-
 }
 
 .combox-text {
@@ -152,14 +151,7 @@
     min-width: 200px;
     width: fit-content;
     max-width: 300px;
-}
-
-.wrapper-combobox {
-    position: relative;
-    display: flex;
-    min-width: 200px;
-    width: fit-content;
-    max-width: 300px;
+    z-index: 3;
 }
 
 .wrapper-combobox.small {

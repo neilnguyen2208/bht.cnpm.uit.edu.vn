@@ -409,7 +409,7 @@ class CreatePost extends React.Component {
                         )}
                     </div>
                     <NormalReactionbar
-                        id={"-1"}
+                        postId={"-1"}
                         likeCount={0}
                         commentCount={0}
                         likedStatus={false}

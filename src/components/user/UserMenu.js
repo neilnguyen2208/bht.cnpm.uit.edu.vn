@@ -8,10 +8,13 @@ import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 import { ClickAwayListener } from "@material-ui/core";
 import authService from "authentication/authServices.js";
+import { authServices } from "redux/services/authServices";
+
+// authServices.
 
 const userMenuOptions = [
-    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: "/user", isLink: true },
-    { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
+    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: "/user/profile/321d-190", isLink: true },
+    // { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
     {
         id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '', to: "/user/my-posts", isLink: true,
         style: {
@@ -156,7 +159,9 @@ class UserMenu extends React.Component {
         return (
             <div id="h-um-wrapper" className="user-menu">
                 <div className="d-flex">
-                    <img className="avatar" src="https://i.imgur.com/SZJgL6C.png" alt="" />
+                    <Link to={`/user/profile/${this.props.authorID}`}>
+                        <img className="avatar" style={{ marginTop: "auto", marginBottom: "auto" }} src="https://i.imgur.com/SZJgL6C.png" alt="" />
+                    </Link>
                 </div>
 
                 <ClickAwayListener onClickAway={() => { this.closeMenu() }}>

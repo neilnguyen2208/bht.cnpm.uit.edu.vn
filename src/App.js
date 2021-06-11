@@ -82,9 +82,9 @@ const App = () => {
                         <Route path="/tags/documents/" exact component={SearchDocumentByTag} />
 
                         {/* user layout */}
-                        <Route exact path="/user" component={ProfilePost} />
-                        <Route exact path="/user/post" component={ProfilePost} />
-                        <Route exact path="/user/document" component={ProfileDocument} />
+                        <Route exact path="/user/profile/:id" component={ProfilePost} />
+                        <Route exact path="/user/posts/:id" component={ProfilePost} />
+                        <Route exact path="/user/documents/:id" component={ProfileDocument} />
                         <Route exact path="/user/email-management" component={EmailManagement} />
                         <Route exact path="/user/account-management" component={AccountManagement} />
 

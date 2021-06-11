@@ -14,13 +14,10 @@ import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 import {
-  mySelfMenuItemList,
   normalMenuItemList,
-  highlightAdminMenuItemList,
-  unHighlightAdminMenuItemList
 } from 'constants.js'
 
-import allActionSummaryMenu from './adapter/allActionSummaryMenu'
+import { basicMenu, adminMenu } from './adapter/allActionSummaryMenu'
 
 //styles
 import 'components/styles/Label.scss'
@@ -159,7 +156,7 @@ class PostSummary extends React.Component {
               </div>
             </div>
             <div className="light-black-label">bởi</div>
-            <Link className="link-label-s" to={/user/}>
+            <Link className="link-label-s" to={`/user/profile/${this.props.authorID}`}>
               {this.props.authorName}
             </Link>
 
@@ -196,12 +193,14 @@ class PostSummary extends React.Component {
               <></>
             }
           </div>
-          {this.props.type !== itemType.normal &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={allActionSummaryMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
+          {this.props.type !== itemType.management && this.props.type !== itemType.normal &&
+            < PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
           }
-          {console.log(this.props.postId)}
-          {(this.props.type === itemType.normal || !this.props.type) &&
+          {(this.props.type === itemType.normal || !this.props.type) && //normal => only report
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
+          }
+           {(this.props.type === itemType.management) &&
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={adminMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
           }
 
           {/* {this.props.type === itemType.management && this.props.isHighlighted &&
@@ -219,7 +218,10 @@ class PostSummary extends React.Component {
         {/* title */}
         <div className="d-flex mg-top-5px" >
           {/* fake avatar */}
-          < img className="avatar" src={this.props.authorAvatarURL} alt="" />
+          <Link to={`/user/profile/${this.props.authorID}`}>
+            < img className="avatar" src={this.props.authorAvatarURL} alt="" />
+          </Link>
+
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
             <Link to={"/post-content/" + this.props.postId}>
               <div className="title">

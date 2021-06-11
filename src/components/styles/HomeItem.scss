@@ -97,11 +97,13 @@
   animation-duration: 1s;
   animation-delay: 0.3s;
   z-index: 1;
+  display: block;
 }
 
 .title-hv-c {
   position: relative;
   opacity: 0;
+  display: none;
 }
 
 .title-hv-m {

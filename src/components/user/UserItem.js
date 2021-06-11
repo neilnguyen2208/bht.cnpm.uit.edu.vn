@@ -9,6 +9,7 @@ import 'components/common/Combobox/Combobox.scss'
 import 'components/styles/Button.scss'
 import 'components/styles/Label.scss'
 import Combobox from 'components/common/Combobox/Combobox'
+import { Link } from 'react-router-dom'
 
 class UserItem extends React.Component {
     componentDidMount() {
@@ -22,7 +23,9 @@ class UserItem extends React.Component {
     render() {
         return (
             <div className="user-item"  >
-                <img alt="" src={this.props.avatarURL} className="avatar"></img>
+                <Link to={`/user/profile/${this.props.authorID}`}>
+                    <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+                </Link>
                 <div className="j-c-space-between" >
                     <div className="d-flex-vertical j-c-space-between">
                         <div>

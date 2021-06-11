@@ -30,24 +30,24 @@ export default class ReportInfo extends React.PureComponent {
 
         let reportersName = <></>;
         if (this.props.reporters.length === 1)
-            reportersName = <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+            reportersName = <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                 {this.props.reporters[0].displayName}
             </Link>
         else if (this.props.reporters.length === 2)
             reportersName = <div className="d-flex">
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
             </Link>
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
             </Link>
             </div>
         else if (this.props.reporters.length > 2)
             reportersName = <div className="d-flex">
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName},
                 </Link>
-                <Link className="link-label-s" to={`/user/${this.props.reporters[1].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[1].id}`}>
                     {this.props.reporters[1].displayName}
                 </Link>
               và {this.props.reporters.length - 2} người khác
@@ -71,7 +71,7 @@ export default class ReportInfo extends React.PureComponent {
                             {/*  */}
                             <div className="black-label-s">{`đã tố cáo bài viết của `}
                             </div>
-                            <Link to={`/user/${this.props.author.id}`} style={{ fontSize: "17px", lineHeight: "18px", fontFamily: "BarlowCondensed-SemiBold" }}>
+                            <Link to={`/user/profile/${this.props.author.id}`} style={{ fontSize: "17px", lineHeight: "18px", fontFamily: "BarlowCondensed-SemiBold" }}>
                                 {this.props.author.displayName + " "}
                             </Link>
                             <div className="black-label-s" style={{ marginLeft: "3px" }}>{" - "}</div>

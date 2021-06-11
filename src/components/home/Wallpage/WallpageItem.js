@@ -92,19 +92,18 @@ class WallpageItem extends React.Component {
                                     </div>
                                 </div>
                                 <div className="light-black-label">bởi</div>
-                                <Link className="link-label-s" to={/user/}>
+                                <Link className="link-label-s" to={`/user/profile/${this.props.authorID}`}>
                                     {this.props.authorName}
                                 </Link>
                             </div>
-
                             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={wallPageAdminMenuItemList} id={`hipm-${this.props.id}`} />
-
                         </div>
 
                         {/* title */}
                         <div className="d-flex mg-top-5px">
-                            {/* fake avatar */}
-                            <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+                            <Link to={`/user/profile/${this.props.authorID}`}>
+                                <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+                            </Link>
                             <div className="mg-left-5px j-c-space-between d-flex-vertical">
                                 <Link to={"/post-content/" + this.props.id}>
                                     <div className="title title-hv">
@@ -141,7 +140,7 @@ class WallpageItem extends React.Component {
                     </div >
                     <div >
                         <NormalReactionbar
-                            id={this.props.id}
+                            postId={this.props.id}
                             likeCount={this.props.likeCount}
                             commentCount={this.props.commentCount}
                             likedStatus={this.props.likedStatus}

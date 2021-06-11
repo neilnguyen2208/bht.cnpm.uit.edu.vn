@@ -81,7 +81,7 @@ class UserSidebar extends React.Component {
                 <div className="mg-bottom-5px"></div>
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to="/user" exact
+                  to="/user/profile/id" exact
                   onClick={() => this.setState({})}> Trang cá nhân
                       </NavLink>
 

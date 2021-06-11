@@ -66,7 +66,7 @@ class PostDetail extends React.Component {
                                 {this.props.isLoadDone ?
                                     <div>
                                         <Metadata
-                                            id={this.props.currentPost.id}
+                                            postId={this.props.currentPost.id}
                                             title={this.props.currentPost.title}
                                             categoryName={this.props.currentPost.categoryName}
                                             categoryID={this.props.currentPost.categoryID}
@@ -75,9 +75,7 @@ class PostDetail extends React.Component {
                                             authorAvatarURL={this.props.currentPost.authorAvatarURL}
                                             publishDtm={this.props.currentPost.publishDtm}
                                             availableActions={this.props.currentPost.availableActions}
-
                                         />
-
 
                                         {/* content here */}
                                         <div className="ck-editor-output" dangerouslySetInnerHTML={{
@@ -90,10 +88,11 @@ class PostDetail extends React.Component {
                                                 <Tag isReadOnly={true} key={item.id} tag={item} />
                                             )}
                                         </div>
+
                                         {console.log(this.props.currentPost.availableActions)}
                                         < NormalReactionbar
                                             availableActions={this.props.currentPost.availableActions}
-                                            id={this.props.currentPost.id}
+                                            postId={this.props.currentPost.id}
                                             likeCount={this.props.currentPost.likeCount}
                                             commentCount={this.props.currentPost.commentCount}
                                             likedStatus={this.props.currentPost.likeStatus}

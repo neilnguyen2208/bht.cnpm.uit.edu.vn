@@ -55,6 +55,8 @@ export default class PopupMenu extends React.Component {
     }
 
     render() {
+        console.log(this.props.availableActions)
+
         let items = this.props.items.map(menuItem => {
             if (menuItem.permissions && menuItem.showOnPermission)
                 return <ShowOnPermission permissions={menuItem.permissions} >

@@ -6,15 +6,14 @@ import HomeReactionbar from 'components/document/HomeReactionbar'
 
 class HomeInfo extends React.Component {
   componentDidMount() {
-
   }
+
   render() {
 
     return (
       <div className="home-item" >
         <img className="document-cover-image" alt='cover' src={this.props.imageURL} />
         <div className="metadata" >
-
           <div className="j-c-space-between mg-top-10px">
             <div className="d-flex">
               <div className="category">
@@ -33,10 +32,8 @@ class HomeInfo extends React.Component {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-
 
         {/* title */}
         <Link to={"/document-content/" + this.props.id}>
@@ -51,10 +48,10 @@ class HomeInfo extends React.Component {
         </Link>
 
         <div className="d-flex mg-top-5px" >
-          <Link to={`/user/${this.props.authorID}`}>
+          <Link to={`/user/profile/${this.props.authorID}`}>
             <img className="avatar" src={this.props.authorAvatarURL} alt="" />
           </Link>
-          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/${this.props.authorID}`}>
+          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/profile/${this.props.authorID}`}>
             {this.props.authorName}
           </Link>
         </div>

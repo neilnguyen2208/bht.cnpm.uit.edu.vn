@@ -51,6 +51,10 @@ export const PostAction = {
     Update: "update",
     Delete: "delete",
     Report: "report",
-    Comment: "comment"
+    Comment: "comment",
+    Highlight: "highlight",
+    UnHighlight: "unhighlight",
+    StickToTop: "sticktotop",
+
 }
 

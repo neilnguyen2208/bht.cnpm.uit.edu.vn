@@ -20,7 +20,7 @@ import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
 
 //constants
-import allActionSummaryMenu from './adapter/allActionSummaryMenu'
+import { basicMenu } from './adapter/allActionSummaryMenu'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
@@ -30,7 +30,7 @@ class PostDetail extends React.Component {
 
   constructor(props) {
     super(props);
-    this.id = this.props.id;
+    this.id = this.props.postId;
     this.title = this.props.title;
     this.image = this.props.image;
 
@@ -45,16 +45,16 @@ class PostDetail extends React.Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPost(this.props.id); closeModal(); }
+          onConfirm: () => { this.props.deleteAPost(this.props.postId); closeModal(); }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-post", { id: this.props.id });
+      openBigModal("edit-post", { id: this.props.postId });
     }
 
     if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
-      openBigModal("report-post", { id: this.props.id });
+      openBigModal("report-post", { id: this.props.postId });
     }
   }
 
@@ -85,7 +85,7 @@ class PostDetail extends React.Component {
       <div className="metadata">
 
         {/* title */}
-        <Link to={"/post-content/" + this.props.id}>
+        <Link to={"/post-content/" + this.props.postId}>
           <div className="title">
             {this.props.title}
           </div>
@@ -121,7 +121,7 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={allActionSummaryMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
         </div>
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}

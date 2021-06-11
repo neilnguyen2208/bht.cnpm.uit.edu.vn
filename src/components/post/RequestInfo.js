@@ -15,7 +15,7 @@ export default class RequestedSummary extends React.PureComponent {
                 <div>
                     <div className="d-flex">
                         <img src={post_approve_icon} alt="" className="icon" />
-                        <Link className="link-label-s" to={`/user/${this.props.authorID}`}>
+                        <Link className="link-label-s" to={`/user/profile/${this.props.authorID}`}>
                             {this.props.authorName}
                         </Link>
                         <div className="black-label-s">{`đã yêu cầu duyệt một bài viết`}</div>

@@ -258,14 +258,13 @@ export function getManagementPosts(searchParamObject) {
                 let result_1 = response_1.data;
                 let IDarr = '';
                 response_1.data.postSummaryWithStateDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
-
                 authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(response_2 => {
                         //merge summary array and statistic array
-                        let finalResult = [];
+                        let result_2 = [];
 
                         for (let i = 0; i < result_1.postSummaryWithStateDTOs.length; i++) {
-                            finalResult.push({
+                            result_2.push({
                                 ...result_1.postSummaryWithStateDTOs[i],
                                 ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryWithStateDTOs[i].id)),
                                 isHighlighted: false
@@ -273,18 +272,20 @@ export function getManagementPosts(searchParamObject) {
                             );
                         }
 
-                        authRequest.get(`/posts/highlightPosts/ids`)
-                            .then(response_3 => {
-                                for (let i = 0; i < response_3.data.length; i++) {
-                                    for (let j = 0; j < finalResult.length; j++) {
-                                        if (finalResult[j].id === response_3.data[i]) { finalResult[j] = { ...finalResult[j], isHighlighted: true } }
-                                    }
-                                }
-                                dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
-                            }).catch(error => { dispatch(get_ManagementPostsFailure()(error)) })
+                        let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
+                        authRequest.get(`/posts/actionAvailable?postIDs=${actionIDarr}`).then(response_3 => {
+                            let finalResult = [];
+                            for (let i = 0; i < result_2.length; i++) {
+                                finalResult.push({
+                                    ...result_2[i],
+                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                });
+                            }
+
+                            console.log(finalResult)
+                            dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                        }).catch(() => get_ManagementPostsSuccess())
                     }).catch((error) => get_ManagementPostsFailure(error))
-
-
             })
             .catch(error => dispatch(get_ManagementPostsFailure(error)))
     }
@@ -323,6 +324,8 @@ export function getPostByID(id) {
                 authRequest.get(`/posts/statistics?postIDs=${result_1.id}`)
                     .then(response_2 => {
                         authRequest.get(`/posts/actionAvailable?postIDs=${result_1.id}`).then(response_3 => {
+
+                            console.log({ ...result_1, ...response_2.data[0], ...response_3.data[0] })
                             dispatch(get_PostByIDSuccess({ ...result_1, ...response_2.data[0], ...response_3.data[0] }))
                         }).catch(error => { dispatch(get_PostByIDFailure(error)) }
                         ).catch(error => { dispatch(get_PostByIDFailure(error)) })

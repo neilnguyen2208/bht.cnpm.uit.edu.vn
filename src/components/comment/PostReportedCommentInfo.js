@@ -32,24 +32,24 @@ export default class ReportInfo extends React.PureComponent {
 
         let reportersName = <></>;
         if (this.props.reporters.length === 1)
-            reportersName = <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+            reportersName = <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                 {this.props.reporters[0].displayName}
             </Link>
         else if (this.props.reporters.length === 2)
             reportersName = <div className="d-flex">
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
             </Link>
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
             </Link>
             </div>
         else if (this.props.reporters.length > 2)
             reportersName = <div className="d-flex">
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName},
                 </Link>
-                <Link className="link-label-s" to={`/user/${this.props.reporters[0].id}`}>
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName}
                 </Link>
               và {this.props.reporters.length - 2} người khác

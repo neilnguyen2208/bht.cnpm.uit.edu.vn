@@ -151,8 +151,10 @@ class DocumentSummary extends React.Component {
 
         {/* title */}
         <div className="d-flex mg-top-5px" >
-          {/* fake avatar */}
-          < img className="avatar" src={this.props.authorAvatarURL} alt="" />
+          <Link to={`/user/profile/${this.props.authorID}`}>
+            < img className="avatar" src={this.props.authorAvatarURL} alt="" />
+          </Link>
+
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
             <Link to={"/document-content/" + 151}>
               <div className="title">

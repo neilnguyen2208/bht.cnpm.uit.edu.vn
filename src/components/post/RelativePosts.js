@@ -22,7 +22,7 @@ class RelativePosts extends React.Component {
         </div>
         <div style={{ padding: "5px" }}>
           {this.props.items.map(item =>
-            <Link to={"post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getPostByID(item.id)} >
+            <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getPostByID(item.id)} >
               <div className="relative-item-icon" />
               <div className="relative-item-title">{item.title}</div>
             </Link>

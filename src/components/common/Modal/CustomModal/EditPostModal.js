@@ -468,7 +468,7 @@ class EditPostModal extends React.Component {
                                     <div className="ed-post-form-container post-detail-container preview-modal d-none" >
                                         <div style={{ marginTop: "20px" }} />
                                         <Metadata
-                                            id={this.props.currentPost.id}
+                                            postId={this.props.currentPost.id}
                                             title={this.state.EDIT_POST_DTO.title}
                                             categoryName={this.state.EDIT_POST_DTO.categoryName}
                                             categoryID={this.state.EDIT_POST_DTO.categoryID}
@@ -488,7 +488,7 @@ class EditPostModal extends React.Component {
                                             )}
                                         </div>
                                         <NormalReactionbar
-                                            id={"-1"}
+                                            postId={"-1"}
                                             likeCount={0}
                                             commentCount={0}
                                             likedStatus={false}

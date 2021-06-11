@@ -25,7 +25,7 @@ export default class ReportInfo extends React.PureComponent {
                     <div>
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
-                            <Link className="link-label-s" to={`/user/${this.props.reporterID}`}>
+                            <Link className="link-label-s" to={`/user/profile/${this.props.reporterID}`}>
                                 {this.props.reporterName} dong
                             </Link>
                             <div className="black-label-s">{`đã tố cáo tài liệu - `}</div>

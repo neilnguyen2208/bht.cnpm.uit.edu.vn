@@ -154,7 +154,6 @@ class MyPosts extends React.Component {
             if (this.props.myPostsList.length !== 0)
                 this.myPostsList = this.props.myPostsList.map((item) => {
                     return <div className="item-container" key={item.id}>
-                        {console.log(item)}
                         <PostSummaryMetadata
                             type={itemType.mySelf}
                             postId={item.id}

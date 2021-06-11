@@ -47,8 +47,10 @@ class HomeInfo extends React.Component {
         </Link>
 
         <div className="d-flex mg-top-5px" >
-          <Link>  <img style={{ marginLeft: "5px" }} to={`/user/${this.props.authorID}`} className="avatar" src={this.props.authorAvatarURL} alt="" /></Link>
-          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/${this.props.authorID}`}>
+          <Link to={`/user/profile/${this.props.authorID}`}>
+            <img style={{ marginLeft: "5px" }} className="avatar" src={this.props.authorAvatarURL} alt="" />
+          </Link>
+          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/profile/${this.props.authorID}`}>
             {this.props.authorName}
           </Link>
         </div>

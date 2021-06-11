@@ -32,7 +32,7 @@ export class RequireLogin extends React.Component {
       //if has required action
       if (this.props.availableActions.includes(this.props.requiredAction)) {
         return (
-          <div onClick={this.handleClick}>
+          <div onClick={() => this.props.expectedEvent()}>
             {this.props.children}
           </div>
         );

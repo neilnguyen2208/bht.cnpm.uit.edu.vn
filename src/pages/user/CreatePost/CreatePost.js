@@ -232,6 +232,8 @@ class CreatePost extends React.Component {
                 e.target.value = ""
             }
         }
+
+
     }
 
     onTagSearchResultClick = (tag) => {
@@ -366,7 +368,7 @@ class CreatePost extends React.Component {
                     }
                     else {
                         document.getElementById("cr-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        document.getElementById("cr-post-tag-input").classList.add('invalid');
+                        // document.getElementById("cr-post-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
@@ -531,7 +533,6 @@ class CreatePost extends React.Component {
                     </div>
                 </div>
 
-
                 {this.props.isHaveCreated ? <Redirect to="/user/my-posts" /> : <></>}
                 {/* Custom for notifing success */}
 
@@ -546,7 +547,6 @@ class CreatePost extends React.Component {
         document.querySelector(".cr-post-form-container.edit").classList.remove("d-none");
         document.querySelector(".cr-post-form-container.preview").classList.add("d-none");
         document.querySelector(".cr-post-form-container.edit").classList.add("d-block");
-
     }
 
     onPreviewBtnClick = () => {
@@ -555,7 +555,6 @@ class CreatePost extends React.Component {
         document.querySelector(".cr-post-form-container.edit").classList.add("d-none");
         document.querySelector(".cr-post-form-container.preview").classList.remove("d-none");
         document.querySelector(".cr-post-form-container.edit").classList.remove("d-block");
-        // console.log(this.state);
     }
 }
 

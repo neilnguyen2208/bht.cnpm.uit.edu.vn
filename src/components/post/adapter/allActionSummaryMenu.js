@@ -60,6 +60,7 @@ export const adminMenu = [
     },
     showOnAction: true,
     permissions: [],
+    showOnPermission: false,
     requiredAction: PostAction.Unhighlight
   },
   {
@@ -70,7 +71,8 @@ export const adminMenu = [
       paddingBottom: "5px"
     },
     showOnAction: true,
-    permission: [],
+    showOnPermission: false,
+    permissions: [],
     requiredAction: PostAction.StickToTop
   },
 ]

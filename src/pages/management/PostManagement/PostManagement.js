@@ -137,7 +137,7 @@ class PostManagement extends React.Component {
             store.dispatch(highlight_APostReset())
         }
 
-        if (this.props.isHaveUnHighlighted) {
+        if (this.props.isHaveUnhighlighted) {
             this.reloadList();
             openBLModal({ type: "success", text: "Đã huỷ ghim bài viết!" });
             store.dispatch(delete_HighlightAPostReset())
@@ -298,7 +298,7 @@ const mapStateToProps = (state) => {
         isHaveDeleted: state.post.isHaveDeleted,
         isHaveEdited: state.post.isHaveEdited,
         isHaveHighlighted: state.home.highlightPosts.isHaveHighlighted,
-        isHaveUnHighlighted: state.home.highlightPosts.isHaveUnHighlighted
+        isHaveUnhighlighted: state.home.highlightPosts.isHaveUnhighlighted
 
 
     };

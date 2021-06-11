@@ -70,7 +70,7 @@ class Wallpage extends React.Component {
 
     render() {
 
-        if (this.props.isHaveUnHighlighted) {
+        if (this.props.isHaveUnhighlighted) {
             this.reloadList();
             if (this.state.activeIndex === this.props.highlightPosts.length)
                 this.prevSlide();
@@ -171,7 +171,7 @@ const mapStateToProps = (state) => {
         highlightPosts: state.home.highlightPosts.data,
         isLoadDone: state.home.highlightPosts.isLoadDone,
         isHaveHighlighted: state.home.highlightPosts.isHaveHighlighted,
-        isHaveUnHighlighted: state.home.highlightPosts.isHaveUnHighlighted,
+        isHaveUnhighlighted: state.home.highlightPosts.isHaveUnhighlighted,
         isHaveStickedToTop: state.home.highlightPosts.isHaveStickedToTop
     };
 }

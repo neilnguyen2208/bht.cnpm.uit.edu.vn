@@ -61,15 +61,6 @@ class PostSummary extends React.Component {
     }
 
     if (selectedItem.value === "REPORT_POST") {
-
-      //call API to get all post report reason 
-      //if success => open report modal
-
-      //map to array of reasons in UI
-      // this.props.getReportReasons();
-
-      //create new type of input un modal and validation for it
-
       openBigModal("report-post", {
         id: this.props.postId
       })

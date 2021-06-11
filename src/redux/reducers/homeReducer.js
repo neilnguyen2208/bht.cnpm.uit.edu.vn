@@ -45,7 +45,7 @@ const initialState = {
         isLoadDone: false,
         data: [],
         error: "",
-        isHaveUnHighlighted: false,
+        isHaveUnhighlighted: false,
         isHaveHighlighted: false,
         isHaveStickedToTop: false
     },
@@ -91,7 +91,7 @@ function HomeReducer(state = initialState, action) {
             return {
                 ...state, highlightPosts: {
                     ...state.highlightPosts,
-                    isHaveUnHighlighted: false
+                    isHaveUnhighlighted: false
                 }
             }
         }
@@ -99,7 +99,7 @@ function HomeReducer(state = initialState, action) {
             return {
                 ...state, highlightPosts: {
                     ...state.highlightPosts,
-                    isHaveUnHighlighted: true
+                    isHaveUnhighlighted: true
                 }
             }
         }

@@ -53,7 +53,7 @@ export const PostAction = {
     Report: "report",
     Comment: "comment",
     Highlight: "highlight",
-    UnHighlight: "unhighlight",
+    Unhighlight: "unhighlight",
     StickToTop: "sticktotop",
 
 }

@@ -91,7 +91,7 @@ const App = () => {
                         <Route exact path="/user/my-documents" component={MyDocuments} />
                         <Route exact path="/user/my-posts" component={MyPosts} />
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
-                        <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.Create, Access.User]} />
+                        <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.POST_PENDING_SELF_CREATE, Access.User]} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-document" component={UploadDocument} />
                         <Route exact path="/courses/:id/exercise" component={Exercise} />
@@ -117,7 +117,6 @@ const App = () => {
 
                         {/* verify email url */}
                         <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} />
-                        <Route exact path="/secured" component={Secured} />
                     </Switch>
                     <Footer />
                 </div>

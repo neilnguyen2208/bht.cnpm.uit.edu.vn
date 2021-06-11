@@ -82,7 +82,7 @@ class ProfilePost extends React.Component {
                 this.userPostList = this.props.userPostList.map((item) => {
                     return <div className="item-container">
                         <PostSummaryMetadata
-                            type={itemType.mySelf}
+                            type={itemType.normal}
                             postId={item.id}
                             authorName={item.authorName}
                             authorID={item.authorID}

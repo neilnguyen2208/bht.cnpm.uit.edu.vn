@@ -9,7 +9,7 @@ class HomeInfo extends React.Component {
 
     return (
       <div className="home-item" >
-        <img className="cover-image" alt='cover' src={this.props.imageURL} />
+        <img className="cover-image" alt='Bài viết này không có hình ảnh.' src={this.props.imageURL} />
         <div className="metadata" >
 
           <div className="j-c-space-between mg-top-10px">

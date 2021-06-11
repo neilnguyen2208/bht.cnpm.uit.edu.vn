@@ -28,19 +28,19 @@ import {
     stick_APostToTopFailure
 
 } from "redux/actions/homeAction.js";
-import { request } from 'utils/requestUtils'
+import { authRequest, request } from 'utils/requestUtils'
 import { openBLModal } from "./modalServices";
 
 export function getTrendingDocuments() {
     return dispatch => {
         dispatch(get_TrendingDocumentsRequest());
-        request.get(`/documents/trending`).then(
+        authRequest.get(`/documents/trending`).then(
             response => {
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.map(item => IDarr += item.id + ","); //create id array
 
-                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
 
@@ -64,14 +64,14 @@ export function getTrendingDocuments() {
 export function getNewestPosts() {
     return dispatch => {
         dispatch(get_NewestPostsRequest());
-        request.get(`/posts/newest`).then(
+        authRequest.get(`/posts/newest`).then(
             response => {
 
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.map(item => IDarr += item.id + ","); //create id array
 
-                request.get(`/posts/statistics?postIDs=${IDarr}`)
+                authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
 
@@ -96,11 +96,11 @@ export function getNewestPosts() {
 export function getHighlightPosts() {
     return dispatch => {
         dispatch(get_HighlightPostsRequest());
-        request.get(`/posts/highlightPosts`)
+        authRequest.get(`/posts/highlightPosts`)
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = ''; response.data.map(item => IDarr += item.postSummaryDTO.id + ",")
-                request.get(`/posts/statistics?postIDs=${IDarr}`)
+                authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
                         for (let i = 0; i < result_1.length; i++) {
@@ -125,11 +125,11 @@ export function getHighlightPosts() {
 export function getNewestActivities() {
     return dispatch => {
         dispatch(get_NewestActivitiesRequest());
-        request.get(`/posts/newactivities`)
+        authRequest.get(`/posts/newactivities`)
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
-                request.get(`/posts/statistics?postIDs=${IDarr}`)
+                authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         let finalResult = [];
 
@@ -154,7 +154,7 @@ export function highlightAPost(id) {
     return dispatch => {
         let tmp = { id: id };
         dispatch(highlight_APostReset());
-        request.post('/posts/highlightPosts', JSON.stringify(tmp))
+        authRequest.post('/posts/highlightPosts', JSON.stringify(tmp))
             .then(response => {
                 dispatch(highlight_APostSuccess(response.data))
             }).catch(error => { dispatch(highlight_APostFailure()) })
@@ -164,7 +164,7 @@ export function highlightAPost(id) {
 export function deleteHighlightAPost(id) {
     return dispatch => {
         dispatch(delete_HighlightAPostReset());
-        request.delete(`/posts/highlightPosts?id=${id}`)
+        authRequest.delete(`/posts/highlightPosts?id=${id}`)
             .then(response => {
                 dispatch(delete_HighlightAPostSuccess(response.data));
             }).catch(error => { dispatch(highlight_APostFailure()) })
@@ -174,7 +174,7 @@ export function deleteHighlightAPost(id) {
 export function stickAPostToTop(id) {
     return dispatch => {
         dispatch(stick_APostToTopReset());
-        request.post(`/posts/highlightPosts/stickToTop?id=${id}`)
+        authRequest.post(`/posts/highlightPosts/stickToTop?id=${id}`)
             .then(response => {
                 openBLModal({ type: "success", text: "Bài viết đã được ghim lên đầu!" })
                 dispatch(stick_APostToTopSuccess(response.data));

@@ -64,41 +64,42 @@ class PostSummary extends React.Component {
       openBigModal("report-post", {
         id: this.props.postId
       })
+    }
 
-      if (selectedItem.value === "HIGHLIGHT_POST") {
-        openModal("confirmation", {
-          title: "Ghim bài viết",
-          text: "Xác nhận ghim bài viết?",
-          onConfirm: () => {
-            this.props.highlightAPost(this.props.postId);
-            closeModal();
-          }
-        });
-      }
+    if (selectedItem.value === "HIGHLIGHT_POST") {
+      openModal("confirmation", {
+        title: "Ghim bài viết",
+        text: "Xác nhận ghim bài viết?",
+        onConfirm: () => {
+          this.props.highlightAPost(this.props.postId);
+          closeModal();
+        }
+      });
+    }
 
-      if (selectedItem.value === "UNHIGHLIGHT_POST") {
-        openModal("confirmation", {
-          title: "Bỏ ghim bài viết",
-          text: "Xác nhận bỏ ghim bài viết?",
-          onConfirm: () => {
-            this.props.deleteHighlightAPost(this.props.postId);
-            closeModal();
-          }
-        });
-      }
+    if (selectedItem.value === "UNHIGHLIGHT_POST") {
+      openModal("confirmation", {
+        title: "Bỏ ghim bài viết",
+        text: "Xác nhận bỏ ghim bài viết?",
+        onConfirm: () => {
+          this.props.deleteHighlightAPost(this.props.postId);
+          closeModal();
+        }
+      });
+    }
 
-      if (selectedItem.value === "STICK_TO_TOP_POST") {
-        openModal("confirmation", {
-          title: "Ghim bài viết lên đầu",
-          text: "Xác nhận ghim bài viết lên đâu?",
-          onConfirm: () => {
-            this.props.stickAPostToTop(this.props.postId);
-            closeModal();
-          }
-        });
-      }
+    if (selectedItem.value === "STICK_TO_TOP_POST") {
+      openModal("confirmation", {
+        title: "Ghim bài viết lên đầu",
+        text: "Xác nhận ghim bài viết lên đâu?",
+        onConfirm: () => {
+          this.props.stickAPostToTop(this.props.postId);
+          closeModal();
+        }
+      });
     }
   }
+
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();
@@ -190,7 +191,7 @@ class PostSummary extends React.Component {
           {(this.props.type === itemType.normal || !this.props.type) && //normal => only report
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
           }
-           {(this.props.type === itemType.management) &&
+          {(this.props.type === itemType.management) &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={adminMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
           }
 

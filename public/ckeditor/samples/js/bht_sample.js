@@ -6,7 +6,6 @@ if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
 // unless user specified own height.
 CKEDITOR.config.width = 'auto';
 
-
 function _createCKEInstance(instanceID, bhtConfiguration, inline) {
 	var wysiwygareaAvailable = isWysiwygareaAvailable(),
 		isBBCodeBuiltIn = !!CKEDITOR.plugins.get('bbcode');

@@ -37,7 +37,6 @@ class Editor extends React.Component {
       autoGrow_bottomSpace: 30
     };
 
-
     //inject bhtConfiguration to external file
     window.createCKEInstance(this.editorID, bhtConfiguration, false)();
 

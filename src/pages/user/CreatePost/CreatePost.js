@@ -27,15 +27,17 @@ import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
+import JQDateTimePicker from 'components/common/JQDateTimePicker/JQDateTimePicker'
 
 const validationCondition = {
     form: '#create-post-form',
     rules: [
         //truyen vao id, loai component, message
         validation.isRequired('cr-post-title', 'text-input', 'Tên bài viết không được để trống!'),
-        validation.noSpecialChar('cr-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
+        // validation.noSpecialChar('cr-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
         validation.isRequired('cr-post-category-combobox', 'combobox', 'Danh mục không được để trống'),
-        validation.isRequired('cr-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống')
+        validation.isRequired('cr-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống'),
+        validation.isRequired('cr-post-imgurl', 'text-input', 'Link ảnh bìa không được để trống'),
     ],
 }
 
@@ -63,7 +65,8 @@ class CreatePost extends React.Component {
                 content: ``,
                 summary: `null`,
                 categoryID: "",
-                imageURL: "null",
+                imageURL: "https://i.imgur.com/tPdFhGa.png",
+                publishDtm: (new Date()).toISOString(),
                 readingTime: 10
             },
 
@@ -109,9 +112,7 @@ class CreatePost extends React.Component {
         document.querySelector(".cr-post-form-container.edit").classList.add("d-block");
 
         this.timeOut = null;
-
         validation(validationCondition);
-
     }
 
     componentWillUnmount() {
@@ -334,9 +335,29 @@ class CreatePost extends React.Component {
         return;
     };
 
+    handleDateChange = (data) => {
+        console.log(data);
+    }
+
+    handleDateSelect = (data) => {
+        console.log(data);
+    }
+
     handleTitleChange = (e) => {
         this.setState({
             CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, title: e.target.value }
+        })
+    }
+
+    onPublishTimeChange = (date) => {
+        this.setState({
+            CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, publishDtm: date }
+        })
+    }
+
+    handleImageURLChange = (e) => {
+        this.setState({
+            CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, imageURL: e.target.value }
         })
     }
 
@@ -368,7 +389,6 @@ class CreatePost extends React.Component {
                     }
                     else {
                         document.getElementById("cr-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        // document.getElementById("cr-post-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
@@ -437,6 +457,16 @@ class CreatePost extends React.Component {
                             </div>
                         </div>
 
+                        <div className="form-group">
+                            <label className="form-label-required">Link ảnh bìa:</label>
+                            <input className="text-input" id="cr-post-imgurl"
+                                placeholder="Nhập link hình ảnh: " onChange={e => this.handleImageURLChange(e)}
+                                type="text" ></input>
+                            <div className="form-error-label-container">
+                                <span className="form-error-label" ></span>
+                            </div>
+                        </div>
+
                         {/* CKEditor */}
                         <div className="form-group">
                             <div className="j-c-space-between">
@@ -464,13 +494,17 @@ class CreatePost extends React.Component {
                                 options={this.categoryList}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"
-                                validation
-                            >
+                                validation>
                             </Combobox>
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
                             </div>
                         </div >
+
+                        <div className="form-group" style={{ zIndex: "4" }}>
+                            <label className="form-label">Thời gian đăng:</label>
+                            <JQDateTimePicker dtPickerId="cr-post" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
+                        </div>
 
                         {/* Tag */}
                         <div className='form-group'>
@@ -534,10 +568,7 @@ class CreatePost extends React.Component {
                 </div>
 
                 {this.props.isHaveCreated ? <Redirect to="/user/my-posts" /> : <></>}
-                {/* Custom for notifing success */}
-
             </div>
-
         );
     }
 

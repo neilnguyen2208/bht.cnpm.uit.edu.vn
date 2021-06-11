@@ -16,10 +16,17 @@ export default class Tag extends React.Component {
         this.props.onDeleteTag(this.props.tag);
     }
 
-    onTagClick = () => {
+    onTagClick = (e) => {
 
         //if the location is tags/... => recall API 
 
+        //prevent search on create post
+        if (window.location.pathname === "/create-post") {
+            e.preventDefault();
+            return;
+        }
+
+        //handle search
         if (window.location.pathname.substring(0, 5) === "/tags") {
 
             let queryParamObject = {
@@ -46,7 +53,7 @@ export default class Tag extends React.Component {
         if (!this.props.tag.id && !this.props.tag.name && !this.props.tag.content) return <></>;
         return (
             <Link to={`/tags/posts?page=1&tag=${this.props.tag.id}`}
-                className="simple-tag" onClick={this.onTagClick} >
+                className="simple-tag" onClick={e => this.onTagClick(e)} >
                 <div className="d-flex">
                     {!this.props.isReadOnly && <div onClick={e => this.onDelete(e)} className="tag-delete-btn"><div className="close_8x8" /> </div>}
                     <div className="mg-left-5px"> {this.props.tag.content} </div>

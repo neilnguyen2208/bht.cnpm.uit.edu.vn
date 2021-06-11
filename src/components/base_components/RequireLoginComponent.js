@@ -28,7 +28,6 @@ export class RequireLogin extends React.Component {
 
   render() {
     //if logged in and props.availableAction => handle by action
-    console.log(authService.isLoggedIn(), this.props.availableActions, this.props.requiredAction)
 
     //showOnAction === true + not granted action => hide 
     //showOnAction === false + not granted action => show in banned state 
@@ -57,12 +56,6 @@ export class RequireLogin extends React.Component {
           <div>
           </div>
         );
-
-      // if (!this.props.showOnAction&&)
-      //   return (
-      //     <div>
-      //     </div>
-      //   );
 
       //!showOnAction&&!requiredAction => hide this component.
       return (
@@ -96,13 +89,9 @@ export class RequireLogin extends React.Component {
         </div>
       );
 
-    //availableActions && !isLoggedIn()
-
     //!isLoggedIn() && showOnAction && !grant requiredAction => hide
     return (
-      // <div onClick={this.handleClick}>
       <div>
-        {/* {this.props.children} */}
       </div>
     );
   }

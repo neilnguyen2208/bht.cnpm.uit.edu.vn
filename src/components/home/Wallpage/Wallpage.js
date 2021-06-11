@@ -101,33 +101,29 @@ class Wallpage extends React.Component {
                         {this.props.highlightPosts ?
                             <ul className="slider" style={{
                                 width: `${this.props.highlightPosts.length * 1000}px`
-                            }}
-                            >
-                                {
-                                    this.props.highlightPosts.map(function (item, index) {
-                                        return (<li key={index} style={style} className={index + 1 === this.state.activeIndex ? 'slider-item' : 'hide'}>
-                                            <WallpageItem
-                                                key={item.id}
-                                                id={item.id}
-                                                authorName={item.authorName}
-                                                authorID={item.authorID}
-                                                publishDtm={item.publishDtm}
-                                                categoryName={item.categoryName}
-                                                categoryID={item.categoryID}
-                                                title={item.title}
-                                                summary={item.summary}
-                                                imageURL={item.imageURL}
-                                                likeStatus={item.likeStatus}
-                                                savedStatus={item.savedStatus}
-                                                readingTime={item.readingTime}
-                                                likeCount={item.likeCount}
-                                                commentCount={item.commentCount}
-                                                authorAvatarURL={item.authorAvatarURL}
-                                            />
-
-                                        </li>)
-                                    }, this)
-                                }
+                            }}>     {this.props.highlightPosts.map(function (item, index) {
+                                return (<li key={index} style={style} className={index + 1 === this.state.activeIndex ? 'slider-item' : 'hide'}>
+                                    <WallpageItem
+                                        key={item.id}
+                                        wpPostId={item.id} //wallpage post id
+                                        authorName={item.authorName}
+                                        authorID={item.authorID}
+                                        publishDtm={item.publishDtm}
+                                        categoryName={item.categoryName}
+                                        categoryID={item.categoryID}
+                                        title={item.title}
+                                        summary={item.summary}
+                                        imageURL={item.imageURL}
+                                        likeStatus={item.likeStatus}
+                                        savedStatus={item.savedStatus}
+                                        readingTime={item.readingTime}
+                                        likeCount={item.likeCount}
+                                        commentCount={item.commentCount}
+                                        authorAvatarURL={item.authorAvatarURL}
+                                        availableActions={item.availableActions}
+                                    />
+                                </li>)
+                            }, this)}
                             </ul>
                             : <Loader />}
                     </div>
@@ -144,7 +140,7 @@ class Wallpage extends React.Component {
                         <ul className="indicators">
                             {this.props.highlightPosts ? this.props.highlightPosts.map(function (item, index) {
                                 return (
-                                    <li key = {item.id} className={index + 1 === this.state.activeIndex ? 'active-indicator' : ''}
+                                    <li key={item.id} className={index + 1 === this.state.activeIndex ? 'active-indicator' : ''}
                                         onClick={this.clickIndicator}>{index + 1}</li>
                                 )
                             }, this)

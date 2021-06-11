@@ -10,10 +10,9 @@ import { reportAPost } from 'redux/services/postServices'
 import { openModal, closeModal, openBLModal, openBigModal } from 'redux/services/modalServices'
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
-import { validation } from 'utils/validationUtils'
 import NormalReactionbar from 'components/post/NormalReactionbar'
-import { wallPageAdminMenuItemList } from 'constants.js'
 import { deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
+import { wallpageMenu } from 'components/post/adapter/allActionSummaryMenu';
 
 //styles
 import 'components/styles/Label.scss'
@@ -26,7 +25,7 @@ class WallpageItem extends React.Component {
     onPopupMenuItemClick = (selectedItem) => {
         if (selectedItem.value === "REPORT_POST") {
             openBigModal("report-post", {
-                id: this.props.id
+                id: this.props.wpPostId
             })
         }
 
@@ -35,7 +34,7 @@ class WallpageItem extends React.Component {
                 title: "Ghim bài viết",
                 text: "Xác nhận ghim bài viết?",
                 onConfirm: () => {
-                    this.props.highlightAPost(this.props.id);
+                    this.props.highlightAPost(this.props.wpPostId);
                     closeModal();
                 }
             });
@@ -46,7 +45,7 @@ class WallpageItem extends React.Component {
                 title: "Bỏ ghim bài viết",
                 text: "Xác nhận bỏ ghim bài viết?",
                 onConfirm: () => {
-                    this.props.deleteHighlightAPost(this.props.id);
+                    this.props.deleteHighlightAPost(this.props.wpPostId);
                     closeModal();
                 }
             });
@@ -57,12 +56,11 @@ class WallpageItem extends React.Component {
                 title: "Ghim bài viết lên đầu",
                 text: "Xác nhận ghim bài viết lên đâu?",
                 onConfirm: () => {
-                    this.props.stickAPostToTop(this.props.id);
+                    this.props.stickAPostToTop(this.props.wpPostId);
                     closeModal();
                 }
             });
         }
-
     }
 
     onConfirmReport = (DTO) => {
@@ -96,7 +94,8 @@ class WallpageItem extends React.Component {
                                     {this.props.authorName}
                                 </Link>
                             </div>
-                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={wallPageAdminMenuItemList} id={`hipm-${this.props.id}`} />
+                            {console.log(this.props.availableActions)}
+                            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={wallpageMenu} id={`hipm-${this.props.wpPostId}`} />
                         </div>
 
                         {/* title */}
@@ -105,7 +104,7 @@ class WallpageItem extends React.Component {
                                 <img className="avatar" src={this.props.authorAvatarURL} alt="" />
                             </Link>
                             <div className="mg-left-5px j-c-space-between d-flex-vertical">
-                                <Link to={"/post-content/" + this.props.id}>
+                                <Link to={"/post-content/" + this.props.wpPostId}>
                                     <div className="title title-hv">
                                         {this.props.title}
                                     </div>
@@ -140,7 +139,8 @@ class WallpageItem extends React.Component {
                     </div >
                     <div >
                         <NormalReactionbar
-                            postId={this.props.id}
+                            postId={this.props.wpPostId}
+                            availableActions={this.props.availableActions}
                             likeCount={this.props.likeCount}
                             commentCount={this.props.commentCount}
                             likedStatus={this.props.likedStatus}

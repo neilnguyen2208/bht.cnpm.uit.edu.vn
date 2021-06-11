@@ -13,6 +13,9 @@ export const basicMenu = [
     icon: report_icon,
     value: "REPORT_POST",
     permissions: [Post.Comment.Report], //base on permission
+    showOnPermission: false,
+    requiredAction: PostAction.Report
+
   },
   {
     id: 2,
@@ -76,3 +79,38 @@ export const adminMenu = [
     requiredAction: PostAction.StickToTop
   },
 ]
+
+export const wallpageMenu = [
+  {
+    id: 1,
+    text: "Report",
+    icon: report_icon,
+    value: "REPORT_POST",
+    permissions: [Post.Comment.Report], //base on permission
+    requiredAction: PostAction.Report,
+
+  },
+  {
+    id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_POST", icon: unpin_icon,
+    style: {
+      height: "26px",
+      paddingTop: "1px",
+      paddingBottom: "5px"
+    },
+    showOnAction: true,
+    permissions: [],
+    showOnPermission: false,
+    requiredAction: PostAction.Unhighlight
+  },
+  {
+    id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_POST", icon: stick_to_top,
+    style: {
+      height: "26px",
+      paddingTop: "1px",
+      paddingBottom: "5px"
+    },
+    showOnAction: true,
+    showOnPermission: false,
+    permissions: [],
+    requiredAction: PostAction.StickToTop
+  },]

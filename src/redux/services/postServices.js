@@ -281,8 +281,6 @@ export function getManagementPosts(searchParamObject) {
                                     ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
                                 });
                             }
-
-                            console.log(finalResult)
                             dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                         }).catch(() => get_ManagementPostsSuccess())
                     }).catch((error) => get_ManagementPostsFailure(error))

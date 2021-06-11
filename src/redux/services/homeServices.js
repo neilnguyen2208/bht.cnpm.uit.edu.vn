@@ -97,27 +97,32 @@ export function getHighlightPosts() {
     return dispatch => {
         dispatch(get_HighlightPostsRequest());
         authRequest.get(`/posts/highlightPosts`)
-            .then(response => {
-                let result_1 = response.data;
-                let IDarr = ''; response.data.map(item => IDarr += item.postSummaryDTO.id + ",")
+            .then(response_1 => {
+                let result_1 = response_1.data;
+                let IDarr = ''; response_1.data.map(item => IDarr += item.postSummaryDTO.id + ",")
                 authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
-                    .then(result => {
-                        let finalResult = [];
+                    .then(response_2 => {
+                        let result_2 = [];
                         for (let i = 0; i < result_1.length; i++) {
-                            finalResult.push({
+                            result_2.push({
                                 ...result_1[i],
                                 ...result_1[i].postSummaryDTO,
-                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].postSummaryDTO.id)),
-                            }
-                            );
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1[i].postSummaryDTO.id)),
+                            });
                         }
-                        dispatch(get_HighlightPostsSuccess(finalResult))
+                        let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
+                        authRequest.get(`/posts/actionAvailable?postIDs=${actionIDarr}`).then(response_3 => {
+                            let finalResult = [];
+                            for (let i = 0; i < result_2.length; i++) {
+                                finalResult.push({
+                                    ...result_2[i],
+                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                });
+                            }
+                            dispatch(get_HighlightPostsSuccess(finalResult))
+                        }).catch(error => dispatch(get_HighlightPostsFailure(error)))
                     }).catch(error => dispatch(get_HighlightPostsFailure(error)))
-            }
-            )
-            .catch(error => {
-                dispatch(get_HighlightPostsFailure(error)); //
-            })
+            }).catch(error => { dispatch(get_HighlightPostsFailure(error)); })
     }
 }
 
@@ -126,25 +131,33 @@ export function getNewestActivities() {
     return dispatch => {
         dispatch(get_NewestActivitiesRequest());
         authRequest.get(`/posts/newactivities`)
-            .then(response => {
-                let result_1 = response.data;
-                let IDarr = ''; response.data.map(item => IDarr += item.id + ",")
+            .then(response_1 => {
+                let result_1 = response_1.data;
+                let IDarr = ''; response_1.data.map(item => IDarr += item.id + ",");
                 authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
-                    .then(result => {
-                        let finalResult = [];
+                    .then(response_2 => {
+                        let result_2 = [];
 
                         for (let i = 0; i < result_1.length; i++) {
-                            finalResult.push({
+                            result_2.push({
                                 ...result_1[i],
-                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1[i].id)),
                             }
                             );
                         }
-                        dispatch(get_NewestActivitiesSuccess(finalResult))
+                        let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
+                        authRequest.get(`/posts/actionAvailable?postIDs=${actionIDarr}`).then(response_3 => {
+                            let finalResult = [];
+                            for (let i = 0; i < result_2.length; i++) {
+                                finalResult.push({
+                                    ...result_2[i],
+                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                });
+                            }
+                            dispatch(get_NewestActivitiesSuccess(finalResult))
+                        }).catch(error => dispatch(get_NewestActivitiesFailure(error)))
                     }).catch(error => dispatch(get_NewestActivitiesFailure(error)))
-            }
-            )
-            .catch(error => {
+            }).catch(error => {
                 dispatch(get_NewestActivitiesFailure(error)); //
             })
     }

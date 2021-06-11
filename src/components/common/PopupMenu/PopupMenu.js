@@ -6,18 +6,14 @@ import { RequireLogin } from "components/base_components/RequireLoginComponent";
 export default class PopupMenu extends React.Component {
     constructor(props) {
         super(props);
-
         this.isAnyValueChanged = false; //will become true if you choose an option
-
         this.state = {
             isDropdownOpen: false,
         }
-
         this.selectedItem = {
             id: "",
             name: ""
         }
-
     }
 
     componentDidMount() {
@@ -55,7 +51,6 @@ export default class PopupMenu extends React.Component {
     }
 
     render() {
-        console.log(this.props.availableActions)
 
         let items = this.props.items.map(menuItem => {
             if (menuItem.permissions && menuItem.showOnPermission)

@@ -28,8 +28,21 @@ export class RequireLogin extends React.Component {
 
   render() {
     //if logged in and props.availableAction => handle by action
-    if (authService.isLoggedIn() && this.props.availableActions && this.props.requiredAction) {
-      //if has required action
+    console.log(authService.isLoggedIn(), this.props.availableActions, this.props.requiredAction)
+
+    //showOnAction === true + not granted action => hide 
+    //showOnAction === false + not granted action => show in banned state 
+    //granted action => show and call event
+    //show and required login =>  
+
+    //requiredAction: false || undefined || ... => base on permission to require login.
+    //permissions
+    //isAny
+
+    //availableActions && isLoggedIn() 
+    if ((authService.isLoggedIn() && this.props.availableActions)) {
+
+      //granted requiredAction => call event
       if (this.props.availableActions.includes(this.props.requiredAction)) {
         return (
           <div onClick={() => this.props.expectedEvent()}>
@@ -37,13 +50,23 @@ export class RequireLogin extends React.Component {
           </div>
         );
       }
-      //else 
-      //if hideOnAction
+
+
+
+      //showOnAction&&!requiredAction => hide this component.
       if (this.props.showOnAction)
         return (
           <div>
           </div>
         );
+
+      // if (!this.props.showOnAction&&)
+      //   return (
+      //     <div>
+      //     </div>
+      //   );
+
+      //!showOnAction&&!requiredAction => hide this component.
       return (
         <div style={{ opacity: "50%" }} className="banned-action">
           {this.props.children}
@@ -51,10 +74,29 @@ export class RequireLogin extends React.Component {
       );
     }
 
-    //else handle by permission 
+    //!isLoggedIn()
+    if (!authService.isLoggedIn() && !this.props.showOnAction)
+      return (
+        <div onClick={this.handleClick}>
+          {this.props.children}
+        </div>
+      );
+
+    //!isLoggedIn() && !showOnAction && !requiredAction => show component and required login on click.
+    if (!authService.isLoggedIn() && !this.props.showOnAction && !this.props.requiredAction)
+      return (
+        <div onClick={this.handleClick}>
+          {this.props.children}
+        </div>
+      );
+
+    //availableActions && !isLoggedIn()
+
+    //!isLoggedIn() && showOnAction && !grant requiredAction => hide
     return (
-      <div onClick={this.handleClick}>
-        {this.props.children}
+      // <div onClick={this.handleClick}>
+      <div>
+        {/* {this.props.children} */}
       </div>
     );
   }

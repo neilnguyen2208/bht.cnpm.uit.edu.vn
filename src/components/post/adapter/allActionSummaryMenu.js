@@ -6,6 +6,16 @@ import unpin_icon from 'assets/icons/24x24/unpinned_icon_24x24.png'
 import stick_to_top from 'assets/icons/24x24/stick_to_top_icon_24x24.png'
 import { Post, PostAction } from 'authentication/permission.config'
 
+export const guestMenu = [{
+  id: 1,
+  text: "Report",
+  icon: report_icon,
+  value: "REPORT_POST",
+  permissions: [Post.Comment.Report], //base on permission
+  showOnPermission: false,
+  requiredAction: PostAction.Report
+}]
+
 export const basicMenu = [
   {
     id: 1,

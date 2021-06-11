@@ -51,8 +51,6 @@ export class RequireLogin extends React.Component {
         );
       }
 
-
-
       //showOnAction&&!requiredAction => hide this component.
       if (this.props.showOnAction)
         return (
@@ -69,6 +67,14 @@ export class RequireLogin extends React.Component {
       //!showOnAction&&!requiredAction => hide this component.
       return (
         <div style={{ opacity: "50%" }} className="banned-action">
+          {this.props.children}
+        </div>
+      );
+    }
+
+    if ((authService.isLoggedIn() && !this.props.availableActions)) {
+      return (
+        <div onClick={() => this.props.expectedEvent()}>
           {this.props.children}
         </div>
       );

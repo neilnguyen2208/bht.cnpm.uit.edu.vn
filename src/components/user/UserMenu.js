@@ -160,7 +160,7 @@ class UserMenu extends React.Component {
             <div id="h-um-wrapper" className="user-menu">
                 <div className="d-flex">
                     <Link to={`/user/profile/${this.props.authorID}`}>
-                        <img className="avatar" style={{ marginTop: "auto", marginBottom: "auto" }} src="https://i.imgur.com/SZJgL6C.png" alt="" />
+                        <img className="avatar" style={{ marginTop: "auto", marginBottom: "auto" }} src="https://i.imgur.com/tPdFhGa.png" alt="" />
                     </Link>
                 </div>
 

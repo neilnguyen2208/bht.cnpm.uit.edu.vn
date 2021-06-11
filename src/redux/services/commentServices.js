@@ -34,19 +34,19 @@ import {
   get_ReportedPostCommentsFailure
 
 } from "redux/actions/commentAction.js";
-import { request } from "utils/requestUtils";
+import { authRequest, request } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";
 
 export function getAPostComments(postId, page) {
   return dispatch => {
     dispatch(get_APostCommentsRequest());
-    request.get(`/posts/${postId}/comments?page=${page}&sort=submitDtm,desc`)
+    authRequest.get(`/posts/${postId}/comments?page=${page}&sort=submitDtm,desc`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
         result_1.postCommentDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
-        request.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+        authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
           .then(result_2 => {
             //merge summary array and statistic array
             let finalResult = [];
@@ -72,7 +72,7 @@ export function getAPostComments(postId, page) {
 export function editAPostComment(commentId, data) {
   return dispatch => {
     dispatch(put_EditAPostCommentReset());
-    request.put(`/posts/comments/${commentId}`, JSON.stringify(data))
+    authRequest.put(`/posts/comments/${commentId}`, JSON.stringify(data))
       .then(response => {
         dispatch(put_EditAPostCommentSuccess(response.data.id));
       })
@@ -85,7 +85,7 @@ export function editAPostComment(commentId, data) {
 export function getCommentReportReasons() {
   return dispatch => {
     dispatch(get_CommentReportReasonsRequest())
-    request.get(`/posts/comments/report`).then(response =>
+    authRequest.get(`/posts/comments/report`).then(response =>
       dispatch(get_CommentReportReasonsSuccess(response.data))
     ).catch(error => { dispatch(get_CommentReportReasonsFailure()) })
   }
@@ -94,7 +94,7 @@ export function getCommentReportReasons() {
 export function reportAPostComment(id, reason) { //
   return dispatch => {
     dispatch(post_ReportAPostCommentReset())
-    request.post(`/posts/comments/${id}/report`, JSON.stringify(reason))
+    authRequest.post(`/posts/comments/${id}/report`, JSON.stringify(reason))
       .then(response => {
         dispatch(post_ReportAPostCommentSuccess());
       }
@@ -105,7 +105,7 @@ export function reportAPostComment(id, reason) { //
 export function createAPostComment(postId, content) {
   return dispatch => {
     dispatch(create_APostCommentReset());
-    request.post(`/posts/` + postId + `/comments`, JSON.stringify(content))
+    authRequest.post(`/posts/` + postId + `/comments`, JSON.stringify(content))
       .then(response => {
         dispatch(create_APostCommentSuccess(response.data.id));
       })
@@ -118,7 +118,7 @@ export function createAPostComment(postId, content) {
 export function resolveAPost(id, resolveDTO) {
   return dispatch => {
     dispatch(post_ResolveAPostCommentReset());
-    request.post(`/posts/comments/  resolveReport/${id}`, JSON.stringify(resolveDTO))
+    authRequest.post(`/posts/comments/  resolveReport/${id}`, JSON.stringify(resolveDTO))
       .then(result => {
         dispatch(post_ResolveAPostCommentSuccess());
       })
@@ -129,7 +129,7 @@ export function resolveAPost(id, resolveDTO) {
 export function likeAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(post_LikeAPostCommentRequest(commentId))
-    request.post(`/posts/comments/${commentId}/likeStatus`)
+    authRequest.post(`/posts/comments/${commentId}/likeStatus`)
       .then(response => {
         // response.data khong co data gi nen thoi, 
         //do can cap nhat cac state khac nhau o cac trang khac nhau nen can them mot bien type
@@ -142,7 +142,7 @@ export function likeAPostComment(commentId) { //maybe use modal later
 export function unLikeAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(delete_UnLikeAPostCommentRequest())
-    request.delete(`/posts/comments/${commentId}/likeStatus`)
+    authRequest.delete(`/posts/comments/${commentId}/likeStatus`)
       .then(response => {
         dispatch(delete_UnLikeAPostCommentSuccess(response.data));
       }
@@ -154,7 +154,7 @@ export function unLikeAPostComment(commentId) { //maybe use modal later
 export function deleteAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(delete_APostCommentReset(commentId))
-    request.delete(`/posts/comments/${commentId}`).then(response => {
+    authRequest.delete(`/posts/comments/${commentId}`).then(response => {
       dispatch(delete_APostCommentSuccess())
       openBLModal({ text: "Xoá bình luận thành công!", type: "success" });
     }).catch(error => { dispatch(delete_APostCommentFailure(commentId)) })
@@ -164,7 +164,7 @@ export function deleteAPostComment(commentId) { //maybe use modal later
 export function createReply(prCommentId, content) {
   return dispatch => {
     dispatch(create_APostCommentReset());
-    request.post(`/posts/comments/${prCommentId}`, JSON.stringify(content))
+    authRequest.post(`/posts/comments/${prCommentId}`, JSON.stringify(content))
       .then(response => {
         dispatch(create_APostCommentSuccess(response.data.id));
       })
@@ -177,7 +177,7 @@ export function createReply(prCommentId, content) {
 export function getReportedPostComments(searchParamObject) {
   return dispatch => {
     dispatch(get_ReportedPostCommentsRequest());
-    request.get(`/posts/comments/report?${generateSearchParam(searchParamObject)}`)
+    authRequest.get(`/posts/comments/report?${generateSearchParam(searchParamObject)}`)
       .then(response => {
         let result_1 = response.data;
         dispatch(get_ReportedPostCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.postCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
@@ -189,7 +189,7 @@ export function getReportedPostComments(searchParamObject) {
 export function resolveAPostComment(id, resolveDTO) {
   return dispatch => {
     dispatch(post_ResolveAPostCommentReset());
-    request.post(`/posts/comments/resolveReport/${id}`, JSON.stringify(resolveDTO))
+    authRequest.post(`/posts/comments/resolveReport/${id}`, JSON.stringify(resolveDTO))
       .then(result => {
         dispatch(post_ResolveAPostCommentSuccess());
       })

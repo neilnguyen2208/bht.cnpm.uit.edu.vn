@@ -11,9 +11,9 @@ import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services
 import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import { validation } from 'utils/validationUtils'
-import { detailType, normalMenuItemList } from 'constants.js'
+import { detailType } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
-
+import { basicMenu } from 'components/post/adapter/allActionSummaryMenu'
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
@@ -120,7 +120,7 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>
 
       </div >

@@ -13,9 +13,6 @@ import { highlightAPost, deleteHighlightAPost, stickAPostToTop } from 'redux/ser
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
-import {
-  normalMenuItemList,
-} from 'constants.js'
 
 import { basicMenu, adminMenu } from './adapter/allActionSummaryMenu'
 
@@ -189,7 +186,7 @@ class PostSummary extends React.Component {
             < PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) && //normal => only report
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
           }
           {(this.props.type === itemType.management) &&
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} availableActions={this.props.availableActions} items={adminMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />

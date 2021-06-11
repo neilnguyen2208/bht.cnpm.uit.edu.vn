@@ -18,10 +18,11 @@ import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
 
 //constants
-import { itemType, mySelfMenuItemList, normalMenuItemList } from 'constants.js'
+import { itemType, mySelfMenuItemList } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+import { basicMenu } from 'components/post/adapter/allActionSummaryMenu';
 
 class DocumentSummary extends React.Component {
 
@@ -145,7 +146,9 @@ class DocumentSummary extends React.Component {
             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for document item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={normalMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+
+            //create adapter later
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
           }
         </div>
 

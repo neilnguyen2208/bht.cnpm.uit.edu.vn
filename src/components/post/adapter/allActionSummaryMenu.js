@@ -15,7 +15,6 @@ export const basicMenu = [
     permissions: [Post.Comment.Report], //base on permission
     showOnPermission: false,
     requiredAction: PostAction.Report
-
   },
   {
     id: 2,

@@ -81,6 +81,15 @@ class PostDetail extends React.Component {
       store.dispatch(post_ReportAPostReset())
     }
 
+    let cover = <></>;
+    console.log(this.props.imageURL)
+    if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
+      cover = <div>
+        <div className="decoration-line mg-top-10px" />
+        <img className="image" src={this.props.imageURL} alt="" />
+      </div>
+    }
+
     return (
       <div className="metadata">
 
@@ -123,6 +132,9 @@ class PostDetail extends React.Component {
           <UserInfo authorName={this.props.authorName} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
         </div>
+
+        {cover}
+
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div >

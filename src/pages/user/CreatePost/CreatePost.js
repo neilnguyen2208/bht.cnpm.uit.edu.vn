@@ -417,6 +417,7 @@ class CreatePost extends React.Component {
                         authorAvartarURL={this.state.author.authorAvatarURL}
                         publishDtm={this.state.publishDtm}
                         type={detailType.preview}
+                        imageURL={this.state.CREATE_POST_DTO.imageURL}
                     />
 
                     {/* content here */}

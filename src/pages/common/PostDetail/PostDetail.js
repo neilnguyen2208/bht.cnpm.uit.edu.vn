@@ -75,6 +75,7 @@ class PostDetail extends React.Component {
                                             authorAvatarURL={this.props.currentPost.authorAvatarURL}
                                             publishDtm={this.props.currentPost.publishDtm}
                                             availableActions={this.props.currentPost.availableActions}
+                                            imageURL={this.props.currentPost.imageURL}
                                         />
 
                                         {/* content here */}

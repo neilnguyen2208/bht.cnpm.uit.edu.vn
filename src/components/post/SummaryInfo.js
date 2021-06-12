@@ -233,7 +233,8 @@ class PostSummary extends React.Component {
             <div className="feedback-reason">
               {this.props.feedback}
             </div>
-          </div> : <></>}
+          </div>
+          : <></>}
 
         {summary}
         {formatMathemicalFormulas()}

@@ -68,7 +68,7 @@ class EditPostModal extends React.Component {
                 content: ``,
                 summary: `null`,
                 categoryID: "",
-                imageURL: "null",
+                imageURL: "",
                 readingTime: 10
             },
 
@@ -524,7 +524,10 @@ class EditPostModal extends React.Component {
                                             <div className="form-group">
                                                 <label className="form-label-required">Link ảnh bìa:</label>
                                                 <input className="text-input" id="ed-post-imgurl"
-                                                    placeholder="Nhập link hình ảnh: " onChange={e => this.handleImageURLChange(e)}
+                                                    placeholder="Nhập link hình ảnh: "
+                                                    defaultValue={
+                                                        !this.props.isCurrentPostLoading ? this.state.EDIT_POST_DTO.imageURL : ''}
+                                                    onChange={e => this.handleImageURLChange(e)}
                                                     type="text" ></input>
                                                 <div className="form-error-label-container">
                                                     <span className="form-error-label" ></span>
@@ -584,7 +587,6 @@ class EditPostModal extends React.Component {
                                                             <div className="form-tip-label" id="ed-post-tag-container-tip-label" />
                                                         </div>
                                                     </div>
-
                                                 </ClickAwayListener>
 
                                                 <div className="form-tip-label-container">
@@ -596,7 +598,6 @@ class EditPostModal extends React.Component {
                                                     )}
                                                 </div>
                                                 <div className="form-line" />
-
                                             </div>
 
                                             {/* Button */}

@@ -21,7 +21,7 @@ export default class RequestedSummary extends React.PureComponent {
                         <div className="black-label-s">{`đã yêu cầu duyệt một bài viết`}</div>
                     </div>
 
-                    <Link className="activity-title" to={`/post-content/${this.props.id}`}>{this.props.title}</Link>
+                    <Link className="activity-title" to={`/post-content/${this.props.postId}`}>{this.props.title}</Link>
                 </div>
                 <div>
                     <div className="d-flex">

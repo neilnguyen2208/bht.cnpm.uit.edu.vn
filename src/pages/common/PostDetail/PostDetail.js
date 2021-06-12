@@ -86,11 +86,10 @@ class PostDetail extends React.Component {
 
                                         <div className="mg-top-10px mg-bottom-10px" >
                                             {this.props.currentPost.tags.map(item =>
-                                                <Tag isReadOnly={true} key={item.id} tag={item} />
+                                                <Tag isReadOnly={true} key={item.id} clickable tag={item} />
                                             )}
                                         </div>
 
-                                        {console.log(this.props.currentPost.availableActions)}
                                         < NormalReactionbar
                                             availableActions={this.props.currentPost.availableActions}
                                             postId={this.props.currentPost.id}

@@ -7,6 +7,8 @@ import { getTagByID, getRelativeTags } from 'redux/services/tagServices'
 import store from 'redux/store/index'
 
 //Set text props for this component
+//isReadOnly => can be delete or not
+//clickable => can be navigate to search post by tag on click
 export default class Tag extends React.Component {
 
     //onDelete, tag: dmID, id, name/content
@@ -21,7 +23,7 @@ export default class Tag extends React.Component {
         //if the location is tags/... => recall API 
 
         //prevent search on create post
-        if (window.location.pathname === "/create-post" || window.location.pathname.substring(0, 13) === "/post-content") {
+        if (!this.props.clickable) {
             e.preventDefault();
             return;
         }

@@ -18,7 +18,7 @@ import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoa
 import AdminSidebar from 'layouts/AdminSidebar'
 import PostManagementNavbar from './PostManagementNavbar'
 import RequestReactionbar from 'components/post/RequestReactionbar'
-import { post_ApproveAPostReset, post_RejectAPostReset, post_RejectAndFeedbackAPostReset } from 'redux/actions/postAction'
+import { post_ApproveAPostReset, post_RejectAPostReset, post_RejectAndFeedbackAPostReset, delete_APostReset, put_EditAPostReset } from 'redux/actions/postAction'
 import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
 import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
@@ -108,8 +108,9 @@ class PostApproving extends React.Component {
         if (!this.props.isListLoading && this.props.postsList) {
             this.postsList = this.props.postsList.map((item) => (
                 <div className="item-container" key={item.id}>
+                    {console.log(item)}
                     <RequestInfo
-                        id={item.id}
+                        postId={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
                         categoryName={item.categoryName}
@@ -120,7 +121,7 @@ class PostApproving extends React.Component {
                     />
                     <SummaryInfo
                         type={itemType.approval}
-                        id={item.id}
+                        postId={item.id}
                         authorName={item.authorName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -145,10 +146,8 @@ class PostApproving extends React.Component {
         }
 
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
-
             this.filter = this.props.postCategories;
         }
-
 
         if (this.props.isHaveApproved) {
             closeModal();
@@ -170,6 +169,17 @@ class PostApproving extends React.Component {
             openBLModal({ type: "success", text: "Từ chối bài viết thành công!" });
             this.reloadList();
         }
+
+        if (this.props.isHaveDeleted) {
+            this.reloadList();
+            store.dispatch(delete_APostReset())
+        }
+
+        if (this.props.isHaveEdited) {
+            this.reloadList();
+            store.dispatch(put_EditAPostReset())
+        }
+
         return (
             <div className="left-sidebar-layout">
                 <AdminSidebar />
@@ -223,6 +233,8 @@ const mapStateToProps = (state) => {
         isHaveApproved: state.post.isHaveApproved,
         isHaveRejected: state.post.isHaveRejected,
         isHaveRejectedAndFeedbacked: state.post.isHaveRejectedAndFeedbacked,
+        isHaveEdited: state.post.isHaveEdited,
+        isHaveDeleted: state.post.isHaveDeleted,
     };
 }
 

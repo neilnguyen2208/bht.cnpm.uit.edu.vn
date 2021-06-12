@@ -34,7 +34,7 @@ class RelativeTagSidebar extends React.Component {
     renderTag = () => {
         if (window.location.pathname === "/tags/posts") {
             return this.props.relativeTags.map(item =>
-                <PostTag isReadOnly={true} tag={item} />
+                <PostTag isReadOnly={true} clickable tag={item} />
             )
         }
         if (window.location.pathname === "/tags/documents") {

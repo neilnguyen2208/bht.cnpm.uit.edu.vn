@@ -49,7 +49,7 @@ class SearchTag extends React.Component {
                                         //Kiểm tra cho document.
                                         this.props.tagsList.map(item =>
                                             <Link to={`/tags/posts?tag=${item.id}`} >
-                                                <Tag isReadOnly={true} tag={item} />
+                                                <Tag isReadOnly={true} tag={item} clickable/>
                                             </Link>
                                         )
                                     }

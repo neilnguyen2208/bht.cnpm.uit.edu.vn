@@ -84,7 +84,7 @@ export default class ReportInfo extends React.PureComponent {
 
                         <div className="d-flex">
                             <img className="avatar mg-top-10px" style={{ marginRight: "10px" }} src={this.props.author.avatarURL} alt="" />
-                            <Link className="activity-title" to={`/post-content/${this.props.id}`} >{this.props.title}</Link>
+                            <Link className="activity-title" to={`/post-content/${this.props.postId}`} >{this.props.title}</Link>
                         </div>
 
                     </div>

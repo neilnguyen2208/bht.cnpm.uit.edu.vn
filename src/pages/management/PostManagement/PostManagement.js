@@ -299,8 +299,6 @@ const mapStateToProps = (state) => {
         isHaveEdited: state.post.isHaveEdited,
         isHaveHighlighted: state.home.highlightPosts.isHaveHighlighted,
         isHaveUnhighlighted: state.home.highlightPosts.isHaveUnhighlighted
-
-
     };
 }
 

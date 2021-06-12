@@ -428,7 +428,7 @@ class CreatePost extends React.Component {
 
                     <div className="mg-top-10px mg-bottom-10px" >
                         {this.shownTag.map(item =>
-                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
+                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
                         )}
                     </div>
                     <NormalReactionbar
@@ -533,7 +533,7 @@ class CreatePost extends React.Component {
 
                             <div className="mg-top-10px" >
                                 {this.shownTag.map(item =>
-                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
+                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
                                 )}
                             </div>
                             <div className="form-line" />

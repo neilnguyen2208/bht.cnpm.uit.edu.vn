@@ -23,6 +23,7 @@ import RequestReactionbar from 'components/document/RequestReactionbar'
 import { post_ApproveADocumentReset, delete_RejectADocumentReset, post_RejectAndFeedbackADocumentReset } from 'redux/actions/documentAction'
 import { openBLModal, closeModal } from 'redux/services/modalServices'
 import store from 'redux/store/index'
+import { delete_APostReset } from 'redux/actions/postAction';
 
 class DocumentApproving extends React.Component {
     constructor(props) {
@@ -209,6 +210,13 @@ class DocumentApproving extends React.Component {
             openBLModal({ type: "success", text: "Từ chối tài liệu thành công!" });
             this.reloadList();
         }
+        if (this.props.isHaveDeleted) {
+            closeModal();
+            this.reloadList();
+            store.dispatch(delete_APostReset());
+            openBLModal({ type: "success", text: "Từ chối tài liệu thành công!" });
+            this.reloadList();
+        }
 
         return (
             <div className="left-sidebar-layout">
@@ -270,6 +278,7 @@ const mapStateToProps = (state) => {
         isHaveApproved: state.document.isHaveApproved,
         isHaveRejected: state.document.isHaveRejected,
         isHaveRejectedAndFeedbacked: state.document.isHaveRejectedAndFeedbacked,
+        // isHaveDeleted:
     };
 }
 

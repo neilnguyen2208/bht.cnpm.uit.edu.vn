@@ -68,6 +68,9 @@ class ReportReactionbar extends React.Component {
   }
 
   onConfirmResolve = (resolveDTO) => {
+    //if resolveDTO not change => KEEP ACTION
+    if (!resolveDTO.postReportActionType)
+      resolveDTO.postReportActionType = "KEEP";
     this.props.resolveAPost(this.props.id, resolveDTO)
   }
 

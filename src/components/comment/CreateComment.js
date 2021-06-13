@@ -24,7 +24,7 @@ import store from 'redux/store';
 import { create_APostCommentReset } from 'redux/actions/commentAction'
 import { createAPostComment, getAPostComments } from 'redux/services/commentServices'
 import { openBLModal } from 'redux/services/modalServices';
-
+import { getAPostStatisticByID } from 'redux/services/postServices';
 const validationCondition = {
   form: '#create-comment-form',
 
@@ -63,49 +63,48 @@ class CreateComment extends React.Component {
 
   render() {
 
-    if (this.props.isHaveCreated)
+    if (this.props.isHaveCreated) {
+      this.props.getAPostStatisticByID(this.props.postId)
       this.reloadList()
-
+    }
     return (
-      <ShowOnPermission permissions={[Post.Comment.Create]} >
-        <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
-          <div className="comment-main-level">
-            <div className="comment-avatar"><img src="https://i.imgur.com/SZJgL6C.png" alt="" /></div>
-            <div className="comment-box">
-              <div id="create-comment-form" tabIndex="1">
-                <div className="form-group">
-                  <div className="j-c-space-between">
-                    {/* <label className="form-label-required">Nội dung:</label> */}
-                    {/* <HoverHint message={`
+      <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
+        <div className="comment-main-level">
+          <div className="comment-avatar"><img src="https://i.imgur.com/SZJgL6C.png" alt="" /></div>
+          <div className="comment-box">
+            <div id="create-comment-form" tabIndex="1">
+              <div className="form-group">
+                <div className="j-c-space-between">
+                  {/* <label className="form-label-required">Nội dung:</label> */}
+                  {/* <HoverHint message={`
                                 - Sử dụng các Format Header để tạo ra mục lục. 
                                 - Sử dụng Style Computer Code để style được tên biến, tên hàm.
                                 - Sử dụng Format Formatted để style một đoạn code`}
                   /> */}
-                  </div>
-                  <Editor
-                    config={CommentCKEToolbarConfiguration}
-                    editorId="crt-cmmnt-cke"
-                    onChange={this.handleEditorChange}
-                    height={120}
-                    autoGrow_maxHeight={250}
-                    validation
-                    autoGrow_minHeight={120}
-                  />
-                  <div className="form-error-label-container">
-                    <span className="form-error-label" ></span>
-                  </div>
-                  <div className="j-c-end mg-top-5px">
-                    <button className="white-button" onClick={() => { this.createComment() }}>Bình luận</button>
-                  </div>
+                </div>
+                <Editor
+                  config={CommentCKEToolbarConfiguration}
+                  editorId="crt-cmmnt-cke"
+                  onChange={this.handleEditorChange}
+                  height={120}
+                  autoGrow_maxHeight={250}
+                  validation
+                  autoGrow_minHeight={120}
+                />
+                <div className="form-error-label-container">
+                  <span className="form-error-label" ></span>
+                </div>
+                <div className="j-c-end mg-top-5px">
+                  <button className="white-button" onClick={() => { this.createComment() }}>Bình luận</button>
                 </div>
               </div>
             </div>
           </div>
-          <div style={{ height: "0px", width: "0px" }} >
-            <div className="triangle-with-shadow comment" />
-          </div>
         </div>
-      </ShowOnPermission>
+        <div style={{ height: "0px", width: "0px" }} >
+          <div className="triangle-with-shadow comment" />
+        </div>
+      </div>
     );
   }
 }
@@ -117,7 +116,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createAPostComment, getAPostComments
+  createAPostComment, getAPostComments, getAPostStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateComment));

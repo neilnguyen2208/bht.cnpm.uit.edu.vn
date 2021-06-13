@@ -6,9 +6,6 @@ export const Access = {
 
 //Post permission
 export const Post = {
-    SetSaveStatus: "Post.SetSaveStatus",
-    SetLikeStatus: "Post.SetLikeStatus",
-    Create: "Post.Create",
     Comment: {
         POSTCOMMENT_PUBLIC_ALL_DELETE: "POSTCOMMENT_PUBLIC_ALL_DELETE",
         POSTCOMMENT_PUBLIC_ALL_LIKE: "POSTCOMMENT_PUBLIC_ALL_LIKE",
@@ -61,7 +58,5 @@ export const PostCommentAction = {
     Delete: "delete",
     Report: "report",
     Comment: "comment",
-    Highlight: "highlight",
-    Unhighlight: "unhighlight",
-    StickToTop: "sticktotop",
+    Reply: "reply"
 }

@@ -25,6 +25,8 @@ import Paginator from 'components/common/Paginator/ServerPaginator';
 import store from 'redux/store';
 import { openBLModal } from 'redux/services/modalServices';
 import { delete_APostCommentReset, post_ReportAPostCommentReset, put_EditAPostCommentReset } from 'redux/actions/commentAction';
+import { getAPostStatisticByID } from 'redux/services/postServices'
+import { PostAction, PostCommentAction } from 'authentication/permission.config';
 
 class CommentSection extends React.Component {
 
@@ -49,6 +51,7 @@ class CommentSection extends React.Component {
     let commentsList = <></>;
     if (this.props.isHaveDeleted) {
       this.reloadList()
+      this.props.getAPostStatisticByID(this.props.id);
       openBLModal({ type: "success", text: "Xoá bình luận thành công!" });
       store.dispatch(delete_APostCommentReset())
     }
@@ -102,10 +105,11 @@ class CommentSection extends React.Component {
           <div>
             <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.postData.commentCount}   Bình luận
             </div>
-            <CreateComment postId={this.props.id} />
           </div>
           : <></>
         }
+        {this.props.postAvailableActions.includes(PostAction.Comment) &&
+          <CreateComment postId={this.props.id} />}
         {!this.props.isLoading && this.props.commentsList ?
           <div>
             {commentsList}
@@ -133,12 +137,14 @@ const mapStateToProps = (state) => {
     postData: state.post.currentPost.data,
     isHaveDeleted: state.comment.isHaveDeleted,
     isHaveEdited: state.comment.isHaveEdited,
-    isHaveReported: state.comment.isHaveReported
+    isHaveReported: state.comment.isHaveReported,
+
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getAPostComments,
+  getAPostStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentSection));

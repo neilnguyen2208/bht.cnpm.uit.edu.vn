@@ -26,7 +26,7 @@ import down_arrow from 'assets/icons/12x12/dropdown_12x12.png'
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils.js';
-import { authRequest, request } from 'utils/requestUtils.js';
+import { authRequest } from 'utils/requestUtils.js';
 import { deleteAPostComment, editAPostComment } from 'redux/services/commentServices'
 
 // const validationCondition = {
@@ -150,30 +150,42 @@ class Comment extends React.Component {
         let IDarr = '';
         result_1.map(item => IDarr += item.id + ",") //tao ra mang id moi
         authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
-          .then(result_2 => {
+          .then(response_2 => {
             //merge summary array and statistic array
-            let finalResult = [];
+            let result_2 = [];
             this.isReplyLoadDone = true;
 
             for (let i = 0; i < result_1.length; i++) {
-              finalResult.push({
+              result_2.push({
                 ...result_1[i],
-                ...(result_2.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                ...(response_2.data.find((itmInner) => itmInner.id === result_1[i].id)),
               }
               );
             }
-            this.replyArray = finalResult;
-
-            //update reply count (unsynchonizew with props)
-            this.replyCount = finalResult.length;
 
             //update reply which has been created
             if (createdReplyId) {
               this.createdReplyId = createdReplyId;
             }
 
+            authRequest.get(`/posts/comments/actionAvailable?postCommentIDs=${IDarr}`).then(response_3 => {
+              let finalResult = [];
+              for (let i = 0; i < result_2.length; i++) {
+                finalResult.push({
+                  ...result_2[i],
+                  ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                });
+              }
+
+              console.log(finalResult)
+              this.replyArray = finalResult;
+              //update reply count (unsynchonizew with props)
+              this.replyCount = finalResult.length;
+
+              this.setState({});
+              return finalResult.length;
+            })
             this.setState({});
-            return finalResult.length;
           }).catch((error) => {
             this.isReplyLoadDone = false;
             this.setState({});
@@ -313,9 +325,12 @@ class Comment extends React.Component {
               createReplyReply={(replyId) => this.createCommentReply(replyId)}
               reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
               createdReplyId={this.createdReplyId}
+              availableActions={reply.availableActions}
             />
+
             <CreateReply
               replyId={reply.id}
+              availableActions={reply.availableActions}
               commentId={this.props.commentId}
               reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
               setNotReplying={() => this.setNotReplying()}
@@ -334,6 +349,7 @@ class Comment extends React.Component {
           submitDtm={reply.submitDtm}
           likeCount={reply.likeCount}
           likeStatus={reply.likeStatus}
+          availableActions={reply.availableActions}
           replyCount={reply.replyCount}
           replyArray={reply.replyArray}
           content={reply.content}
@@ -484,6 +500,7 @@ class Comment extends React.Component {
                 commentId={this.props.commentId}
                 reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
                 componentId={"cr-rpl-" + this.props.commentId + "-idx0"}
+                availableActions={this.props.availableActions}
               />
             </div>
             : <></>

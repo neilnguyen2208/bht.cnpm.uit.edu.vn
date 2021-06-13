@@ -82,7 +82,6 @@ class PostDetail extends React.Component {
     }
 
     let cover = <></>;
-    console.log(this.props.imageURL)
     if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
       cover = <div>
         <div className="decoration-line mg-top-10px" />

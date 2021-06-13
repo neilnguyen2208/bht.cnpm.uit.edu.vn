@@ -21,9 +21,10 @@ import './Comment.scss'
 import Editor from 'components/common/CustomCKE/CKEditor.js'
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import ShowOnPermission from 'components/base_components/ShowOnPermission';
-import { Post } from 'authentication/permission.config';
+import { Post, PostCommentAction } from 'authentication/permission.config';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { authRequest, request } from 'utils/requestUtils';
+import { RequireLogin } from 'components/base_components/RequireLoginComponent';
 
 //TODO: - validation for multi-form => skip
 //TODO: - sort current created reply to first
@@ -60,9 +61,10 @@ class CreateReply extends React.Component {
   }
 
   render() {
+    console.log(this.props.availableActions);
     return (
-
-      <ShowOnPermission permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]} >
+      < RequireLogin availableActions={this.props.availableActions} requiredAction={PostCommentAction.Reply} showOnAction={true} >
+        {/* check xem la reply hay comment */}
         {/* <div style={this.isShow ? { display: "block" } : { display: "none" }}> */}
         <div style={{ width: '100%', marginTop: "10px" }} className="reply-item cr">
           <div className="comment-main-level">
@@ -93,8 +95,7 @@ class CreateReply extends React.Component {
           </div>
 
         </div>
-        {/* </div> */}
-      </ShowOnPermission >
+      </RequireLogin >
     );
   }
 }

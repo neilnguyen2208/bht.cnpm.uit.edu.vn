@@ -102,30 +102,46 @@ class PostDetail extends React.Component {
                                         {/* Create statistic services, callback after create reply, create comment and delete comment */}
 
                                         {this.props.isPostStatisticLoadDone && Object.keys(this.props.postStatistic).length > 0 ?
-                                            < NormalReactionbar
-                                                availableActions={this.props.currentPost.availableActions}
-                                                postId={this.props.currentPost.id}
-                                                likeCount={this.props.currentPost.likeCount}
-                                                commentCount={this.props.postStatistic.commentCount}
-                                                likedStatus={this.props.currentPost.likeStatus}
-                                                savedStatus={this.props.currentPost.savedStatus}
-                                            /> :
-                                            < NormalReactionbar
-                                                availableActions={this.props.currentPost.availableActions}
-                                                postId={this.props.currentPost.id}
-                                                likeCount={this.props.currentPost.likeCount}
-                                                commentCount={this.props.currentPost.commentCount}
-                                                likedStatus={this.props.currentPost.likeStatus}
-                                                savedStatus={this.props.currentPost.savedStatus}
-                                            />
+                                            <div>
+                                                {console.log("A")}
+                                                < NormalReactionbar
+                                                    availableActions={this.props.currentPost.availableActions}
+                                                    postId={this.props.currentPost.id}
+                                                    likeCount={this.props.currentPost.likeCount}
+                                                    commentCount={this.props.postStatistic.commentCount}
+                                                    likedStatus={this.props.currentPost.likeStatus}
+                                                    savedStatus={this.props.currentPost.savedStatus}
+                                                />
+
+                                                <div id="cr-cmt" />
+                                                <CommentSection
+                                                    // create comment will show if you have action create comment
+                                                    postAvailableActions={this.props.currentPost.availableActions}
+                                                    id={this.props.currentPost.id}
+                                                    commentCount={this.props.postStatistic.commentCount}
+                                                />
+                                            </div>
+                                            :
+                                            <div>
+                                                < NormalReactionbar
+                                                    availableActions={this.props.currentPost.availableActions}
+                                                    postId={this.props.currentPost.id}
+                                                    likeCount={this.props.currentPost.likeCount}
+                                                    commentCount={this.props.currentPost.commentCount}
+                                                    likedStatus={this.props.currentPost.likeStatus}
+                                                    savedStatus={this.props.currentPost.savedStatus}
+                                                />
+
+                                                <div id="cr-cmt" />
+                                                <CommentSection
+                                                    // create comment will show if you have action create comment
+                                                    postAvailableActions={this.props.currentPost.availableActions}
+                                                    id={this.props.currentPost.id}
+                                                    commentCount={this.props.currentPost.commentCount}
+                                                />
+                                            </div>
                                         }
 
-                                        <div id="cr-cmt" />
-                                        <CommentSection
-                                            // create comment will show if you have action create comment
-                                            postAvailableActions={this.props.currentPost.availableActions}
-                                            id={this.props.currentPost.id}
-                                        />
                                         {formatMathemicalFormulas()}
                                         {styleCodeSnippet()}
                                     </div>

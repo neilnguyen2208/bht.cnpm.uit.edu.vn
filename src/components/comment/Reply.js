@@ -18,13 +18,13 @@ import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
-import { Post } from 'authentication/permission.config';
+import { Post, PostCommentAction } from 'authentication/permission.config';
 import { formatNumber, timeAgo } from 'utils/miscUtils';
 
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
 import unliked_icon from 'assets/icons/24x24/unliked_icon_24x24.png'
 import { authRequest, request } from 'utils/requestUtils';
-import { closeModal, openBLModal, openModal } from 'redux/services/modalServices';
+import { closeModal, openBigModal, openBLModal, openModal } from 'redux/services/modalServices';
 import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
@@ -87,42 +87,7 @@ class Reply extends React.Component {
   }
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "REPORT_COMMENT") {
-      openModal("form", {
-        id: `rpp-form-modal`,//report post
-        title: `REPORT BÌNH LUẬN`,
-        formId: `rpcmmnt-form`,
-        inputs:
-          [
-            { //for rendering
-              id: `rppcmmnt-form-input`,
-              isRequired: true,
-              label: "Lý do chi tiết:",
-              type: 'text-area',
-              placeHolder: "Nhập lý do tố cáo ",
-              validation: true,
-              key: "reason"
-            },
-          ],
-        append: { id: this.props.commentId },
-        validationCondition: {
-          form: `#rpcmmnt-form-form`,
-          rules: [
-            //truyen vao id, loai component, message
-            validation.isRequired(`rppcmmnt-form-input`, 'text-area', 'Lý do không được để trống!'),
-            validation.minLength(`rppcmmnt-form-input`, 'text-area', 25, 'Lý do không được nhỏ hơn 25 ký tự!')
-          ],
-
-        },
-        submitText: "Report",
-        cancelText: "Huỷ",
-        confirmBox: {
-          title: "Report bài viết",
-          text: "Bạn có chắc chắn muốn tố cáo bài viết này không?",
-          confirmText: "Xác nhận",
-          cancelText: "Huỷ",
-          onConfirm: DTO => this.onConfirmReport(DTO)
-        }
-      });
+      openBigModal("report-comment", { id: this.props.replyId })
     }
 
     if (selectedItem.value === "EDIT_COMMENT") {
@@ -232,7 +197,6 @@ class Reply extends React.Component {
             </div>
             : <></>
           }
-          {console.log(this.props.createdReplyId, this.props.replyId)}
           <div className="comment-box"
             style=
             {this.isEditMode ?
@@ -250,20 +214,30 @@ class Reply extends React.Component {
                   </div>}
                 </div>
               </div>
-              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenu} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.replyId}`} />
+              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}
+                availableActions={this.props.availableActions}
+                items={commentMenu} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.replyId}`} />
             </div>
             {/* comment content */}
             <div>
               <div className="comment-content ck-editor-output" id={"rp-ctnt-" + this.props.replyId} />
               <div className="comment reaction-bar" >
                 <div style={{ display: "flex" }}>
-                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_ALL_LIKE]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_ALL_LIKE]}
+                    expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage}
+                    availableActions={this.props.availableActions}
+                    requiredAction={PostCommentAction.Like}
+                  >
                     <div className="like-btn-container"  >
                       <div className="d-flex"> {likeBtn}</div>
                       <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
                     </div>
                   </RequireLogin>
-                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]} expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}>
+                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+                    expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}
+                    availableActions={this.props.availableActions}
+                    requiredAction = {PostCommentAction.Reply}
+                  >
                     <div className="comment-count-container">
                       <div className="comment-btn-text">
                         Trả lời

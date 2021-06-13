@@ -79,7 +79,10 @@ import {    //highlight posts
     get_SavedPostsFailure,
     get_ManagementPostsRequest,
     get_ManagementPostsSuccess,
-    get_ManagementPostsFailure
+    get_ManagementPostsFailure,
+    get_APostStatisticReset,
+    get_APostStatisticSuccess,
+    get_APostStatisticFailure
 } from "redux/actions/postAction.js";
 
 import {
@@ -282,7 +285,7 @@ export function getManagementPosts(searchParamObject) {
                                 });
                             }
                             dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
-                        }).catch(() => get_ManagementPostsSuccess())
+                        }).catch((error) => get_ManagementPostsFailure(error))
                     }).catch((error) => get_ManagementPostsFailure(error))
             })
             .catch(error => dispatch(get_ManagementPostsFailure(error)))
@@ -322,8 +325,6 @@ export function getPostByID(id) {
                 authRequest.get(`/posts/statistics?postIDs=${result_1.id}`)
                     .then(response_2 => {
                         authRequest.get(`/posts/actionAvailable?postIDs=${result_1.id}`).then(response_3 => {
-
-                            console.log({ ...result_1, ...response_2.data[0], ...response_3.data[0] })
                             dispatch(get_PostByIDSuccess({ ...result_1, ...response_2.data[0], ...response_3.data[0] }))
                         }).catch(error => { dispatch(get_PostByIDFailure(error)) }
                         ).catch(error => { dispatch(get_PostByIDFailure(error)) })
@@ -332,6 +333,17 @@ export function getPostByID(id) {
             )
     }
 }
+
+export function getAPostStatisticByID(id) {
+    return dispatch => {
+        dispatch(get_APostStatisticReset())
+        authRequest.get(`/posts/statistics?postIDs=${id}`)
+            .then(response_1 => {
+                dispatch(get_APostStatisticSuccess(response_1.data[0]))
+            }).catch(error => dispatch(get_APostStatisticFailure(error)))
+    }
+}
+
 export function likeAPost(id) { //maybe use modal later
     return dispatch => {
         dispatch(post_LikeAPostRequest(id))

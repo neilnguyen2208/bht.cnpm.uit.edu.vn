@@ -2,7 +2,7 @@ import React from 'react'
 
 import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
-import { getPostByID } from "redux/services/postServices"
+import { getPostByID, getAPostStatisticByID } from "redux/services/postServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -26,6 +26,7 @@ import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 class PostDetail extends React.Component {
 
     componentDidMount() {
+        this.props.getAPostStatisticByID(this.props.match.params.id);
         this.props.getPostByID(this.props.match.params.id);
         if (window.location.hash === "#cr-cmt") {
             document.getElementById("cr-cmt").scrollIntoView();
@@ -64,6 +65,13 @@ class PostDetail extends React.Component {
                         <div className="d-flex">
                             <div className="post-detail-container" >
                                 {this.props.isLoadDone ?
+                                    //     { if(window.location.hash === "#cr-cmt") {
+                                    //     document.getElementById("cr-cmt").scrollIntoView();
+                                    // if (getCKEInstance('crt-cmmnt-cke'))
+                                    // getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
+                                    //     getCKEInstance('crt-cmmnt-cke').focus();
+                                    //         })
+                                    // }}
                                     <div>
                                         <Metadata
                                             postId={this.props.currentPost.id}
@@ -90,23 +98,41 @@ class PostDetail extends React.Component {
                                             )}
                                         </div>
 
-                                        < NormalReactionbar
-                                            availableActions={this.props.currentPost.availableActions}
-                                            postId={this.props.currentPost.id}
-                                            likeCount={this.props.currentPost.likeCount}
-                                            commentCount={this.props.currentPost.commentCount}
-                                            likedStatus={this.props.currentPost.likeStatus}
-                                            savedStatus={this.props.currentPost.savedStatus}
+                                        {/* Use a fisrt load var to render first statistic. */}
+                                        {/* Create statistic services, callback after create reply, create comment and delete comment */}
+
+                                        {this.props.isPostStatisticLoadDone && Object.keys(this.props.postStatistic).length > 0 ?
+                                            < NormalReactionbar
+                                                availableActions={this.props.currentPost.availableActions}
+                                                postId={this.props.currentPost.id}
+                                                likeCount={this.props.currentPost.likeCount}
+                                                commentCount={this.props.postStatistic.commentCount}
+                                                likedStatus={this.props.currentPost.likeStatus}
+                                                savedStatus={this.props.currentPost.savedStatus}
+                                            /> :
+                                            < NormalReactionbar
+                                                availableActions={this.props.currentPost.availableActions}
+                                                postId={this.props.currentPost.id}
+                                                likeCount={this.props.currentPost.likeCount}
+                                                commentCount={this.props.currentPost.commentCount}
+                                                likedStatus={this.props.currentPost.likeStatus}
+                                                savedStatus={this.props.currentPost.savedStatus}
+                                            />
+                                        }
+
+                                        <div id="cr-cmt" />
+                                        <CommentSection
+                                            // create comment will show if you have action create comment
+                                            postAvailableActions={this.props.currentPost.availableActions}
+                                            id={this.props.currentPost.id}
                                         />
                                         {formatMathemicalFormulas()}
                                         {styleCodeSnippet()}
                                     </div>
-                                    : <DocPostDetailLoader />
+                                    : <div><DocPostDetailLoader />
+                                        <div id="cr-cmt" />
+                                    </div>
                                 }
-                                <div id="cr-cmt" />
-                                <CommentSection
-                                    id={this.props.currentPost.id} />
-
                             </div>
                             <div>
                                 {/* <div className="relative-sidebar">
@@ -150,11 +176,13 @@ const mapStateToProps = (state) => {
         isSameCategoryLoadDone: state.post.sameCategory.isLoadDone,
         sameAuthor: state.post.sameAuthor.data,
         isSameAuthorLoadDone: state.post.sameCategory.isLoadDone,
+        postStatistic: state.post.postStatistic.data,
+        isPostStatisticLoadDone: state.post.postStatistic.isLoadDone
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostByID,
+    getPostByID, getAPostStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));

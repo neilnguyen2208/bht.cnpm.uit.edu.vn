@@ -47,25 +47,32 @@ export function getAPostComments(postId, page) {
         let IDarr = '';
         result_1.postCommentDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
         authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
-          .then(result_2 => {
+          .then(response_2 => {
             //merge summary array and statistic array
-            let finalResult = [];
+            let result_2 = [];
 
             for (let i = 0; i < result_1.postCommentDTOs.length; i++) {
-              finalResult.push({
+              result_2.push({
                 ...result_1.postCommentDTOs[i],
-                ...(result_2.data.find((itmInner) => itmInner.id === result_1.postCommentDTOs[i].id)),
-              }
-              );
-              //delete redundant key - value  
+                ...(response_2.data.find((itmInner) => itmInner.id === result_1.postCommentDTOs[i].id)),
+              });
             }
-            dispatch(get_APostCommentsSuccess({ postCommentDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+            let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
+
+            authRequest.get(`/posts/comments/actionAvailable?postCommentIDs=${actionIDarr}`).then(response_3 => {
+              let finalResult = [];
+              for (let i = 0; i < result_2.length; i++) {
+                finalResult.push({
+                  ...result_2[i],
+                  ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                });
+              }
+              dispatch(get_APostCommentsSuccess({ postCommentDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+            }).catch((error) => get_APostCommentFailure(error))
           }).catch((error) => get_APostCommentFailure(error))
-      })
-      .catch(error => {
+      }).catch(error => {
         dispatch(get_APostCommentFailure(error)); //
       })
-
   }
 }
 

@@ -72,7 +72,7 @@ class Comment extends React.Component {
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "REPORT_COMMENT") {
-      openBigModal("report-comment", { id: this.props.commentId })  
+      openBigModal("report-comment", { id: this.props.commentId })
     }
 
     if (selectedItem.value === "EDIT_COMMENT") {
@@ -448,9 +448,11 @@ class Comment extends React.Component {
                 <Link className="comment-name" to={`user/${this.props.authorID}`}>{this.props.authorDisplayName}</Link>
                 {this.props.isContentAuthor && <div className="by-author-label">
                   Tác giả
-                  </div>}
+                </div>}
               </div>
-              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={this.commentMenu} id={`cipm-${this.props.commentId}`} />
+              <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}
+                availableActions={this.props.availableActions}
+                items={this.commentMenu} id={`cipm-${this.props.commentId}`} />
             </div>
             <div>
               {/* comment content */}
@@ -458,6 +460,7 @@ class Comment extends React.Component {
 
               {/* comment reaction bar */}
               <CommentReactionbar
+                availableActions={this.props.availableActions}
                 componentId={"cmmt-rctn-br" + this.props.commentId}
                 commentId={this.props.commentId}
                 likeCount={this.props.likeCount}

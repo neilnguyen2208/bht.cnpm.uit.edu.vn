@@ -81,6 +81,9 @@ import {
     GET_SAVED_POSTS_REQUEST,
     GET_SAVED_POSTS_FAILURE,
     GET_SAVED_POSTS_SUCCESS,
+    GET_A_POST_STATISTIC_RESET,
+    GET_A_POST_STATISTIC_SUCCESS,
+    GET_A_POST_STATISTIC_FAILURE,
 
 } from '../constants.js'
 
@@ -114,6 +117,11 @@ const initialState = {
     isHaveCreated: false,
     isHaveUnsaved: false,
     isHaveSaved: false,
+    postStatistic: {
+        isLoadDone: false,
+        data: {},
+        error: ''
+    },
 
     //search post: use for search post and post list
     postsList: {
@@ -168,7 +176,8 @@ const initialState = {
         data: [],
         totalPages: 1,
         totalElements: 0
-    }
+    },
+
 };
 
 function PostReducer(state = initialState, action) {
@@ -241,7 +250,6 @@ function PostReducer(state = initialState, action) {
             }
         case GET_POST_SEARCH_FAILURE:
             return { ...state, postsList: { isLoading: false, data: [] } }
-
 
         //get post search result
         case GET_MANAGEMENT_POSTS_REQUEST:
@@ -443,6 +451,28 @@ function PostReducer(state = initialState, action) {
             }
         case GET_SAVED_POSTS_FAILURE:
             return { ...state, savedPosts: { isLoading: false, data: [] } }
+
+        case GET_A_POST_STATISTIC_RESET: return {
+            ...state, postStatistic: {
+                ...state.postStatistic,
+                isLoadDone: false
+            }
+        }
+
+        case GET_A_POST_STATISTIC_SUCCESS: return {
+            ...state, postStatistic: {
+                data: action.payload.data,
+                isLoadDone: true
+            }
+        }
+
+        case GET_A_POST_STATISTIC_FAILURE: return {
+            ...state, postStatistic: {
+                ...state.postStatistic,
+                isLoadDone: false,
+                error: action.payload
+            }
+        }
 
         default:
             return state;

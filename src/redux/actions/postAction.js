@@ -82,7 +82,10 @@ import {
 
     GET_SAVED_POSTS_REQUEST,
     GET_SAVED_POSTS_SUCCESS,
-    GET_SAVED_POSTS_FAILURE
+    GET_SAVED_POSTS_FAILURE,
+    GET_A_POST_STATISTIC_RESET,
+    GET_A_POST_STATISTIC_SUCCESS,
+    GET_A_POST_STATISTIC_FAILURE
 
 
 } from "../constants.js"
@@ -493,4 +496,16 @@ export function get_SavedPostsFailure(error) {
         type: GET_SAVED_POSTS_FAILURE,
         payload: error
     }
+}
+
+export function get_APostStatisticReset() {
+    return { type: GET_A_POST_STATISTIC_RESET }
+}
+
+export function get_APostStatisticSuccess(data) {
+    return { type: GET_A_POST_STATISTIC_SUCCESS, data: data }
+}
+
+export function get_APostStatisticFailure(error) {
+    return { type: GET_A_POST_STATISTIC_FAILURE, error }
 }

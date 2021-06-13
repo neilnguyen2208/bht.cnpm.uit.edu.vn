@@ -62,7 +62,7 @@ class CreateReply extends React.Component {
   render() {
     return (
 
-      <ShowOnPermission permissions={[Post.Comment.Reply.Create]} >
+      <ShowOnPermission permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]} >
         {/* <div style={this.isShow ? { display: "block" } : { display: "none" }}> */}
         <div style={{ width: '100%', marginTop: "10px" }} className="reply-item cr">
           <div className="comment-main-level">

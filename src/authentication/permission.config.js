@@ -10,15 +10,11 @@ export const Post = {
     SetLikeStatus: "Post.SetLikeStatus",
     Create: "Post.Create",
     Comment: {
-        Create: "Post.Comment.Create",
-        Edit: "Post.Comment.Edit",
-        Delete: "Post.Comment.Delete",
-        Reply: {
-            Create: "Post.Comment.Reply.Create",
-            Edit: "Post.Comment.Reply.Edit",
-            Delete: "Post.Comment.Reply.Delete",
-            SetLikeStatus: "Post.Comment.Reply.SetLikeStatus",
-        }, Report: "Post.Comment.Report"
+        POSTCOMMENT_PUBLIC_ALL_DELETE: "POSTCOMMENT_PUBLIC_ALL_DELETE",
+        POSTCOMMENT_PUBLIC_ALL_LIKE: "POSTCOMMENT_PUBLIC_ALL_LIKE",
+        POSTCOMMENT_PUBLIC_SELF_CREATE: "POSTCOMMENT_PUBLIC_SELF_CREATE",
+        POSTCOMMENT_PUBLIC_SELF_DELETE: "POSTCOMMENT_PUBLIC_SELF_DELETE",
+        POSTCOMMENTREPORT_PUBLIC_ALL_CREATE: "POSTCOMMENTREPORT_PUBLIC_ALL_CREATE"
     },
     POST_DELETED_ALL_DELETE: "POST_DELETED_ALL_DELETE",
     POST_DELETED_ALL_READ: "POST_DELETED_ALL_READ",
@@ -42,10 +38,10 @@ export const Post = {
     POST_UNLISTED_SELF_CREATE: "POST_UNLISTED_SELF_CREATE",
     POST_UNLISTED_SELF_DELETE: "POST_UNLISTED_SELF_DELETE",
     POST_UNLISTED_SELF_UPDATE: "POST_UNLISTED_SELF_UPDATE",
-    
 }
 
 export const PostAction = {
+    Read: "read",
     Save: "save",
     Like: "like",
     Update: "update",
@@ -55,6 +51,17 @@ export const PostAction = {
     Highlight: "highlight",
     Unhighlight: "unhighlight",
     StickToTop: "sticktotop",
-
 }
 
+export const PostCommentAction = {
+    Read: "read",
+    Save: "save",
+    Like: "like",
+    Update: "update",
+    Delete: "delete",
+    Report: "report",
+    Comment: "comment",
+    Highlight: "highlight",
+    Unhighlight: "unhighlight",
+    StickToTop: "sticktotop",
+}

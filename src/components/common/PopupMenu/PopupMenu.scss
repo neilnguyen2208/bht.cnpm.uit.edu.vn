@@ -15,7 +15,7 @@
 
 .popup-menu:after {
     color: var(--light-black);
-    content: '•••';
+    content: "•••";
     position: absolute;
     top: 8px;
     left: 13px;
@@ -37,8 +37,12 @@
     padding-right: 4px;
     margin-top: 2px;
     padding-top: 2px;
-    // padding-bottom: 2px;
+    cursor: pointer;
     margin-bottom: 2px;
+}
+
+.banned-action .popup-menu-item {
+    cursor: not-allowed;
 }
 
 .activated-popup-menu-item {
@@ -67,18 +71,15 @@
     background: white;
 }
 
-
 .popup-menu:hover,
 .popup-menu-item:hover {
     opacity: 80%;
     background: var(--grayish) !important;
-    cursor: pointer;
 }
 
 .popup-menu:active,
 .popup-menu-item:active {
     background: #dedede !important;
-    cursor: pointer;
 }
 
 .disabled-popup-menu {
@@ -99,7 +100,6 @@
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
-
 }
 
 .popup-menu-icon {
@@ -126,7 +126,7 @@
 .popup-menu-tip {
     margin-top: -3px;
     height: fit-content;
-    font-family: 'Roboto-Medium', sans-serif;
+    font-family: "Roboto-Medium", sans-serif;
     font-size: 11px;
     color: var(--red);
     user-select: none;

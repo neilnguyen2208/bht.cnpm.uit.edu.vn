@@ -82,17 +82,20 @@ class CommentReactionbar extends React.Component {
     return (
       <div className="comment reaction-bar" >
         <div style={{ display: "flex" }}>
-          <RequireLogin permissions={[Post.Comment.SetLikeStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+          <RequireLogin permissions={[Post.Comment.SetLikeStatus]}
+            expectedEvent={this.props.type !== "PREVIEW" ? this.toggleLikeImage : () => { }} >
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
             </div>
           </RequireLogin>
-          <RequireLogin permissions={[Post.Comment.Reply.Create]} expectedEvent={this.props.type !== "PREVIEW" && this.createCommentReply} >
+          <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+          
+            expectedEvent={this.props.type !== "PREVIEW" ? this.createCommentReply : () => { }} >
             <div className="comment-count-container">
               <div className="comment-btn-text">
                 Trả lời
-            </div>
+              </div>
               <div className="comment-btn-number">
                 {this.props.commentCount && formatNumber(this.props.commentCount)}
               </div>

@@ -86,6 +86,7 @@ class CommentSection extends React.Component {
             replyCount={comment.childCommentCount}
             content={comment.content}
             reloadList={() => this.reloadList()}
+            availableActions={comment.availableActions}
           />
         })}
         < Paginator config={{
@@ -98,12 +99,15 @@ class CommentSection extends React.Component {
       // cst:comment section title
       <div className="comments-container">
         {this.props.postData && !this.props.isPostLoading ?
-          <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.postData.commentCount}   Bình luận</div>
+          <div>
+            <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.postData.commentCount}   Bình luận
+            </div>
+            <CreateComment postId={this.props.id} />
+          </div>
           : <></>
         }
         {!this.props.isLoading && this.props.commentsList ?
           <div>
-            <CreateComment postId={this.props.id} />
             {commentsList}
           </div>
           :

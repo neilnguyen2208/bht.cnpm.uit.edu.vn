@@ -247,7 +247,7 @@ class Reply extends React.Component {
                   <Link className="comment-name" to={`user/${this.props.authorID}`}>{this.props.authorDisplayName}</Link>
                   {this.props.isContentAuthor && <div className="by-author-label">
                     Tác giả
-               </div>}
+                  </div>}
                 </div>
               </div>
               <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={commentMenu} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.replyId}`} />
@@ -257,17 +257,17 @@ class Reply extends React.Component {
               <div className="comment-content ck-editor-output" id={"rp-ctnt-" + this.props.replyId} />
               <div className="comment reaction-bar" >
                 <div style={{ display: "flex" }}>
-                  <RequireLogin permissions={[Post.Comment.Reply.SetLikeStatus]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_ALL_LIKE]} expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
                     <div className="like-btn-container"  >
                       <div className="d-flex"> {likeBtn}</div>
                       <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
                     </div>
                   </RequireLogin>
-                  <RequireLogin permissions={[Post.Comment.Reply.Create]} expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}>
+                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]} expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}>
                     <div className="comment-count-container">
                       <div className="comment-btn-text">
                         Trả lời
-                       </div>
+                      </div>
                     </div>
                   </RequireLogin>
                 </div>
@@ -279,7 +279,7 @@ class Reply extends React.Component {
         <div style={{ height: "0px", width: "0px" }} >
           <div className="triangle-with-shadow reply" />
         </div>
-        { formatMathemicalFormulas()}
+        {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div>
     );

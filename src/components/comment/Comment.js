@@ -311,6 +311,7 @@ class Comment extends React.Component {
           return <div
             key={reply.id}>
             <Reply
+              useAction={true}
               replyId={reply.id}
               authorDisplayName={reply.authorDisplayName}
               authorAvatarURL={reply.authorAvatarURL}
@@ -329,6 +330,7 @@ class Comment extends React.Component {
             />
 
             <CreateReply
+              useAction={true}
               replyId={reply.id}
               availableActions={reply.availableActions}
               commentId={this.props.commentId}
@@ -340,6 +342,7 @@ class Comment extends React.Component {
 
         //if user is not creating a reply under this reply
         return <Reply
+          useAction={true}
           replyId={reply.id}
           key={reply.id}
           authorDisplayName={reply.authorDisplayName}
@@ -467,6 +470,7 @@ class Comment extends React.Component {
                 </div>}
               </div>
               <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}
+                useAction={true}
                 availableActions={this.props.availableActions}
                 items={this.commentMenu} id={`cipm-${this.props.commentId}`} />
             </div>
@@ -476,6 +480,7 @@ class Comment extends React.Component {
 
               {/* comment reaction bar */}
               <CommentReactionbar
+                useAction={true}
                 availableActions={this.props.availableActions}
                 componentId={"cmmt-rctn-br" + this.props.commentId}
                 commentId={this.props.commentId}

@@ -20,18 +20,10 @@ import {
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import CommentSection from 'components/comment/CommentSection'
-import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 class PostDetail extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        //detect: first time loaded (content load done) or not. 
-        this.isFirstTimeLoaded = false;
-    }
-
     componentDidMount() {
         this.props.getAPostStatisticByID(this.props.match.params.id);
         this.props.getPostByID(this.props.match.params.id);
@@ -58,24 +50,7 @@ class PostDetail extends React.Component {
         return ToC;
     }
 
-    scrollToCreateComment = () => {
-        console.log("A");
-        if (window.location.hash === "#cr-cmt") {
-            document.getElementById("cr-cmt").scrollIntoView();
-            if (getCKEInstance('crt-cmmnt-cke'))
-                getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
-                    getCKEInstance('crt-cmmnt-cke').focus();
-                })
-        }
-    }
-
     render() {
-
-        //after first time, this variable is true,this function call only 1 time
-        if (this.props.isLoadDone && !this.isFirstTimeLoaded) {
-            this.isFirstTimeLoaded = true;
-            this.scrollToCreateComment()
-        }
 
         return (
             <div>
@@ -84,9 +59,7 @@ class PostDetail extends React.Component {
                         <div className="d-flex">
                             <div className="post-detail-container" >
                                 {this.props.isLoadDone ?
-
                                     <div>
-                                        {console.log("Done")}
                                         <Metadata
                                             postId={this.props.currentPost.id}
                                             title={this.props.currentPost.title}
@@ -118,6 +91,7 @@ class PostDetail extends React.Component {
                                         {this.props.isPostStatisticLoadDone && Object.keys(this.props.postStatistic).length > 0 ?
                                             <div>
                                                 < NormalReactionbar
+                                                    useAction={true}
                                                     availableActions={this.props.currentPost.availableActions}
                                                     postId={this.props.currentPost.id}
                                                     likeCount={this.props.currentPost.likeCount}
@@ -128,6 +102,7 @@ class PostDetail extends React.Component {
 
                                                 <div id="cr-cmt" />
                                                 <CommentSection
+                                                    useAction={true}
                                                     // create comment will show if you have action create comment
                                                     postAvailableActions={this.props.currentPost.availableActions}
                                                     id={this.props.currentPost.id}
@@ -137,6 +112,7 @@ class PostDetail extends React.Component {
                                             :
                                             <div>
                                                 < NormalReactionbar
+                                                    useAction={true}
                                                     availableActions={this.props.currentPost.availableActions}
                                                     postId={this.props.currentPost.id}
                                                     likeCount={this.props.currentPost.likeCount}
@@ -146,6 +122,7 @@ class PostDetail extends React.Component {
                                                 />
                                                 <div id="cr-cmt" />
                                                 <CommentSection
+                                                    useAction={true}
                                                     // create comment will show if you have action create comment
                                                     postAvailableActions={this.props.currentPost.availableActions}
                                                     id={this.props.currentPost.id}
@@ -153,7 +130,6 @@ class PostDetail extends React.Component {
                                                 />
                                             </div>
                                         }
-                                        {/* {this.scrollToCreateComment} */}
                                         {formatMathemicalFormulas()}
                                         {styleCodeSnippet()}
                                     </div>

@@ -133,6 +133,7 @@ class NormalReactionbar extends React.Component {
           <RequireLogin permissions={[]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Like}
+            useAction={this.props.useAction}
             expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
@@ -145,7 +146,8 @@ class NormalReactionbar extends React.Component {
           <RequireLogin permissions={[]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Save}
-            expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}>
+            expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}
+            useAction={this.props.useAction}     >
             <div className="save-btn-container"  >
               {saveBtn}
             </div>
@@ -157,6 +159,9 @@ class NormalReactionbar extends React.Component {
             <RequireLogin permissions={[]}
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Comment}
+              isLink={true}
+              useAction={this.props.useAction}
+              to={"/post-content/" + this.props.postId + "#cr-cmt"}
               expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
               <div className="comment-count-container">
                 <div className="comment-btn-text">
@@ -168,11 +173,13 @@ class NormalReactionbar extends React.Component {
               </div>
             </RequireLogin>
             :
-            <RequireLogin permissions={[]}
+            <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Comment}
+              useAction={this.props.useAction}
               isLink={true}
               to={"/post-content/" + this.props.postId + "#cr-cmt"}
+              expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}
             >
               {/* onClick={!authService.isGranted(Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE) ? (e) => e.preventDefault() : () => { }}> */}
               <div className="comment-count-container">

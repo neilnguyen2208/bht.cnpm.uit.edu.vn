@@ -172,6 +172,7 @@ class MyPosts extends React.Component {
                             availableActions={item.availableActions}
                             feedback={item.feedback}
                             reloadList={() => this.reloadList()}
+                            useAction={true}
                         />
                         <PostNormalReactionbar
                             postId={item.id}
@@ -180,6 +181,8 @@ class MyPosts extends React.Component {
                             commentCount={item.commentCount}
                             likedStatus={item.likeStatus}
                             savedStatus={item.savedStatus}
+                            useAction={true}
+
                         />
                     </div >
                 })

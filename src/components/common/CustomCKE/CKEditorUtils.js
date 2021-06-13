@@ -5,7 +5,7 @@ export function getCKEInstance(id) {
 
 //run after code snippet output loaded
 export function styleCodeSnippet() {
-  console.log("Style Code called!");
+  // console.log("Style Code called!");
   setTimeout(
     document.querySelectorAll('pre code').forEach((block) => {
       console.log("a")
@@ -17,7 +17,7 @@ export function styleCodeSnippet() {
 //run after code mathemical output loaded
 export function formatMathemicalFormulas() {
   (function () {
-    console.log("Style MF called!");
+    // console.log("Style MF called!");
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML";   // use the location of your MathJax

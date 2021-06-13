@@ -120,6 +120,7 @@ class PostApproving extends React.Component {
                         title={item.title}
                     />
                     <SummaryInfo
+                        // useAction={true}
                         type={itemType.approval}
                         postId={item.id}
                         authorName={item.authorName}

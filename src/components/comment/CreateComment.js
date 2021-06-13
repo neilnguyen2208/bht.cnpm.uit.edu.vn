@@ -38,7 +38,13 @@ class CreateComment extends React.Component {
 
   componentDidMount() {
     validation(validationCondition);
-
+    if (window.location.hash === "#cr-cmt") {
+      if (getCKEInstance('crt-cmmnt-cke'))
+        getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
+          getCKEInstance('crt-cmmnt-cke').focus();
+          document.getElementById("cr-cmt").scrollIntoView();
+        })
+    }
   }
 
   createComment = () => {
@@ -75,12 +81,6 @@ class CreateComment extends React.Component {
             <div id="create-comment-form" tabIndex="1">
               <div className="form-group">
                 <div className="j-c-space-between">
-                  {/* <label className="form-label-required">Nội dung:</label> */}
-                  {/* <HoverHint message={`
-                                - Sử dụng các Format Header để tạo ra mục lục. 
-                                - Sử dụng Style Computer Code để style được tên biến, tên hàm.
-                                - Sử dụng Format Formatted để style một đoạn code`}
-                  /> */}
                 </div>
                 <Editor
                   config={CommentCKEToolbarConfiguration}

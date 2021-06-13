@@ -89,6 +89,7 @@ export default class PopupMenu extends React.Component {
                     availableActions={this.props.availableActions}
                     requiredAction={menuItem.requiredAction}
                     showOnAction={menuItem.showOnAction}
+                    useAction={this.props.useAction}
                     expectedEvent={() => this.handleMenuItemClick(menuItem)}>
                     <div className="popup-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                         id={"pm-menuItem-" + this.props.id + "-" + menuItem.id}

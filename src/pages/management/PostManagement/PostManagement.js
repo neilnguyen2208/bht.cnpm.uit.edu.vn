@@ -226,6 +226,7 @@ class PostManagement extends React.Component {
                         authorAvatarURL={item.authorAvatarURL}
                         isHighlighted={item.isHighlighted}
                         availableActions={item.availableActions}
+                        useAction={true}
                         //
                         reloadList={() => this.reloadList()}
                     />
@@ -236,6 +237,8 @@ class PostManagement extends React.Component {
                         likedStatus={item.likeStatus}
                         savedStatus={item.savedStatus}
                         availableActions={item.availableActions}
+                        useAction={true}
+
                     />
                 </div >
             }

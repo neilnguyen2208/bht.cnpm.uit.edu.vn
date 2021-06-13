@@ -9,24 +9,30 @@ import { Link } from 'react-router-dom'
 
 export class RequireLogin extends React.Component {
   handleClick = () => {
-    if (
-      !this.props.requiredAction && ((this.props.isAny && authService.isGrantedAny(this.props.permissions))
-        || (authService.isGrantedAll(this.props.permissions))
-        || (this.props.requiredAction && this.props.availableActions.includes(this.props.requiredAction))
-      )) {
-      //granted action
+    console.log(this.props.useAction)
+
+    if ((!this.props.useAction && (!this.props.permissions || this.props.permissions.length === 0))) {
+      console.log("A")
       if (this.props.expectedEvent)
         this.props.expectedEvent();
+      return;
     }
-    else {
-      openModal("confirmation",
-        {
-          title: "Đăng nhập",
-          text: "Hành động này cần đăng nhập!",
-          confirmText: "Đăng nhập",
-          onConfirm: () => { authService.doLogin() }
-        });
+
+    if ((!this.props.useAction && ((this.props.isAny && authService.isGrantedAny(this.props.permissions)) || authService.isGrantedAll(this.props.permissions)))
+      || (this.props.useAction && this.props.availableActions.includes(this.props.requiredAction))) {
+      //granted action
+      console.log("B")
+      if (this.props.expectedEvent)
+        this.props.expectedEvent();
+      return;
     }
+    openModal("confirmation",
+      {
+        title: "Đăng nhập",
+        text: "Hành động này cần đăng nhập!",
+        confirmText: "Đăng nhập",
+        onConfirm: () => { authService.doLogin() }
+      });
   }
 
   render() {
@@ -42,8 +48,8 @@ export class RequireLogin extends React.Component {
     //isAny
 
     //availableActions && isLoggedIn() 
-    if ((authService.isLoggedIn() && this.props.availableActions)) {
-
+    if ((authService.isLoggedIn() && this.props.useAction && this.props.availableActions)) {
+      console.log("bug")
       //granted requiredAction => call event
       if (this.props.availableActions.includes(this.props.requiredAction)) {
 
@@ -75,18 +81,27 @@ export class RequireLogin extends React.Component {
     }
 
     //!isLoggedIn() && requiredAction
-    if (!authService.isLoggedIn() && this.props.requiredAction && this.props.availableActions && !this.props.showOnAction) {
+    if (!authService.isLoggedIn() && this.props.useAction && !this.props.showOnAction) {
       return (
         <div onClick={this.handleClick}>
           {this.props.children}
         </div>);
     }
 
-    if ((authService.isLoggedIn() && !this.props.availableActions)) {
+    //!useAction
+    if ((authService.isLoggedIn() && !this.props.useAction)) { //=> check perms
+      if (!this.props.isLink)
+        return (
+          //+ handle link
+          <div onClick={this.props.expectedEvent ? () => this.props.expectedEvent() : () => { }} >
+            {this.props.children}
+          </div >
+        );
       return (
-        <div onClick={this.props.expectedEvent ? () => this.props.expectedEvent() : () => { }}>
+        //+ handle link
+        <Link to={this.props.to} >
           {this.props.children}
-        </div>
+        </Link >
       );
     }
 
@@ -98,7 +113,8 @@ export class RequireLogin extends React.Component {
         </div>
       );
 
-    if (!authService.isLoggedIn() && !this.props.showOnAction)
+    //use action 
+    if (!authService.isLoggedIn() && (!this.props.showOnAction))
       return (
         <div onClick={this.handleClick}>
           {this.props.children}

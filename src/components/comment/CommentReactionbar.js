@@ -85,6 +85,7 @@ class CommentReactionbar extends React.Component {
           <RequireLogin permissions={[]}
             availableActions={this.props.availableActions}
             requiredAction={PostCommentAction.Like}
+            useAction={this.props.useAction}
             expectedEvent={this.props.type !== "PREVIEW" ? this.toggleLikeImage : () => { }} >
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
@@ -94,6 +95,7 @@ class CommentReactionbar extends React.Component {
           <RequireLogin permissions={[]}
             availableActions={this.props.availableActions}
             requiredAction={PostCommentAction.Reply}
+            useAction={this.props.useAction}
             expectedEvent={this.props.type !== "PREVIEW" ? this.createCommentReply : () => { }} >
             <div className="comment-count-container">
               <div className="comment-btn-text">

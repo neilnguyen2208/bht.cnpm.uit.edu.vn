@@ -76,7 +76,7 @@ class CreateComment extends React.Component {
     return (
       <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
         <div className="comment-main-level">
-          <div className="comment-avatar"><img src="https://i.imgur.com/SZJgL6C.png" alt="" /></div>
+          <img className="comment-avatar" src="https://i.imgur.com/SZJgL6C.png" alt="" />
           <div className="comment-box">
             <div id="create-comment-form" tabIndex="1">
               <div className="form-group">

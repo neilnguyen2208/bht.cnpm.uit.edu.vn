@@ -61,14 +61,13 @@ class CreateReply extends React.Component {
   }
 
   render() {
-    console.log(this.props.availableActions);
     return (
       < RequireLogin availableActions={this.props.availableActions} requiredAction={PostCommentAction.Reply} showOnAction={true} >
         {/* check xem la reply hay comment */}
         {/* <div style={this.isShow ? { display: "block" } : { display: "none" }}> */}
         <div style={{ width: '100%', marginTop: "10px" }} className="reply-item cr">
           <div className="comment-main-level">
-            <div className="comment-avatar reply"><img src="https://i.imgur.com/SZJgL6C.png" alt="" /></div>
+            <img className="comment-avatar reply" src="https://i.imgur.com/SZJgL6C.png" alt="" />
             <div className="comment-box">
               <div className="form-group">
                 <Editor

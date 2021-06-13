@@ -177,7 +177,6 @@ class Comment extends React.Component {
                 });
               }
 
-              console.log(finalResult)
               this.replyArray = finalResult;
               //update reply count (unsynchonizew with props)
               this.replyCount = finalResult.length;
@@ -307,27 +306,27 @@ class Comment extends React.Component {
 
         // if (this.createdReplyId && this.createdReplyId === reply.id) return <></>;
         // if user is creating a reply under this reply: show this reply and createReplyComponent under this reply
-        if (this.isReplying && this.replyId === reply.id)
-          return <div
-            key={reply.id}>
-            <Reply
-              useAction={true}
-              replyId={reply.id}
-              authorDisplayName={reply.authorDisplayName}
-              authorAvatarURL={reply.authorAvatarURL}
-              idCmtAuthor={reply.isauthorDisplayName}
-              isContentAuthor={reply.isContentAuthor}
-              submitDtm={reply.submitDtm}
-              likeCount={reply.likeCount}
-              likeStatus={reply.likeStatus}
-              replyCount={reply.replyCount}
-              replyArray={reply.replyArray}
-              content={reply.content}
-              createReplyReply={(replyId) => this.createCommentReply(replyId)}
-              reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
-              createdReplyId={this.createdReplyId}
-              availableActions={reply.availableActions}
-            />
+        return <div
+          key={reply.id}>
+          <Reply
+            useAction={true}
+            replyId={reply.id}
+            authorDisplayName={reply.authorDisplayName}
+            authorAvatarURL={reply.authorAvatarURL}
+            idCmtAuthor={reply.isauthorDisplayName}
+            isContentAuthor={reply.isContentAuthor}
+            submitDtm={reply.submitDtm}
+            likeCount={reply.likeCount}
+            likeStatus={reply.likeStatus}
+            replyCount={reply.replyCount}
+            replyArray={reply.replyArray}
+            content={reply.content}
+            createReplyReply={(replyId) => this.createCommentReply(replyId)}
+            reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
+            createdReplyId={this.createdReplyId}
+            availableActions={reply.availableActions}
+          />
+          {this.isReplying && this.replyId === reply.id &&
 
             <CreateReply
               useAction={true}
@@ -337,29 +336,8 @@ class Comment extends React.Component {
               reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
               setNotReplying={() => this.setNotReplying()}
               componentId={"cr-rpl-" + this.props.commentId + "-idx" + reply.id}
-            />
-          </div>
-
-        //if user is not creating a reply under this reply
-        return <Reply
-          useAction={true}
-          replyId={reply.id}
-          key={reply.id}
-          authorDisplayName={reply.authorDisplayName}
-          authorAvatarURL={reply.authorAvatarURL}
-          idCmtAuthor={reply.isauthorDisplayName}
-          isContentAuthor={reply.isContentAuthor}
-          submitDtm={reply.submitDtm}
-          likeCount={reply.likeCount}
-          likeStatus={reply.likeStatus}
-          availableActions={reply.availableActions}
-          replyCount={reply.replyCount}
-          replyArray={reply.replyArray}
-          content={reply.content}
-          reloadList={(replyId) => this.loadAllReply(replyId)}
-          createReplyReply={(replyId) => this.createCommentReply(replyId)}
-          createdReplyId={this.createdReplyId}
-        />
+            />}
+        </div>
       })
       }
       </div>
@@ -435,7 +413,7 @@ class Comment extends React.Component {
     return (
       <div className="comment-item" id={`comment-item-` + this.props.commentId}>
         <div className="comment-main-level">
-          <div className="comment-avatar"><img src={this.props.authorAvatarURL} alt="" /></div>
+          <img className="comment-avatar" src={this.props.authorAvatarURL} alt="" />
           {/* On view condition */}
           {this.isEditMode ?
             <div className="comment-box edit">

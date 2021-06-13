@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 
 export class RequireLogin extends React.Component {
   handleClick = () => {
-    console.log(this.props.useAction)
 
     if ((!this.props.useAction && (!this.props.permissions || this.props.permissions.length === 0))) {
       console.log("A")
@@ -49,7 +48,6 @@ export class RequireLogin extends React.Component {
 
     //availableActions && isLoggedIn() 
     if ((authService.isLoggedIn() && this.props.useAction && this.props.availableActions)) {
-      console.log("bug")
       //granted requiredAction => call event
       if (this.props.availableActions.includes(this.props.requiredAction)) {
 

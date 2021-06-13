@@ -39,10 +39,10 @@ export default class ReportInfo extends React.PureComponent {
             reportersName = <div className="d-flex">
                 <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
-            </Link>
+                </Link>
                 <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
-            </Link>
+                </Link>
             </div>
         else if (this.props.reporters.length > 2)
             reportersName = <div className="d-flex">
@@ -52,7 +52,7 @@ export default class ReportInfo extends React.PureComponent {
                 <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName}
                 </Link>
-              và {this.props.reporters.length - 2} người khác
+                và {this.props.reporters.length - 2} người khác
             </div>
 
         if (this.props.resolvedTime)
@@ -127,7 +127,7 @@ export default class ReportInfo extends React.PureComponent {
                 <div className="comments-list">
                     <div className="comment-item mg-top-10px">
                         <div className="comment-main-level" style={{ width: "fit-content" }}>
-                            <div className="comment-avatar report"><img src={this.props.authorAvatarURL} alt="" /></div>
+                            <img className="comment-avatar report" src={this.props.authorAvatarURL} alt="" />
                             <div style={{ marginLeft: "10px" }}>
                                 <Link className="comment-name" to={`user/${this.props.authorID}`}>{this.props.authorDisplayName}</Link>
                                 <div className="post-summary-show show-less">

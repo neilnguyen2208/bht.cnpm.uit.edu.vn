@@ -52,6 +52,7 @@ class Reply extends React.Component {
 
   //make current reply's reply component show to UI
   createReplyReply = () => {
+    console.log(this.state.isLiked, this.likeCount)
     this.props.createReplyReply(this.props.replyId);
   }
 
@@ -138,6 +139,7 @@ class Reply extends React.Component {
         //new content after edit (unsync with props)
         this.content = response.data.content;
         this.changeViewMode(this.content);
+
         this.setState({});
       })
       .catch(error => {
@@ -151,8 +153,10 @@ class Reply extends React.Component {
       const window = new JSDOM('').window;
       const DOMPurify = createDOMPurify(window);
       const clean = DOMPurify.sanitize(content ? content : this.content);
-      if (document.querySelector(`#cmt-ctnt-${this.props.replyId}.comment-content`))
-        document.querySelector(`#cmt-ctnt-${this.props.replyId}.comment-content`).innerHTML = clean;
+      console.log(clean)
+
+      if (document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`))
+        document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`).innerHTML = clean;
       this.isEditMode = !this.isEditMode;
       this.setState({});
       return;
@@ -177,7 +181,7 @@ class Reply extends React.Component {
     return (
       <div className="reply-item" id={`reply-item-${this.props.replyId}`}>
         <div className="d-flex">
-          <div className="comment-avatar reply"><img src={this.props.authorAvatarURL} alt="" /></div>
+          <img className="comment-avatar reply" src={this.props.authorAvatarURL} alt="" />
 
           {/* show on edit mode */}
           {this.isEditMode ?
@@ -215,7 +219,7 @@ class Reply extends React.Component {
                 </div>
               </div>
               <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}
-                availableActions={this.props.availableActions}
+                availableActions={this.props.availableActions} useAction={true}
                 items={commentMenu} id={`${this.props.popUpMenuPrefix}-cipm-${this.props.replyId}`} />
             </div>
             {/* comment content */}
@@ -227,6 +231,7 @@ class Reply extends React.Component {
                     expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage}
                     availableActions={this.props.availableActions}
                     requiredAction={PostCommentAction.Like}
+                    useAction={true}
                   >
                     <div className="like-btn-container"  >
                       <div className="d-flex"> {likeBtn}</div>
@@ -236,7 +241,9 @@ class Reply extends React.Component {
                   <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}
                     availableActions={this.props.availableActions}
-                    requiredAction={PostCommentAction.Reply}    >
+                    requiredAction={PostCommentAction.Reply}
+                    useAction={true}
+                  >
                     <div className="comment-count-container">
                       <div className="comment-btn-text">
                         Trả lời

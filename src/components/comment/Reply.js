@@ -223,7 +223,7 @@ class Reply extends React.Component {
               <div className="comment-content ck-editor-output" id={"rp-ctnt-" + this.props.replyId} />
               <div className="comment reaction-bar" >
                 <div style={{ display: "flex" }}>
-                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_ALL_LIKE]}
+                  <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage}
                     availableActions={this.props.availableActions}
                     requiredAction={PostCommentAction.Like}
@@ -233,11 +233,10 @@ class Reply extends React.Component {
                       <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
                     </div>
                   </RequireLogin>
-                  <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+                  <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}
                     availableActions={this.props.availableActions}
-                    requiredAction = {PostCommentAction.Reply}
-                  >
+                    requiredAction={PostCommentAction.Reply}    >
                     <div className="comment-count-container">
                       <div className="comment-btn-text">
                         Trả lời

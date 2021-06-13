@@ -25,16 +25,16 @@ import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 class PostDetail extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        //detect: first time loaded (content load done) or not. 
+        this.isFirstTimeLoaded = false;
+    }
+
     componentDidMount() {
         this.props.getAPostStatisticByID(this.props.match.params.id);
         this.props.getPostByID(this.props.match.params.id);
-        if (window.location.hash === "#cr-cmt") {
-            document.getElementById("cr-cmt").scrollIntoView();
-            if (getCKEInstance('crt-cmmnt-cke'))
-                getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
-                    getCKEInstance('crt-cmmnt-cke').focus();
-                })
-        }
     }
 
     componentWillUnmount() {
@@ -57,7 +57,26 @@ class PostDetail extends React.Component {
         ToC = ToC + "</div>";
         return ToC;
     }
+
+    scrollToCreateComment = () => {
+        console.log("A");
+        if (window.location.hash === "#cr-cmt") {
+            document.getElementById("cr-cmt").scrollIntoView();
+            if (getCKEInstance('crt-cmmnt-cke'))
+                getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
+                    getCKEInstance('crt-cmmnt-cke').focus();
+                })
+        }
+    }
+
     render() {
+
+        //after first time, this variable is true,this function call only 1 time
+        if (this.props.isLoadDone && !this.isFirstTimeLoaded) {
+            this.isFirstTimeLoaded = true;
+            this.scrollToCreateComment()
+        }
+
         return (
             <div>
                 <div className="d-flex">
@@ -65,14 +84,9 @@ class PostDetail extends React.Component {
                         <div className="d-flex">
                             <div className="post-detail-container" >
                                 {this.props.isLoadDone ?
-                                    //     { if(window.location.hash === "#cr-cmt") {
-                                    //     document.getElementById("cr-cmt").scrollIntoView();
-                                    // if (getCKEInstance('crt-cmmnt-cke'))
-                                    // getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
-                                    //     getCKEInstance('crt-cmmnt-cke').focus();
-                                    //         })
-                                    // }}
+
                                     <div>
+                                        {console.log("Done")}
                                         <Metadata
                                             postId={this.props.currentPost.id}
                                             title={this.props.currentPost.title}
@@ -103,7 +117,6 @@ class PostDetail extends React.Component {
 
                                         {this.props.isPostStatisticLoadDone && Object.keys(this.props.postStatistic).length > 0 ?
                                             <div>
-                                                {console.log("A")}
                                                 < NormalReactionbar
                                                     availableActions={this.props.currentPost.availableActions}
                                                     postId={this.props.currentPost.id}
@@ -131,7 +144,6 @@ class PostDetail extends React.Component {
                                                     likedStatus={this.props.currentPost.likeStatus}
                                                     savedStatus={this.props.currentPost.savedStatus}
                                                 />
-
                                                 <div id="cr-cmt" />
                                                 <CommentSection
                                                     // create comment will show if you have action create comment
@@ -141,7 +153,7 @@ class PostDetail extends React.Component {
                                                 />
                                             </div>
                                         }
-
+                                        {/* {this.scrollToCreateComment} */}
                                         {formatMathemicalFormulas()}
                                         {styleCodeSnippet()}
                                     </div>
@@ -178,7 +190,6 @@ class PostDetail extends React.Component {
                     </div>
                 </div>
                 {formatMathemicalFormulas()}
-                {styleCodeSnippet()}
             </div>
         );
     }

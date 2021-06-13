@@ -130,7 +130,7 @@ class NormalReactionbar extends React.Component {
       <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
         <div className="d-flex mg-top-5px">
 
-          <RequireLogin permissions={[Post.SetLikeStatus]}
+          <RequireLogin permissions={[]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Like}
             expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
@@ -142,7 +142,7 @@ class NormalReactionbar extends React.Component {
 
           <div className="vertical-line" />
 
-          <RequireLogin permissions={[Post.SetSaveStatus]}
+          <RequireLogin permissions={[]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Save}
             expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}>
@@ -154,7 +154,7 @@ class NormalReactionbar extends React.Component {
           <div className="vertical-line" />
 
           {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
-            <RequireLogin permissions={[Post.Comment.Create]}
+            <RequireLogin permissions={[]}
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Comment}
               expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
@@ -168,21 +168,22 @@ class NormalReactionbar extends React.Component {
               </div>
             </RequireLogin>
             :
-            <RequireLogin permissions={[Post.Comment.Create]}
+            <RequireLogin permissions={[]}
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Comment}
+              isLink={true}
+              to={"/post-content/" + this.props.postId + "#cr-cmt"}
             >
-              <Link to={"/post-content/" + this.props.postId + "#cr-cmt"}
-                onClick={!authService.isGranted(Post.Comment.Create) ? (e) => e.preventDefault() : () => { }}>
-                <div className="comment-count-container">
-                  <div className="comment-btn-text">
-                    Bình luận
-                  </div>
-                  <div className="comment-btn-number">
-                    {formatNumber(this.props.commentCount)}
-                  </div>
+              {/* onClick={!authService.isGranted(Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE) ? (e) => e.preventDefault() : () => { }}> */}
+              <div className="comment-count-container">
+                <div className="comment-btn-text">
+                  Bình luận
                 </div>
-              </Link>
+                <div className="comment-btn-number">
+                  {formatNumber(this.props.commentCount)}
+                </div>
+              </div>
+              {/* </Link> */}
             </RequireLogin>
           }
 

@@ -17,7 +17,7 @@ import './Comment.scss'
 
 //utils
 import { formatNumber, timeAgo } from 'utils/miscUtils.js'
-import { Post } from 'authentication/permission.config';
+import { Post, PostCommentAction } from 'authentication/permission.config';
 import { likeAPostComment, unLikeAPostComment } from 'redux/services/commentServices'
 
 class CommentReactionbar extends React.Component {
@@ -82,15 +82,18 @@ class CommentReactionbar extends React.Component {
     return (
       <div className="comment reaction-bar" >
         <div style={{ display: "flex" }}>
-          <RequireLogin permissions={[Post.Comment.SetLikeStatus]}
+          <RequireLogin permissions={[]}
+            availableActions={this.props.availableActions}
+            requiredAction={PostCommentAction.Like}
             expectedEvent={this.props.type !== "PREVIEW" ? this.toggleLikeImage : () => { }} >
             <div className="like-btn-container">
               <div className="d-flex"> {likeBtn}</div>
               <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
             </div>
           </RequireLogin>
-          <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
-          
+          <RequireLogin permissions={[]}
+            availableActions={this.props.availableActions}
+            requiredAction={PostCommentAction.Reply}
             expectedEvent={this.props.type !== "PREVIEW" ? this.createCommentReply : () => { }} >
             <div className="comment-count-container">
               <div className="comment-btn-text">

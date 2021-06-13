@@ -15,19 +15,10 @@ const initKeycloak = (onAuthenticatedCallback) => {
         pkceMethod: 'S256',
     })
         .then((authenticated) => {
-            // if (authenticated) {
             onAuthenticatedCallback();
             if (_kc.token) {
-                // console.log("Token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.tokenParsed.exp);
-                // console.log(_kc.token);
-                // console.log("Refresh token expire at: ", Math.round(new Date().getTime() / 1000) - _kc.refreshTokenParsed.exp);
-                // console.log("User name:", _kc.preferred_username);
-                // console.log("Realm roles:", _kc.realmAccess.roles);
-                // console.log("Resource roles:", _kc.resourceAccess.roles);
-
-            }// } else {
-            //   doLogin();
-            // }
+                
+            }
         })
 };
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import authService from 'authentication/authServices.js';
+import authService from 'authentication/authenticationServices.js';
 import store from 'redux/store/index'
 import { openModal } from 'redux/services/modalServices';
 const RequireLoginRoute = ({ path, component: Component, isAny, permissions, render, ...rest }) => {

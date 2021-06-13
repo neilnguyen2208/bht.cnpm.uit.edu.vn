@@ -1,115 +1,43 @@
 import {
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  REGISTER_REQUEST,
-
-  AUTHENTICATE_REQUEST,
-  AUTHENTICATE_FAILURE,
-
-
-
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
+  GET_CURRENT_USER_SUMMARY_REQUEST,
+  GET_CURRENT_USER_SUMMARY_SUCCESS,
+  GET_CURRENT_USER_SUMMARY_FAILURE
 
 } from 'redux/constants.js';
-import { openBLModal } from 'redux/services/modalServices';
 
 const initialState = {
-  authentication: {
-    isAuthenticating: false,
-    isAuthenticated: false
-  },
-
-  expireTime: null,
-  userInfo: null,
-  allPermissions: [],
-  logoutStatus: '',
-  token: null,
-  refreshToken: null
-
+  currentUserSummary: {
+    isLoadDone: false,
+    data: {}
+  }
 };
 
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_SUCCESS:
-      console.log("We logged in for you!");
+    case GET_CURRENT_USER_SUMMARY_REQUEST:
       return {
         ...state,
-        authentication: {
-          isAuthenticating: false,
-          isAuthenticated: true
-        },
-
-        expireTime: action.payload.expireTime,
-        userInfo: action.payload.userInfo,
-        allPermissions: action.payload.keycloak.resourceAccess.account.roles,
+        currentUserSummary: {
+          isLoadDone: false,
+          data: state.currentUserSummary.data
+        }
       };
-    case REGISTER_REQUEST:
+    case GET_CURRENT_USER_SUMMARY_SUCCESS:
       return {
         ...state,
-        isSignedUp: false
+        currentUserSummary: {
+          isLoadDone: true,
+          data: action.payload.data
+        }
       }
 
-    case REGISTER_SUCCESS:
-      return {
-
-      };
-
-    case AUTHENTICATE_REQUEST: {
-      console.log("Authenticating!")
+    case GET_CURRENT_USER_SUMMARY_FAILURE:
       return {
         ...state,
-        authentication: {
-          isAuthenticating: true,
-          isAuthenticated: false
-        },
-        expireTime: null,
-        userInfo: null,
-        allPermissions: []
-      }
-    }
-
-    case AUTHENTICATE_FAILURE: {
-      // if (lS.getItem('kc_token') && lS.getItem('kc_token') !== "undefined")
-      // lS.removeItem('kc_token');
-      console.log("Authenticate failure")
-      return {
-        ...state,
-        authentication: {
-          isAuthenticating: false,
-          isAuthenticated: false
-        },
-        expireTime: null,
-        userInfo: null,
-        allPermissions: [],
-        token: null,
-        refreshToken: null
-      };
-    }
-    case LOGOUT_SUCCESS:
-      console.log("Logout success!");
-      return {
-        ...state,
-        authentication: {
-          isAuthenticating: false,
-          isAuthenticated: false
-        },
-        expireTime: null,
-        userInfo: null,
-        allPermissions: [],
-        token: null,
-        refreshToken: null
-      };
-
-    case LOGOUT_FAILURE:
-      console.log("Logout failure!");
-      return {
-        ...state,
-        logoutStatus: action.payload.error
+        currentUserSummary: {
+          isLoadDone: false,
+          data: action.payload.data, error: action.payload
+        }
       };
     default:
       return state;

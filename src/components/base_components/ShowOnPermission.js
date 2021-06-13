@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types';
-import authService from 'authentication/authServices';
+import authService from 'authentication/authenticationServices';
 
 const ShowOnPermission = (props) => {
   const couldShow =

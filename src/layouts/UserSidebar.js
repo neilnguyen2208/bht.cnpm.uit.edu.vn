@@ -18,8 +18,8 @@ import { withRouter } from "react-router-dom";
 import {
   //suitable roles name 
 } from 'authentication/permission.config'
-import { authServices } from 'redux/services/authServices';
 
+import authServices from 'authentication/authenticationServices'
 
 class UserSidebar extends React.Component {
   constructor(props) {
@@ -53,7 +53,7 @@ class UserSidebar extends React.Component {
             {/* Role and achivement port */}
             <div className="user-role">
               User
-              </div>
+            </div>
 
           </div>
 
@@ -83,13 +83,13 @@ class UserSidebar extends React.Component {
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to="/user/profile/id" exact
                   onClick={() => this.setState({})}> Trang cá nhân
-                      </NavLink>
+                </NavLink>
 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                   to={"/user/account-management"} exact
                   onClick={() => this.setState({})}>Cập nhật thông tin
-                      </NavLink>
+                </NavLink>
 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
@@ -97,7 +97,7 @@ class UserSidebar extends React.Component {
                   exact
                   onClick={() => { authServices.accountManagement(); this.setState({}) }}>
                   Cài đặt bảo mật
-                      </NavLink>
+                </NavLink>
                 {/* 
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
@@ -149,14 +149,14 @@ class UserSidebar extends React.Component {
                     to={"/user/my-posts?page=1&category=0"}
                     onClick={() => this.setState({})}>
                     Bài viết của tôi
-                        </NavLink>
+                  </NavLink>
 
                   <NavLink className="vertical-sub-m-i"
                     activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                     to={"/user/saved-posts?page=1"}
                     onClick={() => this.setState({})}>
                     Đã lưu
-                        </NavLink>
+                  </NavLink>
 
                   <NavLink className="vertical-sub-m-i"
                     activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
@@ -164,7 +164,7 @@ class UserSidebar extends React.Component {
                     to={"/create-post"}
                     onClick={() => this.setState({})}>
                     Tạo bài viết mới
-                        </NavLink>
+                  </NavLink>
                   <div className="decoration-underline" style={{ marginTop: "5px", marginBottom: "10px" }} />
                 </div>
               </div>
@@ -200,14 +200,14 @@ class UserSidebar extends React.Component {
                     to={"/user/my-documents?page=1&category=1"}
                     onClick={() => this.setState({})}>
                     Tài liệu của tôi
-                        </NavLink>
+                  </NavLink>
 
                   <NavLink
                     activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
                     className="vertical-sub-m-i"
                     to={"/upload-document"}>
                     Upload tài liệu
-                        </NavLink>
+                  </NavLink>
 
                   <div className="decoration-underline" style={{ marginTop: "5px", marginBottom: "10px" }} />
                 </div>

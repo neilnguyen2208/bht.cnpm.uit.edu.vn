@@ -23,7 +23,6 @@ import { formatNumber } from 'utils/miscUtils.js'
 
 //permissions config
 import { Post, PostAction } from 'authentication/permission.config.js'
-import authService from 'authentication/authServices';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 class NormalReactionbar extends React.Component {

@@ -7,7 +7,7 @@ import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 import { ClickAwayListener } from "@material-ui/core";
-import authService from "authentication/authServices.js";
+import authService from "authentication/authenticationServices.js";
 import { authServices } from "redux/services/authServices";
 
 // authServices.
@@ -204,7 +204,6 @@ class UserMenu extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAuthenticated: state.auth.authentication.isAuthenticated,
     };
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({

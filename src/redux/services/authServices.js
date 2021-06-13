@@ -1,58 +1,12 @@
-import { request } from 'utils/requestUtils';
+import { authRequest } from 'utils/requestUtils';
 import {
-  registerFailure,
-  registerRequest,
-  registerSuccess,
-  loginSuccess,
-  logoutSuccess,
-  logoutFailure,
-  authenticationRequest
+  get_CurrentUserSummaryRequest
 } from '../actions/authAction';
-
-
-import store from 'redux/store/index'
 
 export function login() {
   return dispatch => {
-    // keycloak.login();
+    dispatch(get_CurrentUserSummaryRequest());
+    authRequest.get()
   }
 }
 
-export function register(registerDTO) {
-  return dispatch => {
-    dispatch(registerRequest());
-    request.post('/user/register', JSON.stringify(registerDTO)).then(response =>
-      dispatch(registerSuccess(response.data))
-    )
-      .catch(error => dispatch(registerFailure(error)));
-  }
-}
-
-export function logout() {
-  return dispatch => {
-    // if (store.getState().auth.keycloak)
-    //   store.getState().auth.keycloak.logout().then(data => {
-    //     console.log("51");
-    //     dispatch(logoutSuccess())
-    //   }
-    //   ).catch(error => {
-    //     console.log("55");
-    //     dispatch(logoutFailure(error));
-    //   });
-    // else {
-    //   console.log("59");
-    //   dispatch(logoutFailure("keycloak_is_null"))
-    // }
-  }
-}
-
-//#region auth services
-export function authServices() {
-}
-
-authServices.isGranted = function (permissionName) {
-  let state = store.getState().auth.allPermissions;
-  return state && state.includes(permissionName);
-}
-
-//#region

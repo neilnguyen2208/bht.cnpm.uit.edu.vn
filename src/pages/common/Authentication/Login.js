@@ -9,30 +9,24 @@ import { openBLModal } from 'redux/services/modalServices';
 class Login extends React.Component {
 
     componentDidMount() {
-        // console.log(this.props.keycloak)
-        // keycloak.login({ redirectUri: process.env.REACT_APP_APP_BASE_URL});
-        // redirectUri: process.env.REACT_APP_APP_BASE_URL
     }
 
-
     render() {
-        if (this.props.isAuthenticating) {
-            return <Loader text="Đang chuyển hướng ..." />;
-        }
-        if (this.props.isAuthenticated) {
-
-            // sso 
-            openBLModal({ type: "success", text: "Đăng nhập thành công!" })
-            return <Redirect to="/" />;
-        }
+        // if (this.props.isAuthenticating) {
         return <Loader text="Đang chuyển hướng ..." />;
+        // }
+        // if (this.props.isAuthenticated) {
+
+        // sso 
+        // openBLModal({ type: "success", text: "Đăng nhập thành công!" })
+        // return <Redirect to="/" />;
+        // }
+        // return <Loader text="Đang chuyển hướng ..." />;
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        isAuthenticated: state.auth.authentication.isAuthenticated,
-        isAuthenticating: state.auth.authentication.isAuthenticating
     };
 }
 

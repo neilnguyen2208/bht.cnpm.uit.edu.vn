@@ -94,7 +94,6 @@ class WallpageItem extends React.Component {
                                     {this.props.authorName}
                                 </Link>
                             </div>
-                            {console.log(this.props.availableActions)}
                             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={true} availableActions={this.props.availableActions} items={wallpageMenu} id={`hipm-${this.props.wpPostId}`} />
                         </div>
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { openBLModal } from 'redux/services/modalServices';
-import authService from 'authentication/authServices.js'
+import authService from 'authentication/authenticationServices.js'
 const qs = require('qs');
 
 export const appBaseUrl = process.env.REACT_APP_APP_BASE_URL;

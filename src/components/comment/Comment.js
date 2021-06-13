@@ -357,7 +357,6 @@ class Comment extends React.Component {
           {/* {newReply} */}
           {subReplyList}
         </div>;
-      // Ư
     }
 
     /*

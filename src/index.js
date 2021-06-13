@@ -28,7 +28,7 @@ import 'assets/fonts/BarlowSemiCondensed-Bold.ttf'
 import 'assets/fonts/BarlowSemiCondensed-SemiBold.ttf'
 
 import 'style.css'
-import authService from 'authentication/authServices.js'
+import authService from 'authentication/authenticationServices.js'
 
 const renderApp = () => render(
   <StrictMode>

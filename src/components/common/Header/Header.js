@@ -21,7 +21,7 @@ import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
 import UserMenu from '../../user/UserMenu'
 import { login } from 'redux/services/authServices'
-import authService from 'authentication/authServices.js';
+import authService from 'authentication/authenticationServices.js';
 import ShowOnPermission from "components/base_components/ShowOnPermission";
 
 class Header extends React.Component {
@@ -72,7 +72,6 @@ class Header extends React.Component {
     keyHandler = (e) => {
         if (!e.target.value) return;
         if (e.charCode === 13) { //press Enter  
-            console.log('A')
             if (this.props.location.pathname.substring(0, 7) === '/search') {
                 this.redirect = <Redirect to={`${this.props.location.pathname}?page=1&q=${e.target.value}&category=${getQueryParamByName('category')}`} />
                 if (this.props.location.pathname === "/search/posts") {
@@ -106,7 +105,6 @@ class Header extends React.Component {
             this.quickSearchResultView = <SmallLoader text="Đang tìm kiếm " />;
 
         let userMenu = <></>;
-        // if (this.props.isAuthenticated) {
         if (authService.isLoggedIn()) {
             userMenu = <UserMenu />
         }
@@ -279,8 +277,6 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAuthenticated: state.auth.authentication.isAuthenticated,
-        isAuthenticating: state.auth.authentication.isAuthenticating,
         quickSearchResultData: state.common.quickSearchResult.data,
         isQuickSearchLoading: state.common.quickSearchResult.isLoading,
         isQuickSearchLoadDone: state.common.quickSearchResult.isLoadDone

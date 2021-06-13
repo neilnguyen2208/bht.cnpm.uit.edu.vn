@@ -1,74 +1,27 @@
 import {
-  LOGIN_SUCCESS,
-  AUTHENTICATE_FAILURE,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  REGISTER_REQUEST,
-
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
-
-  AUTHENTICATE_REQUEST
-
+  GET_CURRENT_USER_SUMMARY_REQUEST,
+  GET_CURRENT_USER_SUMMARY_SUCCESS,
+  GET_CURRENT_USER_SUMMARY_FAILURE,
 } from 'redux/constants.js';
 
-export function loginSuccess(data) {
+export function get_CurrentUserSummaryRequest(data) {
   return {
-    type: LOGIN_SUCCESS,
+    type: GET_CURRENT_USER_SUMMARY_REQUEST,
     payload: data
   }
 }
 
-
-export function authenticateFailure() {
+export function get_CurrentUserSummarySuccess(data) {
   return {
-    type: AUTHENTICATE_FAILURE
-  }
-}
-
-
-export function registerSuccess(data) {
-  return {
-    type: REGISTER_SUCCESS,
-    payload: data
-  }
-}
-export function registerRequest() {
-  return {
-    type: REGISTER_REQUEST,
-  }
-}
-export function registerFailure() {
-  return {
-    type: REGISTER_FAILURE,
-  }
-}
-
-export function logoutRequest(data) {
-  return {
-    type: LOGOUT_REQUEST,
+    type: GET_CURRENT_USER_SUMMARY_SUCCESS,
     payload: data
   }
 }
 
-export function logoutSuccess(data) {
+export function get_CurrentUserSummaryFailure(error) {
   return {
-    type: LOGOUT_SUCCESS,
-    payload: data
-  }
-}
-
-export function logoutFailure(error) {
-  return {
-    type: LOGOUT_FAILURE,
+    type: GET_CURRENT_USER_SUMMARY_FAILURE,
     payload: error
-  }
-}
-
-export function authenticationRequest() {
-  return {
-    type: AUTHENTICATE_REQUEST,
   }
 }
 

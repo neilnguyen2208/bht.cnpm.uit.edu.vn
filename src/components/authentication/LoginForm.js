@@ -69,34 +69,25 @@ class Login extends React.Component {
   }
 
   render() {
-
-    if (this.props.isAuthenticated) {
-      openBLModal({ type: "success", text: "Đăng nhập thành công!" });
-      closeBigModal();
-    }
-
     return (
       <div className="login-form-container">
-
-        {this.props.isAuthenticated ? <Redirect to="/" /> : <></>}
-
         <div className="scroller-container d-flex" style={{ padding: "0px" }} >
           <div className="login-sidebar">
             <div>
               Chào mừng đến với
-            <br />
+              <br />
               <div className="sidebar-bht-name"> BHT
-              Đoàn khoa Công nghệ phần mềm.
-               </div>
+                Đoàn khoa Công nghệ phần mềm.
+              </div>
             </div>
             <img alt="" className="mg-top-5px" src={fb_icon} />
             <br />
             <div style={{ borderBottom: "1px white solid", paddingBottom: "0.1rem", marginTop: "0.625rem", marginBottom: "10px" }}> Đăng nhập để trải nghiệm: </div>
             <div style={{ lineHeight: "1.2rem" }}>
               - Tương tác với các bài viết và tài liệu. <br />
-          - Chia sẻ các tài liệu và bài viết. <br />
-          - Chia sẻ và tận dụng nguồn bài tập. <br />
-          - Tải tài liệu. <br />
+              - Chia sẻ các tài liệu và bài viết. <br />
+              - Chia sẻ và tận dụng nguồn bài tập. <br />
+              - Tải tài liệu. <br />
             </div>
           </div>
 
@@ -157,7 +148,7 @@ class Login extends React.Component {
                   Nếu chưa có tài khoàn, vui lòng</div>
                 <Link to="/register" className="link-label-m" onClick={() => closeBigModal()}>
                   đăng ký
-                  </Link>
+                </Link>
               </div>
             </div>
 
@@ -172,10 +163,7 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLogingIn: state.auth.isLogingIn,
-    isAuthenticated: state.auth.isAuthenticated,
-
-
+    // isLogingIn: state.auth.isLogingIn,
   };
 }
 

@@ -1,4 +1,4 @@
-import authService from 'authentication/authServices.js';
+import authService from 'authentication/authenticationServices.js';
 import { openModal } from 'redux/services/modalServices'
 import React from "react";
 import { Link } from 'react-router-dom'

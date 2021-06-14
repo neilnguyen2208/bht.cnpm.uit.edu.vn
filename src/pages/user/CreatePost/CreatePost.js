@@ -22,7 +22,7 @@ import Metadata from 'components/post/DetailInfo'
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { detailType } from 'constants.js'
-import NormalReactionbar from "components/post/NormalReactionbar";
+import PostNormalReactionbar from "components/post/NormalReactionbar";
 import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
@@ -431,10 +431,11 @@ class CreatePost extends React.Component {
                             <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
                         )}
                     </div>
-                    <NormalReactionbar
+                    <PostNormalReactionbar
                         postId={"-1"}
                         likeCount={0}
                         commentCount={0}
+                        viewCount={0}
                         likedStatus={false}
                         savedStatus={false}
                         type="PREVIEW"

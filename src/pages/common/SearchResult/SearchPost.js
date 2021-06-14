@@ -103,6 +103,7 @@ class SearchPost extends React.Component {
                     <PostNormalReactionbar
                         postId={item.id}
                         likeCount={item.likeCount}
+                        viewCount={item.viewCount}
                         commentCount={item.commentCount}
                         likedStatus={item.likeStatus}
                         savedStatus={item.savedStatus}

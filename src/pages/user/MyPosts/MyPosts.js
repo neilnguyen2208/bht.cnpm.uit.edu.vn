@@ -182,7 +182,7 @@ class MyPosts extends React.Component {
                             likedStatus={item.likeStatus}
                             savedStatus={item.savedStatus}
                             useAction={true}
-
+                            viewCount={item.viewCount}
                         />
                     </div >
                 })

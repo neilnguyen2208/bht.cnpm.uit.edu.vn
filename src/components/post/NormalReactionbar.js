@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent'
+import preview_icon from 'assets/icons/24x24/gray_preview_icon_24x24.png'
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -126,77 +127,83 @@ class NormalReactionbar extends React.Component {
       </div >
     }
     return (
-      <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
-        <div className="d-flex mg-top-5px">
-
-          <RequireLogin permissions={[]}
-            availableActions={this.props.availableActions}
-            requiredAction={PostAction.Like}
-            useAction={this.props.useAction}
-            expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
-            <div className="like-btn-container">
-              <div className="d-flex"> {likeBtn}</div>
-              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
-            </div>
-          </RequireLogin>
-
-          <div className="vertical-line" />
-
-          <RequireLogin permissions={[]}
-            availableActions={this.props.availableActions}
-            requiredAction={PostAction.Save}
-            expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}
-            useAction={this.props.useAction}     >
-            <div className="save-btn-container"  >
-              {saveBtn}
-            </div>
-          </RequireLogin>
-
-          <div className="vertical-line" />
-
-          {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
-            <RequireLogin permissions={[]}
-              availableActions={this.props.availableActions}
-              requiredAction={PostAction.Comment}
-              isLink={true}
-              useAction={this.props.useAction}
-              to={"/post-content/" + this.props.postId + "#cr-cmt"}
-              expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
-              <div className="comment-count-container">
-                <div className="comment-btn-text">
-                  Bình luận
-                </div>
-                <div className="comment-btn-number">
-                  {formatNumber(this.props.commentCount)}
-                </div>
-              </div>
-            </RequireLogin>
-            :
-            <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
-              availableActions={this.props.availableActions}
-              requiredAction={PostAction.Comment}
-              useAction={this.props.useAction}
-              isLink={true}
-              to={"/post-content/" + this.props.postId + "#cr-cmt"}
-              expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}
-            >
-              {/* onClick={!authService.isGranted(Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE) ? (e) => e.preventDefault() : () => { }}> */}
-              <div className="comment-count-container">
-                <div className="comment-btn-text">
-                  Bình luận
-                </div>
-                <div className="comment-btn-number">
-                  {formatNumber(this.props.commentCount)}
-                </div>
-              </div>
-              {/* </Link> */}
-            </RequireLogin>
-          }
-
-        </div>
-        <Link to={`/post-content/${this.props.postId}`} className="continue-read mg-top-5px" >
+      <div>
+        <Link to={`/post-content/${this.props.postId}`} className="continue-read j-c-end mg-top-5px mg-bottom-5px" >
           Đọc tiếp ...
         </Link>
+        <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
+          <div className="d-flex mg-top-5px">
+
+            <RequireLogin permissions={[]}
+              availableActions={this.props.availableActions}
+              requiredAction={PostAction.Like}
+              useAction={this.props.useAction}
+              expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
+              <div className="like-btn-container">
+                <div className="d-flex"> {likeBtn}</div>
+                <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+              </div>
+            </RequireLogin>
+
+            <div className="vertical-line" />
+
+            <RequireLogin permissions={[]}
+              availableActions={this.props.availableActions}
+              requiredAction={PostAction.Save}
+              expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}
+              useAction={this.props.useAction}     >
+              <div className="save-btn-container"  >
+                {saveBtn}
+              </div>
+            </RequireLogin>
+
+            <div className="vertical-line" />
+
+            {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
+              <RequireLogin permissions={[]}
+                availableActions={this.props.availableActions}
+                requiredAction={PostAction.Comment}
+                isLink={true}
+                useAction={this.props.useAction}
+                to={"/post-content/" + this.props.postId + "#cr-cmt"}
+                expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
+                <div className="comment-count-container">
+                  <div className="comment-btn-text">
+                    Bình luận
+                  </div>
+                  <div className="comment-btn-number">
+                    {formatNumber(this.props.commentCount)}
+                  </div>
+                </div>
+              </RequireLogin>
+              :
+              <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+                availableActions={this.props.availableActions}
+                requiredAction={PostAction.Comment}
+                useAction={this.props.useAction}
+                isLink={true}
+                to={"/post-content/" + this.props.postId + "#cr-cmt"}
+                expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}
+              >
+                {/* onClick={!authService.isGranted(Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE) ? (e) => e.preventDefault() : () => { }}> */}
+                <div className="comment-count-container">
+                  <div className="comment-btn-text">
+                    Bình luận
+                  </div>
+                  <div className="comment-btn-number">
+                    {formatNumber(this.props.commentCount)}
+                  </div>
+                </div>
+                {/* </Link> */}
+              </RequireLogin>
+            }
+
+          </div>
+          <div className="view-count-container">
+            {/* <img className="preview-icon" src={preview_icon} alt="" /> */}
+            <div className="view-count"  >{formatNumber(this.props.viewCount)} lượt xem</div>
+          </div >
+        </div>
       </div >
     );
   }

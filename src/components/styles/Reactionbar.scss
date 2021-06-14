@@ -75,7 +75,8 @@
 
 .save-btn-text {
   padding-top: 1px;
-  font-size: 15px;
+  font-family: "BarlowSemiCondensed-Medium";
+  font-size: 1rem;
   color: var(--black);
   line-height: 16px;
 }
@@ -88,8 +89,8 @@
   height: fit-content;
   position: relative;
   height: 20px;
-  font-family: "BarlowCondensed-Medium";
-  font-size: 18px;
+  font-family: "BarlowSemiCondensed-Medium";
+  font-size: 1rem;
   line-height: 18px;
   color: var(--blue);
   user-select: none;
@@ -184,7 +185,7 @@
 
 .download-btn-container {
   display: flex;
-  font-family: "BarlowCondensed-Medium";
+  font-family: "BarlowSemiCondensed-Medium";
   font-size: 18px;
   line-height: 20px;
   color: var(--black);
@@ -198,7 +199,8 @@
 
 .view-count-container {
   @extend .download-btn-container;
-  max-width: 50px;
+  max-width: 85px;
+  font-size: 1rem;
   margin-left: 0px;
 }
 

@@ -238,6 +238,7 @@ class PostManagement extends React.Component {
                         savedStatus={item.savedStatus}
                         availableActions={item.availableActions}
                         useAction={true}
+                        viewCount = {item.viewCount}
 
                     />
                 </div >

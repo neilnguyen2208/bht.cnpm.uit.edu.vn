@@ -30,7 +30,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import Metadata from 'components/post/DetailInfo'
 import SmallLoader from 'components/common/Loader/Loader_S'
-import NormalReactionbar from 'components/post/NormalReactionbar'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
 
 const validationCondition = {
     form: '#edit-post-form',
@@ -491,15 +491,16 @@ class EditPostModal extends React.Component {
 
                                         <div className="mg-top-10px mg-bottom-10px" >
                                             {this.shownTag.map(item =>
-                                                <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
+                                                <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
                                             )}
                                         </div>
-                                        <NormalReactionbar
+                                        <PostNormalReactionbar
                                             postId={"-1"}
                                             likeCount={0}
                                             commentCount={0}
                                             likedStatus={false}
                                             savedStatus={false}
+                                            viewCount={0}
                                             type="PREVIEW"
                                         />
                                     </div>
@@ -594,7 +595,7 @@ class EditPostModal extends React.Component {
                                                 </div>
                                                 <div className="mg-top-10px" >
                                                     {this.shownTag.map(item =>
-                                                        <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
+                                                        <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
                                                     )}
                                                 </div>
                                                 <div className="form-line" />

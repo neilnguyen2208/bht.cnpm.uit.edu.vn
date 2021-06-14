@@ -10,7 +10,7 @@ import { reportAPost } from 'redux/services/postServices'
 import { openModal, closeModal, openBLModal, openBigModal } from 'redux/services/modalServices'
 import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
-import NormalReactionbar from 'components/post/NormalReactionbar'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import { deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
 import { wallpageMenu } from 'components/post/adapter/allActionSummaryMenu';
 
@@ -137,10 +137,11 @@ class WallpageItem extends React.Component {
                         </div>
                     </div >
                     <div >
-                        <NormalReactionbar
+                        <PostNormalReactionbar
                             postId={this.props.wpPostId}
                             availableActions={this.props.availableActions}
                             likeCount={this.props.likeCount}
+                            viewCount={this.props.viewCount}
                             commentCount={this.props.commentCount}
                             likedStatus={this.props.likedStatus}
                             savedStatus={this.props.savedStatus}

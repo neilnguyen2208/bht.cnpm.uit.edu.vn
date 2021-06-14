@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import Metadata from "components/post/DetailInfo"
 import Tag from 'components/post/Tag'
 import Loader from 'components/common/Loader/Loader'
-import NormalReactionbar from 'components/post/NormalReactionbar'
+import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import store from 'redux/store/index.js';
 import {
     get_PostByIDReset,
@@ -90,7 +90,7 @@ class PostDetail extends React.Component {
 
                                         {this.props.isPostStatisticLoadDone && Object.keys(this.props.postStatistic).length > 0 ?
                                             <div>
-                                                < NormalReactionbar
+                                                <PostNormalReactionbar
                                                     useAction={true}
                                                     availableActions={this.props.currentPost.availableActions}
                                                     postId={this.props.currentPost.id}
@@ -98,6 +98,7 @@ class PostDetail extends React.Component {
                                                     commentCount={this.props.postStatistic.commentCount}
                                                     likedStatus={this.props.currentPost.likeStatus}
                                                     savedStatus={this.props.currentPost.savedStatus}
+                                                    viewCount={this.props.currentPost.viewCount}
                                                 />
 
                                                 <div id="cr-cmt" />
@@ -111,7 +112,7 @@ class PostDetail extends React.Component {
                                             </div>
                                             :
                                             <div>
-                                                < NormalReactionbar
+                                                <PostNormalReactionbar
                                                     useAction={true}
                                                     availableActions={this.props.currentPost.availableActions}
                                                     postId={this.props.currentPost.id}
@@ -119,6 +120,8 @@ class PostDetail extends React.Component {
                                                     commentCount={this.props.currentPost.commentCount}
                                                     likedStatus={this.props.currentPost.likeStatus}
                                                     savedStatus={this.props.currentPost.savedStatus}
+                                                    viewCount={this.props.currentPost.viewCount}
+
                                                 />
                                                 <div id="cr-cmt" />
                                                 <CommentSection

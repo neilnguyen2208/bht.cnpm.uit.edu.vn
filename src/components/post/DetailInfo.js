@@ -93,7 +93,7 @@ class PostDetail extends React.Component {
       <div className="metadata">
 
         {/* title */}
-        <Link to={"/post-content/" + this.props.postId}>
+        <Link to={"/post-content/" + this.props.postId} onClick={this.props.type === "PREVIEW" && ((e) => { e.preventDefault() })}>
           <div className="title">
             {this.props.title}
           </div>

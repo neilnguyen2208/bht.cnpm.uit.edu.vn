@@ -73,10 +73,11 @@ class CreateComment extends React.Component {
       this.props.getAPostStatisticByID(this.props.postId)
       this.reloadList()
     }
+    console.log(this.props.userSummaryData)
     return (
       <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
         <div className="comment-main-level">
-          <img className="comment-avatar" src="https://i.imgur.com/SZJgL6C.png" alt="" />
+          <img className="comment-avatar" src={this.props.isSummaryLoaded && this.props.userSummaryData.avatarURL} alt="" />
           <div className="comment-box">
             <div id="create-comment-form" tabIndex="1">
               <div className="form-group">
@@ -112,7 +113,8 @@ class CreateComment extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isHaveCreated: state.comment.isHaveCreated,
-    
+    userSummaryData: state.auth.currentUserSummary.data,
+    isSummaryLoaded: state.auth.currentUserSummary.isLoadDone
   };
 }
 

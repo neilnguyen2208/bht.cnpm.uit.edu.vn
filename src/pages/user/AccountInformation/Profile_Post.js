@@ -106,6 +106,7 @@ class ProfilePost extends React.Component {
                             commentCount={item.commentCount}
                             likedStatus={item.likeStatus}
                             savedStatus={item.savedStatus}
+                            viewCount= {item.viewCount}
                         />
                     </div >
                 })

@@ -111,7 +111,8 @@ class CreateComment extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isHaveCreated: state.comment.isHaveCreated
+    isHaveCreated: state.comment.isHaveCreated,
+    
   };
 }
 

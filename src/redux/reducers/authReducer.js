@@ -1,5 +1,5 @@
 import {
-  GET_CURRENT_USER_SUMMARY_REQUEST,
+  GET_CURRENT_USER_SUMMARY_RESET,
   GET_CURRENT_USER_SUMMARY_SUCCESS,
   GET_CURRENT_USER_SUMMARY_FAILURE
 
@@ -14,12 +14,12 @@ const initialState = {
 
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_CURRENT_USER_SUMMARY_REQUEST:
+    case GET_CURRENT_USER_SUMMARY_RESET:
       return {
         ...state,
         currentUserSummary: {
           isLoadDone: false,
-          data: state.currentUserSummary.data
+          data: {}
         }
       };
     case GET_CURRENT_USER_SUMMARY_SUCCESS:
@@ -27,7 +27,7 @@ export default function AuthReducer(state = initialState, action) {
         ...state,
         currentUserSummary: {
           isLoadDone: true,
-          data: action.payload.data
+          data: action.payload
         }
       }
 
@@ -36,7 +36,7 @@ export default function AuthReducer(state = initialState, action) {
         ...state,
         currentUserSummary: {
           isLoadDone: false,
-          data: action.payload.data, error: action.payload
+          data: state.currentUserSummary.data, error: action.payload
         }
       };
     default:

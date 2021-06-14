@@ -20,7 +20,6 @@ import { DELAY_TIME } from 'constants.js';
 import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
 import UserMenu from '../../user/UserMenu'
-import { login } from 'redux/services/authServices'
 import authService from 'authentication/authenticationServices.js';
 import ShowOnPermission from "components/base_components/ShowOnPermission";
 
@@ -112,7 +111,7 @@ class Header extends React.Component {
         else {
             userMenu = <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
                 Đăng nhập
-             </button>
+            </button>
         }
 
         return (
@@ -284,7 +283,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getQuickSearchResult, login
+    getQuickSearchResult
 }, dispatch);
 
 export default withRouter(

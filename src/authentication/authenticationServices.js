@@ -1,13 +1,11 @@
 import { styleCodeSnippet } from "components/common/CustomCKE/CKEditorUtils";
 import Keycloak from "keycloak-js";
+import { getCurrentUserSummary } from 'redux/services/authServices'
+import { get_CurrentUserSummaryReset } from 'redux/actions/authAction'
+import store from "redux/store";
 
 const _kc = new Keycloak('/keycloak.config.json');
 
-/**
- * Initializes Keycloak instance and calls the provided callback function if successfully authenticated.
- *
- * @param onAuthenticatedCallback
- */
 const initKeycloak = (onAuthenticatedCallback) => {
     _kc.init({
         onLoad: 'check-sso',
@@ -17,14 +15,18 @@ const initKeycloak = (onAuthenticatedCallback) => {
         .then((authenticated) => {
             onAuthenticatedCallback();
             if (_kc.token) {
-                
+                store.dispatch(getCurrentUserSummary())
             }
         })
 };
 
 const doLogin = () => { _kc.login(); styleCodeSnippet(); }
 
-const doLogout = () => { _kc.logout(); styleCodeSnippet(); }
+const doLogout = () => {
+    _kc.logout();
+    store.dispatch(get_CurrentUserSummaryReset());
+    styleCodeSnippet();
+}
 
 const getToken = () => _kc.token;
 

@@ -37,10 +37,7 @@ class UserSidebar extends React.Component {
     window.removeEventListener('scroll', this.scrollFunction);
   }
   render() {
-
-    let roleName; //  score, postCount, docCount, username, avatarURL = "https://i.imgur.com/SZJgL6C.png";
-    // = this.props.accountInformation;
-
+    
     return (
       <div className="left-sidebar-wrapper" >
         {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}

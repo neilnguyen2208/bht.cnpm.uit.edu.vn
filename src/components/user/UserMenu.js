@@ -8,12 +8,11 @@ import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 import { ClickAwayListener } from "@material-ui/core";
 import authService from "authentication/authenticationServices.js";
-import { authServices } from "redux/services/authServices";
-
+import { formatNumber } from 'utils/miscUtils'
 // authServices.
 
 const userMenuOptions = [
-    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: "/user/profile/321d-190", isLink: true },
+    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: `/user/profile/`, isLink: true },
     // { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
     {
         id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '', to: "/user/my-posts", isLink: true,
@@ -45,19 +44,11 @@ class UserMenu extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.isAnyValueChanged = false; //will become true if you choose an option
-
         this.state = {
             isDropdownOpen: false,
         }
-
-        this.selectedItem = {
-            id: "",
-            name: ""
-        }
-
     }
+
     componentDidMount() {
         this.setState({ isDropdownOpen: false });
     }
@@ -90,13 +81,8 @@ class UserMenu extends React.Component {
 
     handleMenuItemClick = (menuItem) => {
         document.getElementById("h-um-wrapper").style.background = "white";
-        this.isAnyValueChanged = true;
         this.setState({});
 
-        //Event handlers
-        if (menuItem.value === "PROFILE") {
-            // return <Redirect to="/user" />;
-        }
         if (menuItem.value === "LOGOUT")
             authService.doLogout();
     }
@@ -110,7 +96,7 @@ class UserMenu extends React.Component {
                 <div className='d-flex'>
                     {menuItem.tip ?
                         <>{menuItem.isLink ?
-                            <Link className='d-flex' to={menuItem.to} onClick={() => this.closeMenu()} style={{ color: "var(--black)" }}>
+                            <Link className='d-flex' to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} onClick={() => this.closeMenu()} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={{
                                     height: "27px",
                                     paddingTop: "7px"
@@ -133,7 +119,7 @@ class UserMenu extends React.Component {
                             </div>
                         }</> :
                         <>{menuItem.isLink ?
-                            <Link className='d-flex' onClick={() => this.closeMenu()} to={menuItem.to} style={{ color: "var(--black)" }}>
+                            <Link className='d-flex' onClick={() => this.closeMenu()} to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
                                     height: "23px",
                                     paddingTop: "0px",
@@ -155,57 +141,60 @@ class UserMenu extends React.Component {
                 </div>
             </div >
         })
+        if (this.props.userSummaryData && this.props.isSummaryLoaded)
+            return (
+                <div id="h-um-wrapper" className="user-menu">
+                    <div className="d-flex">
+                        <Link to={`/user/profile/${this.props.userSummaryData.id}`}>
+                            <img className="avatar" style={{ marginTop: "auto", marginBottom: "auto" }} src={this.props.userSummaryData.avatarURL} alt="" />
+                        </Link>
+                    </div>
 
-        return (
-            <div id="h-um-wrapper" className="user-menu">
-                <div className="d-flex">
-                    <Link to={`/user/profile/${this.props.authorID}`}>
-                        <img className="avatar" style={{ marginTop: "auto", marginBottom: "auto" }} src="https://i.imgur.com/tPdFhGa.png" alt="" />
-                    </Link>
-                </div>
-
-                <ClickAwayListener onClickAway={() => { this.closeMenu() }}>
-                    <div className='d-flex pos-relative' >
-                        <div>
-                            <div className="d-flex">
-                                <img className="user-menu-btn" id={"h-um-btn"} //h-um: header user menu
-                                    onClick={(e) => this.handlePopupMenuClick(e, "h-um-btn", "h-um-dropdown")} alt=""
-                                    src={dropdown_btn}
-                                />
-                            </div>
+                    <ClickAwayListener onClickAway={() => { this.closeMenu() }}>
+                        <div className='d-flex pos-relative' >
                             <div>
-                                {this.state.isDropdownOpen ?
-                                    <div className="user-menu-dropdown" id={"h-um-dropdown"}>
-                                        <div className="display-name">Nguyễn Văn Đông</div>
-                                        <div className="d-flex mg-bottom-5px">
-                                            <div className="reputation-sub-container">
-                                                <img alt="" src={gray_write_icon} className="user-menu-icon" />
-                                                <div className="reputation-label">  2000</div>
+                                <div className="d-flex">
+                                    <img className="user-menu-btn" id={"h-um-btn"} //h-um: header user menu
+                                        onClick={(e) => this.handlePopupMenuClick(e, "h-um-btn", "h-um-dropdown")} alt=""
+                                        src={dropdown_btn}
+                                    />
+                                </div>
+                                <div>
+                                    {this.state.isDropdownOpen ?
+                                        <div className="user-menu-dropdown" id={"h-um-dropdown"}>
+                                            <div className="display-name">{this.props.userSummaryData.displayName}</div>
+                                            <div className="d-flex mg-bottom-5px">
+                                                <div className="reputation-sub-container">
+                                                    <img alt="" src={gray_write_icon} className="user-menu-icon" />
+                                                    <div className="reputation-label">  {formatNumber(this.props.userSummaryData.postCount)}</div>
+                                                </div>
+                                                <div className="reputation-sub-container">
+                                                    <img alt="" src={gray_upload_icon} className="user-menu-icon" />
+                                                    <div className="reputation-label">   {formatNumber(this.props.userSummaryData.docCount)}</div>
+                                                </div>
                                             </div>
-                                            <div className="reputation-sub-container">
-                                                <img alt="" src={gray_upload_icon} className="user-menu-icon" />
-                                                <div className="reputation-label">   2000</div>
-                                            </div>
-                                        </div>
 
-                                        {items}
-                                    </div>
-                                    : <div id={"h-um-dropdown"}></div>}
+                                            {items}
+                                        </div>
+                                        : <div id={"h-um-dropdown"}></div>}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </ClickAwayListener >
-            </div>
-
-        );
+                    </ClickAwayListener >
+                </div>
+            );
+        return <></>;
     }
 
 }
 
 const mapStateToProps = (state) => {
     return {
+        userSummaryData: state.auth.currentUserSummary.data,
+        isSummaryLoaded: state.auth.currentUserSummary.isLoadDone
     };
 };
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 

@@ -77,7 +77,7 @@ class AdminSidebar extends React.Component {
                                 <img alt="*" className="vertical-m-i-icon" src={content_management_icon} id="page-managent-btn-element" />
                                 <div className="side-bar-menu-item-text" id="page-managent-parent-menu-item-text">
                                     Quản lý nội dung
-                                        </div>
+                                </div>
                             </div>
                             <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-admin-dropdown-btn-element" />
                         </div>
@@ -89,13 +89,13 @@ class AdminSidebar extends React.Component {
                                     to={"/admin/post-management"} >
                                     <div className="text" >
                                         Quản lý bài viết
-                                                </div>
+                                    </div>
                                 </NavLink>
                                 <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                     to={"/admin/document-management"} >
                                     <div className="text">
                                         Quản lý tài liệu
-                                                </div>
+                                    </div>
                                 </NavLink>
                                 {/* 
                                 <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
@@ -117,7 +117,7 @@ class AdminSidebar extends React.Component {
                                 >
                                     <div className="text">
                                         Quản lý danh mục
-                                                            </div>
+                                    </div>
                                 </NavLink>
                                 <div className="mg-bottom-5px" />
                                 <div className="decoration-underline " />
@@ -138,7 +138,7 @@ class AdminSidebar extends React.Component {
                                 id="user-managent-btn-element" />
                             <div className="side-bar-menu-item-text"  >
                                 Quản lý người dùng
-                                    </div>
+                            </div>
                         </NavLink>
 
                         {/* Quan ly hoat dong: các báo cáo người dùng  */}
@@ -164,7 +164,7 @@ class AdminSidebar extends React.Component {
                             />
                             <div className="side-bar-menu-item-text"  >
                                 Quản lý quyền truy cập
-                                                    </div>
+                            </div>
                         </NavLink >
 
                         {/* Thong ke */}
@@ -176,7 +176,7 @@ class AdminSidebar extends React.Component {
                                 src={statistic_management_icon} />
                             <div className="side-bar-menu-item-text"  >
                                 Thống kê
-                                        </div>
+                            </div>
                         </NavLink >
                     </div >
                 </div >
@@ -249,10 +249,10 @@ class AdminSidebar extends React.Component {
 }
 
 //#region for redux
-const mapStateToProps = () => {
-    // (state);
+const mapStateToProps = (state) => {
     return {
-        // accountInformation: state.user.account
+        userSummaryData: state.auth.currentUserSummary.data,
+        isUserSummaryLoadDone: state.auth.currentUserSummary.isLoadDone,
     };
 }
 

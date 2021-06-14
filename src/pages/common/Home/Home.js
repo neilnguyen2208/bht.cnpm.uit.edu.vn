@@ -77,6 +77,7 @@ class Home extends React.Component {
                     savedStatus={postItem.savedStatus}
                     readingTime={postItem.readingTime}
                     likeCount={postItem.likeCount}
+                    viewCount={postItem.viewCount}
                     commentCount={postItem.commentCount}
                 ></HomePostItem>
             })
@@ -128,6 +129,7 @@ class Home extends React.Component {
                     savedStatus={postItem.savedStatus}
                     readingTime={postItem.readingTime}
                     likeCount={postItem.likeCount}
+                    viewCount={postItem.viewCount}
                     commentCount={postItem.commentCount}
                 ></HomePostItem>
             })

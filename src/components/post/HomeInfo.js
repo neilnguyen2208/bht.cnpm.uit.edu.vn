@@ -65,6 +65,7 @@ class HomeInfo extends React.Component {
           readingTime={this.props.readingTime}
           likeCount={this.props.likeCount}
           commentCount={this.props.commentCount}
+          viewCount={this.props.viewCount}
         />
       </div>
     );

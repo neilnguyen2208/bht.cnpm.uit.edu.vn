@@ -114,30 +114,35 @@ class HomeReactionbar extends React.Component {
     }
 
     return (
-      <div className="reaction-bar">
-        <div className="d-flex">
-          <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-            <div> {likeBtn}</div>
-            <div className="like-count">{this.props.likeCount?formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount):0}</div>
-          </div>
-          <div className="vertical-line" />
-          <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
-            <div className="d-flex"> {saveBtn}</div>
-          </div>
-          <div className="vertical-line" />
-          <div className="comment-count-container">
-            <div className="comment-btn-text">
-              Bình luận
-            </div>
-            <div className="comment-btn-number">
-              {formatNumber(this.props.commentCount)}
-            </div>
-          </div>
-        </div>
+      <div>
         <Link to={`/post-content/${this.props.id}`} className="continue-read" >
           Đọc tiếp ...
-            </Link>
-      </div >
+        </Link>
+        <div className="reaction-bar">
+          <div className="d-flex">
+            <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+              <div> {likeBtn}</div>
+              <div className="like-count">{this.props.likeCount ? formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount) : 0}</div>
+            </div>
+            <div className="vertical-line" />
+            <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
+              <div className="d-flex"> {saveBtn}</div>
+            </div>
+            <div className="vertical-line" />
+            <div className="comment-count-container">
+              <div className="comment-btn-text">
+                Bình luận
+              </div>
+              <div className="comment-btn-number">
+                {formatNumber(this.props.commentCount)}
+              </div>
+            </div>
+          </div>
+          <div className="view-count-container">
+            <div className="view-count" style={{ fontHeight: "1rem" }}  >{formatNumber(this.props.viewCount)} lượt xem</div>
+          </div >
+        </div >
+      </div>
     );
   }
 

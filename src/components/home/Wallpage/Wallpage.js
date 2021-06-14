@@ -121,6 +121,7 @@ class Wallpage extends React.Component {
                                         commentCount={item.commentCount}
                                         authorAvatarURL={item.authorAvatarURL}
                                         availableActions={item.availableActions}
+                                        viewCount={item.viewCount}
                                     />
                                 </li>)
                             }, this)}
@@ -130,8 +131,8 @@ class Wallpage extends React.Component {
                     <div className="pos-absolute" >
                         <div className="highlight-title" >
                             <img className="hightlight-icon" src={highlight_icon} alt="*" />
-                                             HIGHLIGHTS
-                                </div>
+                            HIGHLIGHTS
+                        </div>
                     </div>
                 </div>
 

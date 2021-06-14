@@ -201,7 +201,7 @@ class NormalReactionbar extends React.Component {
           </div>
           <div className="view-count-container">
             {/* <img className="preview-icon" src={preview_icon} alt="" /> */}
-            <div className="view-count"  >{formatNumber(this.props.viewCount)} lượt xem</div>
+            <div className="view-count" style={{ lineHeight: "0.9rem" }} >{formatNumber(this.props.viewCount)} lượt xem</div>
           </div >
         </div>
       </div >

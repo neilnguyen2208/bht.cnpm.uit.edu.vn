@@ -65,7 +65,7 @@ class Home extends React.Component {
                     authorAvatarURL={postItem.authorAvatarURL}
                     key={postItem.id}
                     id={postItem.id}
-                    authorName={postItem.authorName}
+                    authorDisplayName={postItem.authorDisplayName}
                     authorID={postItem.authorID}
                     publishDtm={postItem.publishDtm}
                     categoryName={postItem.categoryName}
@@ -92,7 +92,7 @@ class Home extends React.Component {
                     key={item.id}
                     id={item.id}
                     authorID={item.authorID}
-                    authorName={item.authorName}
+                    authorDisplayName={item.authorDisplayName}
                     categoryID={item.categoryID}
                     categoryName={item.category}
                     imageURL={item.imageURL}
@@ -116,7 +116,7 @@ class Home extends React.Component {
                 return <HomePostItem
                     key={postItem.id}
                     id={postItem.id}
-                    authorName={postItem.authorName}
+                    authorDisplayName={postItem.authorDisplayName}
                     authorID={postItem.authorID}
                     authorAvatarURL={postItem.authorAvatarURL}
                     publishDtm={postItem.publishDtm}

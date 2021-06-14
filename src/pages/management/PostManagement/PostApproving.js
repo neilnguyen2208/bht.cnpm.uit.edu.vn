@@ -111,7 +111,7 @@ class PostApproving extends React.Component {
                     {console.log(item)}
                     <RequestInfo
                         postId={item.id}
-                        authorName={item.authorName}
+                        authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
@@ -123,7 +123,7 @@ class PostApproving extends React.Component {
                         // useAction={true}
                         type={itemType.approval}
                         postId={item.id}
-                        authorName={item.authorName}
+                        authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
                         categoryName={item.categoryName}

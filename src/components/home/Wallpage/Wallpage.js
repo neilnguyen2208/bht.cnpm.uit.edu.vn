@@ -106,7 +106,7 @@ class Wallpage extends React.Component {
                                     <WallpageItem
                                         key={item.id}
                                         wpPostId={item.id} //wallpage post id
-                                        authorName={item.authorName}
+                                        authorDisplayName={item.authorDisplayName}
                                         authorID={item.authorID}
                                         publishDtm={item.publishDtm}
                                         categoryName={item.categoryName}

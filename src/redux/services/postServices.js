@@ -95,6 +95,7 @@ import { openModal, openBLModal, closeModal } from 'redux/services/modalServices
 
 import { authRequest, request, springAuthRequest } from 'utils/requestUtils';
 import { generateSearchParam } from 'utils/urlUtils'
+import { getUserStatisticById } from "./authServices";
 
 export function createAPost(data) {
     return dispatch => {
@@ -319,9 +320,14 @@ export function getPostByID(id) {
         dispatch(get_PostByIDReset())
         authRequest.get(`/posts/${id}`)
             .then(response_1 => {
-                let result_1 = response_1.data; //response without statistic
+                let result_1 = response_1.data;//response without statistic
+
+                //get relative posts
                 dispatch(getSameAuthorPosts(result_1.id, result_1.authorID));
                 dispatch(getSameCategoryPosts(result_1.id, result_1.categoryID));
+
+                //get user statistic
+                dispatch(getUserStatisticById(result_1.authorID));
                 authRequest.get(`/posts/statistics?postIDs=${result_1.id}`)
                     .then(response_2 => {
                         authRequest.get(`/posts/actionAvailable?postIDs=${result_1.id}`).then(response_3 => {
@@ -329,8 +335,7 @@ export function getPostByID(id) {
                         }).catch(error => { dispatch(get_PostByIDFailure(error)) }
                         ).catch(error => { dispatch(get_PostByIDFailure(error)) })
                     }).catch(error => { dispatch(get_PostByIDFailure(error)) })
-            }
-            )
+            })
     }
 }
 

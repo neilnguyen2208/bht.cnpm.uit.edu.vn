@@ -139,7 +139,7 @@ class HomeReactionbar extends React.Component {
             </div>
           </div>
           <div className="view-count-container">
-            <div className="view-count" style={{ fontHeight: "1rem" }}  >{formatNumber(this.props.viewCount)} lượt xem</div>
+            <div className="view-count" style={{ fontSize: "1rem", lineHeight: "0.9rem", marginTop: "-4px" }}  >{formatNumber(this.props.viewCount)} lượt xem</div>
           </div >
         </div >
       </div>

@@ -449,7 +449,7 @@ class EditDocumentModal extends React.Component {
                     categoryID: this.props.currentDocument.categoryID,
                     categoryName: this.props.currentDocument.categoryName,
                     readingTime: this.props.currentDocument.readingTime,
-                    authorName: this.props.currentDocument.authorName,
+                    authorDisplayName: this.props.currentDocument.authorDisplayName,
                     authorID: this.props.currentDocument.authorID,
                     authorAvatarURL: this.props.currentDocument.authorAvatarURL,
                     id: this.props.currentDocument.id,

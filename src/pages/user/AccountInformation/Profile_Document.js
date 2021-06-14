@@ -85,7 +85,7 @@ class ProfileDocument extends React.Component {
                         <DocumentSummaryMetadata
                             type={itemType.mySelf}
                             id={item.id}
-                            authorName={item.authorName}
+                            authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
                             categoryName={item.category}

@@ -45,7 +45,7 @@ class DocumentDetail extends React.Component {
                                     <Metadata
                                         type={itemType.normal}
                                         id={this.props.currentDocument.id}
-                                        authorName={this.props.currentDocument.authorName}
+                                        authorDisplayName={this.props.currentDocument.authorDisplayName}
                                         authorID={this.props.currentDocument.authorID}
                                         publishDtm={this.props.currentDocument.publishDtm}
                                         categoryName={this.props.currentDocument.categoryName}

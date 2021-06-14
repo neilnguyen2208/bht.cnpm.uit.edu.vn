@@ -91,7 +91,7 @@ class WallpageItem extends React.Component {
                                 </div>
                                 <div className="light-black-label">bởi</div>
                                 <Link className="link-label-s" to={`/user/profile/${this.props.authorID}`}>
-                                    {this.props.authorName}
+                                    {this.props.authorDisplayName}
                                 </Link>
                             </div>
                             <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={true} availableActions={this.props.availableActions} items={wallpageMenu} id={`hipm-${this.props.wpPostId}`} />

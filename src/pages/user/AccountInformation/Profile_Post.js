@@ -84,7 +84,7 @@ class ProfilePost extends React.Component {
                         <PostSummaryMetadata
                             type={itemType.normal}
                             postId={item.id}
-                            authorName={item.authorName}
+                            authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
                             categoryName={item.categoryName}

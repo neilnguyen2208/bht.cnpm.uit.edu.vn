@@ -15,7 +15,7 @@ class UserInfo extends React.Component {
         <img className="avatar" src={this.props.authorAvatarURL} alt="" />
         <div className="mg-left-5px j-c-space-between d-flex-vertical">
           <Link className="link-label-m" to={/user/}>
-            {this.props.authorName}
+            {this.props.authorDisplayName}
           </Link>
 
           <div className="reputation-container">

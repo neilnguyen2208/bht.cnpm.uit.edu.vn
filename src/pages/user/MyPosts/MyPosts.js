@@ -157,7 +157,7 @@ class MyPosts extends React.Component {
                         <PostSummaryMetadata
                             type={itemType.mySelf}
                             postId={item.id}
-                            authorName={item.authorName}
+                            authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
                             categoryName={item.categoryName}

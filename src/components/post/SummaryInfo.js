@@ -146,7 +146,7 @@ class PostSummary extends React.Component {
             </div>
             <div className="light-black-label">bởi</div>
             <Link className="link-label-s" to={`/user/profile/${this.props.authorID}`}>
-              {this.props.authorName}
+              {this.props.authorDisplayName}
             </Link>
 
             {this.props.type === itemType.mySelf || this.props.type === itemType.approval ?

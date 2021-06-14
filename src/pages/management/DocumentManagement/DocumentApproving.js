@@ -144,7 +144,7 @@ class DocumentApproving extends React.Component {
                 <div className="item-container" key={item.id}>
                     <RequestInfo
                         id={item.id}
-                        authorName={item.authorName}
+                        authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         categoryName={item.category}
                         categoryID={item.categoryID}
@@ -156,7 +156,7 @@ class DocumentApproving extends React.Component {
                     <SummaryInfo
                         type={itemType.mySelf}
                         id={item.id}
-                        authorName={item.authorName}
+                        authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
                         categoryName={item.category}

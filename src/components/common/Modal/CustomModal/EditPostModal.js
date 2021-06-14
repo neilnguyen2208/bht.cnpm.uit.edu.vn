@@ -439,7 +439,7 @@ class EditPostModal extends React.Component {
                     categoryID: this.props.currentPost.categoryID,
                     categoryName: this.props.currentPost.categoryName,
                     readingTime: this.props.currentPost.readingTime,
-                    authorName: this.props.currentPost.authorName,
+                    authorDisplayName: this.props.currentPost.authorDisplayName,
                     authorID: this.props.currentPost.authorID,
                     authorAvatarURL: this.props.currentPost.authorAvatarURL,
                     id: this.props.currentPost.id
@@ -479,7 +479,7 @@ class EditPostModal extends React.Component {
                                             categoryName={this.state.EDIT_POST_DTO.categoryName}
                                             categoryID={this.state.EDIT_POST_DTO.categoryID}
                                             readingTime={this.state.EDIT_POST_DTO.readingTime}
-                                            authorName={this.state.EDIT_POST_DTO.authorName}
+                                            authorDisplayName={this.state.EDIT_POST_DTO.authorDisplayName}
                                             authorAvatarURL={this.state.EDIT_POST_DTO.authorAvatarURL}
                                             authorID={this.state.EDIT_POST_DTO.authorID}
                                             publishDtm={this.state.EDIT_POST_DTO.publishDtm}

@@ -212,7 +212,7 @@ class PostManagement extends React.Component {
                     <PostSummaryMetadata
                         type={itemType.management}
                         postId={item.id}
-                        authorName={item.authorName}
+                        authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
                         categoryName={item.categoryName}

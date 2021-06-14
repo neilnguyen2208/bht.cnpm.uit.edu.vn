@@ -51,7 +51,7 @@ class HomeInfo extends React.Component {
             <img style={{ marginLeft: "5px" }} className="avatar" src={this.props.authorAvatarURL} alt="" />
           </Link>
           <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/profile/${this.props.authorID}`}>
-            {this.props.authorName}
+            {this.props.authorDisplayName}
           </Link>
         </div>
 

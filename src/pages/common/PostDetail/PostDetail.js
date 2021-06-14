@@ -66,7 +66,7 @@ class PostDetail extends React.Component {
                                             categoryName={this.props.currentPost.categoryName}
                                             categoryID={this.props.currentPost.categoryID}
                                             readingTime={this.props.currentPost.readingTime}
-                                            authorName={this.props.currentPost.authorName}
+                                            authorDisplayName={this.props.currentPost.authorDisplayName}
                                             authorAvatarURL={this.props.currentPost.authorAvatarURL}
                                             publishDtm={this.props.currentPost.publishDtm}
                                             availableActions={this.props.currentPost.availableActions}

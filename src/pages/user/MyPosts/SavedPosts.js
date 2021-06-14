@@ -68,7 +68,7 @@ class SavedPosts extends React.Component {
                     return <div className="item-container">
                         <PostSummaryMetadata
                             postId={item.id}
-                            authorName={item.authorName}
+                            authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
                             categoryName={item.categoryName}

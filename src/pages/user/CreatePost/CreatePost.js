@@ -413,7 +413,7 @@ class CreatePost extends React.Component {
                         categoryName={this.state.currentCategory}
                         categoryID={this.state.CREATE_POST_DTO.categoryID}
                         readingTime={this.state.CREATE_POST_DTO.readingTime}
-                        authorName={this.state.author.displayName}
+                        authorDisplayName={this.state.author.displayName}
                         authorAvartarURL={this.state.author.authorAvatarURL}
                         publishDtm={this.state.publishDtm}
                         type={detailType.preview}

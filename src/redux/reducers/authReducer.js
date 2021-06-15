@@ -4,7 +4,10 @@ import {
   GET_CURRENT_USER_SUMMARY_FAILURE,
   GET_USER_STATISTIC_BY_ID_RESET,
   GET_USER_STATISTIC_BY_ID_SUCCESS,
-  GET_USER_STATISTIC_BY_ID_FAILURE
+  GET_USER_STATISTIC_BY_ID_FAILURE,
+  GET_USER_DETAIL_BY_ID_SUCCESS,
+  GET_USER_DETAIL_BY_ID_FAILURE,
+  GET_USER_DETAIL_BY_ID_REQUEST
 
 } from 'redux/constants.js';
 
@@ -15,6 +18,10 @@ const initialState = {
   },
   userStatistic: {
     isLoadDone: false,
+    data: {}
+  },
+  userDetail: {
+    isLoading: false,
     data: {}
   }
 };
@@ -67,6 +74,31 @@ export default function AuthReducer(state = initialState, action) {
       return {
         ...state,
         userStatistic: {
+          isLoadDone: false,
+          data: state.currentUserSummary.data, error: action.payload
+        }
+      };
+    case GET_USER_DETAIL_BY_ID_REQUEST:
+      return {
+        ...state,
+        userDetail: {
+          isLoadDone: false,
+          data: {}
+        }
+      };
+    case GET_USER_DETAIL_BY_ID_SUCCESS:
+      return {
+        ...state,
+        userDetail: {
+          isLoadDone: true,
+          data: action.payload
+        }
+      }
+
+    case GET_USER_DETAIL_BY_ID_FAILURE:
+      return {
+        ...state,
+        userDetail: {
           isLoadDone: false,
           data: state.currentUserSummary.data, error: action.payload
         }

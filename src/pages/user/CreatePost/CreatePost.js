@@ -409,16 +409,19 @@ class CreatePost extends React.Component {
             <div>
                 {/* Preview region */}
                 <div className="cr-post-form-container post-detail-container preview" >
-                    <Metadata title={this.state.CREATE_POST_DTO.title}
-                        categoryName={this.state.currentCategory}
-                        categoryID={this.state.CREATE_POST_DTO.categoryID}
-                        readingTime={this.state.CREATE_POST_DTO.readingTime}
-                        authorDisplayName={this.state.author.displayName}
-                        authorAvartarURL={this.state.author.authorAvatarURL}
-                        publishDtm={this.state.publishDtm}
-                        type={detailType.preview}
-                        imageURL={this.state.CREATE_POST_DTO.imageURL}
-                    />
+
+                    {this.props.userSummaryLoaded && this.props.userSummaryData ?
+                        <Metadata title={this.state.CREATE_POST_DTO.title}
+                            categoryName={this.state.currentCategory}
+                            categoryID={this.state.CREATE_POST_DTO.categoryID}
+                            readingTime={this.state.CREATE_POST_DTO.readingTime}
+                            authorDisplayName={this.state.author.displayName}
+                            authorAvatarURL={this.props.userSummaryData.avatarURL}
+                            publishDtm={this.state.publishDtm}
+                            type={detailType.preview}
+                            imageURL={this.state.CREATE_POST_DTO.imageURL}
+                            authorID={this.props.userSummaryData.id}
+                        /> : <></>}
 
                     {/* content here */}
                     <div className="ck-editor-output" dangerouslySetInnerHTML={{
@@ -428,7 +431,7 @@ class CreatePost extends React.Component {
 
                     <div className="mg-top-10px mg-bottom-10px" >
                         {this.shownTag.map(item =>
-                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
+                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
                         )}
                     </div>
                     <PostNormalReactionbar
@@ -534,7 +537,7 @@ class CreatePost extends React.Component {
 
                             <div className="mg-top-10px" >
                                 {this.shownTag.map(item =>
-                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable = {false} tag={item} />
+                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
                                 )}
                             </div>
                             <div className="form-line" />
@@ -603,6 +606,9 @@ const mapStateToProps = (state) => {
 
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
+        userSummaryData: state.auth.currentUserSummary.data,
+        userSummaryLoaded: state.auth.currentUserSummary.isLoadDone,
+
     };
 }
 

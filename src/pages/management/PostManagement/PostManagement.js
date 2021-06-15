@@ -286,7 +286,6 @@ class PostManagement extends React.Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state.post.managementPosts)
     return {
         //pending posts list
         managementPosts: state.post.managementPosts.data,

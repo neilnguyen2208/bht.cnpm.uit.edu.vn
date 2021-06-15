@@ -84,7 +84,7 @@ class PostDetail extends React.Component {
     let cover = <></>;
     if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
       cover = <div>
-        <div className="decoration-line mg-top-10px" />
+        <div className="mg-top-20px" />
         <img className="image" src={this.props.imageURL} alt="" />
       </div>
     }
@@ -128,7 +128,8 @@ class PostDetail extends React.Component {
 
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
-          <UserInfo authorDisplayName={this.props.authorDisplayName} authorAvatarURL={this.props.authorAvatarURL} />
+          {console.log(this.props.authorID)}
+          <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
         </div>
 
@@ -148,7 +149,11 @@ const mapStateToProps = (state) => {
     //edit
     isHaveEdited: state.post.isHaveEdited,
     //report
-    isHaveReported: state.post.isHaveReported
+    isHaveReported: state.post.isHaveReported,
+
+    isStatisticLoaded: state.auth.userStatistic.isLoadDone,
+    statisticData: state.auth.userStatistic.data
+
   };
 }
 

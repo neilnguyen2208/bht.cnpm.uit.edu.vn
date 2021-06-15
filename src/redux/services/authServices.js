@@ -3,6 +3,9 @@ import {
   get_CurrentUserSummaryFailure,
   get_CurrentUserSummaryReset,
   get_CurrentUserSummarySuccess,
+  get_UserDetailByIdFailure,
+  get_UserDetailByIdRequest,
+  get_UserDetailByIdSuccess,
   get_UserStatisticByIdFailure,
   get_UserStatisticByIdReset,
   get_UserStatisticByIdSuccess
@@ -23,11 +26,23 @@ export function getCurrentUserSummary() {
 export function getUserStatisticById(userId) {
   return dispatch => {
     dispatch(get_UserStatisticByIdReset())
-    authRequest.get(`/user/${userId}​/statistics`)
+    authRequest.get(`/user/${userId}/statistics`)
       .then(response => {
         dispatch(get_UserStatisticByIdSuccess(response.data))
       }).catch(error => {
         dispatch(get_UserStatisticByIdFailure());
+      })
+  }
+}
+
+export function getUserDetailById(userId) {
+  return dispatch => {
+    dispatch(get_UserDetailByIdRequest())
+    authRequest.get(`/user/${userId}`)
+      .then(response => {
+        dispatch(get_UserDetailByIdSuccess(response.data))
+      }).catch(error => {
+        dispatch(get_UserDetailByIdFailure());
       })
   }
 }

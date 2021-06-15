@@ -5,6 +5,10 @@ import {
   GET_USER_STATISTIC_BY_ID_SUCCESS,
   GET_USER_STATISTIC_BY_ID_RESET,
   GET_USER_STATISTIC_BY_ID_FAILURE,
+  GET_USER_DETAIL_BY_ID_RESET,
+  GET_USER_DETAIL_BY_ID_SUCCESS,
+  GET_USER_DETAIL_BY_ID_FAILURE,
+  GET_USER_DETAIL_BY_ID_REQUEST,
 } from 'redux/constants.js';
 
 export function get_CurrentUserSummaryReset(data) {
@@ -47,3 +51,24 @@ export function get_UserStatisticByIdFailure(error) {
     payload: error
   }
 }
+
+export function get_UserDetailByIdRequest() {
+  return {
+    type: GET_USER_DETAIL_BY_ID_REQUEST
+  }
+}
+
+export function get_UserDetailByIdSuccess(data) {
+  return {
+    type: GET_USER_DETAIL_BY_ID_SUCCESS,
+    payload: data
+  }
+}
+
+export function get_UserDetailByIdFailure(error) {
+  return {
+    type: GET_USER_DETAIL_BY_ID_FAILURE,
+    payload: error
+  }
+}
+

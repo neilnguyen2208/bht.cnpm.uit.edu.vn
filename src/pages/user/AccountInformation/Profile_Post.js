@@ -41,6 +41,7 @@ class ProfilePost extends React.Component {
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
         this.props.getMyPosts(this.searchParamObject);
+        // this.props.getMyPosts
     }
 
     onFilterClick = (filter) => {
@@ -106,7 +107,7 @@ class ProfilePost extends React.Component {
                             commentCount={item.commentCount}
                             likedStatus={item.likeStatus}
                             savedStatus={item.savedStatus}
-                            viewCount= {item.viewCount}
+                            viewCount={item.viewCount}
                         />
                     </div >
                 })
@@ -191,7 +192,7 @@ const mapStateToProps = (state) => {
         totalElements: state.post.myPosts.totalElements,
         isListLoading: state.post.myPosts.isLoading,
         isCategoryLoading: state.post_category.categories.isLoading,
-
+      
         //handle 2 actions: delete and edit
         isHaveDeleted: state.post.isHaveDeleted,
         isHaveEdited: state.post.isHaveEdited,
@@ -199,7 +200,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPosts
+    getMyPosts, 
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfilePost));

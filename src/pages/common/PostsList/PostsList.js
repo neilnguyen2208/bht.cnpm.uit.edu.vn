@@ -75,7 +75,7 @@ class PostsList extends React.Component {
                     <PostSummaryMetadata
                         type={itemType.normal}
                         postId={item.id}
-                        authorDisplayName={item.authorDisplayName}
+                        authorDisplayName={item.displayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
                         categoryName={item.categoryName}

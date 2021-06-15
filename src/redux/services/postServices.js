@@ -93,9 +93,8 @@ import {
 
 import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 
-import { authRequest, request, springAuthRequest } from 'utils/requestUtils';
+import { authRequest } from 'utils/requestUtils';
 import { generateSearchParam } from 'utils/urlUtils'
-import { getUserStatisticById } from "./authServices";
 
 export function createAPost(data) {
     return dispatch => {
@@ -183,18 +182,11 @@ export function getReportedPosts(searchParamObject) {
                             finalResult.push({
                                 ...result_1.postReportDTOS[i],
                                 ...(result.data.find((itmInner) => itmInner.id === result_1.postReportDTOS[i].postID)),
-                            }
-                            );
+                            });
                         }
-
                         dispatch(get_ReportedPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_ReportedPostsFailure())
-
-
-            }
-
-            )
-            .catch(error => { get_ReportedPostsFailure(error) })
+            }).catch(error => { get_ReportedPostsFailure(error) })
     }
 }
 
@@ -327,7 +319,7 @@ export function getPostByID(id) {
                 dispatch(getSameCategoryPosts(result_1.id, result_1.categoryID));
 
                 //get user statistic
-                dispatch(getUserStatisticById(result_1.authorID));
+                // dispatch(getUserStatisticById(result_1.authorID));
                 authRequest.get(`/posts/statistics?postIDs=${result_1.id}`)
                     .then(response_2 => {
                         authRequest.get(`/posts/actionAvailable?postIDs=${result_1.id}`).then(response_3 => {

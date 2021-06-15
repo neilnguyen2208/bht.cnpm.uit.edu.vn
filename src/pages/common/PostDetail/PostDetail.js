@@ -71,6 +71,7 @@ class PostDetail extends React.Component {
                                             publishDtm={this.props.currentPost.publishDtm}
                                             availableActions={this.props.currentPost.availableActions}
                                             imageURL={this.props.currentPost.imageURL}
+                                            authorID={this.props.currentPost.authorID}
                                         />
 
                                         {/* content here */}
@@ -121,7 +122,6 @@ class PostDetail extends React.Component {
                                                     likedStatus={this.props.currentPost.likeStatus}
                                                     savedStatus={this.props.currentPost.savedStatus}
                                                     viewCount={this.props.currentPost.viewCount}
-
                                                 />
                                                 <div id="cr-cmt" />
                                                 <CommentSection

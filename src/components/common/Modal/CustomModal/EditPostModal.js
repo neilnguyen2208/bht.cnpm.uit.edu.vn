@@ -473,20 +473,22 @@ class EditPostModal extends React.Component {
                                     {/* Preview region */}
                                     <div className="ed-post-form-container post-detail-container preview-modal d-none" >
                                         <div style={{ marginTop: "20px" }} />
-                                        <Metadata
-                                            postId={this.props.currentPost.id}
-                                            title={this.state.EDIT_POST_DTO.title}
-                                            categoryName={this.state.EDIT_POST_DTO.categoryName}
-                                            categoryID={this.state.EDIT_POST_DTO.categoryID}
-                                            readingTime={this.state.EDIT_POST_DTO.readingTime}
-                                            authorDisplayName={this.state.EDIT_POST_DTO.authorDisplayName}
-                                            authorAvatarURL={this.state.EDIT_POST_DTO.authorAvatarURL}
-                                            authorID={this.state.EDIT_POST_DTO.authorID}
-                                            publishDtm={this.state.EDIT_POST_DTO.publishDtm}
-                                            imageURL={this.state.EDIT_POST_DTO.imageURL}
-                                            type="PREVIEW"
-                                            popUpMenuPrefix="edpmd-"
-                                        />
+                                        {
+                                            this.state.EDIT_POST_DTO.authorID ?
+                                                < Metadata
+                                                    postId={this.props.currentPost.id}
+                                                    title={this.state.EDIT_POST_DTO.title}
+                                                    categoryName={this.state.EDIT_POST_DTO.categoryName}
+                                                    categoryID={this.state.EDIT_POST_DTO.categoryID}
+                                                    readingTime={this.state.EDIT_POST_DTO.readingTime}
+                                                    authorDisplayName={this.state.EDIT_POST_DTO.authorDisplayName}
+                                                    authorAvatarURL={this.state.EDIT_POST_DTO.authorAvatarURL}
+                                                    authorID={this.state.EDIT_POST_DTO.authorID}
+                                                    publishDtm={this.state.EDIT_POST_DTO.publishDtm}
+                                                    imageURL={this.state.EDIT_POST_DTO.imageURL}
+                                                    type="PREVIEW"
+                                                    popUpMenuPrefix="edpmd-"
+                                                /> : <></>}
                                         <div className="ck-editor-output" dangerouslySetInnerHTML={{ __html: this.state.EDIT_POST_DTO.content }} />
 
                                         <div className="mg-top-10px mg-bottom-10px" >

@@ -143,12 +143,12 @@ class ProfilePost extends React.Component {
                 {DocPostSummaryLoader()}
                 {DocPostSummaryLoader()}
             </div>
-        console.log(this.props.userPostsList)
         return (
             <div className="left-sidebar-layout">
-             
-                <UserSidebar />
-
+                {
+                    this.props.userSummaryDataLoaded && this.props.userSummaryData && this.props.userSummaryData.id === this.props.match.params.id &&
+                    < UserSidebar />
+                }
                 <div className="content-layout">
                     <Titlebar />
                     <div className="content-container" >
@@ -209,6 +209,8 @@ const mapStateToProps = (state) => {
         totalPages: state.post.postsByFilter.totalPages,
         totalElements: state.post.postsByFilter.totalElements,
         isListLoading: state.post.postsByFilter.isLoading,
+        userSummaryData: state.auth.currentUserSummary.data,
+        userSummaryDataLoaded: state.auth.currentUserSummary.isLoadDone
     };
 }
 

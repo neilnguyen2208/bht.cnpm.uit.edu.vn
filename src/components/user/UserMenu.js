@@ -12,10 +12,13 @@ import { formatNumber } from 'utils/miscUtils'
 
 import upload_icon from 'assets/icons/48x48/blue_upload_icon_48x48.png';
 import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
+import store from "redux/store";
+import { getUserDetailById } from "redux/services/authServices";
+import { getPostsByFilter } from "redux/services/postServices";
 // authServices.
 
 const userMenuOptions = [
-    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: `/user/profile/` },
+    { id: 1, text: "Trang cá nhân", value: "PROFILE", icon: '', tip: "", hasLine: true, to: `/user/profile/`, isLink: true },
     // { id: 2, text: "Thông báo", value: "NOTIFICATION", icon: '', tip: "" },
     {
         id: 3, text: "Bài viết của tôi", value: "MY_POST", icon: '', to: "/user/my-posts", isLink: true,
@@ -87,7 +90,13 @@ class UserMenu extends React.Component {
         document.getElementById("h-um-wrapper").style.background = "white";
         this.setState({});
         if (menuItem.value === "PROFILE") {
-            window.location.pathname = "/user/profile/" + this.props.userSummaryData.id;
+            store.dispatch(getUserDetailById(this.props.userSummaryData.id));
+            this.searchParamObject = {
+                "paginator": 1,
+                "author": this.props.userSummaryData.id,
+                "sort": "publishDtm,desc"
+            }
+            store.dispatch(getPostsByFilter(this.searchParamObject));
         }
         if (menuItem.value === "LOGOUT")
             authService.doLogout();
@@ -101,7 +110,7 @@ class UserMenu extends React.Component {
                 <div className='d-flex'>
                     {menuItem.tip ?
                         <>{menuItem.isLink ?
-                            <Link className='d-flex' to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} onClick={() => this.closeMenu()} style={{ color: "var(--black)" }}>
+                            <Link className='d-flex' to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} onClick={() => this.handleMenuItemClick(menuItem)} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={{
                                     height: "27px",
                                     paddingTop: "7px"
@@ -124,7 +133,7 @@ class UserMenu extends React.Component {
                             </div>
                         }</> :
                         <>{menuItem.isLink ?
-                            <Link className='d-flex' onClick={() => this.closeMenu()} to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} style={{ color: "var(--black)" }}>
+                            <Link className='d-flex' onClick={() => this.handleMenuItemClick(menuItem)} to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} style={{ color: "var(--black)" }}>
                                 {menuItem.icon ? <img className='user-menu-icon' style={menuItem.style ? menuItem.style : {
                                     height: "23px",
                                     paddingTop: "0px",

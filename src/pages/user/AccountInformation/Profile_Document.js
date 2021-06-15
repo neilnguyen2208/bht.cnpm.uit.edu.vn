@@ -128,7 +128,10 @@ class ProfileDocument extends React.Component {
 
         return (
             <div className="left-sidebar-layout">
-                <UserSidebar />
+                {
+                    this.props.userSummaryDataLoaded && this.props.userSummaryData && this.props.userSummaryData.id === this.props.match.params.id &&
+                    < UserSidebar />
+                }
 
                 <div className="content-layout">
                     <Titlebar />
@@ -200,6 +203,8 @@ const mapStateToProps = (state) => {
         //handle 2 actions: delete and edit
         isHaveDeleted: state.document.isHaveDeleted,
         isHaveEdited: state.document.isHaveEdited,
+        userSummaryData: state.auth.currentUserSummary.data,
+        userSummaryDataLoaded: state.auth.currentUserSummary.isLoadDone
     };
 }
 

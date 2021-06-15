@@ -103,12 +103,15 @@ class AccountInformation extends React.Component {
                     <div className="about-me">
                         About me
                     </div>
-                    <div className="about-me-detail">
-                        {this.props.userDetail.aboutMe}
+                    <div className="about-me-detail ">
+                        <div className="ck-editor-output" dangerouslySetInnerHTML={{
+                            __html:
+                                this.props.userDetail.aboutMe
+                        }} />
                     </div>
                     <div>
                         <div className="h-menu-bar">
-                            <NavLink className={window.location.pathname.substring(0,13) !== `/user/profile` ? "d-none" : "h-menu-item"} to={`/user/profile/${this.props.match.params.id}`} exact activeClassName={window.location.pathname.substring(0, 13) === "/user/profile" ? 'h-menu-item active' : 'd-none'}>
+                            <NavLink className={window.location.pathname.substring(0, 13) !== `/user/profile` ? "d-none" : "h-menu-item"} to={`/user/profile/${this.props.match.params.id}`} exact activeClassName={window.location.pathname.substring(0, 13) === "/user/profile" ? 'h-menu-item active' : 'd-none'}>
                                 Bài viết
                             </NavLink>
                             <NavLink className={window.location.pathname.substring(0, 13) === "/user/profile" ? "d-none" : "h-menu-item"} to={`/user/posts/${this.props.match.params.id}`} exact activeClassName='h-menu-item active'>

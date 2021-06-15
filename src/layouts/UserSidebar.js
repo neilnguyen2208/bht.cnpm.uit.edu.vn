@@ -36,17 +36,17 @@ class UserSidebar extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('scroll', this.scrollFunction);
   }
-  render() {
 
+  render() {
     return (
       <div className="left-sidebar-wrapper" >
         {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
-        <div className="fake-left-sidebar" />
-        {/* Left Sidebar */}
-        <div className="left-sidebar" id="user-left-sidebar">
-          {/* Hien thi avatar, thanh tich va ten role */}
-          <div>
+        {/* <div className="fake-left-sidebar" /> */}
 
+        {/* show on current profile id === profile id */}
+
+        <div className="left-sidebar" id="user-left-sidebar">
+          <div>
             {/* Role and achivement port */}
             <div className="user-role">
               User
@@ -73,7 +73,7 @@ class UserSidebar extends React.Component {
                   id="account-admin-dropdown-btn-element" />
               </div >
 
-              <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container"
+              <div className="d-block-default"
                 id="account-admin-menu-item-container">
                 <div className="mg-bottom-5px"></div>
                 <NavLink className="vertical-sub-m-i"
@@ -88,32 +88,18 @@ class UserSidebar extends React.Component {
                   onClick={() => this.setState({})}>Cập nhật thông tin
                 </NavLink>
 
-                <NavLink className="vertical-sub-m-i"
-                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to={"/user/sercurity"}
-                  exact
+                {/* chang to button */}
+                <button
+                  className="vertical-sub-m-i" style={{ background: "white", width: "100%" }}
+                  // activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
+                  // to={"/user/sercurity"}
+                  // exact
                   onClick={() => { authServices.accountManagement(); this.setState({}) }}>
                   Cài đặt bảo mật
-                </NavLink>
-                {/* 
-                <NavLink className="vertical-sub-m-i"
-                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to={"/user/notification"}
-                  onClick={() => this.setState({})}>
-                  Thông báo
-                      </NavLink>
- */}
-
-                {/* <NavLink className="vertical-sub-m-i"
-                  activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to={"/user/email-management"}
-                  onClick={() => this.setState({})}>
-                  Quản lý email
-                      </NavLink> */}
+                </button>
 
                 <div className="decoration-underline" style={{ marginTop: "5px", marginBottom: "10px" }} />
               </div>
-
 
               {/* Bai viet*/}
               <div style={{ display: "block" }}>
@@ -137,7 +123,7 @@ class UserSidebar extends React.Component {
                     id="user-post-managent-parent-menu-item-text" />
                 </div >
 
-                <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container"
+                <div className="d-block-default"
                   id="user-post-management-menu-item-container">
                   <div className="mg-bottom-5px"></div>
 
@@ -166,7 +152,6 @@ class UserSidebar extends React.Component {
                 </div>
               </div>
 
-
               <div style={{ display: "block" }}>
                 <div className="pr-drop-down-m-i" id="user-document-managent-parent-menu-item"
                   onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e,
@@ -188,7 +173,7 @@ class UserSidebar extends React.Component {
                     id="user-document-managent-parent-menu-item-text" />
                 </div >
 
-                <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container"
+                <div className="d-block-default"
                   id="user-document-management-menu-item-container">
                   <div className="mg-bottom-5px"></div>
 
@@ -213,21 +198,11 @@ class UserSidebar extends React.Component {
           </div>
         </div >
       </div >
-
     );
   }
 
   //#region for UI/UX sidebar
   //code style for dropdown menu
-  handleDisplayNoneDefaultDropDownMenuClick = (e, parent_id, show_text_id, dropdown_element_id, container_id) => {
-    e.preventDefault();
-    let dropdown_container = document.getElementById(container_id);
-    if (dropdown_container.style.display === "block") {
-      dropdown_container.style.display = "none";
-    }
-    else
-      dropdown_container.style.display = "block"
-  }
 
   handleDisplayBlockDefaultDropDownMenuClick = (e, parent_id, show_text_id, dropdown_element_id, container_id) => {
     e.preventDefault();

@@ -146,6 +146,7 @@ class ProfilePost extends React.Component {
         console.log(this.props.userPostsList)
         return (
             <div className="left-sidebar-layout">
+             
                 <UserSidebar />
 
                 <div className="content-layout">

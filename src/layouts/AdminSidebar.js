@@ -82,7 +82,7 @@ class AdminSidebar extends React.Component {
                             <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-admin-dropdown-btn-element" />
                         </div>
                         <div>
-                            <div className="Vertical_Display_Block_Default_Dropdown_Menu_Item_Container" id="page-admin-menu-item-container">
+                            <div className="d-block-default" id="page-admin-menu-item-container">
                                 <div className="mg-bottom-5px" />
                                 <NavLink className="vertical-sub-m-i"
                                     activeClassName="main-interactive-menu-item-active vertical-sub-m-i"

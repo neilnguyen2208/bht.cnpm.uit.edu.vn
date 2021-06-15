@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap");
 
 //for content
 .ck-editor-output {
   margin-top: 30px;
   text-justify: inter-word;
   text-align: justify;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   line-height: 1.5rem;
   color: var(--black);
   padding: 15px;
@@ -18,11 +18,24 @@
   white-space: normal;
 }
 
+.about-me-detail .ck-editor-output {
+  font-family: Arial;
+  margin-top: 0px;
+  font-size: 1rem;
+}
+
+.about-me-detail .ck-editor-output p {
+  font-size: 1em;
+  font-weight: 500;
+  text-indent: 0em;
+  margin-bottom: 0px;
+}
+
 .ck-editor-output.comment-content {
   margin-top: 0px;
   text-justify: inter-word;
   text-align: justify;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   line-height: 1.2rem;
   color: var(--black);
   padding: 15px;
@@ -54,7 +67,6 @@
   font-weight: 700;
   margin-bottom: 10px;
   margin-top: 10px;
-
 }
 
 .ck-editor-output h2 {
@@ -90,7 +102,6 @@
 
   overflow-x: auto;
   word-wrap: normal;
-
 }
 
 .ck-editor-output code,
@@ -100,104 +111,29 @@
   font-family: monospace;
 }
 
-//except all style public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css 
-.ck-editor-output code :not(.hljs,
-  .hljs-comment,
-  .hljs-keyword,
-  .hljs-class,
-  .hljs-string,
-  .hljs-annotation,
-  .hljs-template_comment,
-  .hljs-javadoc,
-  .hljs-shebang,
-  .hljs-request,
-  .hljs-status,
-  .hljs-title,
-  .method,
-  .hljs-list,
-  .hljs-number,
-  .hljs-regexp,
-  .hljs-value,
-  .hljs-cdata,
-  .hljs-filter,
-  .hljs-argument,
-  .hljs-attr_selector,
-  .apache .hljs-cbracket,
-  .hljs-date,
-  .hljs-command,
-  .hljs-link_label,
-  .hljs-subst,
-  .hljs-tag,
-  .hljs-doctype,
-  .hljs-sub,
-  .hljs-identifier,
-  .hljs-pi,
-  .input_number,
-  .hljs-identifier,
-  .haskell, .hljs-type,
-  .smalltalk,
-  .hljs-javadoctag,
-  .hljs-yardoctag,
-  .hljs-phpdoc,
-  .hljs-constant,
-  .hljs-symbol,
-  .hljs-built_in,
-  .ruby,
-  .markdown,
-  .hljs-link_url,
-  .hljs-params,
-  .hljs-variable,
-  .clojure,
-  .hljs-property,
-  .hljs-pseudo,
-  .tex,
-  .hljs-special,
-  .hljs-annotation,
-  .apache .hljs-sqbracket,
-  .nginx,
-  .hljs-preprocessor,
-  .hljs-preprocessor *,
-  .hljs-pragma,
-  .hljs-hexcolor,
-  .css,
-  .hljs-rule,
-  .hljs-at_rule,
-  .hljs-operator,
-  .hljs-literal,
-  .hljs-value,
-  .hljs-number,
-  .hljs-title,
-  .hljs-decorator,
-  .hljs-function,
-  .hljs-rules,
-  .diff .hljs-header,
-  .hljs-chunk,
-  .hljs-attribute,
-  .hljs-addition,
-  .hljs-deletion,
-  .coffeescript,
-  .javascript,
-  .xml,
-  .hljs-id,
-  .tex .hljs-formula,
-  .xml .vbscript,
-  .hljs-cdata) {
+//except all style public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css
+.ck-editor-output
+  code
+  :not(.hljs, .hljs-comment, .hljs-keyword, .hljs-class, .hljs-string, .hljs-annotation, .hljs-template_comment, .hljs-javadoc, .hljs-shebang, .hljs-request, .hljs-status, .hljs-title, .method, .hljs-list, .hljs-number, .hljs-regexp, .hljs-value, .hljs-cdata, .hljs-filter, .hljs-argument, .hljs-attr_selector, .apache
+    .hljs-cbracket, .hljs-date, .hljs-command, .hljs-link_label, .hljs-subst, .hljs-tag, .hljs-doctype, .hljs-sub, .hljs-identifier, .hljs-pi, .input_number, .hljs-identifier, .haskell, .hljs-type, .smalltalk, .hljs-javadoctag, .hljs-yardoctag, .hljs-phpdoc, .hljs-constant, .hljs-symbol, .hljs-built_in, .ruby, .markdown, .hljs-link_url, .hljs-params, .hljs-variable, .clojure, .hljs-property, .hljs-pseudo, .tex, .hljs-special, .hljs-annotation, .apache
+    .hljs-sqbracket, .nginx, .hljs-preprocessor, .hljs-preprocessor
+    *, .hljs-pragma, .hljs-hexcolor, .css, .hljs-rule, .hljs-at_rule, .hljs-operator, .hljs-literal, .hljs-value, .hljs-number, .hljs-title, .hljs-decorator, .hljs-function, .hljs-rules, .diff
+    .hljs-header, .hljs-chunk, .hljs-attribute, .hljs-addition, .hljs-deletion, .coffeescript, .javascript, .xml, .hljs-id, .tex
+    .hljs-formula, .xml .vbscript, .hljs-cdata) {
   background-color: #f5f5f5;
   color: #ff3860;
   font-size: 1em;
   font-weight: 400;
-  padding: .15em .25em .15em;
+  padding: 0.15em 0.25em 0.15em;
 }
-
 
 .ck-editor-output code.hljs {
   font-size: 0.9em;
   font-weight: 400;
   // background: none;
-  padding: .15em .25em .15em;
-  //same style of railcast in public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css 
+  padding: 0.15em 0.25em 0.15em;
+  //same style of railcast in public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css
 }
-
 
 .ck-editor-output blockquote {
   background: var(--light-gray) !important;
@@ -210,14 +146,13 @@
   margin-bottom: 15px !important;
   border-left: solid var(--blue) 4px !important;
   font-size: 0.875em;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
   font-style: italic;
   font-weight: 500;
 }
 
-
-
-.ck-editor-output blockquote p {}
+.ck-editor-output blockquote p {
+}
 
 .ck-editor-output li {
   margin-left: 30px;
@@ -232,7 +167,6 @@
   height: 1px;
   margin-top: 5px;
   margin-bottom: 15px;
-
 }
 
 .ck-editor-output ol {
@@ -246,6 +180,5 @@
   background: url("../../../assets/icons/16x16/math_type_icon_16x16.png") !important;
   // background: green;
 }
-
 
 // ../assets/icons/16x16/math_type_icon_16x16.png

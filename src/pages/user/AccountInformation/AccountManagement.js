@@ -11,6 +11,19 @@ import image_icon from 'assets/icons/svg/white_image_icon.svg';
 import { getUserDetailByToken, updateUserDetailByToken } from 'redux/services/authServices'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { openBLModal } from 'redux/services/modalServices';
+import { styleFormSubmit, validation } from 'utils/validationUtils';
+
+const validationCondition = {
+    form: '#edit-profile-form',
+    rules: [
+        //truyen vao id, loai component, message
+        validation.isRequired('edit-profile-displayname', 'text-input', 'Tên hiển thị không được để trống.'),
+        validation.noSpecialChar('edit-profile-displayname', 'text-input', 'Tên hiển thị không được chứa ký tự đặc biệt.'),
+        validation.minLength('edit-profile-displayname', 'text-input', 6, 'Tên hiển thị không được dưới 6 ký tự.'),
+        validation.isRequired('edit-profile-about-me', 'ckeditor', 'Giới thiệu không được để trống'),
+        // validation.isRequired('cr-post-imgurl', 'text-input', 'Link ảnh bìa không được để trống'),
+    ],
+}
 
 class AccountManagement extends React.Component {
     constructor(props) {
@@ -35,13 +48,14 @@ class AccountManagement extends React.Component {
         this.setState({
             EDIT_USER_DETAIL_DTO: {
                 displayName: document.getElementById("edit-profile-displayname").value,
-                aboutMe: getCKEInstance("edit-profile-about-me" + this.props.currentUserDetail.id).getData(),
+                aboutMe: getCKEInstance("edit-profile-about-me").getData(),
             }
         })
-        this.props.updateUserDetailByToken({
-            displayName: document.getElementById("edit-profile-displayname").value,
-            aboutMe: getCKEInstance("edit-profile-about-me" + this.props.currentUserDetail.id).getData(),
-        })
+        if (styleFormSubmit(validationCondition))
+            this.props.updateUserDetailByToken({
+                displayName: document.getElementById("edit-profile-displayname").value,
+                aboutMe: getCKEInstance("edit-profile-about-me").getData(),
+            })
     }
 
     handleDisplayNameChange = (value) => {
@@ -55,6 +69,7 @@ class AccountManagement extends React.Component {
 
     render() {
         if (!this.props.isCurrentUserDetailLoading && this.props.currentUserDetail && !this.isTheFirstTimeLoaded) {
+            validation(validationCondition);
             this.isTheFirstTimeLoaded = true;
             this.setState({
                 EDIT_USER_DETAIL_DTO: {
@@ -88,7 +103,7 @@ class AccountManagement extends React.Component {
                                 </div>
 
                             </div>
-                            <form className="form-container" style={{ marginTop: "0px" }} id="edit-profile">
+                            <form className="form-container" style={{ marginTop: "0px" }} id="edit-profile-form">
                                 <div className="form-group" >
                                     <label className="form-label">Tên hiển thị:</label>
                                     <div className="d-flex">
@@ -111,8 +126,8 @@ class AccountManagement extends React.Component {
                                         <div className="form-label">Giới thiệu về tôi:</div>
                                         <Editor
                                             config={SimpleCKEToolbarConfiguration}
-                                            editorId={"edit-profile-about-me" + this.props.currentUserDetail.id}
-                                            onInstanceReady={() => { getCKEInstance("edit-profile-about-me" + this.props.currentUserDetail.id).setData(this.props.currentUserDetail.aboutMe) }}
+                                            editorId={"edit-profile-about-me"}
+                                            onInstanceReady={() => { getCKEInstance("edit-profile-about-me").setData(this.props.currentUserDetail.aboutMe) }}
                                             validation
                                             autoGrow_maxHeight={200}
                                         />

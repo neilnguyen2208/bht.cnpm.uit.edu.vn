@@ -106,12 +106,21 @@ class Header extends React.Component {
         let userMenu = <></>;
         if (authService.isLoggedIn()) {
             userMenu = <UserMenu />
+
         }
-        // }
+
         else {
-            userMenu = <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
-                Đăng nhập
-            </button>
+            userMenu = <div className="header-end-lv2">
+                <Link to="/upload-document" className="d-flex">
+                    <img className="header-image-button" alt="" src={upload_icon} />
+                </Link>
+                <Link to={"/create-post"} className="d-flex">
+                    <img className="header-image-button" src={write_icon} alt="" />
+                </Link>
+                <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
+                    Đăng nhập
+                </button>
+            </div>
         }
 
         return (
@@ -172,16 +181,9 @@ class Header extends React.Component {
 
                     {/*  */}
                     <div className="Header_End_Lv1">
-                        <div className="header-end-lv2" >
-                            <Link to="/upload-document" className="d-flex">
-                                <img className="header-image-button" alt="" src={upload_icon} />
-                            </Link>
-                            <Link to="/create-post" className="d-flex">
-                                <img className="header-image-button" src={write_icon} alt="" />
-                            </Link>
-
+                        {/* <div className="header-end-lv2" > */}
                             {userMenu}
-                        </div>
+                        {/* </div> */}
                         <div className="header-end-lv2_Collapse"
                             onClick={this.state.isCollapsedUserMenuOpened ?
                                 () => this.handleCloseCollapsedUserMenu()

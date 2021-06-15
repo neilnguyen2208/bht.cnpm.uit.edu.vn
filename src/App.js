@@ -41,7 +41,7 @@ import DocumentReportManagement from "pages/management/DocumentManagement/Docume
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
-import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
+// import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
@@ -52,7 +52,7 @@ import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute'
-import Secured from 'components/base_components/Sercured.js'
+// import Secured from 'components/base_components/Sercured.js'
 import { Access, Post } from "authentication/permission.config";
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
@@ -85,7 +85,7 @@ const App = () => {
                         <Route exact path="/user/profile/:id" component={ProfilePost} />
                         <Route exact path="/user/posts/:id" component={ProfilePost} />
                         <Route exact path="/user/documents/:id" component={ProfileDocument} />
-                        <Route exact path="/user/email-management" component={EmailManagement} />
+                        {/* <Route exact path="/user/email-management" component={EmailManagement} /> */}
                         <Route exact path="/user/account-management" component={AccountManagement} />
 
                         <Route exact path="/user/my-documents" component={MyDocuments} />

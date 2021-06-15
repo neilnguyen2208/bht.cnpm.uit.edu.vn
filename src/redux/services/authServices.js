@@ -77,6 +77,14 @@ export function updateUserDetailByToken(data) {
   }
 }
 
-export function getAccountManagementAvailableActions(userId){
-  
+export function getAccountManagementAvailableActions(userId) {
+  return dispatch => {
+    // dispatch(get_ProfileAvalaibleActionsRequest())
+    authRequest.get(`/user/details`)
+      .then(response => {
+        dispatch(get_UserDetailByTokenSuccess(response.data))
+      }).catch(error => {
+        dispatch(get_UserDetailByTokenFailure(error));
+      })
+  }
 }

@@ -27,9 +27,7 @@
     width: 100%;
     height: fit-content;
     border-top: 0px;
-    padding: 10px;
-    padding-top: 0px;
-    padding-right: 0px;
+    padding: 0px;
     min-height: 700px;
     padding-bottom: 40px;
     max-width: 880px;
@@ -58,13 +56,14 @@
 /*This port contain Management info and vertical menu below Management info*/
 .left-sidebar {
     position: relative;
-    width: 250px;
+    width: 240px;
+    margin-right: 10px;
 }
 
 .fake-left-sidebar {
     display: hidden;
     position: relative;
-    width: 250px;
+    width: 240px;
     height: 0px;
     background: transparent;
 }
@@ -120,7 +119,7 @@
 
 .user-role {
     border-top: 0.35rem var(--blue) solid;
-    width: 100%;
+    width: calc(100%-10px);
     border-bottom: 1px solid var(--gray);
     font-family: "BarlowCondensed-SemiBold";
     font-size: 22px;
@@ -159,7 +158,7 @@
     padding-top: 0px;
     position: relative;
     box-sizing: border-box;
-    width: 250px;
+    width: 240px;
     border-left: 1px;
     border-right: 1px;
     border-bottom: 1px;
@@ -250,7 +249,7 @@
     width: 90%;
 }
 
-.Vertical_Display_Block_Default_Dropdown_Menu_Item_Container {
+.d-block-default {
     display: block;
     user-select: none;
     margin-left: 10%;
@@ -319,9 +318,10 @@
 .pr-drop-down-m-i:hover,
 .vertical-m-i:hover,
 .vertical-sub-m-i:hover {
-    background: var(--grayish);
+    background: var(--grayish) !important;
     cursor: pointer;
     border-right: 4px var(--gray) solid;
+    color: var(--blue);
 }
 
 .pr-drop-down-m-i:active,

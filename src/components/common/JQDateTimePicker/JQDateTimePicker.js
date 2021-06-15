@@ -10,12 +10,9 @@ class DateTimePicker extends React.Component {
   }
 
   componentDidMount() {
-    this.scriptLoaded();
-  }
-
-  scriptLoaded = () => {
-    console.log(this.props.dtPickerId);
+    // window.onload = function () { 
     window.createDTPickerInstance(this.props.dtPickerId, this.props.onDateTimeChange)
+    //  }
   }
 
   render() {

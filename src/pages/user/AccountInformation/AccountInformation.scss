@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap");
 
 .user-profile {
     position: relative;
@@ -37,7 +37,7 @@
 }
 
 .edit-profile-avatar-container .overlay {
-    background: #535A60;
+    background: #535a60;
     height: 2rem;
     color: white;
     width: 100%;
@@ -56,7 +56,6 @@
     display: flex;
     margin-top: -6.5rem;
     position: relative;
-
 }
 
 .user-profile .base-info-container {
@@ -73,7 +72,6 @@
     padding: 0.5rem;
     margin-left: 10px;
     height: fit-content;
-
 }
 
 .user-profile .avatar {
@@ -90,7 +88,7 @@
 .user-profile .info-sub-container-left {
     flex-direction: column;
     justify-content: space-between;
-    display: flex
+    display: flex;
 }
 
 .follow-btn {
@@ -109,7 +107,6 @@
     padding-left: 0.6rem;
     padding-bottom: 0.1rem;
     border: 1px solid var(--blue);
-
 }
 
 .follow-btn-left-text {
@@ -123,7 +120,6 @@
     padding-bottom: 0.15rem;
     font-family: "BarlowCondensed-SemiBold";
     font-size: 1rem;
-
 }
 
 .follow-btn-right {
@@ -152,10 +148,10 @@
     text-align: center;
     line-height: 3rem;
     font-family: "BarlowCondensed-Medium";
-
 }
 
-.avatar-container.view .avatar-overlay {}
+.avatar-container.view .avatar-overlay {
+}
 
 .avatar-container.edit .avatar-overlay {
     background: var(--black);
@@ -168,7 +164,8 @@
 
 .user-profile .display-name {
     display: -webkit-box;
-    width: 100%;
+    min-width: 300px;
+    max-width: 300px;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -207,11 +204,9 @@
     margin-top: 1rem;
 }
 
-
 .followed-button.active {
     background-color: var(--light-gray);
 }
-
 
 .account-information-follow-dropdown {
     margin-top: 0.2rem;
@@ -251,7 +246,6 @@
     width: 100%;
     padding: 0.1rem;
     padding-left: 0.2rem;
-
 }
 
 .follow-menu-item:hover {

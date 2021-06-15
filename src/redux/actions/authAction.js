@@ -16,6 +16,9 @@ import {
   UPDATE_USER_DETAIL_BY_TOKEN_RESET,
   UPDATE_USER_DETAIL_BY_TOKEN_SUCCESS,
   UPDATE_USER_DETAIL_BY_TOKEN_FAILURE,
+  GET_PROFILE_AVAILABLE_ACTIONS_REQUEST,
+  GET_PROFILE_AVAILABLE_ACTIONS_SUCCESS,
+  GET_PROFILE_AVAILABLE_ACTIONS_FAILURE,
 } from 'redux/constants.js';
 
 export function get_CurrentUserSummaryReset(data) {
@@ -118,3 +121,24 @@ export function update_UserDetailByTokenFailure(error) {
     payload: error
   }
 }
+
+export function get_ProfileAvailableActionsRequest() {
+  return {
+    type: GET_PROFILE_AVAILABLE_ACTIONS_REQUEST
+  }
+}
+
+export function get_ProfileAvailableActionsSuccess(data) {
+  return {
+    type: GET_PROFILE_AVAILABLE_ACTIONS_SUCCESS,
+    payload: data
+  }
+}
+
+export function get_ProfileAvailableActionsFailure(error) {
+  return {
+    type: GET_PROFILE_AVAILABLE_ACTIONS_FAILURE,
+    payload: error
+  }
+}
+

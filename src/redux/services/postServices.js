@@ -82,7 +82,10 @@ import {    //highlight posts
     get_ManagementPostsFailure,
     get_APostStatisticReset,
     get_APostStatisticSuccess,
-    get_APostStatisticFailure
+    get_APostStatisticFailure,
+    get_PostsByFilterRequest,
+    get_PostsByFilterSuccess,
+    get_PostsByFilterFailure
 } from "redux/actions/postAction.js";
 
 import {
@@ -110,6 +113,37 @@ export function createAPost(data) {
             .catch(error => {
                 dispatch(post_CreateAPostReset())
             })
+    }
+}
+
+// Not search.
+export function getPostsByFilter(searchParamObject) { //this API to get all approved document of a specific user.
+    return dispatch => {
+        dispatch(get_PostsByFilterRequest());
+        authRequest.get(`/posts?${generateSearchParam(searchParamObject)}`).then(
+            response_1 => {
+                let result_1 = response_1.data;
+                let IDarr = '';
+                response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                //get statistic
+                authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
+                    .then(response_2 => {
+                        //merge summary array and statistic array
+                        let result_2 = [];
+                        for (let i = 0; i < result_1.postSummaryDTOs.length; i++) {
+                            result_2.push({
+                                ...result_1.postSummaryDTOs[i],
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
+                            });
+                        }
+                        dispatch(get_PostsByFilterSuccess({
+                            postSummaryWithStateDTOs: result_2,
+                            totalPages: result_1.totalPages,
+                            totalElements: result_1.totalElements
+                        }))
+                    }).catch((error) => dispatch(get_PostsByFilterFailure(error)))
+            }).catch((error) => dispatch(get_PostsByFilterFailure(error)))
     }
 }
 
@@ -473,7 +507,7 @@ export function getSavedPosts(searchParamObject) {
     return dispatch => {
 
         dispatch(get_SavedPostsRequest());
-        authRequest.get(`/posts/savedBy?${generateSearchParam(searchParamObject)}`)
+        authRequest.get(`/posts/savedPost?${generateSearchParam(searchParamObject)}`)
             .then(response => {
 
                 let result_1 = response.data;

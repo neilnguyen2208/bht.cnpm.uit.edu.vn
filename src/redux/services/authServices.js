@@ -6,9 +6,15 @@ import {
   get_UserDetailByIdFailure,
   get_UserDetailByIdRequest,
   get_UserDetailByIdSuccess,
+  get_UserDetailByTokenFailure,
+  get_UserDetailByTokenRequest,
+  get_UserDetailByTokenSuccess,
   get_UserStatisticByIdFailure,
   get_UserStatisticByIdReset,
-  get_UserStatisticByIdSuccess
+  get_UserStatisticByIdSuccess,
+  update_UserDetailByTokenFailure,
+  update_UserDetailByTokenReset,
+  update_UserDetailByTokenSuccess
 } from '../actions/authAction';
 
 export function getCurrentUserSummary() {
@@ -45,4 +51,32 @@ export function getUserDetailById(userId) {
         dispatch(get_UserDetailByIdFailure());
       })
   }
+}
+
+export function getUserDetailByToken() {
+  return dispatch => {
+    dispatch(get_UserDetailByTokenRequest())
+    authRequest.get(`/user/details`)
+      .then(response => {
+        dispatch(get_UserDetailByTokenSuccess(response.data))
+      }).catch(error => {
+        dispatch(get_UserDetailByTokenFailure(error));
+      })
+  }
+}
+
+export function updateUserDetailByToken(data) {
+  return dispatch => {
+    dispatch(update_UserDetailByTokenReset())
+    authRequest.put(`/user/details`, JSON.stringify(data))
+      .then(response => {
+        dispatch(update_UserDetailByTokenSuccess(response.data))
+      }).catch(error => {
+        dispatch(update_UserDetailByTokenFailure(error));
+      })
+  }
+}
+
+export function getAccountManagementAvailableActions(userId){
+  
 }

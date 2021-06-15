@@ -9,6 +9,13 @@ import {
   GET_USER_DETAIL_BY_ID_SUCCESS,
   GET_USER_DETAIL_BY_ID_FAILURE,
   GET_USER_DETAIL_BY_ID_REQUEST,
+  GET_USER_DETAIL_BY_TOKEN_REQUEST,
+  GET_USER_DETAIL_BY_TOKEN_SUCCESS,
+  GET_USER_DETAIL_BY_TOKEN_FAILURE,
+  UPDATE_USER_DETAIL_BY_TOKEN_REQUEST,
+  UPDATE_USER_DETAIL_BY_TOKEN_RESET,
+  UPDATE_USER_DETAIL_BY_TOKEN_SUCCESS,
+  UPDATE_USER_DETAIL_BY_TOKEN_FAILURE,
 } from 'redux/constants.js';
 
 export function get_CurrentUserSummaryReset(data) {
@@ -72,3 +79,42 @@ export function get_UserDetailByIdFailure(error) {
   }
 }
 
+export function get_UserDetailByTokenRequest() {
+  return {
+    type: GET_USER_DETAIL_BY_TOKEN_REQUEST
+  }
+}
+
+export function get_UserDetailByTokenSuccess(data) {
+  return {
+    type: GET_USER_DETAIL_BY_TOKEN_SUCCESS,
+    payload: data
+  }
+}
+
+export function get_UserDetailByTokenFailure(error) {
+  return {
+    type: GET_USER_DETAIL_BY_TOKEN_FAILURE,
+    payload: error
+  }
+}
+
+export function update_UserDetailByTokenReset() {
+  return {
+    type: UPDATE_USER_DETAIL_BY_TOKEN_RESET
+  }
+}
+
+export function update_UserDetailByTokenSuccess(data) {
+  return {
+    type: UPDATE_USER_DETAIL_BY_TOKEN_SUCCESS,
+    payload: data
+  }
+}
+
+export function update_UserDetailByTokenFailure(error) {
+  return {
+    type: UPDATE_USER_DETAIL_BY_TOKEN_FAILURE,
+    payload: error
+  }
+}

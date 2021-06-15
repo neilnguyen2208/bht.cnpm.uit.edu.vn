@@ -85,7 +85,10 @@ import {
     GET_SAVED_POSTS_FAILURE,
     GET_A_POST_STATISTIC_RESET,
     GET_A_POST_STATISTIC_SUCCESS,
-    GET_A_POST_STATISTIC_FAILURE
+    GET_A_POST_STATISTIC_FAILURE,
+    GET_POSTS_BY_FILTER_REQUEST,
+    GET_POSTS_BY_FILTER_SUCCESS,
+    GET_POSTS_BY_FILTER_FAILURE
 
 
 } from "../constants.js"
@@ -457,7 +460,6 @@ export function get_RelativeSameCategoryPostsFailure() {
     }
 }
 
-
 export function get_RelativeSameAuthorPostsReset() {
     return {
         type: GET_RELATIVE_SAME_AUTHOR_POSTS_RESET
@@ -487,7 +489,8 @@ export function get_SavedPostsRequest() {
 
 export function get_SavedPostsSuccess(data) {
     return {
-        type: GET_SAVED_POSTS_SUCCESS, payload: data
+        type: GET_SAVED_POSTS_SUCCESS,
+        payload: data
     }
 }
 
@@ -502,10 +505,23 @@ export function get_APostStatisticReset() {
     return { type: GET_A_POST_STATISTIC_RESET }
 }
 
+//not implemented yet
 export function get_APostStatisticSuccess(data) {
     return { type: GET_A_POST_STATISTIC_SUCCESS, data: data }
 }
 
 export function get_APostStatisticFailure(error) {
-    return { type: GET_A_POST_STATISTIC_FAILURE, error }
+    return { type: GET_A_POST_STATISTIC_FAILURE, payload: error }
+}
+
+export function get_PostsByFilterRequest() {
+    return { type: GET_POSTS_BY_FILTER_REQUEST }
+}
+
+export function get_PostsByFilterSuccess(data) {
+    return { type: GET_POSTS_BY_FILTER_SUCCESS, payload: data }
+}
+
+export function get_PostsByFilterFailure(error) {
+    return { type: GET_POSTS_BY_FILTER_FAILURE, payload: error }
 }

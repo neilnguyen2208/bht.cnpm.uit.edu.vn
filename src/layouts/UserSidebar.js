@@ -37,7 +37,7 @@ class UserSidebar extends React.Component {
     window.removeEventListener('scroll', this.scrollFunction);
   }
   render() {
-    
+
     return (
       <div className="left-sidebar-wrapper" >
         {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
@@ -78,7 +78,7 @@ class UserSidebar extends React.Component {
                 <div className="mg-bottom-5px"></div>
                 <NavLink className="vertical-sub-m-i"
                   activeClassName="vertical-sub-m-i main-interactive-menu-item-active"
-                  to="/user/profile/" exact
+                  to={`/user/profile/${this.props.userSummaryData.id}`} exact
                   onClick={() => this.setState({})}> Trang cá nhân
                 </NavLink>
 
@@ -286,7 +286,8 @@ class UserSidebar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    userSummaryData: state.auth.currentUserSummary.data,
+    userSummaryDataLoaded: state.auth.currentUserSummary.isLoadDone
   };
 }
 

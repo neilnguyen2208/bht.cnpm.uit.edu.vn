@@ -84,6 +84,9 @@ import {
     GET_A_POST_STATISTIC_RESET,
     GET_A_POST_STATISTIC_SUCCESS,
     GET_A_POST_STATISTIC_FAILURE,
+    GET_POSTS_BY_FILTER_REQUEST,
+    GET_POSTS_BY_FILTER_SUCCESS,
+    GET_POSTS_BY_FILTER_FAILURE,
 
 } from '../constants.js'
 
@@ -121,6 +124,14 @@ const initialState = {
         isLoadDone: false,
         data: {},
         error: ''
+    },
+
+    postsByFilter: {
+        isLoading: false,
+        data: [],
+        error: '',
+        totalPages: 0,
+        totalElements: 0
     },
 
     //search post: use for search post and post list
@@ -470,6 +481,32 @@ function PostReducer(state = initialState, action) {
             ...state, postStatistic: {
                 ...state.postStatistic,
                 isLoadDone: false,
+                error: action.payload
+            }
+        }
+
+        case GET_POSTS_BY_FILTER_REQUEST: return {
+            ...state, postsByFilter: {
+                ...state.postsByFilter,
+                isLoading: true
+            }
+        }
+
+        case GET_POSTS_BY_FILTER_SUCCESS:
+            return {
+                ...state, postsByFilter: {
+                    data: action.payload.postSummaryWithStateDTOs,
+                    isLoading: false,
+                    totalPages: action.payload.totalPages,
+                    totalElements: action.payload.totalElements
+
+                }
+            }
+
+        case GET_POSTS_BY_FILTER_FAILURE: return {
+            ...state, postsByFilter: {
+                ...state.postsByFilter,
+                isLoading: false,
                 error: action.payload
             }
         }

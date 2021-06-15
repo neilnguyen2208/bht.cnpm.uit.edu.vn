@@ -7,7 +7,13 @@ import {
   GET_USER_STATISTIC_BY_ID_FAILURE,
   GET_USER_DETAIL_BY_ID_SUCCESS,
   GET_USER_DETAIL_BY_ID_FAILURE,
-  GET_USER_DETAIL_BY_ID_REQUEST
+  GET_USER_DETAIL_BY_ID_REQUEST,
+  GET_USER_DETAIL_BY_TOKEN_REQUEST,
+  GET_USER_DETAIL_BY_TOKEN_SUCCESS,
+  GET_USER_DETAIL_BY_TOKEN_FAILURE,
+  UPDATE_USER_DETAIL_BY_TOKEN_RESET,
+  UPDATE_USER_DETAIL_BY_TOKEN_SUCCESS,
+  UPDATE_USER_DETAIL_BY_TOKEN_FAILURE
 
 } from 'redux/constants.js';
 
@@ -23,7 +29,12 @@ const initialState = {
   userDetail: {
     isLoading: false,
     data: {}
-  }
+  },
+  currentUserDetail: {
+    isLoading: false,
+    data: {}
+  },
+  isHaveUpdated: false
 };
 
 export default function AuthReducer(state = initialState, action) {
@@ -103,6 +114,50 @@ export default function AuthReducer(state = initialState, action) {
           data: state.currentUserSummary.data, error: action.payload
         }
       };
+
+    case GET_USER_DETAIL_BY_TOKEN_REQUEST:
+      return {
+        ...state,
+        currentUserDetail: {
+          isLoadDone: false,
+          data: {}
+        }
+      };
+    case GET_USER_DETAIL_BY_TOKEN_SUCCESS:
+      return {
+        ...state,
+        currentUserDetail: {
+          isLoadDone: true,
+          data: action.payload
+        }
+      }
+
+    case GET_USER_DETAIL_BY_TOKEN_FAILURE:
+      return {
+        ...state,
+        currentUserDetail: {
+          isLoadDone: false,
+          data: state.currentUserSummary.data, error: action.payload
+        }
+      };
+
+    case UPDATE_USER_DETAIL_BY_TOKEN_RESET:
+      return {
+        ...state,
+        isHaveUpdated: false
+      };
+    case UPDATE_USER_DETAIL_BY_TOKEN_SUCCESS:
+      return {
+        ...state,
+        isHaveUpdated: true
+      }
+
+    case UPDATE_USER_DETAIL_BY_TOKEN_FAILURE:
+      return {
+        ...state,
+        isHaveUpdated: false
+      };
+      
     default:
       return state;
   }

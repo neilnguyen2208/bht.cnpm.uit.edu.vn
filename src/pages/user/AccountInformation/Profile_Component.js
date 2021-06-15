@@ -59,10 +59,6 @@ class AccountInformation extends React.Component {
 
     }
 
-    // onUnfollowClick = () => {
-
-    // }
-
     render() {
         if (!this.props.userDetailLoading && this.props.userDetail)
             return (
@@ -72,10 +68,6 @@ class AccountInformation extends React.Component {
                         <div className="base-info-sub-container" >
                             <div className="avatar-container view">
                                 <img className="avatar" style={{ background: "white" }} src={this.props.userDetail.avatarURL} alt="cover" />
-                                {/* {this.isFollowed ?
-                                <div className="avatar-overlay" >Followed</div>
-                                :
-                                <></>} */}
                             </div>
                             <div className="info-sub-container">
                                 <div className="info-sub-container-left" >
@@ -86,22 +78,6 @@ class AccountInformation extends React.Component {
                                         <div className="email">{this.props.userDetail.email}</div>
                                     </div>
                                     <div className="d-flex-vertical j-c-space-between">
-                                        {/* <div className="j-c-end"> */}
-                                        {/* <div className='d-flex pos-relative' >
-                                        {this.isFollowed ?
-                                            <div className="follow-btn">
-                                                <div className="follow-btn-right">
-                                                    Bỏ theo dõi
-                                                            </div>
-                                                <div className="follow-btn-left">
-                                                    <img className="followed-icon" src={tick_icon} alt="v" />
-                                                    <div className="follow-btn-left-text">  Đang theo dõi</div>
-                                                </div>
-                                            </div>
-                                            :
-                                            <button className="blue-button" >Theo dõi</button>
-                                        }
-                                    </div> */}
                                     </div>
                                 </div>
                                 <div className="j-c-end">
@@ -109,7 +85,6 @@ class AccountInformation extends React.Component {
                                         <div style={{ borderBottom: "var(--gray) 1px solid" }}>
                                             <div className="d-flex">
                                                 <div className="score">Score:  {this.props.userDetail.reputationScore ? formatNumber(this.props.userDetail.reputationScore) : 0}</div>
-                                                {/* <div className="score">Followers: {formatNumber(2000)}</div> */}
                                             </div>
                                             <div className="d-flex">
                                                 <div className="score"> Bài viết:  {this.props.userDetail.postCount ? formatNumber(this.props.userDetail.postCount) : 0} </div>
@@ -133,10 +108,10 @@ class AccountInformation extends React.Component {
                     </div>
                     <div>
                         <div className="h-menu-bar">
-                            <NavLink className={window.location.pathname !== `/user/profile/:id` ? "d-none" : "h-menu-item"} to={`/user/profile/${this.props.match.params.id}`} exact activeClassName={window.location.pathname === "/user" ? 'h-menu-item active' : 'd-none'}>
+                            <NavLink className={window.location.pathname.substring(0,13) !== `/user/profile` ? "d-none" : "h-menu-item"} to={`/user/profile/${this.props.match.params.id}`} exact activeClassName={window.location.pathname.substring(0, 13) === "/user/profile" ? 'h-menu-item active' : 'd-none'}>
                                 Bài viết
                             </NavLink>
-                            <NavLink className={window.location.pathname.substring(0, 14) === "/user/profile/:id" ? "d-none" : "h-menu-item"} to={`/user/posts/${this.props.match.params.id}`} exact activeClassName='h-menu-item active'>
+                            <NavLink className={window.location.pathname.substring(0, 13) === "/user/profile" ? "d-none" : "h-menu-item"} to={`/user/posts/${this.props.match.params.id}`} exact activeClassName='h-menu-item active'>
                                 Bài viết
                             </NavLink>
                             <NavLink className="h-menu-item" to={`/user/documents/${this.props.match.params.id}`} exact activeClassName='h-menu-item active'>

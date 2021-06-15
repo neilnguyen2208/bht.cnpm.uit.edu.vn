@@ -157,6 +157,7 @@
   width: 100%;
   height: 150px;
   line-height: 150px;
+  border: 1px solid var(--gray);
   object-fit: cover;
 }
 
@@ -165,7 +166,7 @@
   height: 150px;
   object-fit: none;
   text-align: center;
-  margin:auto;
+  margin: auto;
   display: block;
   line-height: 150px;
   border: 1px solid var(--gray);

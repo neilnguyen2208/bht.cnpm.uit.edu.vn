@@ -15,12 +15,12 @@ import UserSidebar from 'layouts/UserSidebar';
 import "components/user/UserMenu.scss";
 import ProfileComponent from './Profile_Component'
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
-import { getMyPosts } from 'redux/services/postServices'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 import { itemType } from 'constants.js';
+import { getPostsByFilter } from 'redux/services/postServices'
 
 //import for role config
 class ProfilePost extends React.Component {
@@ -28,9 +28,9 @@ class ProfilePost extends React.Component {
     componentDidMount() {
 
         this.searchParamObject = {
-            "page": 1,
-            "category.id": null,
-            "postState": ''
+            "paginator": 1,
+            "author": this.props.match.params.id,
+            "sort": "publishDtm,desc"
         }
 
         this.queryParamObject = {
@@ -40,8 +40,18 @@ class ProfilePost extends React.Component {
 
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
-        this.props.getMyPosts(this.searchParamObject);
-        // this.props.getMyPosts
+        this.props.getPostsByFilter(this.searchParamObject);
+    }
+
+    //server paginator
+    onPageChange = (pageNumber) => {
+        setQueryParam({ ...this.queryParamObject, page: pageNumber });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            paginator: getQueryParamByName('page'),
+        }
+        this.props.getPostsByFilter(this.searchParamObject);
+        this.setState({});
     }
 
     onFilterClick = (filter) => {
@@ -52,6 +62,13 @@ class ProfilePost extends React.Component {
                     tab: "most-likes"
                 }
                 setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "paginator": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostLiked": true
+                }
+                this.props.getPostsByFilter(this.searchParamObject)
                 this.setState({});
                 return;
             }
@@ -61,6 +78,13 @@ class ProfilePost extends React.Component {
                     tab: "most-views"
                 }
                 setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "paginator": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostsByFilter(this.searchParamObject)
                 this.setState({});
                 return;
             }
@@ -73,25 +97,24 @@ class ProfilePost extends React.Component {
                 this.setState({});
                 return;
             }
-
         }
     }
 
     render() {
         if (!this.props.isListLoading) {
-            if (this.props.userPostList.length !== 0)
-                this.userPostList = this.props.userPostList.map((item) => {
+            if (this.props.userPostsList.length !== 0)
+                this.userPostsList = this.props.userPostsList.map((item) => {
                     return <div className="item-container">
                         <PostSummaryMetadata
                             type={itemType.normal}
                             postId={item.id}
-                            authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
                             categoryName={item.categoryName}
                             categoryID={item.categoryID}
                             title={item.title}
                             summary={item.summary}
+                            authorDisplayName={item.authorDisplayName}
                             imageURL={item.imageURL}
                             readingTime={item.readingTime}
                             approveState={item.postState}
@@ -112,7 +135,7 @@ class ProfilePost extends React.Component {
                     </div >
                 })
             else
-                this.userPostList = <div>Không có bài viết nào!</div>;
+                this.userPostsList = <div>Không có bài viết nào!</div>;
         }
         else
             this.userPostList = <div>
@@ -120,7 +143,7 @@ class ProfilePost extends React.Component {
                 {DocPostSummaryLoader()}
                 {DocPostSummaryLoader()}
             </div>
-
+        console.log(this.props.userPostsList)
         return (
             <div className="left-sidebar-layout">
                 <UserSidebar />
@@ -154,10 +177,9 @@ class ProfilePost extends React.Component {
                                 </div>
                             </div>
                             <div>
-                                {!this.props.isListLoading && this.props.userPostList ?
+                                {!this.props.isListLoading && this.props.userPostsList ?
                                     <>
-
-                                        <div >{this.userPostList}</div>
+                                        <div >{this.userPostsList}</div>
                                         <Paginator config={{
                                             changePage: (pageNumber) => this.onPageChange(pageNumber),
                                             pageCount: this.props.totalPages,
@@ -176,31 +198,21 @@ class ProfilePost extends React.Component {
                         </div>
                     </div >
                 </div >
-            </div >
-
-        );
-
+            </div >);
     }
-
 }
 
 const mapStateToProps = (state) => {
     return {
-        userPostList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.searchData,
-        totalPages: state.post.myPosts.totalPages,
-        totalElements: state.post.myPosts.totalElements,
-        isListLoading: state.post.myPosts.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading,
-      
-        //handle 2 actions: delete and edit
-        isHaveDeleted: state.post.isHaveDeleted,
-        isHaveEdited: state.post.isHaveEdited,
+        userPostsList: state.post.postsByFilter.data,
+        totalPages: state.post.postsByFilter.totalPages,
+        totalElements: state.post.postsByFilter.totalElements,
+        isListLoading: state.post.postsByFilter.isLoading,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyPosts, 
+    getPostsByFilter
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfilePost));

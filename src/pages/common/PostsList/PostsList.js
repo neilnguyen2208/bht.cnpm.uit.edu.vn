@@ -16,7 +16,6 @@ import PostSummaryMetadata from 'components/post/SummaryInfo'
 import { publishedTimeOptions, itemType } from 'constants.js';
 class PostsList extends React.Component {
 
-
     componentDidMount() {
         this.queryParamObject = {
             "category": 0,

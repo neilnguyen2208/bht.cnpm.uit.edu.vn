@@ -10,16 +10,23 @@ import {
     get_CoursesListSuccess,
     get_CoursesListFailure,
 
+    get_DCCoursesListRequest,
+    get_DCCoursesListSuccess,
+    get_DCCoursesListFailure,
+
+    get_CSNNCoursesListRequest,
+    get_CSNNDCCoursesListSuccess,
+    get_CSNNDCCoursesListFailure,
+
     //courses search result 
     get_CourseSearchResultRequest,
     get_CourseSearchResultSuccess,
     get_CourseSearchResultFailure,
+    get_CSNNCoursesListSuccess,
+    get_CSNNCoursesListFailure,
 } from "redux/actions/courseAction.js";
-
-
-//#region Fake data region
-
-//#endregion
+import { authRequest } from "utils/requestUtils";
+import { generateSearchParam } from "utils/urlUtils";
 
 export function uploadCourse(courses) {
     return dispatch => {
@@ -36,79 +43,42 @@ export function getCourseByID(uid, pid) {
 // my courses
 export function getMyCourses() { //this API to get all approved document of a specific user.
     return dispatch => {
-
         dispatch(get_MyCoursesRequest());
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/courses`, requestOptions)
-            .then(response => response.text())
-            .then(
-                result => {
-                    dispatch(get_MyCoursesSuccess(JSON.parse(result)));
-                }
-            )
-            .catch(error => {
-              dispatch(get_MyCoursesFailure(error))
-            })
     }
 }
 
 //courses list
-export function getCoursesList(category = "") {
+export function getCoursesList(searchParamObject) {
     return dispatch => {
+        dispatch(get_CoursesListRequest());
+        authRequest.get(`/exercises/subjects?${generateSearchParam(searchParamObject)}`).then(response => {
+            dispatch(get_CoursesListSuccess(response.data))
+        }).catch(error => dispatch(get_CoursesListFailure(error)))
+    }
+}
 
-        dispatch(get_CoursesListRequest(category));
+export function getDCCoursesList() {
+    return dispatch => {
+        dispatch(get_DCCoursesListRequest());
+        authRequest.get(`/exercises/subjects?subjectGroup=1`).then(response => {
+            dispatch(get_DCCoursesListSuccess(response.data))
+        }).catch(error => dispatch(get_DCCoursesListFailure(error)))
+    }
+}
 
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        
-        fetch(`https://5fe871c82e12ee0017ab46ef.mockapi.io/courses`, requestOptions)
-            .then(response => response.text())
-            .then(
-                
-                result => {
-                    console.log(result)
-                    dispatch(get_CoursesListSuccess(JSON.parse(result)));
-                }
-            )
-            .catch(error => {
-                 dispatch(get_CoursesListFailure(error))
-            })
+export function getCSNNCoursesList() {
+    return dispatch => {
+        dispatch(get_CSNNCoursesListRequest());
+        authRequest.get(`/exercises/subjects?subjectGroup=2`).then(response => {
+            dispatch(get_CSNNCoursesListSuccess(response.data))
+        }).catch(error => dispatch(get_CSNNCoursesListFailure(error)))
     }
 }
 
 //coursess search result
-export function getCourseSearchResult(page = 1, category = "", searchParam = "") {
+export function getCourseSearchResult(searchParamObject) {
     return dispatch => {
         dispatch(get_CourseSearchResultRequest());
-
-        var myHeaders = new Headers();
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/courses`, requestOptions)
-            .then(response => response.text())
-            .then(
-                result => {
-                    dispatch(get_CourseSearchResultSuccess(JSON.parse(result)));
-                }
-            )
-            .catch(error => {
-                 dispatch(get_CourseSearchResultFailure(error))
-            })
     }
 }
 

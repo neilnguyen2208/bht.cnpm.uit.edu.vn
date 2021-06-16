@@ -20,7 +20,6 @@
   margin-bottom: 10px;
   padding-bottom: 20px;
   border-bottom: 1px var(--gray) solid;
-
 }
 
 .sum-item-label {
@@ -156,7 +155,8 @@
   margin: auto;
 }
 
-.home-layout {
+.home-layout,
+.courses-layout {
   width: 100%;
   max-width: 1000px;
   margin: auto;
@@ -173,7 +173,6 @@
   width: 100%;
   max-width: 600px;
   margin: auto;
-
 }
 
 .layout-decoration {

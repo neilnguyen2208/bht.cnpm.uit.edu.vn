@@ -164,7 +164,6 @@ class ProfileDocument extends React.Component {
                             <div>
                                 {!this.props.isListLoading && this.props.userDocumentsList ?
                                     <>
-
                                         <div >{this.userDocumentsList}</div>
                                         <Paginator config={{
                                             changePage: (pageNumber) => this.onPageChange(pageNumber),
@@ -184,12 +183,8 @@ class ProfileDocument extends React.Component {
                         </div>
                     </div >
                 </div >
-            </div >
-
-        );
-
+            </div >);
     }
-
 }
 
 const mapStateToProps = (state) => {

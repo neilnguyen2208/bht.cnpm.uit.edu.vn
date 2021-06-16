@@ -1,26 +1,26 @@
 import {
-    GET_COURSE_FALCUTY_CATEGORIES_REQUEST,
-    GET_COURSE_FALCUTY_CATEGORIES_SUCCESS,
-    GET_COURSE_FALCUTY_CATEGORIES_FAILURE
+    GET_COURSE_FACULTIES_REQUEST,
+    GET_COURSE_FACULTIES_SUCCESS,
+    GET_COURSE_FACULTIES_FAILURE
 } from "../constants.js"
 
 //my post
-export function get_CourseFalcutyCategoriesRequest() {
+export function get_CourseFacultiesRequest() {
     return {
-        type: GET_COURSE_FALCUTY_CATEGORIES_REQUEST,
+        type: GET_COURSE_FACULTIES_REQUEST,
     }
 }
 
-export function get_CourseFalcutyCategoriesSuccess(data) {
+export function get_CourseFacultiesSuccess(data) {
     return {
-        type: GET_COURSE_FALCUTY_CATEGORIES_SUCCESS,
+        type: GET_COURSE_FACULTIES_SUCCESS,
         payload: data
     }
 }
 
-export function get_CourseFalcutyCategoriesFailure(error) {
+export function get_CourseFacultiesFailure(error) {
     return {
-        type: GET_COURSE_FALCUTY_CATEGORIES_FAILURE,
+        type: GET_COURSE_FACULTIES_FAILURE,
         payload: error
     }
 }

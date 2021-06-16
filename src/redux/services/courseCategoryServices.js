@@ -1,29 +1,18 @@
 import {
-    get_CourseFalcutyCategoriesSuccess,
-    get_CourseFalcutyCategoriesRequest,
-    get_CourseFalcutyCategoriesFailure
+    get_CourseFacultiesSuccess,
+    get_CourseFacultiesRequest,
+    get_CourseFacultiesFailure
 } from "redux/actions/courseCategoryAction.js";
+import { authRequest } from "utils/requestUtils";
 
-export function getCourseFalcutyCategories() {
+export function getCourseFaculties() {
     return dispatch => {
-
-        dispatch(get_CourseFalcutyCategoriesRequest());
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-
-        fetch(`https://5fca2bc63c1c220016441d27.mockapi.io/category`, requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                
-                dispatch(get_CourseFalcutyCategoriesSuccess(JSON.parse(result)));
-            })
-            .catch(error => {
-                dispatch(get_CourseFalcutyCategoriesFailure(error))
-            });
-
+        dispatch(get_CourseFacultiesRequest());
+        authRequest.get(`/exercises/subjectFaculties`).then(result => {
+            dispatch(get_CourseFacultiesSuccess(result.data));
+        }).catch(error => {
+            dispatch(get_CourseFacultiesFailure(error))
+        });
     }
 }
 

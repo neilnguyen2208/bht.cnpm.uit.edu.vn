@@ -73,7 +73,7 @@
 .dropdown-container {
     margin-top: 5px;
     position: absolute;
-    border: 1px var(--grayish) solid;
+    border: 1px var(--gray) solid;
     border-bottom: 3px var(--blue) solid;
     border-radius: 2px;
     box-shadow: 0px 0px 2px 0px var(--grayish);
@@ -96,6 +96,7 @@
     height: 0.625rem;
     vertical-align: auto;
     margin-top: 0.573rem;
+    margin-left: 5px;
 }
 
 .combox.small .dropdown-element {

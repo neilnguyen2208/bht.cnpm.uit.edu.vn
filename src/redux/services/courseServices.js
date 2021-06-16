@@ -24,6 +24,12 @@ import {
     get_CourseSearchResultFailure,
     get_CSNNCoursesListSuccess,
     get_CSNNCoursesListFailure,
+    get_CourseTopicsWithExercisesRequest,
+    get_CourseTopicsWithExercisesSuccess,
+    get_CourseTopicsWithExercisesFailure,
+    get_CourseDetailByIdRequest,
+    get_CourseDetailByIdSuccess,
+    get_CourseDetailByIdFailure,
 } from "redux/actions/courseAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
@@ -72,6 +78,24 @@ export function getCSNNCoursesList() {
         authRequest.get(`/exercises/subjects?subjectGroup=2`).then(response => {
             dispatch(get_CSNNCoursesListSuccess(response.data))
         }).catch(error => dispatch(get_CSNNCoursesListFailure(error)))
+    }
+}
+
+export function getCourseTopicsWithExercisesById(courseId) {
+    return dispatch => {
+        dispatch(get_CourseTopicsWithExercisesRequest());
+        authRequest.get(`/exercises/topicsWithExercises?subjectID=5`).then(response => {
+            dispatch(get_CourseTopicsWithExercisesSuccess(response.data))
+        }).catch(error => dispatch(get_CourseTopicsWithExercisesFailure(error)))
+    }
+}
+
+export function getCourseDetailById(courseId) {
+    return dispatch => {
+        dispatch(get_CourseDetailByIdRequest());
+        authRequest.get(`/exercises/subjects?id=5`).then(response => {
+            dispatch(get_CourseDetailByIdSuccess(response.data))
+        }).catch(error => dispatch(get_CourseDetailByIdFailure(error)))
     }
 }
 

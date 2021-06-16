@@ -78,7 +78,7 @@ class CommentSection extends React.Component {
             commentId={comment.id}
             key={comment.id}
             authorDisplayName={comment.authorDisplayName}
-            idCmtAuthor={comment.authorID}
+            authorID={comment.authorID}
             authorAvatarURL={comment.authorAvatarURL}
             isContentAuthor={comment.isContentAuthor}
             submitDtm={comment.submitDtm}

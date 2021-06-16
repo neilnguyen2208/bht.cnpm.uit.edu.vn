@@ -246,7 +246,7 @@ class Comment extends React.Component {
       //     replyId={createdReply.id}
       //     authorDisplayName={createdReply.authorDisplayName}
       //     authorAvatarURL={createdReply.authorAvatarURL}
-      //     idCmtAuthor={createdReply.isauthorDisplayName}
+      //     authorID={createdReply.isauthorDisplayName}
       //     isContentAuthor={createdReply.isContentAuthor}
       //     submitDtm={createdReply.submitDtm}
       //     likeCount={createdReply.likeCount}
@@ -288,7 +288,7 @@ class Comment extends React.Component {
       //       key={createdReply.id}
       //       authorDisplayName={createdReply.authorDisplayName}
       //       authorAvatarURL={createdReply.authorAvatarURL}
-      //       idCmtAuthor={createdReply.isauthorDisplayName}
+      //       authorID={createdReply.isauthorDisplayName}
       //       isContentAuthor={createdReply.isContentAuthor}
       //       submitDtm={createdReply.submitDtm}
       //       likeCount={createdReply.likeCount}
@@ -313,7 +313,7 @@ class Comment extends React.Component {
             replyId={reply.id}
             authorDisplayName={reply.authorDisplayName}
             authorAvatarURL={reply.authorAvatarURL}
-            idCmtAuthor={reply.isauthorDisplayName}
+            authorID={reply.isauthorDisplayName}
             isContentAuthor={reply.isContentAuthor}
             submitDtm={reply.submitDtm}
             likeCount={reply.likeCount}
@@ -371,7 +371,7 @@ class Comment extends React.Component {
     //         replyId={reply.id}
     //         authorDisplayName={reply.authorDisplayName}
     //         authorAvatarURL={reply.authorAvatarURL}
-    //         idCmtAuthor={reply.isauthorDisplayName}
+    //         authorID={reply.isauthorDisplayName}
     //         isContentAuthor={reply.isContentAuthor}
     //         submitDtm={reply.submitDtm}
     //         likeCount={reply.likeCount}
@@ -388,7 +388,7 @@ class Comment extends React.Component {
     //     key={reply.id}
     //     authorDisplayName={reply.authorDisplayName}
     //     authorAvatarURL={reply.authorAvatarURL}
-    //     idCmtAuthor={reply.isauthorDisplayName}
+    //     authorID={reply.isauthorDisplayName}
     //     isContentAuthor={reply.isContentAuthor}
     //     submitDtm={reply.submitDtm}
     //     likeCount={reply.likeCount}

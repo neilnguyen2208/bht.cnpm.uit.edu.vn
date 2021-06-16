@@ -64,7 +64,7 @@ class CoursesList extends React.Component {
         if (!this.props.isDCLoading) {
             dcCoursesList = this.props.dcCoursesList.map(subjectItem => {
                 return <SubjectItem
-                    subjetId={subjectItem.id}
+                    subjectId={subjectItem.id}
                     imageURL={subjectItem.imageURL}
                     subjectName={subjectItem.name}
                     type={itemType.normal}
@@ -76,7 +76,7 @@ class CoursesList extends React.Component {
         if (!this.props.isCSNNLoading) {
             csnnCoursesList = this.props.csnnCoursesList.map(subjectItem => {
                 return <SubjectItem
-                    subjetId={subjectItem.id}
+                    subjectId={subjectItem.id}
                     imageURL={subjectItem.imageURL}
                     subjectName={subjectItem.name}
                     type={itemType.normal}

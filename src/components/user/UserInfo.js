@@ -23,9 +23,11 @@ class UserInfo extends React.Component {
 
     return (
       <div className="user-info"  >
-        <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+        <Link to={`/user/profile/${this.props.authorID}`}>
+          <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+        </Link>
         <div className="mg-left-5px j-c-space-between d-flex-vertical">
-          <Link className="link-label-m" style={{ fontSize: "20px" }} to={/user/}>
+          <Link className="link-label-m" style={{ fontSize: "20px" }} to={`/user/profile/${this.props.authorID}`}>
             {this.props.authorDisplayName}
           </Link>
           {this.props.isStatisticLoaded && this.props.statisticData ?

@@ -1,9 +1,3 @@
-.heading-list {}
-
-.heading-list .subject-description {
-  display: flex;
-}
-
 .heading-list .image {
   width: 160px;
   height: 130px;
@@ -27,9 +21,7 @@
 .heading-list .description {
   font-size: 16px;
   font-family: "BarlowSemiCondensed-MediumItalic";
-
 }
-
 
 .heading-list .save-btn-container {
   display: flex;
@@ -58,7 +50,6 @@
   width: 100%;
   justify-content: space-between;
   border-bottom: 1px solid var(--gray);
-
 }
 
 .heading-list .heading-content-title {
@@ -75,5 +66,4 @@
 .heading-content-container .dropdown-btn {
   margin-right: 5px;
   margin-top: 3px;
-
 }

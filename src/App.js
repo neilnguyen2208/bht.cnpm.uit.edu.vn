@@ -16,9 +16,8 @@ import MyPosts from "pages/user/MyPosts/MyPosts";
 import SearchTag from "pages/common/SearchResult/SearchTag";
 import SearchPost from "pages/common/SearchResult/SearchPost";
 import SearchDocument from "pages/common/SearchResult/SearchDocument";
-import Exercise from "pages/common/ChapterDetail/Exercise"
 import CoursesList from "pages/common/CoursesList/CoursesList"
-import ChaptersList from "pages/common/HeadingsList/HeadingsList"
+import CourseDetail from "pages/common/CourseDetail/CourseDetail"
 import PostsList from 'pages/common/PostsList/PostsList'
 import PostApproving from 'pages/management/PostManagement/PostApproving'
 import NotificationManagement from 'pages/management/NotificationManagement/NotificationManagement'
@@ -41,7 +40,6 @@ import DocumentReportManagement from "pages/management/DocumentManagement/Docume
 import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
-// import EmailManagement from 'pages/user/AccountInformation/EmailManagement'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
@@ -52,7 +50,6 @@ import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager'
 
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute'
-// import Secured from 'components/base_components/Sercured.js'
 import { Access, Post } from "authentication/permission.config";
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
@@ -71,7 +68,7 @@ const App = () => {
                         <Route exact path="/post-content/:id" component={PostDetail} />
                         <Route exact path="/document-content/:id" component={DocumentDetail} />
                         <Route exact path="/courses" component={CoursesList} />
-                        <Route exact path="/courses/:id" component={ChaptersList} />
+                        <Route exact path="/course-content/:id" component={CourseDetail} />
                         <Route path="/search/posts" exact component={SearchPost} />
                         <Route path="/search/documents" exact component={SearchDocument} />
                         <Route path="/search/tags" exact component={SearchTag} />
@@ -85,7 +82,6 @@ const App = () => {
                         <Route exact path="/user/profile/:id" component={ProfilePost} />
                         <Route exact path="/user/posts/:id" component={ProfilePost} />
                         <Route exact path="/user/documents/:id" component={ProfileDocument} />
-                        {/* <Route exact path="/user/email-management" component={EmailManagement} /> */}
                         <Route exact path="/user/account-management" component={AccountManagement} />
 
                         <Route exact path="/user/my-documents" component={MyDocuments} />
@@ -94,7 +90,6 @@ const App = () => {
                         <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.POST_PENDING_SELF_CREATE]} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <Route exact path="/upload-document" component={UploadDocument} />
-                        <Route exact path="/courses/:id/exercise" component={Exercise} />
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />

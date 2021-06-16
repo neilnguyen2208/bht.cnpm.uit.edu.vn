@@ -8,7 +8,6 @@ import DocumentCategoryReducer from "redux/reducers/documentCategoryReducer"
 import TagReducer from "redux/reducers/tagReducer"
 import CourseReducer from "redux/reducers/courseReducer"
 import CourseCategoryReducer from "redux/reducers/courseCategoryReducer"
-import HeadingReducer from "redux/reducers/headingReducer"
 import CommonReducer from "redux/reducers/commonReducer"
 import ModalReducer from "redux/reducers/modalReducer"
 import DocumentSubjectReducer from "redux/reducers/documentSubjectReducer"
@@ -28,7 +27,6 @@ var RootReducer = combineReducers({
     tag: TagReducer,
     course: CourseReducer,
     course_category: CourseCategoryReducer,
-    heading: HeadingReducer,
     common: CommonReducer,
     modal: ModalReducer,
     auth: AuthenticationReducer,

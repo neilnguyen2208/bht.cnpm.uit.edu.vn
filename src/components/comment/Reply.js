@@ -212,7 +212,7 @@ class Reply extends React.Component {
             <div className="comment-head">
               <div>
                 <div className="d-flex" >
-                  <Link className="comment-name" to={`user/${this.props.authorID}`}>{this.props.authorDisplayName}</Link>
+                  <Link className="comment-name" to={`/user/${this.props.authorID}`}>{this.props.authorDisplayName}</Link>
                   {this.props.isContentAuthor && <div className="by-author-label">
                     Tác giả
                   </div>}

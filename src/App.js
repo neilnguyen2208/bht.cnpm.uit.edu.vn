@@ -28,9 +28,7 @@ import SearchCourses from 'pages/common/SearchResult/SearchCourses'
 import UploadDocument from 'pages/user/UploadDocument/UploadDocument'
 import CreatePost from 'pages/user/CreatePost/CreatePost'
 import ActivityManagement from 'pages/management/ActivityManagement/ActivityManagement'
-
 import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement'
-
 import MyNotification from 'pages/user/MyActivities/MyActivities'
 import PostReportManagement from 'pages/management/PostManagement/PostReportManagement'
 import SavedPosts from 'pages/user/MyPosts/SavedPosts'
@@ -43,6 +41,7 @@ import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
+import Exercise from 'pages/common/Exercise/Exercise'
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -73,6 +72,9 @@ const App = () => {
                         <Route path="/search/documents" exact component={SearchDocument} />
                         <Route path="/search/tags" exact component={SearchTag} />
                         <Route path="/search/courses" exact component={SearchCourses} />
+                        <Route path="/search/courses" exact component={SearchCourses} />
+                        <Route path="/courses/exercise/:id" exact component={Exercise} />
+
 
                         {/* Search Tag */}
                         <Route path="/tags/posts/" exact component={SearchPostByTag} />

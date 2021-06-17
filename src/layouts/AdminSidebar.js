@@ -75,11 +75,11 @@ class AdminSidebar extends React.Component {
                             onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e, "page-managent-parent-menu-item", "page-managent-parent-menu-item-text", "page-admin-dropdown-btn-element", "page-admin-menu-item-container")}>
                             <div className="d-flex">
                                 <img alt="*" className="vertical-m-i-icon" src={content_management_icon} id="page-managent-btn-element" />
-                                <div className="side-bar-menu-item-text" id="page-managent-parent-menu-item-text">
+                                <div className="sd-br-lvl1-mi-text" id="page-managent-parent-menu-item-text">
                                     Quản lý nội dung
                                 </div>
                             </div>
-                            <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-admin-dropdown-btn-element" />
+                            <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-admin-dropdown-btn-element" />
                         </div>
                         <div>
                             <div className="d-block-default" id="page-admin-menu-item-container">
@@ -136,7 +136,7 @@ class AdminSidebar extends React.Component {
                                 className="vertical-m-i-icon"
                                 src={user_management_icon}
                                 id="user-managent-btn-element" />
-                            <div className="side-bar-menu-item-text"  >
+                            <div className="sd-br-lvl1-mi-text"  >
                                 Quản lý người dùng
                             </div>
                         </NavLink>
@@ -149,7 +149,7 @@ class AdminSidebar extends React.Component {
                             <img alt="*" className="vertical-m-i-icon"
                                 src={activity_management_icon}
                                 id="activity-managent-btn-element" />
-                            <div className="side-bar-menu-item-text"  >
+                            <div className="sd-br-lvl1-mi-text"  >
                                 Quản lý hoạt động
                                           </div>
                         </NavLink> */}
@@ -162,7 +162,7 @@ class AdminSidebar extends React.Component {
                             <img alt="*" className="vertical-m-i-icon"
                                 src={user_role_management_icon}
                             />
-                            <div className="side-bar-menu-item-text"  >
+                            <div className="sd-br-lvl1-mi-text"  >
                                 Quản lý quyền truy cập
                             </div>
                         </NavLink >
@@ -174,7 +174,7 @@ class AdminSidebar extends React.Component {
                         >
                             <img alt="*" className="vertical-m-i-icon"
                                 src={statistic_management_icon} />
-                            <div className="side-bar-menu-item-text"  >
+                            <div className="sd-br-lvl1-mi-text"  >
                                 Thống kê
                             </div>
                         </NavLink >

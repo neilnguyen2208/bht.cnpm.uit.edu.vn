@@ -15,8 +15,6 @@ import {
     get_DCCoursesListFailure,
 
     get_CSNNCoursesListRequest,
-    get_CSNNDCCoursesListSuccess,
-    get_CSNNDCCoursesListFailure,
 
     //courses search result 
     get_CourseSearchResultRequest,
@@ -24,12 +22,18 @@ import {
     get_CourseSearchResultFailure,
     get_CSNNCoursesListSuccess,
     get_CSNNCoursesListFailure,
-    get_CourseTopicsWithExercisesRequest,
-    get_CourseTopicsWithExercisesSuccess,
-    get_CourseTopicsWithExercisesFailure,
+    get_CourseTopicsWithExercisesBySubjectIdRequest,
+    get_CourseTopicsWithExercisesBySubjectIdSuccess,
+    get_CourseTopicsWithExercisesBySubjectIdFailure,
     get_CourseDetailByIdRequest,
     get_CourseDetailByIdSuccess,
     get_CourseDetailByIdFailure,
+    get_ExerciseByIdFailure,
+    get_ExerciseByIdSuccess,
+    get_ExerciseByIdRequest,
+    get_CourseTopicsWithExercisesByExerciseIdRequest,
+    get_CourseTopicsWithExercisesByExerciseIdSuccess,
+    get_CourseTopicsWithExercisesByExerciseFailure,
 } from "redux/actions/courseAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
@@ -81,14 +85,24 @@ export function getCSNNCoursesList() {
     }
 }
 
-export function getCourseTopicsWithExercisesById(courseId) {
+export function getCourseTopicsWithExercisesBySubjectId(subjectId) {
     return dispatch => {
-        dispatch(get_CourseTopicsWithExercisesRequest());
+        dispatch(get_CourseTopicsWithExercisesBySubjectIdRequest());
         authRequest.get(`/exercises/topicsWithExercises?subjectID=5`).then(response => {
-            dispatch(get_CourseTopicsWithExercisesSuccess(response.data))
-        }).catch(error => dispatch(get_CourseTopicsWithExercisesFailure(error)))
+            dispatch(get_CourseTopicsWithExercisesBySubjectIdSuccess(response.data))
+        }).catch(error => dispatch(get_CourseTopicsWithExercisesBySubjectIdFailure(error)))
     }
 }
+
+export function getCourseTopicsWithExercisesByExerciseId(exerciseId) {
+    return dispatch => {
+        dispatch(get_CourseTopicsWithExercisesByExerciseIdRequest());
+        authRequest.get(`/exercises/subjects/fromExercise/${exerciseId}`).then(response => {
+            dispatch(get_CourseTopicsWithExercisesByExerciseIdSuccess(response.data))
+        }).catch(error => dispatch(get_CourseTopicsWithExercisesByExerciseFailure(error)));
+    }
+}
+
 
 export function getCourseDetailById(courseId) {
     return dispatch => {
@@ -96,6 +110,15 @@ export function getCourseDetailById(courseId) {
         authRequest.get(`/exercises/subjects?id=5`).then(response => {
             dispatch(get_CourseDetailByIdSuccess(response.data))
         }).catch(error => dispatch(get_CourseDetailByIdFailure(error)))
+    }
+}
+
+export function getExerciseById(exerciseId) {
+    return dispatch => {
+        dispatch(get_ExerciseByIdRequest());
+        authRequest.get(`/exercises/${exerciseId}`).then(response => {
+            dispatch(get_ExerciseByIdSuccess(response.data))
+        }).catch(error => dispatch(get_ExerciseByIdFailure(error)))
     }
 }
 

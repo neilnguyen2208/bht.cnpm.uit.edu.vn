@@ -17,13 +17,20 @@ import {
     GET_CSNN_COURSES_LIST_REQUEST,
     GET_CSNN_COURSES_LIST_SUCCESS,
     GET_CSNN_COURSES_LIST_FAILURE,
-    GET_COURSE_TOPICS_WITH_EXCERCISES_REQUEST,
-    GET_COURSE_TOPICS_WITH_EXCERCISES_SUCCESS,
-    GET_COURSE_TOPICS_WITH_EXCERCISES_FAILURE,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_REQUEST,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_SUCCESS,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_FAILURE,
+
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_REQUEST,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_SUCCESS,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_FAILURE,
 
     GET_COURSE_DETAIL_BY_ID_REQUEST,
     GET_COURSE_DETAIL_BY_ID_SUCCESS,
     GET_COURSE_DETAIL_BY_ID_FAILURE,
+    GET_EXERCISE_BY_ID_REQUEST,
+    GET_EXERCISE_BY_ID_SUCCESS,
+    GET_EXERCISE_BY_ID_FAILURE,
 
 } from "../constants.js"
 
@@ -127,23 +134,42 @@ export function get_CourseSearchResultFailure(error) {
     }
 }
 
-//course search result
-export function get_CourseTopicsWithExercisesRequest() {
+export function get_CourseTopicsWithExercisesBySubjectIdRequest() {
     return {
-        type: GET_COURSE_TOPICS_WITH_EXCERCISES_REQUEST
+        type: GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_REQUEST
     }
 }
 
-export function get_CourseTopicsWithExercisesSuccess(data) {
+export function get_CourseTopicsWithExercisesBySubjectIdSuccess(data) {
     return {
-        type: GET_COURSE_TOPICS_WITH_EXCERCISES_SUCCESS,
+        type: GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_SUCCESS,
         payload: data
     }
 }
 
-export function get_CourseTopicsWithExercisesFailure(error) {
+export function get_CourseTopicsWithExercisesBySubjectIdFailure(error) {
     return {
-        type: GET_COURSE_TOPICS_WITH_EXCERCISES_FAILURE,
+        type: GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_FAILURE,
+        payload: error
+    }
+}
+
+export function get_CourseTopicsWithExercisesByExerciseIdRequest() {
+    return {
+        type: GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_REQUEST
+    }
+}
+
+export function get_CourseTopicsWithExercisesByExerciseIdSuccess(data) {
+    return {
+        type: GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_CourseTopicsWithExercisesByExerciseFailure(error) {
+    return {
+        type: GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_FAILURE,
         payload: error
     }
 }
@@ -164,6 +190,26 @@ export function get_CourseDetailByIdSuccess(data) {
 export function get_CourseDetailByIdFailure(error) {
     return {
         type: GET_COURSE_DETAIL_BY_ID_FAILURE,
+        payload: error
+    }
+}
+
+export function get_ExerciseByIdRequest() {
+    return {
+        type: GET_EXERCISE_BY_ID_REQUEST
+    }
+}
+
+export function get_ExerciseByIdSuccess(data) {
+    return {
+        type: GET_EXERCISE_BY_ID_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ExerciseByIdFailure(error) {
+    return {
+        type: GET_EXERCISE_BY_ID_FAILURE,
         payload: error
     }
 }

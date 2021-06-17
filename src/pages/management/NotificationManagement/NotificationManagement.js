@@ -47,7 +47,7 @@ class NotificationManagement extends React.Component {
                             <div>
                                 DANH SÁCH DANH MỤC
                         </div>
-                            <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
+                            <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                         </div>
 
                         <div className="Category_Type_Dropdown_Container" id="management-post-categories-container" style={{ marginTop: "5px" }}>

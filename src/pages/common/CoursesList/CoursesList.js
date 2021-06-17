@@ -48,7 +48,7 @@ class CoursesList extends React.Component {
     //combobox
     onFilterOptionChanged = (selectedOption) => {
         if (selectedOption.id !== 0) {
-            this.searchParamObject = { subjectGroup: selectedOption.id }
+            this.searchParamObject = { subjectFaculty: selectedOption.id }
             this.props.getCoursesList(this.searchParamObject);
             return;
         }

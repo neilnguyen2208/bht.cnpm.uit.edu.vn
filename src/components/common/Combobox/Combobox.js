@@ -62,7 +62,7 @@ export default class Combobox extends React.Component {
         this.closeAllOption();
 
         // if (this.props.validation)
-            // this.validate();
+        // this.validate();
     }
 
     handleComboboxClick = (e, dropdown_element_id, container_id) => {
@@ -152,7 +152,6 @@ export default class Combobox extends React.Component {
         if (this.selectedOption.id === "" && this.props.selectedOptionID) { //chua co lua chon nao va prop co selectedOption ID
 
             //check if selected ID is not in the options list.
-
             this.selectedOption = {
                 id: this.props.selectedOptionID,
                 name: this.props.options.filter(item => item.id === parseInt(this.props.selectedOptionID))[0].name
@@ -186,49 +185,38 @@ export default class Combobox extends React.Component {
                             onClick={(e) => this.handleComboboxClick(e, "combobox-btn-element-" + this.props.comboboxId, "dropdown-container-" + this.props.comboboxId)}>
                             <div className="d-flex">
                                 <div className="combox-text" id={"combobox-text-" + this.props.comboboxId}>
-                                    {
-                                        this.props.placeHolder === "none" ? //neu khong dung placeHolder
-                                            <div>
-                                                {
-                                                    this.props.options.map(item =>
-                                                        <div>
-                                                            {this.selectedOption.id ?
-                                                                <div >
-                                                                    {item.id === this.selectedOption.id //neu da chon roi thi se hien thi cac gia tri duoc chon trong bang cac option
-                                                                        ? item.name
-                                                                        : ""}
-                                                                </div> :
-                                                                <div >
-                                                                    {item.id === this.props.selectedOptionID //neu da chon roi thi se hien thi cac gia tri duoc chon trong bang cac option
-                                                                        ? item.name
-                                                                        : ""}
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                            : // neu co dung place holder
-                                            !this.isAnyValueChanged ?
+                                    {this.props.placeHolder === "none" ? //neu khong dung placeHolder
+                                        <div>       {
+                                            this.props.options.map(item =>
                                                 <div>
-                                                    {(!this.props.selectedOptionID && this.props.placeHolder === "none") ?
-                                                        <div  >
-                                                            {
-                                                                this.props.selectedOptionID ?
-                                                                    this.selectedOption.name
-                                                                    : this.props.options[0].name
-                                                            }
-                                                        </div>
-                                                        :
-                                                        <div>
-                                                            {this.props.selectedOptionID ?
-                                                                this.selectedOption.name
-                                                                : <div> {this.props.placeHolder}</div>
-                                                            }
-                                                        </div>
-                                                    }
-                                                </div>
-                                                : this.selectedOption.name//neu dung, khi co thay doi se chuyen thanh selected name
+                                                    {this.selectedOption.id ?
+                                                        <div >
+                                                            {item.id === this.selectedOption.id //neu da chon roi thi se hien thi cac gia tri duoc chon trong bang cac option
+                                                                ? item.name
+                                                                : ""}
+                                                        </div> :
+                                                        <div >
+                                                            {item.id === this.props.selectedOptionID //neu da chon roi thi se hien thi cac gia tri duoc chon trong bang cac option
+                                                                ? item.name
+                                                                : ""}
+                                                        </div>}
+                                                </div>)}
+                                        </div>
+                                        : // neu co dung place holder
+                                        !this.isAnyValueChanged ?
+                                            <div>
+                                                {(!this.props.selectedOptionID && this.props.placeHolder === "none") ?
+                                                    <div  >
+                                                        {this.props.selectedOptionID ?
+                                                            this.selectedOption.name
+                                                            : this.props.options[0].name}
+                                                    </div> :
+                                                    <div>
+                                                        {this.props.selectedOptionID ?
+                                                            this.selectedOption.name
+                                                            : <div> {this.props.placeHolder}</div>}
+                                                    </div>}
+                                            </div> : this.selectedOption.name//neu dung, khi co thay doi se chuyen thanh selected name
                                     }
                                 </div>
                             </div>
@@ -249,9 +237,7 @@ export default class Combobox extends React.Component {
                 </ClickAwayListener >
                 {this.props.validation ? <div>
                     <div id={"d-e-combobox-wrapper-" + this.props.comboboxId} style={{ "display": "none" }} ></div>
-
-                </div> : <></>
-                }
+                </div> : <></>}
             </div >
         );
     }

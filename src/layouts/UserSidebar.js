@@ -63,12 +63,12 @@ class UserSidebar extends React.Component {
                 <div className="d-flex">
                   <img alt="*" className="vertical-m-i-icon"
                     src={account_management_icon} />
-                  <div className="side-bar-menu-item-text"
+                  <div className="sd-br-lvl1-mi-text"
                     id="account-managent-parent-menu-item-text">
                     {"Tài khoản"}
                   </div>
                 </div>
-                <img alt="v" className="Dropdown_Btn_Element"
+                <img alt="v" className="dropdown-element"
                   src={dropdown_btn}
                   id="account-admin-dropdown-btn-element" />
               </div >
@@ -113,12 +113,12 @@ class UserSidebar extends React.Component {
                   <div className="d-flex">
                     <img alt="*" className="vertical-m-i-icon"
                       src={gray_nb_write_icon} />
-                    <div className="side-bar-menu-item-text"
+                    <div className="sd-br-lvl1-mi-text"
                       id="user-post-managent-parent-menu-item-text">
                       {"Bài viết"}
                     </div>
                   </div>
-                  <img alt="v" className="Dropdown_Btn_Element"
+                  <img alt="v" className="dropdown-element"
                     src={dropdown_btn}
                     id="user-post-managent-parent-menu-item-text" />
                 </div >
@@ -163,12 +163,12 @@ class UserSidebar extends React.Component {
                   <div className="d-flex">
                     <img alt="*" className="vertical-m-i-icon"
                       src={gray_nb_write_icon} />
-                    <div className="side-bar-menu-item-text"
+                    <div className="sd-br-lvl1-mi-text"
                       id="user-document-managent-parent-menu-item-text">
                       {"Tài liệu"}
                     </div>
                   </div>
-                  <img alt="v" className="Dropdown_Btn_Element"
+                  <img alt="v" className="dropdown-element"
                     src={dropdown_btn}
                     id="user-document-managent-parent-menu-item-text" />
                 </div >

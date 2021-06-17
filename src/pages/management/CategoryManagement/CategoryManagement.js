@@ -96,7 +96,7 @@ class CategoryManagement extends React.Component {
                             <div>
                                 DANH MỤC BÀI VIẾT
                             </div>
-                            <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
+                            <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                         </div>
 
                         <div className="Category_Type_Dropdown_Container" id="management-post-categories-container">
@@ -107,7 +107,7 @@ class CategoryManagement extends React.Component {
                                         <div className="Category_Dropdown_Title">
                                             Danh sách danh mục:
                                         </div>
-                                        <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
+                                        <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                                     </div>
 
                                     <ClickAwayListener onClickAway={() => { this.closeAllPostCategoryListItemActivated() }}>
@@ -144,7 +144,7 @@ class CategoryManagement extends React.Component {
                             <div>
                                 DANH MỤC TÀI LIỆU
                         </div>
-                            <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
+                            <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                         </div>
 
                         <div className="Category_Type_Dropdown_Container" id="management-parent-document-categories-container">
@@ -156,7 +156,7 @@ class CategoryManagement extends React.Component {
                                         <div className="Category_Dropdown_Title">
                                             Danh sách danh mục:
                                         </div>
-                                        <img alt="v" className="Dropdown_Btn_Element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
+                                        <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                                     </div>
 
                                     <ClickAwayListener onClickAway={() => { this.closeAllDocCategoryListItemActivated() }}>

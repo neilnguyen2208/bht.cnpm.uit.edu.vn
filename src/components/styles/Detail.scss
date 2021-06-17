@@ -11,7 +11,15 @@
     border: 1px var(--gray) solid;
     border-top: var(--blue) 5px solid;
     padding: 10px;
+    min-width: 800px;
     max-width: 800px;
+}
+
+.exercise-detail-container {
+    @extend .post-detail-container;
+    margin-top: 0px;
+    min-width: 600px;
+    max-width: 600px;
 }
 
 .document-detail-container.preview,
@@ -162,6 +170,9 @@ div div div .ndfHFb-c4YZDc-i5oIFb.ndfHFb-c4YZDc-e1YmVc .ndfHFb-c4YZDc-Wrql6b {
     position: relative;
 }
 
+.fake-relative-sidebar.exercise {
+    margin-top: 0px;
+}
 .relative-sidebar {
     margin-left: 10px;
     width: 240px;

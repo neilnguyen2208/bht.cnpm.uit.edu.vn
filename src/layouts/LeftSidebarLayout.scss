@@ -13,6 +13,12 @@
     max-width: 1140px;
 }
 
+.left-sidebar-layout.exercise {
+    box-shadow: none;
+    padding: 0px;
+    margin: auto;
+}
+
 .content-container {
     width: 100%;
     height: fit-content;
@@ -54,7 +60,7 @@
 }
 
 /*This port contain Management info and vertical menu below Management info*/
-.left-sidebar {
+.left.sidebar {
     position: relative;
     width: 240px;
     margin-right: 10px;
@@ -256,7 +262,7 @@
     width: 90%;
 }
 
-.side-bar-menu-item-text {
+.sd-br-lvl1-mi-text {
     box-sizing: border-box;
     font-family: "BarlowCondensed-Medium";
     font-size: 1.1rem;
@@ -267,7 +273,7 @@
     line-height: 1.7rem;
 }
 
-.Dropdown_Btn_Element {
+.sidebar.left .dropdown-element {
     width: 8px;
     height: 8px;
     vertical-align: auto;

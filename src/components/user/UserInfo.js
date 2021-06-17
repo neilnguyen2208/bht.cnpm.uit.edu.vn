@@ -13,7 +13,7 @@ import { getUserStatisticById } from 'redux/services/authServices'
 
 class UserInfo extends React.Component {
   componentDidMount() {
-    this.props.getUserStatisticById(this.props.authorID);
+    this.props.authorID && this.props.getUserStatisticById(this.props.authorID);
   }
   componentWillUnmount() {
     //reset statistic

@@ -17,12 +17,18 @@ import {
     GET_DC_COURSES_LIST_FAILURE,
     GET_CSNN_COURSES_LIST_REQUEST,
     GET_CSNN_COURSES_LIST_FAILURE,
-    GET_COURSE_TOPICS_WITH_EXCERCISES_REQUEST,
-    GET_COURSE_TOPICS_WITH_EXCERCISES_FAILURE,
-    GET_COURSE_TOPICS_WITH_EXCERCISES_SUCCESS,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_REQUEST,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_FAILURE,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_SUCCESS,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_REQUEST,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_FAILURE,
+    GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_SUCCESS,
     GET_COURSE_DETAIL_BY_ID_REQUEST,
     GET_COURSE_DETAIL_BY_ID_FAILURE,
     GET_COURSE_DETAIL_BY_ID_SUCCESS,
+    GET_EXERCISE_BY_ID_FAILURE,
+    GET_EXERCISE_BY_ID_SUCCESS,
+    GET_EXERCISE_BY_ID_REQUEST,
 
 } from '../constants.js'
 
@@ -62,6 +68,13 @@ const initialState = {
         isLoading: false,
         data: {},
         error: ''
+    },
+
+    exercise: {
+        isLoading: false,
+        data: [],
+        error: '',
+        isLoadDone: false
     },
 
     exerciseDetail: {
@@ -116,16 +129,30 @@ function CourseReducer(state = initialState, action) {
                 return { ...state, coursesList: { isLoading: false, error: action.payload, data: [] } }
             }
 
-        //get course topics
-        case GET_COURSE_TOPICS_WITH_EXCERCISES_REQUEST:
+        //get course topics by subject id
+        case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_REQUEST:
             return {
                 ...state, courseTopicsExercises: { isLoading: true, isLoadDone: false }
             };
-        case GET_COURSE_TOPICS_WITH_EXCERCISES_SUCCESS:
+        case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_SUCCESS:
             {
                 return { ...state, courseTopicsExercises: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
             }
-        case GET_COURSE_TOPICS_WITH_EXCERCISES_FAILURE:
+        case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_SUBJECT_ID_FAILURE:
+            {
+                return { ...state, courseTopicsExercises: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+            }
+
+        //get course topics by exercise id
+        case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_REQUEST:
+            return {
+                ...state, courseTopicsExercises: { isLoading: true, isLoadDone: false }
+            };
+        case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_SUCCESS:
+            {
+                return { ...state, courseTopicsExercises: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+            }
+        case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_FAILURE:
             {
                 return { ...state, courseTopicsExercises: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
             }
@@ -142,6 +169,20 @@ function CourseReducer(state = initialState, action) {
         case GET_COURSE_DETAIL_BY_ID_FAILURE:
             {
                 return { ...state, courseDetailById: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+            }
+
+        //get course detail
+        case GET_EXERCISE_BY_ID_REQUEST:
+            return {
+                ...state, exercise: { isLoading: true, isLoadDone: false }
+            };
+        case GET_EXERCISE_BY_ID_SUCCESS:
+            {
+                return { ...state, exercise: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+            }
+        case GET_EXERCISE_BY_ID_FAILURE:
+            {
+                return { ...state, exercise: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
             }
 
         default:

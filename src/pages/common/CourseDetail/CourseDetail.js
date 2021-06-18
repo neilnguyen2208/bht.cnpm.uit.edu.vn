@@ -42,7 +42,7 @@ class PostsList extends React.Component {
                     return <div className="topic-container">
                         <div className="topic-title">
                             <div className="d-flex">
-                                Nội dung {index}<div className="two-dots">: </div><p>&nbsp;</p>
+                                Nội dung {index + 1}<div className="two-dots">: </div><p>&nbsp;</p>
                                 {topicItem.name}
                             </div>
                             <div className="dropdown-btn" id={"topic-dropdown-" + topicItem.id} onClick={() => this.onTopicClick(topicItem.id)}>

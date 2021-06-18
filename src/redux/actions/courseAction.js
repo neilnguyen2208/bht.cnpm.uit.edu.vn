@@ -32,6 +32,21 @@ import {
     GET_EXERCISE_BY_ID_SUCCESS,
     GET_EXERCISE_BY_ID_FAILURE,
 
+    GET_EXERCISE_QUESTIONS_REQUEST,
+    GET_EXERCISE_QUESTIONS_SUCCESS,
+    GET_EXERCISE_QUESTIONS_FAILURE,
+    CHECK_EXERCISE_ANSWERS_REQUEST,
+    CHECK_EXERCISE_ANSWERS_SUCCESS,
+    CHECK_EXERCISE_ANSWERS_FAILURE,
+    GET_CURRENT_USER_EXERCISE_STATISTIC_REQUEST,
+    GET_CURRENT_USER_EXERCISE_STATISTIC_SUCCESS,
+    GET_CURRENT_USER_EXERCISE_STATISTIC_FAILURE,
+    CREATE_EXERCISE_NOTE_REQUEST,
+    CREATE_EXERCISE_NOTE_SUCCESS,
+    CREATE_EXERCISE_NOTE_FAILURE,
+    UPDATE_EXERCISE_NOTE_REQUEST,
+    UPDATE_EXERCISE_NOTE_SUCCESS,
+    UPDATE_EXERCISE_NOTE_FAILURE,
 } from "../constants.js"
 
 
@@ -214,3 +229,102 @@ export function get_ExerciseByIdFailure(error) {
     }
 }
 
+export function get_ExerciseQuestionsRequest() {
+    return {
+        type: GET_EXERCISE_QUESTIONS_REQUEST
+    }
+}
+
+export function get_ExerciseQuestionsSuccess(data) {
+    return {
+        type: GET_EXERCISE_QUESTIONS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ExerciseQuestionsFailure(error) {
+    return {
+        type: GET_EXERCISE_QUESTIONS_FAILURE,
+        payload: error
+    }
+}
+
+export function check_ExerciseQuestionsRequest() {
+    return {
+        type: CHECK_EXERCISE_ANSWERS_REQUEST
+    }
+}
+
+export function check_ExerciseQuestionsSuccess(data) {
+    return {
+        type: CHECK_EXERCISE_ANSWERS_SUCCESS,
+        payload: data
+    }
+}
+
+export function check_ExerciseQuestionsFailure(error) {
+    return {
+        type: CHECK_EXERCISE_ANSWERS_FAILURE,
+        payload: error
+    }
+}
+
+export function get_CurrentUserExerciseStatisticRequest() {
+    return {
+        type: GET_CURRENT_USER_EXERCISE_STATISTIC_REQUEST
+    }
+}
+
+export function get_CurrentUserExerciseStatisticSuccess(data) {
+    return {
+        type: GET_CURRENT_USER_EXERCISE_STATISTIC_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_CurrentUserExerciseStatisticFailure(error) {
+    return {
+        type: GET_CURRENT_USER_EXERCISE_STATISTIC_FAILURE,
+        payload: error
+    }
+}
+
+export function create_ExerciseNoteRequest() {
+    return {
+        type: CREATE_EXERCISE_NOTE_REQUEST
+    }
+}
+
+export function create_ExerciseNoteSuccess(data) {
+    return {
+        type: CREATE_EXERCISE_NOTE_SUCCESS,
+        payload: data
+    }
+}
+
+export function create_ExerciseNoteFailure(error) {
+    return {
+        type: CREATE_EXERCISE_NOTE_FAILURE,
+        payload: error
+    }
+}
+
+export function update_ExerciseNoteRequest() {
+    return {
+        type: UPDATE_EXERCISE_NOTE_REQUEST
+    }
+}
+
+export function update_ExerciseNoteSuccess(data) {
+    return {
+        type: UPDATE_EXERCISE_NOTE_SUCCESS,
+        payload: data
+    }
+}
+
+export function update_ExerciseNoteFailure(error) {
+    return {
+        type: UPDATE_EXERCISE_NOTE_FAILURE,
+        payload: error
+    }
+}

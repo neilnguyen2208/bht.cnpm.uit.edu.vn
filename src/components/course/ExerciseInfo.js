@@ -36,7 +36,7 @@ class ExerciseInfo extends React.Component {
 
         {/* title */}
         <Link to={"/post-content/" + this.props.exerciseId} onClick={this.props.type === "PREVIEW" && ((e) => { e.preventDefault() })}>
-          <div className="title">
+          <div className="title" >
             {this.props.title}
           </div>
         </Link>
@@ -51,11 +51,6 @@ class ExerciseInfo extends React.Component {
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
 
             <div className="d-flex" style={{ marginTop: "-1px" }}>
-              <div className="d-flex"  >
-                <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {this.props.subjectName}
-                </div>
-              </div>
               <div className="d-flex" >
                 {this.props.publishDtm ?
                   <div className="metadata-label" style={{ marginLeft: "2px" }}>
@@ -70,10 +65,9 @@ class ExerciseInfo extends React.Component {
 
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
-           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
+          <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
           {/* <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.exerciseId}`} /> */}
         </div>
-
         {cover}
 
         {formatMathemicalFormulas()}

@@ -47,7 +47,7 @@ class AdminSidebar extends React.Component {
                 {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
                 <div className="fake-left-sidebar" />
                 {/* Left Sidebar */}
-                <div className="left-sidebar" id="admin-left-sidebar">
+                <div className="left sidebar" id="admin-left-sidebar">
                     <div className="user-info-layout" >
                         <img alt="avatar" className="side-bar-avatar" src={avatarURL} />
                         <div className="achivement-layout">

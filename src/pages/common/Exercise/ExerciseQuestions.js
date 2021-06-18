@@ -6,22 +6,18 @@ import ExerciseInfo from 'components/course/ExerciseInfo'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Tag from 'components/post/Tag'
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import { getExerciseById } from 'redux/services/courseServices'
-import RelativePosts from 'components/post/RelativePosts'
+import { getExerciseById, getExerciseQuestions } from 'redux/services/courseServices'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
-import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
-import ExerciseReactionbar from 'components/course/ExerciseReactionbar'
+import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader';
+import QuestionsToC from 'components/course/QuestionsToC';
+import QuestionItem from 'components/course/QuestionItem';
 
 class PostDetail extends React.Component {
     componentDidMount() {
         this.props.getExerciseById(this.props.match.params.id);
-    }
-
-    componentWillUnmount() {
-
+        this.props.getExerciseQuestions(this.props.match.params.id);
     }
 
     render() {
@@ -31,6 +27,7 @@ class PostDetail extends React.Component {
                     <div className="d-flex">
                         <ExerciseSidebar />
                         <div className="exercise-detail-container" >
+                            {/* Render intro */}
                             {!this.props.isLoading && this.props.exerciseContent ?
                                 <div>
                                     <ExerciseInfo
@@ -47,47 +44,49 @@ class PostDetail extends React.Component {
                                         subjectName={this.props.exerciseContent.subjectName}
                                         totalQuestions={this.props.exerciseContent.totalQuestions}
                                         attemptCount={this.props.exerciseContent.attemptCount}
-
                                     />
-
-                                    {/* content here */}
-                                    <div className="ck-editor-output" dangerouslySetInnerHTML={{
-                                        __html:
-                                            this.props.exerciseContent.description
-                                    }} />
-
-                                    <div className="j-c-space-between" style={{ marginTop: "20px" }}>
+                                    <div className="j-c-space-between" style={{ marginTop: "10px", marginBottom: "20px" }}>
                                         <div className="metadata-label" style={{ marginLeft: "2px" }}>
                                             Tổng số câu hỏi: {this.props.exerciseContent.totalQuestions} </div>
                                         <div className="metadata-label" style={{ marginLeft: "2px" }}>
                                             Tổng số lượt giải: {this.props.exerciseContent.attemptCount} </div>
                                     </div>
-                                    {this.props.exerciseContent.tags &&
-                                        <div className="mg-top-10px mg-bottom-10px" >
-                                            {this.props.exerciseContent.tags && this.props.exerciseContent.tags.map(item =>
-                                                <Tag isReadOnly={true} key={item.id} clickable tag={item} />
-                                            )}
-                                        </div>}
-                                    <div>
-                                        <ExerciseReactionbar
-                                            exerciseId={this.props.match.params.id}
-                                        />
-                                    </div>
+
                                     {formatMathemicalFormulas()}
                                     {styleCodeSnippet()}
                                 </div>
                                 : <div><DocPostDetailLoader />
                                 </div>
                             }
+
+                            {/* Render questions */}
+                            {!this.props.isQuestionsLoading && this.props.questions &&
+                                this.props.questions.map((question, index) => {
+                                    return <QuestionItem
+                                        index={index}
+                                        key={index}
+                                        questionId={question.id}
+                                        content={question.content}
+                                        rank={question.rank}
+                                        answers={question.exerciseAnswerDTOs}
+                                    />
+                                })
+                            }
                         </div>
                     </div>
                     <div>
                         <div className="fake-relative-sidebar exercise"></div>
                         <div style={{ position: "fixed" }}>
-                            <RelativePosts title={"TÀI LIỆU LIÊN QUAN"} items={
-                                [{ id: 1, title: "Bài 1" }]} />
-                            < RelativePosts title={"BÀI VIẾT LIÊN QUAN"}
-                                items={[{ id: 1, title: "Bài 1" }]} />
+                            {!this.props.isQuestionsLoading && this.props.questions &&
+                                <QuestionsToC title={"Mục lục"} items={this.props.questions} />
+                            }
+                            <div className="relative-sidebar" style={{ border: "0px" }}>
+                                <div className="form-group">
+                                    <div className="form-label">Ghi chú:</div>
+                                    <textarea className="text-area" style={{ height: "200px" }}>
+                                    </textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,11 +100,18 @@ const mapStateToProps = (state) => {
     return {
         exerciseContent: state.course.exercise.data,
         isExerciseLoading: state.course.exercise.isLoading,
+        questions: state.course.exerciseQuestions.data,
+        isQuestionsLoading: state.course.exerciseQuestions.isLoading,
+        correctAnswers: state.course.correctAnswers.data,
+        isAnswersLoading: state.course.correctAnswers.isLoading
+
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getExerciseById
+    getExerciseById,
+    getExerciseQuestions
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));

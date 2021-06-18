@@ -45,20 +45,18 @@ class UserSidebar extends React.Component {
 
         {/* show on current profile id === profile id */}
 
-        <div className="left-sidebar" id="user-left-sidebar">
+        <div className="left sidebar" id="user-left-sidebar">
           <div>
-            {/* Role and achivement port */}
             <div className="user-role">
               User
             </div>
-
           </div>
 
           < div className="vertical-menu-container"  >
             <div style={{ display: "block" }}>
               {/* Quan ly tai khoan menu item*/}
               <div className="pr-drop-down-m-i" id="account-managent-parent-menu-item"
-                onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e, "account-managent-parent-menu-item", "account-managent-parent-menu-item-text", "account-admin-dropdown-btn-element", "account-admin-menu-item-container")
+                onClick={(e) => this.handleLevel1Click(e, "account-managent-parent-menu-item", "account-managent-parent-menu-item-text", "account-admin-dropdown-btn-element", "account-admin-menu-item-container")
                 }>
                 <div className="d-flex">
                   <img alt="*" className="vertical-m-i-icon"
@@ -104,7 +102,7 @@ class UserSidebar extends React.Component {
               {/* Bai viet*/}
               <div style={{ display: "block" }}>
                 <div className="pr-drop-down-m-i" id="user-post-managent-parent-menu-item"
-                  onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e,
+                  onClick={(e) => this.handleLevel1Click(e,
                     "user-post-management-parent-menu-item",
                     "user-post-management-parent-menu-item-text",
                     "user-post-management-dropdown-btn-element",
@@ -154,7 +152,7 @@ class UserSidebar extends React.Component {
 
               <div style={{ display: "block" }}>
                 <div className="pr-drop-down-m-i" id="user-document-managent-parent-menu-item"
-                  onClick={(e) => this.handleDisplayBlockDefaultDropDownMenuClick(e,
+                  onClick={(e) => this.handleLevel1Click(e,
                     "user-document-management-parent-menu-item",
                     "user-document-management-parent-menu-item-text",
                     "user-document-management-dropdown-btn-element",
@@ -201,10 +199,7 @@ class UserSidebar extends React.Component {
     );
   }
 
-  //#region for UI/UX sidebar
-  //code style for dropdown menu
-
-  handleDisplayBlockDefaultDropDownMenuClick = (e, parent_id, show_text_id, dropdown_element_id, container_id) => {
+  handleLevel1Click = (e, parent_id, show_text_id, dropdown_element_id, container_id) => {
     e.preventDefault();
     let dropdown_container = document.getElementById(container_id);
     dropdown_container.style.display === "none"
@@ -212,50 +207,6 @@ class UserSidebar extends React.Component {
       dropdown_container.style.display = "block"
       :
       dropdown_container.style.display = "none"
-  }
-
-  //code style for animation when change to account information
-
-  handleOnNotAccountInformationMenuItemClick = () => {
-    this.setState({});
-  }
-
-  //#endregion
-
-  //#region for handle on scroll
-  scrollFunction = () => {
-
-    //   let left_sidebar = document.getElementById("left-sidebar");
-    //   let footer = document.getElementById("footer");
-    //   let header = document.getElementById("header");
-
-    //   function getRectTop(el) {
-    //     var rect = el.getBoundingClientRect();
-    //     return rect.top;
-    //   }
-
-    //   function getRectBottom(el) {
-    //     var rect = el.getBoundingClientRect();
-    //     return rect.bottom;
-    //   }
-
-    //   if (getRectBottom(header) <= 0 - 21) {
-    //     left_sidebar.classList.add("left-sidebar_After_Header");
-    //     left_sidebar.classList.remove("left-sidebar_Reach_Footer");
-    //   }
-    //   if (getRectBottom(header) > 0 - 21) {
-    //     left_sidebar.classList.replace("left-sidebar_After_Header", "left-sidebar_Before_Header");
-    //     left_sidebar.classList.remove("left-sidebar_Reach_Footer");
-    //   }
-
-    //   //Handler for Footer
-    //   if ((getRectBottom(left_sidebar)) >= getRectTop(footer) - 45) {
-    //     left_sidebar.classList.replace("left-sidebar_After_Header", "left-sidebar_Reach_Footer");
-    //   }
-    // }
-    //#endregion
-
-
   }
 }
 

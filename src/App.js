@@ -42,6 +42,7 @@ import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import Security from "pages/user/AccountInformation/Sercurity";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
 import Exercise from 'pages/common/Exercise/Exercise'
+import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions'
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
@@ -74,6 +75,8 @@ const App = () => {
                         <Route path="/search/courses" exact component={SearchCourses} />
                         <Route path="/search/courses" exact component={SearchCourses} />
                         <Route path="/courses/exercise/:id" exact component={Exercise} />
+                        <Route path="/courses/exercise-content/:id" exact component={ExerciseQuestions} />
+
 
 
                         {/* Search Tag */}

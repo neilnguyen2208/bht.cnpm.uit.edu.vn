@@ -11,7 +11,8 @@ import 'components/styles/Label.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCourseTopicsWithExercisesByExerciseId } from 'redux/services/courseServices'
+import { getCourseTopicsWithExercisesByExerciseId, getExerciseById, getExerciseQuestions } from 'redux/services/courseServices'
+import homework_icon from 'assets/icons/24x24/homework_icon_gray_24x24.png'
 
 class ExerciseSidebar extends React.Component {
 
@@ -19,47 +20,75 @@ class ExerciseSidebar extends React.Component {
     this.props.getCourseTopicsWithExercisesByExerciseId(this.props.match.params.id);
   }
 
-  renderLevel1 = (level1Id) => {
+  //2 cases: on excercise detail, on exercise content. 
+  renderLevel1 = (topicsExercisesDTOs) => {
     //neu khong co child => d-none default
-    return <div className="pr-drop-down-m-i"
-      id={"xrlcs-lvl-sdbr" + level1Id}
-      onClick={(e) => this.onFisrtLevelClick(e, "xrlcs-lvl1-sdbr" + level1Id)}>
-      <div className="d-flex">
-        <div className="sd-br-lvl1-mi-text" id={"lvl1-mi-text" + level1Id}>
-          Chủ đề 1
-        </div>
-      </div>
-      <img alt="v" className="dropdown-element" src={dropdown_btn} id="xrlcs-dropdown-btn-element" />
-    </div>
-  }
+    return <div> {topicsExercisesDTOs.map((topic, index) => {
+      return <div>
+        <div className="pr-drop-down-m-i"
+          id={"xrcs-vmi-lvl1-sdbr" + topic.id}
+          onClick={(e) => topic.exerciseSummaryDTOs ? this.onFisrtLevelClick(e, "xrcs-vmi-lvl1-dropdown-container" + topic.id) : () => { }}>
+          <div className="d-flex">
+            <div className="sd-br-lvl1-mi-text" id={"lvl1-mi-text" + topic.id}>
+              {index + 1 + ". "}  {topic.name}
+            </div>
+          </div>
+          <img alt="" className="dropdown-element" src={dropdown_btn} id="xrcs-dropdown-btn-element" />
 
-  renderLevel2 = (level1Id, level2Id) => {
-    return <div className="d-block-default" id="page-admin-menu-item-container">
-      <div className="mg-bottom-5px" />
-      <NavLink className="vertical-sub-m-i"
-        activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
-        to={"/courses/exercise-content/1"} >
-        <div className="text" >
-          Bài 1
         </div>
-      </NavLink>
-      <div className="mg-bottom-5px" />
-      <div className="decoration-underline " />
-      <div className="mg-bottom-5px" />
-      <div className="mg-bottom-5px" />
+        <div className="d-block" style={{ marginLeft: "15px", marginTop: "5px" }} id={"xrcs-vmi-lvl1-dropdown-container" + topic.id}>
+          {topic.exerciseSummaryDTOs && [...topic.exerciseSummaryDTOs, { id: "3", title: "Phần 2" }, { id: "4", title: "Phần 3" }].map(excercise => {
+            return this.renderLevel2(topic.id, excercise)
+          })}
+          {topic.exerciseSummaryDTOs &&
+            <div>
+              <div className="mg-bottom-5px" />
+              <div className="decoration-underline " />
+              <div className="mg-bottom-5px" />
+              <div className="mg-bottom-5px" />
+            </div >
+          }
+        </div >
+      </div >
+    })}
     </div >
   }
 
+  renderLevel2 = (level1Id, level2Item) => {
+    return <NavLink className="vertical-sub-m-i" style={{ marginLeft: "0px", paddingLeft: "5px", paddingBottom: "5px" }}
+      activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
+      to={window.location.pathname.substring(0, 26) === "/courses/exercise-content/" ? "/courses/exercise-content/" + level2Item.id : "/courses/exercise/" + level2Item.id} onClick={() => this.loadContent(level2Item.id)} >
+      <img className="exercise-prefix" style={{ width: "26px", height: "26px", marginTop: "5px", marginRight: "5px" }} src={homework_icon} alt="" />
+      <div className="text" style={{ marginTop: "5px" }} >
+        {level2Item.title}
+      </div>
+    </NavLink>
+  }
+
+  loadContent = (exerciseId) => {
+    if (window.location.pathname.substring(0, 26) !== "/courses/exercise-content/") {
+      this.props.getExerciseById(exerciseId);
+      return;
+    }
+    this.props.getExerciseById(exerciseId);
+    this.props.getExerciseQuestions(exerciseId);
+  }
+
   render() {
+
     return (
       <div className="left-sidebar-wrapper" >
         {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
-        <div className="fake-left-sidebar" />
-        {/* Left Sidebar */}
+        < div className="fake-left-sidebar" />
+
         <div className="sidebar left">
+          <div className="sidebar-subject-name">
+            {this.props.topicsExercises.name && this.props.topicsExercises.name}
+          </div>
           <div className="vertical-menu-container"  >
-            {!this.props.isTopicsExerciesLoading && this.props.topicsExercises && console.log(this.props.topicsExercises)}
-            
+            {(!this.props.isTopicsExercisesLoading && this.props.topicsExercises.exerciseTopicWithExerciseListDTOs) && (
+              this.renderLevel1(this.props.topicsExercises.exerciseTopicWithExerciseListDTOs))
+            }
           </div >
         </div >
       </div >
@@ -84,13 +113,13 @@ const mapStateToProps = (state) => {
   return {
     userSummaryData: state.auth.currentUserSummary.data,
     isUserSummaryLoadDone: state.auth.currentUserSummary.isLoadDone,
-    topicsExercises: state.course.courseTopicsExercises.data,
-    isTopicsExerciesLoading: state.course.courseTopicsExercises.isLoading,
+    topicsExercises: state.course.courseTopicsExercisesByExerciseId.data,
+    isTopicsExercisesLoading: state.course.courseTopicsExercisesByExerciseId.isLoading,
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getCourseTopicsWithExercisesByExerciseId
+  getCourseTopicsWithExercisesByExerciseId, getExerciseById, getExerciseQuestions
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseSidebar));

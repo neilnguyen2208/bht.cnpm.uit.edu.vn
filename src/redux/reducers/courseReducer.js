@@ -29,7 +29,25 @@ import {
     GET_EXERCISE_BY_ID_FAILURE,
     GET_EXERCISE_BY_ID_SUCCESS,
     GET_EXERCISE_BY_ID_REQUEST,
+    GET_EXERCISE_QUESTIONS_REQUEST,
+    GET_EXERCISE_QUESTIONS_SUCCESS,
+    GET_EXERCISE_QUESTIONS_FAILURE,
+    CHECK_EXERCISE_ANSWERS_REQUEST,
+    CHECK_EXERCISE_ANSWERS_SUCCESS,
+    CHECK_EXERCISE_ANSWERS_FAILURE,
 
+    //intergate with exercise detail
+    GET_CURRENT_USER_EXERCISE_STATISTIC_REQUEST,
+    GET_CURRENT_USER_EXERCISE_STATISTIC_SUCCESS,
+    GET_CURRENT_USER_EXERCISE_STATISTIC_FAILURE,
+
+    //
+    CREATE_EXERCISE_NOTE_REQUEST,
+    CREATE_EXERCISE_NOTE_SUCCESS,
+    CREATE_EXERCISE_NOTE_FAILURE,
+    UPDATE_EXERCISE_NOTE_REQUEST,
+    UPDATE_EXERCISE_NOTE_SUCCESS,
+    UPDATE_EXERCISE_NOTE_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -64,6 +82,12 @@ const initialState = {
         error: ''
     },
 
+    courseTopicsExercisesByExerciseId: {
+        isLoading: false,
+        data: {},
+        error: ''
+    },
+
     courseDetailById: {
         isLoading: false,
         data: {},
@@ -83,6 +107,19 @@ const initialState = {
         error: '',
         isLoadDone: false
     },
+
+    //chua biet exercise note co can get hay khong
+    exerciseQuestions: {
+        data: [],
+        isLoading: false,
+        error: '',
+    },
+
+    correctAnswers: {
+        data: [],
+        isLoading: false,
+        error: '',
+    }
 };
 
 function CourseReducer(state = initialState, action) {
@@ -146,15 +183,15 @@ function CourseReducer(state = initialState, action) {
         //get course topics by exercise id
         case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_REQUEST:
             return {
-                ...state, courseTopicsExercises: { isLoading: true, isLoadDone: false }
+                ...state, courseTopicsExercisesByExerciseId: { isLoading: true, isLoadDone: false, data: {} }
             };
         case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_SUCCESS:
             {
-                return { ...state, courseTopicsExercises: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+                return { ...state, courseTopicsExercisesByExerciseId: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
             }
         case GET_COURSE_TOPICS_WITH_EXCERCISES_BY_EXERCISE_ID_FAILURE:
             {
-                return { ...state, courseTopicsExercises: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+                return { ...state, courseTopicsExercisesByExerciseId: { isLoading: false, isLoadDone: true, error: action.payload, data: {} } }
             }
 
         //get course detail
@@ -183,6 +220,32 @@ function CourseReducer(state = initialState, action) {
         case GET_EXERCISE_BY_ID_FAILURE:
             {
                 return { ...state, exercise: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+            }
+
+        case GET_EXERCISE_QUESTIONS_REQUEST:
+            return {
+                ...state, exerciseQuestions: { isLoading: true, data: [], error: '', }
+            };
+        case GET_EXERCISE_QUESTIONS_SUCCESS:
+            return {
+                ...state, exerciseQuestions: { isLoading: false, data: action.payload, error: '', }
+            }
+        case GET_EXERCISE_QUESTIONS_FAILURE:
+            return {
+                ...state, exerciseQuestions: { isLoading: false, isLoadDone: true, error: action.payload, data: [] }
+            }
+
+        case CHECK_EXERCISE_ANSWERS_REQUEST:
+            return {
+                ...state, correctAnswers: { isLoading: true, error: '', data: [] }
+            };
+        case CHECK_EXERCISE_ANSWERS_SUCCESS:
+            return {
+                ...state, correctAnswers: { isLoading: false, data: action.payload, error: '' }
+            }
+        case CHECK_EXERCISE_ANSWERS_FAILURE:
+            return {
+                ...state, correctAnswers: { isLoading: false, error: action.payload, data: [] }
             }
 
         default:

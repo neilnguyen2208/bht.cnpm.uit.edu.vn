@@ -31,9 +31,6 @@ class RelativePosts extends React.Component {
             )
             }
           </div >
-          {/* <div className="relative-see-more">
-          <div className="link-label-s">Xem thêm ...</div>
-        </div> */}
         </div >);
     return <div>
     </div>;

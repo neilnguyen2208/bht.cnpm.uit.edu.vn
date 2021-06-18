@@ -48,7 +48,8 @@
 }
 
 .document-detail-container .title,
-.post-detail-container .title {
+.post-detail-container .title,
+.exercise-detail-container .title {
   @extend .title;
   font-size: 30px;
   line-height: 30px;
@@ -86,7 +87,8 @@
 }
 
 .document-detail-container .metadata-label,
-.post-detail-container .metadata-label {
+.post-detail-container .metadata-label,
+.exercise-detail-container .metadata-label {
   @extend .metadata-label;
   height: 1.5rem;
   font-size: 18px;

@@ -18,8 +18,9 @@
 .exercise-detail-container {
     @extend .post-detail-container;
     margin-top: 0px;
-    min-width: 600px;
-    max-width: 600px;
+    min-width: 640px;
+    max-width: 640px;
+    min-height: 600px;
 }
 
 .document-detail-container.preview,

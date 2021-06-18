@@ -34,6 +34,9 @@ import {
     get_CourseTopicsWithExercisesByExerciseIdRequest,
     get_CourseTopicsWithExercisesByExerciseIdSuccess,
     get_CourseTopicsWithExercisesByExerciseFailure,
+    get_ExerciseQuestionsRequest,
+    get_ExerciseQuestionsSuccess,
+    get_ExerciseQuestionsFailure,
 } from "redux/actions/courseAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
@@ -88,7 +91,7 @@ export function getCSNNCoursesList() {
 export function getCourseTopicsWithExercisesBySubjectId(subjectId) {
     return dispatch => {
         dispatch(get_CourseTopicsWithExercisesBySubjectIdRequest());
-        authRequest.get(`/exercises/topicsWithExercises?subjectID=5`).then(response => {
+        authRequest.get(`/exercises/topicsWithExercises?subjectID=${subjectId}`).then(response => {
             dispatch(get_CourseTopicsWithExercisesBySubjectIdSuccess(response.data))
         }).catch(error => dispatch(get_CourseTopicsWithExercisesBySubjectIdFailure(error)))
     }
@@ -103,12 +106,12 @@ export function getCourseTopicsWithExercisesByExerciseId(exerciseId) {
     }
 }
 
-
-export function getCourseDetailById(courseId) {
+export function getCourseDetailById(subjectId) {
     return dispatch => {
         dispatch(get_CourseDetailByIdRequest());
-        authRequest.get(`/exercises/subjects?id=5`).then(response => {
-            dispatch(get_CourseDetailByIdSuccess(response.data))
+        authRequest.get(`/exercises/subjects?id=${subjectId}`).then(response_1 => {
+            let result_1 = response_1.data;
+            dispatch(get_CourseDetailByIdSuccess(result_1))
         }).catch(error => dispatch(get_CourseDetailByIdFailure(error)))
     }
 }
@@ -117,8 +120,30 @@ export function getExerciseById(exerciseId) {
     return dispatch => {
         dispatch(get_ExerciseByIdRequest());
         authRequest.get(`/exercises/${exerciseId}`).then(response => {
-            dispatch(get_ExerciseByIdSuccess(response.data))
-        }).catch(error => dispatch(get_ExerciseByIdFailure(error)))
+            authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
+                dispatch(get_ExerciseByIdSuccess({ ...response.data, ...response_2.data[0] }))
+            }).catch(error => dispatch(get_ExerciseByIdFailure(error)))
+        })
+    }
+}
+
+export function getExerciseQuestions(exerciseId) {
+    return dispatch => {
+        dispatch(get_ExerciseQuestionsRequest());
+        authRequest.get(`/exercises/${exerciseId}/questionsAndAnswers`).then(response => {
+            dispatch(get_ExerciseQuestionsSuccess(response.data))
+        }).catch(error => dispatch(get_ExerciseQuestionsFailure(error)))
+    }
+}
+
+export function checkExerciseAnswers(exerciseId) {
+    return dispatch => {
+        dispatch(get_ExerciseQuestionsRequest());
+        authRequest.get(`/exercises/${exerciseId}`).then(response => {
+            authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
+                dispatch(get_ExerciseQuestionsSuccess({ ...response.data, ...response_2.data[0] }))
+            }).catch(error => dispatch(get_ExerciseQuestionsFailure(error)))
+        })
     }
 }
 

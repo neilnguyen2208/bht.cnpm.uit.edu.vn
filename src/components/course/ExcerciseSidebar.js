@@ -37,7 +37,7 @@ class ExerciseSidebar extends React.Component {
 
         </div>
         <div className="d-block" style={{ marginLeft: "15px", marginTop: "5px" }} id={"xrcs-vmi-lvl1-dropdown-container" + topic.id}>
-          {topic.exerciseSummaryDTOs && [...topic.exerciseSummaryDTOs, { id: "3", title: "Phần 2" }, { id: "4", title: "Phần 3" }].map(excercise => {
+          {topic.exerciseSummaryDTOs && topic.exerciseSummaryDTOs.map(excercise => {
             return this.renderLevel2(topic.id, excercise)
           })}
           {topic.exerciseSummaryDTOs &&

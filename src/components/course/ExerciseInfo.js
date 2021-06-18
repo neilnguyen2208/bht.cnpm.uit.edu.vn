@@ -17,8 +17,13 @@ import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import { getCurrentUserExerciseStatistic } from 'redux/services/courseServices'
 
 class ExerciseInfo extends React.Component {
+
+  componentDidMount() {
+    this.props.exerciseId && this.props.getCurrentUserExerciseStatistic(this.props.exerciseId)
+  }
 
   render() {
     styleCodeSnippet();
@@ -49,16 +54,18 @@ class ExerciseInfo extends React.Component {
             </div>
           </div>
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-
             <div className="d-flex" style={{ marginTop: "-1px" }}>
-              <div className="d-flex" >
-                {this.props.publishDtm ?
-                  <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                    {this.props.publishDtm.substring(0, 10)}
-                  </div>
-                  : <></>}
-              </div>
+              {this.props.publishDtm ?
+                <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                  {this.props.publishDtm.substring(0, 10)}
+                </div>
+                : <></>}
 
+              {!this.props.isUserStatisticLoading && this.props.userStatistic.bestCorrectQuestions &&
+                <div style={{ background: "var(--blue" }}>
+                  Kết quả tốt nhất của bạn: {this.props.userStatistic.bestCorrectQuestions}/{this.props.totalQuestions}
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -79,10 +86,14 @@ class ExerciseInfo extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    userStatistic: state.course.currentUserExerciseStatistic.data,
+    isUserStatisticLoading: state.course.currentUserExerciseStatistic.isLoading
+
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getCurrentUserExerciseStatistic
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseInfo));

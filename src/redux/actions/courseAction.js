@@ -47,6 +47,12 @@ import {
     UPDATE_EXERCISE_NOTE_REQUEST,
     UPDATE_EXERCISE_NOTE_SUCCESS,
     UPDATE_EXERCISE_NOTE_FAILURE,
+    GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST,
+    GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS,
+    GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE,
+    GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE,
+    GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST,
 } from "../constants.js"
 
 
@@ -326,5 +332,43 @@ export function update_ExerciseNoteFailure(error) {
     return {
         type: UPDATE_EXERCISE_NOTE_FAILURE,
         payload: error
+    }
+}
+
+export function get_RelativePostsByExerciseIdRequest() {
+    return {
+        type: GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST
+    }
+}
+
+export function get_RelativePostsByExerciseIdSuccess(data) {
+    return {
+        type: GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_RelativePostsByExerciseIdFailure() {
+    return {
+        type: GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE
+    }
+}
+
+export function get_RelativeDocumentsByExerciseIdRequest() {
+    return {
+        type: GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST
+    }
+}
+
+export function get_RelativeDocumentsByExerciseIdSuccess(data) {
+    return {
+        type: GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_RelativeDocumentsByExerciseIdFailure() {
+    return {
+        type: GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE
     }
 }

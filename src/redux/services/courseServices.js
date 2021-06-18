@@ -37,6 +37,14 @@ import {
     get_ExerciseQuestionsRequest,
     get_ExerciseQuestionsSuccess,
     get_ExerciseQuestionsFailure,
+    get_RelativePostsByExerciseIdRequest,
+    get_RelativeDocumentsByExerciseIdRequest,
+    get_RelativePostsByExerciseIdSuccess,
+    get_RelativePostsByExerciseIdFailure,
+    get_RelativeDocumentsByExerciseIdSuccess,
+    get_RelativeDocumentsByExerciseIdFailure,
+    get_CurrentUserExerciseStatisticRequest,
+    get_CurrentUserExerciseStatisticSuccess,
 } from "redux/actions/courseAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
@@ -127,6 +135,15 @@ export function getExerciseById(exerciseId) {
     }
 }
 
+export function getCurrentUserExerciseStatistic(exerciseId) {
+    return dispatch => {
+        dispatch(get_CurrentUserExerciseStatisticRequest());
+        authRequest.get(`/exercises/statistics/user?exerciseIDs=${exerciseId}`).then(response => {
+            dispatch(get_CurrentUserExerciseStatisticSuccess(...response.data))
+        }).catch(error => dispatch(get_ExerciseByIdFailure(error)))
+    }
+}
+
 export function getExerciseQuestions(exerciseId) {
     return dispatch => {
         dispatch(get_ExerciseQuestionsRequest());
@@ -144,6 +161,24 @@ export function checkExerciseAnswers(exerciseId) {
                 dispatch(get_ExerciseQuestionsSuccess({ ...response.data, ...response_2.data[0] }))
             }).catch(error => dispatch(get_ExerciseQuestionsFailure(error)))
         })
+    }
+}
+
+export function getRelativePostsByExerciseId(exerciseId) {
+    return dispatch => {
+        dispatch(get_RelativePostsByExerciseIdRequest());
+        authRequest.get(`/posts/related?exerciseID=${exerciseId}`).then(response => {
+            dispatch(get_RelativePostsByExerciseIdSuccess(response.data))
+        }).catch(error => dispatch(get_RelativePostsByExerciseIdFailure(error)))
+    }
+}
+
+export function getRelativeDocumentsByExerciseId(exerciseId) {
+    return dispatch => {
+        dispatch(get_RelativeDocumentsByExerciseIdRequest());
+        authRequest.get(`/documents/related?exerciseID=${exerciseId}`).then(response => {
+            dispatch(get_RelativeDocumentsByExerciseIdSuccess(response.data))
+        }).catch(error => dispatch(get_RelativeDocumentsByExerciseIdFailure(error)))
     }
 }
 

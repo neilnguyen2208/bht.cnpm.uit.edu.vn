@@ -13,8 +13,9 @@ import 'components/styles/Button.scss'
 //components
 class RelativePosts extends React.Component {
 
-  render() {
 
+
+  render() {
     return (
       <div className="relative-sidebar">
         <div className="relative-title" style={{ fontFamily: "BarlowCondensed-Medium", color: "var(--black)" }}>
@@ -23,9 +24,14 @@ class RelativePosts extends React.Component {
         <div className="d-flex">
           <div className="grid-question-items-container">
             {this.props.items.map((item, index) =>
-              <div className="question-toc-item" key={item.id} id={"qstn-tm" + item.id}
+              <div className={item.isAnswered ? "question-toc-item answered" :
+                "question-toc-item"}
+
+                key={item.id} id={"qstn-tocitm-" + item.id}
                 onClick={() => {
-                  //navigate
+                  console.log(document.getElementById("qsitm-" + item.id).style.top)
+                  if (document.getElementById("qsitm-" + item.id))
+                    (document.getElementById("qsitm-" + item.id)).scrollIntoView(50)
                 }}
               >
                 {index + 1}

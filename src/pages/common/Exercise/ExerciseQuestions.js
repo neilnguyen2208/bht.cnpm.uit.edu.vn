@@ -15,12 +15,65 @@ import QuestionsToC from 'components/course/QuestionsToC';
 import QuestionItem from 'components/course/QuestionItem';
 
 class PostDetail extends React.Component {
+    constructor(props) {
+        super(props);
+        this.ANSWERS_DTO = [
+
+        ];
+
+        this.questionToC = [
+            //questionId, isAnswered, 
+        ];
+        this.isFirstTimeQuestionLoaded = false;
+    }
+
     componentDidMount() {
         this.props.getExerciseById(this.props.match.params.id);
         this.props.getExerciseQuestions(this.props.match.params.id);
+
+        //create questionToC from question result.
+
+    }
+
+    //create submit DTO.
+    //When choose an answer => update current DTO.
+    updateAnswerDTO = (questionId, answerId) => {
+
+    }
+
+    updateQuestionToC = (questionId, answerId, state) => {
+
+    }
+
+    onAnswerChecked = (questionId, answer) => {
+        //update questionToC DTO => 
+        for (let i = 0; i < this.questionToC.length; i++) {
+            if (this.questionToC[i].id === questionId) {
+                this.questionToC[i].isAnswered = true;
+            }
+        }
+        console.log(this.questionToC)
+        this.setState({});
     }
 
     render() {
+
+        // if props.questions && firstLoadQuestion (when questions data is loaded the first time)
+        if (!this.isFirstTimeQuestionLoaded && this.props.questions.length > 0 && !this.props.isQuestionsLoading) {
+            this.isFirstTimeQuestionLoaded = true;
+
+            //init toc dto: 
+            for (let i = 0; i < this.props.questions.length; i++) {
+                this.questionToC.push({ id: this.props.questions[i].id, isAnswered: false, isFlagged: false, isCorrect: false })
+            }
+
+            //init answer dto:
+            for (let i = 0; i < this.props.questions.length; i++) {
+                this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answerSelected: [] })
+            }
+            this.setState({});
+        }
+
         return (
             <div className="left-sidebar-layout exercise">
                 <div className="j-c-space-between" style={{ width: "100%" }}>
@@ -69,6 +122,9 @@ class PostDetail extends React.Component {
                                         content={question.content}
                                         rank={question.rank}
                                         answers={question.exerciseAnswerDTOs}
+                                        updateQuestionToC={this.updateQuestionToC}
+                                        updateAnswerDTO={this.updateAnswerDTO}
+                                        onAnswerChecked={this.onAnswerChecked}
                                     />
                                 })
                             }
@@ -78,8 +134,7 @@ class PostDetail extends React.Component {
                         <div className="fake-relative-sidebar exercise"></div>
                         <div style={{ position: "fixed" }}>
                             {!this.props.isQuestionsLoading && this.props.questions &&
-                                <QuestionsToC title={"Mục lục"} items={this.props.questions} />
-                            }
+                                <QuestionsToC title={"Mục lục"} items={this.questionToC} />}
                             <div className="relative-sidebar" style={{ border: "0px" }}>
                                 <div className="form-group">
                                     <div className="form-label">Ghi chú:</div>

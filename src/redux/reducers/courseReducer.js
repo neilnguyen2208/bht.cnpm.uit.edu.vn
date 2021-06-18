@@ -48,6 +48,12 @@ import {
     UPDATE_EXERCISE_NOTE_REQUEST,
     UPDATE_EXERCISE_NOTE_SUCCESS,
     UPDATE_EXERCISE_NOTE_FAILURE,
+    GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST,
+    GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS,
+    GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE,
+    GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST,
+    GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -119,6 +125,24 @@ const initialState = {
         data: [],
         isLoading: false,
         error: '',
+    },
+
+    relativePosts: {
+        isLoading: false,
+        data: [],
+        error: ''
+    },
+
+    relativeDocuments: {
+        isLoading: false,
+        data: [],
+        error: ''
+    },
+
+    currentUserExerciseStatistic: {
+        isLoading: false,
+        data: {},
+        error: ''
     }
 };
 
@@ -247,6 +271,45 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, correctAnswers: { isLoading: false, error: action.payload, data: [] }
             }
+        case GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST:
+            return {
+                ...state, relativePosts: { isLoading: true, error: '', data: [] }
+            };
+        case GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS:
+            console.log(action.payload)
+            return {
+                ...state, relativePosts: { isLoading: false, data: action.payload, error: '' }
+            }
+        case GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE:
+            return {
+                ...state, relativePosts: { isLoading: false, error: action.payload, data: [] }
+            }
+        case GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST:
+            return {
+                ...state, relativeDocuments: { isLoading: true, error: '', data: [] }
+            };
+        case GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_SUCCESS:
+            return {
+                ...state, relativeDocuments: { isLoading: false, data: action.payload, error: '' }
+            }
+        case GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE:
+            return {
+                ...state, relativeDocuments: { isLoading: false, error: action.payload, data: [] }
+            }
+        case GET_CURRENT_USER_EXERCISE_STATISTIC_REQUEST:
+            return {
+                ...state, currentUserExerciseStatistic: { isLoading: true, error: '', data: {} }
+            };
+        case GET_CURRENT_USER_EXERCISE_STATISTIC_SUCCESS:
+            console.log(action.payload);
+            return {
+                ...state, currentUserExerciseStatistic: { isLoading: false, data: action.payload, error: '' }
+            }
+        case GET_CURRENT_USER_EXERCISE_STATISTIC_FAILURE:
+            return {
+                ...state, currentUserExerciseStatistic: { isLoading: false, error: action.payload, data: [] }
+            }
+
 
         default:
             return state;

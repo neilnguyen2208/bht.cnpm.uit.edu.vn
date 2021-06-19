@@ -47,7 +47,9 @@ class PostDetail extends React.Component {
     updateQuestionToC = (questionId, answerId, state) => {
 
     }
+    componentWillUnmount() { 
 
+    }
     onAnswerChecked = (questionId, answer) => {
         //update questionToC DTO => 
         for (let i = 0; i < this.questionToC.length; i++) {
@@ -171,7 +173,7 @@ class PostDetail extends React.Component {
                                 this.finalResult.map((question, index) => {
                                     return <QuestionItem
                                         isChecked
-                                        isCorrect = {question.isCorrect}
+                                        isCorrect={question.isCorrect}
                                         index={index}
                                         key={index}
                                         questionId={question.id}

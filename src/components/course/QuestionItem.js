@@ -13,7 +13,7 @@ import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
 import './QuestionItem.scss'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
-
+import correct_icon from 'assets/icons/24x24/correct_icon_24x24.png'
 //components
 class QuestionItem extends React.Component {
   constructor(props) {
@@ -53,8 +53,13 @@ class QuestionItem extends React.Component {
     return (
       //add id for navigation
       <div className="question-item" id={"qsitm-" + this.props.questionId} style={{ scrollMarginTop: "80px" }}>
-        <div className="question-index">
-          Câu {this.props.index + 1}:
+        <div className="j-c-space-between">
+          <div className="question-index">
+            Câu {this.props.index + 1}:
+          </div>
+          <div>
+            {this.props.isCorrect && <div><img style ={{width: "16px"}}src={correct_icon} alt="" /></div>}
+          </div>
         </div>
         <div className="ck-editor-output question-content" style={{ fontSize: "15px" }}
           dangerouslySetInnerHTML={{
@@ -70,7 +75,7 @@ class QuestionItem extends React.Component {
                 dangerouslySetInnerHTML={{
                   __html: answer.content
                 }} />
-              <input type="radio" onClick={() => this.onAnswerChecked(this.props.questionId, answer)} name={"fieldset" + this.props.questionId} />
+              <input type="radio" onClick={!answer.isChecked ? () => this.onAnswerChecked(this.props.questionId, answer) : (e) => { e.preventDefault() }} name={"fieldset" + this.props.questionId} />
               <span class="checkmark"></span>
             </label>
           </div>

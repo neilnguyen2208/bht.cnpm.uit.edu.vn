@@ -45,6 +45,9 @@ import {
     get_RelativeDocumentsByExerciseIdFailure,
     get_CurrentUserExerciseStatisticRequest,
     get_CurrentUserExerciseStatisticSuccess,
+    check_ExerciseQuestionsRequest,
+    check_ExerciseQuestionsFailure,
+    check_ExerciseQuestionsSuccess,
 } from "redux/actions/courseAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
@@ -153,14 +156,13 @@ export function getExerciseQuestions(exerciseId) {
     }
 }
 
-export function checkExerciseAnswers(exerciseId) {
+export function checkExerciseAnswers(exerciseId, answersDTO) {
     return dispatch => {
-        dispatch(get_ExerciseQuestionsRequest());
-        authRequest.get(`/exercises/${exerciseId}`).then(response => {
-            authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
-                dispatch(get_ExerciseQuestionsSuccess({ ...response.data, ...response_2.data[0] }))
-            }).catch(error => dispatch(get_ExerciseQuestionsFailure(error)))
-        })
+        dispatch(check_ExerciseQuestionsRequest());
+        authRequest.post(`/exercises/${exerciseId}/attempt`, JSON.stringify(answersDTO)).then(
+            response => {
+                dispatch(check_ExerciseQuestionsSuccess(response.data))
+            }).catch(error => dispatch(check_ExerciseQuestionsFailure(error)))
     }
 }
 

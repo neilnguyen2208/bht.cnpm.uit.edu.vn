@@ -304,13 +304,13 @@ export function getManagementPosts(searchParamObject) {
 
                         let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
                         authRequest.get(`/posts/actionAvailable?postIDs=${actionIDarr}`).then(response_3 => {
-                            let finalResult = [];
-                            for (let i = 0; i < result_2.length; i++) {
-                                finalResult.push({
-                                    ...result_2[i],
-                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
-                                });
-                            }
+                                let finalResult = [];
+                                for (let i = 0; i < result_2.length; i++) {
+                                    finalResult.push({
+                                        ...result_2[i],
+                                        ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                    });
+                                }
                             dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                         }).catch((error) => get_ManagementPostsFailure(error))
                     }).catch((error) => get_ManagementPostsFailure(error))

@@ -53,6 +53,8 @@ import {
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE,
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_SUCCESS,
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST,
+    UPDATE_TOC_SUCCESS,
+    UPDATE_TOC_SET,
 } from "../constants.js"
 
 
@@ -370,5 +372,18 @@ export function get_RelativeDocumentsByExerciseIdSuccess(data) {
 export function get_RelativeDocumentsByExerciseIdFailure() {
     return {
         type: GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE
+    }
+}
+
+export function update_QuestionDTOReset() {
+    return {
+        type: UPDATE_TOC_SET,
+    }
+}
+
+export function update_QuestionsToCSucess(data) {
+    return {
+        type: UPDATE_TOC_SUCCESS,
+        payload: data
     }
 }

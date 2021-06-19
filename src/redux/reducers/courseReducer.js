@@ -54,6 +54,8 @@ import {
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST,
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_SUCCESS,
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE,
+    UPDATE_TOC_SET,
+    UPDATE_TOC_SUCCESS,
 } from '../constants.js'
 
 const initialState = {
@@ -143,6 +145,11 @@ const initialState = {
         isLoading: false,
         data: {},
         error: ''
+    },
+
+    questionsToC: {
+        isSet: false,
+        data: []
     }
 };
 
@@ -261,15 +268,15 @@ function CourseReducer(state = initialState, action) {
 
         case CHECK_EXERCISE_ANSWERS_REQUEST:
             return {
-                ...state, correctAnswers: { isLoading: true, error: '', data: [] }
+                ...state, correctAnswers: { isLoading: true, error: '', data: [], isChecked: false }
             };
         case CHECK_EXERCISE_ANSWERS_SUCCESS:
             return {
-                ...state, correctAnswers: { isLoading: false, data: action.payload, error: '' }
+                ...state, correctAnswers: { isLoading: false, data: action.payload, isChecked: true, error: '' }
             }
         case CHECK_EXERCISE_ANSWERS_FAILURE:
             return {
-                ...state, correctAnswers: { isLoading: false, error: action.payload, data: [] }
+                ...state, correctAnswers: { isLoading: false, error: action.payload, data: [], isChecked: false }
             }
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST:
             return {
@@ -301,7 +308,6 @@ function CourseReducer(state = initialState, action) {
                 ...state, currentUserExerciseStatistic: { isLoading: true, error: '', data: {} }
             };
         case GET_CURRENT_USER_EXERCISE_STATISTIC_SUCCESS:
-            console.log(action.payload);
             return {
                 ...state, currentUserExerciseStatistic: { isLoading: false, data: action.payload, error: '' }
             }
@@ -309,7 +315,14 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, currentUserExerciseStatistic: { isLoading: false, error: action.payload, data: [] }
             }
-
+        case UPDATE_TOC_SET:
+            return {
+                ...state, questionsToC: { ...state.questionsToC, isSet: false }
+            }
+        case UPDATE_TOC_SUCCESS:
+            return {
+                ...state, questionsToC: { isLoading: true, data: action.payload }
+            }
 
         default:
             return state;

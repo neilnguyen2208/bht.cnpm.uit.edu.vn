@@ -28,6 +28,11 @@
   cursor: pointer;
 }
 
+.flag-btn-container {
+  @extend .like-btn-container;
+  min-width: 80px;
+}
+
 .like-btn-container:hover,
 .reaction-bar .save-btn-container:hover {
   background: var(--grayish);

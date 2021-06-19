@@ -83,10 +83,7 @@
 .question-item {
   margin-bottom: 15px;
 }
-.question-toc-item.answered {
-  border-bottom: 3px solid var(--blue);
-  border: 1px solid var(--blue);
-}
+
 .question-toc-item {
   cursor: pointer;
   border: 1px solid var(--gray);
@@ -101,6 +98,11 @@
   height: 26px;
   margin-left: 6px;
   margin-top: 6px;
+}
+
+.question-toc-item.answered {
+  border-bottom: 3px solid var(--blue) !important;
+  border: 1px solid var(--blue);
 }
 
 .question-toc-item:hover {

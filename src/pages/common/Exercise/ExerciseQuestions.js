@@ -114,6 +114,7 @@ class PostDetail extends React.Component {
             this.setState({});
         }
 
+        //when check all answer
         if (!this.isFirstTimeAnswerChecked && this.props.questions.length > 0 && !this.props.isQuestionsLoading && this.props.isAnswerChecked) {
             this.isFirstTimeAnswerChecked = true;
             this.finalResult = [];
@@ -123,7 +124,7 @@ class PostDetail extends React.Component {
                 this.finalResult.push({
                     ...this.props.questions[i],
                     ...(this.props.correctAnswers.find((itmInner) => itmInner.id === this.props.questions[i].id)),
-                });
+                }); 
             }
 
             //update ToC array

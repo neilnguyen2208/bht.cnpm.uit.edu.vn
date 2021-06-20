@@ -6,9 +6,6 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-// import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-// import store from 'redux/store/index'
-// import { detailType } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
 
 //styles
@@ -49,27 +46,27 @@ class ExerciseInfo extends React.Component {
           </div>
         </Link>
 
-        <div className="d-flex mg-top-5px"  >
-
+        <div className="d-flex mg-top-5px  j-c-space-between"  >
           <div className="d-flex">
             <div className="category">
               {this.props.categoryName}
             </div>
-          </div>
-          <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <div className="d-flex" style={{ marginTop: "-1px" }}>
-              {this.props.publishDtm ?
-                <div className="metadata-label" style={{ marginLeft: "2px" }}>
-                  {this.props.publishDtm.substring(0, 10)}
-                </div>
-                : <></>}
-
-              {!this.props.isUserStatisticLoading && this.props.userStatistic.bestCorrectQuestions &&
-                <div style={{ background: "var(--blue" }}>
-                  Kết quả tốt nhất của bạn: {this.props.userStatistic.bestCorrectQuestions}/{this.props.totalQuestions}
-                </div>
-              }
+            <div className="mg-left-5px">
+              <div className="d-flex" style={{ marginTop: "-1px" }}>
+                {this.props.publishDtm ?
+                  <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                    {this.props.publishDtm.substring(0, 10)}
+                  </div>
+                  : <></>}
+              </div>
             </div>
+          </div>
+          <div>
+            {!this.props.isUserStatisticLoading && this.props.userStatistic.bestCorrectQuestions &&
+              <div style={{ color: "var(--black)" }}>
+                Kết quả tốt nhất của bạn: {this.props.userStatistic.bestCorrectQuestions}/{this.props.totalQuestions}
+              </div>
+            }
           </div>
         </div>
 

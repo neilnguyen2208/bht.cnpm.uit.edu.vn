@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCourseTopicsWithExercisesByExerciseId, getExerciseById, getExerciseQuestions } from 'redux/services/courseServices'
 import homework_icon from 'assets/icons/24x24/homework_icon_gray_24x24.png'
+import { check_ExerciseQuestionsRequest, update_QuestionsToCReset, update_QuestionsToCSucess } from 'redux/actions/courseAction';
+import store from 'redux/store';
 
 class ExerciseSidebar extends React.Component {
 
@@ -57,7 +59,10 @@ class ExerciseSidebar extends React.Component {
   renderLevel2 = (level1Id, level2Item) => {
     return <NavLink className="vertical-sub-m-i" style={{ marginLeft: "0px", paddingLeft: "5px", paddingBottom: "5px" }}
       activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
-      to={window.location.pathname.substring(0, 26) === "/courses/exercise-content/" ? "/courses/exercise-content/" + level2Item.id : "/courses/exercise/" + level2Item.id} onClick={() => this.loadContent(level2Item.id)} >
+      to={window.location.pathname.substring(0, 26) === "/courses/exercise-content/" ?
+        "/courses/exercise-content/" + level2Item.id
+        : "/courses/exercise/" + level2Item.id}
+      onClick={() => this.loadContent(level2Item.id)}>
       <img className="exercise-prefix" style={{ width: "26px", height: "26px", marginTop: "5px", marginRight: "5px" }} src={homework_icon} alt="" />
       <div className="text" style={{ marginTop: "5px" }} >
         {level2Item.title}
@@ -66,16 +71,34 @@ class ExerciseSidebar extends React.Component {
   }
 
   loadContent = (exerciseId) => {
+
+    //if not in exercise questions  
     if (window.location.pathname.substring(0, 26) !== "/courses/exercise-content/") {
       this.props.getExerciseById(exerciseId);
       return;
     }
     this.props.getExerciseById(exerciseId);
     this.props.getExerciseQuestions(exerciseId);
+
+    //reset questions
+    store.dispatch(check_ExerciseQuestionsRequest());
+
+    //reset array DTO: questions.length => new array ToC
+
+
   }
 
   render() {
 
+    //after questions loaded.
+    if (window.location.pathname.substring(0, 26) === "/courses/exercise-content/" && !this.props.isQuestionsLoading && this.props.questionsData) {
+      this.questionToC = [];
+      for (let i = 0; i < this.props.questionsData.length; i++) {
+        this.questionToC.push({ id: this.props.questionsData[i].id, isAnswered: false, isFlagged: false, isCorrect: false })
+      }
+      store.dispatch(update_QuestionsToCSucess(this.questionToC))
+
+    }
     return (
       <div className="left-sidebar-wrapper" >
         {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
@@ -104,8 +127,6 @@ class ExerciseSidebar extends React.Component {
       :
       dropdown_container.style.display = "none"
   }
-
-
 }
 
 //#region for redux
@@ -115,11 +136,15 @@ const mapStateToProps = (state) => {
     isUserSummaryLoadDone: state.auth.currentUserSummary.isLoadDone,
     topicsExercises: state.course.courseTopicsExercisesByExerciseId.data,
     isTopicsExercisesLoading: state.course.courseTopicsExercisesByExerciseId.isLoading,
+    isQuestionsLoading: state.course.exerciseQuestions.isLoading,
+    questionsData: state.course.exerciseQuestions.data,
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getCourseTopicsWithExercisesByExerciseId, getExerciseById, getExerciseQuestions
+  getCourseTopicsWithExercisesByExerciseId,
+  getExerciseById,
+  getExerciseQuestions
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseSidebar));

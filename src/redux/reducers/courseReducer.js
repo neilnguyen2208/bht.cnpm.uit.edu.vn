@@ -376,7 +376,7 @@ function CourseReducer(state = initialState, action) {
             }
         case UPDATE_TOC_SUCCESS:
             return {
-                ...state, questionsToC: { isLoading: true, data: action.payload }
+                ...state, questionsToC: { isSet: true, data: action.payload }
             }
 
         default:

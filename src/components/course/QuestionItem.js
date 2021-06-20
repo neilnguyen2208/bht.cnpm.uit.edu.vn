@@ -14,11 +14,14 @@ import 'components/styles/Button.scss'
 import './QuestionItem.scss'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import correct_icon from 'assets/icons/24x24/correct_icon_24x24.png'
+import wrong_icon from 'assets/icons/24x24/wrong_icon_24x24.png'
+
 //components
 class QuestionItem extends React.Component {
   constructor(props) {
     super(props);
     this.isFlagged = false;
+    this.isExplainationShown = false;
   }
 
   toggleFlagImage = () => {
@@ -30,6 +33,18 @@ class QuestionItem extends React.Component {
   onAnswerChecked = (questionId, answer) => {
     //Create current answer object and replace in parent.
     this.props.onAnswerChecked(questionId, answer);
+  }
+
+  showOrHideExplaination = () => {
+    if (document.getElementById("xrcs-xplntn" + this.props.questionId).style.display === "none") {
+      document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "block";
+    }
+    else {
+      document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "block";
+    }
+    this.isExplainationShown = !this.isExplainationShown;
+    this.setState({});
+
   }
 
   render() {
@@ -58,8 +73,13 @@ class QuestionItem extends React.Component {
             Câu {this.props.index + 1}:
           </div>
           <div>
-            {this.props.isCorrect && <div><img style ={{width: "16px"}}src={correct_icon} alt="" /></div>}
+            {this.props.isChecked && this.props.isCorrect && <div style={{ position: "relative" }}>
+              <img style={{ width: "20px", height: "auto" }} src={correct_icon} alt="" /></div>}
+            {this.props.isChecked && !this.props.isCorrect && <div style={{ position: "relative" }}>
+              <img style={{ width: "20px", height: "auto" }} src={wrong_icon} alt="" />
+            </div>}
           </div>
+
         </div>
         <div className="ck-editor-output question-content" style={{ fontSize: "15px" }}
           dangerouslySetInnerHTML={{
@@ -75,11 +95,23 @@ class QuestionItem extends React.Component {
                 dangerouslySetInnerHTML={{
                   __html: answer.content
                 }} />
-              <input type="radio" onClick={!answer.isChecked ? () => this.onAnswerChecked(this.props.questionId, answer) : (e) => { e.preventDefault() }} name={"fieldset" + this.props.questionId} />
+              <input type="radio" checked={this.props.isChecked && this.props.answersSelected.includes(answer.id)}
+                onClick={!this.props.isChecked ? () => this.onAnswerChecked(this.props.questionId, answer) : (e) => { e.preventDefault() }}
+                name={"fieldset" + this.props.questionId} />
               <span class="checkmark"></span>
             </label>
           </div>
         })}
+
+        {this.props.explaination && <div className="mg-bottom-10px">
+          <button className="white-button" onClick={() => this.showOrHideExplaination()}>
+            {this.isExplainationShown ? "Ẩn giải thích" : "Xem giải thích"}
+          </button>
+          <div className="exercise-explaination d-none" id={"xrcs-xplntn" + this.props.questionId}>
+            {this.props.explaination}
+          </div>
+        </div>}
+
         <div className="reaction-bar" style={{ borderTop: "0px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
           <div className="d-flex mg-top-5px">
             <div className="flag-btn-container" onClick={this.toggleFlagImage}>
@@ -87,6 +119,7 @@ class QuestionItem extends React.Component {
             </div>
           </div>
         </div >
+
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div >);

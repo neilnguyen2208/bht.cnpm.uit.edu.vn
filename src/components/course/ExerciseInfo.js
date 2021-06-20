@@ -18,11 +18,14 @@ import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import { getCurrentUserExerciseStatistic } from 'redux/services/courseServices'
+import authService from 'authentication/authenticationServices';
 
 class ExerciseInfo extends React.Component {
 
   componentDidMount() {
-    this.props.exerciseId && this.props.getCurrentUserExerciseStatistic(this.props.exerciseId)
+
+    //if user logged in => call API get user's statistic
+    this.props.exerciseId && authService.isLoggedIn() && this.props.getCurrentUserExerciseStatistic(this.props.exerciseId)
   }
 
   render() {

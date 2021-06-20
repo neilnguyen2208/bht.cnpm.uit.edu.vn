@@ -8,13 +8,15 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import { getExerciseById, getExerciseQuestions, checkExerciseAnswers } from 'redux/services/courseServices'
+import { getExerciseById, getExerciseQuestions, checkExerciseAnswers, getExerciseNote, updateExerciseNote } from 'redux/services/courseServices'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader';
 import QuestionsToC from 'components/course/QuestionsToC';
 import QuestionItem from 'components/course/QuestionItem';
 import store from 'redux/store';
-import { update_QuestionsToCSucess } from 'redux/actions/courseAction';
+import { update_QuestionsToCSucess, update_QuestionsToCReset, update_ExerciseNoteReset } from 'redux/actions/courseAction';
+import authService from 'authentication/authenticationServices';
+
 class PostDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -34,8 +36,7 @@ class PostDetail extends React.Component {
     componentDidMount() {
         this.props.getExerciseById(this.props.match.params.id);
         this.props.getExerciseQuestions(this.props.match.params.id);
-
-        //create questionToC from question result.
+        authService.isLoggedIn() && this.props.getExerciseNote(this.props.match.params.id);
     }
 
     //create submit DTO.
@@ -47,14 +48,20 @@ class PostDetail extends React.Component {
     updateQuestionToC = (questionId, answerId, state) => {
 
     }
-    componentWillUnmount() { 
 
+    componentWillUnmount() {
+        store.dispatch(update_QuestionsToCReset());
+        store.dispatch(update_ExerciseNoteReset());
     }
+
+    //when user check an answer
     onAnswerChecked = (questionId, answer) => {
         //update questionToC DTO => 
         for (let i = 0; i < this.questionToC.length; i++) {
             if (this.questionToC[i].id === questionId) {
                 this.questionToC[i].isAnswered = true;
+                this.questionToC[i].isChecked = false;
+                this.questionToC[i].isCorrect = false;
             }
         }
         store.dispatch(update_QuestionsToCSucess([...this.questionToC]))
@@ -69,7 +76,6 @@ class PostDetail extends React.Component {
 
     onQuestionFlagged = (questionId, state) => {
         //update questionToC DTO => 
-        console.log(state)
         for (let i = 0; i < this.questionToC.length; i++) {
             if (this.questionToC[i].id === questionId) {
                 this.questionToC[i].isFlagged = state;
@@ -78,8 +84,15 @@ class PostDetail extends React.Component {
         store.dispatch(update_QuestionsToCSucess([...this.questionToC]))
     }
 
-    checkAnswer = () => {
+    checkAllAnswers = () => {
         this.props.checkExerciseAnswers(this.props.match.params.id, this.ANSWERS_DTO);
+    }
+
+    saveNote = (e) => {
+        e.preventDefault();
+        if (document.getElementById("cr-xcrs-nt-txtr")) {
+            this.props.updateExerciseNote(this.props.match.params.id, { note: document.getElementById("cr-xcrs-nt-txtr").value });
+        }
     }
 
     render() {
@@ -105,12 +118,28 @@ class PostDetail extends React.Component {
             this.isFirstTimeAnswerChecked = true;
             this.finalResult = [];
 
+            //update current question array
             for (let i = 0; i < this.props.questions.length; i++) {
                 this.finalResult.push({
                     ...this.props.questions[i],
                     ...(this.props.correctAnswers.find((itmInner) => itmInner.id === this.props.questions[i].id)),
                 });
             }
+
+            //update ToC array
+            this.tmpQuestionToC = this.questionToC;
+            this.questionToC = [];
+            for (let i = 0; i < this.tmpQuestionToC.length; i++) {
+                this.questionToC.push({
+                    ...this.tmpQuestionToC[i],
+                    isChecked: true,
+                    ...(this.props.correctAnswers.find((itmInner) => itmInner.id === this.tmpQuestionToC[i].id)),
+                });
+            }
+
+            //update array DTO
+            store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
+
             this.setState({});
         }
 
@@ -174,6 +203,9 @@ class PostDetail extends React.Component {
                                     return <QuestionItem
                                         isChecked
                                         isCorrect={question.isCorrect}
+                                        isAnswered={question.isAnswered}
+                                        explaination={question.explanation}
+                                        answersSelected={question.answersSelected}
                                         index={index}
                                         key={index}
                                         questionId={question.id}
@@ -187,7 +219,7 @@ class PostDetail extends React.Component {
                                     />
                                 })
                             }
-                            <button className="blue-button" onClick={() => this.checkAnswer()} >Kiểm tra kết quả</button>
+                            <button className="blue-button" onClick={() => this.checkAllAnswers()} >Kiểm tra kết quả</button>
                         </div>
                     </div>
                     <div>
@@ -198,11 +230,16 @@ class PostDetail extends React.Component {
                             }
                             {/* <Countdown /> */}
                             <div className="relative-sidebar" style={{ border: "0px" }}>
-                                <div className="form-group">
-                                    <div className="form-label">Ghi chú:</div>
-                                    <textarea className="text-area" style={{ height: "200px" }}>
-                                    </textarea>
-                                </div>
+                                <form id="cr-xcrs-note">
+                                    <div className="form-group">
+                                        <div className="form-label">Ghi chú:</div>
+                                        <textarea id="cr-xcrs-nt-txtr" className="text-area" style={{ height: "200px" }} defaultValue={this.props.noteData && !this.props.isNoteLoading && this.props.noteData}>
+                                        </textarea>
+                                    </div>
+                                    <div className="d-flex j-c-end">
+                                        <button className="blue-button" onClick={(e) => this.saveNote(e)}>Lưu</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -221,15 +258,19 @@ const mapStateToProps = (state) => {
         isQuestionsLoading: state.course.exerciseQuestions.isLoading,
         correctAnswers: state.course.correctAnswers.data,
         isAnswersLoading: state.course.correctAnswers.isLoading,
-        isAnswerChecked: state.course.correctAnswers.isChecked
-
+        isAnswerChecked: state.course.correctAnswers.isChecked,
+        noteData: state.course.exerciseNote.data,
+        isNoteLoading: state.course.exerciseNote.isLoading,
+        isNoteHaveUpdated: state.course.exerciseNote.isHaveUpdated,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getExerciseById,
     getExerciseQuestions,
-    checkExerciseAnswers
+    checkExerciseAnswers,
+    getExerciseNote,
+    updateExerciseNote
 
 }, dispatch);
 

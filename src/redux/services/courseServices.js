@@ -48,6 +48,11 @@ import {
     check_ExerciseQuestionsRequest,
     check_ExerciseQuestionsFailure,
     check_ExerciseQuestionsSuccess,
+    update_ExerciseNoteReset,
+    update_ExerciseNoteFailure,
+    get_ExerciseNoteRequest,
+    get_ExerciseNoteSuccess,
+    get_ExerciseNoteFailure,
 } from "redux/actions/courseAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
@@ -181,6 +186,23 @@ export function getRelativeDocumentsByExerciseId(exerciseId) {
         authRequest.get(`/documents/related?exerciseID=${exerciseId}`).then(response => {
             dispatch(get_RelativeDocumentsByExerciseIdSuccess(response.data))
         }).catch(error => dispatch(get_RelativeDocumentsByExerciseIdFailure(error)))
+    }
+}
+
+export function updateExerciseNote(exerciseId, noteContent) {
+    return dispatch => {
+        dispatch(update_ExerciseNoteReset());
+        authRequest.put(`/exercises/${exerciseId}/notes`, JSON.stringify(noteContent)).then(response => {
+            dispatch(update_ExerciseNoteFailure(response.data))
+        }).catch(error => dispatch(update_ExerciseNoteFailure(error)))
+    }
+}
+export function getExerciseNote(exerciseId) {
+    return dispatch => {
+        dispatch(get_ExerciseNoteRequest());
+        authRequest.get(`/exercises/${exerciseId}/notes`).then(response => {
+            dispatch(get_ExerciseNoteSuccess(response.data))
+        }).catch(error => dispatch(get_ExerciseNoteFailure(error)))
     }
 }
 

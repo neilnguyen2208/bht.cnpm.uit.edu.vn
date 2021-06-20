@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
-import { update_QuestionDTOReset } from 'redux/actions/courseAction';
+import { update_QuestionsToCReset } from 'redux/actions/courseAction';
 import store from 'redux/store';
 import flag_icon from 'assets/icons/24x24/gray_flag_icon_24x24.png';
 
@@ -19,7 +19,7 @@ class QuestionToC extends React.Component {
   render() {
 
     if (this.props.isQuestionSet) {
-      store.dispatch(update_QuestionDTOReset())
+      store.dispatch(update_QuestionsToCReset())
     }
 
     return (
@@ -34,8 +34,9 @@ class QuestionToC extends React.Component {
                 <div style={{ poistion: "relative" }}>
                   {item.isFlagged && <img src={flag_icon} alt="" style={{ width: "auto", height: "16px", position: "absolute", marginTop: "18px", marginLeft: "23px" }} />}
                 </div>
-                <div className={item.isAnswered ? "question-toc-item answered" :
-                  "question-toc-item"}
+                <div className={!item.isChecked && item.isAnswered ? "question-toc-item answered" :
+                  item.isChecked && item.isCorrect ? "question-toc-item correct" : item.isChecked && !item.isCorrect ? "question-toc-item wrong" :
+                    "question-toc-item"}
 
                   key={item.id} id={"qstn-tocitm-" + item.id}
                   onClick={() => {

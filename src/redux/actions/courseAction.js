@@ -41,10 +41,6 @@ import {
     GET_CURRENT_USER_EXERCISE_STATISTIC_REQUEST,
     GET_CURRENT_USER_EXERCISE_STATISTIC_SUCCESS,
     GET_CURRENT_USER_EXERCISE_STATISTIC_FAILURE,
-    CREATE_EXERCISE_NOTE_REQUEST,
-    CREATE_EXERCISE_NOTE_SUCCESS,
-    CREATE_EXERCISE_NOTE_FAILURE,
-    UPDATE_EXERCISE_NOTE_REQUEST,
     UPDATE_EXERCISE_NOTE_SUCCESS,
     UPDATE_EXERCISE_NOTE_FAILURE,
     GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST,
@@ -55,6 +51,10 @@ import {
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST,
     UPDATE_TOC_SUCCESS,
     UPDATE_TOC_SET,
+    GET_EXERCISE_NOTE_FAILURE,
+    GET_EXERCISE_NOTE_SUCCESS,
+    GET_EXERCISE_NOTE_REQUEST,
+    UPDATE_EXERCISE_NOTE_RESET,
 } from "../constants.js"
 
 
@@ -297,29 +297,29 @@ export function get_CurrentUserExerciseStatisticFailure(error) {
     }
 }
 
-export function create_ExerciseNoteRequest() {
+export function get_ExerciseNoteRequest() {
     return {
-        type: CREATE_EXERCISE_NOTE_REQUEST
+        type: GET_EXERCISE_NOTE_REQUEST 
     }
 }
 
-export function create_ExerciseNoteSuccess(data) {
+export function get_ExerciseNoteSuccess(data) {
     return {
-        type: CREATE_EXERCISE_NOTE_SUCCESS,
+        type: GET_EXERCISE_NOTE_SUCCESS,
         payload: data
     }
 }
 
-export function create_ExerciseNoteFailure(error) {
+export function get_ExerciseNoteFailure(error) {
     return {
-        type: CREATE_EXERCISE_NOTE_FAILURE,
+        type: GET_EXERCISE_NOTE_FAILURE,
         payload: error
     }
 }
 
-export function update_ExerciseNoteRequest() {
+export function update_ExerciseNoteReset() {
     return {
-        type: UPDATE_EXERCISE_NOTE_REQUEST
+        type: UPDATE_EXERCISE_NOTE_RESET
     }
 }
 
@@ -375,7 +375,7 @@ export function get_RelativeDocumentsByExerciseIdFailure() {
     }
 }
 
-export function update_QuestionDTOReset() {
+export function update_QuestionsToCReset() {
     return {
         type: UPDATE_TOC_SET,
     }

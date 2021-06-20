@@ -42,12 +42,6 @@ import {
     GET_CURRENT_USER_EXERCISE_STATISTIC_FAILURE,
 
     //
-    CREATE_EXERCISE_NOTE_REQUEST,
-    CREATE_EXERCISE_NOTE_SUCCESS,
-    CREATE_EXERCISE_NOTE_FAILURE,
-    UPDATE_EXERCISE_NOTE_REQUEST,
-    UPDATE_EXERCISE_NOTE_SUCCESS,
-    UPDATE_EXERCISE_NOTE_FAILURE,
     GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST,
     GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS,
     GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE,
@@ -56,6 +50,12 @@ import {
     GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_FAILURE,
     UPDATE_TOC_SET,
     UPDATE_TOC_SUCCESS,
+    UPDATE_EXERCISE_NOTE_FAILURE,
+    UPDATE_EXERCISE_NOTE_SUCCESS,
+    UPDATE_EXERCISE_NOTE_RESET,
+    GET_EXERCISE_NOTE_REQUEST,
+    GET_EXERCISE_NOTE_SUCCESS,
+    GET_EXERCISE_NOTE_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -150,6 +150,13 @@ const initialState = {
     questionsToC: {
         isSet: false,
         data: []
+    },
+
+    exerciseNote: {
+        isLoading: false,
+        isHaveUpdated: false,
+        data: {},
+        error: ''
     }
 };
 
@@ -283,7 +290,6 @@ function CourseReducer(state = initialState, action) {
                 ...state, relativePosts: { isLoading: true, error: '', data: [] }
             };
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS:
-            console.log(action.payload)
             return {
                 ...state, relativePosts: { isLoading: false, data: action.payload, error: '' }
             }
@@ -303,6 +309,7 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, relativeDocuments: { isLoading: false, error: action.payload, data: [] }
             }
+
         case GET_CURRENT_USER_EXERCISE_STATISTIC_REQUEST:
             return {
                 ...state, currentUserExerciseStatistic: { isLoading: true, error: '', data: {} }
@@ -315,6 +322,54 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, currentUserExerciseStatistic: { isLoading: false, error: action.payload, data: [] }
             }
+
+        case UPDATE_EXERCISE_NOTE_RESET: return {
+            ...state, exerciseNote: {
+                ...state.exerciseNote,
+                isHaveUpdated: false,
+                error: ''
+            }
+        }
+        case UPDATE_EXERCISE_NOTE_SUCCESS: return {
+            ...state, exerciseNote: {
+                ...state.exerciseNote,
+                isLoading: false,
+                isHaveUpdated: true,
+                error: ''
+            }
+        }
+        case UPDATE_EXERCISE_NOTE_FAILURE: return {
+            ...state, exerciseNote: {
+                ...state.exerciseNote,
+                isLoading: false,
+                isHaveUpdated: false,
+                error: action.payload
+            }
+        }
+
+        case GET_EXERCISE_NOTE_REQUEST: return {
+            ...state, exerciseNote: {
+                ...state.exerciseNote,
+                isLoading: true,
+                error: ''
+            }
+        }
+        case GET_EXERCISE_NOTE_SUCCESS: return {
+            ...state, exerciseNote: {
+                ...state.exerciseNote,
+                isLoading: false,
+                data: action.payload.note,
+                error: ''
+            }
+        }
+        case GET_EXERCISE_NOTE_FAILURE: return {
+            ...state, exerciseNote: {
+                ...state.exerciseNote,
+                isLoading: false,
+                error: action.payload
+            }
+        }
+
         case UPDATE_TOC_SET:
             return {
                 ...state, questionsToC: { ...state.questionsToC, isSet: false }

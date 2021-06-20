@@ -83,7 +83,9 @@ class DocumentDetail extends React.Component {
                                     </div>
                                     <div className="d-flex">
                                         <iframe className="if-container"
-                                            src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
+                                            // src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
+                                            src={"https://drive.google.com/file/d/18_TTBQAbVy3K9FE8Ksbc6KpoUiZ6eajj/view"}
+
                                             title={`doc-if-${this.props.match.params.id}`}
                                             sandbox="allow-scripts allow-same-origin"
                                         ></iframe>

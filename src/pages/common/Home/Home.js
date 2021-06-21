@@ -94,7 +94,7 @@ class Home extends React.Component {
                     authorID={item.authorID}
                     authorDisplayName={item.authorDisplayName}
                     categoryID={item.categoryID}
-                    categoryName={item.category}
+                    categoryName={item.categoryName}
                     imageURL={item.imageURL}
                     publishDtm={item.publishDtm}
                     description={item.description}
@@ -103,7 +103,7 @@ class Home extends React.Component {
                     dislikeCount={item.dislikeCount}
                     downloadCount={item.downloads}
                     viewCount={item.views}
-                    subjectName={item.subject}
+                    subjectName={item.subjectName}
                     subjectID={item.subjectID}
                 ></HomeDocumentItem>
             })

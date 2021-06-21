@@ -146,7 +146,7 @@ class DocumentApproving extends React.Component {
                         id={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
-                        categoryName={item.category}
+                        categoryName={item.categoryName}
                         categoryID={item.categoryID}
                         requestedTime={"20:20:20"}
                         requestedDate={"1/3/2021"}
@@ -159,9 +159,9 @@ class DocumentApproving extends React.Component {
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
-                        categoryName={item.category}
+                        categoryName={item.categoryName}
                         categoryID={item.categoryID}
-                        subjectName={item.subject}
+                        subjectName={item.subjectName}
                         subjectID={item.documentSubjectID}
 
                         title={item.title}

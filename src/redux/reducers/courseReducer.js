@@ -127,6 +127,7 @@ const initialState = {
         data: [],
         isLoading: false,
         error: '',
+        isChecked: false
     },
 
     relativePosts: {
@@ -157,7 +158,8 @@ const initialState = {
         isHaveUpdated: false,
         data: {},
         error: ''
-    }
+    },
+
 };
 
 function CourseReducer(state = initialState, action) {

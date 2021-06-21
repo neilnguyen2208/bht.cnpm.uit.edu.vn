@@ -1,7 +1,7 @@
 import React from 'react'
 
 import 'components/styles/Metadata.scss'
-import { getPostByID } from "redux/services/postServices"
+import { getDocumentByID } from "redux/services/documentServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -21,17 +21,19 @@ import {
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
 import { itemType } from 'constants.js';
+import { get_DocumentByIDReset } from 'redux/actions/documentAction';
 
+//lack services: userStatistic, related Document.
 class DocumentDetail extends React.Component {
 
     componentDidMount() {
-        this.props.getPostByID(this.props.match.params.id);
+        this.props.getDocumentByID(this.props.match.params.id);
     }
 
     componentWillUnmount() {
-        store.dispatch(get_PostByIDReset());
-        store.dispatch(get_RelativeSameAuthorPostsReset());
-        store.dispatch(get_RelativeSameCategoryPostsReset());
+        store.dispatch(get_DocumentByIDReset());
+        // store.dispatch(get_RelativeSameAuthorPostsReset());
+        // store.dispatch(get_RelativeSameCategoryPostsReset());
     }
 
     render() {
@@ -63,7 +65,6 @@ class DocumentDetail extends React.Component {
                                         authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
                                         //
                                         reloadList={() => this.reloadList()}
-
                                     />
 
                                     {/* content here */}
@@ -83,9 +84,7 @@ class DocumentDetail extends React.Component {
                                     </div>
                                     <div className="d-flex">
                                         <iframe className="if-container"
-                                            // src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
-                                            src={"https://drive.google.com/file/d/18_TTBQAbVy3K9FE8Ksbc6KpoUiZ6eajj/view"}
-
+                                            src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
                                             title={`doc-if-${this.props.match.params.id}`}
                                             sandbox="allow-scripts allow-same-origin"
                                         ></iframe>
@@ -105,14 +104,14 @@ class DocumentDetail extends React.Component {
                                 : <Loader />}
                         </div>
                         <div>
-                            {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
+                            {/* {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
                                 <RelativePosts title={"TÀI LIỆU LIÊN QUAN"} items={
                                     this.props.sameAuthor} />
                                 : <Loader />}
                             {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
                                 <RelativePosts title={"CÙNG DANH MỤC"}
                                     items={this.props.sameCategory} /> : <Loader />
-                            }
+                            } */}
                         </div>
                     </div>
                 </div>
@@ -122,27 +121,17 @@ class DocumentDetail extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        currentDocument: state.post.currentPost.data,
-        isLoadDone: state.post.currentPost.isLoadDone,
-        sameCategory: state.post.sameCategory.data,
-        isSameCategoryLoadDone: state.post.sameCategory.isLoadDone,
-        sameAuthor: state.post.sameAuthor.data,
-        isSameAuthorLoadDone: state.post.sameCategory.isLoadDone,
+        currentDocument: state.document.currentDocument.data,
+        isLoadDone: state.document.currentDocument.isLoadDone,
+        // sameCategory: state.document.sameCategory.data,
+        // isSameCategoryLoadDone: state.document.sameCategory.isLoadDone,
+        // sameAuthor: state.document.sameAuthor.data,
+        // isSameAuthorLoadDone: state.document.sameCategory.isLoadDone,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostByID
+    getDocumentByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentDetail));
-
-// <div className="document-live-preview">
-// <PDFViewer
-//     document={{
-//         url: 'https://arxiv.org/pdf/quant-ph/0410100.pdf',
-//     }}
-// />
-// {/* <iframe src={"https://drive.google.com/file/d/" + this.linkFile + "/preview"} width="100%" height="100%"></iframe> */}
-// {/* <iframe src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview?hl=en"} width="100%" height="100%"></iframe> */}
-// </div>

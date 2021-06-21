@@ -40,7 +40,10 @@ import {
     RESOLVE_A_DOCUMENT_FAILURE,
     GET_MANAGEMENT_DOCUMENTS_REQUEST,
     GET_MANAGEMENT_DOCUMENTS_SUCCESS,
-    GET_MANAGEMENT_DOCUMENTS_FAILURE
+    GET_MANAGEMENT_DOCUMENTS_FAILURE,
+    GET_DOCUMENT_BY_ID_FAILURE,
+    GET_DOCUMENT_BY_ID_RESET,
+    GET_DOCUMENT_BY_ID_SUCCESS
 
 } from '../constants.js'
 
@@ -101,6 +104,16 @@ const initialState = {
 
 function DocReducer(state = initialState, action) {
     switch (action.type) {
+
+        //GET: /documents​/{id}
+        case GET_DOCUMENT_BY_ID_SUCCESS:
+            return {
+                ...state, currentDocument: { isLoading: false, data: action.payload, isLoadDone: true }
+            };
+        case GET_DOCUMENT_BY_ID_FAILURE:
+            return { ...state, currentDocument: { ...state.currentDocument, isLoading: false, isLoadDone: true } };
+        case GET_DOCUMENT_BY_ID_RESET:
+            return { ...state, currentDocument: { ...state.currentDocument, isLoadDone: false } };
 
         //my post
         case GET_MY_DOCUMENTS_REQUEST:
@@ -179,7 +192,6 @@ function DocReducer(state = initialState, action) {
             }
 
         //document search result 
-        //my post
         case GET_DOCUMENT_SEARCH_REQUEST:
         case GET_DOCUMENTS_LIST_REQUEST:
             return {
@@ -245,6 +257,7 @@ function DocReducer(state = initialState, action) {
             return { ...state, isHaveRejectedAndFeedbacked: false };
         case REJECT_AND_FEEDBACK_A_DOCUMENT_RESET:
             return { ...state, isHaveRejectedAndFeedbacked: false };
+            
         //delete
         case DELETE_A_DOCUMENT_RESET:
             return {
@@ -259,7 +272,7 @@ function DocReducer(state = initialState, action) {
                 ...state, isHaveDeleted: false
             };
 
-        //edit post
+        //PUT: /documents​/{id}
         case EDIT_A_DOCUMENT_RESET:
             return {
                 ...state, isHaveEdited: false

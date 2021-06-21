@@ -32,7 +32,7 @@ class CourseSummaryItem extends React.Component {
           <div className="j-c-space-between mg-top-10px">
             <div className="d-flex">
               {/* <div className="category">
-                {this.props.category}
+                {this.props.categoryName}
               </div> */}
             </div>
             <div className="d-flex">

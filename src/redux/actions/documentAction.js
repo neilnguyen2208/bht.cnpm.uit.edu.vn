@@ -247,7 +247,6 @@ export function post_ApproveADocumentFailure(notification) {
     }
 }
 
-
 export function delete_RejectADocumentReset() {
     return {
         type: REJECT_A_DOCUMENT_RESET
@@ -265,7 +264,6 @@ export function delete_RejectADocumentFailure() {
         type: REJECT_A_DOCUMENT_FAILURE
     }
 }
-
 
 export function post_RejectAndFeedbackADocumentReset() {
     return {
@@ -363,7 +361,7 @@ export function post_ReportADocumentFailure() {
     }
 }
 
-//posts list 
+//document by id 
 export function get_DocumentByIDSuccess(data) {
     return {
         type: GET_DOCUMENT_BY_ID_SUCCESS,

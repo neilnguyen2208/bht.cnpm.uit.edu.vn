@@ -48,6 +48,8 @@ import {
     get_ManagementDocumentsRequest,
     get_ManagementDocumentsSuccess,
     get_ManagementDocumentsFailure,
+    get_DocumentByIDSuccess,
+    get_DocumentByIDFailure,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam } from 'utils/urlUtils';
@@ -55,7 +57,8 @@ import { openModal, openBLModal, closeModal } from 'redux/services/modalServices
 
 //upload new document
 
-import { request, multipartRequest } from 'utils/requestUtils'
+import { request, multipartRequest, authRequest } from 'utils/requestUtils'
+import { getUserStatisticById } from "./authServices";
 
 export function getNotApprovedDocumentsList() {
     return dispatch => {
@@ -100,22 +103,21 @@ export function getDocumentSearch(searchParamObject) {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response.data.docSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 request.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docDetails.length; i++) {
+                        for (let i = 0; i < result_1.docSummaryDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docDetails[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
+                                ...result_1.docSummaryDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummaryDTOs[i].id)),
                             }
                             );
                         }
 
                         dispatch(get_DocumentSearchSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_DocumentSearchFailure())
-                // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
             })
             .catch(error => {
                 dispatch(get_DocumentSearchFailure(error))
@@ -154,7 +156,6 @@ export function getPendingDocuments(searchParamObject) {
             })
     }
 }
-
 
 export function getReportedDocuments(searchParamObject) {
     return dispatch => {
@@ -205,10 +206,8 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
                             finalResult.push({
                                 ...result_1.docDetails[i],
                                 ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
-                            }
-                            );
+                            });
                         }
-
                         dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_MyDocumentsFailure())
             })
@@ -226,30 +225,20 @@ export function uploadADocument(data, files) {
         let fileData = new FormData();
         // files.forEach(file => {
         fileData.append('file', files);
-        // })
-        console.log(fileData);
-        console.log(data);
 
-        multipartRequest.post(`/documents/upload`, fileData)
+        multipartRequest.document(`/documents/upload`, fileData)
             .then(response => {
-                console.log(response)
                 data.fileCode = response.data.code; //assign secret code.
-                request.post('/documents', JSON.stringify(data)).then(response => {
+                request.document('/documents', JSON.stringify(data)).then(response => {
                     dispatch(post_UploadDocumentSuccess(response));
                     dispatch(closeModal());
                     openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
+                }).catch(error => {
+                    dispatch(post_UploadDocumentFailure(error));
                 })
-                    .catch(error => {
-                        dispatch(post_UploadDocumentFailure(error)); //
-                    })
-            }
-            )
-            .catch(error => {
-                dispatch(post_UploadDocumentFailure(error)); //
+            }).catch(error => {
+                dispatch(post_UploadDocumentFailure(error));
             })
-
-
-
     }
 }
 
@@ -270,25 +259,34 @@ export function reactionADocument(docID, reactionType) {
 export function getDocumentByID(id) {
     return dispatch => {
         dispatch(get_DocumentByIDReset())
-        // request.get(`/documents/${id}`)
-        //     .then(response => {
-        //         let _response = response; //response without statistic
-        //         request.get(`/documents/statistic?docIDs=${_response.data.id}`)
-        //             .then(response => {
-        //                 dispatch(get_DocumentByIDSuccess({ ..._response.data, ...response.data[0] }))
-        //             })
-        //     }
-        //     )
-        //     .catch(error => { dispatch(get_DocumentByIDFailure(error)) })
+        authRequest.get(`/documents/${id}`)
+            .then(response_1 => {
+                let result_1 = response_1.data;//response without statistic
+
+                //get relative documents
+                // dispatch(getSameAuthorDocuments(result_1.id, result_1.authorID));
+                // dispatch(getSameCategoryDocuments(result_1.id, result_1.categoryID));
+
+                //get user statistic
+                dispatch(getUserStatisticById(result_1.authorID));
+                authRequest.get(`/documents/statistics?docIDs=${result_1.id}`)
+                    .then(response_2 => {
+                        // authRequest.get(`/documents/actionAvailable?documentIDs=${result_1.id}`).then(response_3 => {
+                        dispatch(get_DocumentByIDSuccess({
+                            ...result_1, ...response_2.data[0],
+                            //  ...response_3.data[0]
+                        })
+                            // )}).catch(error => { dispatch(get_DocumentByIDFailure(error)) }
+                        ).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
+                    }).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
+            })
     }
 }
-
-
 
 export function approveADocument(id) {
     return dispatch => {
         dispatch(post_ApproveADocumentReset());
-        request.post(`/documents/${id}/approval`)
+        request.document(`/documents/${id}/approval`)
             .then(result => {
                 dispatch(post_ApproveADocumentSuccess());
             })
@@ -311,7 +309,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
         openModal("loader", { text: "Đang xử lý" })
-        request.post(`/documents/${id}/rejection`, JSON.stringify(reason))
+        request.document(`/documents/${id}/rejection`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
                 //             dispatch(post_RejectAndFeedbackADocumentSuccess());
@@ -329,7 +327,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
 export function resolveADocument(id, resolveDTO) {
     return dispatch => {
         dispatch(post_ResolveADocumentReset());
-        request.post(`/documents/resolveReport/${id}`, JSON.stringify(resolveDTO))
+        request.document(`/documents/resolveReport/${id}`, JSON.stringify(resolveDTO))
             .then(result => {
                 dispatch(post_ResolveADocumentSuccess());
             })
@@ -338,11 +336,11 @@ export function resolveADocument(id, resolveDTO) {
 }
 
 
-//chua co API cho viec xoa bai post
+//chua co API cho viec xoa bai document
 export function deleteADocument(id) { //maybe use modal later
     return dispatch => {
         dispatch(delete_ADocumentReset(id))
-        request.delete(`/posts/${id}`).then(response => {
+        request.delete(`/documents/${id}`).then(response => {
             dispatch(delete_ADocumentSuccess())
             openBLModal({ text: "Xoá tài liệu thành công!", type: "success" });
 
@@ -354,7 +352,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
     return dispatch => {
         dispatch(put_EditADocumentReset())
         openModal("loader", { text: "Đang xử lý" });
-        request.put(`/posts/${id}`, JSON.stringify(newDocumentContent))
+        request.put(`/documents/${id}`, JSON.stringify(newDocumentContent))
             .then(response => {
                 dispatch(closeModal());
                 openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
@@ -367,7 +365,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
 export function reportADocument(id, reason) { //
     return dispatch => {
         dispatch(post_ReportADocumentReset())
-        request.post(`/posts/${id}/report`, JSON.stringify(reason))
+        request.document(`/documents/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportADocumentSuccess());
             }

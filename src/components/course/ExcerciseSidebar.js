@@ -94,7 +94,7 @@ class ExerciseSidebar extends React.Component {
     if (window.location.pathname.substring(0, 26) === "/courses/exercise-content/" && !this.props.isQuestionsLoading && this.props.questionsData) {
       this.questionToC = [];
       for (let i = 0; i < this.props.questionsData.length; i++) {
-        this.questionToC.push({ id: this.props.questionsData[i].id, isAnswered: false, isFlagged: false, isCorrect: false })
+        this.questionToC.push({ id: this.props.questionsData[i].id, isChecked: false, isAnswered: false, isFlagged: false, isCorrect: false })
       }
       store.dispatch(update_QuestionsToCSucess(this.questionToC))
 

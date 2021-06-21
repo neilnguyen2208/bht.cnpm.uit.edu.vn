@@ -197,6 +197,7 @@ export function updateExerciseNote(exerciseId, noteContent) {
         }).catch(error => dispatch(update_ExerciseNoteFailure(error)))
     }
 }
+
 export function getExerciseNote(exerciseId) {
     return dispatch => {
         dispatch(get_ExerciseNoteRequest());

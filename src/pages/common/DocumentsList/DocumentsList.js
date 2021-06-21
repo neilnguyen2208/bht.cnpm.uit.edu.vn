@@ -26,7 +26,6 @@ class DocumentsList extends React.Component {
         this.searchParamObject = {
             "paginator": 1,
             "category.id": null,
-            // "docState": ''
             sortByPublishDtm: "DESC"
         }
 
@@ -56,7 +55,6 @@ class DocumentsList extends React.Component {
         this.props.getDocumentSearch(this.searchParamObject);
         this.setState({});
     }
-
 
     //combobox
     onCategoryOptionChange = (selectedOption) => {
@@ -136,7 +134,6 @@ class DocumentsList extends React.Component {
                         </div>
                     </div>
                 </div >
-
         }
 
         else this.comboboxGroup = <div className="filter-container j-c-space-between ">
@@ -161,9 +158,9 @@ class DocumentsList extends React.Component {
                             authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
-                            categoryName={item.category}
+                            categoryName={item.categoryName}
                             categoryID={item.categoryID}
-                            subjectName={item.subject}
+                            subjectName={item.subjectName}
                             subjectID={item.subjectID}
                             title={item.title}
                             fileName={"Demo file name.pdf"}

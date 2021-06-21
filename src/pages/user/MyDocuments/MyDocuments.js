@@ -187,9 +187,9 @@ class MyDocuments extends React.Component {
                             authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
-                            categoryName={item.category}
+                            categoryName={item.categoryName}
                             categoryID={item.categoryID}
-                            subjectName={item.subject}
+                            subjectName={item.subjectName}
                             subjectID={item.subjectID}
 
                             title={item.title}

@@ -257,8 +257,7 @@ export function getPostSearch(searchParamObject) {
                                 ...result_1.postSummaryDTOs[i],
                                 ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
                                 isHighlighted: false
-                            }
-                            );
+                            });
                         }
 
                         authRequest.get(`/posts/highlightPosts/ids`)
@@ -304,13 +303,13 @@ export function getManagementPosts(searchParamObject) {
 
                         let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
                         authRequest.get(`/posts/actionAvailable?postIDs=${actionIDarr}`).then(response_3 => {
-                                let finalResult = [];
-                                for (let i = 0; i < result_2.length; i++) {
-                                    finalResult.push({
-                                        ...result_2[i],
-                                        ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
-                                    });
-                                }
+                            let finalResult = [];
+                            for (let i = 0; i < result_2.length; i++) {
+                                finalResult.push({
+                                    ...result_2[i],
+                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                });
+                            }
                             dispatch(get_ManagementPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                         }).catch((error) => get_ManagementPostsFailure(error))
                     }).catch((error) => get_ManagementPostsFailure(error))
@@ -505,15 +504,12 @@ export function getSameAuthorPosts(postID, authorID) {
 
 export function getSavedPosts(searchParamObject) {
     return dispatch => {
-
         dispatch(get_SavedPostsRequest());
         authRequest.get(`/posts/savedPost?${generateSearchParam(searchParamObject)}`)
             .then(response => {
-
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
-
                 authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array

@@ -14,7 +14,7 @@ import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader';
 import QuestionsToC from 'components/course/QuestionsToC';
 import QuestionItem from 'components/course/QuestionItem';
 import store from 'redux/store';
-import { update_QuestionsToCSucess, update_QuestionsToCReset, update_ExerciseNoteReset } from 'redux/actions/courseAction';
+import { update_QuestionsToCSucess, update_QuestionsToCReset, update_ExerciseNoteReset, check_ExerciseQuestionsRequest } from 'redux/actions/courseAction';
 import authService from 'authentication/authenticationServices';
 
 class PostDetail extends React.Component {
@@ -85,7 +85,8 @@ class PostDetail extends React.Component {
     }
 
     checkAllAnswers = () => {
-        this.props.checkExerciseAnswers(this.props.match.params.id, this.ANSWERS_DTO);
+        if (this.ANSWERS_DTO)
+            this.props.checkExerciseAnswers(this.props.match.params.id, this.ANSWERS_DTO);
     }
 
     saveNote = (e) => {
@@ -105,12 +106,12 @@ class PostDetail extends React.Component {
             for (let i = 0; i < this.props.questions.length; i++) {
                 this.questionToC.push({ id: this.props.questions[i].id, isAnswered: false, isFlagged: false, isCorrect: false })
             }
+            store.dispatch(update_QuestionsToCSucess(this.questionToC))
 
             //init answer dto:
             for (let i = 0; i < this.props.questions.length; i++) {
                 this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
             }
-            store.dispatch(update_QuestionsToCSucess(this.questionToC))
             this.setState({});
         }
 
@@ -124,7 +125,7 @@ class PostDetail extends React.Component {
                 this.finalResult.push({
                     ...this.props.questions[i],
                     ...(this.props.correctAnswers.find((itmInner) => itmInner.id === this.props.questions[i].id)),
-                }); 
+                });
             }
 
             //update ToC array
@@ -138,9 +139,13 @@ class PostDetail extends React.Component {
                 });
             }
 
-            //update array DTO
-            store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
+            //reset answer
+            for (let i = 0; i < this.props.questions.length; i++) {
+                this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
+            }
 
+            store.dispatch(check_ExerciseQuestionsRequest());
+            store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
             this.setState({});
         }
 
@@ -218,8 +223,7 @@ class PostDetail extends React.Component {
                                         onAnswerChecked={this.onAnswerChecked}
                                         onQuestionFlagged={this.onQuestionFlagged}
                                     />
-                                })
-                            }
+                                })}
                             <button className="blue-button" onClick={() => this.checkAllAnswers()} >Kiểm tra kết quả</button>
                         </div>
                     </div>
@@ -234,11 +238,11 @@ class PostDetail extends React.Component {
                                 <form id="cr-xcrs-note">
                                     <div className="form-group">
                                         <div className="form-label">Ghi chú:</div>
-                                        <textarea id="cr-xcrs-nt-txtr" className="text-area" style={{ height: "200px" }} defaultValue={this.props.noteData && !this.props.isNoteLoading && this.props.noteData}>
+                                        <textarea id="cr-xcrs-nt-txtr" className="text-area" style={{ height: "200px" }} defaultValue={authService.isLoggedIn() ? !this.props.isNoteLoading && this.props.noteData : ""}>
                                         </textarea>
                                     </div>
                                     <div className="d-flex j-c-end">
-                                        <button className="blue-button" onClick={(e) => this.saveNote(e)}>Lưu</button>
+                                        {authService.isLoggedIn() && <button className="blue-button" onClick={(e) => this.saveNote(e)}>Lưu</button>}
                                     </div>
                                 </form>
                             </div>

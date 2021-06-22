@@ -24,13 +24,13 @@ class QuestionToC extends React.Component {
 
     return (
       <div className="relative-sidebar">
-        <div className="relative-title" style={{ fontFamily: "BarlowCondensed-Medium", color: "var(--black)" }}>
+        <div className="relative-title" style={{ fontFamily: "BarlowCondensed-Medium", fontWeight: "400" }}>
           {this.props.title}{this.props.isQuestionSet}
         </div>
         <div className="d-flex">
           <div className="grid-question-items-container">
             {!this.props.isQuestionSet && this.props.questionsToC.length > 0 && this.props.questionsToC.map((item, index) =>
-              <div>
+              <div key={index}>
                 <div style={{ poistion: "relative" }}>
                   {item.isFlagged && <img src={flag_icon} alt="" style={{ width: "auto", height: "16px", position: "absolute", marginTop: "18px", marginLeft: "23px" }} />}
                 </div>

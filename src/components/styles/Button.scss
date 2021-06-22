@@ -1,24 +1,26 @@
 .white-button {
-    display: inline-block;
-    box-sizing: border-box;
-    width: fit-content;
-    height: 1.5rem;
-    text-align: center;
-    border-radius: 5px;
-    background: white;
-    font-family: "BarlowCondensed-SemiBold";
+    font-family: "BarlowCondensed-Medium";
     font-size: 18px;
-    line-height: 22px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: var(--light-black);
-    border: var(--gray) 1px solid;
-    user-select: none !important;
-    min-width: 80px;
-    box-shadow: 0px 0px 1px 0px var(--grayish);
-    -webkit-transition: all 0.1s;
-    transition: all 0.1s;
+    text-decoration: none;
+    color: var(--black);
+    background-color: white;
+    text-align: center;
+    letter-spacing: 0.5px;
     cursor: pointer;
+    border: 1px solid var(--gray);
+    border-radius: 2px;
+    display: inline-block;
+    height: 24px;
+    line-height: 22px;
+    outline: 0;
+    border-radius: 3px;
+    vertical-align: middle;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    text-indent: 0px;
+    min-width: 80px;
+    padding: 0px 10px;
 }
 
 .white-button:hover,
@@ -64,7 +66,6 @@
     background: var(--gray);
     opacity: 90%;
     border: var(--gray) solid 1px;
-
 }
 
 .blue-button {

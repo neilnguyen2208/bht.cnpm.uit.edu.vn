@@ -26,7 +26,7 @@ class ExerciseSidebar extends React.Component {
   renderLevel1 = (topicsExercisesDTOs) => {
     //neu khong co child => d-none default
     return <div> {topicsExercisesDTOs.map((topic, index) => {
-      return <div>
+      return <div key={topic.id}>
         <div className="pr-drop-down-m-i"
           id={"xrcs-vmi-lvl1-sdbr" + topic.id}
           onClick={(e) => topic.exerciseSummaryDTOs ? this.onFisrtLevelClick(e, "xrcs-vmi-lvl1-dropdown-container" + topic.id) : () => { }}>
@@ -39,8 +39,8 @@ class ExerciseSidebar extends React.Component {
 
         </div>
         <div className="d-block" style={{ marginLeft: "15px", marginTop: "5px" }} id={"xrcs-vmi-lvl1-dropdown-container" + topic.id}>
-          {topic.exerciseSummaryDTOs && topic.exerciseSummaryDTOs.map(excercise => {
-            return this.renderLevel2(topic.id, excercise)
+          {topic.exerciseSummaryDTOs && topic.exerciseSummaryDTOs.map(exercise => {
+            return <div key={exercise.id}>{this.renderLevel2(exercise)}</div>
           })}
           {topic.exerciseSummaryDTOs &&
             <div>
@@ -56,7 +56,7 @@ class ExerciseSidebar extends React.Component {
     </div >
   }
 
-  renderLevel2 = (level1Id, level2Item) => {
+  renderLevel2 = (level2Item) => {
     return <NavLink className="vertical-sub-m-i" style={{ marginLeft: "0px", paddingLeft: "5px", paddingBottom: "5px" }}
       activeClassName="main-interactive-menu-item-active vertical-sub-m-i"
       to={window.location.pathname.substring(0, 26) === "/courses/exercise-content/" ?

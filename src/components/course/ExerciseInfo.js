@@ -16,6 +16,8 @@ import 'components/common/CustomCKE/CKEditorContent.scss'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import { getCurrentUserExerciseStatistic } from 'redux/services/courseServices'
 import authService from 'authentication/authenticationServices';
+import PopupMenu from 'components/common/PopupMenu/PopupMenu';
+import { guestMenu } from './adapter/allActionSummaryMenu';
 
 class ExerciseInfo extends React.Component {
 
@@ -62,9 +64,9 @@ class ExerciseInfo extends React.Component {
             </div>
           </div>
           <div>
-            {!this.props.isUserStatisticLoading && this.props.userStatistic.bestCorrectQuestions &&
+            {!this.props.isUserStatisticLoading && this.props.currentUserStatistic &&
               <div style={{ color: "var(--black)" }}>
-                Kết quả tốt nhất của bạn: {this.props.userStatistic.bestCorrectQuestions}/{this.props.totalQuestions}
+                Kết quả tốt nhất của bạn: {this.props.currentUserStatistic.bestCorrectQuestions}/{this.props.totalQuestions}
               </div>
             }
           </div>
@@ -73,7 +75,9 @@ class ExerciseInfo extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
-          {/* <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.exerciseId}`} /> */}
+          <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
+            availableActions={this.props.availableActions} items={guestMenu}
+            id={`${this.props.popUpMenuPrefix}-pxrcsi-pm-${this.props.exerciseId}`} />
         </div>
         {cover}
 
@@ -86,7 +90,7 @@ class ExerciseInfo extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userStatistic: state.course.currentUserExerciseStatistic.data,
+    currentUserStatistic: state.course.currentUserExerciseStatistic.data,
     isUserStatisticLoading: state.course.currentUserExerciseStatistic.isLoading
 
   };

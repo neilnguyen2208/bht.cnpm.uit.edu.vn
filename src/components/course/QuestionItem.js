@@ -89,8 +89,8 @@ class QuestionItem extends React.Component {
         />
 
         {this.props.answers.map(answer => {
-          return <div className="answer-item" style={{ fontSize: "15px" }}  >
-            <label class="container">
+          return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
+            <label className="container">
               <div className="answer-container ck-editor-output" style={{ fontSize: "15px" }}
                 dangerouslySetInnerHTML={{
                   __html: answer.content
@@ -98,7 +98,7 @@ class QuestionItem extends React.Component {
               <input type="radio" checked={this.props.isChecked && this.props.answersSelected.includes(answer.id)}
                 onClick={!this.props.isChecked ? () => this.onAnswerChecked(this.props.questionId, answer) : (e) => { e.preventDefault() }}
                 name={"fieldset" + this.props.questionId} />
-              <span class="checkmark"></span>
+              <span className="checkmark"></span>
             </label>
           </div>
         })}

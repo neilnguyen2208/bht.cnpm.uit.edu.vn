@@ -16,6 +16,8 @@ import QuestionItem from 'components/course/QuestionItem';
 import store from 'redux/store';
 import { update_QuestionsToCSucess, update_QuestionsToCReset, update_ExerciseNoteReset, check_ExerciseQuestionsRequest } from 'redux/actions/courseAction';
 import authService from 'authentication/authenticationServices';
+import Countdown from 'components/course/Countdown';
+import { openModal } from 'redux/services/modalServices';
 
 class PostDetail extends React.Component {
     constructor(props) {
@@ -31,6 +33,7 @@ class PostDetail extends React.Component {
         this.isFirstTimeQuestionLoaded = false;
         this.isFirstTimeAnswerChecked = false;
         this.finalResult = null;
+        this.correctAnswerCount = 0;
     }
 
     componentDidMount() {
@@ -137,14 +140,16 @@ class PostDetail extends React.Component {
                     isChecked: true,
                     ...(this.props.correctAnswers.find((itmInner) => itmInner.id === this.tmpQuestionToC[i].id)),
                 });
+                // this.correctAnswerCount = 
+
             }
 
             //reset answer
             for (let i = 0; i < this.props.questions.length; i++) {
                 this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
             }
-
             store.dispatch(check_ExerciseQuestionsRequest());
+            openModal("confirmation", { title: "Kết quả", text: "Kết quả của bạn là: " + this.correctAnswerCount })
             store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
             this.setState({});
         }
@@ -231,10 +236,10 @@ class PostDetail extends React.Component {
                         <div className="fake-relative-sidebar exercise"></div>
                         <div style={{ position: "fixed" }}>
                             {!this.props.isQuestionsLoading && this.questionToC &&
-                                <QuestionsToC title={"Mục lục"} items={this.questionToC} />
+                                <QuestionsToC title={"MỤC LỤC"} items={this.questionToC} />
                             }
-                            {/* <Countdown /> */}
                             <div className="relative-sidebar" style={{ border: "0px" }}>
+                                <Countdown />
                                 <form id="cr-xcrs-note">
                                     <div className="form-group">
                                         <div className="form-label">Ghi chú:</div>

@@ -57,7 +57,7 @@ import { openModal, openBLModal, closeModal } from 'redux/services/modalServices
 
 //upload new document
 
-import { request, multipartRequest, authRequest } from 'utils/requestUtils'
+import { authRequest, multipartRequest } from 'utils/requestUtils'
 import { getUserStatisticById } from "./authServices";
 
 export function getNotApprovedDocumentsList() {
@@ -68,13 +68,13 @@ export function getNotApprovedDocumentsList() {
 export function getManagementDocuments(searchParamObject) {
     return dispatch => {
         dispatch(get_ManagementDocumentsRequest());
-        request.get(`/documents/getManagementDoc?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents/getManagementDoc?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.docSummaryWithStateDTOs.docSummary.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -98,13 +98,13 @@ export function getManagementDocuments(searchParamObject) {
 export function getDocumentSearch(searchParamObject) {
     return dispatch => {
         dispatch(get_DocumentSearchRequest());
-        request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.docSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -128,14 +128,14 @@ export function getDocumentSearch(searchParamObject) {
 export function getPendingDocuments(searchParamObject) {
     return dispatch => {
         dispatch(get_PendingDocumentsRequest());
-        request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
                 // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 IDarr = "1,151";
-                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -160,14 +160,14 @@ export function getPendingDocuments(searchParamObject) {
 export function getReportedDocuments(searchParamObject) {
     return dispatch => {
         dispatch(get_ReportedDocumentsRequest());
-        request.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
                 // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 IDarr = "1,151";
-                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -192,13 +192,13 @@ export function getReportedDocuments(searchParamObject) {
 export function getMyDocuments(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyDocumentsRequest());
-        request.get(`/documents/myDocuments?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents/myDocuments?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                request.get(`/documents/statistics?docIDs=${IDarr}`)
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
@@ -229,7 +229,7 @@ export function uploadADocument(data, files) {
         multipartRequest.document(`/documents/upload`, fileData)
             .then(response => {
                 data.fileCode = response.data.code; //assign secret code.
-                request.document('/documents', JSON.stringify(data)).then(response => {
+                authRequest.document('/documents', JSON.stringify(data)).then(response => {
                     dispatch(post_UploadDocumentSuccess(response));
                     dispatch(closeModal());
                     openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
@@ -245,7 +245,7 @@ export function uploadADocument(data, files) {
 export function reactionADocument(docID, reactionType) {
     return dispatch => {
         dispatch(post_ReactionADocumentRequest());
-        request.put("/documents/reactions", JSON.stringify({ docID: docID, docReactionType: reactionType }))
+        authRequest.put("/documents/reactions", JSON.stringify({ docID: docID, docReactionType: reactionType }))
             .then(response => {
                 openBLModal({ type: "success", text: "Cảm ơn bạn đã đưa cảm nhận về tài liệu!" });
                 dispatch(post_ReactionADocumentSuccess(response))
@@ -286,7 +286,7 @@ export function getDocumentByID(id) {
 export function approveADocument(id) {
     return dispatch => {
         dispatch(post_ApproveADocumentReset());
-        request.document(`/documents/${id}/approval`)
+        authRequest.document(`/documents/${id}/approval`)
             .then(result => {
                 dispatch(post_ApproveADocumentSuccess());
             })
@@ -297,7 +297,7 @@ export function approveADocument(id) {
 export function rejectADocument(id) {
     return dispatch => {
         dispatch(delete_RejectADocumentReset());
-        request.delete(`/documents/${id}/approval`)
+        authRequest.delete(`/documents/${id}/approval`)
             .then(result => {
                 dispatch(delete_RejectADocumentSuccess());
             })
@@ -309,7 +309,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
         openModal("loader", { text: "Đang xử lý" })
-        request.document(`/documents/${id}/rejection`, JSON.stringify(reason))
+        authRequest.document(`/documents/${id}/rejection`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
                 //             dispatch(post_RejectAndFeedbackADocumentSuccess());
@@ -327,7 +327,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
 export function resolveADocument(id, resolveDTO) {
     return dispatch => {
         dispatch(post_ResolveADocumentReset());
-        request.document(`/documents/resolveReport/${id}`, JSON.stringify(resolveDTO))
+        authRequest.document(`/documents/resolveReport/${id}`, JSON.stringify(resolveDTO))
             .then(result => {
                 dispatch(post_ResolveADocumentSuccess());
             })
@@ -340,7 +340,7 @@ export function resolveADocument(id, resolveDTO) {
 export function deleteADocument(id) { //maybe use modal later
     return dispatch => {
         dispatch(delete_ADocumentReset(id))
-        request.delete(`/documents/${id}`).then(response => {
+        authRequest.delete(`/documents/${id}`).then(response => {
             dispatch(delete_ADocumentSuccess())
             openBLModal({ text: "Xoá tài liệu thành công!", type: "success" });
 
@@ -352,7 +352,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
     return dispatch => {
         dispatch(put_EditADocumentReset())
         openModal("loader", { text: "Đang xử lý" });
-        request.put(`/documents/${id}`, JSON.stringify(newDocumentContent))
+        authRequest.put(`/documents/${id}`, JSON.stringify(newDocumentContent))
             .then(response => {
                 dispatch(closeModal());
                 openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
@@ -365,7 +365,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
 export function reportADocument(id, reason) { //
     return dispatch => {
         dispatch(post_ReportADocumentReset())
-        request.document(`/documents/${id}/report`, JSON.stringify(reason))
+        authRequest.document(`/documents/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportADocumentSuccess());
             }

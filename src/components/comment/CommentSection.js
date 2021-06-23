@@ -63,7 +63,7 @@ class CommentSection extends React.Component {
     }
 
     if (this.props.isHaveReported) {
-      openBLModal({ type: "success", text: "Tố cáo bình luận thành công!" });
+      openBLModal({ type: "success", text: "báo cáo bình luận thành công!" });
       store.dispatch(post_ReportAPostCommentReset())
     }
 

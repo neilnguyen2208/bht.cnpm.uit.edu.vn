@@ -10,8 +10,8 @@ export const guestMenu = [{
   id: 1,
   text: "Report",
   icon: report_icon,
-  value: "REPORT_POST",
-  permissions: [Post.Comment.Report], //base on permission
+  value: "REPORT_EXERCISE",
+  permissions: [Post.Report], //base on permission 9fake0
   showOnPermission: false,
   requiredAction: PostAction.Report
 }]
@@ -21,7 +21,7 @@ export const basicMenu = [
     id: 1,
     text: "Report",
     icon: report_icon,
-    value: "REPORT_POST",
+    value: "REPORT_EXERCISE",
     permissions: [Post.Comment.Report], //base on permission
     showOnPermission: false,
     requiredAction: PostAction.Report
@@ -30,7 +30,7 @@ export const basicMenu = [
     id: 2,
     text: "Xoá",
     icon: trash_icon,
-    value: "DELETE_POST",
+    value: "DELETE_EXERCISE",
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
@@ -40,7 +40,7 @@ export const basicMenu = [
     id: 3,
     text: "Chỉnh sửa",
     icon: edit_icon,
-    value: "EDIT_POST",
+    value: "EDIT_EXERCISE",
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
@@ -52,7 +52,7 @@ export const basicMenu = [
 export const adminMenu = [
   ...basicMenu,
   {
-    id: 4, text: "Ghim nội dung", value: "HIGHLIGHT_POST", icon: pin_icon, tip: "Hiển thị ở trang chủ.",
+    id: 4, text: "Ghim nội dung", value: "HIGHLIGHT_EXERCISE", icon: pin_icon, tip: "Hiển thị ở trang chủ.",
     style: {
       height: "26px",
       paddingTop: "1px",
@@ -64,7 +64,7 @@ export const adminMenu = [
     requiredAction: PostAction.Highlight
   },
   {
-    id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_POST", icon: unpin_icon,
+    id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_EXERCISE", icon: unpin_icon,
     style: {
       height: "26px",
       paddingTop: "1px",
@@ -76,7 +76,7 @@ export const adminMenu = [
     requiredAction: PostAction.Unhighlight
   },
   {
-    id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_POST", icon: stick_to_top,
+    id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_EXERCISE", icon: stick_to_top,
     style: {
       height: "26px",
       paddingTop: "1px",
@@ -94,13 +94,13 @@ export const wallpageMenu = [
     id: 1,
     text: "Report",
     icon: report_icon,
-    value: "REPORT_POST",
+    value: "REPORT_EXERCISE",
     permissions: [Post.Comment.Report], //base on permission
     requiredAction: PostAction.Report,
 
   },
   {
-    id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_POST", icon: unpin_icon,
+    id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_EXERCISE", icon: unpin_icon,
     style: {
       height: "26px",
       paddingTop: "1px",
@@ -112,7 +112,7 @@ export const wallpageMenu = [
     requiredAction: PostAction.Unhighlight
   },
   {
-    id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_POST", icon: stick_to_top,
+    id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_EXERCISE", icon: stick_to_top,
     style: {
       height: "26px",
       paddingTop: "1px",

@@ -4,12 +4,11 @@ import 'components/styles/HomeItem.scss'
 import { Link } from 'react-router-dom'
 import HomeReactionbar from 'components/post/HomeReactionbar'
 
-class HomeInfo extends React.Component {
+class HomeTextInfo extends React.Component {
   render() {
 
     return (
       <div className="home-item" >
-        <img className="cover-image" alt='Bài viết này không có hình ảnh.' src={this.props.imageURL} />
         <div className="metadata" >
 
           <div className="j-c-space-between mg-top-10px">
@@ -73,4 +72,4 @@ class HomeInfo extends React.Component {
 
 
 }
-export default HomeInfo;
+export default HomeTextInfo;

@@ -18,6 +18,33 @@ class ReportModal extends React.Component {
       "feedback": "string"
     }
 
+    switch (this.props.type) {
+      case "POST":
+        this.reportTitle = "Báo cáo bài viết";
+        this.reportService = this.props.reportAPost;
+        this.bigModalTitle = "BÁO CÁO BÀI VIẾT";
+        break;
+      case "DOCUMENT": {
+        this.reportTitle = "Báo cáo tài liệu";
+        this.bigModalTitle = "BÁO CÁO TÀI LIỆU";
+        break;
+      }
+      case "EXERCISE": {
+        this.reportTitle = "Báo cáo bài tập";
+        this.bigModalTitle = "BÁO CÁO BÀI TẬP";
+        this.reportService = this.props.resportAnExercise;
+        break;
+      }
+      case "COMMENT":
+        this.reportTitle = "Báo cáo bình luận";
+        this.reportTitle = "BÁO CÁO BÌNH LUẬN";
+        this.reportService = this.props.reportAPostComment;
+        break;
+      default: {
+      }
+    }
+
+
     this.props.getReportReasons();
   }
 
@@ -26,32 +53,20 @@ class ReportModal extends React.Component {
     document.querySelectorAll("#rpmd-rsns .form-checkbox-container input:checked").forEach(item =>
       this.REPORT_DTO.reasonIds.push(item.value)
     )
-    console.log(this.REPORT_DTO)
     if (this.REPORT_DTO.reasonIds.length === 0) {
       //set error message and return
       document.querySelector("#rpmd-rsns .form-error-label-container .form-error-label").innerText = "Chọn ít nhất một lý do."
       return;
     }
+
     openModal("confirmation",
       {
-        title: this.props.type === "POST" ?
-          "Báo cáo tài liệu"
-          : this.props.type === "DOCUMENT" ? "Báo cáo tài liệu" : "Báo cáo bình luận",
-        text: this.props.type === "POST" ?
-          "Xác nhận báo cáo bài viết"
-          : this.props.type === "DOCUMENT" ? "Xác nhận báo cáo tài liệu" : "Xác nhận báo cáo bình luận",
+        title: this.reportTitle,
+        text: "Xác nhận báo cáo nội dung bài tập này",
         confirmText: "Xác nhận",
         cancelText: "Huỷ",
         onConfirm: () => {
-
-          if (this.props.type === "POST")
-            this.props.reportAPost(this.props.id, this.REPORT_DTO)
-          else
-            if (this.props.type === "DOCUMENT") { }
-            else
-              if (this.props.type === "COMMENT") {
-                this.props.reportAPostComment(this.props.id, this.REPORT_DTO)
-              }
+          this.reportService(this.props.id, this.REPORT_DTO);
           closeModal(); //close confimation popup
           closeBigModal(); //close edit post popup
         }
@@ -72,14 +87,13 @@ class ReportModal extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <div className="modal-overlay-shadow" />
         <div className="modal-fixed-layout">
           <div className="modal-wrapper form o-f-hidden pd-top-5px">
-            <ModalTitlebar title={this.props.type === "POST" ?
-              "TỐ CÁO BÀI VIẾT"
-              : this.props.type === "DOCUMENT" ? "TỐ CÁO TÀI LIỆU" : "TỐ CÁO BÌNH LUẬN"} />
+            <ModalTitlebar title={this.bigModalTitle} />
             <div className="form-container pd-10px" id="rpmd-rsns">
               <div className="form-group"
                 style={{ borderBottom: "1px solid var(--gray)", paddingBottom: "8px", marginBottom: "16px" }}>
@@ -113,7 +127,7 @@ class ReportModal extends React.Component {
               {/* Button */}
               <div className="j-c-end">
                 <button className="white-button form-submit-btn" onClick={() => closeBigModal()}>Huỷ</button>
-                <button className="blue-button form-submit-btn mg-left-10px" onClick={() => this.handleSubmit()}>Tố cáo</button>
+                <button className="blue-button form-submit-btn mg-left-10px" onClick={() => this.handleSubmit()}>báo cáo</button>
               </div>
             </div>
           </div >

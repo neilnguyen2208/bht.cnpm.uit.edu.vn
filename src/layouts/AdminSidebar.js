@@ -105,12 +105,12 @@ class AdminSidebar extends React.Component {
                                                 </div>
                                 </NavLink> */}
 
-                                {/* <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
-                                    to={"/admin/comment-report-management"}    >
+                                <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                    to={"/admin/courses-management/report"}    >
                                     <div className="text">
-                                        Xử lý bình luận
-                                                </div>
-                                </NavLink> */}
+                                        Báo cáo bài tập
+                                    </div>
+                                </NavLink>
 
                                 <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                     to={"/admin/category-management"}

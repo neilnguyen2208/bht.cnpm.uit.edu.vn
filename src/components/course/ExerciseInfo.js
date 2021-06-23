@@ -18,6 +18,7 @@ import { getCurrentUserExerciseStatistic } from 'redux/services/courseServices'
 import authService from 'authentication/authenticationServices';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import { guestMenu } from './adapter/allActionSummaryMenu';
+import { closeModal, openBigModal, openModal } from 'redux/services/modalServices';
 
 class ExerciseInfo extends React.Component {
 
@@ -25,6 +26,33 @@ class ExerciseInfo extends React.Component {
 
     //if user logged in => call API get user's statistic
     this.props.exerciseId && authService.isLoggedIn() && this.props.getCurrentUserExerciseStatistic(this.props.exerciseId)
+  }
+  onPopupMenuItemClick = (selectedItem) => {
+    if (selectedItem.value === "DELETE_EXERCISE") {
+      //show confirmation popup and detete id verify
+      openModal("confirmation",
+        {
+          title: "Xoá bài viết",
+          text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
+          confirmText: "Xác nhận",
+          cancelText: "Huỷ",
+          onConfirm: () => {
+            // this.props.deleteAPost(this.props.exerciseId);
+            closeModal();
+          }
+        })
+    }
+
+    if (selectedItem.value === "EDIT_EXERCISE") {
+      openBigModal("edit-post", { id: this.props.exerciseId });
+    }
+
+    if (selectedItem.value === "REPORT_EXERCISE") {
+      openBigModal("report-exercise", {
+        id: this.props.exerciseId
+      })
+    }
+
   }
 
   render() {

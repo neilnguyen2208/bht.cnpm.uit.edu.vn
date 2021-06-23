@@ -39,11 +39,10 @@ import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
 import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
-import Security from "pages/user/AccountInformation/Sercurity";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
 import Exercise from 'pages/common/Exercise/Exercise'
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions'
-
+import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement'
 // modal
 import ModalManager from 'components/common/Modal/ModalManager'
 import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
@@ -112,8 +111,8 @@ const App = () => {
                         <Route exact path="/admin/user-management/:id" component={AdminLayout} />
                         <Route exact path="/admin/statistic" component={Statistic} />
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
+                        <Route exact path="/admin/courses-management/report" component={ExerciseReportManagement} />
                         <Route exact path="/admin/post-management/comment-report" component={PostCommentReport} />
-                        <Route exact path="/user/sercurity" component={Security} />
 
                         {/* verify email url */}
                         <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} />

@@ -77,7 +77,7 @@ class ReportReactionbar extends React.Component {
   render() {
     return (
       <div className="reaction-bar j-c-end pd-top-5px">
-        <button className="blue-button" onClick={() => this.handleResolve()}>Xử lý bài viết</button>
+        <button className="blue-button" onClick={() => this.handleResolve()}>Xử lý bài tập</button>
       </div >
     );
   }

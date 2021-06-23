@@ -102,7 +102,7 @@ export default class ReportInfo extends React.PureComponent {
                 <div className="report-container">
                     <div className="d-flex">
                         <img className="danger-icon" src={danger_icon} alt="!" />
-                        <div>Lý do tố cáo:</div>
+                        <div>Lý do báo cáo:</div>
                     </div>
                     <div className="report-reason">
                         {this.props.reportReasons.map(feedback => {
@@ -112,7 +112,7 @@ export default class ReportInfo extends React.PureComponent {
 
                     {this.props.feedbacks.length > 0 ? <div>
                         <div className="d-flex mg-top-10px">
-                            <div>Nội dung tố cáo:</div>
+                            <div>Nội dung báo cáo:</div>
                         </div>
                         <div className="report-reason">
                             {this.props.feedbacks.map(feedback => {

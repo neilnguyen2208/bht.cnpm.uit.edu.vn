@@ -54,6 +54,7 @@ import {
     get_ExerciseNoteSuccess,
     get_ExerciseNoteFailure,
 } from "redux/actions/courseAction.js";
+import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 
@@ -214,3 +215,14 @@ export function getCourseSearchResult(searchParamObject) {
     }
 }
 
+//temp report services
+export function reportAnExercise(id, reason) { //
+    return dispatch => {
+        dispatch(post_ReportAnExerciseReset())
+        authRequest.post(`/posts/${id}/report`, JSON.stringify(reason))
+            .then(response => {
+                dispatch(post_ReportAnExerciseSuccess());
+            }
+            ).catch(() => dispatch(post_ReportAnExerciseFailure()))
+    }
+}

@@ -63,13 +63,8 @@ export default class ReportInfo extends React.PureComponent {
                     <div>
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
-
-                            {/*  */}
-                            {
-                                reportersName
-                            }
-                            {/*  */}
-                            <div className="black-label-s">{`đã tố cáo bài viết của `}
+                            {reportersName}
+                            <div className="black-label-s">{`đã báo cáo bài tập của `}
                             </div>
                             <Link to={`/user/profile/${this.props.author.id}`} style={{ fontSize: "17px", lineHeight: "18px", fontFamily: "BarlowCondensed-SemiBold" }}>
                                 {this.props.author.displayName + " "}
@@ -104,8 +99,7 @@ export default class ReportInfo extends React.PureComponent {
                                     </div>
                                 </div>
                             </div> :
-                            <></>
-                        }
+                            <></>}
                     </div>
                 </div>
 
@@ -114,7 +108,7 @@ export default class ReportInfo extends React.PureComponent {
                 <div className="report-container">
                     <div className="d-flex">
                         <img className="danger-icon" src={danger_icon} alt="!" />
-                        <div>Lý do tố cáo:</div>
+                        <div>Lý do báo cáo:</div>
                     </div>
                     <div className="report-reason">
                         {this.props.reportReasons.map(feedback => {
@@ -124,7 +118,7 @@ export default class ReportInfo extends React.PureComponent {
 
                     {this.props.feedbacks.length > 0 ? <div>
                         <div className="d-flex mg-top-10px">
-                            <div>Nội dung tố cáo:</div>
+                            <div>Nội dung báo cáo:</div>
                         </div>
                         <div className="report-reason">
                             {this.props.feedbacks.map(feedback => {
@@ -135,50 +129,6 @@ export default class ReportInfo extends React.PureComponent {
                         : <></>
                     }
                 </div>
-
-                <label className="form-label mg-top-10px" >Nội dung bài viết:</label>
-                {/*post-summary-show class to show post detail in summary, show-less: show less content */}
-                {
-                    this.state.isShowMore ?
-                        <div className="post-summary-show show-more">
-                            {
-                                this.props.imageURL ?
-                                    <div >
-                                        <div className="decoration-line mg-top-10px" />
-                                        <img className="image" src={this.props.imageURL} alt="" />
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
-                                    </div>
-                                    :
-                                    <div className="summary-text">
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
-                                    </div>
-                            }
-                        </div>
-                        :
-                        <div className="post-summary-show show-less">
-                            {
-                                this.props.imageURL ?
-                                    <div >
-                                        <div className="decoration-line mg-top-10px" />
-                                        <img className="image" src={this.props.imageURL} alt="" />
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
-                                    </div>
-                                    :
-                                    <div className="summary-text">
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
-                                    </div>
-
-                            }
-                        </div>
-                }
-
-                {
-                    this.state.isShowMore ?
-                        <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = false; this.setState({ isShowMore: false }) }}>Ẩn bớt</div>
-                        :
-                        <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = true; this.setState({ isShowMore: true }) }}>Xem thêm</div>
-                }
-
             </div >
 
         );

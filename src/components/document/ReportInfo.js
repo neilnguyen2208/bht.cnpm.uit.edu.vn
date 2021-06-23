@@ -28,7 +28,7 @@ export default class ReportInfo extends React.PureComponent {
                             <Link className="link-label-s" to={`/user/profile/${this.props.reporterID}`}>
                                 {this.props.reporterName} dong
                             </Link>
-                            <div className="black-label-s">{`đã tố cáo tài liệu - `}</div>
+                            <div className="black-label-s">{`đã báo cáo tài liệu - `}</div>
                             {this.type === resolveStatus.resolved ?
                                 <div className="blue-border-label">RESOLVED</div>
                                 :

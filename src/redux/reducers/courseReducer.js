@@ -56,6 +56,9 @@ import {
     GET_EXERCISE_NOTE_REQUEST,
     GET_EXERCISE_NOTE_SUCCESS,
     GET_EXERCISE_NOTE_FAILURE,
+    REPORT_AN_EXERCISE_RESET,
+    REPORT_AN_EXERCISE_SUCCESS,
+    REPORT_AN_EXERCISE_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -159,6 +162,8 @@ const initialState = {
         data: {},
         error: ''
     },
+
+    isHaveReported: false
 
 };
 
@@ -371,6 +376,13 @@ function CourseReducer(state = initialState, action) {
                 error: action.payload
             }
         }
+        //report
+        case REPORT_AN_EXERCISE_RESET:
+            return { ...state, isHaveReported: false };
+        case REPORT_AN_EXERCISE_SUCCESS:
+            return { ...state, isHaveReported: true };
+        case REPORT_AN_EXERCISE_FAILURE:
+            return { ...state, isHaveReported: false };
 
         case UPDATE_TOC_SET:
             return {

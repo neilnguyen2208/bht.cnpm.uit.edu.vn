@@ -7,7 +7,9 @@ import {
   MODAL_BL_CLOSE,
 
   MODAL_BIG_OPEN,
-  MODAL_BIG_CLOSE
+  MODAL_BIG_CLOSE,
+  MODAL_COMMENT_CLOSE,
+  MODAL_COMMENT_OPEN
 } from "../constants";
 
 export function openModalAction(modalType, modalProps) {
@@ -50,6 +52,21 @@ export function openBigModalAction(modalType, modalProps) {
 export function closeBigModalAction(data) {
   return {
     type: MODAL_BIG_CLOSE,
+    payload: data
+  };
+}
+
+export function openCommentModalAction(modalType, modalProps) {
+  //type: alert, confirmation, form
+  return {
+    type: MODAL_COMMENT_OPEN,
+    payload: { modalType, modalProps }
+  };
+}
+
+export function closeCommentModalAction(data) {
+  return {
+    type: MODAL_COMMENT_CLOSE,
     payload: data
   };
 }

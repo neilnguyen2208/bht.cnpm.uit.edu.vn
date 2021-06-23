@@ -187,8 +187,8 @@ class PostDetail extends React.Component {
 
                                     {formatMathemicalFormulas()}
                                     {styleCodeSnippet()}
-                                </div>
-                                : <div><DocPostDetailLoader />
+                                </div> : <div>
+                                    <DocPostDetailLoader />
                                 </div>
                             }
 
@@ -206,10 +206,8 @@ class PostDetail extends React.Component {
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}
                                         onAnswerChecked={this.onAnswerChecked}
-                                        onQuestionFlagged={this.onQuestionFlagged}
-                                    />
-                                })
-                            }
+                                        onQuestionFlagged={this.onQuestionFlagged} />
+                                })}
                             {this.props.isAnswerChecked && !this.props.isAnswersLoading && this.finalResult &&
                                 this.finalResult.map((question, index) => {
                                     return <QuestionItem
@@ -227,8 +225,7 @@ class PostDetail extends React.Component {
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}
                                         onAnswerChecked={this.onAnswerChecked}
-                                        onQuestionFlagged={this.onQuestionFlagged}
-                                    />
+                                        onQuestionFlagged={this.onQuestionFlagged} />
                                 })}
                             <button className="blue-button" onClick={() => this.checkAllAnswers()} >Kiểm tra kết quả</button>
                         </div>

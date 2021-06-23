@@ -5,7 +5,10 @@ import {
   openModalAction,
   closeModalAction,
   openBigModalAction,
-  closeBigModalAction
+  closeBigModalAction,
+  closeCommentModalAction,
+  openCommentModalAction
+
 } from 'redux/actions/modalAction'
 
 export function openBLModal(modalProps) {
@@ -31,4 +34,12 @@ export function openModal(type, ...modalProps) {
 
 export function closeModal(modalProps) {
   return store.dispatch(closeModalAction(modalProps));
+}
+
+export function closeCommentModal(modalProps) {
+  return store.dispatch(closeCommentModalAction(modalProps));
+}
+
+export function openCommentModal(type, ...modalProps) {
+  return store.dispatch(openCommentModalAction(type, ...modalProps));
 }

@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getReportReasons } from 'redux/services/reportServices'
 import { reportAPost } from 'redux/services/postServices'
-import { reportAPostComment } from 'redux/services/commentServices'
+import { reportAPostComment } from 'redux/services/postCommentServices'
 
 class ReportModal extends React.Component {
 

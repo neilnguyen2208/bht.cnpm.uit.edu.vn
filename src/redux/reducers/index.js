@@ -13,7 +13,10 @@ import ModalReducer from "redux/reducers/modalReducer"
 import DocumentSubjectReducer from "redux/reducers/documentSubjectReducer"
 import AuthenticationReducer from "redux/reducers/authReducer"
 import RoleReducer from "redux/reducers/roleReducer"
-import CommentReducer from "redux/reducers/commentReducer"
+import postCommentReducer from "redux/reducers/postCommentReducer"
+import documentCommentReducer from "redux/reducers/documentCommentReducer"
+import exerciseCommentReducer from "redux/reducers/exerciseCommentReducer"
+
 import ReportReducer from "redux/reducers/reportReducer"
 
 var RootReducer = combineReducers({
@@ -31,7 +34,9 @@ var RootReducer = combineReducers({
     modal: ModalReducer,
     auth: AuthenticationReducer,
     role: RoleReducer,
-    comment: CommentReducer,
+    post_comment: postCommentReducer,
+    document_comment: documentCommentReducer,
+    exercise_comment: exerciseCommentReducer,
     report: ReportReducer
 });
 

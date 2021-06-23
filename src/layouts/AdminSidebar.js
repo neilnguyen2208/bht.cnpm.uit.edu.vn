@@ -40,7 +40,7 @@ class AdminSidebar extends React.Component {
     }
 
     render() {
-        let { roleName, score, postCount, docCount, avatarURL } = this.accountInformation;
+        let { score, postCount, docCount, avatarURL } = this.accountInformation;
         /* {window.onscroll = () => this.scrollFunction()} */
         return (
             <div className="left-sidebar-wrapper" >

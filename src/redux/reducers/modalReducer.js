@@ -4,10 +4,17 @@ import {
   MODAL_BL_OPEN,
   MODAL_BL_CLOSE,
   MODAL_BIG_OPEN,
-  MODAL_BIG_CLOSE
+  MODAL_BIG_CLOSE,
+  MODAL_COMMENT_OPEN,
+  MODAL_COMMENT_CLOSE,
 } from "../constants.js";
 
-const initialState = { modal: [], blModal: [], bigModal: [] }
+const initialState = {
+  modal: [],
+  blModal: [],
+  bigModal: [],
+  commentModal: []
+}
 
 function ModalReducer(state = initialState, action) {
   switch (action.type) {
@@ -61,6 +68,20 @@ function ModalReducer(state = initialState, action) {
         const newBigModalState = state.bigModal.slice();
         newBigModalState.pop();
         return { ...state, bigModal: newBigModalState };
+
+
+      }
+    case MODAL_COMMENT_OPEN:
+      {
+        const { modalType, modalProps } = action.payload;
+        let newCommentModalState = state.bigModal.concat({ modalType, modalProps })
+        return { ...state, commentModal: newCommentModalState }
+      }
+    case MODAL_COMMENT_CLOSE:
+      {
+        const newCommentModalState = state.bigModal.slice();
+        newCommentModalState.pop();
+        return { ...state, commentModal: newCommentModalState };
 
       }
     default:

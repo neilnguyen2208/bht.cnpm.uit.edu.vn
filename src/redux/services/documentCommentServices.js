@@ -33,7 +33,7 @@ import {
   get_ReportedPostCommentsSuccess,
   get_ReportedPostCommentsFailure
 
-} from "redux/actions/commentAction.js";
+} from "redux/actions/postCommentAction.js";
 import { authRequest, request } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";

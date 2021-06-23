@@ -6,7 +6,7 @@ import PostDetail from "pages/common/PostDetail/PostDetail";
 import DocumentDetail from "pages/common/DocumentDetail/DocumentDetail";
 import Header from "components/common/Header/Header";
 import Footer from "components/common/Footer/Footer";
-import AdminLayout from 'layouts/AdminSidebar'
+import AdminLayout from 'layouts/AdminSidebar';
 import SearchPostByTag from "pages/common/SearchResult/SearchPostByTag";
 import ProfilePost from "pages/user/AccountInformation/Profile_Post";
 import ProfileDocument from "pages/user/AccountInformation/Profile_Document";
@@ -18,39 +18,41 @@ import SearchPost from "pages/common/SearchResult/SearchPost";
 import SearchDocument from "pages/common/SearchResult/SearchDocument";
 import CoursesList from "pages/common/CoursesList/CoursesList"
 import CourseDetail from "pages/common/CourseDetail/CourseDetail"
-import PostsList from 'pages/common/PostsList/PostsList'
-import PostApproving from 'pages/management/PostManagement/PostApproving'
-import NotificationManagement from 'pages/management/NotificationManagement/NotificationManagement'
-import CategoryManagement from 'pages/management/NotificationManagement/NotificationManagement'
-import Statistic from 'pages/management/Statistic/Statistic'
-import PostManagement from 'pages/management/PostManagement/PostManagement'
-import SearchCourses from 'pages/common/SearchResult/SearchCourses'
-import UploadDocument from 'pages/user/UploadDocument/UploadDocument'
-import CreatePost from 'pages/user/CreatePost/CreatePost'
-import ActivityManagement from 'pages/management/ActivityManagement/ActivityManagement'
-import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement'
-import MyNotification from 'pages/user/MyActivities/MyActivities'
-import PostReportManagement from 'pages/management/PostManagement/PostReportManagement'
-import SavedPosts from 'pages/user/MyPosts/SavedPosts'
+import PostsList from 'pages/common/PostsList/PostsList';
+import PostApproving from 'pages/management/PostManagement/PostApproving';
+import NotificationManagement from 'pages/management/NotificationManagement/NotificationManagement';
+import CategoryManagement from 'pages/management/NotificationManagement/NotificationManagement';
+import Statistic from 'pages/management/Statistic/Statistic';
+import PostManagement from 'pages/management/PostManagement/PostManagement';
+import SearchCourses from 'pages/common/SearchResult/SearchCourses';
+import UploadDocument from 'pages/user/UploadDocument/UploadDocument';
+import CreatePost from 'pages/user/CreatePost/CreatePost';
+import ActivityManagement from 'pages/management/ActivityManagement/ActivityManagement';
+import CoursesManagement from 'pages/management/CoursesManagement/CoursesManagement';
+import MyNotification from 'pages/user/MyActivities/MyActivities';
+import PostReportManagement from 'pages/management/PostManagement/PostReportManagement';
+import SavedPosts from 'pages/user/MyPosts/SavedPosts';
 
-import DocumentManagement from 'pages/management/DocumentManagement/DocumentManagement'
+import DocumentManagement from 'pages/management/DocumentManagement/DocumentManagement';
 import DocumentReportManagement from "pages/management/DocumentManagement/DocumentReportManagement";
-import DocumentsList from 'pages/common/DocumentsList/DocumentsList'
-import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving'
-import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag'
+import DocumentsList from 'pages/common/DocumentsList/DocumentsList';
+import DocumentApproving from 'pages/management/DocumentManagement/DocumentApproving';
+import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag';
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
-import PostCommentReport from 'pages/management/PostManagement/PostCommentReport'
-import Exercise from 'pages/common/Exercise/Exercise'
-import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions'
-import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement'
-// modal
-import ModalManager from 'components/common/Modal/ModalManager'
-import ModalBLManager from 'components/common/ModalBL/ModalBLManager'
-import ModalBigManager from 'components/common/Modal/ModalBigManager'
+import PostCommentReport from 'pages/management/PostManagement/PostCommentReport';
+import Exercise from 'pages/common/Exercise/Exercise';
+import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
+import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';
 
-import RequireLoginRoute from 'components/base_components/RequireLoginRoute'
+// modal
+import ModalManager from 'components/common/Modal/ModalManager';
+import ModalBLManager from 'components/common/Modal/ModalBL/ModalBLManager'
+import ModalBigManager from 'components/common/Modal/ModalBigManager';
+import CommentModalManager from 'components/common/Modal/CommentModal/CommentModalManager';
+import CommentModal from 'components/common/Modal/CommentModal/CommentModal';
+
+import RequireLoginRoute from 'components/base_components/RequireLoginRoute';
 import { Access, Post } from "authentication/permission.config";
-import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 
 const App = () => {
     return (
@@ -115,7 +117,9 @@ const App = () => {
                         <Route exact path="/admin/post-management/comment-report" component={PostCommentReport} />
 
                         {/* verify email url */}
-                        <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} />
+                        {/* <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} /> */}
+                        <Route exact path="/demo-comment" component={CommentModal} />
+
                     </Switch>
                     <Footer />
                 </div>
@@ -123,6 +127,7 @@ const App = () => {
                 <div>
                 </div>
                 <div>
+                    <CommentModalManager />
                     <ModalBigManager />
                     <ModalManager />
                     <ModalBLManager />

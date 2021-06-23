@@ -4,7 +4,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType, resolveStateOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
-import { getReportedPostComments } from 'redux/services/commentServices'
+import { getReportedPostComments } from 'redux/services/postCommentServices'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ import AdminSidebar from 'layouts/AdminSidebar'
 import PostCommentReportReactionbar from 'components/comment/PostReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
-import { post_ResolveAPostCommentReset } from 'redux/actions/commentAction';
+import { post_ResolveAPostCommentReset } from 'redux/actions/postCommentAction';
 import PostReportedCommentInfo from 'components/comment/PostReportedCommentInfo'
 import PostManagementNavBar from './ExerciseManagementNavbar';
 import Combobox from 'components/common/Combobox/Combobox';

@@ -1,0 +1,102 @@
+.comment-modal-container {
+    position: fixed;
+    bottom: 10px;
+    width: 50%;
+    min-width: 400px;
+    max-width: 600px;
+    top: 60px;
+    background: white;
+    border: 1px solid var(--gray);
+    box-shadow: 0px 0px 10px 0px var(--gray);
+    padding: 5px;
+    padding-top: 8px;
+    padding-left: 10px;
+    animation-name: example;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.comment-modal .comments-container {
+    margin-top: 0px;
+    border-top: 0px;
+    padding-top: 5px;
+}
+.comment-modal .comments-container .section-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--light-black);
+    font-family: "Open Sans", sans-serif;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 5px;
+}
+
+.comment-modal-close-icon {
+    margin-top: 4px;
+    right: 0px;
+    margin-right: 10px;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.comment-modal-text-c {
+    width: "260px";
+    max-width: "260px";
+    background: "green";
+    display: flex;
+}
+
+.comment-modal-text {
+    height: fit-content;
+    font-family: "Roboto-Medium", sans-serif;
+    color: var(--red);
+    user-select: none;
+    max-width: 215px;
+    width: 215px;
+    color: var(--black);
+    position: relative;
+    padding-left: 0.5rem;
+    height: fit-content;
+    user-select: none;
+    min-width: 80px;
+    font-family: "Arial";
+    font-size: 0.8rem;
+    height: 20px;
+    padding-top: 0.1rem;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.comment-modal-text-link:hover,
+.comment-modal-close-icon:hover {
+    opacity: 60%;
+}
+
+.comment-modal-main-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.comment-modal-fixed-layout {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    padding-top: 70px;
+    justify-content: flex-end;
+    display: flex;
+}
+
+@keyframes example {
+    0% {
+        bottom: -100px;
+    }
+
+    100% {
+        bottom: 10px;
+    }
+}

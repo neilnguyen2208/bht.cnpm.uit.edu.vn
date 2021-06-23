@@ -18,13 +18,13 @@ import ShowOnPermission from 'components/base_components/ShowOnPermission';
 import { Post } from 'authentication/permission.config';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
+
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import store from 'redux/store';
 import { create_APostCommentReset } from 'redux/actions/postCommentAction'
 import { createAPostComment, getAPostComments } from 'redux/services/postCommentServices'
 import { openBLModal } from 'redux/services/modalServices';
 import { getAPostStatisticByID } from 'redux/services/postServices';
-
 const validationCondition = {
   form: '#create-comment-form',
 

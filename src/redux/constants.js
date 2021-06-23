@@ -266,6 +266,9 @@ export const MODAL_BL_OPEN = "MODAL_BL_OPEN";
 
 export const MODAL_BIG_CLOSE = "MODAL_BIG_CLOSE";
 export const MODAL_BIG_OPEN = "MODAL_BIG_OPEN";
+
+export const MODAL_COMMENT_CLOSE = "MODAL_COMMENT_CLOSE";
+export const MODAL_COMMENT_OPEN = "MODAL_COMMENT_OPEN";
 //#endregion
 
 //#region tag

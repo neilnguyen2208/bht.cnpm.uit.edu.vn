@@ -14,6 +14,7 @@ import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 
 import { publishedTimeOptions, itemType } from 'constants.js';
+import HomePostItem from 'components/post/HomeFullInfo'
 class PostsList extends React.Component {
 
     componentDidMount() {
@@ -67,88 +68,46 @@ class PostsList extends React.Component {
     }
 
     render() {
-        let postSearchResult = <></>
+        let postSearchResult = <></>;
         if (!this.props.isListLoading) {
-            postSearchResult = this.props.postSearchResult.map((item) => {
-                return < div className="item-container" key={item.id} >
-                    <PostSummaryMetadata
-                        type={itemType.normal}
-                        postId={item.id}
-                        authorDisplayName={item.authorDisplayName}
-                        authorID={item.authorID}
-                        publishDtm={item.publishDtm}
-                        categoryName={item.categoryName}
-                        categoryID={item.categoryID}
-                        title={item.title}
-                        summary={item.summary}
-                        imageURL={item.imageURL}
-                        readingTime={item.readingTime}
-                        approveState={item.postState}
-                        popUpMenuPrefix="pmpu"   //stand for my post popup 
-                        authorAvatarURL={item.authorAvatarURL}
-                        //
-                        reloadList={() => this.reloadList()}
-                    />
-                    <PostNormalReactionbar
-                        postId={item.id}
-                        likeCount={item.likeCount}
-                        viewCount={item.viewCount}
-                        commentCount={item.commentCount}
-                        likedStatus={item.likeStatus}
-                        savedStatus={item.savedStatus}
-                    />
+            postSearchResult = this.props.postSearchResult.map((postItem) => {
+                return < div className="home-item-container" key={postItem.id} >
+
+                    <HomePostItem
+                        authorAvatarURL={postItem.authorAvatarURL}
+                        key={postItem.id}
+                        id={postItem.id}
+                        authorDisplayName={postItem.authorDisplayName}
+                        authorID={postItem.authorID}
+                        publishDtm={postItem.publishDtm}
+                        categoryName={postItem.categoryName}
+                        categoryID={postItem.categoryID}
+                        title={postItem.title}
+                        summary={postItem.summary}
+                        imageURL={postItem.imageURL}
+                        likeStatus={postItem.likeStatus}
+                        savedStatus={postItem.savedStatus}
+                        readingTime={postItem.readingTime}
+                        likeCount={postItem.likeCount}
+                        viewCount={postItem.viewCount}
+                        commentCount={postItem.commentCount}
+                    ></HomePostItem>
                 </div >
             })
         }
         else
             postSearchResult = <Loader />
-        let comboboxGroup = <></>;
-        if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0) {
-            comboboxGroup =
-                <div className="j-c-space-between">
-                    <div className="d-flex">
-                        <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
-                        <div className="mg-left-5px">
-                            <ComboBox
-                                options={publishedTimeOptions}
-                                selectedOptionID={1}
-                                placeHolder="Tất cả"
-                                onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                comboboxId="pltf-combobox" //post list time filter 
-                            ></ComboBox>
-                        </div>
-                    </div>
-                    <div className="d-flex">
-                        <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
-                        <div className="mg-left-5px">
-                            <ComboBox
-                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
-                                options={this.props.postCategories}
-                                onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                comboboxId="plcf-combobox" //post search category filter
-                            ></ComboBox>
-                        </div>
-                    </div>
-                </div >
-        }
+
         return (
-            <div className="search-layout">
+            <div className="home-layout">
                 <div className="mg-top-10px" />
                 <div className="nm-bl-layout-router-outlet" >
                     <div>
                         <div className="filter-container" >
-                            {comboboxGroup}
                         </div>
-                        {this.props.isListLoading ?
-                            < Loader /> :
+                        {!this.props.isListLoading &&
                             <div>
-                                <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
-                                <div >{postSearchResult}</div>
-                                < Paginator config={{
-                                    changePage: (pageNumber) => this.onPageChange(pageNumber),
-                                    pageCount: this.props.totalPages,
-                                    currentPage: getQueryParamByName('page') ? getQueryParamByName('page') : 1
-                                }} />
+                                {postSearchResult}
                             </div>
                         }
                     </div>

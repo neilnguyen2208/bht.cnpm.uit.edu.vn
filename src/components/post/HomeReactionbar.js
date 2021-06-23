@@ -145,7 +145,6 @@ class HomeReactionbar extends React.Component {
       </div>
     );
   }
-
 }
 
 const mapStateToProps = (state, ownProps) => {

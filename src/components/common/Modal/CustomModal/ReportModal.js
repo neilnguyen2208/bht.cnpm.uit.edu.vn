@@ -109,11 +109,8 @@ class ReportModal extends React.Component {
                             <div className="form-tip-label" style={{ fontSize: "0.9rem" }} >{reason.reason}</div>
                           </label>
                         </div>
-                      </div>
-                        ;
-                    })
-                    : <div style={{ height: "1rem" }} />
-                  }
+                      </div>;
+                    }) : <div style={{ height: "1rem" }} />}
                 </div>
                 <div className="form-error-label-container">
                   <span className="form-error-label mg-top-10px" ></span>
@@ -127,7 +124,7 @@ class ReportModal extends React.Component {
               {/* Button */}
               <div className="j-c-end">
                 <button className="white-button form-submit-btn" onClick={() => closeBigModal()}>Huỷ</button>
-                <button className="blue-button form-submit-btn mg-left-10px" onClick={() => this.handleSubmit()}>báo cáo</button>
+                <button className="blue-button form-submit-btn mg-left-10px" onClick={() => this.handleSubmit()}>Báo cáo</button>
               </div>
             </div>
           </div >

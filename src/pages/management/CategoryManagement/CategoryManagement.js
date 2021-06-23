@@ -37,7 +37,6 @@ class CategoryManagement extends React.Component {
 
         //for Edit and Delete, only choose 1 item in all table
         this.selected_category_id = "";
-        this.selected_category-name = "";
 
         //for document category
         this.documentCategoriesList = [];
@@ -67,7 +66,7 @@ class CategoryManagement extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getDocumentCategories();
+        // this.props.getDocumentCategories();
 
 
     }
@@ -143,7 +142,7 @@ class CategoryManagement extends React.Component {
                         <div className="Category_Type_Dropdown" id="management-parent-document-categories-dropdown" onClick={() => this.handlerCategoryTypeDropDownClick("management-parent-document-categories-dropdown", "management-parent-document-categories-container")}>
                             <div>
                                 DANH MỤC TÀI LIỆU
-                        </div>
+                            </div>
                             <img alt="v" className="dropdown-element" src={dropdown_btn} id="page-management-dropdown-btn-element" />
                         </div>
 

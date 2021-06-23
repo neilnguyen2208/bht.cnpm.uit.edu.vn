@@ -30,7 +30,7 @@ class NotificationManagement extends React.Component {
 
     componentDidMount() {
         // console.log(process.env.path);
-        this.fetchAllNotification();
+        // this.fetchAllNotification();
 
     }
 

@@ -197,6 +197,7 @@ class PostDetail extends React.Component {
                                 this.props.questions.map((question, index) => {
                                     return <QuestionItem
                                         index={index}
+                                        exerciseId={this.props.match.params.id}
                                         key={index}
                                         questionId={question.id}
                                         content={question.content}

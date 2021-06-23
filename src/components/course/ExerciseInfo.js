@@ -27,6 +27,7 @@ class ExerciseInfo extends React.Component {
     //if user logged in => call API get user's statistic
     this.props.exerciseId && authService.isLoggedIn() && this.props.getCurrentUserExerciseStatistic(this.props.exerciseId)
   }
+  
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_EXERCISE") {
       //show confirmation popup and detete id verify

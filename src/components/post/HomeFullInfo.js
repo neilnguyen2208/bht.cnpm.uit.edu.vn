@@ -70,7 +70,5 @@ class HomeFullInfo extends React.Component {
       </div>
     );
   }
-
-
 }
 export default HomeFullInfo;

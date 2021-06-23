@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { likeAPost, unLikeAPost, saveAPost, unSaveAPost } from 'redux/services/postServices';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent'
-import preview_icon from 'assets/icons/24x24/gray_preview_icon_24x24.png'
 
 //resources
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -183,9 +182,7 @@ class NormalReactionbar extends React.Component {
                 useAction={this.props.useAction}
                 isLink={true}
                 to={"/post-content/" + this.props.postId + "#cr-cmt"}
-                expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}
-              >
-                {/* onClick={!authService.isGranted(Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE) ? (e) => e.preventDefault() : () => { }}> */}
+                expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
                 <div className="comment-count-container">
                   <div className="comment-btn-text">
                     Bình luận
@@ -194,7 +191,6 @@ class NormalReactionbar extends React.Component {
                     {formatNumber(this.props.commentCount)}
                   </div>
                 </div>
-                {/* </Link> */}
               </RequireLogin>
             }
 

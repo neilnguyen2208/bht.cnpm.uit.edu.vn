@@ -27,22 +27,22 @@
 }
 
 .countdown-time-input {
-  @extend .text-input;
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 45px;
+  max-width: 45px;
   text-align: center;
   margin-top: 0px;
   margin-left: 0px;
   display: flex;
   margin-right: 5px;
+  border: 1px solid var(--gray);
 }
 
 .countdown-text-container {
   border: 1px solid var(--gray);
   margin: auto;
-  padding: 10px;
   margin-top: 5px;
   text-align: center;
+  padding-bottom: 10px;
   padding-top: 20px;
   margin-bottom: 10px;
 }
@@ -55,10 +55,9 @@
 }
 
 .countdown-time-label {
-  @extend .form-label;
   width: fit-content;
   min-width: fit-content;
-  margin-top: 0px;
+  margin-top: 1px;
   justify-content: flex-start;
   text-align: left;
 }

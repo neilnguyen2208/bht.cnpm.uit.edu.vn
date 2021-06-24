@@ -227,8 +227,8 @@ const mapStateToProps = (state) => {
         totalElements: state.post.pendingPosts.totalElements,
 
         //category
-        postCategories: state.post_category.categories.searchData,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        postCategories: state.postCategory.categories.searchData,
+        isCategoryLoading: state.postCategory.categories.isLoading,
 
         //handle 3 actions
         isHaveApproved: state.post.isHaveApproved,

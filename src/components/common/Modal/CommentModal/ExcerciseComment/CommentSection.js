@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //services
-import { getAPostComments } from "redux/services/postCommentServices"
+import { getAnExerciseComments } from "redux/services/exerciseCommentServices"
 
 // import store from 'redux/store/index'
 // import { validation } from 'utils/validationUtils'
@@ -24,26 +24,25 @@ import CommentLoader from 'components/common/Loader/CommentLoader';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import store from 'redux/store';
 import { openBLModal } from 'redux/services/modalServices';
-import { delete_APostCommentReset, post_ReportAPostCommentReset, put_EditAPostCommentReset } from 'redux/actions/postCommentAction';
-import { getAPostStatisticByID } from 'redux/services/postServices'
-import { PostAction, PostCommentAction } from 'authentication/permission.config';
+import { delete_AnExerciseCommentReset, post_ReportAnExerciseCommentReset, put_EditAnExerciseCommentReset } from 'redux/actions/exerciseCommentAction';
+import { exerciseAction } from 'authentication/permission.config.js';
 
 class CommentSection extends React.Component {
 
   componentDidMount() {
-    this.props.getAPostComments(this.props.match.params.id, 0);
+    this.props.getAnExerciseComments(2, 0);
   }
 
   handleEditorChange = () => { }
 
   onPageChange = (pageNumber) => {
     this.pageNumber = pageNumber;
-    this.props.getAPostComments(this.props.match.params.id, pageNumber - 1);
+    this.props.getAnExerciseComments(2, pageNumber - 1);
     this.setState({})
   }
 
   reloadList = () => {
-    this.props.getAPostComments(this.props.match.params.id, this.pageNumber - 1);
+    this.props.getAnExerciseComments(2, this.pageNumber - 1);
   }
 
   render() {
@@ -51,20 +50,19 @@ class CommentSection extends React.Component {
     let commentsList = <></>;
     if (this.props.isHaveDeleted) {
       this.reloadList()
-      this.props.getAPostStatisticByID(this.props.id);
       openBLModal({ type: "success", text: "Xoá bình luận thành công!" });
-      store.dispatch(delete_APostCommentReset())
+      store.dispatch(delete_AnExerciseCommentReset())
     }
 
     if (this.props.isHaveEdited) {
       this.reloadList();
       openBLModal({ type: "success", text: "Chỉnh sửa bình luận thành công!" });
-      store.dispatch(put_EditAPostCommentReset())
+      store.dispatch(put_EditAnExerciseCommentReset())
     }
 
     if (this.props.isHaveReported) {
       openBLModal({ type: "success", text: "báo cáo bình luận thành công!" });
-      store.dispatch(post_ReportAPostCommentReset())
+      store.dispatch(post_ReportAnExerciseCommentReset())
     }
 
     if (!this.props.isLoading && this.props.commentsList)
@@ -72,7 +70,7 @@ class CommentSection extends React.Component {
         commentsList = <div>Không có bình luận nào</div>
       }
 
-      else commentsList = <div className="comments-list">  {
+      else commentsList = <div className="comments-list scroller-container">  {
         this.props.commentsList.map(comment => {
           return <Comment
             commentId={comment.id}
@@ -100,16 +98,19 @@ class CommentSection extends React.Component {
       </div >
     return (
       // cst:comment section title
-      <div className="comments-container">
-        {this.props.postData && !this.props.isPostLoading ?
+      <div className="exercise comments-container">
+        {this.props.exerciseData && !this.props.isExerciseLoading ?
           <div>
-            <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.postData.commentCount}   Bình luận
+            <div className="section-title"
+              style={{ borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}
+              id={"cst-" + 2}>{this.props.exerciseData.commentCount}
+              Bình luận
             </div>
           </div>
           : <></>
         }
-        {this.props.postAvailableActions.includes(PostAction.Comment) &&
-          <CreateComment postId={this.props.id} />}
+        {this.props.exerciseAvailableActions.includes(exerciseAction.Comment) &&
+          <CreateComment exerciseId={this.props.id} />}
         {!this.props.isLoading && this.props.commentsList ?
           <div>
             {commentsList}
@@ -128,23 +129,22 @@ class CommentSection extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    totalPages: state.comment.currentPostComments.totalPages,
-    totalElements: state.comment.currentPostComments.totalElements,
-    commentsList: state.comment.currentPostComments.data,
-    isLoadDone: state.comment.currentPostComments.isLoadDone,
-    isLoading: state.comment.currentPostComments.isLoading,
-    isPostLoading: state.post.currentPost.isLoading,
-    postData: state.post.currentPost.data,
-    isHaveDeleted: state.comment.isHaveDeleted,
-    isHaveEdited: state.comment.isHaveEdited,
-    isHaveReported: state.comment.isHaveReported,
+    totalPages: state.exerciseComment.currentExerciseComments.totalPages,
+    totalElements: state.exerciseComment.currentExerciseComments.totalElements,
+    commentsList: state.exerciseComment.currentExerciseComments.data,
+    isLoadDone: state.exerciseComment.currentExerciseComments.isLoadDone,
+    isLoading: state.exerciseComment.currentExerciseComments.isLoading,
+    isExerciseLoading: state.course.currentExercise.isLoading,
+    exerciseData: state.course.currentExercise.data,
+    isHaveDeleted: state.exerciseComment.isHaveDeleted,
+    isHaveEdited: state.exerciseComment.isHaveEdited,
+    isHaveReported: state.exerciseComment.isHaveReported,
 
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getAPostComments,
-  getAPostStatisticByID
+  getAnExerciseComments,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentSection));

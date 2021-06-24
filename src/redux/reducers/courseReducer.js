@@ -105,7 +105,7 @@ const initialState = {
         error: ''
     },
 
-    exercise: {
+    currentExercise: {
         isLoading: false,
         data: [],
         error: '',
@@ -256,15 +256,15 @@ function CourseReducer(state = initialState, action) {
         //get course detail
         case GET_EXERCISE_BY_ID_REQUEST:
             return {
-                ...state, exercise: { isLoading: true, isLoadDone: false }
+                ...state, currentExercise: { isLoading: true, isLoadDone: false }
             };
         case GET_EXERCISE_BY_ID_SUCCESS:
             {
-                return { ...state, exercise: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+                return { ...state, currentExercise: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
             }
         case GET_EXERCISE_BY_ID_FAILURE:
             {
-                return { ...state, exercise: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+                return { ...state, currentExercise: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
             }
 
         case GET_EXERCISE_QUESTIONS_REQUEST:

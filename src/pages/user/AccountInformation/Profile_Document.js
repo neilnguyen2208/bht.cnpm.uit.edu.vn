@@ -190,7 +190,7 @@ class ProfileDocument extends React.Component {
 const mapStateToProps = (state) => {
     return {
         userDocumentsList: state.document.myDocuments.data,
-        documentCategories: state.document_category.categories.searchData,
+        documentCategories: state.documentCategory.categories.searchData,
         totalPages: state.document.myDocuments.totalPages,
         totalElements: state.document.myDocuments.totalElements,
         isListLoading: state.document.myDocuments.isLoading,

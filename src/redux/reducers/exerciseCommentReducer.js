@@ -1,47 +1,47 @@
 
 import {
-  GET_A_POST_COMMENTS_SUCCESS,
-  GET_A_POST_COMMENTS_REQUEST,
-  GET_A_POST_COMMENTS_FAILURE,
-  EDIT_A_POST_COMMENT_RESET,
-  EDIT_A_POST_COMMENT_SUCCESS,
-  EDIT_A_POST_COMMENT_FAILURE,
-  CREATE_A_POST_COMMENT_SUCCESS,
-  CREATE_A_POST_COMMENT_RESET,
-  CREATE_A_POST_COMMENT_FAILURE,
-  LIKE_A_POST_COMMENT_REQUEST,
-  LIKE_A_POST_COMMENT_SUCCESS,
-  LIKE_A_POST_COMMENT_FAILURE,
-  UNLIKE_A_POST_COMMENT_REQUEST,
-  UNLIKE_A_POST_COMMENT_SUCCESS,
-  UNLIKE_A_POST_COMMENT_FAILURE,
-  DELETE_A_POST_COMMENT_RESET,
-  DELETE_A_POST_COMMENT_SUCCESS,
-  DELETE_A_POST_COMMENT_FAILURE,
-  REPORT_A_POST_COMMENT_SUCCESS,
-  REPORT_A_POST_COMMENT_RESET,
-  REPORT_A_POST_COMMENT_FAILURE,
-  RESOLVE_A_POST_COMMENT_RESET,
-  RESOLVE_A_POST_COMMENT_FAILURE,
-  RESOLVE_A_POST_COMMENT_SUCCESS,
-  CREATE_A_PC_REPLY_FAILURE,
-  CREATE_A_PC_REPLY_SUCCESS,
-  CREATE_A_PC_REPLY_RESET,
+  GET_AN_EXERCISE_COMMENTS_SUCCESS,
+  GET_AN_EXERCISE_COMMENTS_REQUEST,
+  GET_AN_EXERCISE_COMMENTS_FAILURE,
+  EDIT_AN_EXERCISE_COMMENT_RESET,
+  EDIT_AN_EXERCISE_COMMENT_SUCCESS,
+  EDIT_AN_EXERCISE_COMMENT_FAILURE,
+  CREATE_AN_EXERCISE_COMMENT_SUCCESS,
+  CREATE_AN_EXERCISE_COMMENT_RESET,
+  CREATE_AN_EXERCISE_COMMENT_FAILURE,
+  LIKE_AN_EXERCISE_COMMENT_REQUEST,
+  LIKE_AN_EXERCISE_COMMENT_SUCCESS,
+  LIKE_AN_EXERCISE_COMMENT_FAILURE,
+  UNLIKE_AN_EXERCISE_COMMENT_REQUEST,
+  UNLIKE_AN_EXERCISE_COMMENT_SUCCESS,
+  UNLIKE_AN_EXERCISE_COMMENT_FAILURE,
+  DELETE_AN_EXERCISE_COMMENT_RESET,
+  DELETE_AN_EXERCISE_COMMENT_SUCCESS,
+  DELETE_AN_EXERCISE_COMMENT_FAILURE,
+  REPORT_AN_EXERCISE_COMMENT_SUCCESS,
+  REPORT_AN_EXERCISE_COMMENT_RESET,
+  REPORT_AN_EXERCISE_COMMENT_FAILURE,
+  RESOLVE_AN_EXERCISE_COMMENT_RESET,
+  RESOLVE_AN_EXERCISE_COMMENT_FAILURE,
+  RESOLVE_AN_EXERCISE_COMMENT_SUCCESS,
+  CREATE_AN_EXERCISE_COMMENT_REPLY_FAILURE,
+  CREATE_AN_EXERCISE_COMMENT_REPLY_SUCCESS,
+  CREATE_AN_EXERCISE_COMMENT_REPLY_RESET,
 
-  GET_REPORTED_POST_COMMENTS_REQUEST,
-  GET_REPORTED_POST_COMMENTS_SUCCESS,
-  GET_REPORTED_POST_COMMENTS_FAILURE,
+  GET_REPORTED_EXERCISE_COMMENTS_REQUEST,
+  GET_REPORTED_EXERCISE_COMMENTS_SUCCESS,
+  GET_REPORTED_EXERCISE_COMMENTS_FAILURE,
 } from "../constants.js"
 
 const initialState = {
-  currentPostComments: {
+  currentExerciseComments: {
     isLoading: false,
     isLoadDone: false,
     data: [],
     totalPages: 5,
     totalElements: 23,
   },
-  reportedPostComments: {
+  reportedExerciseComments: {
     isLoading: false,
     isLoadDone: false,
     data: [],
@@ -63,19 +63,19 @@ const initialState = {
 
 }
 
-function CommentReducer(state = initialState, action) {
+function ExerciseCommentReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_A_POST_COMMENTS_REQUEST:
+    case GET_AN_EXERCISE_COMMENTS_REQUEST:
       return {
         ...state,
-        currentPostComments: {
-          ...state.currentPostComments,
+        currentExerciseComments: {
+          ...state.currentExerciseComments,
           isLoading: true
         }
       }
-    case GET_A_POST_COMMENTS_SUCCESS:
+    case GET_AN_EXERCISE_COMMENTS_SUCCESS:
       return {
-        ...state, currentPostComments: {
+        ...state, currentExerciseComments: {
           isLoading: false,
           data: action.payload.postCommentDTOs,
           totalPages: action.payload.totalPages,
@@ -83,123 +83,123 @@ function CommentReducer(state = initialState, action) {
         }
       };
 
-    case GET_A_POST_COMMENTS_FAILURE: return {
+    case GET_AN_EXERCISE_COMMENTS_FAILURE: return {
       ...state
     }
 
-    case CREATE_A_POST_COMMENT_RESET: return {
+    case CREATE_AN_EXERCISE_COMMENT_RESET: return {
       ...state, isHaveCreated: false,
     }
 
-    case CREATE_A_POST_COMMENT_SUCCESS:
+    case CREATE_AN_EXERCISE_COMMENT_SUCCESS:
       return {
         ...state, isHaveCreated: true,
         createdCommentId: action.payload,
       }
 
     // maybe use internal state to handle
-    case CREATE_A_POST_COMMENT_FAILURE: return {
+    case CREATE_AN_EXERCISE_COMMENT_FAILURE: return {
       ...state, isHaveCreated: false,
       createdCommentId: null,
     }
 
-    case CREATE_A_PC_REPLY_RESET: return {
+    case CREATE_AN_EXERCISE_COMMENT_REPLY_RESET: return {
       ...state,
       isHaveCreated: false,
     }
 
-    case CREATE_A_PC_REPLY_SUCCESS:
+    case CREATE_AN_EXERCISE_COMMENT_REPLY_SUCCESS:
       return {
         ...state,
         isHaveCreated: true,
         createdCommentId: action.payload,
       }
 
-    case CREATE_A_PC_REPLY_FAILURE: return {
+    case CREATE_AN_EXERCISE_COMMENT_REPLY_FAILURE: return {
       ...state, isHaveCreated: false,
       createdCommentId: null,
     }
 
     //like post comment
-    case LIKE_A_POST_COMMENT_REQUEST:
-      return { ...state, likePost: { isLoading: true } }//use for all post item
-    case LIKE_A_POST_COMMENT_SUCCESS:
-      return { ...state, likePost: { isLoading: false } }
-    case LIKE_A_POST_COMMENT_FAILURE:
-      return { ...state, likePost: { isLoading: false } }
+    case LIKE_AN_EXERCISE_COMMENT_REQUEST:
+      return { ...state, likeExercise: { isLoading: true } }//use for all post item
+    case LIKE_AN_EXERCISE_COMMENT_SUCCESS:
+      return { ...state, likeExercise: { isLoading: false } }
+    case LIKE_AN_EXERCISE_COMMENT_FAILURE:
+      return { ...state, likeExercise: { isLoading: false } }
 
     //unlike post
-    case UNLIKE_A_POST_COMMENT_REQUEST:
-      return { ...state, unLikePost: { isLoading: true } } //true when any post is in the like request
-    case UNLIKE_A_POST_COMMENT_SUCCESS:
-      return { ...state, unLikePost: { isLoading: false } } //sau nay xu ly sau
-    case UNLIKE_A_POST_COMMENT_FAILURE:
-      return { ...state, unLikePost: { isLoading: false } };
+    case UNLIKE_AN_EXERCISE_COMMENT_REQUEST:
+      return { ...state, unLikeExercise: { isLoading: true } } //true when any post is in the like request
+    case UNLIKE_AN_EXERCISE_COMMENT_SUCCESS:
+      return { ...state, unLikeExercise: { isLoading: false } } //sau nay xu ly sau
+    case UNLIKE_AN_EXERCISE_COMMENT_FAILURE:
+      return { ...state, unLikeExercise: { isLoading: false } };
 
     //delete
-    case DELETE_A_POST_COMMENT_RESET:
+    case DELETE_AN_EXERCISE_COMMENT_RESET:
       return {
         ...state, isHaveDeleted: false
       };
-    case DELETE_A_POST_COMMENT_SUCCESS:
+    case DELETE_AN_EXERCISE_COMMENT_SUCCESS:
       return {
         ...state, isHaveDeleted: true
       };
-    case DELETE_A_POST_COMMENT_FAILURE:
+    case DELETE_AN_EXERCISE_COMMENT_FAILURE:
       return {
         ...state, isHaveDeleted: false
       };
 
     //edit post
-    case EDIT_A_POST_COMMENT_RESET:
+    case EDIT_AN_EXERCISE_COMMENT_RESET:
       return {
         ...state, isHaveEdited: false
       };
-    case EDIT_A_POST_COMMENT_SUCCESS:
+    case EDIT_AN_EXERCISE_COMMENT_SUCCESS:
       return {
         ...state, isHaveEdited: true
       };
-    case EDIT_A_POST_COMMENT_FAILURE:
+    case EDIT_AN_EXERCISE_COMMENT_FAILURE:
       return {
         ...state, isHaveEdited: false
       };
 
     //report
-    case REPORT_A_POST_COMMENT_RESET:
+    case REPORT_AN_EXERCISE_COMMENT_RESET:
       return { ...state, isHaveReported: false };
-    case REPORT_A_POST_COMMENT_SUCCESS:
+    case REPORT_AN_EXERCISE_COMMENT_SUCCESS:
       return { ...state, isHaveReported: true };
-    case REPORT_A_POST_COMMENT_FAILURE:
+    case REPORT_AN_EXERCISE_COMMENT_FAILURE:
       return { ...state, isHaveReported: false };
 
     //resolve    
-    case RESOLVE_A_POST_COMMENT_RESET:
+    case RESOLVE_AN_EXERCISE_COMMENT_RESET:
       return { ...state, isHaveResolved: false };
-    case RESOLVE_A_POST_COMMENT_SUCCESS:
+    case RESOLVE_AN_EXERCISE_COMMENT_SUCCESS:
       return { ...state, isHaveResolved: true };
-    case RESOLVE_A_POST_COMMENT_FAILURE:
+    case RESOLVE_AN_EXERCISE_COMMENT_FAILURE:
       return { ...state, isHaveResolved: false };
 
     //resolve    
-    case GET_REPORTED_POST_COMMENTS_REQUEST:
+    case GET_REPORTED_EXERCISE_COMMENTS_REQUEST:
       return {
-        ...state, reportedPostComments: {
+        ...state, reportedExerciseComments: {
           ...state.postReportedCommentWithStateDTOs,
           isLoading: true
         }
       };
-    case GET_REPORTED_POST_COMMENTS_SUCCESS:
+    case GET_REPORTED_EXERCISE_COMMENTS_SUCCESS:
       return {
-        ...state, reportedPostComments: {
+        ...state, reportedExerciseComments: {
           isLoading: false,
           data: action.payload.postReportedCommentWithStateDTOs,
           totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
           totalElements: action.payload.totalElements ? action.payload.totalElements : 0
         }
       };
-    case GET_REPORTED_POST_COMMENTS_FAILURE:
+    case GET_REPORTED_EXERCISE_COMMENTS_FAILURE:
       return {
-        ...state, reportedPostComments: {
+        ...state, reportedExerciseComments: {
           isLoading: false,
           data: [],
           totalPages: 1,
@@ -212,4 +212,4 @@ function CommentReducer(state = initialState, action) {
   }
 }
 
-export default CommentReducer;
+export default ExerciseCommentReducer;

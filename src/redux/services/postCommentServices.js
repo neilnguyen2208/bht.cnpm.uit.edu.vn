@@ -122,17 +122,6 @@ export function createAPostComment(postId, content) {
   }
 }
 
-export function resolveAPost(id, resolveDTO) {
-  return dispatch => {
-    dispatch(post_ResolveAPostCommentReset());
-    authRequest.post(`/posts/comments/  resolveReport/${id}`, JSON.stringify(resolveDTO))
-      .then(result => {
-        dispatch(post_ResolveAPostCommentSuccess());
-      })
-      .catch(error => post_ResolveAPostCommentFailure())
-  }
-}
-
 export function likeAPostComment(commentId) { //maybe use modal later
   return dispatch => {
     dispatch(post_LikeAPostCommentRequest(commentId))

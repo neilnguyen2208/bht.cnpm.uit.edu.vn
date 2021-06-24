@@ -17,7 +17,7 @@ import store from 'redux/store';
 import { update_QuestionsToCSucess, update_QuestionsToCReset, update_ExerciseNoteReset, check_ExerciseQuestionsRequest } from 'redux/actions/courseAction';
 import authService from 'authentication/authenticationServices';
 import Countdown from 'components/course/Countdown';
-import { openModal } from 'redux/services/modalServices';
+import { closeModal, openCommentModal, openModal } from 'redux/services/modalServices';
 
 class PostDetail extends React.Component {
     constructor(props) {
@@ -122,7 +122,7 @@ class PostDetail extends React.Component {
         if (!this.isFirstTimeAnswerChecked && this.props.questions.length > 0 && !this.props.isQuestionsLoading && this.props.isAnswerChecked) {
             this.isFirstTimeAnswerChecked = true;
             this.finalResult = [];
-
+            this.correctAnswerCount = 0;
             //update current question array
             for (let i = 0; i < this.props.questions.length; i++) {
                 this.finalResult.push({
@@ -140,7 +140,9 @@ class PostDetail extends React.Component {
                     isChecked: true,
                     ...(this.props.correctAnswers.find((itmInner) => itmInner.id === this.tmpQuestionToC[i].id)),
                 });
-                // this.correctAnswerCount = 
+                if (this.props.correctAnswers[i].isCorrect) {
+                    this.correctAnswerCount++;
+                }
 
             }
 
@@ -149,7 +151,15 @@ class PostDetail extends React.Component {
                 this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
             }
             store.dispatch(check_ExerciseQuestionsRequest());
-            openModal("confirmation", { title: "Kết quả", text: "Kết quả của bạn là: " + this.correctAnswerCount })
+            openModal("confirmation", {
+                title: "Kết quả",
+                showIcon: false,
+                text: "Số câu trả lời đúng: " + this.correctAnswerCount,
+                confirmText: "Xem đáp án",
+                onConfirm: () => {
+                    closeModal();
+                }
+            })
             store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
             this.setState({});
         }
@@ -237,7 +247,7 @@ class PostDetail extends React.Component {
                                 <QuestionsToC title={"MỤC LỤC"} items={this.questionToC} />
                             }
                             <div className="relative-sidebar" style={{ border: "0px" }}>
-                                <Countdown />
+                                <Countdown checkAnswer={() => this.checkAllAnswers()} />
                                 <form id="cr-xcrs-note">
                                     <div className="form-group">
                                         <div className="form-label">Ghi chú:</div>
@@ -260,8 +270,8 @@ class PostDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        exerciseContent: state.course.exercise.data,
-        isExerciseLoading: state.course.exercise.isLoading,
+        exerciseContent: state.course.currentExercise.data,
+        isExerciseLoading: state.course.currentExercise.isLoading,
         questions: state.course.exerciseQuestions.data,
         isQuestionsLoading: state.course.exerciseQuestions.isLoading,
         correctAnswers: state.course.correctAnswers.data,

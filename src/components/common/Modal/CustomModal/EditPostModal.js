@@ -642,8 +642,8 @@ class EditPostModal extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.post_category.categories.data,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        categories: state.postCategory.categories.data,
+        isCategoryLoading: state.postCategory.categories.isLoading,
 
         isCurrentPostLoading: state.post.currentPost.isLoading,
         currentPost: state.post.currentPost.data,

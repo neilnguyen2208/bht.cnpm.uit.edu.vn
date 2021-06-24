@@ -294,8 +294,8 @@ const mapStateToProps = (state) => {
         totalElements: state.post.managementPosts.totalElements,
 
         //category
-        postCategories: state.post_category.categories.searchData,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        postCategories: state.postCategory.categories.searchData,
+        isCategoryLoading: state.postCategory.categories.isLoading,
 
         //handle 2 actions: delete and edit
         isHaveDeleted: state.post.isHaveDeleted,

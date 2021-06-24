@@ -231,16 +231,16 @@ const mapStateToProps = (state) => {
         isListLoading: state.document.documentsList.isLoading,
 
         //category
-        isCategoryLoading: state.document_category.categories.isLoading,
-        categories: state.document_category.categories.searchData,
+        isCategoryLoading: state.documentCategory.categories.isLoading,
+        categories: state.documentCategory.categories.searchData,
 
         //pages and elements
         totalPages: state.document.documentsList.totalPages,
         totalElements: state.document.documentsList.totalElements,
 
         //subject
-        isSubjectLoading: state.document_subject.subjects.isLoading,
-        subjects: state.document_subject.subjects.searchData
+        isSubjectLoading: state.documentSubject.subjects.isLoading,
+        subjects: state.documentSubject.subjects.searchData
 
     };
 }

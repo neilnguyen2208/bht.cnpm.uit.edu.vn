@@ -235,11 +235,11 @@ class MyPosts extends React.Component {
 const mapStateToProps = (state) => {
     return {
         myPostsList: state.post.myPosts.data,
-        postCategories: state.post_category.categories.searchData,
+        postCategories: state.postCategory.categories.searchData,
         totalPages: state.post.myPosts.totalPages,
         totalElements: state.post.myPosts.totalElements,
         isListLoading: state.post.myPosts.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        isCategoryLoading: state.postCategory.categories.isLoading,
 
         //handle 2 actions: delete and edit
         isHaveDeleted: state.post.isHaveDeleted,

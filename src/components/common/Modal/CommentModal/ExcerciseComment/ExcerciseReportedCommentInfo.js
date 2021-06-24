@@ -21,6 +21,7 @@ export default class ReportInfo extends React.PureComponent {
             isShowMore: false
         }
     }
+    
     componentDidMount() {
         const DOMPurify = createDOMPurify(window);
         const clean = DOMPurify.sanitize(this.props.content);

@@ -596,8 +596,8 @@ class CreatePost extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.post_category.categories.data,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        categories: state.postCategory.categories.data,
+        isCategoryLoading: state.postCategory.categories.isLoading,
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
 

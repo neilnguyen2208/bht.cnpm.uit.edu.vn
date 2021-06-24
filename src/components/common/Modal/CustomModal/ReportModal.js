@@ -135,7 +135,6 @@ class ReportModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.comment.reportReasons.data)
   return {
     reportReasons: state.report.data,
     isLoading: state.report.isLoading,

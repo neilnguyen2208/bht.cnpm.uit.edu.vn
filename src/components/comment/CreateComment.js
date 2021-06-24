@@ -112,7 +112,7 @@ class CreateComment extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isHaveCreated: state.comment.isHaveCreated,
+    isHaveCreated: state.postComment.isHaveCreated,
     userSummaryData: state.auth.currentUserSummary.data,
     isSummaryLoaded: state.auth.currentUserSummary.isLoadDone
   };

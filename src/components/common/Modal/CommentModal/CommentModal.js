@@ -3,69 +3,77 @@ import '../ModalBL/ModalBL.scss';
 import './CommentModal.scss';
 import 'components/styles/Comment.scss';
 import gray_delete_icon from 'assets/icons/24x24/gray_delete_icon_24x24.png';
-import { closeBLModal } from "redux/services/modalServices";
+import { closeCommentModal } from "redux/services/modalServices";
+import CommentSection from "./ExcerciseComment/CommentSection";
 
-export default class CommentModal extends React.Component {
+import { bindActionCreators } from 'redux';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { getExerciseById } from 'redux/services/courseServices'
+
+class CommentModal extends React.Component {
     constructor(props) {
         super(props);
         this.timeOut = null;
     }
 
     componentDidMount() {
+        this.props.getExerciseById(2);
+        document.querySelectorAll("comment-modal-container").forEach(item => item.classList.remove("close"));
         window.onresize = () => {
             document.querySelectorAll(".comment-modal-container").forEach(element => {
                 element.style.height = (window.innerHeight - 80).toString() + "px";
             })
         }
-        this.timeOut = setTimeout(() => closeBLModal(), 10000)
     }
 
     closeModal = () => {
-        if (this.timeOut)
-            clearTimeout(this.timeOut);
-        // closeBLModal(this.props.id);
+        document.querySelectorAll(".comment-modal-container").forEach(item => item.classList.add("close"));
+        setTimeout(() => closeCommentModal(this.props.id), 1000);
     }
-
-    onButtonClick = () => {
-
-        closeBLModal(this.props.id);
-        // if (this.props.onBtnClick)
-        // this.props.onBtnClick();
-    }
-
 
     componentWillUnmount() {
-        // if (this.timeOut)
-        // clearTimeout(this.timeOut);
+
     }
 
     render() {
-        // let { text } = this.props;
         return (
-            <div className="comment-modal-fixed-layout">
-                <div className="comment-modal-container" style={{ height: (window.innerHeight - 80).toString() + "px" }}>
-                    <div className="j-c-space-between comment-modal">
-                        <div className="comments-container">
-                            <div className="section-title"> 30 Bình luận</div>
-                            <div className="d-flex">
-                                <div className="comment-modal-text">
-                                    {/* {text} */}
-                                </div>
-                                <div className="comment-modal-text-link" onClick={() => this.onButtonClick()}>
-                                    {/* {btnText} */}
-                                </div>
+            <div>
+                <div className="modal-overlay-shadow" />
+                <div className="modal-fixed-layout" style={{ padding: "0px" }}>
+                    <div className="comment-modal-fixed-layout">
+                        <div className="comment-modal-container" style={{ height: (window.innerHeight - 80).toString() + "px" }}>
+                            <div className="j-c-space-between comment-modal">
+                                <img className="comment-modal-close-icon" alt="x" src={gray_delete_icon}
+                                    onClick={() => this.closeModal()} />
                             </div>
+                            <CommentSection
+                                useAction={true}
+                                // create comment will show if you have action create comment
+                                // exerciseAvailableActions={this.props.currentExercise.availableActions}
+                                exerciseAvailableActions={["comment"]}
+                                // id={this.props.currentExercise.id}
+                                id={2}
+                                commentCount={0}
+                            />
                         </div>
-                        <img className="comment-modal-close-icon" alt="x" src={gray_delete_icon}
-                            onClick={() => this.closeModal()} />
-                    </div>
-                    <div className="right-comment-container">
-                        Hiện tại không có bình luận nào cho bài tập này.
-                    </div>
+                    </div >
                 </div>
-            </div >
+            </div>
         );
-
     }
 }
 
+
+const mapStateToProps = (state) => {
+    return {
+        currentExercise: state.course.currentExercise.data,
+        isLoadDone: state.course.currentExercise.isLoadDone
+    }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    getExerciseById,
+}, dispatch);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentModal));

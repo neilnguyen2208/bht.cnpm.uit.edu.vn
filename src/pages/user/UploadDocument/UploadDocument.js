@@ -520,10 +520,10 @@ class UploadDocument extends React.Component {
 const mapStateToProps = (state) => {
     return {
         //category and subject
-        categories: state.document_category.categories.data,
-        isCategoryLoading: state.document_category.categories.isLoading,
-        subjects: state.document_subject.subjects.data,
-        isSubjectLoading: state.document_subject.subjects.isLoading,
+        categories: state.documentCategory.categories.data,
+        isCategoryLoading: state.documentCategory.categories.isLoading,
+        subjects: state.documentSubject.subjects.data,
+        isSubjectLoading: state.documentSubject.subjects.isLoading,
 
         //tah
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,

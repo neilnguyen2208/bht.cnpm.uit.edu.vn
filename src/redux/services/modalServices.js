@@ -28,7 +28,6 @@ export function openBigModal(type, ...modalProps) {
 }
 
 export function openModal(type, ...modalProps) {
-  console.log(type, ...modalProps)
   return store.dispatch(openModalAction(type, ...modalProps));
 }
 
@@ -37,9 +36,11 @@ export function closeModal(modalProps) {
 }
 
 export function closeCommentModal(modalProps) {
+  //set animation
+  // comment-modal-container
   return store.dispatch(closeCommentModalAction(modalProps));
 }
 
-export function openCommentModal(type, ...modalProps) {
-  return store.dispatch(openCommentModalAction(type, ...modalProps));
+export function openCommentModal(...modalProps) {
+  return store.dispatch(openCommentModalAction(...modalProps));
 }

@@ -183,16 +183,15 @@ class PostCommentReport extends React.Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state.comment.reportedPostComments)
     return {
         //pending posts list
-        reportedCommentsList: state.comment.reportedPostComments.data,
-        isListLoading: state.comment.reportedPostComments.isLoading,
-        totalPages: state.comment.reportedPostComments.totalPages,
-        totalElements: state.comment.reportedPostComments.totalElements,
+        reportedCommentsList: state.postComment.reportedPostComments.data,
+        isListLoading: state.postComment.reportedPostComments.isLoading,
+        totalPages: state.postComment.reportedPostComments.totalPages,
+        totalElements: state.postComment.reportedPostComments.totalElements,
 
         //handle action resolve a report
-        isHaveResolved: state.comment.isHaveResolved
+        isHaveResolved: state.postComment.isHaveResolved
     };
 }
 

@@ -105,8 +105,8 @@ class PostDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        exerciseContent: state.course.exercise.data,
-        isExerciseLoading: state.course.exercise.isLoading,
+        exerciseContent: state.course.currentExercise.data,
+        isExerciseLoading: state.course.currentExercise.isLoading,
         relativePosts: state.course.relativePosts.data,
         isRelativePostsLoading: state.course.relativePosts.isLoading,
         relativeDocuments: state.course.relativeDocuments.data,

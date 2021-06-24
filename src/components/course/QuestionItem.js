@@ -16,7 +16,7 @@ import correct_icon from 'assets/icons/24x24/correct_icon_24x24.png'
 import wrong_icon from 'assets/icons/24x24/wrong_icon_24x24.png'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import { guestMenu } from './adapter/allActionSummaryMenu';
-import { closeModal, openBigModal, openModal } from 'redux/services/modalServices';
+import { closeModal, openBigModal, openCommentModal, openModal } from 'redux/services/modalServices';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
 import { Post, PostAction } from 'authentication/permission.config';
 
@@ -79,7 +79,7 @@ class QuestionItem extends React.Component {
   }
 
   onCommentBtnClick = () => {
-
+    openCommentModal();
   }
 
 

@@ -24,9 +24,9 @@ import {
   RESOLVE_A_POST_COMMENT_RESET,
   RESOLVE_A_POST_COMMENT_FAILURE,
   RESOLVE_A_POST_COMMENT_SUCCESS,
-  CREATE_A_PC_REPLY_FAILURE,
-  CREATE_A_PC_REPLY_SUCCESS,
-  CREATE_A_PC_REPLY_RESET,
+  CREATE_A_POST_COMMENT_REPLY_FAILURE,
+  CREATE_A_POST_COMMENT_REPLY_SUCCESS,
+  CREATE_A_POST_COMMENT_REPLY_RESET,
 
   GET_REPORTED_POST_COMMENTS_REQUEST,
   GET_REPORTED_POST_COMMENTS_SUCCESS,
@@ -103,19 +103,19 @@ function CommentReducer(state = initialState, action) {
       createdCommentId: null,
     }
 
-    case CREATE_A_PC_REPLY_RESET: return {
+    case CREATE_A_POST_COMMENT_REPLY_RESET: return {
       ...state,
       isHaveCreated: false,
     }
 
-    case CREATE_A_PC_REPLY_SUCCESS:
+    case CREATE_A_POST_COMMENT_REPLY_SUCCESS:
       return {
         ...state,
         isHaveCreated: true,
         createdCommentId: action.payload,
       }
 
-    case CREATE_A_PC_REPLY_FAILURE: return {
+    case CREATE_A_POST_COMMENT_REPLY_FAILURE: return {
       ...state, isHaveCreated: false,
       createdCommentId: null,
     }

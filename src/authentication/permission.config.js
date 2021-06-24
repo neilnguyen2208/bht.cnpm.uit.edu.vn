@@ -84,3 +84,6 @@ export const DocAction = {
 }
 
 // export const 
+export const exerciseAction = {
+    Comment: "comment"
+}

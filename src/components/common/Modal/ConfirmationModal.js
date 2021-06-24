@@ -27,7 +27,7 @@ class ConfirmationModal extends React.Component {
 
     render() {
 
-        let { confirmText, cancelText } = this.props;
+        let { confirmText, cancelText, showIcon } = this.props;
 
         return (
             <div>
@@ -39,7 +39,7 @@ class ConfirmationModal extends React.Component {
                             <div className="modal-content-c">
                                 <div className="modal-text d-flex">
                                     <div> {this.props.title}</div>
-                                    <img src={question_icon} alt="?" className="confirmation-icon"></img>
+                                    {showIcon && <img src={question_icon} alt="?" className="confirmation-icon"></img>}
                                 </div>
                                 <div className="modal-hint">
                                     {this.props.text}

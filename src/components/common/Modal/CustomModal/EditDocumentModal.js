@@ -591,11 +591,11 @@ class EditDocumentModal extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.document_category.categories.data,
-        isCategoryLoading: state.document_category.categories.isLoading,
+        categories: state.documentCategory.categories.data,
+        isCategoryLoading: state.documentCategory.categories.isLoading,
 
-        subjects: state.document_subject.subjects.data,
-        isSubjectLoading: state.document_subject.subjects.isLoading,
+        subjects: state.documentSubject.subjects.data,
+        isSubjectLoading: state.documentSubject.subjects.isLoading,
 
         isCurrentDocumentLoading: state.document.currentDocument.isLoading,
         currentDocument: state.document.currentDocument.data,

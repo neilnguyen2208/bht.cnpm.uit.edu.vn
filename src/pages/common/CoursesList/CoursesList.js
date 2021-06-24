@@ -195,11 +195,11 @@ const mapStateToProps = (state) => {
         dcCoursesList: state.course.dcCoursesList.data,
         csnnCoursesList: state.course.csnnCoursesList.data,
         allCoursesList: state.course.coursesList.data,
-        falcutyCategories: state.course_category.falcutyCategories.data,
+        falcutyCategories: state.courseCategory.falcutyCategories.data,
 
         //Cac thong tin loading
         isDCLoading: state.course.dcCoursesList.isLoading,
-        isFalcutyLoading: state.course_category.falcutyCategories.isLoading,
+        isFalcutyLoading: state.courseCategory.falcutyCategories.isLoading,
         isCSNNLoading: state.course.csnnCoursesList.isLoading,
         isCoursesLoading: state.course.coursesList.isLoading,
     };

@@ -27,7 +27,7 @@ import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils.js';
 import { authRequest } from 'utils/requestUtils.js';
-import { deleteAPostComment, editAPostComment } from 'redux/services/postCommentServices'
+import { deleteAnExerciseComment, editAnExerciseComment } from 'redux/services/exerciseCommentServices'
 
 // const validationCondition = {
 //   form: '#create-comment-form',
@@ -89,7 +89,7 @@ class Comment extends React.Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPostComment(this.props.commentId); closeModal(); }
+          onConfirm: () => { this.props.deleteAnExerciseComment(this.props.commentId); closeModal(); }
         })
     }
   }
@@ -110,7 +110,7 @@ class Comment extends React.Component {
 
   onSubmitCommentClick = () => {
     // if (styleFormSubmit(validationCondition)) {
-    this.props.editAPostComment(this.props.commentId, { content: getCKEInstance("edit-comment-" + this.props.commentId).getData() });
+    this.props.editAnExerciseComment(this.props.commentId, { content: getCKEInstance("edit-comment-" + this.props.commentId).getData() });
     // }
   }
 
@@ -144,12 +144,12 @@ class Comment extends React.Component {
 
   loadAllReply = (createdReplyId) => {  //not use redux in this case
     this.isReplyLoadDone = false;
-    authRequest.get(`/posts/comments/${this.props.commentId}/children`)
+    authRequest.get(`/exercises/comments/${this.props.commentId}/children`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
         result_1.map(item => IDarr += item.id + ",") //tao ra mang id moi
-        authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+        authRequest.get(`/exercises/comments/statistics?commentIDs=${IDarr}`)
           .then(response_2 => {
             //merge summary array and statistic array
             let result_2 = [];
@@ -168,7 +168,7 @@ class Comment extends React.Component {
               this.createdReplyId = createdReplyId;
             }
 
-            authRequest.get(`/posts/comments/actionAvailable?postCommentIDs=${IDarr}`).then(response_3 => {
+            authRequest.get(`/exercises/comments/actionAvailable?exerciseCommentIDs=${IDarr}`).then(response_3 => {
               let finalResult = [];
               for (let i = 0; i < result_2.length; i++) {
                 finalResult.push({
@@ -240,68 +240,7 @@ class Comment extends React.Component {
       //if first condition is true => show all reply
       //if ONLY second condition is true => only show created reply, it is not best case :(
       let subReplyList;
-      // if (!this.isShowAllReply && this.createdReplyId) {
-      //   let createdReply = this.replyArray.find(reply => reply.id = this.createdReplyId);
-      //   subReplyList = < Reply
-      //     replyId={createdReply.id}
-      //     authorDisplayName={createdReply.authorDisplayName}
-      //     authorAvatarURL={createdReply.authorAvatarURL}
-      //     authorID={createdReply.isauthorDisplayName}
-      //     isContentAuthor={createdReply.isContentAuthor}
-      //     submitDtm={createdReply.submitDtm}
-      //     likeCount={createdReply.likeCount}
-      //     likeStatus={createdReply.likeStatus}
-      //     replyCount={createdReply.replyCount}
-      //     replyArray={createdReply.replyArray}
-      //     content={createdReply.content}
-      //     createReplyReply={(replyId) => this.createCommentReply(replyId)}
-      //     reloadList={(createdReplyId) => this.loadAllReply(createdReplyId)}
-      //     createdReplyId={this.createdReplyId}
-      //   />
-
-      //   replyList = this.replyCount > 1 ?
-      //     <div>
-      //       {subReplyList}
-      //       {/* if only have one reply */}
-      //       {/* { */}
-      //       <div className="hs-label-container" onClick={() => { this.onViewAllReplyClick() }}>
-      //         <div className="hs-label">Xem thêm {this.replyCount - 1} câu trả lời</div>
-      //         <img className="hs-label-img" src={down_arrow} alt="" />
-      //       </div>
-      //     </div>
-      //     : <div>
-      //       {subReplyList}
-      //     </div>
-      // }
-      // // create a reply list on some condition
-      // else {
-
-      //   //if show all 
-      //   //if createdReply => not show this reply in list, show first
-      //   //else show this reply 
-
-      //   let newReply = <></>;
-      //   if (this.createdReplyId) {
-      //     let createdReply = this.replyArray.find(reply => reply.id = this.createdReplyId);
-      //     newReply = <Reply
-      //       replyId={createdReply.id}
-      //       key={createdReply.id}
-      //       authorDisplayName={createdReply.authorDisplayName}
-      //       authorAvatarURL={createdReply.authorAvatarURL}
-      //       authorID={createdReply.isauthorDisplayName}
-      //       isContentAuthor={createdReply.isContentAuthor}
-      //       submitDtm={createdReply.submitDtm}
-      //       likeCount={createdReply.likeCount}
-      //       likeStatus={createdReply.likeStatus}
-      //       replyCount={createdReply.replyCount}
-      //       replyArray={createdReply.replyArray}
-      //       content={createdReply.content}
-      //       reloadList={(replyId) => this.loadAllReply(replyId)}
-      //       createReplyReply={(replyId) => this.createCommentReply(replyId)}
-      //       createdReplyId={this.createdReplyId}
-      //     />
-      //   }
-
+     
       subReplyList = <div> {this.replyArray.map(reply => {
 
         // if (this.createdReplyId && this.createdReplyId === reply.id) return <></>;
@@ -359,56 +298,6 @@ class Comment extends React.Component {
         </div>;
     }
 
-    /*
-    //if not show all reply and reply array has more than 3 replies
-    // else {
-    // if (this.isReplyLoadDone) {
-    // let subReplyList = this.replyArray.slice(0, 3).map(reply => {
-    //   if (this.isReplying && this.replyId === reply.id)
-    //     return <div
-    //       key={reply.id}>
-    //       <Reply
-    //         replyId={reply.id}
-    //         authorDisplayName={reply.authorDisplayName}
-    //         authorAvatarURL={reply.authorAvatarURL}
-    //         authorID={reply.isauthorDisplayName}
-    //         isContentAuthor={reply.isContentAuthor}
-    //         submitDtm={reply.submitDtm}
-    //         likeCount={reply.likeCount}
-    //         likeStatus={reply.likeStatus}
-    //         replyCount={reply.replyCount}
-    //         replyArray={reply.replyArray}
-    //         content={reply.content}
-    //         createReplyReply={(replyId) => this.createCommentReply(replyId)} />
-    //       <CreateReply replyId={reply.id} commentId={this.props.commentId} reloadList={() => this.loadAllReply()} />
-    //     </div>
-    
-    //   return <Reply
-    //     replyId={reply.id}
-    //     key={reply.id}
-    //     authorDisplayName={reply.authorDisplayName}
-    //     authorAvatarURL={reply.authorAvatarURL}
-    //     authorID={reply.isauthorDisplayName}
-    //     isContentAuthor={reply.isContentAuthor}
-    //     submitDtm={reply.submitDtm}
-    //     likeCount={reply.likeCount}
-    //     likeStatus={reply.likeStatus}
-    //     replyCount={reply.replyCount}
-    //     replyArray={reply.replyArray}
-    //     content={reply.content}
-    //     createReplyReply={(replyId) => this.createCommentReply(replyId)}
-    //   />
-    // })
-    // replyList = <div>
-    //   {subReplyList}
-    //   <div className="hs-label-container" onClick={() => { this.isShowAllReply = true; this.setState() }}>
-    //     <div className="hs-label">Xem thêm {this.props.replyCount - 3} câu trả lời</div>
-    //     <img className="hs-label-img" src={down_arrow} alt="" />
-    //   </div>
-    // </div >
-    // }
-    // }
-    */
     return (
       <div className="comment-item" id={`comment-item-` + this.props.commentId}>
         <div className="comment-main-level">
@@ -503,13 +392,13 @@ class Comment extends React.Component {
 const mapStateToProps = (state) => {
   return {
     //report
-    createdCommentId: state.comment.createdCommentId,
+    createdCommentId: state.exerciseComment.createdCommentId,
 
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPostComment, editAPostComment
+  deleteAnExerciseComment, editAnExerciseComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comment));

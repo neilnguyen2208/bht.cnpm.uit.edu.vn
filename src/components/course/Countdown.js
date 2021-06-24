@@ -5,12 +5,12 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getExerciseById } from 'redux/services/courseServices'
-
+import { closeModal, openModal } from 'redux/services/modalServices';
 class Countdown extends React.Component {
   componentDidMount() {
     document.getElementById("stopwatch-container").style.display = "none";
     document.getElementById("countdown-button").classList.add("active");
-
+    this.dir = "cd";
   }
 
   formatTimer = function (a) {
@@ -20,10 +20,9 @@ class Countdown extends React.Component {
     return a;
   }
 
-  startTimer = (dir) => {
+  startTimer = () => {
     var a;
     // save type
-    this.dir = dir;
     // get current date
     this.d1 = new Date();
     console.log(this.d1.getTime())
@@ -61,14 +60,14 @@ class Countdown extends React.Component {
     this.componentState = 'pause';
   }
 
-  resetTimer = (dir) => {
+  resetTimer = () => {
     // reset display
-    document.getElementById(dir + '_ms').innerText = '00';
-    document.getElementById(dir + '_s').innerText = '00';
-    document.getElementById(dir + '_m').innerText = '00';
-    document.getElementById(dir + '_h').innerText = '00';
+    document.getElementById(this.dir + '_ms').innerText = '00';
+    document.getElementById(this.dir + '_s').innerText = '00';
+    document.getElementById(this.dir + '_m').innerText = '00';
+    document.getElementById(this.dir + '_h').innerText = '00';
     // change button value
-    document.getElementById(dir + '_start').value = 'Start';
+    document.getElementById(this.dir + '_start').value = 'Start';
     // set state
     this.componentState = 'reset';
 
@@ -107,6 +106,19 @@ class Countdown extends React.Component {
         if (td <= 0) {
           // if time difference is 0 end countdown
           this.endTimer(this.resetTimer());
+          if (this.dir === 'cd') {
+            openModal("confirmation", {
+              showIcon: false,
+              text: "Hết thời gian đếm ngược.",
+              title: "Hết giờ",
+              confirmText: "Kiểm tra đáp án",
+              cancelText: "Tiếp tục",
+              onConfirm: () => {
+                this.props.checkAnswer();
+                closeModal();
+              }
+            })
+          }
         }
       }
       // calculate milliseconds
@@ -148,7 +160,8 @@ class Countdown extends React.Component {
       this.setState({})
 
     } else {
-      // kill loop
+      // kill loop => on pause
+
       clearTimeout(this.t);
       return true;
     }
@@ -160,7 +173,8 @@ class Countdown extends React.Component {
     document.getElementById("countdown-container").style.display = "none";
     document.getElementById("stopwatch-button").classList.add("active");
     document.getElementById("countdown-button").classList.remove("active");
-    this.resetTimer('sw');
+    this.dir = 'sw';
+    this.resetTimer();
   }
 
   onCountdownClick = () => {
@@ -168,7 +182,8 @@ class Countdown extends React.Component {
     document.getElementById("stopwatch-container").style.display = "none";
     document.getElementById("stopwatch-button").classList.remove("active");
     document.getElementById("countdown-button").classList.add("active");
-    this.resetTimer('cd');
+    this.dir = 'cd';
+    this.resetTimer();
   }
 
   onCountdownInputChange = () => { }
@@ -184,9 +199,9 @@ class Countdown extends React.Component {
           </div>
         </div>
 
-        {this.props.exerciseContent && !this.props.isExerciseLoading &&
-          <div className="countdown-time-label" style={{ marginTop: "5px" }}>Thời gian làm bài đề xuất: {this.props.exerciseContent.suggestedDuration / 60} phút</div>}
         <div id="stopwatch-container" >
+          {this.props.exerciseContent && !this.props.isExerciseLoading &&
+            <div className="" style={{ marginTop: "10px" }}>Thời gian làm bài đề xuất: {this.props.exerciseContent.suggestedDuration / 60} phút</div>}
           <div className="countdown-text-container">
             <span id="sw_h">00</span><span>:</span>
             <span id="sw_m">00</span><span>:</span>
@@ -196,27 +211,28 @@ class Countdown extends React.Component {
           <div className="j-c-space-between" style={{ paddingBottom: "10px", borderBottom: "1px solid var(--gray)", marginBottom: "10px" }}>
             <input type="button" className="_button" value="START" id="sw_start" onClick={() => this.startTimer('sw')} />
             <input type="button" className="_button" value="PAUSE" id="sw_pause" onClick={() => this.pauseTimer('sw')} />
-            <input type="button" className="_button" value="RESET" id="sw_reset" onClick={() => this.resetTimer('sw')} />
+            <input type="button" className="_button" value="RESET" id="sw_reset" onClick={() => this.resetTimer()} />
           </div>
         </div>
         <div id="countdown-container" >
-          <div className="d-flex">
-            <div className="countdown-time-label">Thời gian đếm ngược: </div>
-            <div className="j-c-end">
-              <input type="number" className="countdown-time-input" defaultValue="15" id="cd_minutes" onChange={() => this.onCountdownInputChange()} />
-              <div id="minutes" className="countdown-time-label">phút.</div>
-            </div>
-          </div>
+
+          {this.props.exerciseContent && !this.props.isExerciseLoading &&
+            <div className="" style={{ marginTop: "10px" }}>Thời gian làm bài đề xuất: {this.props.exerciseContent.suggestedDuration / 60} phút</div>}
           <div className="countdown-text-container">
             <span id="cd_h">00</span><span>:</span>
             <span id="cd_m">00</span><span>:</span>
             <span id="cd_s">00</span><span>:</span>
             <span id="cd_ms">00</span>
+            <div className="d-flex mg-top-5px" >
+              <div className="countdown-time-label" style={{ marginRight: "5px", marginLeft: "5px" }}>Thời gian đếm ngược: </div>
+              <input type="number" className="countdown-time-input" min="0" defaultValue="15" id="cd_minutes" onChange={() => this.onCountdownInputChange()} />
+              <div id="minutes" className="countdown-time-label">phút.</div>
+            </div>
           </div>
           <div className="j-c-space-between" style={{ paddingBottom: "10px", borderBottom: "1px solid var(--gray)", marginBottom: "10px" }}>
             <input type="button" className="_button" value="START" id="cd_start" onClick={() => this.startTimer('cd')} />
             <input type="button" className="_button" value="PAUSE" id="cd_pause" onClick={() => this.pauseTimer('cd')} />
-            <input type="button" className="_button" value="RESET" id="cd_reset" onClick={() => this.resetTimer('cd')} />
+            <input type="button" className="_button" value="RESET" id="cd_reset" onClick={() => this.resetTimer()} />
           </div>
         </div>
       </div >
@@ -226,13 +242,13 @@ class Countdown extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    exerciseContent: state.course.exercise.data,
-    isExerciseLoading: state.course.exercise.isLoading,
+    exerciseContent: state.course.currentExercise.data,
+    isExerciseLoading: state.course.currentExercise.isLoading,
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getExerciseById
+  getExerciseById,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Countdown));

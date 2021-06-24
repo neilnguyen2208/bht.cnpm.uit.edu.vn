@@ -119,9 +119,9 @@ class PostsList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        postCategories: state.post_category.categories.searchData,
+        postCategories: state.postCategory.categories.searchData,
         isListLoading: state.post.postsList.isLoading,
-        isCategoryLoading: state.post_category.categories.isLoading,
+        isCategoryLoading: state.postCategory.categories.isLoading,
         postSearchResult: state.post.postsList.data,
 
         totalPages: state.post.postsList.totalPages,

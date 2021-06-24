@@ -120,9 +120,9 @@ class SearchDocumentByTag extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.document_category.categories.searchData,
+        categories: state.documentCategory.categories.searchData,
         isListLoading: state.document.documentsList.isLoading,
-        isCategoryLoading: state.document_category.categories.isLoading,
+        isCategoryLoading: state.documentCategory.categories.isLoading,
         documentSearchResult: state.document.documentsList.data,
         totalPages: state.document.documentsList.totalPages,
         totalElements: state.document.documentsList.totalElements,

@@ -267,13 +267,13 @@ const mapStateToProps = (state) => {
     return {
         //
         myDocumentsList: state.document.myDocuments.data,
-        categories: state.document_category.categories.searchData,
-        subjects: state.document_subject.subjects.searchData,
+        categories: state.documentCategory.categories.searchData,
+        subjects: state.documentSubject.subjects.searchData,
         totalPages: state.document.myDocuments.totalPages,
         totalElements: state.document.myDocuments.totalElements,
         isListLoading: state.document.myDocuments.isLoading,
-        isCategoryLoading: state.document_category.categories.isLoading,
-        isSubjectLoading: state.document_subject.subjects.isLoading,
+        isCategoryLoading: state.documentCategory.categories.isLoading,
+        isSubjectLoading: state.documentSubject.subjects.isLoading,
 
         //handle 2 actions: delete and edit
         isHaveDeleted: state.document.isHaveDeleted,

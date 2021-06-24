@@ -53,6 +53,7 @@ import CommentModal from 'components/common/Modal/CommentModal/CommentModal';
 
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute';
 import { Access, Post } from "authentication/permission.config";
+import { openCommentModal } from "redux/services/modalServices";
 
 const App = () => {
     return (
@@ -118,14 +119,12 @@ const App = () => {
 
                         {/* verify email url */}
                         {/* <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} /> */}
-                        <Route exact path="/demo-comment" component={CommentModal} />
+                        {/* <Route exact path="/demo-comment" component={CommentModal} /> */}
 
                     </Switch>
                     <Footer />
                 </div>
                 <Header />
-                <div>
-                </div>
                 <div>
                     <CommentModalManager />
                     <ModalBigManager />

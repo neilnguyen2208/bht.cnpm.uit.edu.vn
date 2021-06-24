@@ -125,16 +125,16 @@ class CommentSection extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    totalPages: state.comment.currentPostComments.totalPages,
-    totalElements: state.comment.currentPostComments.totalElements,
-    commentsList: state.comment.currentPostComments.data,
-    isLoadDone: state.comment.currentPostComments.isLoadDone,
-    isLoading: state.comment.currentPostComments.isLoading,
+    totalPages: state.postComment.currentPostComments.totalPages,
+    totalElements: state.postComment.currentPostComments.totalElements,
+    commentsList: state.postComment.currentPostComments.data,
+    isLoadDone: state.postComment.currentPostComments.isLoadDone,
+    isLoading: state.postComment.currentPostComments.isLoading,
     isPostLoading: state.post.currentPost.isLoading,
     postData: state.post.currentPost.data,
-    isHaveDeleted: state.comment.isHaveDeleted,
-    isHaveEdited: state.comment.isHaveEdited,
-    isHaveReported: state.comment.isHaveReported,
+    isHaveDeleted: state.postComment.isHaveDeleted,
+    isHaveEdited: state.postComment.isHaveEdited,
+    isHaveReported: state.postComment.isHaveReported,
 
   };
 }

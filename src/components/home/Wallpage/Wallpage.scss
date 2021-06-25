@@ -150,7 +150,26 @@
     color: white;
 }
 
+.trending-title {
+    font-family: "BarlowSemiCondensed-BoldItalic";
+    font-size: 18px;
+    background: var(--blue);
+    padding: 2px;
+    padding-left: 30px;
+    width: fit-content;
+    padding-right: 20px;
+    margin-left: 10px;
+    color: white;
+}
+
 .hightlight-icon {
+    height: 1.5rem;
+    position: absolute;
+    left: 5px;
+    width: auto;
+}
+
+.trending-icon {
     height: 1.5rem;
     position: absolute;
     left: 5px;

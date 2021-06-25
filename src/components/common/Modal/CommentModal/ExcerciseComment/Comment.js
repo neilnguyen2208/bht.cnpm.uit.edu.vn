@@ -240,7 +240,7 @@ class Comment extends React.Component {
       //if first condition is true => show all reply
       //if ONLY second condition is true => only show created reply, it is not best case :(
       let subReplyList;
-     
+
       subReplyList = <div> {this.replyArray.map(reply => {
 
         // if (this.createdReplyId && this.createdReplyId === reply.id) return <></>;
@@ -304,7 +304,7 @@ class Comment extends React.Component {
           <img className="comment-avatar" src={this.props.authorAvatarURL} alt="" />
           {/* On view condition */}
           {this.isEditMode ?
-            <div className="comment-box edit">
+            <div className="comment-box edit  exercise">
               <Editor editorId={"edit-comment-" + this.props.commentId}
                 onChange={() => this.onEditorChange()}
                 onInstanceReady={() => this.onEditorReady()}
@@ -321,12 +321,16 @@ class Comment extends React.Component {
             : <></>
           }
 
-          <div className="comment-box"
-            style=
-            {this.isEditMode ?
+          <div className="comment-box  exercise"
+            style={this.isEditMode ?
               { display: "none" } :
               this.props.createdCommentId === this.props.commentId ?
-                { display: "block", border: "1px solid var(--blue)", boxShadow: "0px 0px 2px 0px var(--blue)" } : { display: "block" }
+                {
+                  display: "block",
+                  border: "1px solid var(--blue)",
+                  boxShadow: "0px 0px 2px 0px var(--blue)"
+                } :
+                { display: "block" }
             }>
             <div className="comment-head">
               <div className="d-flex" >
@@ -379,9 +383,7 @@ class Comment extends React.Component {
         <div className="comments-list reply-list">
           {replyList}
         </div>
-        <div style={{ height: "0px", width: "0px" }} >
-          <div className="triangle-with-shadow comment" />
-        </div>
+
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div >

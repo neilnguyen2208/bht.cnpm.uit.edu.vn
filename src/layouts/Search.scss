@@ -20,7 +20,13 @@
     margin-top: -1.5rem;
 }
 
-.h-filter-c+div {
+.r-h-filter-c {
+    right: 0px;
+    position: relative;
+    margin-top: -1.5rem;
+}
+
+.h-filter-c + div {
     margin-top: 1.5rem;
 }
 
@@ -57,7 +63,7 @@
     border-bottom-right-radius: 0.3rem;
 }
 
-.h-filter-item+.h-filter-item {
+.h-filter-item + .h-filter-item {
     border-left: none;
 }
 
@@ -125,7 +131,6 @@
     margin: auto;
     height: 30px;
 }
-
 
 .h-menu-item.active {
     color: var(--blue);

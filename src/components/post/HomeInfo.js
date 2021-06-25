@@ -4,7 +4,7 @@ import 'components/styles/HomeItem.scss'
 import { Link } from 'react-router-dom'
 import HomeReactionbar from 'components/post/HomeReactionbar'
 
-class HomeFullInfo extends React.Component {
+class HomeFirstInfo extends React.Component {
   render() {
 
     return (
@@ -71,4 +71,4 @@ class HomeFullInfo extends React.Component {
     );
   }
 }
-export default HomeFullInfo;
+export default HomeFirstInfo;

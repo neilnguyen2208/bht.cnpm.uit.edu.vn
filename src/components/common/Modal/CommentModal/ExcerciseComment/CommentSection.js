@@ -70,7 +70,7 @@ class CommentSection extends React.Component {
         commentsList = <div>Không có bình luận nào</div>
       }
 
-      else commentsList = <div className="comments-list scroller-container">  {
+      else commentsList = <div className="comments-list">  {
         this.props.commentsList.map(comment => {
           return <Comment
             commentId={comment.id}
@@ -109,19 +109,21 @@ class CommentSection extends React.Component {
           </div>
           : <></>
         }
-        {this.props.exerciseAvailableActions.includes(exerciseAction.Comment) &&
-          <CreateComment exerciseId={this.props.id} />}
-        {!this.props.isLoading && this.props.commentsList ?
-          <div>
-            {commentsList}
-          </div>
-          :
-          <div>
-            <CommentLoader />
-            <CommentLoader />
-            <CommentLoader />
-          </div>
-        }
+        <div className=" scroller-container">
+          {this.props.exerciseAvailableActions.includes(exerciseAction.Comment) &&
+            <CreateComment exerciseId={this.props.id} />}
+          {!this.props.isLoading && this.props.commentsList ?
+            <div>
+              {commentsList}
+            </div>
+            :
+            <div>
+              <CommentLoader />
+              <CommentLoader />
+              <CommentLoader />
+            </div>
+          }
+        </div>
       </div >
     );
   }

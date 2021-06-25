@@ -93,12 +93,12 @@
 
 .exercise-title-container {
   margin-left: 5px;
+  justify-content: space-between;
   padding-bottom: 2px;
   display: flex;
 }
 
-.excercise-title {
-  width: 100%;
+.exercise-title {
   margin-left: 5px;
   font-size: 1.1rem;
   font-family: "BarlowCondensed-Medium";
@@ -121,6 +121,16 @@
   padding-top: 2px;
   padding-bottom: 2px;
   border-radius: 4px;
+}
+
+.exercise-prefix.max {
+  border: 1px solid var(--green);
+  border-bottom: 3px solid var(--green);
+}
+
+.exercise-prefix.attempted {
+  border: 1px solid var(--orange);
+  border-bottom: 3px solid var(--orange);
 }
 
 .topic-container .dropdown-btn {

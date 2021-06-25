@@ -8,15 +8,38 @@ class HomeTextInfo extends React.Component {
   render() {
 
     return (
-      <div className="home-item" >
+      <div className="home-item text" >
         <div className="metadata" >
-
-          <div className="j-c-space-between mg-top-10px">
+          <div className="j-c-space-between">
             <div className="d-flex">
-              <div className="category">
-                {this.props.categoryName}
+              <div className="d-flex">
+                <div className="category">
+                  {this.props.categoryName}
+                </div>
               </div>
+              <div className="light-black-label">bởi</div>
+              <Link className="link-label-s" to={`/user/profile/${this.props.authorID}`}>
+                {this.props.authorDisplayName}
+              </Link>
             </div>
+          </div>
+        </div>
+
+        <div className="d-flex mg-top-10px" >
+          <Link to={`/user/profile/${this.props.authorID}`}>
+            <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+          </Link>
+          <div style={{ marginLeft: "10px" }}>
+            <Link to={"/post-content/" + this.props.id} >
+              <div className="title title-hv" style={{ marginTop: "-2px" }}>
+                {this.props.title}
+              </div>
+              <div className="title-hv-c">
+                <div className="title-hv-m">
+                  {this.props.title}
+                </div>
+              </div>
+            </Link>
             <div className="d-flex">
               <div className="d-flex"  >
                 <div className="metadata-label" style={{ marginLeft: "2px" }}>
@@ -29,29 +52,7 @@ class HomeTextInfo extends React.Component {
                 </div>
               </div>
             </div>
-
           </div>
-        </div>
-
-        {/* title */}
-        <Link to={"/post-content/" + this.props.id}>
-          <div className="title title-hv">
-            {this.props.title}
-          </div>
-          <div className="title-hv-c">
-            <div className="title-hv-m">
-              {this.props.title}
-            </div>
-          </div>
-        </Link>
-
-        <div className="d-flex mg-top-5px" >
-          <Link to={`/user/profile/${this.props.authorID}`}>
-            <img style={{ marginLeft: "5px" }} className="avatar" src={this.props.authorAvatarURL} alt="" />
-          </Link>
-          <Link className="link-label-s mg-left-5px" style={{ lineHeight: "25px" }} to={`/user/profile/${this.props.authorID}`}>
-            {this.props.authorDisplayName}
-          </Link>
         </div>
 
         <div className="summary-text">

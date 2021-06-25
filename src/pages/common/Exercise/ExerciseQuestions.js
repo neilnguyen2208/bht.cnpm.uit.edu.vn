@@ -8,16 +8,33 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import { getExerciseById, getExerciseQuestions, checkExerciseAnswers, getExerciseNote, updateExerciseNote } from 'redux/services/courseServices'
-import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import {
+    getExerciseById,
+    getExerciseQuestions,
+    checkExerciseAnswers,
+    getExerciseNote,
+    updateExerciseNote
+} from 'redux/services/courseServices'
+import {
+    formatMathemicalFormulas,
+    styleCodeSnippet
+} from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader';
 import QuestionsToC from 'components/course/QuestionsToC';
 import QuestionItem from 'components/course/QuestionItem';
 import store from 'redux/store';
-import { update_QuestionsToCSucess, update_QuestionsToCReset, update_ExerciseNoteReset, check_ExerciseQuestionsRequest } from 'redux/actions/courseAction';
+import {
+    update_QuestionsToCSucess,
+    update_QuestionsToCReset,
+    update_ExerciseNoteReset,
+    check_ExerciseQuestionsRequest
+} from 'redux/actions/courseAction';
 import authService from 'authentication/authenticationServices';
 import Countdown from 'components/course/Countdown';
-import { closeModal, openCommentModal, openModal } from 'redux/services/modalServices';
+import {
+    closeModal,
+    openModal
+} from 'redux/services/modalServices';
 
 class PostDetail extends React.Component {
     constructor(props) {
@@ -88,8 +105,15 @@ class PostDetail extends React.Component {
     }
 
     checkAllAnswers = () => {
-        if (this.ANSWERS_DTO)
+        console.log("checked")
+        console.log(this.ANSWERS_DTO)
+        if (this.ANSWERS_DTO) {
             this.props.checkExerciseAnswers(this.props.match.params.id, this.ANSWERS_DTO);
+            //will open modal if done
+        }
+        //hide check answer
+        document.getElementById("check-answer" + this.props.match.params.id).style.display = "none";
+
     }
 
     saveNote = (e) => {
@@ -102,27 +126,43 @@ class PostDetail extends React.Component {
     render() {
 
         // if props.questions && firstLoadQuestion (when questions data is loaded the first time)
-        if (!this.isFirstTimeQuestionLoaded && this.props.questions.length > 0 && !this.props.isQuestionsLoading) {
+        if (!this.isFirstTimeQuestionLoaded
+            && this.props.questions.length > 0
+            && !this.props.isQuestionsLoading) {
             this.isFirstTimeQuestionLoaded = true;
 
             //init toc dto: 
             for (let i = 0; i < this.props.questions.length; i++) {
-                this.questionToC.push({ id: this.props.questions[i].id, isAnswered: false, isFlagged: false, isCorrect: false })
+                this.questionToC.push({
+                    id: this.props.questions[i].id,
+                    isAnswered: false,
+                    isFlagged: false,
+                    isCorrect: false
+                })
             }
             store.dispatch(update_QuestionsToCSucess(this.questionToC))
 
             //init answer dto:
             for (let i = 0; i < this.props.questions.length; i++) {
-                this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
+                this.ANSWERS_DTO.push({
+                    id: this.props.questions[i].id,
+                    answersSelected: []
+                })
             }
             this.setState({});
         }
 
         //when check all answer
-        if (!this.isFirstTimeAnswerChecked && this.props.questions.length > 0 && !this.props.isQuestionsLoading && this.props.isAnswerChecked) {
+        if (!this.isFirstTimeAnswerChecked
+            && this.props.questions.length > 0
+            && !this.props.isQuestionsLoading
+            && this.props.isAnswerChecked
+            && this.props.correctAnswers.length > 0) {
+
             this.isFirstTimeAnswerChecked = true;
             this.finalResult = [];
             this.correctAnswerCount = 0;
+            console.log("check 2");
             //update current question array
             for (let i = 0; i < this.props.questions.length; i++) {
                 this.finalResult.push({
@@ -143,14 +183,9 @@ class PostDetail extends React.Component {
                 if (this.props.correctAnswers[i].isCorrect) {
                     this.correctAnswerCount++;
                 }
-
             }
+            store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
 
-            //reset answer
-            for (let i = 0; i < this.props.questions.length; i++) {
-                this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
-            }
-            store.dispatch(check_ExerciseQuestionsRequest());
             openModal("confirmation", {
                 title: "Kết quả",
                 showIcon: false,
@@ -160,7 +195,13 @@ class PostDetail extends React.Component {
                     closeModal();
                 }
             })
-            store.dispatch(update_QuestionsToCSucess([...this.questionToC]));
+
+            //reset answer
+            for (let i = 0; i < this.props.questions.length; i++) {
+                this.ANSWERS_DTO.push({ id: this.props.questions[i].id, answersSelected: [] })
+            }
+
+            // store.dispatch(check_ExerciseQuestionsRequest());
             this.setState({});
         }
 
@@ -202,7 +243,7 @@ class PostDetail extends React.Component {
                                 </div>
                             }
 
-                            {/* Render questions */}
+                            {/* Render questions, without result */}
                             {!this.props.isAnswerChecked && !this.props.isQuestionsLoading && this.props.questions &&
                                 this.props.questions.map((question, index) => {
                                     return <QuestionItem
@@ -218,6 +259,8 @@ class PostDetail extends React.Component {
                                         onAnswerChecked={this.onAnswerChecked}
                                         onQuestionFlagged={this.onQuestionFlagged} />
                                 })}
+
+                            {/* with result */}
                             {this.props.isAnswerChecked && !this.props.isAnswersLoading && this.finalResult &&
                                 this.finalResult.map((question, index) => {
                                     return <QuestionItem
@@ -232,12 +275,13 @@ class PostDetail extends React.Component {
                                         content={question.content}
                                         rank={question.rank}
                                         answers={question.exerciseAnswerDTOs}
+                                        correctAnswers={question.correctAnswers}
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}
                                         onAnswerChecked={this.onAnswerChecked}
                                         onQuestionFlagged={this.onQuestionFlagged} />
                                 })}
-                            <button className="blue-button" onClick={() => this.checkAllAnswers()} >Kiểm tra kết quả</button>
+                            <button className="blue-button" id={"check-answer" + this.props.match.params.id} onClick={() => this.checkAllAnswers()} >Kiểm tra kết quả</button>
                         </div>
                     </div>
                     <div>

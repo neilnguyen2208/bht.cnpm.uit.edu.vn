@@ -19,13 +19,13 @@ class Editor extends React.Component {
 
   scriptCKELoaded = () => {
     // console.log("editor loaded!")
-    //bhtConfiguration
-    // let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
+    // bhtConfiguration
+    let toolbarConfig = this.props.config ? this.props.config : CKEToolbarConfiguration;
 
     let bhtConfiguration = {
       extraPlugins: 'nvd_math',
       mathJaxLib: '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML',
-      // toolbar: toolbarConfig,
+      toolbar: toolbarConfig,
       format_tags: 'p;h1;h2;h3;pre',
       stylesSet: styleConfig,
       codeSnippet_theme: codeSnippet_theme,
@@ -118,8 +118,6 @@ class Editor extends React.Component {
 
         infoTab.get('lang').label = 'Chọn ngôn ngữ lập trình:';
         infoTab.get('code').label = `Nội dung code:`;
-
-
 
       }
     });

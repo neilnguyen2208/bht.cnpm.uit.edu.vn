@@ -147,6 +147,10 @@
   border: 1px solid var(--gray);
 }
 
+.comments-list .comment-box.exercise {
+  margin-left: 0.5rem;
+}
+
 .comments-list.cr .comment-box,
 .reply-item.cr .comment-box {
   border: none;

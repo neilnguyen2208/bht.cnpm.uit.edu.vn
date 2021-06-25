@@ -88,7 +88,13 @@ import {
     GET_A_POST_STATISTIC_FAILURE,
     GET_POSTS_BY_FILTER_REQUEST,
     GET_POSTS_BY_FILTER_SUCCESS,
-    GET_POSTS_BY_FILTER_FAILURE
+    GET_POSTS_BY_FILTER_FAILURE,
+    GET_POSTS_BY_CATEGORY_ID_FAILURE,
+    GET_POSTS_BY_CATEGORY_ID_SUCCESS,
+    GET_POSTS_BY_CATEGORY_ID_REQUEST,
+    GET_TRENDING_POSTS_REQUEST,
+    GET_TRENDING_POSTS_SUCCESS,
+    GET_TRENDING_POSTS_FAILURE
 
 
 } from "../constants.js"
@@ -524,4 +530,29 @@ export function get_PostsByFilterSuccess(data) {
 
 export function get_PostsByFilterFailure(error) {
     return { type: GET_POSTS_BY_FILTER_FAILURE, payload: error }
+}
+
+//for posts list page
+export function get_PostsByCategoryIdRequest(categoryId) {
+    return { type: GET_POSTS_BY_CATEGORY_ID_REQUEST, payload: { id: categoryId } }
+}
+
+export function get_PostsByCategoryIdSuccess(categoryId, data) {
+    return { type: GET_POSTS_BY_CATEGORY_ID_SUCCESS, payload: { id: categoryId, data: data } }
+}
+
+export function get_PostsByCategoryIdFailure(categoryId, error) {
+    return { type: GET_POSTS_BY_CATEGORY_ID_FAILURE, payload: { error: error, id: categoryId } }
+}
+
+export function get_TrendingPostsRequest() {
+    return { type: GET_TRENDING_POSTS_REQUEST }
+}
+
+export function get_TrendingPostsSuccess(data) {
+    return { type: GET_TRENDING_POSTS_SUCCESS, payload: data }
+}
+
+export function get_TrendingPostsFailure(error) {
+    return { type: GET_TRENDING_POSTS_FAILURE, payload: error }
 }

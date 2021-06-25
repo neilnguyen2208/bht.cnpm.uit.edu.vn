@@ -22,7 +22,6 @@ import { publishedTimeOptions, itemType } from 'constants.js';
 import SearchHorizontalMenubar from './SearchHorizontalMenubar';
 import Loader from 'components/common/Loader/Loader';
 
-
 class DocumentsList extends React.Component {
 
     componentDidMount() {
@@ -101,46 +100,60 @@ class DocumentsList extends React.Component {
 
     render() {
 
-        if (!this.props.isSubjectLoading && this.props.subjects)
-            this.subjectCombobox = < div className="mg-top-10px" >
-                <div className="filter-label t-a-right mg-right-5px">Môn học: </div>
-                <div className="mg-left-5px">
-                    <ComboBox
-                        options={this.props.subjects}
-                        placeHolder="Tất cả"
-                        onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
-                        id="my-document-list-subject-filter-combobox"
-                    ></ComboBox>
-                </div>
-            </div >
-
-        if (!this.props.isCategoryLoading && this.props.categories) {
-            this.comboboxGroup =
-                <div className="j-c-space-between">
-                    <div>
+        if (!this.props.isCategoryLoading && this.props.categories && !this.props.isSubjectLoading && this.props.subjects) {
+            this.comboboxGroup = <div className="j-c-space-between" style={{ marginTop: "30px" }}>
+                <div className="d-flex">
+                    <div className="d-flex">
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
                             <ComboBox
                                 selectedOptionID={"0"}
                                 options={this.props.categories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="my-document-list-category-filter-combobox"
+                                comboboxId="my-document-list-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
-                    <div>
-                        <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
+                    <div className="d-flex" style={{ marginLeft: "10px" }}>
+                        <div className="filter-label t-a-right mg-right-5px">Môn học: </div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                options={publishedTimeOptions}
-                                selectedOptionID={1}
+                                options={this.props.subjects}
                                 placeHolder="Tất cả"
-                                onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                                id="pltf-combobox" //post list time filter 
+                                onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
+                                comboboxId="my-document-list-subject-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
-                </div >
+                </div>
+                <div>
+                    <div className="r-h-filter-c" style={{ marginTop: "-43px" }}>
+                        <div className="h-filter">
+                            <div className={!getQueryParamByName("tab") ||
+                                (getQueryParamByName("tab") !== "most-likes"
+                                    && getQueryParamByName("tab") !== "most-views")
+                                ? "h-filter-item active first" : "h-filter-item first"}
+                                onClick={() => this.onFilterClick("newest")}
+                            > Đang hot</div>
+
+                            <div className={getQueryParamByName("tab") === "most-likes"
+                                ? "h-filter-item active" : "h-filter-item"}
+                                onClick={() => this.onFilterClick("most-likes")}
+                            >Tốt nhất</div>
+
+                            <div className={getQueryParamByName("tab") === "most-likes"
+                                ? "h-filter-item active" : "h-filter-item"}
+                                onClick={() => this.onFilterClick("most-likes")}
+                            >Mới nhất</div>
+
+                            <div className={getQueryParamByName("tab") === "most-views"
+                                ? "h-filter-item last active" : "h-filter-item last"}
+                                onClick={() => this.onFilterClick("most-views")}
+                            >Lượt thích</div>
+                        </div>
+                    </div>
+                </div>
+            </div >
 
         }
 
@@ -218,7 +231,7 @@ class DocumentsList extends React.Component {
                         {this.props.isListLoading ?
                             < Loader /> :
                             <div>
-                                <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
+                                <div className="gray-label" style={{ marginBottom: "20px" }}> Tổng số kết quả: {this.props.totalElements}  </div>
                                 <div >{this.documentsList}</div>
 
                                 < Paginator config={{

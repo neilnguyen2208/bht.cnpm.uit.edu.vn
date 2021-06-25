@@ -83,7 +83,11 @@
 }
 
 .question-item {
+  border: 1px solid var(--gray);
+  padding: 10px;
   margin-bottom: 15px;
+  // display: flex;
+  width: 100%;
 }
 
 .question-toc-item {
@@ -123,8 +127,8 @@
 }
 
 .question-content {
-  margin-top: 5px;
-  font-weight: 600;
+  margin-top: 0px;
+  font-family: "Arial";
 }
 
 .question-toc-item:nth-child(7n + 1) {
@@ -133,6 +137,9 @@
 
 .answer-container.ck-editor-output {
   margin-top: 0px;
+  font-family: "Arial";
+  padding: 0px;
+  font-weight: 400;
 }
 
 .question-index {

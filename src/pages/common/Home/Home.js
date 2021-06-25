@@ -10,7 +10,7 @@ import './Home.scss'
 
 //utils
 import { setQueryParam } from 'utils/urlUtils'
-import HomePostItem from 'components/post/HomeFullInfo'
+import HomePostItem from 'components/post/HomeInfo'
 import HomeDocumentItem from 'components/document/HomeInfo'
 
 import Wallpage from 'components/home/Wallpage/Wallpage'

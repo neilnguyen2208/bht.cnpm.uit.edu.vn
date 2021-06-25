@@ -13,7 +13,7 @@ export const CKEToolbarConfiguration = [
 ];
 
 export const CommentCKEToolbarConfiguration =[
-  { name: 'clipboard', items: ['Undo', 'Redo'] },
+  // { name: 'clipboard', items: ['Undo', 'Redo'] },
   { name: 'links', items: ['Link'] },
   { name: 'insert', items: ['Image', 'HorizontalRule', 'SpecialChar'] },
   { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },

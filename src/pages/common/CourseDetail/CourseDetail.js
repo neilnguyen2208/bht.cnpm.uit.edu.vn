@@ -35,6 +35,7 @@ class PostsList extends React.Component {
 
     render() {
 
+        //List of topics
         let topicsList = <></>;
         if (!this.props.isTopicsLoading && this.props.topicsData.length > 0)
             topicsList = <div style={{ borderLeft: "3px var(--blue) solid" }}>
@@ -50,19 +51,39 @@ class PostsList extends React.Component {
                             </div>
                         </div>
                         <div id={"topic-content-dropdown-" + topicItem.id} className="d-block">
-                            {topicItem.exerciseSummaryDTOs && topicItem.exerciseSummaryDTOs.map(exercise => {
-                                return <div className={exercise.attempted ? "exercise-title-container attempted" : "exercise-title-container"}>
-                                    <div style={{ width: "26px", height: "26px", marginTop: "5px", marginRight: "5px" }}>
-                                        <img className="exercise-prefix" src={homework_icon} alt="" />
+                            {/* Exercises list of an  */}
+                            {topicItem.exerciseSummaryDTOs
+                                && topicItem.exerciseSummaryDTOs.map(exercise => {
+
+                                    return <div className={exercise.attempted ? "exercise-title-container" : "exercise-title-container"}>
+                                        {/* icon decoration */}
+                                        <div className="d-flex">
+                                            <div style={{ width: "26px", height: "26px", marginTop: "5px", marginRight: "5px", marginLeft: "10px" }}>
+                                                <img className={
+                                                    exercise.maxCorrectAnsweredQuestions === exercise.totalQuestions && exercise.attempted ?
+                                                        "exercise-prefix max" :
+                                                        exercise.maxCorrectAnsweredQuestions < exercise.totalQuestions
+                                                            && exercise.maxCorrectAnsweredQuestions
+                                                            ? "exercise-prefix attempted" :
+                                                            "exercise-prefix"
+                                                } src={homework_icon} alt="" />
+                                            </div>
+                                            <Link className="exercise-title" to={`/courses/exercise/${exercise.id}`} >
+                                                {exercise.title}
+                                            </Link>
+                                        </div>
+                                        {exercise.attempted && exercise.maxCorrectAnsweredQuestions ?
+                                            <div className="exercise-title" style={{ minWidth: "fit-content" }}>
+                                                {exercise.maxCorrectAnsweredQuestions + "/" + exercise.totalQuestions}
+                                            </div>
+                                            : <></>
+                                        }
                                     </div>
-                                    <Link className="excercise-title" to={`/courses/exercise/${exercise.id}`} >
-                                        {exercise.title}
-                                    </Link>
-                                </div>
-                            })}
+                                })}
                         </div>
                     </div>
-                })}
+                })
+                }
             </div >
 
         return (

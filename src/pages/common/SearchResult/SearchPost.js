@@ -115,19 +115,7 @@ class SearchPost extends React.Component {
             postSearchResult = <Loader />
         let combobox = <></>;
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0)
-            combobox = <div className="j-c-space-between">
-                <div className="d-flex">
-                    <div className="filter-label t-a-right mg-right-5px">Thời gian:</div>
-                    <div className="mg-left-5px">
-                        <ComboBox
-                            options={publishedTimeOptions}
-                            selectedOptionID={1}
-                            placeHolder="Tất cả"
-                            onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                            comboboxId="pstf-combobox" //post seacrh time filter 
-                        ></ComboBox>
-                    </div>
-                </div>
+            combobox = <div className="j-c-space-between" style={{ marginTop: "20px" }}>
                 <div className="d-flex">
                     <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                     <div className="mg-left-5px">
@@ -139,7 +127,33 @@ class SearchPost extends React.Component {
                         ></ComboBox>
                     </div>
                 </div>
-            </div>
+                <div className="r-h-filter-c" style={{ marginTop: "-33px" }}>
+                    <div className="h-filter">
+                        <div className={!getQueryParamByName("tab") ||
+                            (getQueryParamByName("tab") !== "most-likes"
+                                && getQueryParamByName("tab") !== "most-views")
+                            ? "h-filter-item active first" : "h-filter-item first"}
+                            onClick={() => this.onFilterClick("newest")}
+                        > Đang hot</div>
+
+                        <div className={getQueryParamByName("tab") === "most-likes"
+                            ? "h-filter-item active" : "h-filter-item"}
+                            onClick={() => this.onFilterClick("most-likes")}
+                        >Tốt nhất</div>
+
+                        <div className={getQueryParamByName("tab") === "most-likes"
+                            ? "h-filter-item active" : "h-filter-item"}
+                            onClick={() => this.onFilterClick("most-likes")}
+                        >Mới nhất</div>
+
+                        <div className={getQueryParamByName("tab") === "most-views"
+                            ? "h-filter-item last active" : "h-filter-item last"}
+                            onClick={() => this.onFilterClick("most-views")}
+                        >Lượt thích</div>
+                    </div>
+                </div>
+
+            </div >
 
         return (
             <div className="pr-layout" >
@@ -150,11 +164,12 @@ class SearchPost extends React.Component {
                         <div>
                             <div className="filter-container" >
                                 {combobox}
+
                             </div>
                             {this.props.isListLoading ?
                                 < Loader /> :
                                 <div>
-                                    <div className="gray-label margin-bottom-10px"> Tổng số kết quả: {this.props.totalElements}  </div>
+                                    <div className="gray-label" style={{ marginBottom: "20px" }}>  Tổng số kết quả: {this.props.totalElements}  </div>
                                     <div >{postSearchResult}</div>
 
                                     < Paginator config={{

@@ -85,7 +85,13 @@ import {    //highlight posts
     get_APostStatisticFailure,
     get_PostsByFilterRequest,
     get_PostsByFilterSuccess,
-    get_PostsByFilterFailure
+    get_PostsByFilterFailure,
+    get_PostsByCategoryIdRequest,
+    get_PostsByCategoryIdSuccess,
+    get_PostsByCategoryIdFailure,
+    get_TrendingPostsRequest,
+    get_TrendingPostsSuccess,
+    get_TrendingPostsFailure
 } from "redux/actions/postAction.js";
 
 import {
@@ -454,8 +460,7 @@ export function reportAPost(id, reason) { //
         authRequest.post(`/posts/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportAPostSuccess());
-            }
-            ).catch(() => dispatch(post_ReportAPostFailure()))
+            }).catch(() => dispatch(post_ReportAPostFailure()))
     }
 }
 
@@ -471,11 +476,9 @@ export function rejectAndFeedbackAPost(id, reason) { //
                 dispatch(closeModal());
                 openBLModal({ text: "Từ chối bài viết thành công!", type: "success" });
 
-            }
-            ).catch(() => {
+            }).catch(() => {
                 dispatch(post_RejectAndFeedbackAPostFailure())
-            }
-            )
+            })
     }
 }
 
@@ -536,5 +539,25 @@ export function getHighlightPostsIds() {
             .then(response => {
                 dispatch(get_HighlightPostsIdsSuccess(response.data));
             }).catch(error => { dispatch(get_HighlightPostsIdsFailure(error)) })
+    }
+}
+
+export function getPostsByCategoryId(categoryId) {
+    return dispatch => {
+        dispatch(get_PostsByCategoryIdRequest(categoryId));
+        authRequest.delete(`/posts/highlightPosts/ids`)
+            .then(response => {
+                dispatch(get_PostsByCategoryIdSuccess(categoryId, response.data));
+            }).catch(error => { dispatch(get_PostsByCategoryIdFailure(categoryId, error)) })
+    }
+}
+
+export function getTrendingPosts(categoryId) {
+    return dispatch => {
+        dispatch(get_TrendingPostsRequest());
+        authRequest.delete(`/posts/highlightPosts/ids`)
+            .then(response => {
+                dispatch(get_TrendingPostsSuccess(response.data));
+            }).catch(error => { dispatch(get_TrendingPostsFailure(error)) })
     }
 }

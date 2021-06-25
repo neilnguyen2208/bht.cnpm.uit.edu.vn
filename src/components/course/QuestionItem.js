@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import flaged_icon from 'assets/icons/24x24/blue_flag_icon_24x24.png';
 import unflaged_icon from 'assets/icons/24x24/gray_flag_icon_24x24.png';
+import correct_f_icon from 'assets/icons/24x24/correct_icon_n_24x24.png'
+import wrong_f_icon from 'assets/icons/24x24/wrong_icon_n_24x24.png'
 
 //styles
 import 'components/styles/Label.scss'
@@ -19,6 +21,7 @@ import { guestMenu } from './adapter/allActionSummaryMenu';
 import { closeModal, openBigModal, openCommentModal, openModal } from 'redux/services/modalServices';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
 import { Post, PostAction } from 'authentication/permission.config';
+import comment_icon from 'assets/icons/24x24/comment_icon_24x24.png'
 
 //components
 class QuestionItem extends React.Component {
@@ -40,12 +43,11 @@ class QuestionItem extends React.Component {
   }
 
   showOrHideExplaination = () => {
-    if (document.getElementById("xrcs-xplntn" + this.props.questionId).style.display === "none") {
+    if (this.isExplainationShown)
+      document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "none";
+    else
       document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "block";
-    }
-    else {
-      document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "block";
-    }
+
     this.isExplainationShown = !this.isExplainationShown;
     this.setState({});
 
@@ -104,83 +106,101 @@ class QuestionItem extends React.Component {
     return (
       //add id for navigation
       <div className="question-item" id={"qsitm-" + this.props.questionId} style={{ scrollMarginTop: "80px" }}>
-        <div className="j-c-space-between">
-          <div className="j-c-space-between w-100-percents">
-            <div className="question-index">
-              Câu {this.props.index + 1}:
+        <div className="w-100-percents">
+          <div className="j-c-space-between">
+            <div className="j-c-space-between w-100-percents">
+              <div className="d-flex">
+                <div className="question-index">
+                  Câu {this.props.index + 1}:
+                </div>
+                <div>
+                  {this.props.isChecked && this.props.isCorrect && <div style={{ position: "relative" }}>
+                    <img style={{ width: "auto", height: "20px", marginTop: "-2px", marginLeft: "5px" }} src={correct_icon} alt="" /></div>}
+                  {this.props.isChecked && !this.props.isCorrect && <div style={{ position: "relative" }}>
+                    <img style={{ width: "auto", height: "20px", marginTop: "-2px", marginLeft: "5px" }} src={wrong_icon} alt="" />
+                  </div>}
+                </div>
+              </div>
+
+              <div className="d-flex">
+                <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
+                  availableActions={this.props.availableActions} items={guestMenu}
+                  id={`${this.props.popUpMenuPrefix}-xrcs-qstn-itm-pm-${this.props.questionId}`} />
+              </div>
+
             </div>
-            <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
-              availableActions={this.props.availableActions} items={guestMenu}
-              id={`${this.props.popUpMenuPrefix}-xrcs-qstn-itm-pm-${this.props.questionId}`} />
-            {/* exercise question item popup menu*/}
-          </div>
 
-          <div>
-            {this.props.isChecked && this.props.isCorrect && <div style={{ position: "relative" }}>
-              <img style={{ width: "20px", height: "auto" }} src={correct_icon} alt="" /></div>}
-            {this.props.isChecked && !this.props.isCorrect && <div style={{ position: "relative" }}>
-              <img style={{ width: "20px", height: "auto" }} src={wrong_icon} alt="" />
-            </div>}
           </div>
+          <div className="ck-editor-output question-content" style={{ fontSize: "15px" }}
+            dangerouslySetInnerHTML={{
+              __html:
+                this.props.content
+            }}
+          />
 
+          {/* answer items */}
+          {
+            this.props.answers.map(answer => {
+              return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
+                <label className="container">
+
+
+                  <input type="radio" checked={this.props.isChecked && this.props.answersSelected.includes(answer.id)}
+                    onClick={!this.props.isChecked ? () => this.onAnswerChecked(this.props.questionId, answer) : (e) => { e.preventDefault() }}
+                    name={"fieldset" + this.props.questionId} />
+
+                  <div className="d-flex">
+                    <div className="answer-container ck-editor-output" style={{ fontSize: "15px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: answer.content
+                      }} />
+                    {
+                      this.props.isChecked
+                      && !this.props.isCorrect
+                      && this.props.answersSelected.length > 0
+                      && this.props.answersSelected.includes(answer.id)
+                      && <img src={wrong_f_icon} style={{ width: "auto", height: "16px", marginTop: "2px", marginLeft: "5px" }} alt="" ></img>
+                    }
+                    {
+                      this.props.isChecked
+                      && !this.props.isCorrect
+                      // && this.props.answersSelected.length > 0
+                      && this.props.correctAnswers.includes(answer.id)
+                      && <img src={correct_f_icon} style={{ width: "auto", height: "16px", marginTop: "2px", marginLeft: "10px" }} alt="" ></img>
+                    }
+                  </div>
+                  <span className="checkmark"></span>
+                </label>
+              </div>
+            })
+          }
+
+          {
+            this.props.explaination && <div className="mg-bottom-10px">
+              <button className="white-button" onClick={() => this.showOrHideExplaination()}>
+                {this.isExplainationShown ? "Ẩn giải thích" : "Xem giải thích"}
+              </button>
+              <div className="exercise-explaination d-none" id={"xrcs-xplntn" + this.props.questionId}>
+                {this.props.explaination}
+              </div>
+            </div>
+          }
         </div>
-        <div className="ck-editor-output question-content" style={{ fontSize: "15px" }}
-          dangerouslySetInnerHTML={{
-            __html:
-              this.props.content
-          }}
-        />
-
-        {
-          this.props.answers.map(answer => {
-            return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
-              <label className="container">
-                <div className="answer-container ck-editor-output" style={{ fontSize: "15px" }}
-                  dangerouslySetInnerHTML={{
-                    __html: answer.content
-                  }} />
-                <input type="radio" checked={this.props.isChecked && this.props.answersSelected.includes(answer.id)}
-                  onClick={!this.props.isChecked ? () => this.onAnswerChecked(this.props.questionId, answer) : (e) => { e.preventDefault() }}
-                  name={"fieldset" + this.props.questionId} />
-                <span className="checkmark"></span>
-              </label>
-            </div>
-          })
-        }
-
-        {
-          this.props.explaination && <div className="mg-bottom-10px">
-            <button className="white-button" onClick={() => this.showOrHideExplaination()}>
-              {this.isExplainationShown ? "Ẩn giải thích" : "Xem giải thích"}
-            </button>
-            <div className="exercise-explaination d-none" id={"xrcs-xplntn" + this.props.questionId}>
-              {this.props.explaination}
-            </div>
-          </div>
-        }
-
-        <div className="reaction-bar" style={{ borderTop: "0px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
-          <div className="d-flex mg-top-5px">
-            <div className="flag-btn-container" onClick={this.toggleFlagImage}>
-              <div className="d-flex"> {flagBtn}</div>
-            </div>
+        <div className="question reaction-bar" style={{ borderTop: "1px solid var(--gray)", paddingBottom: "5px", paddingTop: "5px", margin: "0px", marginTop: "20px" }}>
+          <div className="flag-btn-container" onClick={this.toggleFlagImage}>
+            <div className="d-flex"> {flagBtn}</div>
           </div>
           <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
             availableActions={this.props.availableActions}
             requiredAction={PostAction.Comment}
             useAction={this.props.useAction}
             expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
-            <div className="comment-count-container">
-              <div className="comment-btn-text">
-                Bình luận
-              </div>
-              <div className="comment-btn-number">
-                {/* {formatNumber(this.props.commentCount)} */}
-              </div>
+            <div className="exercise comment-count-container">
+              {/* <img className="save-btn" alt="dislike" src={comment_icon} /> */}
+              <div className="comment-btn-text">Bình luận</div>
             </div>
           </RequireLogin>
         </div >
-
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div >);

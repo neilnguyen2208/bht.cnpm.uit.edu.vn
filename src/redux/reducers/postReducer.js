@@ -189,6 +189,9 @@ const initialState = {
         totalElements: 0
     },
 
+    postsByCategory: {
+
+    }
 };
 
 function PostReducer(state = initialState, action) {

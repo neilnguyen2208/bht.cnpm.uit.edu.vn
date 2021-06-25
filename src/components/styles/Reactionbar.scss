@@ -7,6 +7,12 @@
   height: fit-content;
 }
 
+// .reaction-bar.question {
+//   display: flex;
+//   width: fit-content;
+//   flex-direction: column;
+// }
+
 //post area
 .post-like-btn {
   width: 18px;
@@ -29,9 +35,20 @@
 }
 
 .flag-btn-container {
+  // .exercise.comment-count-container {
   @extend .like-btn-container;
-  min-width: 80px;
+  // min-width: 30px;
+  // width: 30px;
+  // padding: 7px;
+  // padding-top: 5px;
+  // border-radius: 50%;
+  // border-bottom: 1px solid var(--gray);
+  // height: 30px;
 }
+
+// .exercise.comment-count-container {
+//   padding: 5px;
+// }
 
 .like-btn-container:hover,
 .reaction-bar .save-btn-container:hover {

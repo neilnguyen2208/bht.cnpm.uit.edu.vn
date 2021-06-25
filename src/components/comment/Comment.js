@@ -490,9 +490,7 @@ class Comment extends React.Component {
         <div className="comments-list reply-list">
           {replyList}
         </div>
-        <div style={{ height: "0px", width: "0px" }} >
-          <div className="triangle-with-shadow comment" />
-        </div>
+        
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div >

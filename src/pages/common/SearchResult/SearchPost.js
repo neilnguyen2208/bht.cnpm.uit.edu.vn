@@ -198,7 +198,7 @@ class SearchPost extends React.Component {
             postSearchResult = <Loader />
         let combobox = <></>;
         if (!this.props.isCategoryLoading && this.props.postCategories.length !== 0)
-            combobox = <div className="j-c-space-between" style={{ marginTop: "20px" }}>
+            combobox = <div className="j-c-space-between" style={{ marginTop: "50px" }}>
                 <div className="d-flex">
                     <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                     <div className="mg-left-5px">
@@ -210,7 +210,7 @@ class SearchPost extends React.Component {
                         ></ComboBox>
                     </div>
                 </div>
-                <div className="r-h-filter-c" style={{ marginTop: "-33px" }}>
+                <div className="r-h-filter-c" style={{ marginTop: "-63px" }}>
                     <div className="h-filter">
                         <div className={!getQueryParamByName("tab") ||
                             (getQueryParamByName("tab") !== "top"

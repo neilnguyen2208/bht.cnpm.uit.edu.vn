@@ -48,6 +48,10 @@ export function generateSearchParam(searchParamObject) { //for generating search
                 return;
             if ((key === "categoryID" || key === "category" || key === "postCategoryID") && searchParamObject[key] === "0")
                 return;
+            if ((key === "subjectID" || key === "subject") && searchParamObject[key] === 0)
+                return;
+            if ((key === "subjectID" || key === "subject") && searchParamObject[key] === "0")
+                return;
             if (searchParamObject[key] === null) return;
 
             //neu la category.id hoac category => value bang 0 thi khong them vao

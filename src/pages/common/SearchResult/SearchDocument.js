@@ -168,7 +168,7 @@ class DocumentsList extends React.Component {
     render() {
 
         if (!this.props.isCategoryLoading && this.props.categories.length > 1 && !this.props.isSubjectLoading && this.props.subjects.length > 1) {
-            this.comboboxGroup = <div className="j-c-space-between" style={{ marginTop: "30px" }}>
+            this.comboboxGroup = <div className="j-c-space-between" style={{ marginTop: "50px" }}>
                 <div className="d-flex">
                     <div className="d-flex">
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
@@ -195,7 +195,7 @@ class DocumentsList extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <div className="r-h-filter-c" style={{ marginTop: "-43px" }}>
+                    <div className="r-h-filter-c" style={{ marginTop: "-63px" }}>
                         <div className="h-filter">
                             <div className={!getQueryParamByName("tab") ||
                                 (getQueryParamByName("tab") !== "top"

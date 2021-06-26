@@ -16,6 +16,15 @@
   box-shadow: 0px 0px 2px 0px var(--grayish);
 }
 
+.home-item-container.row .home-item {
+  min-width: 320px;
+  width: 320px;
+}
+
+.home-item-container.row + .home-item-container.row {
+  margin-left: 20px;
+}
+
 .home-item + .home-item {
   margin-left: 20px;
 }
@@ -39,7 +48,8 @@
   border: 1px solid var(--gray);
   padding: 10px;
 }
-.posts-list-container .home-item-container:first-child {
+
+.posts-list-container.row .home-item-container:first-child {
   padding-right: 10px;
 }
 

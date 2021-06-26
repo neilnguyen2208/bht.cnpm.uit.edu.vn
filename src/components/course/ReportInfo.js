@@ -5,7 +5,7 @@ import 'components/styles/Button.scss'
 import calendar_icon from 'assets/icons/24x24/calendar_icon_24x24.png'
 import clock_icon from 'assets/icons/24x24/clock_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import { resolveStatus } from 'constants.js'
+import { exerciseResolveStatus } from 'constants.js'
 
 import { Link } from 'react-router-dom'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
@@ -22,8 +22,8 @@ export default class ReportInfo extends React.PureComponent {
     componentDidMount() {
         const DOMPurify = createDOMPurify(window);
         const clean = DOMPurify.sanitize(this.props.content);
-        if (document.querySelector(`#rprt-pst-ctnt-${this.props.postId}`))
-            document.querySelector(`#rprt-pst-ctnt-${this.props.postId}`).innerHTML = clean;
+        if (document.querySelector(`#rprt-pst-ctnt-${this.props.exerciseId}`))
+            document.querySelector(`#rprt-pst-ctnt-${this.props.exerciseId}`).innerHTML = clean;
     }
 
     render() {
@@ -53,10 +53,13 @@ export default class ReportInfo extends React.PureComponent {
                 và {this.props.reporters.length - 2} người khác
             </div>
 
-        if (this.props.resolvedTime)
-            this.type = resolveStatus.resolved
+        if (this.props.actionTaken === exerciseResolveStatus.fixed)
+            this.type = exerciseResolveStatus.fixed
         else
-            this.type = resolveStatus.notResolved;
+            if (this.props.actionTaken === exerciseResolveStatus.inProgress)
+                this.type = exerciseResolveStatus.inProgress
+            else if (this.props.actionTaken === exerciseResolveStatus.rejected)
+                this.type = exerciseResolveStatus.rejected
         return (
             <div className="report-info metadata">
                 <div className="activity-metadata"  >
@@ -70,16 +73,19 @@ export default class ReportInfo extends React.PureComponent {
                                 {this.props.author.displayName + " "}
                             </Link>
                             <div className="black-label-s" style={{ marginLeft: "3px" }}>{" - "}</div>
-                            {this.type === resolveStatus.resolved ?
-                                <div className="blue-border-label">RESOLVED</div>
-                                :
-                                <div className="red-border-label">PENDING</div>
+                            {this.type === exerciseResolveStatus.fixed ?
+                                <div className="green-border-label">FIXED</div> :
+                                this.type === exerciseResolveStatus.inProgress ?
+                                    <div className="blue-border-label">IN PROGRESS</div> :
+                                    this.type === exerciseResolveStatus.rejected ?
+                                        <div className="red-border-label">REJECTED</div> :
+                                        <div className="gray-border-label">PENDING</div>
                             }
                         </div>
 
                         <div className="d-flex">
                             <img className="avatar mg-top-10px" style={{ marginRight: "10px" }} src={this.props.author.avatarURL} alt="" />
-                            <Link className="activity-title" to={`/post-content/${this.props.postId}`} >{this.props.title}</Link>
+                            <Link className="activity-title" to={`/courses/exercise-content/${this.props.exerciseId}`} >{this.props.title}</Link>
                         </div>
 
                     </div>

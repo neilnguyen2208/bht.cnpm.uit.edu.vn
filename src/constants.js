@@ -1,15 +1,15 @@
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import pin_icon from 'assets/icons/24x24/pinned_icon_24x24.png'
-import unpin_icon from 'assets/icons/24x24/unpinned_icon_24x24.png'
-import stick_to_top from 'assets/icons/24x24/stick_to_top_icon_24x24.png'
 
 export const itemType = { approval: "APPROVAL", normal: "NORMAL", mySelf: "MYSELF", report: "REPORT", management: "MANAGEMENT" }
 export const componentType = { document: "DOCUMENT", post: "POST" }
 export const approvalStatus = { pending: "PENDING_APPROVAL", rejected: "REJECTED", waitingForFeedback: "PENDING_FIX" }
 export const resolveType = { keep: "KEEP", delete: "DELETE" }
 export const resolveStatus = { resolved: "RESOLVED", notResolved: "NOT_RESOLVED" }
+export const exerciseResolveType = { fixed: "FIXED", inProgress: "IN_PROGRESS", rejected: "REJECTED" }
+export const exerciseResolveStatus = { fixed: "FIXED", inProgress: "IN_PROGRESS", rejected: "REJECTED" }
+
 export const courseContentType = { video: "VIDEO", artical: "ARTICAL", exercise: "EXERCISE" };
 export const detailType = { preview: "PREVIEW", normal: "NORMAL" }
 export const docReactionType = { like: "LIKE", dislike: "DISLIKE", none: "NONE" }
@@ -27,7 +27,6 @@ export const resolveStateOptions = [
   { id: 1, name: "Tất cả", icon: report_icon, value: "REPORT_POST" },
   { id: 2, name: "Chưa xử lý", icon: report_icon, value: "REPORT_POST" },
   { id: 3, name: "Đã xử lý", icon: report_icon, value: "REPORT_POST" },
-
 ]
 
 export const exerciseResolveStateOptions = [

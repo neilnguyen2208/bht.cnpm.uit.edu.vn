@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 
 import HomeFirstInfo from 'components/post/HomeFirstInfo';
 import HomeTextInfo from 'components/post/HomeTextInfo';
+import HomeInfo from 'components/post/HomeInfo';
+import bg from 'assets/images/BG1_White.jpg'
 import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
 import { request } from 'utils/requestUtils';
 
@@ -56,11 +58,10 @@ class PostsList extends React.Component {
         })
     }
 
-    renderThreeItems = (items) => {
-
+    renderGridThreeItems = (items) => {
         return <div className="d-flex">
             {/* //item 0 */}
-            {items[0] && <div className="home-item-container" style={{ paddingRight: "10px" }} key={items[0].id} >
+            {items[0] && <div className="home-item-container grid" style={{ paddingRight: "10px" }} key={items[0].id} >
                 <HomeFirstInfo
                     authorAvatarURL={items[0].authorAvatarURL}
                     key={items[0].id}
@@ -86,7 +87,7 @@ class PostsList extends React.Component {
             {/* //item1, item2*/}
 
             <div style={{ borderLeft: "1px solid var(--grayish)", paddingLeft: "10px" }} >
-                {items[1] && < div className="home-item-container" style={{ paddingRight: "0px" }} key={items[1].id} >
+                {items[1] && < div className="home-item-container grid" style={{ paddingRight: "0px" }} key={items[1].id} >
                     <HomeTextInfo
                         authorAvatarURL={items[1].authorAvatarURL}
                         key={items[1].id}
@@ -108,7 +109,7 @@ class PostsList extends React.Component {
                     ></HomeTextInfo>
                 </div >}
 
-                {items[2] && < div className="home-item-container" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
+                {items[2] && < div className="home-item-container grid" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
                     <HomeTextInfo
                         authorAvatarURL={items[2].authorAvatarURL}
                         key={items[2].id}
@@ -134,29 +135,104 @@ class PostsList extends React.Component {
         </div>
     }
 
+    renderRowThreeItems = (items) => {
+        return <div className="d-flex">
+            {items[0] && <div className="home-item-container row" key={items[0].id} >
+                <HomeInfo
+                    authorAvatarURL={items[0].authorAvatarURL}
+                    key={items[0].id}
+                    id={items[0].id}
+                    authorDisplayName={items[0].authorDisplayName}
+                    authorID={items[0].authorID}
+                    publishDtm={items[0].publishDtm}
+                    categoryName={items[0].categoryName}
+                    categoryID={items[0].categoryID}
+                    title={items[0].title}
+                    summary={items[0].summary}
+                    imageURL={items[0].imageURL}
+                    likeStatus={items[0].likeStatus}
+                    savedStatus={items[0].savedStatus}
+                    readingTime={items[0].readingTime}
+                    likeCount={items[0].likeCount}
+                    viewCount={items[0].viewCount}
+                    commentCount={items[0].commentCount}
+                ></HomeInfo>
+            </div >
+            }
+
+            {items[1] && < div className="home-item-container row" key={items[1].id} >
+                <HomeInfo
+                    authorAvatarURL={items[1].authorAvatarURL}
+                    key={items[1].id}
+                    id={items[1].id}
+                    authorDisplayName={items[1].authorDisplayName}
+                    authorID={items[1].authorID}
+                    publishDtm={items[1].publishDtm}
+                    categoryName={items[1].categoryName}
+                    categoryID={items[1].categoryID}
+                    title={items[1].title}
+                    summary={items[1].summary}
+                    imageURL={items[1].imageURL}
+                    likeStatus={items[1].likeStatus}
+                    savedStatus={items[1].savedStatus}
+                    readingTime={items[1].readingTime}
+                    likeCount={items[1].likeCount}
+                    viewCount={items[1].viewCount}
+                    commentCount={items[1].commentCount}
+                ></HomeInfo>
+            </div >}
+
+            {items[2] && < div className="home-item-container row" key={items[2].id} >
+                <HomeInfo
+                    authorAvatarURL={items[2].authorAvatarURL}
+                    key={items[2].id}
+                    id={items[2].id}
+                    authorDisplayName={items[2].authorDisplayName}
+                    authorID={items[2].authorID}
+                    publishDtm={items[2].publishDtm}
+                    categoryName={items[2].categoryName}
+                    categoryID={items[2].categoryID}
+                    title={items[2].title}
+                    summary={items[2].summary}
+                    imageURL={items[2].imageURL}
+                    likeStatus={items[2].likeStatus}
+                    savedStatus={items[2].savedStatus}
+                    readingTime={items[2].readingTime}
+                    likeCount={items[2].likeCount}
+                    viewCount={items[2].viewCount}
+                    commentCount={items[2].commentCount}
+                ></HomeInfo>
+            </div >
+            }
+        </div >
+    }
+
     render() {
-        console.log(this.allResult)
         return (
-            <div className="home-layout">
-                <div className="mg-top-10px" />
-                <div className="nm-bl-layout-router-outlet" >
+            <div>
+                <div style={{ backgroundImage: "url(" + bg + ")", padding: "10px", borderBottom: "2px solid var(--gray)" }}>
+                    <div className="home-layout">
+                        <div className="posts-list-container">
+                            {!this.props.isTrendingLoading && this.props.trendingPosts &&
+                                <div>
+                                    <div className="trending-title" >
+                                        <img className="trending-icon" src={highlight_icon} alt="*" />
+                                        TRENDING
+                                    </div>
+                                    <div style={{ height: "3px", background: "var(--blue)", marginBottom: "5px" }} />
+                                    <div className="d-flex">
+                                        {this.renderGridThreeItems(this.props.trendingPosts)}
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div className="home-layout">
                     <div className="posts-list-container">
                         {/* render trending posts */}
-                        {!this.props.isTrendingLoading && this.props.trendingPosts &&
-                            <div>
-                                <div className="trending-title" >
-                                    <img className="trending-icon" src={highlight_icon} alt="*" />
-                                    TRENDINGS
-                                </div>
-                                <div style={{ height: "3px", background: "var(--blue)", marginBottom: "5px" }} />
-                                <div className="d-flex">
-                                    {this.renderThreeItems(this.props.trendingPosts)}
-                                </div>
-                            </div>
-                        }
-
-                        {this.allResult.map(item => {
-
+                        {this.allResult.map((item, index) => {
                             if (item.posts.length > 0)
                                 return <div>
                                     <div className="j-c-space-between" style={{ marginTop: "30px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
@@ -169,13 +245,14 @@ class PostsList extends React.Component {
                                     </div>
 
                                     <div style={{ marginTop: "10px" }}>
-                                        {item.posts.length > 0 && this.renderThreeItems(item.posts)}
+                                        {index % 2 === 0 && item.posts.length > 0 && this.renderGridThreeItems(item.posts)}
+                                        {index % 2 === 1 && item.posts.length > 0 && this.renderRowThreeItems(item.posts)}
                                     </div>
                                 </div>
                             return <></>;
                         })}
                     </div>
-                </div>
+                </div >
             </div >
         );
     }

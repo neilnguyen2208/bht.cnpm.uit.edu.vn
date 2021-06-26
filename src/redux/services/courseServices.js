@@ -222,7 +222,6 @@ export function getCourseSearchResult(searchParamObject) {
 }
 
 //temp report services
-
 export function getReportedExercises(searchParamObject) {
     return dispatch => {
         dispatch(get_ReportedExercisesRequest());
@@ -231,7 +230,7 @@ export function getReportedExercises(searchParamObject) {
                 let result_1 = response.data;
                 let IDarr = '';
                 response.data.exerciseReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                
+
                 dispatch(get_ReportedExercisesSuccess({
                     exerciseReportDTOs: result_1.exerciseReportDTOs,
                     totalPages: result_1.totalPages,

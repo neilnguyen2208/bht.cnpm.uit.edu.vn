@@ -16,17 +16,21 @@ class ReportReactionbar extends React.Component {
 
   handleResolve = () => {
     openModal("form", {
-      id: `rsap-form-modal`,//resolve a post
-      title: `XỬ LÝ BÀI VIẾT`,
-      formId: `rsap-form`,
+      id: `rsae-form-modal`,//resolve an exerice
+      title: `XỬ LÝ BÀI TẬP`,
+      formId: `rsae-form`,
       inputs:
         [
           { //for rendering
-            id: `rsap-combobox`,
+            id: `rsae-combobox`,
             isRequired: true,
             label: "Hỉnh thức xử lý:",
             type: 'combobox',
-            options: [{ id: 1, name: "Giữ lại", value: "KEEP" }, { id: 2, name: "Xoá", value: "DELETE" }],
+            options: [
+              { id: 1, name: "Duyệt báo cáo", value: "IN_PROGRESS" },
+              { id: 2, name: "Đã xử lý", value: "FIXED" },
+              { id: 3, name: "Không duyệt", value: "REJECTED" },
+            ],
             selectedOptionID: 1,
             validation: true,
             key: "postReportActionType",
@@ -35,30 +39,30 @@ class ReportReactionbar extends React.Component {
             }
           },
           { //for rendering
-            id: `rsap-form-input`,
+            id: `rsae-form-input`,
             isRequired: true,
             label: "Ghi chú:",
             type: 'text-area',
-            placeHolder: "Nhập ghi chú xử lý bài viết ",
+            placeHolder: "Nhập ghi chú xử lý bài tập ",
             validation: true,
             key: "resolvedNote"
           },
         ],
       // append: { id: this.props.id },
       validationCondition: {
-        form: `#rsap-form`,
+        form: `#rsae-form`,
         rules: [
-          validation.isRequired(`rsap-form-input`, 'text-area', 'Ghi chú không được để trống!'),
-          validation.isRequired(`rsap-combobox`, 'combobox', 'Hình thức xử lý không được để trống!'),
-          validation.minLength(`rsap-form-input`, 'text-area', 25, 'Ghi chú không được ít hơn 25 ký tự!'),
+          validation.isRequired(`rsae-form-input`, 'text-area', 'Ghi chú không được để trống!'),
+          validation.isRequired(`rsae-combobox`, 'combobox', 'Hình thức xử lý không được để trống!'),
+          validation.minLength(`rsae-form-input`, 'text-area', 25, 'Ghi chú không được ít hơn 25 ký tự!'),
         ],
 
       },
       submitText: "Xác nhận",
       cancelText: "Huỷ",
       confirmBox: {
-        title: "Xử lý bài viết",
-        text: "Bạn có chắc chắn muốn xử lý báo cáo bài viết này không?",
+        title: "Xử lý bài tập",
+        text: "Bạn có chắc chắn muốn xử lý báo cáo bài tập này không?",
         verifyText: "Xác nhận",
         cancelText: "Huỷ",
         onConfirm: DTO => this.onConfirmResolve(DTO)

@@ -34,14 +34,10 @@
     padding-right: 5px;
 }
 
-
 .light-black-normal-label {
     @extend .gray-normal-label;
     color: var(--light-black);
 }
-
-
-
 
 .filter-label {
     margin-top: 2px;
@@ -75,7 +71,6 @@
     @extend .color-border-label;
     border: 1px solid var(--red);
     color: var(--red);
-
 }
 
 // .follow-label {
@@ -92,21 +87,24 @@
     @extend .color-border-label;
     border: 1px solid var(--blue);
     color: var(--blue);
+}
 
+.green-border-label {
+    @extend .color-border-label;
+    border: 1px solid var(--green) !important;
+    color: var(--green);
 }
 
 .gray-border-label {
     @extend .color-border-label;
     border: 1px solid var(--gray);
     color: var(--gray);
-
 }
 
 .green-border-label {
     @extend .color-border-label;
     border: 1px solid var(--blue);
     color: var(--green);
-
 }
 
 label {
@@ -129,7 +127,7 @@ label {
 // }
 
 .light-black-label {
-    line-height: 1.0em;
+    line-height: 1em;
     display: flex;
     justify-content: flex-start;
     height: 20px;
@@ -160,7 +158,7 @@ label {
 }
 
 .black-label-m {
-    line-height: 1.0em;
+    line-height: 1em;
     display: flex;
     justify-content: flex-start;
     height: 20px;
@@ -175,7 +173,7 @@ label {
 }
 
 .summary-text {
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     font-size: 16px;
     line-height: 25px;
     display: flex;
@@ -198,7 +196,6 @@ label {
     user-select: none;
     cursor: pointer;
     margin-right: 5px;
-
 }
 
 .link-label-m {
@@ -218,14 +215,11 @@ label {
     opacity: 60%;
 }
 
-
 .blue-label-s {
     @extend .link-label-s;
     cursor: normal;
     user-select: none;
-
 }
-
 
 .blue-label-s:hover {
     opacity: 100%;

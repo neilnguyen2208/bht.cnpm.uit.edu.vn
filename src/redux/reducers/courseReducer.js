@@ -139,7 +139,7 @@ const initialState = {
         isChecked: false
     },
 
-    relativeExercises: {
+    relativePosts: {
         isLoading: false,
         data: [],
         error: ''
@@ -309,15 +309,15 @@ function CourseReducer(state = initialState, action) {
             }
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST:
             return {
-                ...state, relativeExercises: { isLoading: true, error: '', data: [] }
+                ...state, relativePosts: { isLoading: true, error: '', data: [] }
             };
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS:
             return {
-                ...state, relativeExercises: { isLoading: false, data: action.payload, error: '' }
+                ...state, relativePosts: { isLoading: false, data: action.payload, error: '' }
             }
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE:
             return {
-                ...state, relativeExercises: { isLoading: false, error: action.payload, data: [] }
+                ...state, relativePosts: { isLoading: false, error: action.payload, data: [] }
             }
         case GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST:
             return {

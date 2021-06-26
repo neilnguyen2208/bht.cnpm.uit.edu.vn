@@ -102,7 +102,7 @@ class DocumentsList extends React.Component {
                     "sort": "publishDtm,desc",
                     "mostLiked": true
                 }
-                this.props.getPostSearch(this.searchParamObject)
+                this.props.getDocumentSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }
@@ -118,7 +118,7 @@ class DocumentsList extends React.Component {
                     "sort": "publishDtm,desc",
                     "mostViewed": true
                 }
-                this.props.getPostSearch(this.searchParamObject)
+                this.props.getDocumentSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }
@@ -134,7 +134,7 @@ class DocumentsList extends React.Component {
                     "sort": "publishDtm,desc",
                     "mostViewed": true
                 }
-                this.props.getPostSearch(this.searchParamObject)
+                this.props.getDocumentSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }
@@ -150,7 +150,7 @@ class DocumentsList extends React.Component {
                     "sort": "publishDtm,desc",
                     "mostViewed": true
                 }
-                this.props.getPostSearch(this.searchParamObject)
+                this.props.getDocumentSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }

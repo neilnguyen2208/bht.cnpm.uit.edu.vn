@@ -18,7 +18,7 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
-import { publishedTimeOptions, itemType } from 'constants.js';
+import { itemType } from 'constants.js';
 import SearchHorizontalMenubar from './SearchHorizontalMenubar';
 import Loader from 'components/common/Loader/Loader';
 
@@ -26,18 +26,18 @@ class DocumentsList extends React.Component {
 
     componentDidMount() {
         this.queryParamObject = {
-            "category": 0,
+            "category": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
             "page": 1,
-            "q": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
-
+            "tab": 'hot',
+            "q": getQueryParamByName('q') ? getQueryParamByName('q') : '',
+            'subject': getQueryParamByName('subject') ? getQueryParamByName('subject') : 0
         }
 
         this.searchParamObject = {
-            "paginator": 1,
-            "categoryID": null,
-            // "sortByPublishDtm": "desc",
-            // "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
-
+            "page": 1,
+            "categoryID": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : '',
+            'subjectID': getQueryParamByName('subject') ? getQueryParamByName('subject') : 0
         }
 
         //force default properties, can't access by querry param
@@ -68,7 +68,7 @@ class DocumentsList extends React.Component {
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category.id": selectedOption.id,
+            "categoryID": selectedOption.id,
             page: 1
         }
         this.props.getDocumentSearch(this.searchParamObject);
@@ -76,11 +76,11 @@ class DocumentsList extends React.Component {
     }
 
     onSubjectOptionChange = (selectedOption) => {
-        this.queryParamObject = { ...this.queryParamObject, category: selectedOption.id, page: 1 }
+        this.queryParamObject = { ...this.queryParamObject, subject: selectedOption.id, page: 1 }
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category.id": selectedOption.id, // => change subject
+            "subjectID": selectedOption.id, // => change subject
             page: 1
         }
         this.props.getDocumentSearch(this.searchParamObject);
@@ -88,26 +88,93 @@ class DocumentsList extends React.Component {
 
     }
 
-    onTimeOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, "page": 1 });
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            sortByPublishDtm: selectedOption.sort
+    onFilterClick = (filter) => {
+        switch (filter) {
+            case "hot": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "hot"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostLiked": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            case "best": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "best"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            case "newest": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "newest"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            case "top": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "top"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            default: {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "hot"
+                }
+                setQueryParam(this.queryParamObject);
+                this.setState({});
+                return;
+            }
         }
-        this.props.getDocumentSearch(this.searchParamObject);
-        this.setState({});
     }
-
     render() {
 
-        if (!this.props.isCategoryLoading && this.props.categories && !this.props.isSubjectLoading && this.props.subjects) {
+        if (!this.props.isCategoryLoading && this.props.categories.length > 1 && !this.props.isSubjectLoading && this.props.subjects.length > 1) {
             this.comboboxGroup = <div className="j-c-space-between" style={{ marginTop: "30px" }}>
                 <div className="d-flex">
                     <div className="d-flex">
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                selectedOptionID={"0"}
+                                selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                 options={this.props.categories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
                                 comboboxId="my-document-list-category-filter-combobox"
@@ -118,6 +185,7 @@ class DocumentsList extends React.Component {
                         <div className="filter-label t-a-right mg-right-5px">Môn học: </div>
                         <div className="mg-left-5px">
                             <ComboBox
+                                selectedOptionID={getQueryParamByName('subject') ? getQueryParamByName('subject') : 0}
                                 options={this.props.subjects}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
@@ -130,25 +198,27 @@ class DocumentsList extends React.Component {
                     <div className="r-h-filter-c" style={{ marginTop: "-43px" }}>
                         <div className="h-filter">
                             <div className={!getQueryParamByName("tab") ||
-                                (getQueryParamByName("tab") !== "most-likes"
-                                    && getQueryParamByName("tab") !== "most-views")
+                                (getQueryParamByName("tab") !== "top"
+                                    && getQueryParamByName("tab") !== "best"
+                                    && getQueryParamByName("tab") !== "newest"
+                                )
                                 ? "h-filter-item active first" : "h-filter-item first"}
-                                onClick={() => this.onFilterClick("newest")}
+                                onClick={() => this.onFilterClick("hot")}
                             > Đang hot</div>
 
-                            <div className={getQueryParamByName("tab") === "most-likes"
+                            <div className={getQueryParamByName("tab") === "best"
                                 ? "h-filter-item active" : "h-filter-item"}
-                                onClick={() => this.onFilterClick("most-likes")}
+                                onClick={() => this.onFilterClick("best")}
                             >Tốt nhất</div>
 
-                            <div className={getQueryParamByName("tab") === "most-likes"
+                            <div className={getQueryParamByName("tab") === "newest"
                                 ? "h-filter-item active" : "h-filter-item"}
-                                onClick={() => this.onFilterClick("most-likes")}
+                                onClick={() => this.onFilterClick("newest")}
                             >Mới nhất</div>
 
-                            <div className={getQueryParamByName("tab") === "most-views"
+                            <div className={getQueryParamByName("tab") === "top"
                                 ? "h-filter-item last active" : "h-filter-item last"}
-                                onClick={() => this.onFilterClick("most-views")}
+                                onClick={() => this.onFilterClick("top")}
                             >Lượt thích</div>
                         </div>
                     </div>
@@ -191,7 +261,7 @@ class DocumentsList extends React.Component {
                             imageURL={item.imageURL}
                             readingTime={item.readingTime}
                             approveState={item.docState}
-                            popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                            popUpMenuPrefix="sdpu"   //stand for search doc popup 
                             authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
                             //
                             reloadList={() => this.reloadList()}

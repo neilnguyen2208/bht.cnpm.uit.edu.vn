@@ -27,7 +27,7 @@ class ExerciseInfo extends React.Component {
     //if user logged in => call API get user's statistic
     this.props.exerciseId && authService.isLoggedIn() && this.props.getCurrentUserExerciseStatistic(this.props.exerciseId)
   }
-  
+
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_EXERCISE") {
       //show confirmation popup and detete id verify
@@ -75,7 +75,7 @@ class ExerciseInfo extends React.Component {
           <div className="title" >
             {this.props.title}
           </div>
-        </Link>
+        </Link> 
 
         <div className="d-flex mg-top-5px  j-c-space-between"  >
           <div className="d-flex">
@@ -93,7 +93,7 @@ class ExerciseInfo extends React.Component {
             </div>
           </div>
           <div>
-            {!this.props.isUserStatisticLoading && this.props.currentUserStatistic &&
+            {!this.props.isUserStatisticLoading && this.props.currentUserStatistic.bestCorrectQuestions && authService.isLoggedIn() &&
               <div style={{ color: "var(--black)" }}>
                 Kết quả tốt nhất của bạn: {this.props.currentUserStatistic.bestCorrectQuestions}/{this.props.totalQuestions}
               </div>

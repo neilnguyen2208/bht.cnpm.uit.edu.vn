@@ -111,7 +111,10 @@ class CommentSection extends React.Component {
         }
         <div className=" scroller-container">
           {this.props.exerciseAvailableActions.includes(exerciseAction.Comment) &&
-            <CreateComment exerciseId={this.props.id} />}
+            <CreateComment
+              // exerciseId={this.props.id} 
+              exerciseId={2}
+            />}
           {!this.props.isLoading && this.props.commentsList ?
             <div>
               {commentsList}

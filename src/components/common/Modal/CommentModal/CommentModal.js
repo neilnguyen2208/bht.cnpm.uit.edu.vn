@@ -18,13 +18,13 @@ class CommentModal extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getExerciseById(2);
+        // this.props.getExerciseById(2);
         document.querySelectorAll("comment-modal-container").forEach(item => item.classList.remove("close"));
         window.onresize = () => {
             document.querySelectorAll(".comment-modal-container").forEach(element => {
                 element.style.height = (window.innerHeight - 80).toString() + "px";
             })
-        }
+        }   
     }
 
     closeModal = () => {

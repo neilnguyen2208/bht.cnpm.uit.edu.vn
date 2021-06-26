@@ -159,7 +159,7 @@ class QuestionItem extends React.Component {
                       && !this.props.isCorrect
                       && this.props.answersSelected.length > 0
                       && this.props.answersSelected.includes(answer.id)
-                      && <img src={wrong_f_icon} style={{ width: "auto", height: "16px", marginTop: "2px", marginLeft: "5px" }} alt="" ></img>
+                      && <img src={wrong_f_icon} style={{ width: "auto", height: "16px", marginTop: "2px", marginLeft: "10px" }} alt="" ></img>
                     }
                     {
                       this.props.isChecked

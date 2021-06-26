@@ -1,166 +1,179 @@
 import React from 'react';
-import { getPostSearch } from "redux/services/postServices"
+import { getTrendingPosts, getPostsByCategoryId } from "redux/services/postServices"
 import { getPostCategoriesHaveAll } from "redux/services/postCategoryServices"
 
 import { bindActionCreators } from 'redux';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
-
-import Loader from 'components/common/Loader/Loader'
 
 import HomeFirstInfo from 'components/post/HomeFirstInfo';
 import HomeTextInfo from 'components/post/HomeTextInfo';
 import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
+import { request } from 'utils/requestUtils';
 
 class PostsList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { allResult: [] }
+        this.allResult = [];
+        this.allRenderResult = <></>;
+    }
 
     componentDidMount() {
-        this.queryParamObject = {
-            "category": 0,
-            "page": 1,
-        }
 
-        this.searchParamObject = {
-            "page": 1,
-            "postCategoryID": null,
-            "sortByPublishDtm": "publishDtm,desc",
-            searchTerm: ''
-        }
+        //fake for trending
+        this.props.getTrendingPosts();
+        this.renderByCategory();
 
-        setQueryParam(this.queryParamObject)
-        this.props.getPostCategoriesHaveAll();
-        this.props.getPostSearch(this.searchParamObject);
     }
 
-    //server paginator
-    onPageChange = (pageNumber) => {
-        setQueryParam({ ...this.queryParamObject, "page": pageNumber });
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            page: getQueryParamByName('page'),
-        }
-        this.props.getPostSearch(this.searchParamObject);
-        this.setState({});
+    renderByCategory = () => {
+        this.allResult = [];
+        request.get(`/posts/categories`).then((response) => {
+            for (let i = 0; i < response.data.length; i++) {
+                request.get(`/posts/searchFilter?searchTerm=&page=0&postCategoryID=${response.data[i].id}`).then(response_1 => {
+                    let result_1 = response_1.data;
+                    let IDarr = '';
+                    response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                    request.get(`/posts/statistics?postIDs=${IDarr}`)
+                        .then(response_2 => {
+                            //merge summary array and statistic array
+                            let finalResult = [];
+
+                            for (let j = 0; j < result_1.postSummaryDTOs.length; j++) {
+                                finalResult.push({
+                                    ...result_1.postSummaryDTOs[j],
+                                    ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[j].id)),
+                                });
+                            }
+                            this.allResult = [...this.allResult, { id: response.data[i].id, categoryName: response.data[i].name, posts: finalResult }];
+                            this.setState({});
+
+                        })
+                })
+            }
+        })
     }
 
-    onTimeOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, "page": 1 });
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            sortByPublishDtm: selectedOption.sort
-        }
-        this.props.getPostSearch(this.searchParamObject);
-        this.setState({});
-    }
+    renderThreeItems = (items) => {
 
-    onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, "page": 1, "category": selectedOption.id });
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            "postCategoryID": selectedOption.id,
-            "page": 1
-        }
-        this.props.getPostSearch(this.searchParamObject);
-        this.setState({});
-    }
+        return <div className="d-flex">
+            {/* //item 0 */}
+            {items[0] && <div className="home-item-container" style={{ paddingRight: "10px" }} key={items[0].id} >
+                <HomeFirstInfo
+                    authorAvatarURL={items[0].authorAvatarURL}
+                    key={items[0].id}
+                    id={items[0].id}
+                    authorDisplayName={items[0].authorDisplayName}
+                    authorID={items[0].authorID}
+                    publishDtm={items[0].publishDtm}
+                    categoryName={items[0].categoryName}
+                    categoryID={items[0].categoryID}
+                    title={items[0].title}
+                    summary={items[0].summary}
+                    imageURL={items[0].imageURL}
+                    likeStatus={items[0].likeStatus}
+                    savedStatus={items[0].savedStatus}
+                    readingTime={items[0].readingTime}
+                    likeCount={items[0].likeCount}
+                    viewCount={items[0].viewCount}
+                    commentCount={items[0].commentCount}
+                ></HomeFirstInfo>
+            </div >
+            }
 
-    renderThreeItem = (items) => { }
+            {/* //item1, item2*/}
+
+            <div style={{ borderLeft: "1px solid var(--grayish)", paddingLeft: "10px" }} >
+                {items[1] && < div className="home-item-container" style={{ paddingRight: "0px" }} key={items[1].id} >
+                    <HomeTextInfo
+                        authorAvatarURL={items[1].authorAvatarURL}
+                        key={items[1].id}
+                        id={items[1].id}
+                        authorDisplayName={items[1].authorDisplayName}
+                        authorID={items[1].authorID}
+                        publishDtm={items[1].publishDtm}
+                        categoryName={items[1].categoryName}
+                        categoryID={items[1].categoryID}
+                        title={items[1].title}
+                        summary={items[1].summary}
+                        imageURL={items[1].imageURL}
+                        likeStatus={items[1].likeStatus}
+                        savedStatus={items[1].savedStatus}
+                        readingTime={items[1].readingTime}
+                        likeCount={items[1].likeCount}
+                        viewCount={items[1].viewCount}
+                        commentCount={items[1].commentCount}
+                    ></HomeTextInfo>
+                </div >}
+
+                {items[2] && < div className="home-item-container" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
+                    <HomeTextInfo
+                        authorAvatarURL={items[2].authorAvatarURL}
+                        key={items[2].id}
+                        id={items[2].id}
+                        authorDisplayName={items[2].authorDisplayName}
+                        authorID={items[2].authorID}
+                        publishDtm={items[2].publishDtm}
+                        categoryName={items[2].categoryName}
+                        categoryID={items[2].categoryID}
+                        title={items[2].title}
+                        summary={items[2].summary}
+                        imageURL={items[2].imageURL}
+                        likeStatus={items[2].likeStatus}
+                        savedStatus={items[2].savedStatus}
+                        readingTime={items[2].readingTime}
+                        likeCount={items[2].likeCount}
+                        viewCount={items[2].viewCount}
+                        commentCount={items[2].commentCount}
+                    ></HomeTextInfo>
+                </div >
+                }
+            </div >
+        </div>
+    }
 
     render() {
-        let postSearchResult = <></>;
-        if (!this.props.isListLoading) {
-            postSearchResult = this.props.postSearchResult.map((postItem, index) => {
-                if (index === 1)
-                    return < div className="home-item-container" key={postItem.id} >
-                        <HomeTextInfo
-                            authorAvatarURL={postItem.authorAvatarURL}
-                            key={postItem.id}
-                            id={postItem.id}
-                            authorDisplayName={postItem.authorDisplayName}
-                            authorID={postItem.authorID}
-                            publishDtm={postItem.publishDtm}
-                            categoryName={postItem.categoryName}
-                            categoryID={postItem.categoryID}
-                            title={postItem.title}
-                            summary={postItem.summary}
-                            imageURL={postItem.imageURL}
-                            likeStatus={postItem.likeStatus}
-                            savedStatus={postItem.savedStatus}
-                            readingTime={postItem.readingTime}
-                            likeCount={postItem.likeCount}
-                            viewCount={postItem.viewCount}
-                            commentCount={postItem.commentCount}
-                        ></HomeTextInfo>
-                    </div >
-                if (index === 2)
-                    return < div className="home-item-container" key={postItem.id} style={{ marginTop: "20px" }}>
-                        <HomeTextInfo
-                            authorAvatarURL={postItem.authorAvatarURL}
-                            key={postItem.id}
-                            id={postItem.id}
-                            authorDisplayName={postItem.authorDisplayName}
-                            authorID={postItem.authorID}
-                            publishDtm={postItem.publishDtm}
-                            categoryName={postItem.categoryName}
-                            categoryID={postItem.categoryID}
-                            title={postItem.title}
-                            summary={postItem.summary}
-                            imageURL={postItem.imageURL}
-                            likeStatus={postItem.likeStatus}
-                            savedStatus={postItem.savedStatus}
-                            readingTime={postItem.readingTime}
-                            likeCount={postItem.likeCount}
-                            viewCount={postItem.viewCount}
-                            commentCount={postItem.commentCount}
-                        ></HomeTextInfo>
-                    </div >
-                return <></>
-            })
-        }
-        else
-            postSearchResult = <Loader />
-
+        console.log(this.allResult)
         return (
             <div className="home-layout">
                 <div className="mg-top-10px" />
                 <div className="nm-bl-layout-router-outlet" >
                     <div className="posts-list-container">
-                        {!this.props.isListLoading &&
+                        {/* render trending posts */}
+                        {!this.props.isTrendingLoading && this.props.trendingPosts &&
                             <div>
                                 <div className="trending-title" >
                                     <img className="trending-icon" src={highlight_icon} alt="*" />
                                     TRENDINGS
                                 </div>
-                                <div style={{ height: "3px", background: "var(--blue)", marginLeft: "10px", marginRight: "10px", marginBottom: "5px" }} />
+                                <div style={{ height: "3px", background: "var(--blue)", marginBottom: "5px" }} />
                                 <div className="d-flex">
-                                    {this.props.postSearchResult[0] &&
-                                        < div className="home-item-container" key={this.props.postSearchResult[0].id} >
-                                            <HomeFirstInfo
-                                                authorAvatarURL={this.props.postSearchResult[0].authorAvatarURL}
-                                                key={this.props.postSearchResult[0].id}
-                                                id={this.props.postSearchResult[0].id}
-                                                authorDisplayName={this.props.postSearchResult[0].authorDisplayName}
-                                                authorID={this.props.postSearchResult[0].authorID}
-                                                publishDtm={this.props.postSearchResult[0].publishDtm}
-                                                categoryName={this.props.postSearchResult[0].categoryName}
-                                                categoryID={this.props.postSearchResult[0].categoryID}
-                                                title={this.props.postSearchResult[0].title}
-                                                summary={this.props.postSearchResult[0].summary}
-                                                imageURL={this.props.postSearchResult[0].imageURL}
-                                                likeStatus={this.props.postSearchResult[0].likeStatus}
-                                                savedStatus={this.props.postSearchResult[0].savedStatus}
-                                                readingTime={this.props.postSearchResult[0].readingTime}
-                                                likeCount={this.props.postSearchResult[0].likeCount}
-                                                viewCount={this.props.postSearchResult[0].viewCount}
-                                                commentCount={this.props.postSearchResult[0].commentCount}
-                                            ></HomeFirstInfo>
-                                        </div >
-                                    }
-                                    <div style={{ borderLeft: "1px solid var(--grayish)" }} >{postSearchResult}</div>
+                                    {this.renderThreeItems(this.props.trendingPosts)}
                                 </div>
                             </div>
                         }
+
+                        {this.allResult.map(item => {
+
+                            if (item.posts.length > 0)
+                                return <div>
+                                    <div className="j-c-space-between" style={{ marginTop: "30px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
+                                        <div className="part-title" style={{ textTransform: "uppercase" }} >
+                                            {item.categoryName}
+                                        </div>
+                                        <Link className="link-label-s" to={`/search/posts?category=${item.id}&page=1&q=`}>
+                                            Xem tất cả >>
+                                        </Link>
+                                    </div>
+
+                                    <div style={{ marginTop: "10px" }}>
+                                        {item.posts.length > 0 && this.renderThreeItems(item.posts)}
+                                    </div>
+                                </div>
+                            return <></>;
+                        })}
                     </div>
                 </div>
             </div >
@@ -173,15 +186,17 @@ const mapStateToProps = (state) => {
         postCategories: state.postCategory.categories.searchData,
         isListLoading: state.post.postsList.isLoading,
         isCategoryLoading: state.postCategory.categories.isLoading,
-        postSearchResult: state.post.postsList.data,
+        trendingPosts: state.post.trendingPosts.data,
+        isTrendingLoading: state.post.trendingPosts.isLoading,
 
         totalPages: state.post.postsList.totalPages,
         totalElements: state.post.postsList.totalElements,
+        postByCategoryId: state.post.postByCategoryId,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostSearch, getPostCategoriesHaveAll
+    getTrendingPosts, getPostCategoriesHaveAll, getPostsByCategoryId
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

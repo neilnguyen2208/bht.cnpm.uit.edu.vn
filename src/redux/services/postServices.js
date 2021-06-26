@@ -545,19 +545,52 @@ export function getHighlightPostsIds() {
 export function getPostsByCategoryId(categoryId) {
     return dispatch => {
         dispatch(get_PostsByCategoryIdRequest(categoryId));
-        authRequest.delete(`/posts/highlightPosts/ids`)
-            .then(response => {
-                dispatch(get_PostsByCategoryIdSuccess(categoryId, response.data));
-            }).catch(error => { dispatch(get_PostsByCategoryIdFailure(categoryId, error)) })
+        authRequest.get(`/posts/searchFilter?searchTerm=&page=0&postCategoryID=${categoryId}`)
+            .then(response_1 => {
+                let result_1 = response_1.data;
+                let IDarr = '';
+                response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
+                    .then(response_2 => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.postSummaryDTOs.length; i++) {
+                            finalResult.push({
+                                ...result_1.postSummaryDTOs[i],
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
+                            });
+                        }
+                        dispatch(get_PostsByCategoryIdSuccess({ id: categoryId, postSummaryWithStateDTOs: finalResult }))
+                    }).catch(() => get_PostsByCategoryIdFailure())
+            })
+            .catch(error => dispatch(get_PostsByCategoryIdFailure(error)))
     }
 }
 
 export function getTrendingPosts(categoryId) {
     return dispatch => {
         dispatch(get_TrendingPostsRequest());
-        authRequest.delete(`/posts/highlightPosts/ids`)
+        authRequest.get(`/posts/trending`)
             .then(response => {
-                dispatch(get_TrendingPostsSuccess(response.data));
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
+                    .then(result => {
+                        //merge summary array and statistic array
+                        let finalResult = [];
+
+                        for (let i = 0; i < result_1.length; i++) {
+                            finalResult.push({
+                                ...result_1[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                            });
+                        }
+                        console.log(finalResult);
+                        dispatch(dispatch(get_TrendingPostsSuccess(finalResult)))
+                    }).catch((error) => dispatch(get_TrendingPostsFailure(error)))
             }).catch(error => { dispatch(get_TrendingPostsFailure(error)) })
     }
 }

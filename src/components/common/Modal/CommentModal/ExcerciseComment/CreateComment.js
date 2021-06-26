@@ -21,8 +21,8 @@ import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import store from 'redux/store';
-import { create_APostCommentReset } from 'redux/actions/postCommentAction'
-import { createAPostComment, getAPostComments } from 'redux/services/postCommentServices'
+import { create_AnExerciseCommentReset } from 'redux/actions/exerciseCommentAction'
+import { createAnExerciseComment, getAnExerciseComments } from 'redux/services/exerciseCommentServices'
 import { openBLModal } from 'redux/services/modalServices';
 import { getAPostStatisticByID } from 'redux/services/postServices';
 const validationCondition = {
@@ -49,11 +49,11 @@ class CreateComment extends React.Component {
 
   createComment = () => {
     if (styleFormSubmit(validationCondition))
-      this.props.createAPostComment(this.props.postId, { content: getCKEInstance("crt-cmmnt-cke").getData() })
+      this.props.createAnExerciseComment(this.props.exerciseId, { content: getCKEInstance("crt-cmmnt-cke").getData() })
   }
 
   componentWillUnmount() {
-    store.dispatch(create_APostCommentReset());
+    store.dispatch(create_AnExerciseCommentReset());
     if (getCKEInstance('crt-cmmnt-cke'))
       getCKEInstance('crt-cmmnt-cke').destroy();
 
@@ -62,23 +62,22 @@ class CreateComment extends React.Component {
   reloadList = () => {
     openBLModal({ type: "success", text: "Tạo bình luận thành công!" });
     getCKEInstance("crt-cmmnt-cke").setData("");
-    this.props.getAPostComments(this.props.postId);
-    store.dispatch(create_APostCommentReset())
+    this.props.getAnExerciseComments(this.props.exerciseId);
+    store.dispatch(create_AnExerciseCommentReset())
     this.setState({});
   }
 
   render() {
 
     if (this.props.isHaveCreated) {
-      this.props.getAPostStatisticByID(this.props.postId)
+      this.props.getAPostStatisticByID(this.props.exerciseId)
       this.reloadList()
     }
-    console.log(this.props.userSummaryData)
     return (
       <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
         <div className="comment-main-level">
           <img className="comment-avatar" src={this.props.isSummaryLoaded && this.props.userSummaryData.avatarURL} alt="" />
-          <div className="comment-box">
+          <div className="comment-box exercise">
             <div id="create-comment-form" tabIndex="1">
               <div className="form-group">
                 <div className="j-c-space-between">
@@ -102,7 +101,7 @@ class CreateComment extends React.Component {
             </div>
           </div>
         </div>
-        
+
       </div>
     );
   }
@@ -110,14 +109,14 @@ class CreateComment extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isHaveCreated: state.postComment.isHaveCreated,
+    isHaveCreated: state.exerciseComment.isHaveCreated,
     userSummaryData: state.auth.currentUserSummary.data,
     isSummaryLoaded: state.auth.currentUserSummary.isLoadDone
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createAPostComment, getAPostComments, getAPostStatisticByID
+  createAnExerciseComment, getAnExerciseComments, getAPostStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateComment));

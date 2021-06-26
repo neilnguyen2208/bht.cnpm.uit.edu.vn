@@ -44,7 +44,7 @@ class CourseSummaryItem extends React.Component {
         </div>
 
         {/* title */}
-        <Link to={"/course-content/" + this.props.subjectId}>
+        <Link to={this.props.type === "DOCUMENT" ? "/subject-documents/" + this.props.subjectId : "/course-content/" + this.props.subjectId}>
           <div className="title title-hv">
             {this.props.subjectName}
           </div>

@@ -87,6 +87,12 @@ import {
     GET_POSTS_BY_FILTER_REQUEST,
     GET_POSTS_BY_FILTER_SUCCESS,
     GET_POSTS_BY_FILTER_FAILURE,
+    GET_POSTS_BY_CATEGORY_ID_REQUEST,
+    GET_POSTS_BY_CATEGORY_ID_SUCCESS,
+    GET_POSTS_BY_CATEGORY_ID_FAILURE,
+    GET_TRENDING_POSTS_REQUEST,
+    GET_TRENDING_POSTS_FAILURE,
+    GET_TRENDING_POSTS_SUCCESS,
 
 } from '../constants.js'
 
@@ -189,9 +195,14 @@ const initialState = {
         totalElements: 0
     },
 
-    postsByCategory: {
+    postsByCategory: [],
 
-    }
+    trendingPosts: {
+        isLoading: false,
+        data: []
+    },
+
+
 };
 
 function PostReducer(state = initialState, action) {
@@ -514,6 +525,50 @@ function PostReducer(state = initialState, action) {
             }
         }
 
+        // case GET_POSTS_BY_CATEGORY_ID_REQUEST: return {
+        //     ...state, postsByCategory: [
+        //         ...state.postsByCategory,
+        //     ]
+        // }
+
+        // case GET_POSTS_BY_CATEGORY_ID_SUCCESS:
+        //     return {
+        //         ...state, postsByFilter: [
+        //             ...state.postsByCategory,
+        //         ]
+        //     }
+
+        // case GET_POSTS_BY_CATEGORY_ID_FAILURE:
+        //     return {
+        //         ...state, postsByCategory: [
+        //             ...state.postsByCategory,
+        //         ]
+        //     }
+
+        case GET_TRENDING_POSTS_REQUEST: return {
+            ...state, trendingPosts: {
+                ...state.trendingPosts,
+                isLoading: true
+            }
+        }
+
+        case GET_TRENDING_POSTS_SUCCESS:
+            return {
+                ...state, trendingPosts: {
+                    data: action.payload,
+                    isLoading: false
+
+                }
+            }
+
+        case GET_TRENDING_POSTS_FAILURE:
+            return {
+                ...state, trendingPosts: {
+                    ...state.trendingPosts,
+                    isLoading: false,
+                    error: action.payload
+                }
+            }
         default:
             return state;
     }

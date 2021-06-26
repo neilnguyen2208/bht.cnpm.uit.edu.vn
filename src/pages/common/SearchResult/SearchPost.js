@@ -15,27 +15,28 @@ import SearchHorizontalMenubar from './SearchHorizontalMenubar'
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 
-import { publishedTimeOptions, itemType } from 'constants.js';
+import { itemType } from 'constants.js';
 class SearchPost extends React.Component {
 
 
     componentDidMount() {
+        //TODO: change initiate category
         this.queryParamObject = {
-            "category": 0,
+            "category": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
             "page": 1,
-            "q": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
-
+            "tab": 'hot',
+            "q": getQueryParamByName('q') ? getQueryParamByName('q') : '',
         }
 
         this.searchParamObject = {
             "page": 1,
-            "postCategoryID": null,
+            "postCategoryID": getQueryParamByName('category'),
             "sortByPublishDtm": "desc",
-            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ''
 
         }
 
-        setQueryParam(this.queryParamObject)
+        setQueryParam(this.queryParamObject);
         this.props.getPostCategoriesHaveAll();
         this.props.getPostSearch(this.searchParamObject);
     }
@@ -76,12 +77,94 @@ class SearchPost extends React.Component {
         this.setState({});
     }
 
+    onFilterClick = (filter) => {
+        switch (filter) {
+            case "hot": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    "page": 1,
+
+                    tab: "hot"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostLiked": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            case "best": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    "page": 1,
+
+                    tab: "best"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            case "newest": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    "page": 1,
+
+                    tab: "newest"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            case "top": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "top"
+                }
+                setQueryParam(this.queryParamObject);
+                this.searchParamObject = {
+                    "page": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true
+                }
+                this.props.getPostSearch(this.searchParamObject)
+                this.setState({});
+                return;
+            }
+            default: {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "hot"
+                }
+                setQueryParam(this.queryParamObject);
+                this.setState({});
+                return;
+            }
+        }
+    }
     render() {
         let postSearchResult = <></>
         if (!this.props.isListLoading) {
             postSearchResult = this.props.postSearchResult.map((item) => {
                 return < div className="item-container" >
-                    {console.log(item)}
                     <PostSummaryMetadata
                         type={itemType.normal}
                         postId={item.id}
@@ -130,25 +213,27 @@ class SearchPost extends React.Component {
                 <div className="r-h-filter-c" style={{ marginTop: "-33px" }}>
                     <div className="h-filter">
                         <div className={!getQueryParamByName("tab") ||
-                            (getQueryParamByName("tab") !== "most-likes"
-                                && getQueryParamByName("tab") !== "most-views")
+                            (getQueryParamByName("tab") !== "top"
+                                && getQueryParamByName("tab") !== "best"
+                                && getQueryParamByName("tab") !== "newest"
+                            )
                             ? "h-filter-item active first" : "h-filter-item first"}
-                            onClick={() => this.onFilterClick("newest")}
+                            onClick={() => this.onFilterClick("hot")}
                         > Đang hot</div>
 
-                        <div className={getQueryParamByName("tab") === "most-likes"
+                        <div className={getQueryParamByName("tab") === "best"
                             ? "h-filter-item active" : "h-filter-item"}
-                            onClick={() => this.onFilterClick("most-likes")}
+                            onClick={() => this.onFilterClick("best")}
                         >Tốt nhất</div>
 
-                        <div className={getQueryParamByName("tab") === "most-likes"
+                        <div className={getQueryParamByName("tab") === "newest"
                             ? "h-filter-item active" : "h-filter-item"}
-                            onClick={() => this.onFilterClick("most-likes")}
+                            onClick={() => this.onFilterClick("newest")}
                         >Mới nhất</div>
 
-                        <div className={getQueryParamByName("tab") === "most-views"
+                        <div className={getQueryParamByName("tab") === "top"
                             ? "h-filter-item last active" : "h-filter-item last"}
-                            onClick={() => this.onFilterClick("most-views")}
+                            onClick={() => this.onFilterClick("top")}
                         >Lượt thích</div>
                     </div>
                 </div>

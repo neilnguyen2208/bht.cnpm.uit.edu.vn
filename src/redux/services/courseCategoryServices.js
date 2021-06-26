@@ -8,7 +8,7 @@ import { authRequest } from "utils/requestUtils";
 export function getCourseFaculties() {
     return dispatch => {
         dispatch(get_CourseFacultiesRequest());
-        authRequest.get(`/exercises/subjectFaculties`).then(result => {
+        authRequest.get(`/subjectFaculties`).then(result => {
             dispatch(get_CourseFacultiesSuccess(result.data));
         }).catch(error => {
             dispatch(get_CourseFacultiesFailure(error))

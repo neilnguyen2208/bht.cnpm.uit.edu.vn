@@ -20,11 +20,11 @@ class SearchTag extends React.Component {
 
     componentDidMount() {
         this.queryParamObject = {
-            "q": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+            "q": getQueryParamByName('q') ? getQueryParamByName('q') : ''
         }
 
         this.searchParamObject = {
-            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ' '
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ''
         }
 
         setQueryParam(this.queryParamObject)

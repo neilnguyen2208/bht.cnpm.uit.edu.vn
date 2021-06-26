@@ -38,10 +38,10 @@ import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";
 
-export function getAnExerciseComments(postId, page) {
+export function getAnExerciseComments(exerciseId, page) {
   return dispatch => {
     dispatch(get_AnExerciseCommentsRequest());
-    authRequest.get(`/posts/${postId}/comments?page=${page}&sort=submitDtm,desc`)
+    authRequest.get(`/posts/${exerciseId}/comments?page=${page}&sort=submitDtm,desc`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
@@ -104,15 +104,15 @@ export function reportAnExerciseComment(id, reason) { //
     authRequest.post(`/posts/comments/${id}/report`, JSON.stringify(reason))
       .then(response => {
         dispatch(post_ReportAnExerciseCommentSuccess());
-      }
-      ).catch(() => dispatch(post_ReportAnExerciseCommentFailure()))
+      })
+      .catch(() => dispatch(post_ReportAnExerciseCommentFailure()))
   }
 }
 
-export function createAnExerciseComment(postId, content) {
+export function createAnExerciseComment(exerciseId, content) {
   return dispatch => {
     dispatch(create_AnExerciseCommentReset());
-    authRequest.post(`/posts/` + postId + `/comments`, JSON.stringify(content))
+    authRequest.post(`/posts/` + exerciseId + `/comments`, JSON.stringify(content))
       .then(response => {
         dispatch(create_AnExerciseCommentSuccess(response.data.id));
       })

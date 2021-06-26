@@ -50,6 +50,15 @@ import {
     get_ManagementDocumentsFailure,
     get_DocumentByIDSuccess,
     get_DocumentByIDFailure,
+    get_DocumentSubjectsListRequest,
+    get_DocumentSubjectsListSuccess,
+    get_DocumentSubjectsListFailure,
+    get_DCDocumentSubjectsListRequest,
+    get_DCDocumentSubjectsListSuccess,
+    get_DCDocumentSubjectsListFailure,
+    get_CSNNDocumentSubjectsListRequest,
+    get_CSNNDocumentSubjectsListSuccess,
+    get_CSNNDocumentSubjectsListFailure,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam } from 'utils/urlUtils';
@@ -82,8 +91,7 @@ export function getManagementDocuments(searchParamObject) {
                             finalResult.push({
                                 ...result_1.docSummary[i],
                                 ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummary[i].id)),
-                            }
-                            );
+                            });
                         }
 
                         dispatch(get_ManagementDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
@@ -98,7 +106,7 @@ export function getManagementDocuments(searchParamObject) {
 export function getDocumentSearch(searchParamObject) {
     return dispatch => {
         dispatch(get_DocumentSearchRequest());
-        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents/searchFilter?${generateSearchParam(searchParamObject)}`)
             .then(response => {
                 //statistic
                 let result_1 = response.data;
@@ -112,10 +120,8 @@ export function getDocumentSearch(searchParamObject) {
                             finalResult.push({
                                 ...result_1.docSummaryDTOs[i],
                                 ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummaryDTOs[i].id)),
-                            }
-                            );
+                            });
                         }
-
                         dispatch(get_DocumentSearchSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_DocumentSearchFailure())
             })
@@ -370,5 +376,36 @@ export function reportADocument(id, reason) { //
                 dispatch(post_ReportADocumentSuccess());
             }
             ).catch(() => dispatch(post_ReportADocumentFailure()))
+    }
+}
+
+
+
+
+//
+export function getDocumentSubjectsList(searchParamObject) {
+    return dispatch => {
+        dispatch(get_DocumentSubjectsListRequest());
+        authRequest.get(`/subjects?${generateSearchParam(searchParamObject)}`).then(response => {
+            dispatch(get_DocumentSubjectsListSuccess(response.data))
+        }).catch(error => dispatch(get_DocumentSubjectsListFailure(error)))
+    }
+}
+
+export function getDCDocumentSubjectsList() {
+    return dispatch => {
+        dispatch(get_DCDocumentSubjectsListRequest());
+        authRequest.get(`/subjects?subjectGroup=1`).then(response => {
+            dispatch(get_DCDocumentSubjectsListSuccess(response.data))
+        }).catch(error => dispatch(get_DCDocumentSubjectsListFailure(error)))
+    }
+}
+
+export function getCSNNDocumentSubjectsList() {
+    return dispatch => {
+        dispatch(get_CSNNDocumentSubjectsListRequest());
+        authRequest.get(`/subjects?subjectGroup=2`).then(response => {
+            dispatch(get_CSNNDocumentSubjectsListSuccess(response.data))
+        }).catch(error => dispatch(get_CSNNDocumentSubjectsListFailure(error)))
     }
 }

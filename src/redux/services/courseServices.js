@@ -81,7 +81,7 @@ export function getMyCourses() { //this API to get all approved document of a sp
 export function getCoursesList(searchParamObject) {
     return dispatch => {
         dispatch(get_CoursesListRequest());
-        authRequest.get(`/exercises/subjects?${generateSearchParam(searchParamObject)}`).then(response => {
+        authRequest.get(`/subjects?${generateSearchParam(searchParamObject)}`).then(response => {
             dispatch(get_CoursesListSuccess(response.data))
         }).catch(error => dispatch(get_CoursesListFailure(error)))
     }
@@ -90,7 +90,7 @@ export function getCoursesList(searchParamObject) {
 export function getDCCoursesList() {
     return dispatch => {
         dispatch(get_DCCoursesListRequest());
-        authRequest.get(`/exercises/subjects?subjectGroup=1`).then(response => {
+        authRequest.get(`/subjects?subjectGroup=1`).then(response => {
             dispatch(get_DCCoursesListSuccess(response.data))
         }).catch(error => dispatch(get_DCCoursesListFailure(error)))
     }
@@ -99,7 +99,7 @@ export function getDCCoursesList() {
 export function getCSNNCoursesList() {
     return dispatch => {
         dispatch(get_CSNNCoursesListRequest());
-        authRequest.get(`/exercises/subjects?subjectGroup=2`).then(response => {
+        authRequest.get(`/subjects?subjectGroup=2`).then(response => {
             dispatch(get_CSNNCoursesListSuccess(response.data))
         }).catch(error => dispatch(get_CSNNCoursesListFailure(error)))
     }
@@ -117,7 +117,7 @@ export function getCourseTopicsWithExercisesBySubjectId(subjectId) {
 export function getCourseTopicsWithExercisesByExerciseId(exerciseId) {
     return dispatch => {
         dispatch(get_CourseTopicsWithExercisesByExerciseIdRequest());
-        authRequest.get(`/exercises/subjects/fromExercise/${exerciseId}`).then(response => {
+        authRequest.get(`/subjects/withExerciseTopicAndExerciseList/fromExercise/${exerciseId}`).then(response => {
             dispatch(get_CourseTopicsWithExercisesByExerciseIdSuccess(response.data))
         }).catch(error => dispatch(get_CourseTopicsWithExercisesByExerciseFailure(error)));
     }
@@ -126,7 +126,7 @@ export function getCourseTopicsWithExercisesByExerciseId(exerciseId) {
 export function getCourseDetailById(subjectId) {
     return dispatch => {
         dispatch(get_CourseDetailByIdRequest());
-        authRequest.get(`/exercises/subjects?id=${subjectId}`).then(response_1 => {
+        authRequest.get(`/subjects?id=${subjectId}`).then(response_1 => {
             let result_1 = response_1.data;
             dispatch(get_CourseDetailByIdSuccess(result_1))
         }).catch(error => dispatch(get_CourseDetailByIdFailure(error)))
@@ -222,7 +222,6 @@ export function reportAnExercise(id, reason) { //
         authRequest.post(`/posts/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportAnExerciseSuccess());
-            }
-            ).catch(() => dispatch(post_ReportAnExerciseFailure()))
+            }).catch(() => dispatch(post_ReportAnExerciseFailure()))
     }
 }

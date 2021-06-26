@@ -6,8 +6,12 @@ export default class SearchHorizontalMenubar extends React.Component {
     return (
       <div>
         <div className="d-flex mg-bottom-5px">
-          <div className="gray-label">Kết quả tìm kiếm cho:  </div>
-          <div className="gray-normal-label">'{decodeURIComponent(getQueryParamByName('q'))}'</div>
+          {decodeURIComponent(getQueryParamByName('q')) !== '' &&
+            <div className="d-flex">
+              <div className="gray-label">Kết quả tìm kiếm cho:  </div>
+              <div className="gray-normal-label">'{decodeURIComponent(getQueryParamByName('q'))}'</div>
+            </div>
+          }
         </div>
         <div className="h-menu-bar">
           <NavLink to={`/search/posts?q=${getQueryParamByName('q')}`} className="h-menu-item" activeClassName='h-menu-item active'>

@@ -57,8 +57,15 @@ import {
     GET_MANAGEMENT_DOCUMENTS_FAILURE,
     GET_MANAGEMENT_DOCUMENTS_SUCCESS,
     GET_MANAGEMENT_DOCUMENTS_REQUEST,
-
-
+    GET_DOCUMENT_SUBJECTS_LIST_REQUEST,
+    GET_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+    GET_DOCUMENT_SUBJECTS_LIST_FAILURE,
+    GET_DC_DOCUMENT_SUBJECTS_LIST_REQUEST,
+    GET_DC_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+    GET_DC_DOCUMENT_SUBJECTS_LIST_FAILURE,
+    GET_CSNN_DOCUMENT_SUBJECTS_LIST_REQUEST,
+    GET_CSNN_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+    GET_CSNN_DOCUMENT_SUBJECTS_LIST_FAILURE,
 } from "../constants.js"
 
 //my documents
@@ -379,5 +386,62 @@ export function get_DocumentByIDFailure(error) {
 export function get_DocumentByIDReset() {
     return {
         type: GET_DOCUMENT_BY_ID_RESET
+    }
+}
+
+export function get_DocumentSubjectsListRequest() {
+    return {
+        type: GET_DOCUMENT_SUBJECTS_LIST_REQUEST
+    }
+}
+
+
+export function get_DocumentSubjectsListSuccess() {
+    return {
+        type: GET_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+    }
+}
+
+export function get_DocumentSubjectsListFailure() {
+    return {
+        type: GET_DOCUMENT_SUBJECTS_LIST_FAILURE
+    }
+}
+
+export function get_DCDocumentSubjectsListRequest() {
+    return {
+        type: GET_DC_DOCUMENT_SUBJECTS_LIST_REQUEST
+    }
+}
+
+export function get_DCDocumentSubjectsListSuccess(data) {
+    return {
+        type: GET_DC_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_DCDocumentSubjectsListFailure() {
+    return {
+        type: GET_DC_DOCUMENT_SUBJECTS_LIST_FAILURE
+    }
+}
+
+export function get_CSNNDocumentSubjectsListRequest() {
+    return {
+        type: GET_CSNN_DOCUMENT_SUBJECTS_LIST_REQUEST
+    }
+}
+
+
+export function get_CSNNDocumentSubjectsListSuccess() {
+    return {
+        type: GET_CSNN_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+    }
+}
+
+export function get_CSNNDocumentSubjectsListFailure() {
+    return {
+        type: GET_CSNN_DOCUMENT_SUBJECTS_LIST_FAILURE
     }
 }

@@ -10,7 +10,7 @@ import { request } from 'utils/requestUtils';
 export function getDocumentSubjects() {
     return dispatch => {
         dispatch(get_DocumentSubjectsRequest());
-        request.get('/documents/subjects')
+        request.get('/subjects')
             .then(response => {
                 dispatch(get_DocumentSubjectsSuccess(response.data))
             })
@@ -20,7 +20,7 @@ export function getDocumentSubjects() {
 export function getDocumentSubjectsHaveAll() {
     return dispatch => {
         dispatch(get_DocumentSubjectsRequest());
-        request.get('/documents/subjects')
+        request.get('/subjects')
             .then(response => {
                 dispatch(get_DocumentSubjectsHaveAllSuccess(response.data))
             })

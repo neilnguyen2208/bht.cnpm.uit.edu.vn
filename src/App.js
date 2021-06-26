@@ -49,11 +49,9 @@ import ModalManager from 'components/common/Modal/ModalManager';
 import ModalBLManager from 'components/common/Modal/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager';
 import CommentModalManager from 'components/common/Modal/CommentModal/CommentModalManager';
-import CommentModal from 'components/common/Modal/CommentModal/CommentModal';
-
+import DocumentsSubjectList from 'pages/common/DocumentsList/DocumentsSubjectList';
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute';
 import { Access, Post } from "authentication/permission.config";
-import { openCommentModal } from "redux/services/modalServices";
 
 const App = () => {
     return (
@@ -66,7 +64,8 @@ const App = () => {
                         <Route exact path="/" component={Home} />
 
                         <Route exact path="/posts" component={PostsList} />
-                        <Route exact path="/documents" component={DocumentsList} />
+                        <Route exact path="/documents" component={DocumentsSubjectList} />
+                        <Route exact path="/subject-documents/:id" component={DocumentsList} />
                         <Route exact path="/post-content/:id" component={PostDetail} />
                         <Route exact path="/document-content/:id" component={DocumentDetail} />
                         <Route exact path="/courses" component={CoursesList} />
@@ -78,8 +77,6 @@ const App = () => {
                         <Route path="/search/courses" exact component={SearchCourses} />
                         <Route path="/courses/exercise/:id" exact component={Exercise} />
                         <Route path="/courses/exercise-content/:id" exact component={ExerciseQuestions} />
-
-
 
                         {/* Search Tag */}
                         <Route path="/tags/posts/" exact component={SearchPostByTag} />

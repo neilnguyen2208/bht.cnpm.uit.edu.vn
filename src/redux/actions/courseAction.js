@@ -58,6 +58,12 @@ import {
     REPORT_AN_EXERCISE_RESET,
     REPORT_AN_EXERCISE_SUCCESS,
     REPORT_AN_EXERCISE_FAILURE,
+    RESOLVE_AN_EXERCISE_RESET,
+    RESOLVE_AN_EXERCISE_FAILURE,
+    RESOLVE_AN_EXERCISE_SUCCESS,
+    GET_REPORTED_EXERCISES_REQUEST,
+    GET_REPORTED_EXERCISES_SUCCESS,
+    GET_REPORTED_EXERCISES_FAILURE,
 } from "../constants.js"
 
 
@@ -393,6 +399,43 @@ export function post_ReportAnExerciseSuccess() {
 export function post_ReportAnExerciseFailure() {
     return {
         type: REPORT_AN_EXERCISE_FAILURE
+    }
+}
+
+export function get_ReportedExercisesRequest() {
+    return {
+        type: GET_REPORTED_EXERCISES_REQUEST,
+    }
+}
+
+export function get_ReportedExercisesSuccess(data) {
+    return {
+        type: GET_REPORTED_EXERCISES_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ReportedExercisesFailure() {
+    return {
+        type: GET_REPORTED_EXERCISES_FAILURE
+    }
+}
+
+export function post_ResolveAnExerciseReset() {
+    return {
+        type: RESOLVE_AN_EXERCISE_RESET
+    }
+}
+
+export function post_ResolveAnExerciseSuccess() {
+    return {
+        type: RESOLVE_AN_EXERCISE_SUCCESS
+    }
+}
+
+export function post_ResolveAnExerciseFailure() {
+    return {
+        type: RESOLVE_AN_EXERCISE_FAILURE
     }
 }
 

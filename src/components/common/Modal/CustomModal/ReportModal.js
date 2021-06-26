@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { getReportReasons } from 'redux/services/reportServices'
 import { reportAPost } from 'redux/services/postServices'
 import { reportAPostComment } from 'redux/services/postCommentServices'
+import { reportAnExercise } from 'redux/services/courseServices';
 
 class ReportModal extends React.Component {
 
@@ -32,7 +33,7 @@ class ReportModal extends React.Component {
       case "EXERCISE": {
         this.reportTitle = "Báo cáo bài tập";
         this.bigModalTitle = "BÁO CÁO BÀI TẬP";
-        this.reportService = this.props.resportAnExercise;
+        this.reportService = this.props.reportAnExercise;
         break;
       }
       case "COMMENT":
@@ -142,8 +143,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getReportReasons, reportAPost,
-  reportAPostComment
+  getReportReasons,
+  reportAPost,
+  reportAPostComment,
+  reportAnExercise
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportModal));

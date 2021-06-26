@@ -53,6 +53,12 @@ import {
     get_ExerciseNoteRequest,
     get_ExerciseNoteSuccess,
     get_ExerciseNoteFailure,
+    post_ResolveAnExerciseReset,
+    post_ResolveAnExerciseSuccess,
+    post_ResolveAnExerciseFailure,
+    get_ReportedExercisesRequest,
+    get_ReportedExercisesSuccess,
+    get_ReportedExercisesFailure,
 } from "redux/actions/courseAction.js";
 import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
@@ -216,12 +222,42 @@ export function getCourseSearchResult(searchParamObject) {
 }
 
 //temp report services
+
+export function getReportedExercises(searchParamObject) {
+    return dispatch => {
+        dispatch(get_ReportedExercisesRequest());
+        authRequest.get(`/exercises/report?${generateSearchParam(searchParamObject)}`)
+            .then(response => {
+                let result_1 = response.data;
+                let IDarr = '';
+                response.data.exerciseReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                
+                dispatch(get_ReportedExercisesSuccess({
+                    exerciseReportDTOs: result_1.exerciseReportDTOs,
+                    totalPages: result_1.totalPages,
+                    totalElements: result_1.totalElements
+                }))
+            }).catch(error => { get_ReportedExercisesFailure(error) })
+    }
+}
+
 export function reportAnExercise(id, reason) { //
     return dispatch => {
         dispatch(post_ReportAnExerciseReset())
-        authRequest.post(`/posts/${id}/report`, JSON.stringify(reason))
+        authRequest.post(`/exercises/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportAnExerciseSuccess());
             }).catch(() => dispatch(post_ReportAnExerciseFailure()))
+    }
+}
+
+export function resolveAnExercise(id, resolveDTO) {
+    return dispatch => {
+        dispatch(post_ResolveAnExerciseReset());
+        authRequest.post(`/exercises/resolveReport/${id}`, JSON.stringify(resolveDTO))
+            .then(result => {
+                dispatch(post_ResolveAnExerciseSuccess());
+            })
+            .catch(error => post_ResolveAnExerciseFailure())
     }
 }

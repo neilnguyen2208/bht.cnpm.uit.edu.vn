@@ -4,7 +4,7 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
-import { getReportedPosts } from "redux/services/postServices";
+import { getReportedExercises } from "redux/services/courseServices";
 import ReportInfo from 'components/course/ReportInfo'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -15,10 +15,10 @@ import AdminSidebar from 'layouts/AdminSidebar'
 import CourseManagementNavbar from './ExerciseManagementNavbar'
 import ReportReactionbar from 'components/course/ReportReactionbar'
 import store from 'redux/store/index'
-import { post_ResolveAPostReset } from 'redux/actions/postAction'
+import { post_ResolveAnExerciseReset } from 'redux/actions/courseAction'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 import Combobox from 'components/common/Combobox/Combobox';
-import { resolveStateOptions } from 'constants.js'
+import { exerciseResolveStateOptions } from 'constants.js'
 
 class PostReportManagement extends React.Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class PostReportManagement extends React.Component {
             page: getQueryParamByName('page')
         }
 
-        this.props.getReportedPosts(this.searchParamObject);
+        this.props.getReportedExercises(this.searchParamObject);
     }
 
     //server paginator
@@ -45,7 +45,7 @@ class PostReportManagement extends React.Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
         }
-        this.props.getReportedPosts(this.searchParamObject);
+        this.props.getReportedExercises(this.searchParamObject);
         this.setState({});
     }
 
@@ -73,20 +73,20 @@ class PostReportManagement extends React.Component {
                     page: "1"
                 }
         }
-        this.props.getReportedPosts(this.searchParamObject);
+        this.props.getReportedExercises(this.searchParamObject);
         this.setState({});
     }
 
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
-        if (this.props.postsList.length === 1 && this.searchParamObject.page > 1)
+        if (this.props.exercisesList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
                 paginator: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getReportedPosts(this.searchParamObject);
+        this.props.getReportedExercises(this.searchParamObject);
     }
 
     render() {
@@ -95,36 +95,38 @@ class PostReportManagement extends React.Component {
             closeModal();
             closeModal();
             this.reloadList();
-            store.dispatch(post_ResolveAPostReset());
+            store.dispatch(post_ResolveAnExerciseReset());
             openBLModal({ type: "success", text: "Xử lý bài viết thành công!" });
         }
-        if (!this.props.isListLoading && this.props.postsList) {
-            this.postsList = this.props.postsList.map((item) => (
-                <div className="item-container">
-                    <ReportInfo
-                        postId={item.id}
-                        reporters={item.reporters}
-                        author={item.author}
-                        reportReasons={item.reportReasons}
-                        title={item.title}
-                        content={item.content}
-                        imageURL={item.postImageURL}
-                        reportTime={item.reportTime}
-                        resolvedTime={item.resolvedTime}
-                        resolvedNote={item.resolvedNote}
-                        actionTaken={item.actionTaken}
-                        feedbacks={item.feedbacks}
-                    />
+        if (!this.props.isListLoading && this.props.exercisesList) {
+            this.exercisesList = this.props.exercisesList.map((item) => {
+                console.log(item);
+                return (
+                    <div className="item-container">
+                        <ReportInfo
+                            exerciseId={item.id}
+                            reporters={item.reporters}
+                            author={item.author}
+                            reportReasons={item.reportReasons}
+                            title={item.title}
+                            content={item.content}
+                            reportTime={item.reportTime}
+                            resolvedTime={item.resolvedTime}
+                            resolvedNote={item.resolvedNote}
+                            actionTaken={item.actionTaken}
+                            feedbacks={item.feedbacks}
+                        />
 
-                    <ReportReactionbar type={itemType.mySelf}
-                        id={item.id} //report id, not post id
-                    />
-                </div>
-            ))
+                        <ReportReactionbar type={itemType.mySelf}
+                            id={item.id}
+                        />
+                    </div>
+                )
+            })
         }
 
         return (
-            <div className="left-sidebar-layout">
+            <div className="left-sidebar-layout" >
                 <AdminSidebar />
                 <div className="content-layout">
                     <Titlebar title="QUẢN LÝ BÀI TẬP" />
@@ -145,7 +147,7 @@ class PostReportManagement extends React.Component {
                                 <div className="filter-label t-a-right mg-right-5px">Trạng thái xử lý:</div>
                                 <div className="mg-left-5px">
                                     <Combobox
-                                        options={resolveStateOptions}
+                                        options={exerciseResolveStateOptions}
                                         placeHolder="Tất cả"
                                         onOptionChanged={(selectedOption) => this.onStateOptionChange(selectedOption)}
                                         comboboxId="prmrsf-combobox" //post report management resolve state filter 
@@ -156,7 +158,7 @@ class PostReportManagement extends React.Component {
 
                         {!this.props.isListLoading ?
                             <>
-                                <>{this.postsList}</>
+                                <>{this.exercisesList}</>
                                 <Paginator config={{
                                     changePage: (pageNumber) => this.onPageChange(pageNumber),
                                     pageCount: this.props.totalPages,
@@ -178,21 +180,22 @@ class PostReportManagement extends React.Component {
     }
 }
 const mapStateToProps = (state) => {
+    console.log(state.course.reportedExercises.data);
     return {
-        //pending posts list
-        postsList: state.post.reportedPosts.data,
-        isListLoading: state.post.reportedPosts.isLoading,
-        totalPages: state.post.reportedPosts.totalPages,
-        totalElements: state.post.reportedPosts.totalElements,
+        //pending exercises list
+        exercisesList: state.course.reportedExercises.data,
+        isListLoading: state.course.reportedExercises.isLoading,
+        totalPages: state.course.reportedExercises.totalPages,
+        totalElements: state.course.reportedExercises.totalElements,
 
         //handle action resolve a report
-        isHaveResolved: state.post.isHaveResolved
+        isHaveResolved: state.course.isHaveResolved
 
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getReportedPosts
+    getReportedExercises
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostReportManagement));

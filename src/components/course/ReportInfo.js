@@ -107,7 +107,7 @@ export default class ReportInfo extends React.PureComponent {
 
                 <div className="report-container">
                     <div className="d-flex">
-                        <img className="danger-icon" src={danger_icon} alt="!" />
+                        <img className="danger-icon" src={danger_icon} alt="" />
                         <div>Lý do báo cáo:</div>
                     </div>
                     <div className="report-reason">

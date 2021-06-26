@@ -59,6 +59,12 @@ import {
     REPORT_AN_EXERCISE_RESET,
     REPORT_AN_EXERCISE_SUCCESS,
     REPORT_AN_EXERCISE_FAILURE,
+    RESOLVE_AN_EXERCISE_FAILURE,
+    RESOLVE_AN_EXERCISE_SUCCESS,
+    RESOLVE_AN_EXERCISE_RESET,
+    GET_REPORTED_EXERCISES_REQUEST,
+    GET_REPORTED_EXERCISES_SUCCESS,
+    GET_REPORTED_EXERCISES_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -133,7 +139,7 @@ const initialState = {
         isChecked: false
     },
 
-    relativePosts: {
+    relativeExercises: {
         isLoading: false,
         data: [],
         error: ''
@@ -163,7 +169,16 @@ const initialState = {
         error: ''
     },
 
-    isHaveReported: false
+    reportedExercises: {
+        data: [],
+        isLoading: false,
+        totalPages: 1,
+        totalElements: 0
+    },
+
+    isHaveReported: false,
+    isHaveResolved: false
+
 
 };
 
@@ -294,15 +309,15 @@ function CourseReducer(state = initialState, action) {
             }
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_REQUEST:
             return {
-                ...state, relativePosts: { isLoading: true, error: '', data: [] }
+                ...state, relativeExercises: { isLoading: true, error: '', data: [] }
             };
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_SUCCESS:
             return {
-                ...state, relativePosts: { isLoading: false, data: action.payload, error: '' }
+                ...state, relativeExercises: { isLoading: false, data: action.payload, error: '' }
             }
         case GET_RELATIVE_POSTS_BY_EXERCISE_ID_FAILURE:
             return {
-                ...state, relativePosts: { isLoading: false, error: action.payload, data: [] }
+                ...state, relativeExercises: { isLoading: false, error: action.payload, data: [] }
             }
         case GET_RELATIVE_DOCUMENTS_BY_EXERCISE_ID_REQUEST:
             return {
@@ -376,6 +391,32 @@ function CourseReducer(state = initialState, action) {
                 error: action.payload
             }
         }
+
+        case GET_REPORTED_EXERCISES_REQUEST:
+            return {
+                ...state, reportedExercises: {
+                    ...state.reportedExercises,
+                    isLoading: true
+                }
+            };
+        case GET_REPORTED_EXERCISES_SUCCESS:
+            return {
+                ...state, reportedExercises: {
+                    isLoading: false,
+                    data: action.payload.exerciseReportDTOs,
+                    totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
+                    totalElements: action.payload.totalElements ? action.payload.totalElements : 0
+                }
+            };
+        case GET_REPORTED_EXERCISES_FAILURE:
+            return {
+                ...state, reportedExercises: {
+                    isLoading: false,
+                    data: [],
+                    totalPages: 1,
+                    totalElements: 0
+                }
+            };
         //report
         case REPORT_AN_EXERCISE_RESET:
             return { ...state, isHaveReported: false };
@@ -383,6 +424,14 @@ function CourseReducer(state = initialState, action) {
             return { ...state, isHaveReported: true };
         case REPORT_AN_EXERCISE_FAILURE:
             return { ...state, isHaveReported: false };
+
+        //report
+        case RESOLVE_AN_EXERCISE_RESET:
+            return { ...state, isHaveResolved: false };
+        case RESOLVE_AN_EXERCISE_SUCCESS:
+            return { ...state, isHaveResolved: true };
+        case RESOLVE_AN_EXERCISE_FAILURE:
+            return { ...state, isHaveResolved: false };
 
         case UPDATE_TOC_SET:
             return {

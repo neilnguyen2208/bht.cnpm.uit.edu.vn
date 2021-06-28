@@ -24,7 +24,7 @@ class CommentModal extends React.Component {
             document.querySelectorAll(".comment-modal-container").forEach(element => {
                 element.style.height = (window.innerHeight - 80).toString() + "px";
             })
-        }   
+        }
     }
 
     closeModal = () => {
@@ -37,6 +37,7 @@ class CommentModal extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <div className="modal-overlay-shadow" />
@@ -52,8 +53,7 @@ class CommentModal extends React.Component {
                                 // create comment will show if you have action create comment
                                 // exerciseAvailableActions={this.props.currentExercise.availableActions}
                                 exerciseAvailableActions={["comment"]}
-                                // id={this.props.currentExercise.id}
-                                id={2}
+                                exerciseId={this.props.exerciseId}
                                 commentCount={0}
                             />
                         </div>

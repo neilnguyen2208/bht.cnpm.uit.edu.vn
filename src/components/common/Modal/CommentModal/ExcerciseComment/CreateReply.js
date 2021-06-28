@@ -7,7 +7,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //services
-import { getAPostComments } from "redux/services/postCommentServices"
 
 // import store from 'redux/store/index'
 // import { validation } from 'utils/validationUtils'
@@ -41,7 +40,7 @@ class CreateReply extends React.Component {
 
   createReply = () => {
     if (getCKEInstance(this.props.componentId))
-      authRequest.post(`/posts/comments/${this.props.commentId}`, {
+      authRequest.post(`/exercises/comments/${this.props.commentId}`, {
         content: getCKEInstance(this.props.componentId).getData()
       }).then(response => {
 
@@ -89,9 +88,9 @@ class CreateReply extends React.Component {
               </div>
             </div>
           </div>
-          <div style={{ height: "0px", width: "0px" }} >
+          {/* <div style={{ height: "0px", width: "0px" }} >
             <div className="triangle-with-shadow reply" />
-          </div>
+          </div> */}
 
         </div>
       </RequireLogin >

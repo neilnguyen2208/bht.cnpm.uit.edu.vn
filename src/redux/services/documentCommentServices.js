@@ -1,52 +1,52 @@
 
 import {
-  get_APostCommentFailure,
-  get_APostCommentsRequest,
-  get_APostCommentsSuccess,
+  get_ADocumentCommentFailure,
+  get_ADocumentCommentsRequest,
+  get_ADocumentCommentsSuccess,
 
-  create_APostCommentReset,
-  create_APostCommentSuccess,
-  create_APostCommentFailure,
-  post_LikeAPostCommentRequest,
-  post_LikeAPostCommentSuccess,
-  post_LikeAPostCommentFailure,
-  delete_UnLikeAPostCommentRequest,
-  delete_UnLikeAPostCommentSuccess,
-  delete_UnLikeAPostCommentFailure,
+  create_ADocumentCommentReset,
+  create_ADocumentCommentSuccess,
+  create_ADocumentCommentFailure,
+  post_LikeADocumentCommentRequest,
+  post_LikeADocumentCommentSuccess,
+  post_LikeADocumentCommentFailure,
+  delete_UnLikeADocumentCommentRequest,
+  delete_UnLikeADocumentCommentSuccess,
+  delete_UnLikeADocumentCommentFailure,
 
-  delete_APostCommentReset,
-  delete_APostCommentSuccess,
-  delete_APostCommentFailure,
-  put_EditAPostCommentReset,
-  put_EditAPostCommentSuccess,
-  put_EditAPostCommentFailure,
+  delete_ADocumentCommentReset,
+  delete_ADocumentCommentSuccess,
+  delete_ADocumentCommentFailure,
+  put_EditADocumentCommentReset,
+  put_EditADocumentCommentSuccess,
+  put_EditADocumentCommentFailure,
   get_CommentReportReasonsSuccess,
   get_CommentReportReasonsFailure,
   get_CommentReportReasonsRequest,
-  post_ReportAPostCommentReset,
-  post_ReportAPostCommentSuccess,
-  post_ReportAPostCommentFailure,
-  post_ResolveAPostCommentReset,
-  post_ResolveAPostCommentSuccess,
-  post_ResolveAPostCommentFailure,
-  get_ReportedPostCommentsRequest,
-  get_ReportedPostCommentsSuccess,
-  get_ReportedPostCommentsFailure
+  post_ReportADocumentCommentReset,
+  post_ReportADocumentCommentSuccess,
+  post_ReportADocumentCommentFailure,
+  post_ResolveADocumentCommentReset,
+  post_ResolveADocumentCommentSuccess,
+  post_ResolveADocumentCommentFailure,
+  get_ReportedDocumentCommentsRequest,
+  get_ReportedDocumentCommentsSuccess,
+  get_ReportedDocumentCommentsFailure
 
 } from "redux/actions/postCommentAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";
 
-export function getAPostComments(postId, page) {
+export function getADocumentComments(postId, page) {
   return dispatch => {
-    dispatch(get_APostCommentsRequest());
-    authRequest.get(`/posts/${postId}/comments?page=${page}&sort=submitDtm,desc`)
+    dispatch(get_ADocumentCommentsRequest());
+    authRequest.get(`/documents/${postId}/comments?page=${page}&sort=submitDtm,desc`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
         result_1.postCommentDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
-        authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+        authRequest.get(`/documents/comments/statistics?commentIDs=${IDarr}`)
           .then(response_2 => {
             //merge summary array and statistic array
             let result_2 = [];
@@ -59,7 +59,7 @@ export function getAPostComments(postId, page) {
             }
             let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
 
-            authRequest.get(`/posts/comments/actionAvailable?postCommentIDs=${actionIDarr}`).then(response_3 => {
+            authRequest.get(`/documents/comments/actionAvailable?postCommentIDs=${actionIDarr}`).then(response_3 => {
               let finalResult = [];
               for (let i = 0; i < result_2.length; i++) {
                 finalResult.push({
@@ -67,24 +67,24 @@ export function getAPostComments(postId, page) {
                   ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
                 });
               }
-              dispatch(get_APostCommentsSuccess({ postCommentDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
-            }).catch((error) => get_APostCommentFailure(error))
-          }).catch((error) => get_APostCommentFailure(error))
+              dispatch(get_ADocumentCommentsSuccess({ postCommentDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+            }).catch((error) => get_ADocumentCommentFailure(error))
+          }).catch((error) => get_ADocumentCommentFailure(error))
       }).catch(error => {
-        dispatch(get_APostCommentFailure(error)); //
+        dispatch(get_ADocumentCommentFailure(error)); //
       })
   }
 }
 
-export function editAPostComment(commentId, data) {
+export function editADocumentComment(commentId, data) {
   return dispatch => {
-    dispatch(put_EditAPostCommentReset());
-    authRequest.put(`/posts/comments/${commentId}`, JSON.stringify(data))
+    dispatch(put_EditADocumentCommentReset());
+    authRequest.put(`/documents/comments/${commentId}`, JSON.stringify(data))
       .then(response => {
-        dispatch(put_EditAPostCommentSuccess(response.data.id));
+        dispatch(put_EditADocumentCommentSuccess(response.data.id));
       })
       .catch(error => {
-        dispatch(put_EditAPostCommentFailure(error)); //
+        dispatch(put_EditADocumentCommentFailure(error)); //
       })
   }
 }
@@ -92,114 +92,114 @@ export function editAPostComment(commentId, data) {
 export function getCommentReportReasons() {
   return dispatch => {
     dispatch(get_CommentReportReasonsRequest())
-    authRequest.get(`/posts/comments/report`).then(response =>
+    authRequest.get(`/documents/comments/report`).then(response =>
       dispatch(get_CommentReportReasonsSuccess(response.data))
     ).catch(error => { dispatch(get_CommentReportReasonsFailure()) })
   }
 }
 
-export function reportAPostComment(id, reason) { //
+export function reportADocumentComment(id, reason) { //
   return dispatch => {
-    dispatch(post_ReportAPostCommentReset())
-    authRequest.post(`/posts/comments/${id}/report`, JSON.stringify(reason))
+    dispatch(post_ReportADocumentCommentReset())
+    authRequest.post(`/documents/comments/${id}/report`, JSON.stringify(reason))
       .then(response => {
-        dispatch(post_ReportAPostCommentSuccess());
+        dispatch(post_ReportADocumentCommentSuccess());
       }
-      ).catch(() => dispatch(post_ReportAPostCommentFailure()))
+      ).catch(() => dispatch(post_ReportADocumentCommentFailure()))
   }
 }
 
-export function createAPostComment(postId, content) {
+export function createADocumentComment(postId, content) {
   return dispatch => {
-    dispatch(create_APostCommentReset());
-    authRequest.post(`/posts/` + postId + `/comments`, JSON.stringify(content))
+    dispatch(create_ADocumentCommentReset());
+    authRequest.post(`/documents/` + postId + `/comments`, JSON.stringify(content))
       .then(response => {
-        dispatch(create_APostCommentSuccess(response.data.id));
+        dispatch(create_ADocumentCommentSuccess(response.data.id));
       })
       .catch(error => {
-        dispatch(create_APostCommentFailure(error)); //
+        dispatch(create_ADocumentCommentFailure(error)); //
       })
   }
 }
 
-export function resolveAPost(id, resolveDTO) {
+export function resolveADocument(id, resolveDTO) {
   return dispatch => {
-    dispatch(post_ResolveAPostCommentReset());
-    authRequest.post(`/posts/comments/  resolveReport/${id}`, JSON.stringify(resolveDTO))
+    dispatch(post_ResolveADocumentCommentReset());
+    authRequest.post(`/documents/comments/  resolveReport/${id}`, JSON.stringify(resolveDTO))
       .then(result => {
-        dispatch(post_ResolveAPostCommentSuccess());
+        dispatch(post_ResolveADocumentCommentSuccess());
       })
-      .catch(error => post_ResolveAPostCommentFailure())
+      .catch(error => post_ResolveADocumentCommentFailure())
   }
 }
 
-export function likeAPostComment(commentId) { //maybe use modal later
+export function likeADocumentComment(commentId) { //maybe use modal later
   return dispatch => {
-    dispatch(post_LikeAPostCommentRequest(commentId))
-    authRequest.post(`/posts/comments/${commentId}/likeStatus`)
+    dispatch(post_LikeADocumentCommentRequest(commentId))
+    authRequest.post(`/documents/comments/${commentId}/likeStatus`)
       .then(response => {
         // response.data khong co data gi nen thoi, 
         //do can cap nhat cac state khac nhau o cac trang khac nhau nen can them mot bien type
-        dispatch(post_LikeAPostCommentSuccess(commentId));
+        dispatch(post_LikeADocumentCommentSuccess(commentId));
       }
-      ).catch(() => dispatch(post_LikeAPostCommentFailure()))
+      ).catch(() => dispatch(post_LikeADocumentCommentFailure()))
   }
 }
 
-export function unLikeAPostComment(commentId) { //maybe use modal later
+export function unLikeADocumentComment(commentId) { //maybe use modal later
   return dispatch => {
-    dispatch(delete_UnLikeAPostCommentRequest())
-    authRequest.delete(`/posts/comments/${commentId}/likeStatus`)
+    dispatch(delete_UnLikeADocumentCommentRequest())
+    authRequest.delete(`/documents/comments/${commentId}/likeStatus`)
       .then(response => {
-        dispatch(delete_UnLikeAPostCommentSuccess(response.data));
+        dispatch(delete_UnLikeADocumentCommentSuccess(response.data));
       }
-      ).catch(() => dispatch(delete_UnLikeAPostCommentFailure()))
+      ).catch(() => dispatch(delete_UnLikeADocumentCommentFailure()))
   }
 }
 
 //chua co API cho viec xoa bai post
-export function deleteAPostComment(commentId) { //maybe use modal later
+export function deleteADocumentComment(commentId) { //maybe use modal later
   return dispatch => {
-    dispatch(delete_APostCommentReset(commentId))
-    authRequest.delete(`/posts/comments/${commentId}`).then(response => {
-      dispatch(delete_APostCommentSuccess())
+    dispatch(delete_ADocumentCommentReset(commentId))
+    authRequest.delete(`/documents/comments/${commentId}`).then(response => {
+      dispatch(delete_ADocumentCommentSuccess())
       openBLModal({ text: "Xoá bình luận thành công!", type: "success" });
-    }).catch(error => { dispatch(delete_APostCommentFailure(commentId)) })
+    }).catch(error => { dispatch(delete_ADocumentCommentFailure(commentId)) })
   }
 }
 
 export function createReply(prCommentId, content) {
   return dispatch => {
-    dispatch(create_APostCommentReset());
-    authRequest.post(`/posts/comments/${prCommentId}`, JSON.stringify(content))
+    dispatch(create_ADocumentCommentReset());
+    authRequest.post(`/documents/comments/${prCommentId}`, JSON.stringify(content))
       .then(response => {
-        dispatch(create_APostCommentSuccess(response.data.id));
+        dispatch(create_ADocumentCommentSuccess(response.data.id));
       })
       .catch(error => {
-        dispatch(create_APostCommentFailure(error)); //
+        dispatch(create_ADocumentCommentFailure(error)); //
       })
   }
 }
 
-export function getReportedPostComments(searchParamObject) {
+export function getReportedDocumentComments(searchParamObject) {
   return dispatch => {
-    dispatch(get_ReportedPostCommentsRequest());
-    authRequest.get(`/posts/comments/report?${generateSearchParam(searchParamObject)}`)
+    dispatch(get_ReportedDocumentCommentsRequest());
+    authRequest.get(`/documents/comments/report?${generateSearchParam(searchParamObject)}`)
       .then(response => {
         let result_1 = response.data;
-        dispatch(get_ReportedPostCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.postCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+        dispatch(get_ReportedDocumentCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.postCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
       })
-      .catch(error => { get_ReportedPostCommentsFailure(error) })
+      .catch(error => { get_ReportedDocumentCommentsFailure(error) })
   }
 }
 
-export function resolveAPostComment(id, resolveDTO) {
+export function resolveADocumentComment(id, resolveDTO) {
   return dispatch => {
-    dispatch(post_ResolveAPostCommentReset());
-    authRequest.post(`/posts/comments/resolveReport/${id}`, JSON.stringify(resolveDTO))
+    dispatch(post_ResolveADocumentCommentReset());
+    authRequest.post(`/documents/comments/resolveReport/${id}`, JSON.stringify(resolveDTO))
       .then(result => {
-        dispatch(post_ResolveAPostCommentSuccess());
+        dispatch(post_ResolveADocumentCommentSuccess());
       })
-      .catch(error => post_ResolveAPostCommentFailure())
+      .catch(error => post_ResolveADocumentCommentFailure())
   }
 }

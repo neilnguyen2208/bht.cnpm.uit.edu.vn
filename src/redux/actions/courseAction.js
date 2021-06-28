@@ -64,6 +64,8 @@ import {
     GET_REPORTED_EXERCISES_REQUEST,
     GET_REPORTED_EXERCISES_SUCCESS,
     GET_REPORTED_EXERCISES_FAILURE,
+    SET_TIME_NORMAL,
+    SET_TIME_STOP,
 } from "../constants.js"
 
 
@@ -451,4 +453,12 @@ export function update_QuestionsToCSucess(data) {
         type: UPDATE_TOC_SUCCESS,
         payload: data
     }
+}
+
+export function set_TimeStart() {
+    return { type: SET_TIME_NORMAL }
+}
+
+export function set_TimeStop() {
+    return { type: SET_TIME_STOP }
 }

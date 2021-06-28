@@ -24,13 +24,13 @@ import store from 'redux/store';
 import { create_AnExerciseCommentReset } from 'redux/actions/exerciseCommentAction'
 import { createAnExerciseComment, getAnExerciseComments } from 'redux/services/exerciseCommentServices'
 import { openBLModal } from 'redux/services/modalServices';
-import { getAPostStatisticByID } from 'redux/services/postServices';
+// import { getAnExerciseStatisticByID } from 'redux/services/courseService';
 const validationCondition = {
   form: '#create-comment-form',
 
   rules: [
     //truyen vao id, loai component, message
-    validation.isRequired('crt-cmmnt-cke', 'ckeditor', 'Nội dung bình luận không được để trống')
+    validation.isRequired('crt-xrcs-cmmnt-cke', 'ckeditor', 'Nội dung bình luận không được để trống')
   ],
 }
 
@@ -38,30 +38,23 @@ class CreateComment extends React.Component {
 
   componentDidMount() {
     validation(validationCondition);
-    if (window.location.hash === "#cr-cmt") {
-      if (getCKEInstance('crt-cmmnt-cke'))
-        getCKEInstance('crt-cmmnt-cke').on('instanceReady', function () {
-          getCKEInstance('crt-cmmnt-cke').focus();
-          document.getElementById("cr-cmt").scrollIntoView();
-        })
-    }
   }
 
   createComment = () => {
     if (styleFormSubmit(validationCondition))
-      this.props.createAnExerciseComment(this.props.exerciseId, { content: getCKEInstance("crt-cmmnt-cke").getData() })
+      this.props.createAnExerciseComment(this.props.exerciseId, { content: getCKEInstance("crt-xrcs-cmmnt-cke").getData() })
   }
 
   componentWillUnmount() {
     store.dispatch(create_AnExerciseCommentReset());
-    if (getCKEInstance('crt-cmmnt-cke'))
-      getCKEInstance('crt-cmmnt-cke').destroy();
+    if (getCKEInstance('crt-xrcs-cmmnt-cke'))
+      getCKEInstance('crt-xrcs-cmmnt-cke').destroy();
 
   }
 
   reloadList = () => {
     openBLModal({ type: "success", text: "Tạo bình luận thành công!" });
-    getCKEInstance("crt-cmmnt-cke").setData("");
+    getCKEInstance("crt-xrcs-cmmnt-cke").setData("");
     this.props.getAnExerciseComments(this.props.exerciseId);
     store.dispatch(create_AnExerciseCommentReset())
     this.setState({});
@@ -70,9 +63,10 @@ class CreateComment extends React.Component {
   render() {
 
     if (this.props.isHaveCreated) {
-      this.props.getAPostStatisticByID(this.props.exerciseId)
+      // this.props.getAnExerciseStatisticByID(this.props.exerciseId)
       this.reloadList()
     }
+
     return (
       <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
         <div className="comment-main-level">
@@ -84,7 +78,7 @@ class CreateComment extends React.Component {
                 </div>
                 <Editor
                   config={CommentCKEToolbarConfiguration}
-                  editorId="crt-cmmnt-cke"
+                  editorId="crt-xrcs-cmmnt-cke"
                   onChange={this.handleEditorChange}
                   height={120}
                   autoGrow_maxHeight={250}
@@ -116,7 +110,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createAnExerciseComment, getAnExerciseComments, getAPostStatisticByID
+  createAnExerciseComment, getAnExerciseComments,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateComment));

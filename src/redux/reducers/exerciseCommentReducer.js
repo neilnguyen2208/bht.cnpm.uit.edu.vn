@@ -77,7 +77,7 @@ function ExerciseCommentReducer(state = initialState, action) {
       return {
         ...state, currentExerciseComments: {
           isLoading: false,
-          data: action.payload.postCommentDTOs,
+          data: action.payload.exerciseCommentDTOs,
           totalPages: action.payload.totalPages,
           totalElements: action.payload.totalElements
         }

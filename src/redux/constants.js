@@ -589,3 +589,6 @@ export const UPDATE_TOC_SET = "UPDATE_TOC_SET";
 export const UPDATE_TOC_SUCCESS = "UPDATE_TOC_SUCCESS";
 
 export const SET_SEARCHING = "SET_SEARCHING";
+
+export const SET_TIME_NORMAL = "SET_TIME_NORMAL";
+export const SET_TIME_STOP = "SET_TIME_STOP";

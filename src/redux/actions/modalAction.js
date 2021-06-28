@@ -56,11 +56,11 @@ export function closeBigModalAction(data) {
   };
 }
 
-export function openCommentModalAction(modalType, modalProps) {
+export function openCommentModalAction(modalProps) {
   //type: alert, confirmation, form
   return {
     type: MODAL_COMMENT_OPEN,
-    payload: { modalType, modalProps }
+    payload: { modalProps }
   };
 }
 

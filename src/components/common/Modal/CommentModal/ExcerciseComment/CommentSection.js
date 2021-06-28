@@ -9,9 +9,6 @@ import { connect } from "react-redux";
 //services
 import { getAnExerciseComments } from "redux/services/exerciseCommentServices"
 
-// import store from 'redux/store/index'
-// import { validation } from 'utils/validationUtils'
-
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
@@ -24,25 +21,29 @@ import CommentLoader from 'components/common/Loader/CommentLoader';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import store from 'redux/store';
 import { openBLModal } from 'redux/services/modalServices';
-import { delete_AnExerciseCommentReset, post_ReportAnExerciseCommentReset, put_EditAnExerciseCommentReset } from 'redux/actions/exerciseCommentAction';
+import {
+  delete_AnExerciseCommentReset,
+  post_ReportAnExerciseCommentReset,
+  put_EditAnExerciseCommentReset
+} from 'redux/actions/exerciseCommentAction';
 import { exerciseAction } from 'authentication/permission.config.js';
 
 class CommentSection extends React.Component {
 
   componentDidMount() {
-    this.props.getAnExerciseComments(2, 0);
+    this.props.getAnExerciseComments(this.props.exerciseId, 0);
   }
 
   handleEditorChange = () => { }
 
   onPageChange = (pageNumber) => {
     this.pageNumber = pageNumber;
-    this.props.getAnExerciseComments(2, pageNumber - 1);
+    this.props.getAnExerciseComments(this.props.exerciseId, pageNumber - 1);
     this.setState({})
   }
 
   reloadList = () => {
-    this.props.getAnExerciseComments(2, this.pageNumber - 1);
+    this.props.getAnExerciseComments(this.props.exerciseId, this.pageNumber - 1);
   }
 
   render() {
@@ -112,8 +113,7 @@ class CommentSection extends React.Component {
         <div className=" scroller-container">
           {this.props.exerciseAvailableActions.includes(exerciseAction.Comment) &&
             <CreateComment
-              // exerciseId={this.props.id} 
-              exerciseId={2}
+              exerciseId={this.props.exerciseId}
             />}
           {!this.props.isLoading && this.props.commentsList ?
             <div>

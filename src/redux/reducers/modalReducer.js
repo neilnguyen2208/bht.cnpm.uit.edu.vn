@@ -73,8 +73,8 @@ function ModalReducer(state = initialState, action) {
       }
     case MODAL_COMMENT_OPEN:
       {
-        const { modalType, modalProps } = action.payload;
-        let newCommentModalState = state.bigModal.concat({ modalType, modalProps })
+        const { modalProps } = action.payload;
+        let newCommentModalState = state.bigModal.concat({ modalProps })
         return { ...state, commentModal: newCommentModalState }
       }
     case MODAL_COMMENT_CLOSE:

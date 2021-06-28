@@ -30,10 +30,11 @@ export const resolveStateOptions = [
 ]
 
 export const exerciseResolveStateOptions = [
-  { id: 1, name: "Tất cả", icon: report_icon, value: "REPORT_POST" },
-  { id: 2, name: "Không duyệt", icon: report_icon, value: "REPORT_POST" },
-  { id: 3, name: "Đang xử lý", icon: report_icon, value: "REPORT_POST" },
-  { id: 4, name: "Đã xử lý", icon: report_icon, value: "REPORT_POST" },
+  { id: 1, name: "Tất cả", icon: report_icon, value: "EXERCISE_REPORT_ALL" },
+  { id: 2, name: "Đang chờ duyệt", icon: report_icon, value: "EXERCISE_REPORT_PENDING" },
+  { id: 3, name: "Đang xử lý", icon: report_icon, value: "EXERCISE_REPORT_IN_PROGRESS" },
+  { id: 4, name: "Không duyệt", icon: report_icon, value: "EXERCISE_REPORT_REJECTED" },
+  { id: 5, name: "Đã xử lý", icon: report_icon, value: "EXERCISE_REPORT_FIXED" },
 ]
 
 export const adminApproveStatusOptions = [

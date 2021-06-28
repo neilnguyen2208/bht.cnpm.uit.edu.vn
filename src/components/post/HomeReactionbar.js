@@ -33,12 +33,12 @@ class HomeReactionbar extends React.Component {
     let tmpLike = this.state.isLiked;
 
     if (tmpLike === 0)
-      if (this.props.likedStatus) tmpLike = 1;
+      if (this.props.likeStatus) tmpLike = 1;
       else tmpLike = -1;
 
     tmpLike = - tmpLike;
 
-    if (this.props.likedStatus) {
+    if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
         this.props.unLikeAPost(this.props.id);
@@ -50,7 +50,7 @@ class HomeReactionbar extends React.Component {
     }
     else {
       if (tmpLike === 1) {
-        this.likeCount = this.props.likeCount + 1
+        this.likeCount = this.props.likeCount + 1;
         this.props.likeAPost(this.props.id);
       } else {
         this.props.unLikeAPost(this.props.id);
@@ -92,7 +92,7 @@ class HomeReactionbar extends React.Component {
     let saveBtn = <div></div>;
 
     //render likeBtn
-    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likedStatus)) {
+    if (this.state.isLiked === 1 || (this.state.isLiked === 0 && this.props.likeStatus)) {
       likeBtn = <img className="post-like-btn" alt="like" src={liked_icon}></img>
     }
     else {
@@ -122,7 +122,7 @@ class HomeReactionbar extends React.Component {
           <div className="d-flex">
             <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
               <div> {likeBtn}</div>
-              <div className="like-count">{this.props.likeCount ? formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount) : 0}</div>
+              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
             </div>
             <div className="vertical-line" />
             <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >

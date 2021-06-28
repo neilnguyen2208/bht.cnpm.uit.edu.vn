@@ -65,6 +65,8 @@ import {
     GET_REPORTED_EXERCISES_REQUEST,
     GET_REPORTED_EXERCISES_SUCCESS,
     GET_REPORTED_EXERCISES_FAILURE,
+    SET_TIME_NORMAL,
+    SET_TIME_STOP,
 } from '../constants.js'
 
 const initialState = {
@@ -177,8 +179,8 @@ const initialState = {
     },
 
     isHaveReported: false,
-    isHaveResolved: false
-
+    isHaveResolved: false,
+    isTimeNormal: true,
 
 };
 
@@ -441,7 +443,12 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, questionsToC: { isSet: true, data: action.payload }
             }
+            
+        case SET_TIME_NORMAL:
+            return { ...state, isTimeNormal: true }
 
+        case SET_TIME_STOP:
+            return { ...state, isTimeNormal: false }
         default:
             return state;
     }

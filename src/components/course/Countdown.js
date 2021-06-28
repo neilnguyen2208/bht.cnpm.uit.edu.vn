@@ -189,6 +189,12 @@ class Countdown extends React.Component {
   onCountdownInputChange = () => { }
 
   render() {
+
+    if (this.props.isTimeStop) {
+      this.pauseTimer();
+      console.log("stop");
+    }
+
     return (
       <div className="countdown-wrapper">
         <div className="h-menu-bar j-c-space-between">
@@ -244,6 +250,8 @@ const mapStateToProps = (state) => {
   return {
     exerciseContent: state.course.currentExercise.data,
     isExerciseLoading: state.course.currentExercise.isLoading,
+    isTimeNormal: state.course.isTimeNormal,
+    isTimeStop: !state.course.isTimeNormal
   };
 }
 

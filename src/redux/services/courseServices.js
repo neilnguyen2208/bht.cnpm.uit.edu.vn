@@ -59,6 +59,8 @@ import {
     get_ReportedExercisesRequest,
     get_ReportedExercisesSuccess,
     get_ReportedExercisesFailure,
+    set_TimeStart,
+    set_TimeStop,
 } from "redux/actions/courseAction.js";
 import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
@@ -259,4 +261,12 @@ export function resolveAnExercise(id, resolveDTO) {
             })
             .catch(error => post_ResolveAnExerciseFailure())
     }
+}
+
+export function setTimeStart() {
+    return dispatch => { dispatch(set_TimeStart()) }
+}
+
+export function setTimeStop() {
+    return dispatch => { dispatch(set_TimeStop()) }
 }

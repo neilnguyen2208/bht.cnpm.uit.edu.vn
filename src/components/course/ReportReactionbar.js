@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { resolveAPost } from 'redux/services/postServices';
+import { resolveAnExercise } from 'redux/services/courseServices';
 
 //styles
 import 'components/styles/Reactionbar.scss'
@@ -33,7 +33,7 @@ class ReportReactionbar extends React.Component {
             ],
             selectedOptionID: 1,
             validation: true,
-            key: "postReportActionType",
+            key: "exerciseReportActionType",
             onOptionChanged: (option) => {
               return option.value;
             }
@@ -73,9 +73,9 @@ class ReportReactionbar extends React.Component {
 
   onConfirmResolve = (resolveDTO) => {
     //if resolveDTO not change => KEEP ACTION
-    if (!resolveDTO.postReportActionType)
-      resolveDTO.postReportActionType = "KEEP";
-    this.props.resolveAPost(this.props.id, resolveDTO)
+    if (!resolveDTO.exerciseReportActionType)
+      resolveDTO.exerciseReportActionType = "IN_PROGRESS";
+    this.props.resolveAnExercise(this.props.id, resolveDTO)
   }
 
   render() {
@@ -94,7 +94,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  resolveAPost
+  resolveAnExercise
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportReactionbar));

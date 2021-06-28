@@ -13,7 +13,8 @@ import {
     getExerciseQuestions,
     checkExerciseAnswers,
     getExerciseNote,
-    updateExerciseNote
+    updateExerciseNote,
+    setTimeStop
 } from 'redux/services/courseServices'
 import {
     formatMathemicalFormulas,
@@ -35,7 +36,6 @@ import {
     closeModal,
     openModal
 } from 'redux/services/modalServices';
-
 class PostDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -105,15 +105,13 @@ class PostDetail extends React.Component {
     }
 
     checkAllAnswers = () => {
-        console.log("checked")
-        console.log(this.ANSWERS_DTO)
         if (this.ANSWERS_DTO) {
             this.props.checkExerciseAnswers(this.props.match.params.id, this.ANSWERS_DTO);
             //will open modal if done
         }
         //hide check answer
         document.getElementById("check-answer" + this.props.match.params.id).style.display = "none";
-
+        this.props.setTimeStop();
     }
 
     saveNote = (e) => {
@@ -284,6 +282,8 @@ class PostDetail extends React.Component {
                             <button className="blue-button" id={"check-answer" + this.props.match.params.id} onClick={() => this.checkAllAnswers()} >Kiểm tra kết quả</button>
                         </div>
                     </div>
+
+                    {/*Left sidebar  */}
                     <div>
                         <div className="fake-relative-sidebar exercise"></div>
                         <div style={{ position: "fixed" }}>
@@ -332,7 +332,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getExerciseQuestions,
     checkExerciseAnswers,
     getExerciseNote,
-    updateExerciseNote
+    updateExerciseNote,
+    setTimeStop
 
 }, dispatch);
 

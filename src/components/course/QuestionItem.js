@@ -52,6 +52,7 @@ class QuestionItem extends React.Component {
     this.setState({});
 
   }
+
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_EXERCISE") {
       //show confirmation popup and detete id verify
@@ -81,7 +82,7 @@ class QuestionItem extends React.Component {
   }
 
   onCommentBtnClick = () => {
-    openCommentModal();
+    openCommentModal({ exerciseId: this.props.match.params.id });
   }
 
 
@@ -186,6 +187,8 @@ class QuestionItem extends React.Component {
             </div>
           }
         </div>
+
+        {/* Reactionbar */}
         <div className="question reaction-bar" style={{ borderTop: "1px solid var(--gray)", paddingBottom: "5px", paddingTop: "5px", margin: "0px", marginTop: "20px" }}>
           <div className="flag-btn-container" onClick={this.toggleFlagImage}>
             <div className="d-flex"> {flagBtn}</div>

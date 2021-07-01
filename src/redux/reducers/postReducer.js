@@ -93,12 +93,21 @@ import {
     GET_TRENDING_POSTS_REQUEST,
     GET_TRENDING_POSTS_FAILURE,
     GET_TRENDING_POSTS_SUCCESS,
+    GET_POST_BY_ID_FOR_EDIT_FAILURE,
+    GET_POST_BY_ID_FOR_EDIT_REQUEST,
+    GET_POST_BY_ID_FOR_EDIT_SUCCESS,
 
 } from '../constants.js'
 
 const initialState = {
     //for post detail
     currentPost: {
+        isLoading: false,
+        data: {},
+        isLoadDone: false,
+
+    },
+    postDetailForEdit: {
         isLoading: false,
         data: {},
         isLoadDone: false,
@@ -569,6 +578,21 @@ function PostReducer(state = initialState, action) {
                     error: action.payload
                 }
             }
+        case GET_POST_BY_ID_FOR_EDIT_SUCCESS:
+            return {
+                ...state,
+                postDetailForEdit: { isLoading: false, data: action.payload, isLoadDone: true }
+            };
+        case GET_POST_BY_ID_FOR_EDIT_FAILURE:
+            return {
+                ...state,
+                postDetailForEdit: { ...state.postDetailForEdit, isLoading: false, isLoadDone: true }
+            };
+        case GET_POST_BY_ID_FOR_EDIT_REQUEST:
+            return {
+                ...state,
+                postDetailForEdit: { ...state.postDetailForEdit, isLoadDone: false }
+            };
         default:
             return state;
     }

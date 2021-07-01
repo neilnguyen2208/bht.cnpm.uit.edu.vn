@@ -232,10 +232,10 @@ export function uploadADocument(data, files) {
         // files.forEach(file => {
         fileData.append('file', files);
 
-        multipartRequest.document(`/documents/upload`, fileData)
+        multipartRequest.post(`/documents/upload`, fileData)
             .then(response => {
                 data.fileCode = response.data.code; //assign secret code.
-                authRequest.document('/documents', JSON.stringify(data)).then(response => {
+                authRequest.post('/documents', JSON.stringify(data)).then(response => {
                     dispatch(post_UploadDocumentSuccess(response));
                     dispatch(closeModal());
                     openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
@@ -292,7 +292,7 @@ export function getDocumentByID(id) {
 export function approveADocument(id) {
     return dispatch => {
         dispatch(post_ApproveADocumentReset());
-        authRequest.document(`/documents/${id}/approval`)
+        authRequest.post(`/documents/${id}/approval`)
             .then(result => {
                 dispatch(post_ApproveADocumentSuccess());
             })
@@ -315,7 +315,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
         openModal("loader", { text: "Đang xử lý" })
-        authRequest.document(`/documents/${id}/rejection`, JSON.stringify(reason))
+        authRequest.post(`/documents/${id}/rejection`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
                 //             dispatch(post_RejectAndFeedbackADocumentSuccess());
@@ -333,7 +333,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
 export function resolveADocument(id, resolveDTO) {
     return dispatch => {
         dispatch(post_ResolveADocumentReset());
-        authRequest.document(`/documents/resolveReport/${id}`, JSON.stringify(resolveDTO))
+        authRequest.post(`/documents/resolveReport/${id}`, JSON.stringify(resolveDTO))
             .then(result => {
                 dispatch(post_ResolveADocumentSuccess());
             })
@@ -371,7 +371,7 @@ export function editADocument(id, newDocumentContent, reloadList) { //
 export function reportADocument(id, reason) { //
     return dispatch => {
         dispatch(post_ReportADocumentReset())
-        authRequest.document(`/documents/${id}/report`, JSON.stringify(reason))
+        authRequest.post(`/documents/${id}/report`, JSON.stringify(reason))
             .then(response => {
                 dispatch(post_ReportADocumentSuccess());
             }

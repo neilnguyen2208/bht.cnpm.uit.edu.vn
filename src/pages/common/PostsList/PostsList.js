@@ -61,7 +61,7 @@ class PostsList extends React.Component {
     renderGridThreeItems = (items) => {
         return <div className="d-flex">
             {/* //item 0 */}
-            {items[0] && <div className="home-item-container grid" style={{ paddingRight: "10px" }} key={items[0].id} >
+            {items[0] && <div className="home-item-container grid" style={{ marginRight: "10px" }} key={items[0].id} >
                 <HomeFirstInfo
                     authorAvatarURL={items[0].authorAvatarURL}
                     key={items[0].id}
@@ -87,7 +87,7 @@ class PostsList extends React.Component {
             {/* //item1, item2*/}
 
             <div style={{ borderLeft: "1px solid var(--grayish)", paddingLeft: "10px" }} >
-                {items[1] && < div className="home-item-container grid" style={{ paddingRight: "0px" }} key={items[1].id} >
+                {items[1] && < div className="home-item-container grid" style={{ marginRight: "0px" }} key={items[1].id} >
                     <HomeTextInfo
                         authorAvatarURL={items[1].authorAvatarURL}
                         key={items[1].id}
@@ -109,7 +109,7 @@ class PostsList extends React.Component {
                     ></HomeTextInfo>
                 </div >}
 
-                {items[2] && < div className="home-item-container grid" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
+                {items[2] && < div className="home-item-container grid" key={items[2].id} style={{ marginTop: "20px", marginRight: "0px" }}>
                     <HomeTextInfo
                         authorAvatarURL={items[2].authorAvatarURL}
                         key={items[2].id}
@@ -212,7 +212,7 @@ class PostsList extends React.Component {
             <div>
                 <div style={{ backgroundImage: "url(" + bg + ")", padding: "10px", borderBottom: "2px solid var(--gray)" }}>
                     <div className="home-layout">
-                        <div className="posts-list-container">
+                        <div className="posts-list-container trending">
                             {!this.props.isTrendingLoading && this.props.trendingPosts &&
                                 <div>
                                     <div className="trending-title" >

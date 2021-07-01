@@ -21,7 +21,6 @@ import { guestMenu } from './adapter/allActionSummaryMenu';
 import { closeModal, openBigModal, openCommentModal, openModal } from 'redux/services/modalServices';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
 import { Post, PostAction } from 'authentication/permission.config';
-import comment_icon from 'assets/icons/24x24/comment_icon_24x24.png'
 
 //components
 class QuestionItem extends React.Component {
@@ -75,7 +74,9 @@ class QuestionItem extends React.Component {
 
     if (selectedItem.value === "REPORT_EXERCISE") {
       openBigModal("report-exercise", {
-        id: this.props.exerciseId
+        id: this.props.exerciseId,
+        rank: this.props.rank,
+        exerciseTitle: this.props.exerciseTitle
       })
     }
 

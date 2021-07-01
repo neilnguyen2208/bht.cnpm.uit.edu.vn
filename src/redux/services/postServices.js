@@ -91,7 +91,11 @@ import {    //highlight posts
     get_PostsByCategoryIdFailure,
     get_TrendingPostsRequest,
     get_TrendingPostsSuccess,
-    get_TrendingPostsFailure
+    get_TrendingPostsFailure,
+    get_PostByIDForEditReset,
+    get_PostByIDForEditSuccess,
+    get_PostByIDForEditEFailure,
+    get_PostByIDForEditFailure
 } from "redux/actions/postAction.js";
 
 import {
@@ -367,6 +371,18 @@ export function getPostByID(id) {
                         ).catch(error => { dispatch(get_PostByIDFailure(error)) })
                     }).catch(error => { dispatch(get_PostByIDFailure(error)) })
             })
+    }
+}
+
+export function getPostByIDForEdit(id) {
+    return dispatch => {
+        dispatch(get_PostByIDForEditReset())
+        authRequest.get(`/posts/${id}`)
+            .then(response_1 => {
+                let result_1 = response_1.data;//response without statistic
+
+                dispatch(get_PostByIDForEditSuccess({ ...result_1 }))
+            }).catch(error => { dispatch(get_PostByIDForEditFailure(error)) })
     }
 }
 

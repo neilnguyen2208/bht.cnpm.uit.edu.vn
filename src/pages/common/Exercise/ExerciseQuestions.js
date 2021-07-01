@@ -242,8 +242,11 @@ class PostDetail extends React.Component {
                             }
 
                             {/* Render questions, without result */}
-                            {!this.props.isAnswerChecked && !this.props.isQuestionsLoading && this.props.questions &&
-                                this.props.questions.map((question, index) => {
+                            {!this.props.isAnswerChecked
+                                && !this.props.isQuestionsLoading
+                                && this.props.questions
+                                && this.props.exerciseContent
+                                && this.props.questions.map((question, index) => {
                                     return <QuestionItem
                                         index={index}
                                         exerciseId={this.props.match.params.id}
@@ -252,6 +255,7 @@ class PostDetail extends React.Component {
                                         content={question.content}
                                         rank={question.rank}
                                         answers={question.exerciseAnswerDTOs}
+                                        exerciseTitle={this.props.exerciseContent.title}
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}
                                         onAnswerChecked={this.onAnswerChecked}
@@ -269,6 +273,7 @@ class PostDetail extends React.Component {
                                         answersSelected={question.answersSelected}
                                         index={index}
                                         key={index}
+                                        exerciseTitle={this.props.exerciseContent.title}
                                         questionId={question.id}
                                         content={question.content}
                                         rank={question.rank}

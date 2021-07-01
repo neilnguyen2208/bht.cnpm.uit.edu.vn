@@ -38,8 +38,8 @@ export default class ReportInfo extends React.PureComponent {
                 <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
                     {this.props.reporters[0].displayName} và
                 </Link>
-                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[0].id}`}>
-                    {this.props.reporters[0].displayName}
+                <Link className="link-label-s" to={`/user/profile/${this.props.reporters[1].id}`}>
+                    {this.props.reporters[1].displayName}
                 </Link>
             </div>
         else if (this.props.reporters.length > 2)

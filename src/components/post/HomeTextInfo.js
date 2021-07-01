@@ -57,16 +57,17 @@ class HomeTextInfo extends React.Component {
 
         <div className="summary-text">
           {this.props.summary}
-        </div>
-        <HomeReactionbar
-          id={this.props.id}
-          likeStatus={this.props.likeStatus}
-          savedStatus={this.props.savedStatus}
-          readingTime={this.props.readingTime}
-          likeCount={this.props.likeCount}
-          commentCount={this.props.commentCount}
-          viewCount={this.props.viewCount}
-        />
+        </div >
+        <div className="reaction-padding-by-wrapper">
+          <HomeReactionbar
+            id={this.props.id}
+            likeStatus={this.props.likeStatus}
+            savedStatus={this.props.savedStatus}
+            readingTime={this.props.readingTime}
+            likeCount={this.props.likeCount}
+            commentCount={this.props.commentCount}
+            viewCount={this.props.viewCount}
+          /></div>
       </div>
     );
   }

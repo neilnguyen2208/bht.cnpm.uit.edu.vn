@@ -94,7 +94,10 @@ import {
     GET_POSTS_BY_CATEGORY_ID_REQUEST,
     GET_TRENDING_POSTS_REQUEST,
     GET_TRENDING_POSTS_SUCCESS,
-    GET_TRENDING_POSTS_FAILURE
+    GET_TRENDING_POSTS_FAILURE,
+    GET_POST_BY_ID_FOR_EDIT_REQUEST,
+    GET_POST_BY_ID_FOR_EDIT_FAILURE,
+    GET_POST_BY_ID_FOR_EDIT_SUCCESS
 
 
 } from "../constants.js"
@@ -250,6 +253,18 @@ export function get_PostByIDFailure(error) {
 
 export function get_PostByIDReset() {
     return { type: GET_POST_BY_ID_RESET }
+}
+
+export function get_PostByIDForEditSuccess(data) {
+    return { type: GET_POST_BY_ID_FOR_EDIT_SUCCESS, payload: data }
+}
+
+export function get_PostByIDForEditFailure(error) {
+    return { type: GET_POST_BY_ID_FOR_EDIT_FAILURE, error: error }
+}
+
+export function get_PostByIDForEditReset() {
+    return { type: GET_POST_BY_ID_FOR_EDIT_REQUEST }
 }
 
 //post search result

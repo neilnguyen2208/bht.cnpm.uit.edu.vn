@@ -5,10 +5,11 @@ function _createDTPickerInstance(instanceID, onDateTimeChange) {
             inline: false,
             minDate: '+1970/01/02',
             startDate: '+1970/01/02',
-            onChangeDateTime: function (dp, $input) {
-                $input.val(new Date($input.val()).toISOString());
-                onDateTimeChange($input.val());
-            }
+            // onChangeDateTime: function (dp, $input) {
+
+            //     console.log($input.val())
+            //     onDateTimeChange($input.val());
+            // }
         });
     })
 }

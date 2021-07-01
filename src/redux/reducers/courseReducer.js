@@ -289,8 +289,23 @@ function CourseReducer(state = initialState, action) {
                 ...state, exerciseQuestions: { isLoading: true, data: [], error: '', }
             };
         case GET_EXERCISE_QUESTIONS_SUCCESS:
+            //sort data by rank
+
+            let currentData = action.payload;
+            currentData[2].rank = 20;
+            currentData.sort(function (question_1, question_2) {
+                let keyA = question_1.rank,
+                    keyB = question_2.rank;
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
             return {
-                ...state, exerciseQuestions: { isLoading: false, data: action.payload, error: '', }
+                ...state, exerciseQuestions: {
+                    isLoading: false,
+                    data: action.payload,
+                    error: '',
+                }
             }
         case GET_EXERCISE_QUESTIONS_FAILURE:
             return {
@@ -443,7 +458,7 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, questionsToC: { isSet: true, data: action.payload }
             }
-            
+
         case SET_TIME_NORMAL:
             return { ...state, isTimeNormal: true }
 

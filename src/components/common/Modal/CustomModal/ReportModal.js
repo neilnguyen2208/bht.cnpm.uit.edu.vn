@@ -10,6 +10,7 @@ import { getReportReasons } from 'redux/services/reportServices'
 import { reportAPost } from 'redux/services/postServices'
 import { reportAPostComment } from 'redux/services/postCommentServices'
 import { reportAnExercise } from 'redux/services/courseServices';
+import info_icon from 'assets/icons/24x24/info_icon_24x24.png'
 
 class ReportModal extends React.Component {
 
@@ -44,7 +45,6 @@ class ReportModal extends React.Component {
       default: {
       }
     }
-
 
     this.props.getReportReasons();
   }
@@ -95,7 +95,27 @@ class ReportModal extends React.Component {
         <div className="modal-fixed-layout">
           <div className="modal-wrapper form o-f-hidden pd-top-5px">
             <ModalTitlebar title={this.bigModalTitle} />
+
+            {/* exercise report */}
+
+
             <div className="form-container pd-10px" id="rpmd-rsns">
+              {this.props.type === "EXERCISE"
+                && <div style={{
+                  marginBottom: "10px",
+                  paddingBottom: "10px",
+                  borderBottom: "1px solid var(--gray)",
+                  lineHeight: "20px",
+                }}>
+                  {<img src={info_icon} alt="?" className="confirmation-icon mg-right-5px" style={{ float: "left" }}></img>}
+                  <span> Bạn đang thực hiện gửi góp ý cho bài tập: <br />
+                  </span>
+                  <strong> {this.props.exerciseTitle} </strong>
+
+                  <span><br /> Hãy làm rõ thông tin câu hỏi hoặc câu trả lời muốn góp ý nhé. </span>
+
+                </div>
+              }
               <div className="form-group"
                 style={{ borderBottom: "1px solid var(--gray)", paddingBottom: "8px", marginBottom: "16px" }}>
                 <label className="form-label-required">Chọn ít nhất một lý do:</label>
@@ -117,9 +137,14 @@ class ReportModal extends React.Component {
                   <span className="form-error-label mg-top-10px" ></span>
                 </div>
               </div>
+
               <div className="form-group" style={{ marginTop: "3px" }}>
                 <label className="form-label">Bạn có thể làm rõ lý do báo cáo không?</label>
-                <textarea className="text-area" onChange={(e) => this.updateFeedback(e)} id="rpmd-txtr" placeholder="Thông tin thêm ... " />
+                <textarea className="text-area"
+                  defaultValue={this.props.type === "EXERCISE" ? "Câu " + this.props.rank + ": " : ""}
+                  onChange={(e) => this.updateFeedback(e)}
+                  id="rpmd-txtr"
+                  placeholder="Thông tin thêm ... " />
               </div>
 
               {/* Button */}

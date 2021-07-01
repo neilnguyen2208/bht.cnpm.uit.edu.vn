@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getPostCategories } from "redux/services/postCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { getPostByID, editAPost } from "redux/services/postServices"
-import { get_PostByIDReset, put_EditAPostReset } from "redux/actions/postAction"
+import { getPostByIDForEdit, editAPost } from "redux/services/postServices"
+import { get_PostByIDForEditReset, put_EditAPostReset } from "redux/actions/postAction"
 
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
@@ -111,7 +111,7 @@ class EditPostModal extends React.Component {
     componentDidMount() {
         validation(validationCondition);
         this.props.getPostCategories();
-        this.props.getPostByID(this.props.id);
+        this.props.getPostByIDForEdit(this.props.id);
 
         document.querySelector(".ed-post-form-container.preview-modal").classList.remove("d-block");
         document.querySelector(".ed-post-form-container.edit").classList.remove("d-none");
@@ -126,7 +126,7 @@ class EditPostModal extends React.Component {
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
-        store.dispatch(get_PostByIDReset());
+        store.dispatch(get_PostByIDForEditReset());
         store.dispatch(put_EditAPostReset());
         if (getCKEInstance('ed-post-cke'))
             getCKEInstance('ed-post-cke').destroy();
@@ -421,34 +421,34 @@ class EditPostModal extends React.Component {
             }
 
         //load lan dau tien hoac moi load xong thi gan data cho DTO
-        if (!this.props.isCurrentPostLoading && Object.keys(this.props.currentPost).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
+        if (!this.props.isCurrentPostLoading && Object.keys(this.props.postDetailForEdit).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
             this.isFirstLoad = true;
-            this.props.currentPost.tags.forEach((item, index) => {
+            this.props.postDetailForEdit.tags.forEach((item, index) => {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
 
-            getCKEInstance('ed-post-cke').setData(this.props.currentPost.content);
+            getCKEInstance('ed-post-cke').setData(this.props.postDetailForEdit.content);
 
             this.setState({
                 EDIT_POST_DTO: {
-                    title: this.props.currentPost.title,
-                    tags: this.props.currentPost.tags ? this.props.currentPost.tags : [],
-                    content: this.props.currentPost.content,
-                    imageURL: this.props.currentPost.imageURL,
-                    categoryID: this.props.currentPost.categoryID,
-                    categoryName: this.props.currentPost.categoryName,
-                    readingTime: this.props.currentPost.readingTime,
-                    authorDisplayName: this.props.currentPost.authorDisplayName,
-                    authorID: this.props.currentPost.authorID,
-                    authorAvatarURL: this.props.currentPost.authorAvatarURL,
-                    id: this.props.currentPost.id
+                    title: this.props.postDetailForEdit.title,
+                    tags: this.props.postDetailForEdit.tags ? this.props.postDetailForEdit.tags : [],
+                    content: this.props.postDetailForEdit.content,
+                    imageURL: this.props.postDetailForEdit.imageURL,
+                    categoryID: this.props.postDetailForEdit.categoryID,
+                    categoryName: this.props.postDetailForEdit.categoryName,
+                    readingTime: this.props.postDetailForEdit.readingTime,
+                    authorDisplayName: this.props.postDetailForEdit.authorDisplayName,
+                    authorID: this.props.postDetailForEdit.authorID,
+                    authorAvatarURL: this.props.postDetailForEdit.authorAvatarURL,
+                    id: this.props.postDetailForEdit.id
 
                 }
             })
         }
         //load xong thi cho hien thi body
-        if (this.props.currentPost && !this.props.isCurrentPostLoading && document.getElementById('edit-post-body')) {
+        if (this.props.postDetailForEdit && !this.props.isCurrentPostLoading && document.getElementById('edit-post-body')) {
             document.getElementById('edit-post-body').classList.add("d-block");
             document.getElementById('edit-post-body').classList.remove("d-none");
         }
@@ -476,7 +476,7 @@ class EditPostModal extends React.Component {
                                         {
                                             this.state.EDIT_POST_DTO.authorID ?
                                                 < Metadata
-                                                    postId={this.props.currentPost.id}
+                                                    postId={this.props.postDetailForEdit.id}
                                                     title={this.state.EDIT_POST_DTO.title}
                                                     categoryName={this.state.EDIT_POST_DTO.categoryName}
                                                     categoryID={this.state.EDIT_POST_DTO.categoryID}
@@ -611,7 +611,7 @@ class EditPostModal extends React.Component {
                                         </div >
                                     </div >
                                 </div >
-                                {(this.props.isCurrentPostLoading || !this.props.currentPost) ?
+                                {(this.props.isCurrentPostLoading || !this.props.postDetailForEdit) ?
                                     <Loader /> :
                                     <></>}
                             </div>
@@ -645,9 +645,9 @@ const mapStateToProps = (state) => {
         categories: state.postCategory.categories.data,
         isCategoryLoading: state.postCategory.categories.isLoading,
 
-        isCurrentPostLoading: state.post.currentPost.isLoading,
-        currentPost: state.post.currentPost.data,
-        isCurrentPostLoadDone: state.post.currentPost.isLoadDone,
+        isCurrentPostLoading: state.post.postDetailForEdit.isLoading,
+        postDetailForEdit: state.post.postDetailForEdit.data,
+        isCurrentPostLoadDone: state.post.postDetailForEdit.isLoadDone,
 
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
@@ -659,7 +659,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostCategories,
     getTagQuickQueryResult,
-    getPostByID,
+    getPostByIDForEdit,
     editAPost
 
 }, dispatch);

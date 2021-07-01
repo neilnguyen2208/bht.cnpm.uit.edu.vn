@@ -350,6 +350,7 @@ class CreatePost extends React.Component {
     }
 
     onPublishTimeChange = (date) => {
+        console.log(date)
         this.setState({
             CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, publishDtm: date }
         })

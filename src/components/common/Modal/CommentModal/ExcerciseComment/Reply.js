@@ -29,7 +29,7 @@ import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
-import { likeAPostComment, unLikeAPostComment } from 'redux/services/postCommentServices'
+import { likeAnExerciseComment, unLikeAnExerciseComment } from 'redux/services/exerciseCommentServices'
 
 //NOTE: reply relative components only use internal state, not use redux for handle any event, reply redux code will be delete in the future
 class Reply extends React.Component {
@@ -68,19 +68,19 @@ class Reply extends React.Component {
     if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPostComment(this.props.replyId);
+        this.props.unLikeAnExerciseComment(this.props.replyId);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPostComment(this.props.replyId);
+        this.props.likeAnExerciseComment(this.props.replyId);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        this.props.likeAPostComment(this.props.replyId);
+        this.props.likeAnExerciseComment(this.props.replyId);
       } else {
-        this.props.unLikeAPostComment(this.props.replyId);
+        this.props.unLikeAnExerciseComment(this.props.replyId);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -112,7 +112,7 @@ class Reply extends React.Component {
 
   deleteAReply = () => {
     this.isHaveDeleted = false;
-    authRequest.delete(`/posts/comments/${this.props.replyId}`).then(response => {
+    authRequest.delete(`/exercises/comments/${this.props.replyId}`).then(response => {
       this.props.reloadList();
       openBLModal({ text: "Xoá bình luận thành công!", type: "success" });
       this.isHaveDeleted = true;
@@ -130,7 +130,7 @@ class Reply extends React.Component {
 
   onSubmitReplyClick = () => {
     this.isHaveEdited = false;
-    authRequest.put(`/posts/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
+    authRequest.put(`/exercises/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
       .then(response => {
         this.props.reloadList(this.props.replyId);
         openBLModal({ text: "Cập nhật bình luận thành công!", type: "success" });
@@ -153,7 +153,6 @@ class Reply extends React.Component {
       const window = new JSDOM('').window;
       const DOMPurify = createDOMPurify(window);
       const clean = DOMPurify.sanitize(content ? content : this.content);
-      console.log(clean)
 
       if (document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`))
         document.querySelector(`#rp-ctnt-${this.props.replyId}.comment-content`).innerHTML = clean;
@@ -273,7 +272,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  likeAPostComment, unLikeAPostComment
+  likeAnExerciseComment, unLikeAnExerciseComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Reply));

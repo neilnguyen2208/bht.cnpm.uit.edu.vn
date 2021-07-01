@@ -18,7 +18,7 @@ import 'components/styles/Comment.scss'
 //utils
 import { formatNumber, timeAgo } from 'utils/miscUtils.js'
 import { Post, PostCommentAction } from 'authentication/permission.config';
-import { likeAPostComment, unLikeAPostComment } from 'redux/services/postCommentServices'
+import { likeAnExerciseComment, unLikeAnExerciseComment } from 'redux/services/exerciseCommentServices'
 
 class CommentReactionbar extends React.Component {
 
@@ -41,19 +41,19 @@ class CommentReactionbar extends React.Component {
     if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPostComment(this.props.commentId);
+        this.props.unLikeAnExerciseComment(this.props.commentId);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPostComment(this.props.commentId);
+        this.props.likeAnExerciseComment(this.props.commentId);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        this.props.likeAPostComment(this.props.commentId);
+        this.props.likeAnExerciseComment(this.props.commentId);
       } else {
-        this.props.unLikeAPostComment(this.props.commentId);
+        this.props.unLikeAnExerciseComment(this.props.commentId);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -121,7 +121,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  likeAPostComment, unLikeAPostComment
+  likeAnExerciseComment, unLikeAnExerciseComment
 
 }, dispatch);
 

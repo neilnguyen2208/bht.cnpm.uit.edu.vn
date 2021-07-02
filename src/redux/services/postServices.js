@@ -558,10 +558,10 @@ export function getHighlightPostsIds() {
     }
 }
 
-export function getPostsByCategoryId(categoryId) {
+export function getPostsByCategoryId(categoryID) {
     return dispatch => {
-        dispatch(get_PostsByCategoryIdRequest(categoryId));
-        authRequest.get(`/posts/searchFilter?searchTerm=&page=0&postCategoryID=${categoryId}`)
+        dispatch(get_PostsByCategoryIdRequest(categoryID));
+        authRequest.get(`/posts/searchFilter?searchTerm=&page=0&postCategoryID=${categoryID}`)
             .then(response_1 => {
                 let result_1 = response_1.data;
                 let IDarr = '';
@@ -578,14 +578,14 @@ export function getPostsByCategoryId(categoryId) {
                                 ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryDTOs[i].id)),
                             });
                         }
-                        dispatch(get_PostsByCategoryIdSuccess({ id: categoryId, postSummaryWithStateDTOs: finalResult }))
+                        dispatch(get_PostsByCategoryIdSuccess({ id: categoryID, postSummaryWithStateDTOs: finalResult }))
                     }).catch(() => get_PostsByCategoryIdFailure())
             })
             .catch(error => dispatch(get_PostsByCategoryIdFailure(error)))
     }
 }
 
-export function getTrendingPosts(categoryId) {
+export function getTrendingPosts(categoryID) {
     return dispatch => {
         dispatch(get_TrendingPostsRequest());
         authRequest.get(`/posts/trending`)

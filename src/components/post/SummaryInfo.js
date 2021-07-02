@@ -14,7 +14,7 @@ import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 
-import { basicMenu, adminMenu, guestMenu } from './adapter/allActionSummaryMenu'
+import { basicMenu, adminMenu, guestMenu } from './adapter/actionMenu'
 
 //styles
 import 'components/styles/Label.scss'

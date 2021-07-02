@@ -20,7 +20,7 @@ import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
 
 //constants
-import { basicMenu } from './adapter/allActionSummaryMenu'
+import { basicMenu } from './adapter/actionMenu'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
@@ -128,7 +128,6 @@ class PostDetail extends React.Component {
 
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
-          {console.log(this.props.authorID)}
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
           <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
         </div>

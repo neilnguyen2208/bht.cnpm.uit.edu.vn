@@ -6,9 +6,7 @@ import { connect } from "react-redux";
 
 import HomeFirstInfo from 'components/document/HomeFirstInfo';
 import HomeTextInfo from 'components/document/HomeTextInfo';
-import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
 import { request } from 'utils/requestUtils';
-import Loader from 'components/common/Loader/Loader_S';
 import { getCourseDetailById } from 'redux/services/courseServices';
 class PostsList extends React.Component {
     constructor(props) {

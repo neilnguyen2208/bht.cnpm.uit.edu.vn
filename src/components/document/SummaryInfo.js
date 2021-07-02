@@ -22,7 +22,7 @@ import { itemType, mySelfMenuItemList } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import { basicMenu } from 'components/post/adapter/allActionSummaryMenu';
+import { basicMenu } from 'components/document/adapter/actionMenu';
 
 class DocumentSummary extends React.Component {
 
@@ -56,7 +56,7 @@ class DocumentSummary extends React.Component {
     }
 
     if (selectedItem.value === "REPORT_POST") {
-      openBigModal("report-post", { id: this.props.id });
+      openBigModal("report-document", { id: this.props.id });
     }
   }
 
@@ -182,13 +182,13 @@ class DocumentSummary extends React.Component {
             </div>
           </div>
         </div>
-        <div className="file-name">{this.props.fileName}</div>
+        {/* <div className="file-name">{this.props.fileName}</div> */}
         {summary}
         <div className="j-c-end">
           {/* <Link to={`/document-content/${this.props.id}`} className="continue-read mg-bottom-5px" > */}
           <Link to={`/document-content/${151}`} className="continue-read mg-bottom-5px" >
             Xem tài liệu >>
-            </Link>
+          </Link>
         </div>
       </div >
     );

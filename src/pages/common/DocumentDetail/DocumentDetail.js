@@ -1,42 +1,77 @@
 import React from 'react'
 
 import 'components/styles/Metadata.scss'
-import { getDocumentByID } from "redux/services/documentServices"
+import { getDocumentById } from "redux/services/documentServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import 'components/styles/Detail.scss'
-import Metadata from "components/document/DetailInfo"
-import Loader from 'components/common/Loader/Loader'
-import Tag from 'components/document/Tag'
+import DetailInfo from "components/document/DetailInfo"
+import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
+import RelativeLoader from 'components/common/Loader/RelativeLoader'
 
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import store from 'redux/store/index.js';
-import {
-    get_PostByIDReset,
-    get_RelativeSameAuthorPostsReset,
-    get_RelativeSameCategoryPostsReset
-} from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import RelativePosts from 'components/post/RelativePosts'
+import RelativeDocuments from 'components/document/RelativeDocuments'
 import { itemType } from 'constants.js';
-import { get_DocumentByIDReset } from 'redux/actions/documentAction';
+import {
+    delete_ADocumentReset,
+    get_DocumentByIDReset,
+    post_ReportADocumentReset,
+    put_EditADocumentReset,
+    get_RelativeDocumentsReset,
+    get_SameSubjectDocumentsReset
+} from 'redux/actions/documentAction';
+import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import { openBLModal } from 'redux/services/modalServices';
 
 //lack services: userStatistic, related Document.
 class DocumentDetail extends React.Component {
 
     componentDidMount() {
-        this.props.getDocumentByID(this.props.match.params.id);
+        this.props.getDocumentById(this.props.match.params.id);
     }
 
     componentWillUnmount() {
         store.dispatch(get_DocumentByIDReset());
-        // store.dispatch(get_RelativeSameAuthorPostsReset());
-        // store.dispatch(get_RelativeSameCategoryPostsReset());
+        store.dispatch(get_RelativeDocumentsReset());
+        store.dispatch(get_SameSubjectDocumentsReset());
+    }
+
+    onFileCollapseIconClick = (fileId) => {
+        let ele = document.getElementById("dcm-file-preview-" + fileId);
+        let btnEle = document.getElementById("dcm-file-preview-btn-" + fileId);
+        if (ele.style.display === "none") {
+            ele.style.display = "block";
+            btnEle.innerText = "Ẩn xem trước";
+        }
+        else
+            if (ele.style.display === "block") {
+                ele.style.display = "none";
+                btnEle.innerText = "Xem trước";
+            }
+
     }
 
     render() {
+        styleCodeSnippet();
+
+        //reload the list when any item has been deleted or edited:
+        if (this.props.isHaveDeleted) {
+            store.dispatch(delete_ADocumentReset())
+        }
+
+        if (this.props.isHaveEdited) {
+            store.dispatch(put_EditADocumentReset())
+        }
+
+        if (this.props.isHaveReported) {
+            openBLModal({ text: "Report tài liệu thành công!", type: "success" });
+            store.dispatch(post_ReportADocumentReset())
+        }
+
         return (
             <div className="d-flex">
                 <div className="mg-auto">
@@ -44,7 +79,7 @@ class DocumentDetail extends React.Component {
                         <div className="document-detail-container" >
                             {this.props.isLoadDone ?
                                 <div>
-                                    <Metadata
+                                    <DetailInfo
                                         type={itemType.normal}
                                         id={this.props.currentDocument.id}
                                         authorDisplayName={this.props.currentDocument.authorDisplayName}
@@ -52,43 +87,48 @@ class DocumentDetail extends React.Component {
                                         publishDtm={this.props.currentDocument.publishDtm}
                                         categoryName={this.props.currentDocument.categoryName}
                                         categoryID={this.props.currentDocument.categoryID}
-                                        subjectName={this.props.currentDocument.docSubject ? this.props.currentDocument.docSubject : "Cấu trúc dữ liệu & giải thuật"}
-                                        subjectID={this.props.currentDocument.docSubjectID}
+                                        subjectName={this.props.currentDocument.subjectName ? this.props.currentDocument.subjectName : "Cấu trúc dữ liệu & giải thuật"}
+                                        subjectID={this.props.currentDocument.subjectID}
 
                                         title={this.props.currentDocument.title}
-                                        fileName={this.props.currentDocument.fileName ? this.props.currentDocument.fileName : "Tài liệu Cấu trúc dữ liệu và giải thuật nâng cao."}
+                                        docFileUploadDTOs={this.props.currentDocument.docFileUploadDTOs}
                                         description={this.props.currentDocument.description}
                                         imageURL={this.props.currentDocument.imageURL}
                                         readingTime={this.props.currentDocument.readingTime}
                                         approveState={this.props.currentDocument.docState}
-                                        popUpMenuPrefix="mdpu"   //stand for my doc popup 
-                                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                                        popUpMenuPrefix="ddpu"   //stand for document detail popup 
                                         //
                                         reloadList={() => this.reloadList()}
+                                        tags={this.props.currentDocument.tags}
                                     />
 
-                                    {/* content here */}
-                                    <div className="ck-editor-output" dangerouslySetInnerHTML={{
-                                        __html:
-                                            this.props.currentDocument.content
-                                    }} />
+                                    {this.props.currentDocument.docFileUploadDTOs.map(file => {
+                                        return <div key={file.id}>
+                                            <div className="file-name-container">
+                                                <div className="d-flex" style={{ lineHeight: "24px" }}>
+                                                    <strong style={{ marginRight: "5px" }}>{file.fileName ? file.fileName : "Tài liệu giải thuật nâng cao.pdf"}</strong> -
+                                                    <div style={{ marginLeft: "5px" }}> {Math.round(file.fileSize / 1048576 * 100) / 100 + "MB"}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button className="blue-button">Tải xuống</button>
+                                                    <button className="white-button mg-left-5px" id={"dcm-file-preview-btn-" + file.id} onClick={() => this.onFileCollapseIconClick(file.id)}>Xem trước</button>
+                                                </div>
+                                            </div>
 
-                                    <div className="mg-top-10px mg-bottom-10px" >
-                                        {this.props.currentDocument.tags.map(item =>
-                                            <Tag isReadOnly={true} tag={item} />
-                                        )}
-                                    </div>
-                                    <div className="file-name-container">
-                                        <div className="file-name">{this.props.currentDocument.fileName ? this.props.currentDocument.fileName : "Tài liệu giải thuật nâng cao.pdf"}</div>
-                                        <button className="white-button">Tải xuống</button>
-                                    </div>
-                                    <div className="d-flex">
-                                        <iframe className="if-container"
-                                            src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
-                                            title={`doc-if-${this.props.match.params.id}`}
-                                            sandbox="allow-scripts allow-same-origin"
-                                        ></iframe>
-                                    </div>
+                                            <div style={{ display: "none" }} id={"dcm-file-preview-" + file.id}>
+                                                <div className="d-flex">
+                                                    <iframe className="if-container"
+                                                        src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
+                                                        title={`doc-if-${this.props.match.params.id}`}
+                                                        sandbox="allow-scripts allow-same-origin"
+                                                    ></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    })}
+
+                                    <div style={{ marginTop: "50px" }} />
 
                                     <DocumentNormalReactionbar
                                         id={this.props.id}
@@ -99,19 +139,34 @@ class DocumentDetail extends React.Component {
                                         downloadCount={this.props.downloadCount ? this.props.downloadCount : 21}
                                         viewCount={this.props.viewCount ? this.props.viewCount : 1200}
                                     />
-                                    {/* <Comment></Comment> */}
+                                    {/* <div id="cr-cmt" />
+                                    <CommentSection
+                                        useAction={true}
+                                        // create comment will show if you have action create comment
+                                        postAvailableActions={this.props.currentPost.availableActions}
+                                        id={this.props.currentPost.id}
+                                        commentCount={this.props.currentPost.commentCount}
+                                    /> */}
                                 </div>
-                                : <Loader />}
+                                : <div>
+                                    <DocPostDetailLoader />
+                                </div>
+                            }
                         </div>
                         <div>
-                            {/* {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
-                                <RelativePosts title={"TÀI LIỆU LIÊN QUAN"} items={
-                                    this.props.sameAuthor} />
-                                : <Loader />}
-                            {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
-                                <RelativePosts title={"CÙNG DANH MỤC"}
-                                    items={this.props.sameCategory} /> : <Loader />
-                            } */}
+                            <div className="fake-relative-sidebar"></div>
+                            <div style={{ position: "fixed" }}>
+                                {this.props.isRelativeDocLoadDone && this.props.relativeDocuments ?
+                                    <RelativeDocuments title={"TÀI LIỆU LIÊN QUAN"} items={
+                                        this.props.relativeDocuments} />
+                                    : <RelativeLoader />}
+                                {this.props.isSameSubjectLoadDone && this.props.sameSubjectDocument ?
+                                    <RelativeDocuments title={"CÙNG MÔN HỌC"}
+                                        items={this.props.sameSubjectDocument} />
+                                    : <RelativeLoader />
+                                }
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -123,15 +178,15 @@ const mapStateToProps = (state) => {
     return {
         currentDocument: state.document.currentDocument.data,
         isLoadDone: state.document.currentDocument.isLoadDone,
-        // sameCategory: state.document.sameCategory.data,
-        // isSameCategoryLoadDone: state.document.sameCategory.isLoadDone,
-        // sameAuthor: state.document.sameAuthor.data,
-        // isSameAuthorLoadDone: state.document.sameCategory.isLoadDone,
+        sameSubjectDocument: state.document.sameSubjectDocuments.data,
+        isSameSubjectLoadDone: state.document.sameSubjectDocuments.isLoadDone,
+        relativeDocuments: state.document.relativeDocuments.data,
+        isRelativeDocLoadDone: state.document.relativeDocuments.isLoadDone,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentByID
+    getDocumentById
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentDetail));

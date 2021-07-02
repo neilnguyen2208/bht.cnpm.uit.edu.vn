@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { getDocumentSubjects } from "redux/services/documentSubjectServices";
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { getDocumentByID, editADocument } from "redux/services/documentServices"
+import { getDocumentById, editADocument } from "redux/services/documentServices"
 import { get_DocumentByIDReset, put_EditADocumentReset } from "redux/actions/documentAction"
 
 import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
@@ -118,7 +118,7 @@ class EditDocumentModal extends React.Component {
         this.props.getDocumentCategories();
         this.props.getDocumentSubjects();
 
-        this.props.getDocumentByID(this.props.id);
+        this.props.getDocumentById(this.props.id);
         this.isFirstLoad = false;
 
         this.timeOut = null;
@@ -614,7 +614,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getDocumentCategories,
     getDocumentSubjects,
     getTagQuickQueryResult,
-    getDocumentByID,
+    getDocumentById,
     editADocument
 
 }, dispatch);

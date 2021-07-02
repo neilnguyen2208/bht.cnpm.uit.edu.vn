@@ -152,7 +152,7 @@ class Home extends React.Component {
                     <div className="mg-top-5px" />
                     <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            <div className="home-item-container">
+                            <div className="home-item-container row">
                                 {newestPosts}
                             </div>
                         </div>
@@ -165,7 +165,7 @@ class Home extends React.Component {
                     <div className="mg-top-5px" />
                     <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            <div className="home-item-container">
+                            <div className="home-item-container row">
                                 {TrendingDocuments}
                             </div>
                         </div>
@@ -178,7 +178,7 @@ class Home extends React.Component {
                     <div className="mg-top-5px" />
                     <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            <div className="home-item-container">
+                            <div className="home-item-container row">
                                 {newestActivitiesList}
                             </div >
                         </div >

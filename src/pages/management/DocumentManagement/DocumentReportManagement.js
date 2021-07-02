@@ -66,7 +66,7 @@ class DocumentReportManagement extends React.Component {
             closeModal();
             this.reloadList();
             store.dispatch(post_ResolveADocumentReset());
-            openBLModal({ type: "success", text: "Xử lý bài viết thành công!" });
+            openBLModal({ type: "success", text: "Xử lý tài liệu thành công!" });
         }
         if (!this.props.isListLoading && this.props.documentsList) {
             this.documentsList = this.props.documentsList.map((item) => (

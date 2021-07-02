@@ -7,7 +7,7 @@ import { getPostByID, getAPostStatisticByID } from "redux/services/postServices"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Metadata from "components/post/DetailInfo"
+import DetailInfo from "components/post/DetailInfo"
 import Tag from 'components/post/Tag'
 import Loader from 'components/common/Loader/Loader'
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
@@ -60,7 +60,7 @@ class PostDetail extends React.Component {
                             <div className="post-detail-container" >
                                 {this.props.isLoadDone ?
                                     <div>
-                                        <Metadata
+                                        <DetailInfo
                                             postId={this.props.currentPost.id}
                                             title={this.props.currentPost.title}
                                             categoryName={this.props.currentPost.categoryName}

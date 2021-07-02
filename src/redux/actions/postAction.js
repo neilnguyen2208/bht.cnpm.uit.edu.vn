@@ -548,16 +548,16 @@ export function get_PostsByFilterFailure(error) {
 }
 
 //for posts list page
-export function get_PostsByCategoryIdRequest(categoryId) {
-    return { type: GET_POSTS_BY_CATEGORY_ID_REQUEST, payload: { id: categoryId } }
+export function get_PostsByCategoryIdRequest(categoryID) {
+    return { type: GET_POSTS_BY_CATEGORY_ID_REQUEST, payload: { id: categoryID } }
 }
 
-export function get_PostsByCategoryIdSuccess(categoryId, data) {
-    return { type: GET_POSTS_BY_CATEGORY_ID_SUCCESS, payload: { id: categoryId, data: data } }
+export function get_PostsByCategoryIdSuccess(categoryID, data) {
+    return { type: GET_POSTS_BY_CATEGORY_ID_SUCCESS, payload: { id: categoryID, data: data } }
 }
 
-export function get_PostsByCategoryIdFailure(categoryId, error) {
-    return { type: GET_POSTS_BY_CATEGORY_ID_FAILURE, payload: { error: error, id: categoryId } }
+export function get_PostsByCategoryIdFailure(categoryID, error) {
+    return { type: GET_POSTS_BY_CATEGORY_ID_FAILURE, payload: { error: error, id: categoryID } }
 }
 
 export function get_TrendingPostsRequest() {

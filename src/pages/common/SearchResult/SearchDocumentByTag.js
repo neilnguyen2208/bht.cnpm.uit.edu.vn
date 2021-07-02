@@ -24,7 +24,7 @@ class SearchDocumentByTag extends React.Component {
         }
 
         this.searchParamObject = {
-            "paginator": 1,
+            "page": 1,
             // tags: getQueryParamByName('tag') !== "null" && getQueryParamByName('tag') ? getQueryParamByName('tag') : 1,
             searchTerm: ''
         }
@@ -51,7 +51,7 @@ class SearchDocumentByTag extends React.Component {
             documentSearchResult = this.props.documentSearchResult.map((item) => {
                 return < div className="item-container" >
                     <DocumentSummaryMetadata
-                        type={itemType.mySelf}
+                        type={itemType.normal}
                         id={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
@@ -62,14 +62,14 @@ class SearchDocumentByTag extends React.Component {
                         subjectID={item.subjectID}
 
                         title={item.title}
-                        // fileName={item.fileName}
-                        fileName={"Demo file name.pdf"}
+
                         description={item.description}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
-                        approveState={item.docState}
+                        // approveState={item.docState}
                         popUpMenuPrefix="mdpu"   //stand for my doc popup 
-                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                        docFileUploadDTOs={item.docFileUploadDTOs}
+                        // authorAvatarURL={ }
                         //
                         reloadList={() => this.reloadList()}
                     />

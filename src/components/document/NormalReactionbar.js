@@ -103,9 +103,6 @@ class NormalReactionbar extends React.Component {
     this.dislikeCount = this.dislikeCount - 1;
     this.setState({ isDisliked: 0, isLiked: 0 });
     this.calculateBar();
-
-
-
   }
 
   render() {
@@ -177,8 +174,6 @@ class NormalReactionbar extends React.Component {
           </div >
         </div >
       </div>
-
-
 
     );
   }

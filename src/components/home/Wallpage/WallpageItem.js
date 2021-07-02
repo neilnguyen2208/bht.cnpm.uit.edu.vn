@@ -12,7 +12,7 @@ import { post_ReportAPostReset } from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import { deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
-import { wallpageMenu } from 'components/post/adapter/allActionSummaryMenu';
+import { wallpageMenu } from 'components/post/adapter/actionMenu';
 
 //styles
 import 'components/styles/Label.scss'

@@ -17,7 +17,7 @@ import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/Cu
 import { getCurrentUserExerciseStatistic } from 'redux/services/courseServices'
 import authService from 'authentication/authenticationServices';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu';
-import { guestMenu } from './adapter/allActionSummaryMenu';
+import { guestMenu } from './adapter/actionMenu';
 import { closeModal, openBigModal, openModal } from 'redux/services/modalServices';
 
 class ExerciseInfo extends React.Component {

@@ -34,7 +34,7 @@ import { openBLModal } from "./modalServices";
 export function getTrendingDocuments() {
     return dispatch => {
         dispatch(get_TrendingDocumentsRequest());
-        authRequest.get(`/documents/trending`).then(
+        authRequest.get(`/documents/hot`).then(
             response => {
                 let result_1 = response.data;
                 let IDarr = '';
@@ -125,7 +125,6 @@ export function getHighlightPosts() {
             }).catch(error => { dispatch(get_HighlightPostsFailure(error)); })
     }
 }
-
 
 export function getNewestActivities() {
     return dispatch => {

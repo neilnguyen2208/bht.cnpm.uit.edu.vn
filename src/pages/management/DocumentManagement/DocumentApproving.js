@@ -43,7 +43,7 @@ class DocumentApproving extends React.Component {
         setQueryParam(this.queryParamObject);
 
         this.searchParamObject = {
-            "paginator": 1,
+            "page": 1,
             "category": 0,
         }
 
@@ -109,7 +109,7 @@ class DocumentApproving extends React.Component {
                             selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                             options={this.props.documentCategories}
                             onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                            id="document-approval-category-filter-combobox"
+                            comboboxId="document-approval-category-filter-combobox"
                         ></ComboBox>
                     </div>
                 </div>
@@ -129,7 +129,7 @@ class DocumentApproving extends React.Component {
                         options={this.props.subjects}
                         placeHolder="Tất cả"
                         onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
-                        id="my-document-list-subject-filter-combobox"
+                        comboboxId="my-document-list-subject-filter-combobox"
                     ></ComboBox>
                 </div>
             </div >

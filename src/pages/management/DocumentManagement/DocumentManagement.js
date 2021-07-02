@@ -20,6 +20,8 @@ import DocumentManagementNavbar from './DocumentManagementNavbar'
 import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
 
 import 'layouts/Layout.scss'
+import store from 'redux/store';
+import { delete_ADocumentReset, put_EditADocumentReset } from 'redux/actions/documentAction';
 
 class DocumentManagement extends React.Component {
 
@@ -123,16 +125,16 @@ class DocumentManagement extends React.Component {
 
     render() {
 
-        //reload the list when any item has been deleted or edited:
-        // if (this.props.isHaveDeleted) {
-        //     this.reloadList();
-        //     store.dispatch(delete_ADocumentReset())
-        // }
+        // reload the list when any item has been deleted or edited:
+        if (this.props.isHaveDeleted) {
+            this.reloadList();
+            store.dispatch(delete_ADocumentReset())
+        }
 
-        // if (this.props.isHaveEdited) {
-        //     this.reloadList();
-        //     store.dispatch(put_EditADocumentReset())
-        // }
+        if (this.props.isHaveEdited) {
+            this.reloadList();
+            store.dispatch(put_EditADocumentReset())
+        }
         //combobox
         if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
             this.comboboxGroup =
@@ -159,7 +161,7 @@ class DocumentManagement extends React.Component {
                                     selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
                                     options={this.props.documentCategories}
                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                    id="dmcf-combobox" //document management category filter
+                                    comboboxId="dmcf-combobox" //document management category filter
                                 ></ComboBox>
                             </div>
                         </div>
@@ -170,7 +172,7 @@ class DocumentManagement extends React.Component {
                                     options={adminApproveStatusOptions}
                                     placeHolder="Tất cả"
                                     onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
-                                    id="dmasf-combobox" //document management approval status filter 
+                                    comboboxId="dmasf-combobox" //document management approval status filter 
                                 ></ComboBox>
                             </div>
                         </div>
@@ -194,7 +196,7 @@ class DocumentManagement extends React.Component {
                             options={this.props.subjects}
                             placeHolder="Tất cả"
                             onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
-                            id="my-document-list-subject-filter-combobox"
+                            comboboxId="my-document-list-subject-filter-combobox"
                         ></ComboBox>
                     </div>
                 </div >
@@ -206,7 +208,7 @@ class DocumentManagement extends React.Component {
                             selectedOptionID={1}
                             placeHolder="Tất cả"
                             onOptionChanged={(selectedOption) => this.onTimeOptionChange(selectedOption)}
-                            id="dmtf-combobox" //document management time filter 
+                            comboboxId="dmtf-combobox" //document management time filter 
                         ></ComboBox>
                     </div>
                 </div>
@@ -234,7 +236,7 @@ class DocumentManagement extends React.Component {
 
                         title={item.title}
                         // fileName={item.fileName}
-                        fileName={"Demo file name.pdf"}
+                        // fileName={"Demo file name.pdf"}
                         description={item.description}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}

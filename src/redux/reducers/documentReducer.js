@@ -43,7 +43,13 @@ import {
     GET_MANAGEMENT_DOCUMENTS_FAILURE,
     GET_DOCUMENT_BY_ID_FAILURE,
     GET_DOCUMENT_BY_ID_RESET,
-    GET_DOCUMENT_BY_ID_SUCCESS
+    GET_DOCUMENT_BY_ID_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_FAILURE,
+    GET_RELATIVE_DOCUMENTS_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_RESET,
+    GET_SAME_SUBJECT_DOCUMENTS_FAILURE,
+    GET_SAME_SUBJECT_DOCUMENTS_SUCCESS,
+    GET_SAME_SUBJECT_DOCUMENTS_RESET
 
 } from '../constants.js'
 
@@ -99,7 +105,18 @@ const initialState = {
         error: "",
         totalPages: 0,
         totalElements: 0
-    }
+    },
+
+    relativeDocuments: {
+        isLoadDone: false,
+        data: [],
+        error: ''
+    },
+    sameSubjectDocuments: {
+        isLoadDone: false,
+        data: [],
+        error: ''
+    },
 }
 
 function DocReducer(state = initialState, action) {
@@ -257,7 +274,7 @@ function DocReducer(state = initialState, action) {
             return { ...state, isHaveRejectedAndFeedbacked: false };
         case REJECT_AND_FEEDBACK_A_DOCUMENT_RESET:
             return { ...state, isHaveRejectedAndFeedbacked: false };
-            
+
         //delete
         case DELETE_A_DOCUMENT_RESET:
             return {
@@ -302,7 +319,44 @@ function DocReducer(state = initialState, action) {
         case RESOLVE_A_DOCUMENT_FAILURE:
             return { ...state, isHaveResolved: false };
 
+        case GET_RELATIVE_DOCUMENTS_RESET:
+            return { ...state, relativeDocuments: { isLoadDone: false } };
+        case GET_RELATIVE_DOCUMENTS_SUCCESS:
+            return {
+                ...state, relativeDocuments: {
+                    isLoadDone: true,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_DOCUMENTS_FAILURE:
+            return {
+                ...state, relativeDocuments: {
+                    error: action.payload,
+                    isLoadDone: true, data: []
+                }
+            }
 
+        case GET_SAME_SUBJECT_DOCUMENTS_RESET:
+            return {
+                ...state,
+                sameSubjectDocuments: { isLoadDone: false }
+            };
+        case GET_SAME_SUBJECT_DOCUMENTS_SUCCESS:
+            return {
+                ...state, sameSubjectDocuments: {
+                    isLoadDone: true,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_SAME_SUBJECT_DOCUMENTS_FAILURE:
+            return {
+                ...state, sameSubjectDocuments: {
+                    error: action.payload,
+                    isLoadDone: true, data: []
+                }
+            }
         default:
             return state;
     }

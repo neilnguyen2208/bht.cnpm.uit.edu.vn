@@ -6,14 +6,13 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
+import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
+import { delete_ADocumentReset, put_EditADocumentReset, post_ReportADocumentReset } from 'redux/actions/documentAction'
 import store from 'redux/store/index'
-import { validation } from 'utils/validationUtils'
 import { detailType } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
-import { basicMenu } from 'components/post/adapter/allActionSummaryMenu'
+import { basicMenu } from 'components/document/adapter/actionMenu'
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
@@ -22,6 +21,8 @@ import 'components/common/CustomCKE/CKEditorContent.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
+import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import Tag from './Tag';
 
 class PostDetail extends React.Component {
 
@@ -35,24 +36,24 @@ class PostDetail extends React.Component {
   }
 
   onPopupMenuItemClick = (selectedItem) => {
-    if (selectedItem.value === "DELETE_POST") {
+    if (selectedItem.value === "DELETE_DOCUMENT") {
       //show confirmation popup and detete id verify
       openModal("confirmation",
         {
-          title: "Xoá bài viết",
+          title: "Xoá tài liệu",
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPost(this.props.id); closeModal(); }
+          onConfirm: () => { this.props.deleteADocument(this.props.id); closeModal(); }
         })
     }
 
-    if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-post", { id: this.props.id });
+    if (selectedItem.value === "EDIT_DOCUMENT") {
+      openBigModal("edit-document", { id: this.props.id });
     }
 
-    if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
-      openBigModal("report-post", {
+    if (selectedItem.value === "REPORT_DOCUMENT" && this.props.type !== detailType.preview) {
+      openBigModal("report-document", {
         id: this.props.id
       })
     }
@@ -61,23 +62,31 @@ class PostDetail extends React.Component {
   onConfirmReport = (DTO) => {
     closeModal();
     closeModal();
-    this.props.reportAPost(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
+    this.props.reportADocument(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
   render() {
 
     //reload the list when any item has been deleted or edited:
     if (this.props.isHaveDeleted) {
-      store.dispatch(delete_APostReset())
+      store.dispatch(delete_ADocumentReset())
     }
 
     if (this.props.isHaveEdited) {
-      store.dispatch(put_EditAPostReset())
+      store.dispatch(put_EditADocumentReset())
     }
 
     if (this.props.isHaveReported) {
-      openBLModal({ text: "Report bài viết thành công!", type: "success" });
-      store.dispatch(post_ReportAPostReset())
+      openBLModal({ text: "Report tài liệu thành công!", type: "success" });
+      store.dispatch(post_ReportADocumentReset())
+    }
+
+    let cover = <></>;
+    if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
+      cover = <div>
+        <div className="mg-top-20px" />
+        <img className="image" src={this.props.imageURL} alt="" />
+      </div>
     }
 
     return (
@@ -119,12 +128,29 @@ class PostDetail extends React.Component {
 
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
-          <UserInfo authorDisplayName={this.props.authorDisplayName} authorAvatarURL={this.props.authorAvatarURL} />
+          <UserInfo authorDisplayName={this.props.authorDisplayName} authorAvatarURL={this.props.authorAvatarURL} authorID={this.props.authorID} />
           <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
         </div>
 
-      </div >
+        <div style={{ width: "100%", marginTop: "20px", maxWidth: "600px", margin: "auto", marginBottom: "20px" }}>
+          {/* content here */}
+          <div className="ck-editor-output" dangerouslySetInnerHTML={{
+            __html:
+              this.props.description
+          }} />
+          <div style={{ border: "1px solid var(--gray)" }}>
+            {cover}
+          </div>
+          <div className="mg-top-10px mg-bottom-10px" >
+            {this.props.tags.map(item =>
+              <Tag isReadOnly={true} tag={item} />
+            )}
+          </div>
+        </div>
 
+        {formatMathemicalFormulas()}
+        {styleCodeSnippet()}
+      </div >
     );
   }
 }
@@ -132,17 +158,21 @@ class PostDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     //delete
-    isHaveDeleted: state.post.isHaveDeleted,
+    isHaveDeleted: state.document.isHaveDeleted,
     //edit
-    isHaveEdited: state.post.isHaveEdited,
+    isHaveEdited: state.document.isHaveEdited,
     //report
-    isHaveReported: state.post.isHaveReported
+    isHaveReported: state.document.isHaveReported,
+
+    isStatisticLoaded: state.auth.userStatistic.isLoadDone,
+    statisticData: state.auth.userStatistic.data
+
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPost, editAPost, reportAPost
-}, dispatch);
+  deleteADocument, editADocument, reportADocument
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));
 

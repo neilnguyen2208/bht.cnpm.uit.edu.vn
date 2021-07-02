@@ -25,8 +25,8 @@
 
 .white-button:hover,
 .white-button:focus {
-    background: var(--gray);
-    box-shadow: 0px 0px 2px 0px var(--gray);
+    box-shadow: 0px 0px 2px 0px var(--blue);
+    border: var(--blue) 1px solid;
     opacity: 80%;
 }
 

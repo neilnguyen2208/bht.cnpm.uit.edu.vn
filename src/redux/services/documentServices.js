@@ -43,8 +43,6 @@ import {
     post_ReportADocumentSuccess,
     post_ReportADocumentFailure,
     get_DocumentByIDReset,
-    // get_DocumentByIDSuccess,
-    // get_DocumentByIDFailure,
     get_ManagementDocumentsRequest,
     get_ManagementDocumentsSuccess,
     get_ManagementDocumentsFailure,
@@ -59,6 +57,12 @@ import {
     get_CSNNDocumentSubjectsListRequest,
     get_CSNNDocumentSubjectsListSuccess,
     get_CSNNDocumentSubjectsListFailure,
+    get_RelativeDocumentsFailure,
+    get_RelativeDocumentsSuccess,
+    get_RelativeDocumentsReset,
+    get_SameSubjectDocumentsReset,
+    get_SameSubjectDocumentsSuccess,
+    get_SameSubjectDocumentsFailure,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam } from 'utils/urlUtils';
@@ -82,19 +86,24 @@ export function getManagementDocuments(searchParamObject) {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.docSummaryWithStateDTOs.docSummary.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response.data.docSummaryWithStateDTOs.map(item => IDarr += item.docSummary.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
-                    .then(result => {
+                    .then(result_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docSummary.length; i++) {
+                        for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docSummary[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummary[i].id)),
+                                ...result_1.docSummaryWithStateDTOs[i].docState,
+                                ...result_1.docSummaryWithStateDTOs[i].docSummary,
+                                ...(result_2.data.find((itmInner) => itmInner.docID === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
                             });
                         }
 
-                        dispatch(get_ManagementDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                        dispatch(get_ManagementDocumentsSuccess({
+                            docSummaryWithStateDTOs: finalResult,
+                            totalPages: result_1.totalPages,
+                            totalElements: result_1.totalElements
+                        }))
                     }).catch(() => get_ManagementDocumentsFailure())
             })
             .catch(error => {
@@ -134,28 +143,29 @@ export function getDocumentSearch(searchParamObject) {
 export function getPendingDocuments(searchParamObject) {
     return dispatch => {
         dispatch(get_PendingDocumentsRequest());
-        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents/pendingApproval?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
-                //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                IDarr = "1,151";
+                response.data.docSummaryWithStateDTOs.map(item => IDarr += item.docSummary.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
-                    .then(result => {
+                    .then(result_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docDetails.length; i++) {
+                        for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docDetails[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
-                            }
-                            );
+                                ...result_1.docSummaryWithStateDTOs[i].docState,
+                                ...result_1.docSummaryWithStateDTOs[i].docSummary,
+                                ...(result_2.data.find((itmInner) => itmInner.docID === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
+                            });
                         }
 
-                        dispatch(get_PendingDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                        dispatch(get_PendingDocumentsSuccess({
+                            docSummaryWithStateDTOs: finalResult,
+                            totalPages: result_1.totalPages,
+                            totalElements: result_1.totalElements
+                        }))
                     }).catch(() => get_PendingDocumentsFailure())
-                // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
             })
             .catch(error => {
                 dispatch(get_PendingDocumentsFailure(error))
@@ -262,7 +272,7 @@ export function reactionADocument(docID, reactionType) {
     }
 }
 
-export function getDocumentByID(id) {
+export function getDocumentById(id) {
     return dispatch => {
         dispatch(get_DocumentByIDReset())
         authRequest.get(`/documents/${id}`)
@@ -270,8 +280,8 @@ export function getDocumentByID(id) {
                 let result_1 = response_1.data;//response without statistic
 
                 //get relative documents
-                // dispatch(getSameAuthorDocuments(result_1.id, result_1.authorID));
-                // dispatch(getSameCategoryDocuments(result_1.id, result_1.categoryID));
+                dispatch(getRelativeDocuments(result_1.id, result_1.authorID));
+                dispatch(getSameSubjectDocuments(result_1.id, result_1.subjectID));
 
                 //get user statistic
                 dispatch(getUserStatisticById(result_1.authorID));
@@ -286,6 +296,16 @@ export function getDocumentByID(id) {
                         ).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
                     }).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
             })
+    }
+}
+
+export function reportAPost(id, reason) { //
+    return dispatch => {
+        dispatch(post_ReportADocumentReset())
+        authRequest.post(`/documents/${id}/report`, JSON.stringify(reason))
+            .then(response => {
+                dispatch(post_ReportADocumentSuccess());
+            }).catch(() => dispatch(post_ReportADocumentFailure()))
     }
 }
 
@@ -379,9 +399,6 @@ export function reportADocument(id, reason) { //
     }
 }
 
-
-
-
 //
 export function getDocumentSubjectsList(searchParamObject) {
     return dispatch => {
@@ -407,5 +424,23 @@ export function getCSNNDocumentSubjectsList() {
         authRequest.get(`/subjects?subjectGroup=2`).then(response => {
             dispatch(get_CSNNDocumentSubjectsListSuccess(response.data))
         }).catch(error => dispatch(get_CSNNDocumentSubjectsListFailure(error)))
+    }
+}
+
+export function getRelativeDocuments(documentID) {
+    return dispatch => {
+        dispatch(get_RelativeDocumentsReset());
+        authRequest.get(`/documents/related?docID=${documentID}`).then(response => {
+            dispatch(get_RelativeDocumentsSuccess(response.data))
+        }).catch(error => dispatch(get_RelativeDocumentsFailure(error)))
+    }
+}
+
+export function getSameSubjectDocuments(documentID, subjectID) {
+    return dispatch => {
+        dispatch(get_SameSubjectDocumentsReset());
+        authRequest.get(`/documents/related?docID=${documentID}&subjectID=${subjectID}`).then(response => {
+            dispatch(get_SameSubjectDocumentsSuccess(response.data))
+        }).catch(error => dispatch(get_SameSubjectDocumentsFailure(error)))
     }
 }

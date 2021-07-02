@@ -66,6 +66,12 @@ import {
     GET_CSNN_DOCUMENT_SUBJECTS_LIST_REQUEST,
     GET_CSNN_DOCUMENT_SUBJECTS_LIST_SUCCESS,
     GET_CSNN_DOCUMENT_SUBJECTS_LIST_FAILURE,
+    GET_RELATIVE_DOCUMENTS_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_FAILURE,
+    GET_RELATIVE_DOCUMENTS_RESET,
+    GET_SAME_SUBJECT_DOCUMENTS_FAILURE,
+    GET_SAME_SUBJECT_DOCUMENTS_RESET,
+    GET_SAME_SUBJECT_DOCUMENTS_SUCCESS,
 } from "../constants.js"
 
 //my documents
@@ -395,7 +401,6 @@ export function get_DocumentSubjectsListRequest() {
     }
 }
 
-
 export function get_DocumentSubjectsListSuccess() {
     return {
         type: GET_DOCUMENT_SUBJECTS_LIST_SUCCESS,
@@ -433,7 +438,6 @@ export function get_CSNNDocumentSubjectsListRequest() {
     }
 }
 
-
 export function get_CSNNDocumentSubjectsListSuccess() {
     return {
         type: GET_CSNN_DOCUMENT_SUBJECTS_LIST_SUCCESS,
@@ -443,5 +447,43 @@ export function get_CSNNDocumentSubjectsListSuccess() {
 export function get_CSNNDocumentSubjectsListFailure() {
     return {
         type: GET_CSNN_DOCUMENT_SUBJECTS_LIST_FAILURE
+    }
+}
+
+export function get_RelativeDocumentsReset() {
+    return {
+        type: GET_RELATIVE_DOCUMENTS_RESET
+    }
+}
+
+export function get_RelativeDocumentsSuccess(data) {
+    return {
+        type: GET_RELATIVE_DOCUMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_RelativeDocumentsFailure() {
+    return {
+        type: GET_RELATIVE_DOCUMENTS_FAILURE
+    }
+}
+
+export function get_SameSubjectDocumentsReset() {
+    return {
+        type: GET_SAME_SUBJECT_DOCUMENTS_RESET
+    }
+}
+
+export function get_SameSubjectDocumentsSuccess(data) {
+    return {
+        type: GET_SAME_SUBJECT_DOCUMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_SameSubjectDocumentsFailure() {
+    return {
+        type: GET_SAME_SUBJECT_DOCUMENTS_FAILURE
     }
 }

@@ -56,7 +56,6 @@
 .form-group.invalid .text-input {
     border-color: var(--red);
     box-shadow: 0px 0px 2px 0px var(--light-red);
-
 }
 
 .form-label {
@@ -86,7 +85,7 @@
     color: var(--red);
     user-select: none;
     min-width: 80px;
-    font-family: 'Arial';
+    font-family: "Arial";
     font-size: 0.8rem;
     width: 100%;
 }
@@ -96,7 +95,6 @@
     color: var(--black) !important;
     padding-left: 0px;
     position: relative;
-
 }
 
 .form-tip-label-2 {
@@ -204,7 +202,7 @@
     border: 1px var(--gray) solid;
     padding: 5px;
     border-radius: 5px;
-
+    box-shadow: 0px 0px 5px 0px var(--gray);
 }
 
 .file-input {
@@ -214,20 +212,18 @@
 
 .validation {
     // class này không được dùng để làm gì cả,
-    // nếu một element có 2 class là validation và form-group 
+    // nếu một element có 2 class là validation và form-group
     // khi nút submit được bấm thì form sẽ duyệt hết tất cả các element chứa 2 class này,
     // nếu valid thì element không có thêm class nào, nếu không valid thì element có class form-group có thêm class class invalid
-    // 
+    //
 }
 
 .ckeditor {
     //tich hop vao wrraper
-
 }
 
 .combobox {
     //tich hop vao wrraper luon
-
 }
 
 .file-input-container {
@@ -270,9 +266,11 @@
     margin: auto;
 }
 
-.file-input-wrapper.focus {}
+.file-input-wrapper.focus {
+}
 
-.form-radio {}
+.form-radio {
+}
 
 .form-checkbox-container {
     display: block;
@@ -304,7 +302,6 @@
     width: fit-content;
     padding-top: 0.1rem;
     padding-right: 0.2rem;
-
 }
 
 .form-checkbox-style {
@@ -320,19 +317,19 @@
     background-color: var(--grayish);
 }
 
-.form-checkbox-container input:hover~.form-checkbox-style {
+.form-checkbox-container input:hover ~ .form-checkbox-style {
     border: 1px solid var(--blue);
     box-shadow: 0px 0px 2px 0px var(--light-blue);
 }
 
-.form-checkbox-container input:focus~.form-checkbox-style {
+.form-checkbox-container input:focus ~ .form-checkbox-style {
     border: 1px solid var(--blue);
     opacity: 80%;
     box-shadow: 0px 0px 2px 0px var(--light-blue);
 }
 
 /* When the checkbox is checked, add a blue background */
-.form-checkbox-container input:checked~.form-checkbox-style {
+.form-checkbox-container input:checked ~ .form-checkbox-style {
     background-color: var(--blue);
     box-shadow: 0px 0px 2px 0px var(--light-blue);
     border: 1px solid var(--blue);
@@ -344,7 +341,7 @@
     display: none;
 }
 
-.form-checkbox-container input:checked~.form-checkbox-style:after {
+.form-checkbox-container input:checked ~ .form-checkbox-style:after {
     display: block;
 }
 

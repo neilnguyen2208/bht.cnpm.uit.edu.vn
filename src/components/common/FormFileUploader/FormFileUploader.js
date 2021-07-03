@@ -14,7 +14,8 @@ class FormFileUploader extends React.Component {
         var name = document.getElementById('file-input-' + this.props.id);
         let displayText = '';
         for (let i = 0; i < name.files.length; i++) {
-            displayText = displayText + ` - Tên file: ${name.files.item(i).name}\n Kích thước:  ${Math.round(name.files.item(i).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${name.files.item(i).type} \n`;
+            displayText = displayText + ` - Tên file: ${name.files.item(i).name}\n Kích thước:  ${Math.round(name.files.item(i).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${name.files.item(i).type} 
+            \n`;
         }
 
         document.querySelector('.form-tip-label.file-info').innerText = displayText;

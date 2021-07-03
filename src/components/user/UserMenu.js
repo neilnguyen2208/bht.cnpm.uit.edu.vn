@@ -184,7 +184,7 @@ class UserMenu extends React.Component {
                                         {this.state.isDropdownOpen ?
                                             <div className="user-menu-dropdown" id={"h-um-dropdown"}>
                                                 <div className="display-name">{this.props.userSummaryData.displayName}</div>
-                                                <div className="d-flex mg-bottom-5px">
+                                                <div className="d-flex mg-bottom-5px" style={{ borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
                                                     <div className="reputation-sub-container">
                                                         <img alt="" src={gray_write_icon} className="user-menu-icon" />
                                                         <div className="reputation-label">  {formatNumber(this.props.userSummaryData.postCount)}</div>
@@ -193,6 +193,7 @@ class UserMenu extends React.Component {
                                                         <img alt="" src={gray_upload_icon} className="user-menu-icon" />
                                                         <div className="reputation-label">   {formatNumber(this.props.userSummaryData.docCount)}</div>
                                                     </div>
+                                                    <div className="reputation-label"> Score: {formatNumber(this.props.userSummaryData.reputationScore)}</div>
                                                 </div>
 
                                                 {items}

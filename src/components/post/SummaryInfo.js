@@ -32,7 +32,7 @@ class PostSummary extends React.Component {
   constructor(props) {
     super(props);
 
-    this.id = this.props.postId;
+    this.id = this.props.postID;
     this.title = this.props.title;
     this.image = this.props.image;
   }
@@ -47,19 +47,19 @@ class PostSummary extends React.Component {
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
           onConfirm: () => {
-            this.props.deleteAPost(this.props.postId);
+            this.props.deleteAPost(this.props.postID);
             closeModal();
           }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-post", { id: this.props.postId });
+      openBigModal("edit-post", { id: this.props.postID });
     }
 
     if (selectedItem.value === "REPORT_POST") {
       openBigModal("report-post", {
-        id: this.props.postId
+        id: this.props.postID
       })
     }
 
@@ -68,7 +68,7 @@ class PostSummary extends React.Component {
         title: "Ghim bài viết",
         text: "Xác nhận ghim bài viết?",
         onConfirm: () => {
-          this.props.highlightAPost(this.props.postId);
+          this.props.highlightAPost(this.props.postID);
           closeModal();
         }
       });
@@ -79,7 +79,7 @@ class PostSummary extends React.Component {
         title: "Bỏ ghim bài viết",
         text: "Xác nhận bỏ ghim bài viết?",
         onConfirm: () => {
-          this.props.deleteHighlightAPost(this.props.postId);
+          this.props.deleteHighlightAPost(this.props.postID);
           closeModal();
         }
       });
@@ -90,7 +90,7 @@ class PostSummary extends React.Component {
         title: "Ghim bài viết lên đầu",
         text: "Xác nhận ghim bài viết lên đâu?",
         onConfirm: () => {
-          this.props.stickAPostToTop(this.props.postId);
+          this.props.stickAPostToTop(this.props.postID);
           closeModal();
         }
       });
@@ -183,13 +183,13 @@ class PostSummary extends React.Component {
             }
           </div>
           {this.props.type !== itemType.management && this.props.type !== itemType.normal &&
-            < PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} /> //stand for post item poupup menu
+            < PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} /> //stand for post item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) && //normal => only report
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={guestMenu} useAction={this.props.useAction} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={guestMenu} useAction={this.props.useAction} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
           }
           {(this.props.type === itemType.management) &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={adminMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={adminMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
           }
         </div>
 
@@ -201,7 +201,7 @@ class PostSummary extends React.Component {
           </Link>
 
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/post-content/" + this.props.postId}>
+            <Link to={"/post-content/" + this.props.postID}>
               <div className="title">
                 {this.props.title}
               </div>

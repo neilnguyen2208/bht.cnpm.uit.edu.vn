@@ -27,6 +27,8 @@ class ModalBigManager extends React.Component {
                     return <EditDocumentModal {...modalProps} key={modalType + index} />
                 case "report-post":
                     return <ReportModal {...modalProps} type="POST" key={modalType + index} />
+                case "report-document":
+                    return <ReportModal {...modalProps} type="DOCUMENT" key={modalType + index} />
                 case "report-exercise":
                     return <ReportModal {...modalProps} type="EXERCISE" key={modalType + index} />
                 case "report-comment":

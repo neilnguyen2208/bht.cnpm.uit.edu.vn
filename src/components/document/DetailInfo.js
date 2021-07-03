@@ -6,9 +6,22 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-import { delete_ADocumentReset, put_EditADocumentReset, post_ReportADocumentReset } from 'redux/actions/documentAction'
+import {
+  deleteADocument,
+  editADocument,
+  reportADocument
+} from 'redux/services/documentServices'
+import {
+  openBigModal,
+  openModal,
+  closeModal,
+  openBLModal
+} from 'redux/services/modalServices'
+import {
+  delete_ADocumentReset,
+  put_EditADocumentReset,
+  post_ReportADocumentReset
+} from 'redux/actions/documentAction'
 import store from 'redux/store/index'
 import { detailType } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
@@ -21,18 +34,20 @@ import 'components/common/CustomCKE/CKEditorContent.scss'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import {
+  formatMathemicalFormulas,
+  styleCodeSnippet
+} from 'components/common/CustomCKE/CKEditorUtils';
 import Tag from './Tag';
+import { imageExists } from 'utils/urlUtils';
 
 class PostDetail extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.id = this.props.id;
-    this.title = this.props.title;
-    this.image = this.props.image;
-
+    this.isLoadedImage = false;
+    this.state = { isLoadedImage: false }
   }
 
   onPopupMenuItemClick = (selectedItem) => {
@@ -65,6 +80,17 @@ class PostDetail extends React.Component {
     this.props.reportADocument(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
+  setImageURL = (isExist) => {
+    this.cover = <></>;
+    if (isExist) {
+      this.cover = <div style={{ border: "1px solid var(--gray)" }}>
+        <div className="mg-top-20px" />
+        <img className="image" src={this.props.imageURL} alt="" />
+      </div>
+    };
+    this.setState({ isLoadedImage: true });
+  }
+
   render() {
 
     //reload the list when any item has been deleted or edited:
@@ -81,12 +107,10 @@ class PostDetail extends React.Component {
       store.dispatch(post_ReportADocumentReset())
     }
 
-    let cover = <></>;
-    if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
-      cover = <div>
-        <div className="mg-top-20px" />
-        <img className="image" src={this.props.imageURL} alt="" />
-      </div>
+    if (this.props.imageURL
+      && !this.state.isLoadedImage
+    ) {
+      imageExists(this.props.imageURL, this.setImageURL)
     }
 
     return (
@@ -138,9 +162,9 @@ class PostDetail extends React.Component {
             __html:
               this.props.description
           }} />
-          <div style={{ border: "1px solid var(--gray)" }}>
-            {cover}
-          </div>
+
+          {this.state.isLoadedImage && this.cover}
+
           <div className="mg-top-10px mg-bottom-10px" >
             {this.props.tags.map(item =>
               <Tag isReadOnly={true} tag={item} />

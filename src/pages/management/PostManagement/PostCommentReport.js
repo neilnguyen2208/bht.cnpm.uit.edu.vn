@@ -105,7 +105,7 @@ class PostCommentReport extends React.Component {
                     <PostReportedCommentInfo
                         id={reportedComment.id}
                         commentId={reportedComment.commentID}
-                        postId={reportedComment.postID}
+                        postID={reportedComment.postID}
                         postTitle={reportedComment.postTitle}
                         content={reportedComment.content}
                         reporters={reportedComment.reporters}

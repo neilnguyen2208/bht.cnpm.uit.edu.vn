@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&family=Rosario:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&family=Rosario:wght@300&display=swap");
 
 .user-item {
     position: relative;
@@ -14,6 +14,7 @@
 }
 
 .user-info {
+    margin-top: 20px;
     position: relative;
     height: fit-content;
     width: 100%;
@@ -63,20 +64,35 @@
     display: flex;
 }
 
+.ui-left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 20px;
+    margin-left: 0px;
+    border-left: 1px solid var(--gray);
+    padding-left: 10px;
+}
+
 .user-info .reputation-sub-container {
     display: flex;
-    min-width: 60px;
+    min-width: 40px;
     width: fit-content;
     cursor: pointer;
     max-width: 80px;
     margin-right: 2px;
 }
 
+.user-info .displayname {
+    font-family: "Roboto Slab", serif;
+    font-size: 1rem;
+}
+
 .user-info .reputation-label {
     margin-top: 1px;
     font-size: 18px;
     padding-left: 3px;
-    color: var(--light-black)
+    color: var(--light-black);
 }
 
 .user-item .avatar {
@@ -99,7 +115,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     height: 1.5rem;
-    font-family: 'Roboto Slab', serif;
+    font-family: "Roboto Slab", serif;
     font-size: 1.3rem;
     color: var(--black);
     line-height: 1.4rem;
@@ -115,7 +131,6 @@
 
     display: flex;
     color: rgba(0, 0, 0, 0.5);
-
 }
 
 .user-item-icon,
@@ -129,6 +144,7 @@
     width: 1.5rem;
     height: 1.5rem;
     padding: 2px;
+    border: none;
 }
 
 .user-item .score {
@@ -153,7 +169,6 @@
     height: 1.5rem;
     padding-left: 0.25rem;
     line-height: 1.5rem;
-
 }
 
 .user-profile .document-count,
@@ -171,7 +186,6 @@
     font-family: "BarlowCondensed-Medium";
     font-size: 1rem;
     justify-content: space-between;
-
 }
 
 .user-item .achievement-bar {

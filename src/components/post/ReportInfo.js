@@ -22,8 +22,8 @@ export default class ReportInfo extends React.PureComponent {
     componentDidMount() {
         const DOMPurify = createDOMPurify(window);
         const clean = DOMPurify.sanitize(this.props.content);
-        if (document.querySelector(`#rprt-pst-ctnt-${this.props.postId}`))
-            document.querySelector(`#rprt-pst-ctnt-${this.props.postId}`).innerHTML = clean;
+        if (document.querySelector(`#rprt-pst-ctnt-${this.props.postID}`))
+            document.querySelector(`#rprt-pst-ctnt-${this.props.postID}`).innerHTML = clean;
     }
 
     render() {
@@ -84,7 +84,7 @@ export default class ReportInfo extends React.PureComponent {
 
                         <div className="d-flex">
                             <img className="avatar mg-top-10px" style={{ marginRight: "10px" }} src={this.props.author.avatarURL} alt="" />
-                            <Link className="activity-title" to={`/post-content/${this.props.postId}`} >{this.props.title}</Link>
+                            <Link className="activity-title" to={`/post-content/${this.props.postID}`} >{this.props.title}</Link>
                         </div>
 
                     </div>
@@ -146,11 +146,11 @@ export default class ReportInfo extends React.PureComponent {
                                     <div >
                                         <div className="decoration-line mg-top-10px" />
                                         <img className="image" src={this.props.imageURL} alt="" />
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
                                     </div>
                                     :
                                     <div className="summary-text">
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
                                     </div>
                             }
                         </div>
@@ -161,11 +161,11 @@ export default class ReportInfo extends React.PureComponent {
                                     <div >
                                         <div className="decoration-line mg-top-10px" />
                                         <img className="image" src={this.props.imageURL} alt="" />
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
                                     </div>
                                     :
                                     <div className="summary-text">
-                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postId} />
+                                        <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
                                     </div>
 
                             }

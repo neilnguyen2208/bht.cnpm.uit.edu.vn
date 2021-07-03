@@ -227,7 +227,7 @@ export default class Combobox extends React.Component {
 
                         {/* dropdown */}
                         {this.state.isDropdownOpen ? (
-                            <div className="dropdown-container" id={"dropdown-container-" + this.props.comboboxId}>
+                            <div className="dropdown-container scroller-container" style={{ maxHeight: "300px" }} id={"dropdown-container-" + this.props.comboboxId}>
                                 {options}
                                 <div className="mg-bottom-5px" />
                                 <div className="mg-bottom-5px" />

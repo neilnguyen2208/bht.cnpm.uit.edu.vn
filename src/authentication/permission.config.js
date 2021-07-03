@@ -61,7 +61,7 @@ export const PostCommentAction = {
     Reply: "reply"
 }
 
-export const Doc = {
+export const Document = {
     DOC_PUBLIC_ALL_READ: "DOC_PUBLIC_ALL_READ",
     DOC_DELETED_ALL_READ: "DOC_DELETED_ALL_READ",
     DOC_UNLISTED_ALL_READ: "DOC_UNLISTED_ALL_READ",

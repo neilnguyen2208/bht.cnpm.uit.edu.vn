@@ -15,7 +15,7 @@ import UserSidebar from 'layouts/UserSidebar';
 import "components/user/UserMenu.scss";
 import ProfileComponent from './Profile_Component'
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
-import { getMyDocuments } from 'redux/services/documentServices'
+import { getDocumentsByFilter } from 'redux/services/documentServices'
 import Paginator from 'components/common/Paginator/ServerPaginator'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
@@ -29,8 +29,8 @@ class ProfileDocument extends React.Component {
 
         this.searchParamObject = {
             "page": 1,
-            "category.id": null,
-            // "documentState": ''
+            "author": this.props.match.params.id,
+            "sort": "publishDtm,desc"
         }
 
         this.queryParamObject = {
@@ -40,7 +40,7 @@ class ProfileDocument extends React.Component {
 
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
-        this.props.getMyDocuments(this.searchParamObject);
+        this.props.getDocumentsByFilter(this.searchParamObject);
     }
 
 
@@ -81,10 +81,10 @@ class ProfileDocument extends React.Component {
         if (!this.props.isListLoading) {
             if (this.props.userDocumentsList.length !== 0)
                 this.userDocumentsList = this.props.userDocumentsList.map((item) => {
-                    return <div className="item-container">
+                    return <div className="item-container" key={item.id}>
                         <DocumentSummaryMetadata
-                            type={itemType.mySelf}
-                            id={item.id}
+                            type={itemType.normal}
+                            documentID={item.id}
                             authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
@@ -100,24 +100,24 @@ class ProfileDocument extends React.Component {
                             imageURL={item.imageURL}
                             readingTime={item.readingTime}
                             approveState={item.docState}
-                            popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                            popUpMenuPrefix="prfdpu"   //stand for profile doc popup 
                             authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
                             //
                             reloadList={() => this.reloadList()}
                         />
                         <DocumentNormalReactionbar
-                            id={item.id}
-                            likeCount={item.likeCount ? item.likeCount : 2}
-                            dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                            documentID={item.id}
+                            likeCount={item.likeCount}
+                            dislikeCount={item.dislikeCount}
                             docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
-                            commentCount={item.commentCount ? item.commentCount : 10}
-                            downloadCount={item.downloadCount ? item.downloadCount : 21}
-                            viewCount={item.viewCount ? item.viewCount : 1200}
+                            commentCount={item.commentCount}
+                            downloadCount={item.downloadCount}
+                            viewCount={item.viewCount}
                         />
                     </div >
                 })
             else
-                this.userDocumentsList = <div>Không có bài viết nào!</div>;
+                this.userDocumentsList = <div>Không có tài liệu nào!</div>;
         }
         else
             this.userDocumentsList = <div>
@@ -189,11 +189,11 @@ class ProfileDocument extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        userDocumentsList: state.document.myDocuments.data,
+        userDocumentsList: state.document.documentsByFilter.data,
         documentCategories: state.documentCategory.categories.searchData,
-        totalPages: state.document.myDocuments.totalPages,
-        totalElements: state.document.myDocuments.totalElements,
-        isListLoading: state.document.myDocuments.isLoading,
+        totalPages: state.document.documentsByFilter.totalPages,
+        totalElements: state.document.documentsByFilter.totalElements,
+        isListLoading: state.document.documentsByFilter.isLoading,
 
         //handle 2 actions: delete and edit
         isHaveDeleted: state.document.isHaveDeleted,
@@ -204,7 +204,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getMyDocuments
+    getDocumentsByFilter
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileDocument));

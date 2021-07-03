@@ -30,7 +30,7 @@ class PostDetail extends React.Component {
 
   constructor(props) {
     super(props);
-    this.id = this.props.postId;
+    this.id = this.props.postID;
     this.title = this.props.title;
     this.image = this.props.image;
 
@@ -45,16 +45,16 @@ class PostDetail extends React.Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPost(this.props.postId); closeModal(); }
+          onConfirm: () => { this.props.deleteAPost(this.props.postID); closeModal(); }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-post", { id: this.props.postId });
+      openBigModal("edit-post", { id: this.props.postID });
     }
 
     if (selectedItem.value === "REPORT_POST" && this.props.type !== detailType.preview) {
-      openBigModal("report-post", { id: this.props.postId });
+      openBigModal("report-post", { id: this.props.postID });
     }
   }
 
@@ -93,7 +93,7 @@ class PostDetail extends React.Component {
       <div className="metadata">
 
         {/* title */}
-        <Link to={"/post-content/" + this.props.postId} onClick={this.props.type === "PREVIEW" && ((e) => { e.preventDefault() })}>
+        <Link to={"/post-content/" + this.props.postID} onClick={this.props.type === "PREVIEW" && ((e) => { e.preventDefault() })}>
           <div className="title">
             {this.props.title}
           </div>
@@ -129,7 +129,7 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postId}`} />
+          <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
         </div>
 
         {cover}

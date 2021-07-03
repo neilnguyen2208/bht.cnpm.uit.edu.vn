@@ -4,7 +4,7 @@ import 'components/styles/HomeItem.scss'
 import { Link } from 'react-router-dom'
 import HomeReactionbar from 'components/document/HomeReactionbar'
 
-class HomeInfo extends React.Component {
+class HomeTextInfo extends React.Component {
   componentDidMount() {
   }
 
@@ -12,7 +12,7 @@ class HomeInfo extends React.Component {
 
     return (
       <div className="home-item" >
-        <img className="document-cover-image" alt='Tài liệu này không có hình ảnh.' src={this.props.imageURL} />
+        <img className="cover-image" alt='Tài liệu này không có hình ảnh.' src={this.props.imageURL} />
         <div className="metadata" >
           <div className="j-c-space-between mg-top-10px">
             <div className="d-flex">
@@ -61,19 +61,15 @@ class HomeInfo extends React.Component {
         </div>
         <HomeReactionbar
           id={this.props.id}
-          likeCount={this.props.likeCount ? this.props.likeCount : 2}
-          dislikeCount={this.props.dislikeCount ? this.props.dislikeCount : 3}
+          likeCount={this.props.likeCount}
+          dislikeCount={this.props.dislikeCount}
           docReactionType={this.props.docReactionType ? this.props.docReactionType : "NONE"}
-          commentCount={this.props.commentCount ? this.props.commentCount : 10}
-          downloadCount={this.props.downloadCount ? this.props.downloadCount : 21}
-          viewCount={this.props.viewCount ? this.props.viewCount : 1200}
+          commentCount={this.props.commentCount}
+          downloadCount={this.props.downloadCount}
+          viewCount={this.props.viewCount}
         />
       </div>
-
-
     );
   }
-
-
 }
-export default HomeInfo;
+export default HomeTextInfo;

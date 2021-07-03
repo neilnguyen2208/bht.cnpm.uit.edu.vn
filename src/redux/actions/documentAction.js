@@ -72,6 +72,12 @@ import {
     GET_SAME_SUBJECT_DOCUMENTS_FAILURE,
     GET_SAME_SUBJECT_DOCUMENTS_RESET,
     GET_SAME_SUBJECT_DOCUMENTS_SUCCESS,
+    GET_DOWNLOAD_URL_RESET,
+    GET_DOWNLOAD_URL_SUCCESS,
+    GET_DOWNLOAD_URL_FAILURE,
+    GET_DOCUMENTS_BY_FILTER_REQUEST,
+    GET_DOCUMENTS_BY_FILTER_SUCCESS,
+    GET_DOCUMENTS_BY_FILTER_FAILURE,
 } from "../constants.js"
 
 //my documents
@@ -486,4 +492,35 @@ export function get_SameSubjectDocumentsFailure() {
     return {
         type: GET_SAME_SUBJECT_DOCUMENTS_FAILURE
     }
+}
+
+export function get_DownloadURLReset() {
+    return {
+        type: GET_DOWNLOAD_URL_RESET
+    }
+}
+
+export function get_DownloadURSuccess(data) {
+    return {
+        type: GET_DOWNLOAD_URL_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_DownloadURLFailure() {
+    return {
+        type: GET_DOWNLOAD_URL_FAILURE
+    }
+}
+
+export function get_DocumentsByFilterRequest() {
+    return { type: GET_DOCUMENTS_BY_FILTER_REQUEST }
+}
+
+export function get_DocumentsByFilterSuccess(data) {
+    return { type: GET_DOCUMENTS_BY_FILTER_SUCCESS, payload: data }
+}
+
+export function get_DocumentsByFilterFailure(error) {
+    return { type: GET_DOCUMENTS_BY_FILTER_FAILURE, payload: error }
 }

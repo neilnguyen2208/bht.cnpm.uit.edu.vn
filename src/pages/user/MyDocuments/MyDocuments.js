@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType, userApproveStatusOptions } from 'constants.js';
+import { itemType, userDocumentApproveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
@@ -28,7 +28,7 @@ class MyDocuments extends React.Component {
     componentDidMount() {
         this.searchParamObject = {
             "page": 1,
-            "category.id": null,
+            "categoryID": null,
             // "docState": ''
             sort: "Dtm,asc"
         }
@@ -66,7 +66,7 @@ class MyDocuments extends React.Component {
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category.id": selectedOption.id,
+            "categoryID": selectedOption.id,
             page: 1
         }
         this.props.getMyDocuments(this.searchParamObject);
@@ -90,7 +90,7 @@ class MyDocuments extends React.Component {
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
-            "category.id": selectedOption.id, // => change subject
+            "subjectID": selectedOption.id, // => change subject
             page: 1
         }
         this.props.getMyDocuments(this.searchParamObject);
@@ -135,7 +135,7 @@ class MyDocuments extends React.Component {
                                 selectedOptionID={"0"}
                                 options={this.props.categories}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
-                                id="my-document-list-category-filter-combobox"
+                                comboboxId="my-document-list-category-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -143,10 +143,10 @@ class MyDocuments extends React.Component {
                         <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                options={userApproveStatusOptions}
+                                options={userDocumentApproveStatusOptions}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
-                                id="my-document-list-approve-status-filter-combobox"
+                                comboboxId="my-document-list-approve-status-filter-combobox"
                             ></ComboBox>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ class MyDocuments extends React.Component {
                         options={this.props.subjects}
                         placeHolder="Tất cả"
                         onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
-                        id="my-document-list-subject-filter-combobox"
+                        comboboxId="my-document-list-subject-filter-combobox"
                     ></ComboBox>
                 </div>
             </div >
@@ -183,7 +183,7 @@ class MyDocuments extends React.Component {
                     return <div className="item-container" key={item.id}>
                         <DocumentSummaryMetadata
                             type={itemType.mySelf}
-                            id={item.id}
+                            documentID={item.id}
                             authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
@@ -205,7 +205,7 @@ class MyDocuments extends React.Component {
                             reloadList={() => this.reloadList()}
                         />
                         <DocumentNormalReactionbar
-                            id={item.id}
+                            documentID={item.id}
                             likeCount={item.likeCount ? item.likeCount : 2}
                             dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
                             docReactionType={item.docReactionType ? item.docReactionType : "NONE"}

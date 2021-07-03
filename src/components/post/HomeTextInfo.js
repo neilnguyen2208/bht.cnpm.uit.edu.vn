@@ -58,6 +58,7 @@ class HomeTextInfo extends React.Component {
         <div className="summary-text">
           {this.props.summary}
         </div >
+        
         <div className="reaction-padding-by-wrapper">
           <HomeReactionbar
             id={this.props.id}

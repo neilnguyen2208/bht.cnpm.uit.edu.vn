@@ -85,3 +85,15 @@ export function removeQueryParams(key, sourceURL) {
     }
     return rtn;
 }
+
+export function imageExists(url, callback) {
+    var img = new Image();
+    img.onload = function () { callback(true); };
+    img.onerror = function () { callback(false); };
+    img.src = url;
+}
+
+export function openInNewTab(url) {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null;
+}

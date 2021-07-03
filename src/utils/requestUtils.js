@@ -52,10 +52,21 @@ export const multipartRequest = axios.create({
 );
 
 multipartRequest.interceptors.request.use(
-  function (config) {
-    return config;
+  config => {
+    if (authService.isLoggedIn()) {
+      const callback = () => {
+        config.headers.Authorization = `Bearer ${authService.getToken()}`;
+        return Promise.resolve(config);
+      };
+
+      //if token is expire
+      return authService.updateToken(callback);
+    }
+
+    //if not logged in => request without token
+    return Promise.resolve(config);
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
   }
 );

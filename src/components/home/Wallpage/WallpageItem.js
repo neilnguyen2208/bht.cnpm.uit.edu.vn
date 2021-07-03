@@ -138,7 +138,7 @@ class WallpageItem extends React.Component {
                     </div >
                     <div >
                         <PostNormalReactionbar
-                            postId={this.props.wpPostId}
+                            postID={this.props.wpPostId}
                             availableActions={this.props.availableActions}
                             likeCount={this.props.likeCount}
                             viewCount={this.props.viewCount}

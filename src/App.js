@@ -51,7 +51,7 @@ import ModalBigManager from 'components/common/Modal/ModalBigManager';
 import CommentModalManager from 'components/common/Modal/CommentModal/CommentModalManager';
 import DocumentsSubjectList from 'pages/common/DocumentsList/DocumentsSubjectList';
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute';
-import { Access, Post } from "authentication/permission.config";
+import { Access, Post, Document } from "authentication/permission.config";
 
 const App = () => {
     return (
@@ -93,7 +93,7 @@ const App = () => {
                         <Route exact path="/user/saved-posts" component={SavedPosts} />
                         <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.POST_PENDING_SELF_CREATE]} />
                         <Route exact path="/user/notification" component={MyNotification} />
-                        <Route exact path="/upload-document" component={UploadDocument} />
+                        <RequireLoginRoute exact path="/upload-document" component={UploadDocument} permissions={[Document.DOC_PENDING_SELF_CREATE, Document.DOC_PENDING_SELF_UPLOAD]} />
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />

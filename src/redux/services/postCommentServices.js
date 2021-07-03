@@ -38,10 +38,10 @@ import { authRequest, request } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";
 
-export function getAPostComments(postId, page) {
+export function getAPostComments(postID, page) {
   return dispatch => {
     dispatch(get_APostCommentsRequest());
-    authRequest.get(`/posts/${postId}/comments?page=${page}&sort=submitDtm,desc`)
+    authRequest.get(`/posts/${postID}/comments?page=${page}&sort=submitDtm,desc`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
@@ -109,10 +109,10 @@ export function reportAPostComment(id, reason) { //
   }
 }
 
-export function createAPostComment(postId, content) {
+export function createAPostComment(postID, content) {
   return dispatch => {
     dispatch(create_APostCommentReset());
-    authRequest.post(`/posts/` + postId + `/comments`, JSON.stringify(content))
+    authRequest.post(`/posts/` + postID + `/comments`, JSON.stringify(content))
       .then(response => {
         dispatch(create_APostCommentSuccess(response.data.id));
       })

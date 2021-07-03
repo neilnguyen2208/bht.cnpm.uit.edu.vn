@@ -47,7 +47,18 @@ const validationCondition = {
 class UploadDocument extends React.Component {
     constructor(props) {
         super(props);
-
+        this.categoriesList = [
+            {
+                id: 1,
+                name: "Chọn danh mục"
+            }
+        ];
+        this.subjectsList = [
+            {
+                id: 1,
+                name: "Chọn môn học"
+            }
+        ];
         this.state = {
             currentCategory: "Chọn danh mục",
             currentSubject: "Chọn môn học",
@@ -338,7 +349,15 @@ class UploadDocument extends React.Component {
 
     render() {
         //load for category and subject 
+        if (!this.props.isCategoryLoading && this.props.categories) {
+            this.categoriesList = this.props.categories;
+        }
 
+        if (!this.props.isSubjectLoading && this.props.subjects) {
+            this.subjectsList = this.props.subjects;
+        }
+
+        //quick search tag
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
@@ -349,11 +368,10 @@ class UploadDocument extends React.Component {
                 if (this.state.isSearchingTag) {
                     this.setState({ isSearchingTag: false })
                 }
-                if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
+                if (this.props.tagQuickQueryResult) {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
                     if (this.state.UPLOAD_DOCUMENT_DTO.tags.length < 5) {
-                        document.getElementById("cr-document-tag-input").classList.remove('invalid');
                         if (this.props.tagQuickQueryResult.length === 0)
                             document.getElementById("cr-document-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
@@ -361,7 +379,6 @@ class UploadDocument extends React.Component {
                     }
                     else {
                         document.getElementById("cr-document-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        document.getElementById("cr-document-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
@@ -404,6 +421,9 @@ class UploadDocument extends React.Component {
                                 placeholder='Start typing here...'
                                 onChange={this.handleEditorChange}
                                 data="<p>Nhập nội dung tài liệu ...</p>"
+                                height={200}
+                                autoGrow_maxHeight={300}
+                                autoGrow_minHeight={200}
                                 validation
                             />
                             <div className="form-error-label-container">
@@ -414,8 +434,8 @@ class UploadDocument extends React.Component {
                         {/* Category */}
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
-                            <Combobox comboboxId = "cr-document-category-combobox"
-                                options={(!this.props.isCategoryLoading && this.props.categories) ? this.props.categories : [{ id: 1, name: "Chọn danh mục" }]}
+                            <Combobox comboboxId="cr-document-category-combobox"
+                                options={this.categoriesList}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"
                                 validation
@@ -429,8 +449,8 @@ class UploadDocument extends React.Component {
                         {/* Subject */}
                         <div className="form-group" >
                             <label className="form-label-required">Môn học:</label>
-                            <Combobox comboboxId = "cr-document-subject-combobox"
-                                options={(!this.props.isSubjectLoading && this.props.subjects) ? this.props.subjects : [{ id: 1, name: "Chọn môn học" }]}
+                            <Combobox comboboxId="cr-document-subject-combobox"
+                                options={this.subjectsList}
                                 onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
                                 placeHolder="Chọn môn học"
                                 validation
@@ -440,6 +460,11 @@ class UploadDocument extends React.Component {
                                 <span className="form-error-label" ></span>
                             </div>
                         </div >
+
+                        {/* <div className="form-group" style={{ zIndex: "4" }}>
+                            <label className="form-label">Thời gian đăng:</label>
+                            <JQDateTimePicker dtPickerId="cr-document" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
+                        </div> */}
 
                         {/* Tag */}
                         <div className='form-group'>
@@ -454,12 +479,8 @@ class UploadDocument extends React.Component {
                                 {/* khi load xong thi ntn */}
                                 <div id="cr-document-qs-tag-result-container" className="text-input-dropdown-container hidden">
                                     <div className="text-input-dropdown">
-                                        <div className="d-flex">
-                                            {this.tagSearchResult}
-                                        </div>
-
+                                        {this.tagSearchResult}
                                         <div className="form-tip-label" id="cr-document-tag-container-tip-label">
-
                                         </div>
                                     </div>
                                 </div>
@@ -471,7 +492,7 @@ class UploadDocument extends React.Component {
 
                             <div className="mg-top-10px" >
                                 {this.shownTag.map(item =>
-                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} tag={item} />
+                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)}  clickable={false} tag={item} />
                                 )}
                             </div>
                             <div className="form-line" />

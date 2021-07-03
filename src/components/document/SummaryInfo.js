@@ -22,14 +22,14 @@ import { itemType, mySelfMenuItemList } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import { basicMenu } from 'components/document/adapter/actionMenu';
+import { basicMenu, guestMenu } from 'components/document/adapter/actionMenu';
 
 class DocumentSummary extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.id = this.props.id;
+    this.id = this.props.documentID;
     this.title = this.props.title;
     this.image = this.props.image;
 
@@ -45,18 +45,18 @@ class DocumentSummary extends React.Component {
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
           onConfirm: () => {
-            this.props.deleteADocument(this.props.id);
+            this.props.deleteADocument(this.props.documentID);
             closeModal();
           }
         })
     }
 
     if (selectedItem.value === "EDIT_POST") {
-      openBigModal("edit-document", { id: this.props.id });
+      openBigModal("edit-document", { id: this.props.documentID });
     }
 
     if (selectedItem.value === "REPORT_POST") {
-      openBigModal("report-document", { id: this.props.id });
+      openBigModal("report-document", { id: this.props.documentID });
     }
   }
 
@@ -113,7 +113,7 @@ class DocumentSummary extends React.Component {
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>
-                  <div className="red-border-label">PENDING</div>
+                  <div className="gray-border-label">PENDING</div>
                 </div >
                 : <>
                   {this.props.approveState === "PENDING_FIX" ?
@@ -143,12 +143,15 @@ class DocumentSummary extends React.Component {
             }
           </div>
           {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} /> //stand for document item poupup menu
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-dipm-${this.props.documentID}`} /> //stand for document item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) &&
 
             //create adapter later
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}
+              items={guestMenu}
+              useAction={this.props.useAction}
+              id={`${this.props.popUpMenuPrefix}-pipm-${this.props.documentID}`} />
           }
         </div>
 
@@ -159,7 +162,7 @@ class DocumentSummary extends React.Component {
           </Link>
 
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/document-content/" + 151}>
+            <Link to={"/document-content/" + this.props.documentID}>
               <div className="title">
                 {this.props.title}
               </div>
@@ -185,17 +188,13 @@ class DocumentSummary extends React.Component {
         {/* <div className="file-name">{this.props.fileName}</div> */}
         {summary}
         <div className="j-c-end">
-          {/* <Link to={`/document-content/${this.props.id}`} className="continue-read mg-bottom-5px" > */}
-          <Link to={`/document-content/${151}`} className="continue-read mg-bottom-5px" >
+          <Link to={`/document-content/${this.props.documentID}`} className="continue-read mg-bottom-5px" >
             Xem tài liệu >>
           </Link>
         </div>
       </div >
     );
   }
-
-
-
 }
 
 const mapStateToProps = (state) => {

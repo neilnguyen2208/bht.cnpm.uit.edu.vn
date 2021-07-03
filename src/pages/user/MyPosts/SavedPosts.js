@@ -67,7 +67,7 @@ class SavedPosts extends React.Component {
                 this.savedPosts = this.props.savedPosts.map((item) => {
                     return <div className="item-container">
                         <PostSummaryMetadata
-                            postId={item.id}
+                            postID={item.id}
                             authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
@@ -83,7 +83,7 @@ class SavedPosts extends React.Component {
                             type={"NORMAL"}
                         />
                         <PostNormalReactionbar
-                            postId={item.id}
+                            postID={item.id}
                             likeCount={item.likeCount}
                             commentCount={item.commentCount}
                             likedStatus={item.likeStatus}

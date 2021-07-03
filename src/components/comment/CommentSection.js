@@ -106,7 +106,7 @@ class CommentSection extends React.Component {
           : <></>
         }
         {this.props.postAvailableActions.includes(PostAction.Comment) &&
-          <CreateComment postId={this.props.id} />}
+          <CreateComment postID={this.props.id} />}
         {!this.props.isLoading && this.props.commentsList ?
           <div>
             {commentsList}

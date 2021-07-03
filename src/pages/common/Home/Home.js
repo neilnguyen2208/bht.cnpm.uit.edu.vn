@@ -88,6 +88,7 @@ class Home extends React.Component {
 
         if (!this.props.isTrendingDocumentLoading)
             TrendingDocuments = this.props.trendingDocuments.map(item => {
+               
                 return <HomeDocumentItem
                     key={item.id}
                     id={item.id}
@@ -101,8 +102,8 @@ class Home extends React.Component {
                     title={item.title}
                     likeCount={item.likeCount}
                     dislikeCount={item.dislikeCount}
-                    downloadCount={item.downloads}
-                    viewCount={item.views}
+                    downloadCount={item.downloadCount}
+                    viewCount={item.viewCount}
                     subjectName={item.subjectName}
                     subjectID={item.subjectID}
                 ></HomeDocumentItem>

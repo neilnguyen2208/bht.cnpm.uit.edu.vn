@@ -84,8 +84,6 @@ class PostsList extends React.Component {
             </div >
             }
 
-            {/* //item1, item2*/}
-
             <div style={{ borderLeft: "1px solid var(--grayish)", paddingLeft: "10px" }} >
                 {items[1] && < div className="home-item-container grid" style={{ marginRight: "0px" }} key={items[1].id} >
                     <HomeTextInfo
@@ -157,10 +155,8 @@ class PostsList extends React.Component {
                     viewCount={items[0].viewCount}
                     commentCount={items[0].commentCount}
                 ></HomeInfo>
-            </div >
-            }
-
-            {items[1] && < div className="home-item-container row" key={items[1].id} >
+            </div >}
+            {items[1] && <div className="home-item-container row" key={items[1].id} >
                 <HomeInfo
                     authorAvatarURL={items[1].authorAvatarURL}
                     key={items[1].id}
@@ -181,8 +177,7 @@ class PostsList extends React.Component {
                     commentCount={items[1].commentCount}
                 ></HomeInfo>
             </div >}
-
-            {items[2] && < div className="home-item-container row" key={items[2].id} >
+            {items[2] && <div className="home-item-container row" key={items[2].id} >
                 <HomeInfo
                     authorAvatarURL={items[2].authorAvatarURL}
                     key={items[2].id}
@@ -202,8 +197,7 @@ class PostsList extends React.Component {
                     viewCount={items[2].viewCount}
                     commentCount={items[2].commentCount}
                 ></HomeInfo>
-            </div >
-            }
+            </div >}
         </div >
     }
 

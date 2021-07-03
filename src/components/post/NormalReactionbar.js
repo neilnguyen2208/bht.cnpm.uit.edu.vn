@@ -46,19 +46,19 @@ class NormalReactionbar extends React.Component {
     if (this.props.likedStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPost(this.props.postId);
+        this.props.unLikeAPost(this.props.postID);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPost(this.props.postId);
+        this.props.likeAPost(this.props.postID);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        this.props.likeAPost(this.props.postId);
+        this.props.likeAPost(this.props.postID);
       } else {
-        this.props.unLikeAPost(this.props.postId);
+        this.props.unLikeAPost(this.props.postID);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -70,17 +70,17 @@ class NormalReactionbar extends React.Component {
     if (tmp === 0) //neu la lan dau load component
       if (this.props.savedStatus) {
         tmp = 1;
-        this.props.unSaveAPost(this.props.postId)
+        this.props.unSaveAPost(this.props.postID)
       }
       else {
         tmp = -1;
-        this.props.saveAPost(this.props.postId)
+        this.props.saveAPost(this.props.postID)
       }
     else {
       if (tmp === 1)
-        this.props.unSaveAPost(this.props.postId)
+        this.props.unSaveAPost(this.props.postID)
       else
-        this.props.saveAPost(this.props.postId)
+        this.props.saveAPost(this.props.postID)
     }
 
     tmp = -tmp;
@@ -127,7 +127,7 @@ class NormalReactionbar extends React.Component {
     }
     return (
       <div>
-        <Link to={`/post-content/${this.props.postId}`} className="continue-read j-c-end mg-top-5px mg-bottom-5px" >
+        <Link to={`/post-content/${this.props.postID}`} className="continue-read j-c-end mg-top-5px mg-bottom-5px" >
           Đọc tiếp ...
         </Link>
         <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
@@ -164,7 +164,7 @@ class NormalReactionbar extends React.Component {
                 requiredAction={PostAction.Comment}
                 isLink={true}
                 useAction={this.props.useAction}
-                to={"/post-content/" + this.props.postId + "#cr-cmt"}
+                to={"/post-content/" + this.props.postID + "#cr-cmt"}
                 expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
                 <div className="comment-count-container">
                   <div className="comment-btn-text">
@@ -181,7 +181,7 @@ class NormalReactionbar extends React.Component {
                 requiredAction={PostAction.Comment}
                 useAction={this.props.useAction}
                 isLink={true}
-                to={"/post-content/" + this.props.postId + "#cr-cmt"}
+                to={"/post-content/" + this.props.postID + "#cr-cmt"}
                 expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
                 <div className="comment-count-container">
                   <div className="comment-btn-text">

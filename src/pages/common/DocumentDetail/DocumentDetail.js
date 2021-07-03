@@ -1,7 +1,7 @@
 import React from 'react'
 
 import 'components/styles/Metadata.scss'
-import { getDocumentById } from "redux/services/documentServices"
+import { getDocumentById, getDownloadURL } from "redux/services/documentServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -53,6 +53,10 @@ class DocumentDetail extends React.Component {
                 btnEle.innerText = "Xem trước";
             }
 
+    }
+
+    onDownloadButtonClick = (documentId) => {
+        this.props.getDownloadURL(documentId);
     }
 
     render() {
@@ -111,7 +115,7 @@ class DocumentDetail extends React.Component {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <button className="blue-button">Tải xuống</button>
+                                                    <button className="blue-button" onClick={() => this.onDownloadButtonClick(file.id)}>Tải xuống</button>
                                                     <button className="white-button mg-left-5px" id={"dcm-file-preview-btn-" + file.id} onClick={() => this.onFileCollapseIconClick(file.id)}>Xem trước</button>
                                                 </div>
                                             </div>
@@ -131,16 +135,16 @@ class DocumentDetail extends React.Component {
                                     <div style={{ marginTop: "50px" }} />
 
                                     <DocumentNormalReactionbar
-                                        id={this.props.id}
-                                        likeCount={this.props.likeCount ? this.props.likeCount : 2}
-                                        dislikeCount={this.props.dislikeCount ? this.props.dislikeCount : 3}
-                                        docReactionType={this.props.docReactionType ? this.props.docReactionType : "NONE"}
-                                        commentCount={this.props.commentCount ? this.props.commentCount : 10}
-                                        downloadCount={this.props.downloadCount ? this.props.downloadCount : 21}
-                                        viewCount={this.props.viewCount ? this.props.viewCount : 1200}
+                                        id={this.props.currentDocument.id}
+                                        likeCount={this.props.currentDocument.likeCount ? this.props.currentDocument.likeCount : 0}
+                                        dislikeCount={this.props.currentDocument.dislikeCount ? this.props.currentDocument.dislikeCount : 0}
+                                        docReactionType={this.props.currentDocument.docReactionType ? this.props.currentDocument.docReactionType : "NONE"}
+                                        commentCount={this.props.currentDocument.commentCount ? this.props.currentDocument.commentCount : 0}
+                                        downloadCount={this.props.currentDocument.downloadCount ? this.props.currentDocument.downloadCount : 0}
+                                        viewCount={this.props.currentDocument.viewCount ? this.props.currentDocument.viewCount : 0}
                                     />
-                                    {/* <div id="cr-cmt" />
-                                    <CommentSection
+                                    <div id="cr-cmt" />
+                                    {/* <CommentSection
                                         useAction={true}
                                         // create comment will show if you have action create comment
                                         postAvailableActions={this.props.currentPost.availableActions}
@@ -159,11 +163,12 @@ class DocumentDetail extends React.Component {
                                 {this.props.isRelativeDocLoadDone && this.props.relativeDocuments ?
                                     <RelativeDocuments title={"TÀI LIỆU LIÊN QUAN"} items={
                                         this.props.relativeDocuments} />
-                                    : <RelativeLoader />}
+                                    : <></>
+                                }
                                 {this.props.isSameSubjectLoadDone && this.props.sameSubjectDocument ?
                                     <RelativeDocuments title={"CÙNG MÔN HỌC"}
                                         items={this.props.sameSubjectDocument} />
-                                    : <RelativeLoader />
+                                    : <></>
                                 }
                             </div>
 
@@ -186,7 +191,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentById
+    getDocumentById, getDownloadURL
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentDetail));

@@ -104,10 +104,10 @@ class ProfilePost extends React.Component {
         if (!this.props.isListLoading) {
             if (this.props.userPostsList.length !== 0)
                 this.userPostsList = this.props.userPostsList.map((item) => {
-                    return <div className="item-container">
+                    return <div className="item-container" key={item.id}>
                         <PostSummaryMetadata
                             type={itemType.normal}
-                            postId={item.id}
+                            postID={item.id}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
                             categoryName={item.categoryName}
@@ -125,7 +125,7 @@ class ProfilePost extends React.Component {
                             reloadList={() => this.reloadList()}
                         />
                         <PostNormalReactionbar
-                            postId={item.id}
+                            postID={item.id}
                             likeCount={item.likeCount}
                             commentCount={item.commentCount}
                             likedStatus={item.likeStatus}

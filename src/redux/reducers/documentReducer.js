@@ -49,7 +49,13 @@ import {
     GET_RELATIVE_DOCUMENTS_RESET,
     GET_SAME_SUBJECT_DOCUMENTS_FAILURE,
     GET_SAME_SUBJECT_DOCUMENTS_SUCCESS,
-    GET_SAME_SUBJECT_DOCUMENTS_RESET
+    GET_SAME_SUBJECT_DOCUMENTS_RESET,
+    GET_DOWNLOAD_URL_RESET,
+    GET_DOWNLOAD_URL_SUCCESS,
+    GET_DOWNLOAD_URL_FAILURE,
+    GET_DOCUMENTS_BY_FILTER_REQUEST,
+    GET_DOCUMENTS_BY_FILTER_SUCCESS,
+    GET_DOCUMENTS_BY_FILTER_FAILURE
 
 } from '../constants.js'
 
@@ -112,10 +118,19 @@ const initialState = {
         data: [],
         error: ''
     },
+
     sameSubjectDocuments: {
         isLoadDone: false,
         data: [],
         error: ''
+    },
+
+    documentsByFilter: {
+        isLoading: false,
+        data: [],
+        error: '',
+        totalPages: 0,
+        totalElements: 0
     },
 }
 
@@ -357,6 +372,33 @@ function DocReducer(state = initialState, action) {
                     isLoadDone: true, data: []
                 }
             }
+
+        case GET_DOCUMENTS_BY_FILTER_REQUEST: return {
+            ...state, documentsByFilter: {
+                ...state.documentsByFilter,
+                isLoading: true
+            }
+        }
+
+        case GET_DOCUMENTS_BY_FILTER_SUCCESS:
+            return {
+                ...state, documentsByFilter: {
+                    data: action.payload.docSummaryWithStateDTOs,
+                    isLoading: false,
+                    totalPages: action.payload.totalPages,
+                    totalElements: action.payload.totalElements
+
+                }
+            }
+
+        case GET_DOCUMENTS_BY_FILTER_FAILURE: return {
+            ...state, documentsByFilter: {
+                ...state.documentsByFilter,
+                isLoading: false,
+                error: action.payload
+            }
+        }
+
         default:
             return state;
     }

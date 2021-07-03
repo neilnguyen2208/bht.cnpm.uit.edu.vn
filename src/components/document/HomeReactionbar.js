@@ -141,11 +141,11 @@ class NormalReactionbar extends React.Component {
             <div className="d-flex">
               <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
                 <div className="d-flex"> {likeBtn}</div>
-                <div className="document-like-count">{formatNumber(this.likeCount)}</div>
+                <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0 }</div>
               </div>
               <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleDislikeImage} >
                 {dislikeBtn}
-                <div className="document-like-count">{formatNumber(this.dislikeCount)}</div>
+                <div className="document-like-count">{this.dislikeCount ? formatNumber(this.dislikeCount) : 0}</div>
               </div>
             </div>
 
@@ -161,7 +161,7 @@ class NormalReactionbar extends React.Component {
               Bình luận
             </div>
             <div className="comment-btn-number">
-              {formatNumber(this.props.commentCount)}
+              {this.props.commentCount ? formatNumber(this.props.commentCount) : 0}
             </div>
           </div>
         </div>
@@ -169,11 +169,11 @@ class NormalReactionbar extends React.Component {
         <div className="d-flex">
           <div className="view-count-container">
             <img className="preview-icon" src={preview_icon} alt="" />
-            <div className="view-count"  >{formatNumber(this.props.viewCount)}</div>
+            <div className="view-count"  >{this.props.viewCount ? formatNumber(this.props.viewCount) : 0}</div>
           </div >
           <div className="download-btn-container">
             <img className="download-btn" src={download_btn} alt="" />
-            <div className="download-count"  >{formatNumber(this.props.downloadCount)}</div>
+            <div className="download-count"  >{this.props.downloadCount ? formatNumber(this.props.downloadCount) : 0}</div>
           </div >
         </div >
       </div>

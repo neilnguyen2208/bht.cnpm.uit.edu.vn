@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from 'react'
 import Titlebar from 'components/common/Titlebar/Titlebar';
-import { itemType, userApproveStatusOptions } from 'constants.js';
+import { itemType, userPostApproveStatusOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 
 //import for redux
@@ -97,8 +97,6 @@ class MyPosts extends React.Component {
         this.props.getMyPosts(this.searchParamObject);
     }
 
-
-
     render() {
 
         //reload the list when any item has been deleted or edited:
@@ -130,7 +128,7 @@ class MyPosts extends React.Component {
                         <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
                         <div className="mg-left-5px">
                             <ComboBox
-                                options={userApproveStatusOptions}
+                                options={userPostApproveStatusOptions}
                                 placeHolder="Tất cả"
                                 onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
                                 comboboxId="my-post-list-approve-status-filter-combobox"
@@ -156,7 +154,7 @@ class MyPosts extends React.Component {
                     return <div className="item-container" key={item.id}>
                         <PostSummaryMetadata
                             type={itemType.mySelf}
-                            postId={item.id}
+                            postID={item.id}
                             authorDisplayName={item.authorDisplayName}
                             authorID={item.authorID}
                             publishDtm={item.publishDtm}
@@ -175,7 +173,7 @@ class MyPosts extends React.Component {
                             useAction={true}
                         />
                         <PostNormalReactionbar
-                            postId={item.id}
+                            postID={item.id}
                             availableActions={item.availableActions}
                             likeCount={item.likeCount}
                             commentCount={item.commentCount}

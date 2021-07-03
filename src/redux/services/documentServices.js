@@ -63,20 +63,18 @@ import {
     get_SameSubjectDocumentsReset,
     get_SameSubjectDocumentsSuccess,
     get_SameSubjectDocumentsFailure,
+    get_DocumentsByFilterRequest,
+    get_DocumentsByFilterSuccess,
+    get_DocumentsByFilterFailure,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
-import { generateSearchParam } from 'utils/urlUtils';
+import { generateSearchParam, openInNewTab } from 'utils/urlUtils';
 import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
 
 //upload new document
 
 import { authRequest, multipartRequest } from 'utils/requestUtils'
 import { getUserStatisticById } from "./authServices";
-
-export function getNotApprovedDocumentsList() {
-    return dispatch => {
-    }
-}
 
 export function getManagementDocuments(searchParamObject) {
     return dispatch => {
@@ -181,8 +179,7 @@ export function getReportedDocuments(searchParamObject) {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                // response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
-                IDarr = "1,151";
+                response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
@@ -191,8 +188,7 @@ export function getReportedDocuments(searchParamObject) {
                             finalResult.push({
                                 ...result_1.docDetails[i],
                                 ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
-                            }
-                            );
+                            });
                         }
 
                         dispatch(get_ReportedDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
@@ -213,15 +209,17 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                result_1.docSummaryWithStateDTOs.map(item => IDarr += item.docSummary.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docDetails.length; i++) {
+                        for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docDetails[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
+                                ...result_1.docSummaryWithStateDTOs[i],
+                                ...result_1.docSummaryWithStateDTOs[i].docSummary,
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummaryWithStateDTOs[i].id)),
+
                             });
                         }
                         dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
@@ -285,9 +283,12 @@ export function getDocumentById(id) {
 
                 //get user statistic
                 dispatch(getUserStatisticById(result_1.authorID));
+
                 authRequest.get(`/documents/statistics?docIDs=${result_1.id}`)
                     .then(response_2 => {
                         // authRequest.get(`/documents/actionAvailable?documentIDs=${result_1.id}`).then(response_3 => {
+
+                        console.log({ ...result_1, ...response_2.data[0] });
                         dispatch(get_DocumentByIDSuccess({
                             ...result_1, ...response_2.data[0],
                             //  ...response_3.data[0]
@@ -345,8 +346,7 @@ export function rejectAndFeedbackADocument(id, reason) { //
             }
             ).catch(() => {
                 // dispatch(post_RejectAndFeedbackADocumentFailure())
-            }
-            )
+            })
     }
 }
 
@@ -361,15 +361,12 @@ export function resolveADocument(id, resolveDTO) {
     }
 }
 
-
-//chua co API cho viec xoa bai document
 export function deleteADocument(id) { //maybe use modal later
     return dispatch => {
         dispatch(delete_ADocumentReset(id))
         authRequest.delete(`/documents/${id}`).then(response => {
             dispatch(delete_ADocumentSuccess())
             openBLModal({ text: "Xoá tài liệu thành công!", type: "success" });
-
         }).catch(error => { dispatch(delete_ADocumentFailure(id)) })
     }
 }
@@ -442,5 +439,47 @@ export function getSameSubjectDocuments(documentID, subjectID) {
         authRequest.get(`/documents/related?docID=${documentID}&subjectID=${subjectID}`).then(response => {
             dispatch(get_SameSubjectDocumentsSuccess(response.data))
         }).catch(error => dispatch(get_SameSubjectDocumentsFailure(error)))
+    }
+}
+
+export function getDownloadURL(documentID) {
+    return dispatch => {
+        dispatch(get_SameSubjectDocumentsReset());
+        authRequest.get(`/documents/downloadURL?id=${documentID}`).then(response => {
+            openInNewTab(response.data.downloadURL);
+            // dispatch(get_SameSubjectDocumentsSuccess(response.data))
+        }).catch(error => dispatch(get_SameSubjectDocumentsFailure(error)))
+    }
+}
+
+//for sorting.
+export function getDocumentsByFilter(searchParamObject) { //this API to get all approved document of a specific user.
+    return dispatch => {
+        dispatch(get_DocumentsByFilterRequest());
+        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`).then(
+            response_1 => {
+                let result_1 = response_1.data;
+                let IDarr = '';
+                result_1.docSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+
+                //get statistic
+                authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
+                    .then(response_2 => {
+                        //merge summary array and statistic array
+                        let result_2 = [];
+                        for (let i = 0; i < result_1.docSummaryDTOs.length; i++) {
+                            result_2.push({
+                                ...result_1.docSummaryDTOs[i],
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryDTOs[i].id)),
+                            });
+                        }
+                        
+                        dispatch(get_DocumentsByFilterSuccess({
+                            docSummaryWithStateDTOs: result_2,
+                            totalPages: result_1.totalPages,
+                            totalElements: result_1.totalElements
+                        }))
+                    }).catch((error) => dispatch(get_DocumentsByFilterFailure(error)))
+            }).catch((error) => dispatch(get_DocumentsByFilterFailure(error)))
     }
 }

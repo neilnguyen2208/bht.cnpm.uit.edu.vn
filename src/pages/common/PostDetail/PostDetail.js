@@ -61,7 +61,7 @@ class PostDetail extends React.Component {
                                 {this.props.isLoadDone ?
                                     <div>
                                         <DetailInfo
-                                            postId={this.props.currentPost.id}
+                                            postID={this.props.currentPost.id}
                                             title={this.props.currentPost.title}
                                             categoryName={this.props.currentPost.categoryName}
                                             categoryID={this.props.currentPost.categoryID}
@@ -94,7 +94,7 @@ class PostDetail extends React.Component {
                                                 <PostNormalReactionbar
                                                     useAction={true}
                                                     availableActions={this.props.currentPost.availableActions}
-                                                    postId={this.props.currentPost.id}
+                                                    postID={this.props.currentPost.id}
                                                     likeCount={this.props.currentPost.likeCount}
                                                     commentCount={this.props.postStatistic.commentCount}
                                                     likedStatus={this.props.currentPost.likeStatus}
@@ -116,7 +116,7 @@ class PostDetail extends React.Component {
                                                 <PostNormalReactionbar
                                                     useAction={true}
                                                     availableActions={this.props.currentPost.availableActions}
-                                                    postId={this.props.currentPost.id}
+                                                    postID={this.props.currentPost.id}
                                                     likeCount={this.props.currentPost.likeCount}
                                                     commentCount={this.props.currentPost.commentCount}
                                                     likedStatus={this.props.currentPost.likeStatus}

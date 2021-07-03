@@ -16,11 +16,18 @@ export const docReactionType = { like: "LIKE", dislike: "DISLIKE", none: "NONE" 
 
 export const RECAPTCHA_CLIENT_SIDE_KEY = "6LcENcUaAAAAACyhhPZ8CXHOOMJ-c-TL5LrDxzcc";
 
-export const userApproveStatusOptions = [
+export const userPostApproveStatusOptions = [
   { id: 1, name: "Tất cả", postState: "" },
   { id: 2, name: "Đã duyệt", postState: "APPROVED" },
   { id: 3, name: "Chưa duyệt", postState: "PENDING_APPROVAL" },
   { id: 4, name: "Cần xem lại", postState: "PENDING_FIX" }
+];
+
+export const userDocumentApproveStatusOptions = [
+  { id: 1, name: "Tất cả", docState: "" },
+  { id: 2, name: "Đã duyệt", docState: "APPROVED" },
+  { id: 3, name: "Chưa duyệt", docState: "PENDING_APPROVAL" },
+  { id: 4, name: "Cần xem lại", docState: "PENDING_FIX" }
 ];
 
 export const resolveStateOptions = [

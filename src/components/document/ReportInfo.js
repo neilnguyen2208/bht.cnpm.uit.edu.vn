@@ -26,7 +26,7 @@ export default class ReportInfo extends React.PureComponent {
                         <div className="d-flex">
                             <img src={report_icon} alt="" className="icon" />
                             <Link className="link-label-s" to={`/user/profile/${this.props.reporterID}`}>
-                                {this.props.reporterName} dong
+                                {this.props.reporterName}
                             </Link>
                             <div className="black-label-s">{`đã báo cáo tài liệu - `}</div>
                             {this.type === resolveStatus.resolved ?
@@ -35,7 +35,7 @@ export default class ReportInfo extends React.PureComponent {
                                 <div className="red-border-label">PENDING</div>
                             }
                         </div>
-                        <Link className="activity-title" to={`/document-content/${151}`} >{this.props.title}</Link>
+                        <Link className="activity-title" to={`/document-content/${this.props.id}`} >{this.props.title}</Link>
 
                     </div>
                     <div>

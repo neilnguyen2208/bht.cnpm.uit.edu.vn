@@ -24,10 +24,10 @@ class UserInfo extends React.Component {
     return (
       <div className="user-info"  >
         <Link to={`/user/profile/${this.props.authorID}`}>
-          <img className="avatar" src={this.props.authorAvatarURL} alt="" />
+          <img className="avatar mg-right-5px" style={{ borderRadius: "2px" }} src={this.props.authorAvatarURL} alt="" />
         </Link>
-        <div className="mg-left-5px j-c-space-between d-flex-vertical">
-          <Link className="link-label-m" style={{ fontSize: "20px" }} to={`/user/profile/${this.props.authorID}`}>
+        <div className="ui-left-container">
+          <Link className="displayname" style={{ fontSize: "20px" }} to={`/user/profile/${this.props.authorID}`}>
             {this.props.authorDisplayName}
           </Link>
           {this.props.isStatisticLoaded && this.props.statisticData ?
@@ -40,9 +40,14 @@ class UserInfo extends React.Component {
                 <img alt="" src={gray_upload_icon} className="user-info-icon" />
                 <div className="reputation-label">   {this.props.statisticData.docCount}</div>
               </div>
+              <div className="reputation-sub-container">
+
+                <div className="reputation-label">Score: {this.props.statisticData.reputationScore}</div>
+              </div>
             </div>
             : <></>}
         </div>
+
       </div >
     );
   }

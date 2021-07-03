@@ -1,13 +1,18 @@
 import React from "react";
 import '../Modal.scss'
 import 'components/styles/Button.scss'
-import { closeBigModal, closeModal, openModal } from "redux/services/modalServices";
+import {
+  closeBigModal,
+  closeModal,
+  openModal
+} from "redux/services/modalServices";
 import ModalTitlebar from "components/common/Titlebar/ModalTitlebar";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getReportReasons } from 'redux/services/reportServices'
 import { reportAPost } from 'redux/services/postServices'
+import { reportADocument } from 'redux/services/documentServices'
 import { reportAPostComment } from 'redux/services/postCommentServices'
 import { reportAnExercise } from 'redux/services/courseServices';
 import info_icon from 'assets/icons/24x24/info_icon_24x24.png'
@@ -29,6 +34,7 @@ class ReportModal extends React.Component {
       case "DOCUMENT": {
         this.reportTitle = "Báo cáo tài liệu";
         this.bigModalTitle = "BÁO CÁO TÀI LIỆU";
+        this.reportService = this.props.reportADocument;
         break;
       }
       case "EXERCISE": {
@@ -107,11 +113,10 @@ class ReportModal extends React.Component {
                   borderBottom: "1px solid var(--gray)",
                   lineHeight: "20px",
                 }}>
-                  {<img src={info_icon} alt="?" className="confirmation-icon mg-right-5px" style={{ float: "left" }}></img>}
+                  {<img src={info_icon} alt="" className="confirmation-icon mg-right-5px" style={{ float: "left" }}></img>}
                   <span> Bạn đang thực hiện gửi góp ý cho bài tập: <br />
                   </span>
-                  <strong> {this.props.exerciseTitle} </strong>
-
+                  <strong style={{ margin: "auto", marginBottom: "10px" }}> {this.props.exerciseTitle} </strong>
                   <span><br /> Hãy làm rõ thông tin câu hỏi hoặc câu trả lời muốn góp ý nhé. </span>
 
                 </div>
@@ -170,6 +175,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getReportReasons,
   reportAPost,
+  reportADocument,
   reportAPostComment,
   reportAnExercise
 

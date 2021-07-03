@@ -382,7 +382,6 @@ class CreatePost extends React.Component {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
                     if (this.state.CREATE_POST_DTO.tags.length < 5) {
-                        document.getElementById("cr-post-tag-input").classList.remove('invalid');
                         if (this.props.tagQuickQueryResult.length === 0)
                             document.getElementById("cr-post-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
@@ -436,7 +435,7 @@ class CreatePost extends React.Component {
                         )}
                     </div>
                     <PostNormalReactionbar
-                        postId={"-1"}
+                        postID={"-1"}
                         likeCount={0}
                         commentCount={0}
                         viewCount={0}
@@ -529,7 +528,6 @@ class CreatePost extends React.Component {
                                         <div className="form-tip-label" id="cr-post-tag-container-tip-label" />
                                     </div>
                                 </div>
-
                             </ClickAwayListener>
 
                             <div className="form-tip-label-container">

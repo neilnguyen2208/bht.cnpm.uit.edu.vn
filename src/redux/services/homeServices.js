@@ -28,33 +28,31 @@ import {
     stick_APostToTopFailure
 
 } from "redux/actions/homeAction.js";
-import { authRequest, request } from 'utils/requestUtils'
+import { authRequest } from 'utils/requestUtils'
 import { openBLModal } from "./modalServices";
 
 export function getTrendingDocuments() {
     return dispatch => {
         dispatch(get_TrendingDocumentsRequest());
         authRequest.get(`/documents/hot`).then(
-            response => {
-                let result_1 = response.data;
+            response_1 => {
+                let result_1 = response_1.data;
                 let IDarr = '';
-                response.data.map(item => IDarr += item.id + ","); //create id array
+                response_1.data.map(item => IDarr += item.id + ","); //create id array
 
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
-                    .then(result => {
+                    .then(response_2 => {
                         let finalResult = [];
 
                         for (let i = 0; i < result_1.length; i++) {
                             finalResult.push({
                                 ...result_1[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1[i].id)),
-                            }
-                            );
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1[i].id)),
+                            });
                         }
                         dispatch(get_TrendingDocumentsSuccess(finalResult))
                     }).catch(error => dispatch(get_TrendingDocumentsFailure(error)))
-            }
-        )
+            })
             .catch(error => {
                 dispatch(get_TrendingDocumentsFailure(error)); //
             })

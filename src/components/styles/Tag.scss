@@ -27,7 +27,6 @@
 
 .simple-tag:hover::after {
     border-color: transparent transparent transparent var(--blue);
-
 }
 
 .simple-tag:after {
@@ -56,13 +55,11 @@
 .tag-delete-btn:hover .close_8x8:after {
     background: var(--blue);
     border-left: 2px solid var(--blue);
-
 }
 
 .tag-delete-btn:hover .close_8x8:before {
     background: var(--blue);
     border-left: 2px solid var(--blue);
-
 }
 
 .close_8x8 {
@@ -74,7 +71,7 @@
 }
 
 .close_8x8:after {
-    content: '';
+    content: "";
     height: 8px;
     border-left: 2px solid #fff;
     position: absolute;
@@ -83,7 +80,7 @@
 }
 
 .close_8x8:before {
-    content: '';
+    content: "";
     height: 8px;
     border-left: 2px solid #fff;
     position: absolute;
@@ -100,12 +97,11 @@
     font-weight: bold;
     color: var(--light-black);
     overflow: hidden;
+    cursor: pointer;
 }
-
 
 .tag-search-item:hover {
     background: var(--grayish);
-
 }
 
 .tag-name {

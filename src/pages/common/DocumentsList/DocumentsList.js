@@ -8,6 +8,7 @@ import HomeFirstInfo from 'components/document/HomeFirstInfo';
 import HomeTextInfo from 'components/document/HomeTextInfo';
 import { request } from 'utils/requestUtils';
 import { getCourseDetailById } from 'redux/services/courseServices';
+import HomeInfo from 'components/document/HomeInfo';
 class PostsList extends React.Component {
     constructor(props) {
         super(props);
@@ -45,6 +46,9 @@ class PostsList extends React.Component {
                                     ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryDTOs[j].id)),
                                 });
                             }
+
+                            console.log(finalResult);
+
                             this.allResult = [...this.allResult, { id: response.data[i].id, categoryName: response.data[i].name, documents: finalResult }];
                             this.setState({});
                         })
@@ -53,10 +57,10 @@ class PostsList extends React.Component {
         })
     }
 
-    renderThreeItems = (items) => {
+    renderGridThreeItems = (items) => {
         return <div className="d-flex">
             {/* //item 0 */}
-            {items[0] && <div className="home-item-container" style={{ paddingRight: "10px" }} key={items[0].id} >
+            {items[0] && <div className="home-item-container  grid" style={{ marginRight: "10px" }} >
                 <HomeFirstInfo
                     key={items[0].id}
                     id={items[0].id}
@@ -70,18 +74,16 @@ class PostsList extends React.Component {
                     title={items[0].title}
                     likeCount={items[0].likeCount}
                     dislikeCount={items[0].dislikeCount}
-                    downloadCount={items[0].downloads}
-                    viewCount={items[0].views}
+                    downloadCount={items[0].downloadCount}
+                    viewCount={items[0].viewCount}
                     subjectName={items[0].subjectName}
                     subjectID={items[0].subjectID}
-                ></HomeFirstInfo>
+                />
             </div >
             }
 
-            {/* //item1, item2*/}
-
             <div style={{ borderLeft: "1px solid var(--grayish)", paddingLeft: "10px" }} >
-                {items[1] && < div className="home-item-container" style={{ paddingRight: "0px" }} key={items[1].id} >
+                {items[1] && < div className="home-item-container grid" style={{ paddingRight: "0px" }}  >
                     <HomeTextInfo
                         key={items[1].id}
                         id={items[1].id}
@@ -95,14 +97,14 @@ class PostsList extends React.Component {
                         title={items[1].title}
                         likeCount={items[1].likeCount}
                         dislikeCount={items[1].dislikeCount}
-                        downloadCount={items[1].downloads}
-                        viewCount={items[1].views}
+                        downloadCount={items[1].downloadCount}
+                        viewCount={items[1].viewCount}
                         subjectName={items[1].subjectName}
                         subjectID={items[1].subjectID}
-                    ></HomeTextInfo>
+                    />
                 </div >}
 
-                {items[2] && < div className="home-item-container" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
+                {items[2] && < div className="home-item-container grid" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
                     <HomeTextInfo
                         key={items[2].id}
                         id={items[2].id}
@@ -116,8 +118,8 @@ class PostsList extends React.Component {
                         title={items[2].title}
                         likeCount={items[2].likeCount}
                         dislikeCount={items[2].dislikeCount}
-                        downloadCount={items[2].downloads}
-                        viewCount={items[2].views}
+                        downloadCount={items[2].downloadCount}
+                        viewCount={items[2].viewCount}
                         subjectName={items[2].subjectName}
                         subjectID={items[2].subjectID}
                     ></HomeTextInfo>
@@ -125,6 +127,73 @@ class PostsList extends React.Component {
                 }
             </div >
         </div>
+    }
+    renderRowThreeItems = (items) => {
+        return <div className="d-flex">
+            {/* //item 0 */}
+            {items[0] && <div className="home-item-container row"  >
+                <HomeInfo
+                    key={items[0].id}
+                    id={items[0].id}
+                    authorID={items[0].authorID}
+                    authorDisplayName={items[0].authorDisplayName}
+                    categoryID={items[0].categoryID}
+                    categoryName={items[0].categoryName}
+                    imageURL={items[0].imageURL}
+                    publishDtm={items[0].publishDtm}
+                    description={items[0].description}
+                    title={items[0].title}
+                    likeCount={items[0].likeCount}
+                    dislikeCount={items[0].dislikeCount}
+                    downloadCount={items[0].downloadCount}
+                    viewCount={items[0].viewCount}
+                    subjectName={items[0].subjectName}
+                    subjectID={items[0].subjectID}
+                ></HomeInfo>
+            </div >}
+
+            {items[1] && < div className="home-item-container row"  >
+                <HomeInfo
+                    key={items[1].id}
+                    id={items[1].id}
+                    authorID={items[1].authorID}
+                    authorDisplayName={items[1].authorDisplayName}
+                    categoryID={items[1].categoryID}
+                    categoryName={items[1].categoryName}
+                    imageURL={items[1].imageURL}
+                    publishDtm={items[1].publishDtm}
+                    description={items[1].description}
+                    title={items[1].title}
+                    likeCount={items[1].likeCount}
+                    dislikeCount={items[1].dislikeCount}
+                    downloadCount={items[1].downloadCount}
+                    viewCount={items[1].viewCount}
+                    subjectName={items[1].subjectName}
+                    subjectID={items[1].subjectID}
+                />
+            </div >}
+
+            {items[2] && < div className="home-item-container row" key={items[2].id} >
+                <HomeInfo
+                    key={items[2].id}
+                    id={items[2].id}
+                    authorID={items[2].authorID}
+                    authorDisplayName={items[2].authorDisplayName}
+                    categoryID={items[2].categoryID}
+                    categoryName={items[2].categoryName}
+                    imageURL={items[2].imageURL}
+                    publishDtm={items[2].publishDtm}
+                    description={items[2].description}
+                    title={items[2].title}
+                    likeCount={items[2].likeCount}
+                    dislikeCount={items[2].dislikeCount}
+                    downloadCount={items[2].downloadCount}
+                    viewCount={items[2].viewCount}
+                    subjectName={items[2].subjectName}
+                    subjectID={items[2].subjectID}
+                />
+            </div >}
+        </div >
     }
 
     render() {
@@ -148,36 +217,39 @@ class PostsList extends React.Component {
                                 </div >
                             </div >
                         }
-                        {this.allResult.map(item => {
-                            if (item.documents.length > 0)
-                                return <div>
-                                    <div className="j-c-space-between" style={{ marginTop: "30px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
-                                        <div className="part-title" style={{ textTransform: "uppercase" }} >
-                                            {item.categoryName}
-                                        </div>
-                                        <Link className="link-label-s" to={`/search/documents?category=${item.id}&page=1&subject=${this.props.match.params.id}&q=`}>
-                                            Xem tất cả >>
-                                        </Link>
-                                    </div>
-
-                                    <div style={{ marginTop: "10px" }}>
-                                        {item.documents.length > 0 ?
-                                            this.renderThreeItems(item.documents)
-                                            :
+                        <div className="home-layout">
+                            <div className="posts-list-container">
+                                {this.allResult.map((item, index) => {
+                                    if (item.documents.length > 0)
+                                        return <div>
                                             <div className="j-c-space-between" style={{ marginTop: "30px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
-                                                Môn học này chưa có tài liệu nào
+                                                <div className="part-title" style={{ textTransform: "uppercase" }} >
+                                                    {item.categoryName}
+                                                </div>
+                                                <Link className="link-label-s" to={`/search/documents?category=${item.id}&page=1&subject=${this.props.match.params.id}&q=`}>
+                                            Xem tất cả >>
+                                                </Link>
                                             </div>
-                                        }
-                                    </div>
-                                </div>
-                            return <></>;
-                        })
-                            // <div style={{ display: "block", margin: "auto", marginTop: "30px", borderTop: "1px solid var(--gray)", paddingTop: "30px", paddingBottom: "5px" }}>
-                            //     Môn học này chưa có tài liệu nào
-                            // </div>
-                        }
-                    </div>
-                </div>
+
+                                            <div style={{ marginTop: "10px" }}>
+                                                {item.documents.length > 0 ?
+                                                    <div>
+                                                        {index % 2 === 0 && item.documents.length > 0 && this.renderGridThreeItems(item.documents)}
+                                                        {index % 2 === 1 && item.documents.length > 0 && this.renderRowThreeItems(item.documents)}
+                                                    </div>
+                                                    :
+                                                    <div className="j-c-space-between" style={{ marginTop: "30px", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>
+                                                        Môn học này chưa có tài liệu nào
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    return <></>;
+                                })}
+                            </div>
+                        </div>
+                    </div >
+                </div >
             </div >
         );
     }

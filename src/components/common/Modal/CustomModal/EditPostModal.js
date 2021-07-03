@@ -476,7 +476,7 @@ class EditPostModal extends React.Component {
                                         {
                                             this.state.EDIT_POST_DTO.authorID ?
                                                 < Metadata
-                                                    postId={this.props.postDetailForEdit.id}
+                                                    postID={this.props.postDetailForEdit.id}
                                                     title={this.state.EDIT_POST_DTO.title}
                                                     categoryName={this.state.EDIT_POST_DTO.categoryName}
                                                     categoryID={this.state.EDIT_POST_DTO.categoryID}
@@ -497,7 +497,7 @@ class EditPostModal extends React.Component {
                                             )}
                                         </div>
                                         <PostNormalReactionbar
-                                            postId={"-1"}
+                                            postID={"-1"}
                                             likeCount={0}
                                             commentCount={0}
                                             likedStatus={false}

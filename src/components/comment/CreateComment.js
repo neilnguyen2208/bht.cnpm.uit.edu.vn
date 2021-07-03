@@ -49,7 +49,7 @@ class CreateComment extends React.Component {
 
   createComment = () => {
     if (styleFormSubmit(validationCondition))
-      this.props.createAPostComment(this.props.postId, { content: getCKEInstance("crt-cmmnt-cke").getData() })
+      this.props.createAPostComment(this.props.postID, { content: getCKEInstance("crt-cmmnt-cke").getData() })
   }
 
   componentWillUnmount() {
@@ -62,7 +62,7 @@ class CreateComment extends React.Component {
   reloadList = () => {
     openBLModal({ type: "success", text: "Tạo bình luận thành công!" });
     getCKEInstance("crt-cmmnt-cke").setData("");
-    this.props.getAPostComments(this.props.postId);
+    this.props.getAPostComments(this.props.postID);
     store.dispatch(create_APostCommentReset())
     this.setState({});
   }
@@ -70,7 +70,7 @@ class CreateComment extends React.Component {
   render() {
 
     if (this.props.isHaveCreated) {
-      this.props.getAPostStatisticByID(this.props.postId)
+      this.props.getAPostStatisticByID(this.props.postID)
       this.reloadList()
     }
     console.log(this.props.userSummaryData)

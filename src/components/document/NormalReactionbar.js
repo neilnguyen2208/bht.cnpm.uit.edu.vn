@@ -138,7 +138,7 @@ class NormalReactionbar extends React.Component {
             <div className="d-flex">
               <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
                 <div className="d-flex"> {likeBtn}</div>
-                <div className="document-like-count">{formatNumber(this.likeCount)}</div>
+                <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0}</div>
               </div>
               <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleDislikeImage} >
                 {dislikeBtn}

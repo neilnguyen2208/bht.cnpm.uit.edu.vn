@@ -97,8 +97,8 @@ class DocumentsList extends React.Component {
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
+                    ...this.searchParamObject,
                     "page": 1,
-                    "author": this.props.match.params.id,
                     "sort": "publishDtm,desc",
                     "mostLiked": true
                 }
@@ -113,8 +113,8 @@ class DocumentsList extends React.Component {
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
+                    ...this.searchParamObject,
                     "page": 1,
-                    "author": this.props.match.params.id,
                     "sort": "publishDtm,desc",
                     "mostViewed": true
                 }
@@ -129,10 +129,11 @@ class DocumentsList extends React.Component {
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
+                    ...this.searchParamObject,
                     "page": 1,
-                    "author": this.props.match.params.id,
                     "sort": "publishDtm,desc",
-                    "mostViewed": true
+                    "mostViewed": false,
+                    "mostLiked": false
                 }
                 this.props.getDocumentSearch(this.searchParamObject)
                 this.setState({});
@@ -145,8 +146,8 @@ class DocumentsList extends React.Component {
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
+                    ...this.searchParamObject,
                     "page": 1,
-                    "author": this.props.match.params.id,
                     "sort": "publishDtm,desc",
                     "mostViewed": true
                 }
@@ -260,7 +261,7 @@ class DocumentsList extends React.Component {
                             readingTime={item.readingTime}
                             approveState={item.docState}
                             popUpMenuPrefix="sdpu"   //stand for search doc popup 
-                            authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                            authorAvatarURL={item.authorAvatarURL}
                             //
                             reloadList={() => this.reloadList()}
                         />

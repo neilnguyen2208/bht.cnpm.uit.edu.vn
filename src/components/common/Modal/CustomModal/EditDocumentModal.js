@@ -113,6 +113,7 @@ class EditDocumentModal extends React.Component {
         this.isInstanceReady = false;
         this.tagQuickQueryResult = <></>;
     }
+    
     componentDidMount() {
         validation(validationCondition);
         this.props.getDocumentCategories();
@@ -141,7 +142,6 @@ class EditDocumentModal extends React.Component {
             currentCategory: selectedOption.name
         })
     }
-
 
     onSubjectOptionChanged = (selectedOption) => {
         this.setState({
@@ -175,8 +175,6 @@ class EditDocumentModal extends React.Component {
                         this.closeModal(); //close edit document popup
                     }
                 })
-
-
         }
     }
 
@@ -407,7 +405,6 @@ class EditDocumentModal extends React.Component {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
                     if (this.state.EDIT_DOCUMENT_DTO.tags.length < 5) {
-                        document.getElementById("ed-document-tag-input").classList.remove('invalid');
                         if (this.props.tagQuickQueryResult.length === 0)
                             document.getElementById("ed-document-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
@@ -415,7 +412,6 @@ class EditDocumentModal extends React.Component {
                     }
                     else {
                         document.getElementById("ed-document-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
-                        document.getElementById("ed-document-tag-input").classList.add('invalid');
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
@@ -459,13 +455,14 @@ class EditDocumentModal extends React.Component {
                 }
             })
         }
+
         //load xong thi cho hien thi body
         if (this.props.currentDocument && !this.props.isCurrentDocumentLoading && document.getElementById('edit-document-body')) {
+
         }
 
         return (
             <div>
-
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
@@ -508,7 +505,7 @@ class EditDocumentModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Danh mục:</label>
-                                                <Combobox comboboxId = "ed-document-category-combobox"
+                                                <Combobox comboboxId="ed-document-category-combobox"
                                                     selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.categoryID : 0}
                                                     options={this.categoryList}
                                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
@@ -524,7 +521,7 @@ class EditDocumentModal extends React.Component {
                                             {/* Category */}
                                             <div className="form-group" >
                                                 <label className="form-label-required">Môn học:</label>
-                                                <Combobox comboboxId = "ed-document-subject-combobox"
+                                                <Combobox comboboxId="ed-document-subject-combobox"
                                                     selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.subjectID : 0}
                                                     options={this.subjectList}
                                                     onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}

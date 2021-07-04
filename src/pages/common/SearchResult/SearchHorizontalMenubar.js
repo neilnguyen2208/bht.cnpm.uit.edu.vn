@@ -21,7 +21,7 @@ export default class SearchHorizontalMenubar extends React.Component {
             Tài liệu
           </NavLink>
           <NavLink to={`/search/courses?q=${getQueryParamByName('q')}`} className="h-menu-item " activeClassName='h-menu-item active'>
-            Khoá học
+            Bài tập
           </NavLink>
           <NavLink to={`/search/tags?q=${getQueryParamByName('q')}`} className="h-menu-item " activeClassName='h-menu-item active'>
             Tag

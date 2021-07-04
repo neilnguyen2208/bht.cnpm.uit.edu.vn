@@ -604,7 +604,6 @@ export function getTrendingPosts(categoryID) {
                                 ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
                             });
                         }
-                        console.log(finalResult);
                         dispatch(dispatch(get_TrendingPostsSuccess(finalResult)))
                     }).catch((error) => dispatch(get_TrendingPostsFailure(error)))
             }).catch(error => { dispatch(get_TrendingPostsFailure(error)) })

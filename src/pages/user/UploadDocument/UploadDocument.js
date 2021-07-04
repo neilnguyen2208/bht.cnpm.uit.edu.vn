@@ -77,9 +77,9 @@ class UploadDocument extends React.Component {
                 categoryID: "",//
                 subjectID: "",
                 imageURL: "null",
-                fileCode: "",
+                docFileUploadRequestDTOs: [],
             },
-            file_DTO: { file: "" },
+            filesList: [],
             author: {
                 avatarURL: "https://i.imgur.com/SZJgL6C.png",
                 displayName: "Nguyễn Văn Đông",
@@ -140,7 +140,7 @@ class UploadDocument extends React.Component {
 
     handleUploadBtnClick = () => {
         if (styleFormSubmit(validationCondition)) {
-            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.state.fileDTO);
+            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.state.filesList);
         }
 
     }
@@ -339,12 +339,8 @@ class UploadDocument extends React.Component {
     }
 
     onFileChange = (files) => {
-        //gan cho state
-        // console.log(files[0]);
-        // if (files.length > 0)
-        // this.setState({ ...this.state, fileDTO: files[0], UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, fileName: files[0].name } })
-        this.setState({ ...this.state, fileDTO: files[0] })
-
+        this.filesList = files;
+        this.setState({ ...this.state, })
     }
 
     render() {
@@ -492,7 +488,7 @@ class UploadDocument extends React.Component {
 
                             <div className="mg-top-10px" >
                                 {this.shownTag.map(item =>
-                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)}  clickable={false} tag={item} />
+                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
                                 )}
                             </div>
                             <div className="form-line" />

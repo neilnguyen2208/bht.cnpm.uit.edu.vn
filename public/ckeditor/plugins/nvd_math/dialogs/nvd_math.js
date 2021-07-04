@@ -13,7 +13,7 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 		resizable: CKEDITOR.DIALOG_RESIZE_NONE,
 		contents: [
 			{
-				id: 'NVD_CCEquationEditor' ,
+				id: 'NVD_CCEquationEditor',
 				label: 'nvd-eqn-editor',
 				elements:
 					[{
@@ -114,7 +114,10 @@ CKEDITOR.dialog.add('nvd_mathDialog', function (editor) {
 
 });
 
-var http = ('https:' === document.location.protocol ? 'https://' : 'http://');
+var http;
+if ('https:' === document.location.protocol)
+	http = 'https://';
+else http = 'http://';
 var host = 'latex.codecogs.com';
 
 var EQUATION_ENGINE = http + host;
@@ -1326,8 +1329,8 @@ var EqEditor = {
 
 
 			if (!isNaN(m) && !isNaN(n)) {
-				for (let mi = 1; mi <= m; mi++) {
-					for (let ni = 1; ni <= n; ni++) {
+				for (var mi = 1; mi <= m; mi++) {
+					for (var ni = 1; ni <= n; ni++) {
 						if (ni === 1) {
 							row = row + 'a_{' + mi + ni + '} ';
 							if (isSOLE) {

@@ -108,7 +108,7 @@ class CoursesList extends React.Component {
             <div className="courses-layout" >
                 <div className="course-description">
                     <p>
-                        Các khoá học  MIỄN PHÍ được biên soạn và cập nhật liên tục bởi các thành viên và cộng tác viên Ban học tập Đoàn khoa Công nghệ phần mềm. Nếu có bất kỳ góp ý nào cho các Khoá học hoặc có nguyên vọng đóng góp, tài trợ cho các khoá học,
+                        Các bài tập MIỄN PHÍ được biên soạn và cập nhật liên tục bởi các thành viên và cộng tác viên Ban học tập Đoàn khoa Công nghệ phần mềm. Nếu có bất kỳ góp ý nào cho các bài tập hoặc có nguyên vọng đóng góp, tài trợ cho các bài tập,
                         vui lòng liên hệ email:&nbsp;
                     </p>
                     <a href="bht.cnpm.uit@gmail.com">bht.cnpm.uit@gmail.com</a>

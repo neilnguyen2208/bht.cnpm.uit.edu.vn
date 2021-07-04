@@ -66,6 +66,8 @@ import {
     get_DocumentsByFilterRequest,
     get_DocumentsByFilterSuccess,
     get_DocumentsByFilterFailure,
+    post_RejectAndFeedbackADocumentFailure,
+    post_RejectAndFeedbackADocumentSuccess,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam, openInNewTab } from 'utils/urlUtils';
@@ -231,28 +233,41 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
     }
 }
 
-export function uploadADocument(data, files) {
+export function uploadADocument(data, filesList) {
     return dispatch => {
         dispatch(post_UploadDocumentRequest());
         openModal("loader", { text: "Đang upload tài liệu " });
 
-        let fileData = new FormData();
-        // files.forEach(file => {
-        fileData.append('file', files);
+        let uploadResponses = [];
 
-        multipartRequest.post(`/documents/upload`, fileData)
-            .then(response => {
-                data.fileCode = response.data.code; //assign secret code.
-                authRequest.post('/documents', JSON.stringify(data)).then(response => {
-                    dispatch(post_UploadDocumentSuccess(response));
-                    dispatch(closeModal());
-                    openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
-                }).catch(error => {
-                    dispatch(post_UploadDocumentFailure(error));
+        //response for appending to current array
+        for (let i = 0; i < filesList.length; i++) {
+
+            let fileData = new FormData();
+            fileData.append('file', filesList[i]);
+
+            multipartRequest.post(`/documents/upload`, { file: fileData })
+                .then(response => {
+                    uploadResponses.push({ rank: i, id: response.data.id, success: true });
                 })
-            }).catch(error => {
-                dispatch(post_UploadDocumentFailure(error));
-            })
+                .catch(error => uploadResponses.push({ rank: i, id: "", success: false }))
+        }
+
+        console.log(uploadResponses);
+
+        // multipartRequest.post(`/documents/upload`, fileData)
+        //     .then(response => {
+        //         // data.fileCode = response.data.code; //assign secret code.
+        //         // authRequest.post('/documents', JSON.stringify(data)).then(response => {
+        //         //     dispatch(post_UploadDocumentSuccess(response));
+        //         //     dispatch(closeModal());
+        //         //     openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
+        //         // }).catch(error => {
+        //         //     dispatch(post_UploadDocumentFailure(error));
+        //         // })
+        //     }).catch(error => {
+        //         dispatch(post_UploadDocumentFailure(error));
+        //     })
     }
 }
 
@@ -339,14 +354,11 @@ export function rejectAndFeedbackADocument(id, reason) { //
         authRequest.post(`/documents/${id}/rejection`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
-                //             dispatch(post_RejectAndFeedbackADocumentSuccess());
+                dispatch(post_RejectAndFeedbackADocumentSuccess());
                 dispatch(closeModal());
                 openBLModal({ text: "Từ chối tài liệu thành công!", type: "success" });
 
-            }
-            ).catch(() => {
-                // dispatch(post_RejectAndFeedbackADocumentFailure())
-            })
+            }).catch((error) => dispatch(post_RejectAndFeedbackADocumentFailure(error)))
     }
 }
 
@@ -473,7 +485,7 @@ export function getDocumentsByFilter(searchParamObject) { //this API to get all 
                                 ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryDTOs[i].id)),
                             });
                         }
-                        
+
                         dispatch(get_DocumentsByFilterSuccess({
                             docSummaryWithStateDTOs: result_2,
                             totalPages: result_1.totalPages,
@@ -483,3 +495,4 @@ export function getDocumentsByFilter(searchParamObject) { //this API to get all 
             }).catch((error) => dispatch(get_DocumentsByFilterFailure(error)))
     }
 }
+

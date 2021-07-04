@@ -53,6 +53,8 @@ class ProfileDocument extends React.Component {
                 }
                 setQueryParam(this.queryParamObject);
                 this.setState({});
+                this.props.getDocumentsByFilter(this.searchParamObject)
+
                 return;
             }
             case "most-views": {
@@ -61,6 +63,19 @@ class ProfileDocument extends React.Component {
                     tab: "most-views"
                 }
                 setQueryParam(this.queryParamObject);
+                this.props.getDocumentsByFilter(this.searchParamObject)
+
+                this.setState({});
+                return;
+            }
+            case "most-downloads": {
+                this.queryParamObject = {
+                    ...this.queryParamObject,
+                    tab: "most-downloads"
+                }
+                setQueryParam(this.queryParamObject);
+                this.props.getDocumentsByFilter(this.searchParamObject)
+
                 this.setState({});
                 return;
             }
@@ -70,6 +85,8 @@ class ProfileDocument extends React.Component {
                     tab: "newest"
                 }
                 setQueryParam(this.queryParamObject);
+                this.props.getDocumentsByFilter(this.searchParamObject)
+
                 this.setState({});
                 return;
             }
@@ -144,11 +161,16 @@ class ProfileDocument extends React.Component {
                                 <div className="h-filter">
                                     <div className={!getQueryParamByName("tab") ||
                                         (getQueryParamByName("tab") !== "most-likes"
-                                            && getQueryParamByName("tab") !== "most-views")
+                                            && getQueryParamByName("tab") !== "most-views"
+                                            && getQueryParamByName("tab") !== "most-downloads"
+                                        )
                                         ? "h-filter-item active first" : "h-filter-item first"}
                                         onClick={() => this.onFilterClick("newest")}
                                     > Mới nhất</div>
-
+                                    <div className={getQueryParamByName("tab") === "most-downloads"
+                                        ? "h-filter-item active" : "h-filter-item"}
+                                        onClick={() => this.onFilterClick("most-downloads")}
+                                    >Lượt tải</div>
                                     <div className={getQueryParamByName("tab") === "most-likes"
                                         ? "h-filter-item active" : "h-filter-item"}
                                         onClick={() => this.onFilterClick("most-likes")}

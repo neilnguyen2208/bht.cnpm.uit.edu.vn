@@ -28,7 +28,7 @@ class CoursesManagement extends React.Component {
             <div className="management-layout">
                 <AdminSidebar />
                 <div className="content-container">
-                    <Titlebar title="QUẢN LÝ KHOÁ HỌC" />
+                    <Titlebar title="QUẢN LÝ BÀI TẬP" />
                     <div className="content-container">
 
                     </div>

@@ -24,7 +24,7 @@ class PostsList extends React.Component {
         this.renderByCategory();
 
     }
-
+    
     renderByCategory = () => {
 
         this.allResult = [];
@@ -47,8 +47,6 @@ class PostsList extends React.Component {
                                 });
                             }
 
-                            console.log(finalResult);
-
                             this.allResult = [...this.allResult, { id: response.data[i].id, categoryName: response.data[i].name, documents: finalResult }];
                             this.setState({});
                         })
@@ -63,7 +61,7 @@ class PostsList extends React.Component {
             {items[0] && <div className="home-item-container  grid" style={{ marginRight: "10px" }} >
                 <HomeFirstInfo
                     key={items[0].id}
-                    id={items[0].id}
+                    documentID={items[0].id}
                     authorID={items[0].authorID}
                     authorDisplayName={items[0].authorDisplayName}
                     categoryID={items[0].categoryID}
@@ -86,7 +84,7 @@ class PostsList extends React.Component {
                 {items[1] && < div className="home-item-container grid" style={{ paddingRight: "0px" }}  >
                     <HomeTextInfo
                         key={items[1].id}
-                        id={items[1].id}
+                        documentID={items[1].id}
                         authorID={items[1].authorID}
                         authorDisplayName={items[1].authorDisplayName}
                         categoryID={items[1].categoryID}
@@ -107,7 +105,7 @@ class PostsList extends React.Component {
                 {items[2] && < div className="home-item-container grid" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
                     <HomeTextInfo
                         key={items[2].id}
-                        id={items[2].id}
+                        documentID={items[2].id}
                         authorID={items[2].authorID}
                         authorDisplayName={items[2].authorDisplayName}
                         categoryID={items[2].categoryID}
@@ -134,7 +132,7 @@ class PostsList extends React.Component {
             {items[0] && <div className="home-item-container row"  >
                 <HomeInfo
                     key={items[0].id}
-                    id={items[0].id}
+                    documentID={items[0].id}
                     authorID={items[0].authorID}
                     authorDisplayName={items[0].authorDisplayName}
                     categoryID={items[0].categoryID}
@@ -155,7 +153,7 @@ class PostsList extends React.Component {
             {items[1] && < div className="home-item-container row"  >
                 <HomeInfo
                     key={items[1].id}
-                    id={items[1].id}
+                    documentID={items[1].id}
                     authorID={items[1].authorID}
                     authorDisplayName={items[1].authorDisplayName}
                     categoryID={items[1].categoryID}
@@ -176,7 +174,7 @@ class PostsList extends React.Component {
             {items[2] && < div className="home-item-container row" key={items[2].id} >
                 <HomeInfo
                     key={items[2].id}
-                    id={items[2].id}
+                    documentID={items[2].id}
                     authorID={items[2].authorID}
                     authorDisplayName={items[2].authorDisplayName}
                     categoryID={items[2].categoryID}

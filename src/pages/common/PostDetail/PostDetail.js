@@ -19,7 +19,7 @@ import {
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
-import CommentSection from 'components/comment/CommentSection'
+import CommentSection from 'components/post/comment/CommentSection'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 

@@ -40,6 +40,7 @@ import DocumentApproving from 'pages/management/DocumentManagement/DocumentAppro
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag';
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport';
+import DocumentCommentReport from 'pages/management/DocumentManagement/DocumentReportManagement';
 import Exercise from 'pages/common/Exercise/Exercise';
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
 import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';
@@ -113,6 +114,8 @@ const App = () => {
                         <Route exact path="/admin/courses-management" component={CoursesManagement} />
                         <Route exact path="/admin/courses-management/report" component={ExerciseReportManagement} />
                         <Route exact path="/admin/post-management/comment-report" component={PostCommentReport} />
+                        <Route exact path="/admin/document-management/comment-report" component={DocumentCommentReport} />
+
 
                         {/* verify email url */}
                         {/* <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} /> */}

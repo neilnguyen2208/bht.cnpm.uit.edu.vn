@@ -32,7 +32,7 @@ class HomeTextInfo extends React.Component {
             <img className="avatar" src={this.props.authorAvatarURL} alt="" />
           </Link>
           <div style={{ marginLeft: "10px" }}>
-            <Link to={"/document-content/" + this.props.id}>
+            <Link to={"/document-content/" + this.props.documentID}>
               <div className="title title-hv" style={{ marginTop: "-2px" }}>
                 {this.props.title}
               </div>
@@ -63,7 +63,7 @@ class HomeTextInfo extends React.Component {
         </div>
 
         <HomeReactionbar
-          id={this.props.id}
+          documentID={this.props.documentID}
           likeCount={this.props.likeCount ? this.props.likeCount : 2}
           dislikeCount={this.props.dislikeCount ? this.props.dislikeCount : 3}
           docReactionType={this.props.docReactionType ? this.props.docReactionType : "NONE"}

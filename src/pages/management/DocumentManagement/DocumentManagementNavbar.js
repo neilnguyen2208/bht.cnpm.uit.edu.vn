@@ -7,14 +7,16 @@ export default class DocumentManagementNavBar extends React.PureComponent {
             < div className="h-menu-bar mg-top-10px" >
                 <NavLink exact to="/admin/document-management" className="h-menu-item" activeClassName='h-menu-item active'>
                     Quản lý tài liệu
-                             </NavLink>
+                </NavLink>
                 <NavLink exact to="/admin/document-management/approval" className="h-menu-item " activeClassName='h-menu-item active'>
                     Duyệt tài liệu
-                            </NavLink>
+                </NavLink>
                 <NavLink exact to="/admin/document-management/report" className="h-menu-item " activeClassName='h-menu-item active'>
                     Xử lý report
-                            </NavLink>
-
+                </NavLink>
+                <NavLink exact to="/admin/document-management/comment-report" className="h-menu-item " activeClassName='h-menu-item active'>
+                    Xử lý bình luận
+                </NavLink>
             </div>);
     }
 }

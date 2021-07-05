@@ -91,7 +91,7 @@ class Home extends React.Component {
                
                 return <HomeDocumentItem
                     key={item.id}
-                    id={item.id}
+                    documentID={item.id}
                     authorID={item.authorID}
                     authorDisplayName={item.authorDisplayName}
                     categoryID={item.categoryID}

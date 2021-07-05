@@ -79,7 +79,6 @@ class UploadDocument extends React.Component {
                 imageURL: "null",
                 docFileUploadRequestDTOs: [],
             },
-            filesList: [],
             author: {
                 avatarURL: "https://i.imgur.com/SZJgL6C.png",
                 displayName: "Nguyễn Văn Đông",
@@ -95,6 +94,7 @@ class UploadDocument extends React.Component {
         ]
         this.isPopupOpen = false;
         this.message = "";
+        this.filesList = [];
 
         this.tagQuickQueryResult =
             [
@@ -140,9 +140,8 @@ class UploadDocument extends React.Component {
 
     handleUploadBtnClick = () => {
         if (styleFormSubmit(validationCondition)) {
-            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.state.filesList);
+            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.filesList);
         }
-
     }
 
     //#region  tag region
@@ -324,6 +323,7 @@ class UploadDocument extends React.Component {
     }
 
     //#endregion
+
     handleEditorChange = (value) => {
         // let dom = document.createElement("DIV");
         // dom.innerHTML = this.state.UPLOAD_DOCUMENT_DTO.content;
@@ -340,7 +340,7 @@ class UploadDocument extends React.Component {
 
     onFileChange = (files) => {
         this.filesList = files;
-        this.setState({ ...this.state, })
+        this.setState({ ...this.state })
     }
 
     render() {
@@ -504,11 +504,7 @@ class UploadDocument extends React.Component {
                                 multiple
                                 maxFileCount={3}
                             />
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                            <div className='form-tip-label file-info mg-top-20px'></div>
-                            <div className="form-line mg-top-5px" />
+                           
                         </div>
 
                         {/* Button */}

@@ -13,7 +13,7 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
-import { adminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
+import { postAdminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import DocumentManagementNavbar from './DocumentManagementNavbar'
@@ -28,7 +28,7 @@ class DocumentManagement extends React.Component {
     componentDidMount() {
 
         this.queryParamObject = {
-            "category": 0,
+            "category": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
             "page": 1,
         }
 
@@ -101,16 +101,18 @@ class DocumentManagement extends React.Component {
         this.props.getManagementDocuments(this.searchParamObject);
         this.setState({});
     }
+
     onSubjectOptionChange = (selectedOption) => {
-        // setQueryParam({ ...this.queryParamObject, page: 1, "category": selectedOption.id });
-        // this.searchParamObject = {
-        //     ...this.searchParamObject,
-        //     "category": selectedOption.id,
-        //     page: 1
-        // }
-        // this.props.getPendingDocuments(this.searchParamObject);
-        // this.setState({});
+        setQueryParam({ ...this.queryParamObject, page: 1, "subject": selectedOption.id });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "subjectID": selectedOption.id,
+            page: 1
+        }
+        this.props.getManagementDocuments(this.searchParamObject);
+        this.setState({});
     }
+
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
@@ -169,7 +171,7 @@ class DocumentManagement extends React.Component {
                             <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
                             <div className="mg-left-5px">
                                 <ComboBox
-                                    options={adminApproveStatusOptions}
+                                    options={postAdminApproveStatusOptions}
                                     placeHolder="Tất cả"
                                     onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
                                     comboboxId="dmasf-combobox" //document management approval status filter 
@@ -196,7 +198,7 @@ class DocumentManagement extends React.Component {
                             options={this.props.subjects}
                             placeHolder="Tất cả"
                             onOptionChanged={(selectedOption) => this.onSubjectOptionChange(selectedOption)}
-                            comboboxId="my-document-list-subject-filter-combobox"
+                            comboboxId="dmlsf-combobox" //document management subject filter 
                         ></ComboBox>
                     </div>
                 </div >
@@ -235,14 +237,12 @@ class DocumentManagement extends React.Component {
                         subjectID={item.subjectID}
 
                         title={item.title}
-                        // fileName={item.fileName}
-                        // fileName={"Demo file name.pdf"}
                         description={item.description}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.docState}
                         popUpMenuPrefix="mdpu"   //stand for my doc popup 
-                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                        authorAvatarURL={item.authorAvatarURL}
                         //
                         reloadList={() => this.reloadList()}
                     />

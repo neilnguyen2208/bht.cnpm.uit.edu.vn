@@ -61,29 +61,6 @@ class DocumentApproving extends React.Component {
         this.setState({});
     }
 
-    //combobox
-    onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, paginator: 1, "category": selectedOption.id });
-        this.searchParamObject = {
-            ...this.searchParamObject,
-            "category": selectedOption.id,
-            paginator: 1
-        }
-        this.props.getPendingDocuments(this.searchParamObject);
-        this.setState({});
-    }
-
-    onSubjectOptionChange = (selectedOption) => {
-        // setQueryParam({ ...this.queryParamObject, paginator: 1, "category": selectedOption.id });
-        // this.searchParamObject = {
-        //     ...this.searchParamObject,
-        //     "category": selectedOption.id,
-        //     paginator: 1
-        // }
-        // this.props.getPendingDocuments(this.searchParamObject);
-        // this.setState({});
-    }
-
     reloadList = () => {
         //neu con 1 item thi phai goi ve trang truoc
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
@@ -172,7 +149,7 @@ class DocumentApproving extends React.Component {
                         readingTime={item.readingTime}
                         approveState={item.docState}
                         popUpMenuPrefix="mdpu"   //stand for my doc popup 
-                        authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                        authorAvatarURL={item.authorAvatarURL}
                         //
                         reloadList={() => this.reloadList()}
                     />

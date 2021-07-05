@@ -132,6 +132,8 @@ const initialState = {
         totalPages: 0,
         totalElements: 0
     },
+
+
 }
 
 function DocReducer(state = initialState, action) {
@@ -398,6 +400,8 @@ function DocReducer(state = initialState, action) {
                 error: action.payload
             }
         }
+
+
 
         default:
             return state;

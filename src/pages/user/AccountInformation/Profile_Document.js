@@ -118,7 +118,7 @@ class ProfileDocument extends React.Component {
                             readingTime={item.readingTime}
                             approveState={item.docState}
                             popUpMenuPrefix="prfdpu"   //stand for profile doc popup 
-                            authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                            authorAvatarURL={item.authorAvatarURL}
                             //
                             reloadList={() => this.reloadList()}
                         />

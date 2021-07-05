@@ -195,7 +195,6 @@ export function getReportedDocuments(searchParamObject) {
 
                         dispatch(get_ReportedDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_ReportedDocumentsFailure())
-                // dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: response.data.docDetails, totalPages: response.data.totalPages, totalElements: response.data.totalElements }))
             })
             .catch(error => {
                 dispatch(get_PendingDocumentsFailure(error))
@@ -236,9 +235,10 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
 export function uploadADocument(data, filesList) {
     return dispatch => {
         dispatch(post_UploadDocumentRequest());
-        openModal("loader", { text: "Đang upload tài liệu " });
+        // openModal("loader", { text: "Đang upload tài liệu " });
 
         let uploadResponses = [];
+        console.log(filesList, filesList.length, filesList[0]);
 
         //response for appending to current array
         for (let i = 0; i < filesList.length; i++) {
@@ -246,14 +246,14 @@ export function uploadADocument(data, filesList) {
             let fileData = new FormData();
             fileData.append('file', filesList[i]);
 
-            multipartRequest.post(`/documents/upload`, { file: fileData })
+            multipartRequest.post(`/documents/upload`, fileData)
                 .then(response => {
-                    uploadResponses.push({ rank: i, id: response.data.id, success: true });
+                    console.log(response.data)
+                    dispatch()
                 })
-                .catch(error => uploadResponses.push({ rank: i, id: "", success: false }))
+                .catch(error => uploadResponses.push({ rank: i, id: "", success: false }))  
         }
 
-        console.log(uploadResponses);
 
         // multipartRequest.post(`/documents/upload`, fileData)
         //     .then(response => {
@@ -274,9 +274,8 @@ export function uploadADocument(data, filesList) {
 export function reactionADocument(docID, reactionType) {
     return dispatch => {
         dispatch(post_ReactionADocumentRequest());
-        authRequest.put("/documents/reactions", JSON.stringify({ docID: docID, docReactionType: reactionType }))
+        authRequest.put(`/documents/${docID}/reactions`, JSON.stringify({ docReactionType: reactionType }))
             .then(response => {
-                openBLModal({ type: "success", text: "Cảm ơn bạn đã đưa cảm nhận về tài liệu!" });
                 dispatch(post_ReactionADocumentSuccess(response))
             })
             .catch(error => {
@@ -375,11 +374,13 @@ export function resolveADocument(id, resolveDTO) {
 
 export function deleteADocument(id) { //maybe use modal later
     return dispatch => {
-        dispatch(delete_ADocumentReset(id))
+        dispatch(delete_ADocumentReset());
         authRequest.delete(`/documents/${id}`).then(response => {
-            dispatch(delete_ADocumentSuccess())
+            dispatch(delete_ADocumentSuccess());
             openBLModal({ text: "Xoá tài liệu thành công!", type: "success" });
-        }).catch(error => { dispatch(delete_ADocumentFailure(id)) })
+            if (window.location.pathname.substring(0, 17) === "/document-content") //delete success on document detail
+            window.location.pathname = "/";
+        }).catch(error => { dispatch(delete_ADocumentFailure(error)) })
     }
 }
 
@@ -408,7 +409,6 @@ export function reportADocument(id, reason) { //
     }
 }
 
-//
 export function getDocumentSubjectsList(searchParamObject) {
     return dispatch => {
         dispatch(get_DocumentSubjectsListRequest());

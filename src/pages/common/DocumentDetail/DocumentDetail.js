@@ -26,6 +26,7 @@ import {
 } from 'redux/actions/documentAction';
 import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import { openBLModal } from 'redux/services/modalServices';
+import CommentSection from 'components/document/comment/CommentSection';
 
 //lack services: userStatistic, related Document.
 class DocumentDetail extends React.Component {
@@ -85,8 +86,9 @@ class DocumentDetail extends React.Component {
                                 <div>
                                     <DetailInfo
                                         type={itemType.normal}
-                                        id={this.props.currentDocument.id}
+                                        documentID={this.props.currentDocument.id}
                                         authorDisplayName={this.props.currentDocument.authorDisplayName}
+                                        authorAvatarURL={this.props.currentDocument.authorAvatarURL}
                                         authorID={this.props.currentDocument.authorID}
                                         publishDtm={this.props.currentDocument.publishDtm}
                                         categoryName={this.props.currentDocument.categoryName}
@@ -135,7 +137,7 @@ class DocumentDetail extends React.Component {
                                     <div style={{ marginTop: "50px" }} />
 
                                     <DocumentNormalReactionbar
-                                        id={this.props.currentDocument.id}
+                                        documentID={this.props.currentDocument.id}
                                         likeCount={this.props.currentDocument.likeCount ? this.props.currentDocument.likeCount : 0}
                                         dislikeCount={this.props.currentDocument.dislikeCount ? this.props.currentDocument.dislikeCount : 0}
                                         docReactionType={this.props.currentDocument.docReactionType ? this.props.currentDocument.docReactionType : "NONE"}
@@ -144,13 +146,16 @@ class DocumentDetail extends React.Component {
                                         viewCount={this.props.currentDocument.viewCount ? this.props.currentDocument.viewCount : 0}
                                     />
                                     <div id="cr-cmt" />
-                                    {/* <CommentSection
+                                    <CommentSection
                                         useAction={true}
                                         // create comment will show if you have action create comment
-                                        postAvailableActions={this.props.currentPost.availableActions}
-                                        id={this.props.currentPost.id}
-                                        commentCount={this.props.currentPost.commentCount}
-                                    /> */}
+                                        postAvailableActions={['comment']}
+                                        // postAvailableActions={this.props.currentPost.availableActions}
+
+                                        // id={this.props.currentPost.id}
+                                        id={2}
+                                        commentCount={this.props.currentDocument.commentCount}
+                                    />
                                 </div>
                                 : <div>
                                     <DocPostDetailLoader />

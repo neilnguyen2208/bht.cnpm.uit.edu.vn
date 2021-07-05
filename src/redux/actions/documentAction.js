@@ -78,6 +78,9 @@ import {
     GET_DOCUMENTS_BY_FILTER_REQUEST,
     GET_DOCUMENTS_BY_FILTER_SUCCESS,
     GET_DOCUMENTS_BY_FILTER_FAILURE,
+    SET_PROGRESS_UPLOAD_FILE_RESET,
+    SET_PROGRESS_UPLOAD_FILE_SUCCESS,
+    SET_PROGRESS_UPLOAD_FILE_FAILURE,
 } from "../constants.js"
 
 //my documents
@@ -322,23 +325,22 @@ export function post_ResolveADocumentFailure() {
 }
 
 // edit and delete post
-export function delete_ADocumentReset(data) {
+export function delete_ADocumentReset() {
     return {
         type: DELETE_A_DOCUMENT_RESET,
-        request: data
     }
 }
 
-export function delete_ADocumentSuccess(data) {
+export function delete_ADocumentSuccess() {
     return {
         type: DELETE_A_DOCUMENT_SUCCESS,
-        payload: data
     }
 }
 
-export function delete_ADocumentFailure() {
+export function delete_ADocumentFailure(error) {
     return {
-        type: DELETE_A_DOCUMENT_FAILURE
+        type: DELETE_A_DOCUMENT_FAILURE,
+        payload: error
     }
 }
 
@@ -523,4 +525,16 @@ export function get_DocumentsByFilterSuccess(data) {
 
 export function get_DocumentsByFilterFailure(error) {
     return { type: GET_DOCUMENTS_BY_FILTER_FAILURE, payload: error }
+}
+
+export function setProgressUploadFileReset() {
+    return { type: SET_PROGRESS_UPLOAD_FILE_RESET }
+}
+
+export function setProgressUploadFileSuccess(data) {
+    return { type: SET_PROGRESS_UPLOAD_FILE_SUCCESS, payload: data }
+}
+
+export function setProgressUploadFileFailure(error) {
+    return { type: SET_PROGRESS_UPLOAD_FILE_FAILURE, payload: error }
 }

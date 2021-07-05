@@ -44,7 +44,13 @@ export const exerciseResolveStateOptions = [
   { id: 5, name: "Đã xử lý", icon: report_icon, value: "EXERCISE_REPORT_FIXED" },
 ]
 
-export const adminApproveStatusOptions = [
+export const postAdminApproveStatusOptions = [
+  { id: 1, name: "Tất cả", postState: "" },
+  { id: 2, name: "Đã duyệt", postState: "APPROVED" },
+  { id: 3, name: "Chưa duyệt", postState: "PENDING_APPROVAL" }
+];
+
+export const documentAdminApproveStatusOptions = [
   { id: 1, name: "Tất cả", postState: "" },
   { id: 2, name: "Đã duyệt", postState: "APPROVED" },
   { id: 3, name: "Chưa duyệt", postState: "PENDING_APPROVAL" }

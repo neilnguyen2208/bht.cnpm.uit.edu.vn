@@ -13,7 +13,7 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
-import { adminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
+import { postAdminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
 import PostNormalReactionbar from 'components/post/NormalReactionbar'
 import PostSummaryMetadata from 'components/post/SummaryInfo'
 import PostManagementNavbar from './PostManagementNavbar'
@@ -177,7 +177,7 @@ class PostManagement extends React.Component {
                             <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
                             <div className="mg-left-5px">
                                 <ComboBox
-                                    options={adminApproveStatusOptions}
+                                    options={postAdminApproveStatusOptions}
                                     placeHolder="Tất cả"
                                     onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
                                     comboboxId="pmasf-combobox" //post management approval status filter 

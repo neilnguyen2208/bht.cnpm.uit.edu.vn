@@ -200,7 +200,7 @@ class MyDocuments extends React.Component {
                             readingTime={item.readingTime}
                             approveState={item.docState}
                             popUpMenuPrefix="mdpu"   //stand for my doc popup 
-                            authorAvatarURL={"https://i.imgur.com/b6F1E7f.png"}
+                            authorAvatarURL={item.authorAvatarURL}
                             //
                             reloadList={() => this.reloadList()}
                         />

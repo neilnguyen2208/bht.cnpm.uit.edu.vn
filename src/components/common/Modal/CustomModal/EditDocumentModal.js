@@ -9,10 +9,16 @@ import { bindActionCreators } from 'redux';
 import { getDocumentSubjects } from "redux/services/documentSubjectServices";
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { getDocumentById, editADocument } from "redux/services/documentServices"
-import { get_DocumentByIDReset, put_EditADocumentReset } from "redux/actions/documentAction"
+import {
+    getDocumentById,
+    editADocument
+} from "redux/services/documentServices"
+import { put_EditADocumentReset } from "redux/actions/documentAction"
 
-import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
+import {
+    get_tagQuickQueryResultRequest,
+    get_tagQuickQueryResultReset
+} from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
@@ -27,8 +33,12 @@ import Loader from 'components/common/Loader/Loader'
 
 //utils
 import { ClickAwayListener } from '@material-ui/core';
-import { validation, styleFormSubmit } from 'utils/validationUtils'
+import {
+    validation,
+    styleFormSubmit
+} from 'utils/validationUtils'
 import SmallLoader from 'components/common/Loader/Loader_S'
+import { SimpleCKEToolbarConfiguration } from "components/common/CustomCKE/CKEditorConfiguration";
 
 const validationCondition = {
     form: '#edit-document-form',
@@ -113,7 +123,7 @@ class EditDocumentModal extends React.Component {
         this.isInstanceReady = false;
         this.tagQuickQueryResult = <></>;
     }
-    
+
     componentDidMount() {
         validation(validationCondition);
         this.props.getDocumentCategories();
@@ -130,7 +140,6 @@ class EditDocumentModal extends React.Component {
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
-        store.dispatch(get_DocumentByIDReset());
         store.dispatch(put_EditADocumentReset());
         if (getCKEInstance('ed-document-cke'))
             getCKEInstance('ed-document-cke').destroy();
@@ -489,13 +498,17 @@ class EditDocumentModal extends React.Component {
 
                                             {/* CKEditor */}
                                             <div className="form-group">
-                                                <div className="form-label-required">Nội dung:</div>
+                                                <div className="form-label-required">Mô tả tài liệu:</div>
                                                 <Editor
-                                                    editorId={"ed-document-cke"}
+                                                    config={SimpleCKEToolbarConfiguration}
+                                                    editorId="ed-document-description"
+                                                    placeholder='Start typing here...'
                                                     onChange={this.handleEditorChange}
-                                                    myData={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.content : ''}
+                                                    data="<p>Nhập nội dung tài liệu ...</p>"
+                                                    height={200}
+                                                    autoGrow_maxHeight={300}
+                                                    autoGrow_minHeight={200}
                                                     validation
-                                                    onInstanceReady={this.onCKEInstanceReady}
                                                 />
                                                 <div className="form-error-label-container">
                                                     <span className="form-error-label" ></span>

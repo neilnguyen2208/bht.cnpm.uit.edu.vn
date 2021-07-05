@@ -1,14 +1,25 @@
 import React from 'react'
 
-import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-//resources
-import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-import { delete_APostReset, put_EditAPostReset, post_ReportAPostReset } from 'redux/actions/postAction'
+import {
+  deleteAPost,
+  editAPost,
+  reportAPost
+} from 'redux/services/postServices'
+import {
+  openBigModal,
+  openModal,
+  closeModal,
+  openBLModal
+} from 'redux/services/modalServices'
+import {
+  delete_APostReset,
+  put_EditAPostReset,
+  post_ReportAPostReset
+} from 'redux/actions/postAction'
 import store from 'redux/store/index'
 import { detailType } from 'constants.js'
 import UserInfo from 'components/user/UserInfo'
@@ -18,6 +29,7 @@ import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
 import 'components/common/CustomCKE/CKEditorContent.scss'
+import 'components/styles/Button.scss'
 
 //constants
 import { basicMenu } from './adapter/actionMenu'
@@ -45,7 +57,10 @@ class PostDetail extends React.Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPost(this.props.postID); closeModal(); }
+          onConfirm: () => {
+            this.props.deleteAPost(this.props.postID);
+            closeModal();
+          }
         })
     }
 

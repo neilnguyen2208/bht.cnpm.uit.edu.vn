@@ -59,17 +59,21 @@ class PostDetail extends React.Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteADocument(this.props.id); closeModal(); }
+          showIcon: true,
+          onConfirm: () => {
+            this.props.deleteADocument(this.props.documentID);
+            closeModal();
+          }
         })
     }
 
     if (selectedItem.value === "EDIT_DOCUMENT") {
-      openBigModal("edit-document", { id: this.props.id });
+      openBigModal("edit-document", { id: this.props.documentID });
     }
 
     if (selectedItem.value === "REPORT_DOCUMENT" && this.props.type !== detailType.preview) {
       openBigModal("report-document", {
-        id: this.props.id
+        id: this.props.documentID
       })
     }
   }
@@ -117,7 +121,7 @@ class PostDetail extends React.Component {
       <div className="metadata">
 
         {/* title */}
-        <Link to={"/document-content/" + this.props.id}>
+        <Link to={"/document-content/" + this.props.documentID}>
           <div className="title">
             {this.props.title}
           </div>
@@ -153,7 +157,7 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorAvatarURL={this.props.authorAvatarURL} authorID={this.props.authorID} />
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.id}`} />
+          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.documentID}`} />
         </div>
 
         <div style={{ width: "100%", marginTop: "20px", maxWidth: "600px", margin: "auto", marginBottom: "20px" }}>
@@ -196,7 +200,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteADocument, editADocument, reportADocument
-});
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));
 

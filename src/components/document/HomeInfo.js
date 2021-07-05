@@ -60,7 +60,7 @@ class HomeTextInfo extends React.Component {
           {this.props.description}
         </div>
         <HomeReactionbar
-          id={this.props.id}
+          documentID={this.props.documentID}
           likeCount={this.props.likeCount}
           dislikeCount={this.props.dislikeCount}
           docReactionType={this.props.docReactionType ? this.props.docReactionType : "NONE"}

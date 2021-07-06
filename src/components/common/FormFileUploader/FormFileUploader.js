@@ -8,28 +8,34 @@ class FormFileUploader extends React.Component {
     //onDelete, tag: dmID, id, name/content
     constructor(props) {
         super(props);
+        this.state = { haveChoosenFiles: false }
 
         this.clientFiles = [
-            { rank: 1, value: "FIRST_FILE", text: '' },
-            { rank: 2, value: "SECOND_FILE", text: '' },
-            { rank: 3, value: "THIRD_FILE", text: '' }
+            { rank: 1, value: "FIRST_FILE", text: '', hasFile: false },
+            { rank: 2, value: "SECOND_FILE", text: '', hasFile: false },
+            { rank: 3, value: "THIRD_FILE", text: '', hasFile: false }
         ];
 
         this.uploadResponses = [
-            { rank: 1, id: "", success: false },
-            { rank: 2, id: "", success: false },
-            { rank: 3, id: "", success: false }
+            { rank: 1, id: "", success: false, haveLoaded: false, },
+            { rank: 2, id: "", success: false, haveLoaded: false },
+            { rank: 3, id: "", success: false, haveLoaded: false }
         ];
         this.clientFileItems = <></>;
     }
 
     //handle file client, will append new file to current client files list
     onFileChange = () => {
-
         var fileInput = document.getElementById('file-input-' + this.props.id);
+
+        this.clientFiles.forEach(item => {
+            item.hasFile = false;
+            item.text = ''
+        });
+
         for (let i = 0; i < fileInput.files.length; i++) {
-            this.clientFiles[i].text = ` - Tên file: ${fileInput.files.item(i).name}\n Kích thước:  ${Math.round(fileInput.files.item(i).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${fileInput.files.item(i).type} 
-            // \n`;
+            this.clientFiles[i].text = ` - Tên file: ${fileInput.files.item(i).name}\n, kích thước:  ${Math.round(fileInput.files.item(i).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${fileInput.files.item(i).type}`;
+            this.clientFiles[i].hasFile = true;
         }
 
         this.clientFileItems = this.clientFiles.map(file =>
@@ -37,13 +43,14 @@ class FormFileUploader extends React.Component {
                 {file.text}
             </div>
         )
-        console.log("file change");
+
+        this.setState({ haveChoosenFiles: true });
+
         //max file, size, type
         if (this.props.onFileChange) {
-            // this.props.onFileChange(document.getElementById('file-input-' + this.props.id).files)
+            this.props.onFileChange(document.getElementById('file-input-' + this.props.id).files)
         }
 
-        this.setState({});
     }
 
     updateFileList = () => {
@@ -59,13 +66,13 @@ class FormFileUploader extends React.Component {
 
             multipartRequest.post(`/documents/upload`, fileData)
                 .then(response => {
-                    this.uploadResponses[i] = { ...this.uploadResponses[i], success: true };
+                    this.uploadResponses[i] = { ...this.uploadResponses[i], success: true, haveLoaded: true };
                     this.uploadResponses = [
                         ...this.uploadResponses
                     ];
                 })
                 .catch(error => {
-                    this.uploadResponses[i] = { ...this.uploadResponses[i], success: false };
+                    this.uploadResponses[i] = { ...this.uploadResponses[i], success: false, haveLoaded: true };
                     this.uploadResponses = [
                         ...this.uploadResponses
                     ];
@@ -90,10 +97,43 @@ class FormFileUploader extends React.Component {
     }
 
     onDeleteAFile = (value) => {
+        //set new value for files
+        //set new value for client files
+    }
 
+    resetUploadState = () => {
+        this.uploadResponses.forEach(item => {
+            item.success = false;
+            item.haveLoaded = false
+        })
+        this.setState({ haveChoosenFiles: false })
+    }
+
+    checkUploadDone = () => {
+        //check hasFile
+        let hasFileCount = 0;
+        this.clientFiles.forEach(item => {
+            if (item.hasFile) hasFileCount = hasFileCount + 1;
+        });
+
+        //check load done.
+        let hasUploadedCount = 0;
+        this.uploadResponses.forEach(item => {
+            if (item.hasFile) hasUploadedCount = hasUploadedCount + 1;
+        });
+
+        if (hasUploadedCount === 0 && hasUploadedCount !== hasFileCount)
+            return false;
+        return true;
     }
 
     render() {
+        //reset choosen state if has choosen a file
+        if (this.state.haveChoosenFiles) { this.resetUploadState() }
+
+        //check all file and responses id done
+        if (this.checkUploadDone()) { console.log("All file uploaded") };
+
         return (
             <div>
                 <div className="file-input-wrapper">
@@ -118,9 +158,11 @@ class FormFileUploader extends React.Component {
                 </div>
 
                 {/* show list of files items */}
-                {this.clientFilesItems}
+                <div className="form-tip-label file-input-text" style={{ marginTop: "20px" }}>
+                    {this.clientFileItems}
+                </div>
 
-                <div className="form-line mg-top-5px" />
+                < div className="form-line mg-top-5px" />
             </div>
         )
     }

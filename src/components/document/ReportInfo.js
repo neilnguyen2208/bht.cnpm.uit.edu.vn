@@ -35,7 +35,7 @@ export default class ReportInfo extends React.PureComponent {
                                 <div className="red-border-label">PENDING</div>
                             }
                         </div>
-                        <Link className="activity-title" to={`/document-content/${this.props.id}`} >{this.props.title}</Link>
+                        <Link className="activity-title" to={`/document-content/${this.props.documentID}`} >{this.props.title}</Link>
 
                     </div>
                     <div>

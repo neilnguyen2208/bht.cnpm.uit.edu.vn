@@ -36,7 +36,7 @@ class HomeTextInfo extends React.Component {
         </div>
 
         {/* title */}
-        <Link to={"/document-content/" + this.props.id}>
+        <Link to={"/document-content/" + this.props.documentID}>
           <div className="title title-hv">
             {this.props.title}
           </div>

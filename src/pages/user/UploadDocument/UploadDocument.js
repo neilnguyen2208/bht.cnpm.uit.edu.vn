@@ -504,7 +504,6 @@ class UploadDocument extends React.Component {
                                 multiple
                                 maxFileCount={3}
                             />
-                           
                         </div>
 
                         {/* Button */}

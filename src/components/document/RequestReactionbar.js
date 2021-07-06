@@ -14,34 +14,35 @@ class RequestedSummary extends React.Component {
     handleApprove = () => {
         openModal("confirmation",
             {
-                title: "Duyệt bài viết",
-                text: "Bạn có chắc chắn muốn duyệt bài viết không?",
+                title: "Duyệt tài liệu",
+                text: "Bạn có chắc chắn muốn duyệt tài liệu không?",
                 onConfirm: () => this.onConfirmApprove(),
             });
 
     }
 
     onConfirmApprove = () => {
-        this.props.approveADocument(this.props.id);
+        this.props.approveADocument(this.props.documentID);
     }
 
     handleReject = () => {
         openModal("confirmation",
             {
-                title: "Từ chối bài viết",
-                text: "Bạn có chắc chắn muốn từ chối bài viết này không?",
+                showIcon: true,
+                title: "Từ chối tài liệu",
+                text: "Bạn có chắc chắn muốn từ chối tài liệu này không?",
                 onConfirm: () => this.onConfirmReject(),
             });
     }
 
     onConfirmReject = () => {
-        this.props.rejectADocument(this.props.id);
+        this.props.rejectADocument(this.props.documentID);
     }
 
     handleRejectAndFeedback = () => {
         openModal("form", {
             id: `rjafbdcm-form-modal`,//reject and feed back
-            title: `TỪ CHỐI BÀI VIẾT`,
+            title: `TỪ CHỐI TÀI LIỆU`,
             formId: `rjafbdcm-form`,
             inputs:
                 [
@@ -55,7 +56,7 @@ class RequestedSummary extends React.Component {
                         key: "reason"
                     },
                 ],
-            append: { id: this.props.id },
+            append: { id: this.props.documentID },
             validationCondition: {
                 form: `#rjafbdcm-form`,
                 rules: [
@@ -69,8 +70,8 @@ class RequestedSummary extends React.Component {
             submitText: "Xác nhận",
             cancelText: "Huỷ",
             confirmBox: {
-                title: "Từ chối bài viết?",
-                text: "Bạn có chắc chắn muốn từ chối bài viết này không?",
+                title: "Từ chối tài liệu?",
+                text: "Bạn có chắc chắn muốn từ chối tài liệu này không?",
                 verifyText: "Xác nhận",
                 cancelText: "Huỷ",
                 onConfirm: DTO => this.onConfirmRejectAndFeedback(DTO)

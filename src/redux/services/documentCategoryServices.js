@@ -22,11 +22,9 @@ export function getDocumentCategoriesHaveAll() { //co truong tat ca hay khong
     return dispatch => {
         dispatch(get_DocumentCategoriesRequest());
         request.get(`/documents/categories`).then(response => {
-            console.log(response.data)
             dispatch(get_DocumentCategoriesHaveAllSuccess(response.data));
         })
             .catch(error => {
-                
                 dispatch(get_DocumentCategoriesFailure());
             });
 

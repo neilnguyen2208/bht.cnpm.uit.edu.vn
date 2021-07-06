@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 //resources
 import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
-import { validation } from 'utils/validationUtils'
+import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 
 //styles
 import 'components/styles/Label.scss'
@@ -185,7 +185,18 @@ class DocumentSummary extends React.Component {
             </div>
           </div>
         </div>
-        {/* <div className="file-name">{this.props.fileName}</div> */}
+
+        {this.props.approveState === "PENDING_FIX" ?
+          <div className="feedback-container">
+            <div className="d-flex">
+              <img className="danger-icon" src={danger_icon} alt="!" />
+              <div>Feedback:</div>
+            </div>
+            <div className="feedback-reason">
+              {this.props.feedback}
+            </div>
+          </div>
+          : <></>}
         {summary}
         <div className="j-c-end">
           <Link to={`/document-content/${this.props.documentID}`} className="continue-read mg-bottom-5px" >

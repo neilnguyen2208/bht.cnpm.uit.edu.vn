@@ -227,7 +227,7 @@ class DocumentManagement extends React.Component {
                 return <div className="item-container" key={item.id}>
                     <DocumentSummaryMetadata
                         type={itemType.mySelf}
-                        id={item.id}
+                        documentID={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -247,17 +247,16 @@ class DocumentManagement extends React.Component {
                         reloadList={() => this.reloadList()}
                     />
                     <DocumentNormalReactionbar
-                        id={item.id}
-                        likeCount={item.likeCount ? item.likeCount : 2}
-                        dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                        documentID={item.id}
+                        likeCount={item.likeCount ? item.likeCount : 0}
+                        dislikeCount={item.dislikeCount ? item.dislikeCount : 0}
                         docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
-                        commentCount={item.commentCount ? item.commentCount : 10}
-                        downloadCount={item.downloadCount ? item.downloadCount : 21}
-                        viewCount={item.viewCount ? item.viewCount : 1200}
+                        commentCount={item.commentCount ? item.commentCount : 0}
+                        downloadCount={item.downloadCount ? item.downloadCount : 0}
+                        viewCount={item.viewCount ? item.viewCount : 0}
                     />
                 </div >
-            }
-            )
+            })
         }
         if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
             this.filter = this.props.documentCategories;

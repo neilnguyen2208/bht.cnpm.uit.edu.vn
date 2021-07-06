@@ -66,12 +66,36 @@ class DocumentApproving extends React.Component {
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
-                paginator: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
+                paginator: this.searchParamObject.page,
             }
         setQueryParam(this.queryParamObject);
 
         this.props.getPendingDocuments(this.searchParamObject);
 
+    }
+
+    onSubjectOptionChange = (selectedOption) => {
+        setQueryParam({ ...this.queryParamObject, page: 1, "subject": selectedOption.id });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "subjectID": selectedOption.id,
+            page: 1
+        }
+        this.props.getPendingDocuments(this.searchParamObject);
+        this.setState({});
+    }
+
+    onCategoryOptionChange = (selectedOption) => {
+        setQueryParam({
+            ...this.queryParamObject, "page": 1, "category": selectedOption.id
+        });
+        this.searchParamObject = {
+            ...this.searchParamObject,
+            "categoryID": selectedOption.id,
+            page: 1
+        }
+        this.props.getPendingDocuments(this.searchParamObject);
+        this.setState({});
     }
 
     render() {
@@ -120,19 +144,18 @@ class DocumentApproving extends React.Component {
             this.documentsList = this.props.documentsList.map((item) => (
                 <div className="item-container" key={item.id}>
                     <RequestInfo
-                        id={item.id}
+                        documentID={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
-                        requestedTime={"20:20:20"}
-                        requestedDate={"1/3/2021"}
+                        submitDtm={item.submitDtm}
                         title={item.title}
                     />
 
                     <SummaryInfo
                         type={itemType.mySelf}
-                        id={item.id}
+                        documentID={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -140,10 +163,7 @@ class DocumentApproving extends React.Component {
                         categoryID={item.categoryID}
                         subjectName={item.subjectName}
                         subjectID={item.documentSubjectID}
-
                         title={item.title}
-                        // fileName={item.fileName}
-                        fileName={"Demo file name.pdf"}
                         description={item.description}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
@@ -155,7 +175,7 @@ class DocumentApproving extends React.Component {
                     />
 
                     <RequestReactionbar
-                        id={item.id}
+                        documentID={item.id}
                     />
                 </div>
             ))

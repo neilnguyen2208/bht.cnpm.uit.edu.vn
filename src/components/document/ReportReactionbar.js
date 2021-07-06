@@ -44,7 +44,7 @@ class ReportReactionbar extends React.Component {
             key: "resolvedNote"
           },
         ],
-      // append: { id: this.props.id },
+      
       validationCondition: {
         form: `#rsadcm-form`,
         rules: [
@@ -68,7 +68,7 @@ class ReportReactionbar extends React.Component {
   }
 
   onConfirmResolve = (resolveDTO) => {
-    this.props.resolveADocument(this.props.id, resolveDTO)
+    this.props.resolveADocument(this.props.documentID, resolveDTO)
   }
 
   render() {

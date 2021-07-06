@@ -103,7 +103,7 @@ class PostCommentReport extends React.Component {
                 return <div className="item-container">
 
                     <PostReportedCommentInfo
-                        id={reportedComment.id}
+                        documentID={reportedComment.id}
                         commentId={reportedComment.commentID}
                         postID={reportedComment.postID}
                         postTitle={reportedComment.postTitle}
@@ -122,7 +122,7 @@ class PostCommentReport extends React.Component {
 
                     />
 
-                    <PostCommentReportReactionbar id={reportedComment.id} />
+                    <PostCommentReportReactionbar documentID={reportedComment.id} />
                 </div>
             })
         }

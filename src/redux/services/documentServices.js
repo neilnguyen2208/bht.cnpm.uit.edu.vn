@@ -93,12 +93,12 @@ export function getManagementDocuments(searchParamObject) {
                         let finalResult = [];
                         for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docSummaryWithStateDTOs[i].docState,
+                                docState: result_1.docSummaryWithStateDTOs[i].docState,
                                 ...result_1.docSummaryWithStateDTOs[i].docSummary,
-                                ...(result_2.data.find((itmInner) => itmInner.docID === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
+                                ...(result_2.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
                             });
                         }
-
+                        console.log(finalResult);
                         dispatch(get_ManagementDocumentsSuccess({
                             docSummaryWithStateDTOs: finalResult,
                             totalPages: result_1.totalPages,
@@ -147,19 +147,17 @@ export function getPendingDocuments(searchParamObject) {
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.docSummaryWithStateDTOs.map(item => IDarr += item.docSummary.id + ",") //tao ra mang id moi
+                result_1.docDetailsWithStateDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
+                        for (let i = 0; i < result_1.docDetailsWithStateDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docSummaryWithStateDTOs[i].docState,
-                                ...result_1.docSummaryWithStateDTOs[i].docSummary,
-                                ...(result_2.data.find((itmInner) => itmInner.docID === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
+                                ...result_1.docDetailsWithStateDTOs[i],
+                                ...(result_2.data.find((itmInner) => itmInner.id === result_1.docDetailsWithStateDTOs[i].id)),
                             });
                         }
-
                         dispatch(get_PendingDocumentsSuccess({
                             docSummaryWithStateDTOs: finalResult,
                             totalPages: result_1.totalPages,
@@ -217,12 +215,13 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
                         let finalResult = [];
                         for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docSummaryWithStateDTOs[i],
+                                docState: result_1.docSummaryWithStateDTOs[i].docState,
                                 ...result_1.docSummaryWithStateDTOs[i].docSummary,
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummaryWithStateDTOs[i].id)),
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
 
                             });
                         }
+                        console.log(finalResult);
                         dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_MyDocumentsFailure())
             })
@@ -235,23 +234,53 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
 export function uploadADocument(data, filesList) {
     return dispatch => {
         dispatch(post_UploadDocumentRequest());
-        // openModal("loader", { text: "Đang upload tài liệu " });
-
-        let uploadResponses = [];
-        console.log(filesList, filesList.length, filesList[0]);
-
+        let fileData;
         //response for appending to current array
-        for (let i = 0; i < filesList.length; i++) {
+        switch (filesList.length) {
+            case 1:
+                fileData = new FormData();
+                fileData.append('file', filesList[0]);
+                openModal("loader", { text: "Đang upload tài liệu!" });
 
-            let fileData = new FormData();
-            fileData.append('file', filesList[i]);
+                multipartRequest.post(`/documents/upload`, fileData)
+                    .then(response => {
+                        data.docFileUploadRequestDTOs = [{ rank: 1, id: response.data.id }];
+                        authRequest.post('/documents', JSON.stringify(data)).then(response => {
+                            dispatch(post_UploadDocumentSuccess(response));
+                            dispatch(closeModal());
+                            openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
+                            window.location.pathname = "/user/my-documents";
+                        })
+                    })
+                    .catch(error => post_UploadDocumentFailure(error));
 
-            multipartRequest.post(`/documents/upload`, fileData)
-                .then(response => {
-                    console.log(response.data)
-                    dispatch()
-                })
-                .catch(error => uploadResponses.push({ rank: i, id: "", success: false }))  
+                break;
+
+            case 2:
+                fileData = new FormData();
+                fileData.append('file', filesList[0]);
+                openModal("loader", { text: "Đang upload tài liệu!" });
+
+                multipartRequest.post(`/documents/upload`, fileData)
+                    .then(response => {
+                        data.docFileUploadRequestDTOs = [{ rank: 1, id: response.data.id }];
+                        authRequest.post('/documents', JSON.stringify(data)).then(response => {
+                            dispatch(post_UploadDocumentSuccess(response));
+                            dispatch(closeModal());
+                            openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
+                            window.location.pathname = "/user/my-documents";
+                        })
+                    })
+                    .catch(error => post_UploadDocumentFailure(error));
+
+                break;
+
+                break;
+
+            case 3:
+                break;
+
+            default: { }
         }
 
 
@@ -379,7 +408,7 @@ export function deleteADocument(id) { //maybe use modal later
             dispatch(delete_ADocumentSuccess());
             openBLModal({ text: "Xoá tài liệu thành công!", type: "success" });
             if (window.location.pathname.substring(0, 17) === "/document-content") //delete success on document detail
-            window.location.pathname = "/";
+                window.location.pathname = "/";
         }).catch(error => { dispatch(delete_ADocumentFailure(error)) })
     }
 }

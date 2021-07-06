@@ -72,7 +72,7 @@ class DocumentReportManagement extends React.Component {
             this.documentsList = this.props.documentsList.map((item) => (
                 <div className="item-container">
                     <ReportInfo
-                        id={item.id}
+                        documentID={item.id}
                         // reporterName={item.reporter.name}
                         // reporterID={item.reporter.id}
                         // reporterAvatarURL={item.reporter.avatarURL}
@@ -90,7 +90,7 @@ class DocumentReportManagement extends React.Component {
                     />
 
                     <ReportReactionbar type={itemType.mySelf}
-                        id={item.id} //report id, not document id
+                        documentID={item.id} //report id, not document id
                         reloadList={() => this.reloadList()}
 
                     />

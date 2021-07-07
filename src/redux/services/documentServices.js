@@ -68,6 +68,9 @@ import {
     get_DocumentsByFilterFailure,
     post_RejectAndFeedbackADocumentFailure,
     post_RejectAndFeedbackADocumentSuccess,
+    get_DocumentByIDForEditFailure,
+    get_DocumentByIDForEditSuccess,
+    get_DocumentByIDForEditReset,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import { generateSearchParam, openInNewTab } from 'utils/urlUtils';
@@ -174,20 +177,20 @@ export function getPendingDocuments(searchParamObject) {
 export function getReportedDocuments(searchParamObject) {
     return dispatch => {
         dispatch(get_ReportedDocumentsRequest());
-        authRequest.get(`/documents?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents/report?${generateSearchParam(searchParamObject)}`)
             .then(response => {
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                response.data.docDetails.map(item => IDarr += item.id + ",") //tao ra mang id moi
+                response.data.docReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docDetails.length; i++) {
+                        for (let i = 0; i < result_1.docReportDTOs.length; i++) {
                             finalResult.push({
-                                ...result_1.docDetails[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docDetails[i].id)),
+                                ...result_1.docReportDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docReportDTOs[i].id)),
                             });
                         }
 
@@ -208,16 +211,15 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
                 //statistic
                 let result_1 = response.data;
                 let IDarr = '';
-                result_1.docSummaryWithStateDTOs.map(item => IDarr += item.docSummary.id + ",") //tao ra mang id moi
+                result_1.docSummaryWithStateAndFeedbackDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
                         let finalResult = [];
-                        for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
+                        for (let i = 0; i < result_1.docSummaryWithStateAndFeedbackDTOs.length; i++) {
                             finalResult.push({
-                                docState: result_1.docSummaryWithStateDTOs[i].docState,
-                                ...result_1.docSummaryWithStateDTOs[i].docSummary,
-                                ...(result.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
+                                ...result_1.docSummaryWithStateAndFeedbackDTOs[i],
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateAndFeedbackDTOs[i].id)),
 
                             });
                         }
@@ -234,15 +236,15 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
 export function uploadADocument(data, filesList) {
     return dispatch => {
         dispatch(post_UploadDocumentRequest());
-        let fileData;
+        openModal("loader", { text: "Đang upload tài liệu!" });
+
         //response for appending to current array
         switch (filesList.length) {
             case 1:
-                fileData = new FormData();
-                fileData.append('file', filesList[0]);
-                openModal("loader", { text: "Đang upload tài liệu!" });
+                let formData_1 = new FormData();
+                formData_1.append('file', filesList[0].file);
 
-                multipartRequest.post(`/documents/upload`, fileData)
+                multipartRequest.post(`/documents/upload`, formData_1)
                     .then(response => {
                         data.docFileUploadRequestDTOs = [{ rank: 1, id: response.data.id }];
                         authRequest.post('/documents', JSON.stringify(data)).then(response => {
@@ -257,46 +259,67 @@ export function uploadADocument(data, filesList) {
                 break;
 
             case 2:
-                fileData = new FormData();
-                fileData.append('file', filesList[0]);
-                openModal("loader", { text: "Đang upload tài liệu!" });
+                let formData_2 = new FormData();
+                formData_2.append('file', filesList[0].file);
 
-                multipartRequest.post(`/documents/upload`, fileData)
-                    .then(response => {
-                        data.docFileUploadRequestDTOs = [{ rank: 1, id: response.data.id }];
-                        authRequest.post('/documents', JSON.stringify(data)).then(response => {
-                            dispatch(post_UploadDocumentSuccess(response));
-                            dispatch(closeModal());
-                            openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
-                            window.location.pathname = "/user/my-documents";
-                        })
-                    })
-                    .catch(error => post_UploadDocumentFailure(error));
+                multipartRequest.post(`/documents/upload`, formData_2)
+                    .then(response_1 => {
+                        formData_2 = new FormData();
+                        formData_2.append('file', filesList[1].file);
+                        data.docFileUploadRequestDTOs = [{ rank: 1, id: response_1.data.id }];
 
-                break;
-
+                        multipartRequest.post(`/documents/upload`, formData_2)
+                            .then(response_2 => {
+                                data.docFileUploadRequestDTOs = [...data.docFileUploadRequestDTOs, { rank: 2, id: response_2.data.id }];
+                                authRequest.post('/documents', JSON.stringify(data)).then(response => {
+                                    dispatch(post_UploadDocumentSuccess(response));
+                                    dispatch(closeModal());
+                                    openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
+                                    window.location.pathname = "/user/my-documents";
+                                }).catch(error => post_UploadDocumentFailure(error));
+                            })
+                            .catch(error => post_UploadDocumentFailure(error));
+                    }).catch(error => post_UploadDocumentFailure(error));
                 break;
 
             case 3:
-                break;
+                let formData_3 = new FormData();
+                formData_3.append('file', filesList[0].file);
 
+                multipartRequest.post(`/documents/upload`, formData_3)
+                    .then(response_1 => {
+
+                        formData_3 = new FormData();
+                        formData_3.append('file', filesList[1].file);
+                        data.docFileUploadRequestDTOs = [{ rank: 1, id: response_1.data.id }];
+
+                        multipartRequest.post(`/documents/upload`, formData_3)
+                            .then(response_2 => {
+
+                                formData_3 = new FormData();
+                                formData_3.append('file', filesList[2].file);
+                                data.docFileUploadRequestDTOs = [...data.docFileUploadRequestDTOs, { rank: 2, id: response_2.data.id }];
+
+                                multipartRequest.post(`/documents/upload`, formData_3)
+                                    .then(response_3 => {
+
+                                        data.docFileUploadRequestDTOs = [...data.docFileUploadRequestDTOs, { rank: 3, id: response_3.data.id }];
+
+                                        authRequest.post('/documents', JSON.stringify(data)).then(response => {
+                                            dispatch(post_UploadDocumentSuccess(response));
+                                            dispatch(closeModal());
+                                            openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
+                                            window.location.pathname = "/user/my-documents";
+                                        }).catch(error => post_UploadDocumentFailure(error));
+
+                                    })
+                                    .catch(error => post_UploadDocumentFailure(error));
+                            })
+                            .catch(error => post_UploadDocumentFailure(error));
+                    }).catch(error => post_UploadDocumentFailure(error));
+                break;
             default: { }
         }
-
-
-        // multipartRequest.post(`/documents/upload`, fileData)
-        //     .then(response => {
-        //         // data.fileCode = response.data.code; //assign secret code.
-        //         // authRequest.post('/documents', JSON.stringify(data)).then(response => {
-        //         //     dispatch(post_UploadDocumentSuccess(response));
-        //         //     dispatch(closeModal());
-        //         //     openBLModal({ type: "success", text: "Tài liệu được tạo thành công!" });
-        //         // }).catch(error => {
-        //         //     dispatch(post_UploadDocumentFailure(error));
-        //         // })
-        //     }).catch(error => {
-        //         dispatch(post_UploadDocumentFailure(error));
-        //     })
     }
 }
 
@@ -329,27 +352,27 @@ export function getDocumentById(id) {
 
                 authRequest.get(`/documents/statistics?docIDs=${result_1.id}`)
                     .then(response_2 => {
-                        // authRequest.get(`/documents/actionAvailable?documentIDs=${result_1.id}`).then(response_3 => {
 
                         console.log({ ...result_1, ...response_2.data[0] });
                         dispatch(get_DocumentByIDSuccess({
                             ...result_1, ...response_2.data[0],
-                            //  ...response_3.data[0]
                         })
-                            // )}).catch(error => { dispatch(get_DocumentByIDFailure(error)) }
                         ).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
                     }).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
             })
     }
 }
 
-export function reportAPost(id, reason) { //
+export function getDocumentByIdForEdit(id) {
     return dispatch => {
-        dispatch(post_ReportADocumentReset())
-        authRequest.post(`/documents/${id}/report`, JSON.stringify(reason))
-            .then(response => {
-                dispatch(post_ReportADocumentSuccess());
-            }).catch(() => dispatch(post_ReportADocumentFailure()))
+        dispatch(get_DocumentByIDForEditReset())
+        authRequest.get(`/documents/${id}`)
+            .then(response_1 => {
+                let result_1 = response_1.data;//response without statistic
+                dispatch(get_DocumentByIDForEditSuccess({
+                    ...result_1
+                }));
+            }).catch(error => { dispatch(get_DocumentByIDForEditFailure(error)) })
     }
 }
 
@@ -379,12 +402,12 @@ export function rejectAndFeedbackADocument(id, reason) { //
     return dispatch => {
         dispatch(closeModal());
         openModal("loader", { text: "Đang xử lý" })
-        authRequest.post(`/documents/${id}/rejection`, JSON.stringify(reason))
+        authRequest.post(`/documents/${id}/rejectionWithFeedback`, JSON.stringify(reason))
             .then(response => {
                 dispatch(closeModal());
                 dispatch(post_RejectAndFeedbackADocumentSuccess());
                 dispatch(closeModal());
-                openBLModal({ text: "Từ chối tài liệu thành công!", type: "success" });
+                openBLModal({ text: "Từ chối duyệt tài liệu thành công!", type: "success" });
 
             }).catch((error) => dispatch(post_RejectAndFeedbackADocumentFailure(error)))
     }

@@ -30,7 +30,7 @@ class DocumentReportManagement extends React.Component {
         setQueryParam(this.queryParamObject);
 
         this.searchParamObject = {
-            paginator: getQueryParamByName('page')
+            page: getQueryParamByName('page')
         }
 
         this.props.getReportedDocuments(this.searchParamObject);
@@ -52,7 +52,7 @@ class DocumentReportManagement extends React.Component {
         if (this.props.documentsList.length === 1 && this.searchParamObject.page > 1)
             this.searchParamObject = {
                 ...this.searchParamObject,
-                paginator: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
+                page: this.searchParamObject.page, //vl chua => do trong db luu page tu 0 con trong fe luu tu 1
             }
         setQueryParam(this.queryParamObject);
 
@@ -72,21 +72,23 @@ class DocumentReportManagement extends React.Component {
             this.documentsList = this.props.documentsList.map((item) => (
                 <div className="item-container">
                     <ReportInfo
-                        documentID={item.id}
-                        // reporterName={item.reporter.name}
-                        // reporterID={item.reporter.id}
-                        // reporterAvatarURL={item.reporter.avatarURL}
-                        reason={item.reason}
-
-                        title={item.title}
-                        content={item.content}
-                        imageURL={item.documentImageURL}
-
-                        reportTime={item.reportTime ? item.reportTime : "1994-11-05T13:15:30Z "}
-                        
+                        id={item.id}
+                        documentID={item.docID}
+                        title={item.docTitle}
+                        description={item.description}
+                        imageURL={item.imageURL}
+                        reportTime={item.reportTime ? item.reportTime : "2020-11-05T13:15:30Z "}
+                        author={item.author}
+                        reporters={item.reporters}
+                        docFileUploadDTOs={item.docFileUploadDTOs}
+                        categoryID={item.categoryID}
+                        categoryName={item.categoryID}
                         resolvedTime={item.resolvedTime}
                         resolvedNote={item.resolvedNote}
                         actionTaken={item.actionTaken}
+                        subjectName={item.subjectName}
+                        subjectID={item.subjectID}
+                        reportReasons={item.reportReasons}
                     />
 
                     <ReportReactionbar type={itemType.mySelf}

@@ -193,8 +193,7 @@ class MyDocuments extends React.Component {
                             subjectID={item.subjectID}
 
                             title={item.title}
-                            // fileName={item.fileName}
-                            fileName={"Demo file name.pdf"}
+                            feedback={item.feedback}
                             description={item.description}
                             imageURL={item.imageURL}
                             readingTime={item.readingTime}

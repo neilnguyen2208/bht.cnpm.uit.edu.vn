@@ -2,7 +2,10 @@ import React from 'react';
 import upload_icon from 'assets/icons/64x64/b_nb_upload_icon_64x64.png'
 import 'components/styles/Form.scss'
 import { multipartRequest } from 'utils/requestUtils';
+import './FormFileUploader.scss';
+import delete_icon from 'assets/icons/24x24/gray_delete_icon_24x24.png';
 
+//NOTE: not multiple files in a time.
 class FormFileUploader extends React.Component {
 
     //onDelete, tag: dmID, id, name/content
@@ -11,9 +14,9 @@ class FormFileUploader extends React.Component {
         this.state = { haveChoosenFiles: false }
 
         this.clientFiles = [
-            { rank: 1, value: "FIRST_FILE", text: '', hasFile: false },
-            { rank: 2, value: "SECOND_FILE", text: '', hasFile: false },
-            { rank: 3, value: "THIRD_FILE", text: '', hasFile: false }
+            { rank: 1, file: null },
+            { rank: 2, file: null },
+            { rank: 3, file: null }
         ];
 
         this.uploadResponses = [
@@ -21,34 +24,48 @@ class FormFileUploader extends React.Component {
             { rank: 2, id: "", success: false, haveLoaded: false },
             { rank: 3, id: "", success: false, haveLoaded: false }
         ];
+
         this.clientFileItems = <></>;
     }
 
+    //add a file
     //handle file client, will append new file to current client files list
     onFileChange = () => {
+
+        //get file input element
         var fileInput = document.getElementById('file-input-' + this.props.id);
 
-        this.clientFiles.forEach(item => {
-            item.hasFile = false;
-            item.text = ''
-        });
+        //check duplicate files by name
+        for (let i = 0; i < 3; i++) {
 
-        for (let i = 0; i < fileInput.files.length; i++) {
-            this.clientFiles[i].text = ` - Tên file: ${fileInput.files.item(i).name}\n, kích thước:  ${Math.round(fileInput.files.item(i).size / 1048576 * 100) / 100 + "MB"}, loại file:  ${fileInput.files.item(i).type}`;
-            this.clientFiles[i].hasFile = true;
+            //exist a file has name is the same of new file's name
+            if (this.clientFiles[i].file !== null && this.clientFiles[i].file.name === fileInput.files[0].name) {
+                document.querySelector(".form-error-label.ff-uploader").innerText = "Không được chọn file trùng";
+                return;
+            }
         }
 
-        this.clientFileItems = this.clientFiles.map(file =>
-            <div className='form-tip-label'>
-                {file.text}
-            </div>
-        )
+        //assgin only allow add one file at once.
+        if (this.clientFiles[0].file === null)
+            this.clientFiles[0].file = fileInput.files[0];
+        else {
+            if (this.clientFiles[1].file === null)
+                this.clientFiles[1].file = fileInput.files[0];
+            else if (this.clientFiles[2].file === null)
+                this.clientFiles[2].file = fileInput.files[0];
+        }
+
+        this.clientFileItems = this.clientFiles.map(fileItem => {
+            if (fileItem.file !== null)
+                return this.renderAFile(fileItem.file, fileItem.rank)
+            return <></>;
+        })
 
         this.setState({ haveChoosenFiles: true });
 
-        //max file, size, type
+        //pass current files list to parrent
         if (this.props.onFileChange) {
-            this.props.onFileChange(document.getElementById('file-input-' + this.props.id).files)
+            this.props.onFileChange(this.clientFiles.filter(fileItem => fileItem.file !== null))
         }
 
     }
@@ -96,9 +113,38 @@ class FormFileUploader extends React.Component {
 
     }
 
-    onDeleteAFile = (value) => {
-        //set new value for files
-        //set new value for client files
+    renderAFile = (fileItem, fileRank) => {
+        return <div className="file-list-item" key={fileRank}>
+            <div className='form-tip-label'>
+                Tên file: <strong>{fileItem.name}</strong>
+                <br />Kích thước: <strong>  {Math.round(fileItem.size / 1048576 * 100) / 100 + "MB"}</strong>, loại file: {fileItem.type}
+            </div>
+            <div style={{
+                display: "flex",
+                flexDirection: "column"
+            }}>
+                <img src={delete_icon} alt="" className="close_14x14" onClick={() => { this.deleteAFile(fileRank) }} />
+            </div>
+        </div>
+    }
+
+    deleteAFile = (fileRank) => {
+        //update array
+        this.clientFiles[fileRank - 1].file = null;
+
+        //update UI
+        this.clientFileItems = this.clientFiles.map(fileItem => {
+            if (fileItem.file !== null)
+                return this.renderAFile(fileItem.file, fileItem.rank)
+            return <></>;
+        })
+
+        //pass to parent
+        if (this.props.onFileChange) {
+            this.props.onFileChange(this.clientFiles.filter(fileItem => fileItem.file !== null))
+        }
+
+        this.setState({});
     }
 
     resetUploadState = () => {
@@ -132,20 +178,23 @@ class FormFileUploader extends React.Component {
         if (this.state.haveChoosenFiles) { this.resetUploadState() }
 
         //check all file and responses id done
-        if (this.checkUploadDone()) { console.log("All file uploaded") };
+        // if (this.checkUploadDone()) { console.log("All file uploaded") };
 
         return (
             <div>
+
+                <div className="form-tip-label" style={{ marginBottom: "8px" }} >
+                    Nhập tối đa {this.props.maxFileCount ? this.props.maxFileCount : 3} file, tổng dung lượng không quá {Math.round(this.props.maxSize / 1048576 * 100) / 100 + "MB."}
+                </div>
+
                 <div className="file-input-wrapper">
                     <label className="file-input-label" id={'file-input-label-' + this.props.id} for={'file-input-' + this.props.id}>
                         <div className="c-pointer">
                             <img alt="...loading" className='file-input-image' src={upload_icon} />
                             <div className="form-tip-label t-a-center">Định dạng {this.props.fileType}
-                                <br></br>Dung lượng không quá {Math.round(this.props.maxSize / 1048576 * 100) / 100 + "MB"}
                             </div>
                         </div>
                         <input type="file"
-                            multiple={this.props.multiple}
                             className="file-input"
                             accept={this.props.fileType}
                             id={'file-input-' + this.props.id}
@@ -154,8 +203,9 @@ class FormFileUploader extends React.Component {
                 </div>
 
                 <div className="form-error-label-container">
-                    <span className="form-error-label" ></span>
+                    <span className="form-error-label ff-uploader" ></span>
                 </div>
+
 
                 {/* show list of files items */}
                 <div className="form-tip-label file-input-text" style={{ marginTop: "20px" }}>
@@ -163,7 +213,7 @@ class FormFileUploader extends React.Component {
                 </div>
 
                 < div className="form-line mg-top-5px" />
-            </div>
+            </div >
         )
     }
 

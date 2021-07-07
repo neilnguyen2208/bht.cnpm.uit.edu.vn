@@ -125,7 +125,7 @@ class DocumentDetail extends React.Component {
                                             <div style={{ display: "none" }} id={"dcm-file-preview-" + file.id}>
                                                 <div className="d-flex">
                                                     <iframe className="if-container"
-                                                        src={"https://drive.google.com/file/d/0B1HXnM1lBuoqMzVhZjcwNTAtZWI5OS00ZDg3LWEyMzktNzZmYWY2Y2NhNWQx/preview"}
+                                                        src={file.previewURL}
                                                         title={`doc-if-${this.props.match.params.id}`}
                                                         sandbox="allow-scripts allow-same-origin"
                                                     ></iframe>

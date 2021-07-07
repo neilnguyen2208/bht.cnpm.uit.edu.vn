@@ -78,7 +78,7 @@ class DocumentApproving extends React.Component {
         setQueryParam({ ...this.queryParamObject, page: 1, "subject": selectedOption.id });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "subjectID": selectedOption.id,
+            "subject": selectedOption.id,
             page: 1
         }
         this.props.getPendingDocuments(this.searchParamObject);
@@ -91,7 +91,7 @@ class DocumentApproving extends React.Component {
         });
         this.searchParamObject = {
             ...this.searchParamObject,
-            "categoryID": selectedOption.id,
+            "category": selectedOption.id,
             page: 1
         }
         this.props.getPendingDocuments(this.searchParamObject);

@@ -9,8 +9,17 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
-import { deleteADocument, editADocument, reportADocument } from 'redux/services/documentServices'
-import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
+import {
+  deleteADocument,
+  editADocument,
+  reportADocument
+} from 'redux/services/documentServices'
+import {
+  openBigModal,
+  openModal,
+  closeModal,
+  openBLModal
+} from 'redux/services/modalServices'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 
 //styles
@@ -26,21 +35,12 @@ import { basicMenu, guestMenu } from 'components/document/adapter/actionMenu';
 
 class DocumentSummary extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.id = this.props.documentID;
-    this.title = this.props.title;
-    this.image = this.props.image;
-
-  }
-
   onPopupMenuItemClick = (selectedItem) => {
-    if (selectedItem.value === "DELETE_POST") {
+    if (selectedItem.value === "DELETE_DOCUMENT") {
       //show confirmation popup and detete id verify
       openModal("confirmation",
         {
-          title: "Xoá bài viết",
+          title: "Xoá tài liệu",
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
@@ -51,26 +51,20 @@ class DocumentSummary extends React.Component {
         })
     }
 
-    if (selectedItem.value === "EDIT_POST") {
+    if (selectedItem.value === "EDIT_DOCUMENT") {
       openBigModal("edit-document", { id: this.props.documentID });
     }
 
-    if (selectedItem.value === "REPORT_POST") {
+    if (selectedItem.value === "REPORT_DOCUMENT") {
       openBigModal("report-document", { id: this.props.documentID });
     }
-  }
-
-  onConfirmReport = (DTO) => {
-    closeModal();
-    closeModal();
-    this.props.reportADocument(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
   render() {
 
     //only set for report.
     if (this.props.isHaveReported) {
-      openBLModal({ text: "Report bài viết thành công!", type: "success" });
+      openBLModal({ text: "Report tài liệu thành công!", type: "success" });
     }
 
     let summary = <></>;

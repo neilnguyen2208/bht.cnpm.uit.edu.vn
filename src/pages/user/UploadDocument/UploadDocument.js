@@ -325,11 +325,7 @@ class UploadDocument extends React.Component {
     //#endregion
 
     handleEditorChange = (value) => {
-        // let dom = document.createElement("DIV");
-        // dom.innerHTML = this.state.UPLOAD_DOCUMENT_DTO.content;
-        // let plain_text = (dom.textContent || dom.innerText);
         this.setState({ UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, description: value } });
-
     };
 
     handleTitleChange = (e) => {
@@ -340,7 +336,7 @@ class UploadDocument extends React.Component {
 
     onFileChange = (files) => {
         this.filesList = files;
-        this.setState({ ...this.state })
+        this.setState({})
     }
 
     render() {
@@ -456,11 +452,6 @@ class UploadDocument extends React.Component {
                                 <span className="form-error-label" ></span>
                             </div>
                         </div >
-
-                        {/* <div className="form-group" style={{ zIndex: "4" }}>
-                            <label className="form-label">Thời gian đăng:</label>
-                            <JQDateTimePicker dtPickerId="cr-document" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
-                        </div> */}
 
                         {/* Tag */}
                         <div className='form-group'>

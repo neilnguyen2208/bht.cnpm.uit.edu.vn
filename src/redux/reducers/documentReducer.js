@@ -55,7 +55,10 @@ import {
     GET_DOWNLOAD_URL_FAILURE,
     GET_DOCUMENTS_BY_FILTER_REQUEST,
     GET_DOCUMENTS_BY_FILTER_SUCCESS,
-    GET_DOCUMENTS_BY_FILTER_FAILURE
+    GET_DOCUMENTS_BY_FILTER_FAILURE,
+    GET_DOCUMENT_BY_ID_FOR_EDIT_RESET,
+    GET_DOCUMENT_BY_ID_FOR_EDIT_FAILURE,
+    GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS
 
 } from '../constants.js'
 
@@ -77,6 +80,10 @@ const initialState = {
     },
 
     currentDocument: {
+        isLoading: false, data: {}, isLoadDone: false,
+    },
+
+    currentDocumentForEdit: {
         isLoading: false, data: {}, isLoadDone: false,
     },
 
@@ -145,9 +152,31 @@ function DocReducer(state = initialState, action) {
                 ...state, currentDocument: { isLoading: false, data: action.payload, isLoadDone: true }
             };
         case GET_DOCUMENT_BY_ID_FAILURE:
-            return { ...state, currentDocument: { ...state.currentDocument, isLoading: false, isLoadDone: true } };
+            return {
+                ...state,
+                currentDocument: { ...state.currentDocument, isLoading: false, isLoadDone: true }
+            };
         case GET_DOCUMENT_BY_ID_RESET:
-            return { ...state, currentDocument: { ...state.currentDocument, isLoadDone: false } };
+            return {
+                ...state,
+                currentDocument: { ...state.currentDocument, isLoadDone: false }
+            };
+
+        //GET: /documents​/{id}
+        case GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS:
+            return {
+                ...state, currentDocumentForEdit: { isLoading: false, data: action.payload, isLoadDone: true }
+            };
+        case GET_DOCUMENT_BY_ID_FOR_EDIT_FAILURE:
+            return {
+                ...state,
+                currentDocumentForEdit: { ...state.currentDocument, isLoading: false, isLoadDone: true }
+            };
+        case GET_DOCUMENT_BY_ID_FOR_EDIT_RESET:
+            return {
+                ...state,
+                currentDocumentForEdit: { ...state.currentDocument, isLoadDone: false }
+            };
 
         //my post
         case GET_MY_DOCUMENTS_REQUEST:

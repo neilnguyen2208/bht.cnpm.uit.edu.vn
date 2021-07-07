@@ -10,6 +10,7 @@ import { getDocumentSubjects } from "redux/services/documentSubjectServices";
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import {
+    getDocumentByIdForEdit,
     getDocumentById,
     editADocument
 } from "redux/services/documentServices"
@@ -129,7 +130,7 @@ class EditDocumentModal extends React.Component {
         this.props.getDocumentCategories();
         this.props.getDocumentSubjects();
 
-        this.props.getDocumentById(this.props.id);
+        this.props.getDocumentByIdForEdit(this.props.id);
         this.isFirstLoad = false;
 
         this.timeOut = null;
@@ -141,6 +142,7 @@ class EditDocumentModal extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(put_EditADocumentReset());
+        this.props.getDocumentById(this.props.id)
         if (getCKEInstance('ed-document-cke'))
             getCKEInstance('ed-document-cke').destroy();
     }
@@ -501,7 +503,7 @@ class EditDocumentModal extends React.Component {
                                                 <div className="form-label-required">Mô tả tài liệu:</div>
                                                 <Editor
                                                     config={SimpleCKEToolbarConfiguration}
-                                                    editorId="ed-document-description"
+                                                    editorId="ed-document-cke"
                                                     placeholder='Start typing here...'
                                                     onChange={this.handleEditorChange}
                                                     data="<p>Nhập nội dung tài liệu ...</p>"
@@ -607,11 +609,9 @@ const mapStateToProps = (state) => {
         subjects: state.documentSubject.subjects.data,
         isSubjectLoading: state.documentSubject.subjects.isLoading,
 
-        isCurrentDocumentLoading: state.document.currentDocument.isLoading,
-        currentDocument: state.document.currentDocument.data,
-        isCurrentDocumentLoadDone: state.document.currentDocument.isLoadDone,
-
-
+        isCurrentDocumentLoading: state.document.currentDocumentForEdit.isLoading,
+        currentDocument: state.document.currentDocumentForEdit.data,
+        isCurrentDocumentLoadDone: state.document.currentDocumentForEdit.isLoadDone,
 
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
@@ -624,6 +624,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getDocumentCategories,
     getDocumentSubjects,
     getTagQuickQueryResult,
+    getDocumentByIdForEdit,
     getDocumentById,
     editADocument
 

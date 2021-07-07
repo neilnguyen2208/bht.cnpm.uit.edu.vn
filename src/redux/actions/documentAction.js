@@ -81,6 +81,9 @@ import {
     SET_PROGRESS_UPLOAD_FILE_RESET,
     SET_PROGRESS_UPLOAD_FILE_SUCCESS,
     SET_PROGRESS_UPLOAD_FILE_FAILURE,
+    GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS,
+    GET_DOCUMENT_BY_ID_FOR_EDIT_FAILURE,
+    GET_DOCUMENT_BY_ID_FOR_EDIT_RESET,
 } from "../constants.js"
 
 //my documents
@@ -400,6 +403,27 @@ export function get_DocumentByIDFailure(error) {
 export function get_DocumentByIDReset() {
     return {
         type: GET_DOCUMENT_BY_ID_RESET
+    }
+}
+
+
+export function get_DocumentByIDForEditSuccess(data) {
+    return {
+        type: GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_DocumentByIDForEditFailure(error) {
+    return {
+        type: GET_DOCUMENT_BY_ID_FOR_EDIT_FAILURE,
+        error: error
+    }
+}
+
+export function get_DocumentByIDForEditReset() {
+    return {
+        type: GET_DOCUMENT_BY_ID_FOR_EDIT_RESET
     }
 }
 

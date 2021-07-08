@@ -40,7 +40,7 @@ import DocumentApproving from 'pages/management/DocumentManagement/DocumentAppro
 import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag';
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport';
-import DocumentCommentReport from 'pages/management/DocumentManagement/DocumentReportManagement';
+import DocumentCommentReport from 'pages/management/DocumentManagement/DocumentCommentReport';
 import Exercise from 'pages/common/Exercise/Exercise';
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
 import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';

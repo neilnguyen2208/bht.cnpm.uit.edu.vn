@@ -72,7 +72,7 @@ class Comment extends React.Component {
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "REPORT_COMMENT") {
-      openBigModal("report-comment", { id: this.props.commentId })
+      openBigModal("report-post-comment", { id: this.props.commentId })
     }
 
     if (selectedItem.value === "EDIT_COMMENT") {

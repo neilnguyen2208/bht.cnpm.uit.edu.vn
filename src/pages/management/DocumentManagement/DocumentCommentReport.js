@@ -4,23 +4,23 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType, resolveStateOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
-import { getReportedPostComments } from 'redux/services/postCommentServices'
+import { getReportedDocumentComments } from 'redux/services/documentCommentServices'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
-// import PostManagementNavbar from './PostManagementNavbar'
-import PostCommentReportReactionbar from 'components/post/comment/PostReportedCommentReactionbar'
+// import DocumentManagementNavbar from './DocumentManagementNavbar'
+import DocumentCommentReportReactionbar from 'components/document/comment/ReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
-import { post_ResolveAPostCommentReset } from 'redux/actions/documentCommentAction';
-import PostReportedCommentInfo from 'components/post/comment/PostReportedCommentInfo'
-import PostManagementNavBar from './PostManagementNavbar';
+import { post_ResolveADocumentCommentReset } from 'redux/actions/documentCommentAction';
+import ReportedCommentInfo from 'components/document/comment/ReportedCommentInfo'
+import DocumentManagementNavBar from './DocumentManagementNavbar';
 import Combobox from 'components/common/Combobox/Combobox';
 
-class PostCommentReport extends React.Component {
+class DocumentCommentReport extends React.Component {
     constructor(props) {
         super();
     }
@@ -35,7 +35,7 @@ class PostCommentReport extends React.Component {
             page: getQueryParamByName('page')
         }
 
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedDocumentComments(this.searchParamObject);
     }
 
     //server paginator
@@ -45,7 +45,7 @@ class PostCommentReport extends React.Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
         }
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedDocumentComments(this.searchParamObject);
         this.setState({});
     }
 
@@ -58,7 +58,7 @@ class PostCommentReport extends React.Component {
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedDocumentComments(this.searchParamObject);
     }
 
     onStateOptionChange = (selectedOption) => {
@@ -85,7 +85,7 @@ class PostCommentReport extends React.Component {
                     page: "1"
                 }
         }
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedDocumentComments(this.searchParamObject);
         this.setState({});
     }
 
@@ -95,17 +95,17 @@ class PostCommentReport extends React.Component {
             closeModal();
             closeModal();
             this.reloadList();
-            store.dispatch(post_ResolveAPostCommentReset());
+            store.dispatch(post_ResolveADocumentCommentReset());
             openBLModal({ type: "success", text: "Xử lý bình luận thành công!" });
         }
         if (!this.props.isListLoading && this.props.reportedCommentsList) {
             this.reportedCommentsList = this.props.reportedCommentsList.map((reportedComment) => {
                 return <div className="item-container">
 
-                    <PostReportedCommentInfo
-                        documentID={reportedComment.id}
+                    <ReportedCommentInfo
+                        id={reportedComment.id}
+                        documentID={reportedComment.docID}
                         commentId={reportedComment.commentID}
-                        postID={reportedComment.postID}
                         postTitle={reportedComment.postTitle}
                         content={reportedComment.content}
                         reporters={reportedComment.reporters}
@@ -119,10 +119,9 @@ class PostCommentReport extends React.Component {
                         authorAvatarURL={"https://ziclife.com/wp-content/uploads/2020/08/cute-profile-picture-32.jpg"}
                         authorID={""}
                         authorDisplayName={"Nguyễn Văn Đông"}
-
                     />
 
-                    <PostCommentReportReactionbar documentID={reportedComment.id} />
+                    <DocumentCommentReportReactionbar documentID={reportedComment.id} />
                 </div>
             })
         }
@@ -131,9 +130,9 @@ class PostCommentReport extends React.Component {
             <div className="left-sidebar-layout" >
                 <AdminSidebar />
                 <div className="content-layout">
-                    <Titlebar title="QUẢN LÝ BÀI VIẾT" />
+                    <Titlebar title="QUẢN LÝ TÀI LIỆU" />
                     <div className="content-container">
-                        <PostManagementNavBar />
+                        <DocumentManagementNavBar />
 
                         <div />
                         <div className="filter-container j-c-space-between">
@@ -154,7 +153,7 @@ class PostCommentReport extends React.Component {
                                         options={resolveStateOptions}
                                         placeHolder="Tất cả"
                                         onOptionChanged={(selectedOption) => this.onStateOptionChange(selectedOption)}
-                                        comboboxId="pcrmrsf-combobox" //post comment report management resolve state filter 
+                                        comboboxId="dcrmrsf-combobox" //document comment report management resolve state filter 
                                     ></Combobox>
                                 </div>
                             </div>
@@ -185,18 +184,18 @@ class PostCommentReport extends React.Component {
 const mapStateToProps = (state) => {
     return {
         //pending posts list
-        reportedCommentsList: state.postComment.reportedPostComments.data,
-        isListLoading: state.postComment.reportedPostComments.isLoading,
-        totalPages: state.postComment.reportedPostComments.totalPages,
-        totalElements: state.postComment.reportedPostComments.totalElements,
+        reportedCommentsList: state.documentComment.reportedDocumentComments.data,
+        isListLoading: state.documentComment.reportedDocumentComments.isLoading,
+        totalPages: state.documentComment.reportedDocumentComments.totalPages,
+        totalElements: state.documentComment.reportedDocumentComments.totalElements,
 
         //handle action resolve a report
-        isHaveResolved: state.postComment.isHaveResolved
+        isHaveResolved: state.documentComment.isHaveResolved
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getReportedPostComments
+    getReportedDocumentComments
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostCommentReport));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentCommentReport));

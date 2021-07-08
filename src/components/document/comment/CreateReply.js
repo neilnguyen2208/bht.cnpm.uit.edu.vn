@@ -41,7 +41,7 @@ class CreateReply extends React.Component {
 
   createReply = () => {
     if (getCKEInstance(this.props.componentId))
-      authRequest.post(`/posts/comments/${this.props.commentId}`, {
+      authRequest.post(`/documents/comments/${this.props.commentId}`, {
         content: getCKEInstance(this.props.componentId).getData()
       }).then(response => {
 
@@ -89,9 +89,7 @@ class CreateReply extends React.Component {
               </div>
             </div>
           </div>
-          <div style={{ height: "0px", width: "0px" }} >
-            <div className="triangle-with-shadow reply" />
-          </div>
+         
 
         </div>
       </RequireLogin >

@@ -88,9 +88,6 @@ class CreateReply extends React.Component {
               </div>
             </div>
           </div>
-          {/* <div style={{ height: "0px", width: "0px" }} >
-            <div className="triangle-with-shadow reply" />
-          </div> */}
 
         </div>
       </RequireLogin >

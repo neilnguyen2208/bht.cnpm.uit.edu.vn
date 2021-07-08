@@ -88,7 +88,7 @@ class Reply extends React.Component {
   }
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "REPORT_COMMENT") {
-      openBigModal("report-comment", { id: this.props.replyId })
+      openBigModal("report-post-comment", { id: this.props.replyId })
     }
 
     if (selectedItem.value === "EDIT_COMMENT") {
@@ -256,9 +256,7 @@ class Reply extends React.Component {
             </div>
           </div>
         </div>
-        <div style={{ height: "0px", width: "0px" }} >
-          <div className="triangle-with-shadow reply" />
-        </div>
+        
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}
       </div>

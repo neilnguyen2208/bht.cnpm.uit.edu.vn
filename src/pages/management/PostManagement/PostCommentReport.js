@@ -12,11 +12,11 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
 // import PostManagementNavbar from './PostManagementNavbar'
-import PostCommentReportReactionbar from 'components/post/comment/PostReportedCommentReactionbar'
+import ReportedCommentReactionbar from 'components/post/comment/ReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 import { post_ResolveAPostCommentReset } from 'redux/actions/postCommentAction';
-import PostReportedCommentInfo from 'components/post/comment/PostReportedCommentInfo'
+import ReportedCommentInfo from 'components/post/comment/ReportedCommentInfo'
 import PostManagementNavBar from './PostManagementNavbar';
 import Combobox from 'components/common/Combobox/Combobox';
 
@@ -102,7 +102,7 @@ class PostCommentReport extends React.Component {
             this.reportedCommentsList = this.props.reportedCommentsList.map((reportedComment) => {
                 return <div className="item-container">
 
-                    <PostReportedCommentInfo
+                    <ReportedCommentInfo
                         id={reportedComment.id}
                         commentId={reportedComment.commentID}
                         postID={reportedComment.postID}
@@ -122,7 +122,7 @@ class PostCommentReport extends React.Component {
 
                     />
 
-                    <PostCommentReportReactionbar id={reportedComment.id} />
+                    <ReportedCommentReactionbar id={reportedComment.id} />
                 </div>
             })
         }

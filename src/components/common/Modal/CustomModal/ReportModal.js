@@ -15,6 +15,9 @@ import { reportAPost } from 'redux/services/postServices'
 import { reportADocument } from 'redux/services/documentServices'
 import { reportAPostComment } from 'redux/services/postCommentServices'
 import { reportAnExercise } from 'redux/services/courseServices';
+import { reportAnExerciseComment } from 'redux/services/exerciseCommentServices';
+import { reportADocumentComment } from 'redux/services/documentCommentServices';
+
 import info_icon from 'assets/icons/24x24/info_icon_24x24.png'
 
 class ReportModal extends React.Component {
@@ -43,11 +46,25 @@ class ReportModal extends React.Component {
         this.reportService = this.props.reportAnExercise;
         break;
       }
-      case "COMMENT":
+      case "POST_COMMENT": {
         this.reportTitle = "Báo cáo bình luận";
-        this.reportTitle = "BÁO CÁO BÌNH LUẬN";
+        this.bigModalTitle = "BÁO CÁO BÌNH LUẬN";
         this.reportService = this.props.reportAPostComment;
         break;
+      }
+      case "DOCUMENT_COMMENT":
+        {
+          this.reportTitle = "Báo cáo bình luận";
+          this.bigModalTitle = "BÁO CÁO BÌNH LUẬN";
+          this.reportService = this.props.reportADocumentComment;
+          break;
+        }
+      case "EXERCISE_COMMENT": {
+        this.reportTitle = "Báo cáo bình luận";
+        this.bigModalTitle = "BÁO CÁO BÌNH LUẬN";
+        this.reportService = this.props.reportAnExerciseComment;
+        break;
+      }
       default: {
       }
     }
@@ -57,6 +74,10 @@ class ReportModal extends React.Component {
 
   handleSubmit = () => {
     this.REPORT_DTO.reasonIds = [];
+    this.REPORT_DTO = {
+      ...this.REPORT_DTO,
+      "feedback": document.getElementById("rprtmdl-txtr").value
+    }
     document.querySelectorAll("#rpmd-rsns .form-checkbox-container input:checked").forEach(item =>
       this.REPORT_DTO.reasonIds.push(item.value)
     )
@@ -86,13 +107,6 @@ class ReportModal extends React.Component {
       document.querySelector(".form-error-label-container .form-error-label").innerText = ""
   }
 
-  updateFeedback = (e) => {
-    this.REPORT_DTO = {
-      ...this.REPORT_DTO,
-      "feedback": e.target.value
-    }
-  }
-
   render() {
 
     return (
@@ -103,8 +117,6 @@ class ReportModal extends React.Component {
             <ModalTitlebar title={this.bigModalTitle} />
 
             {/* exercise report */}
-
-
             <div className="form-container pd-10px" id="rpmd-rsns">
               {this.props.type === "EXERCISE"
                 && <div style={{
@@ -147,8 +159,8 @@ class ReportModal extends React.Component {
                 <label className="form-label">Bạn có thể làm rõ lý do báo cáo không?</label>
                 <textarea className="text-area"
                   defaultValue={this.props.type === "EXERCISE" ? "Câu " + this.props.rank + ": " : ""}
-                  onChange={(e) => this.updateFeedback(e)}
-                  id="rpmd-txtr"
+                  onChange={() => { }}
+                  id="rprtmdl-txtr"
                   placeholder="Thông tin thêm ... " />
               </div>
 
@@ -176,9 +188,10 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   getReportReasons,
   reportAPost,
   reportADocument,
+  reportAnExercise,
   reportAPostComment,
-  reportAnExercise
-
+  reportAnExerciseComment,
+  reportADocumentComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportModal));

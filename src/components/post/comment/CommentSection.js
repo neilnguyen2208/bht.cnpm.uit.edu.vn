@@ -23,7 +23,7 @@ import store from 'redux/store';
 import { openBLModal } from 'redux/services/modalServices';
 import { delete_APostCommentReset, post_ReportAPostCommentReset, put_EditAPostCommentReset } from 'redux/actions/postCommentAction';
 import { getAPostStatisticByID } from 'redux/services/postServices'
-import { PostAction, PostCommentAction } from 'authentication/permission.config';
+import { PostAction, CommentAction } from 'authentication/permission.config';
 
 class CommentSection extends React.Component {
 

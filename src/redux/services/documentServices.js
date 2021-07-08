@@ -73,13 +73,21 @@ import {
     get_DocumentByIDForEditReset,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
-import { generateSearchParam, openInNewTab } from 'utils/urlUtils';
-import { openModal, openBLModal, closeModal } from 'redux/services/modalServices'
+import {
+    generateSearchParam,
+    openInNewTab
+} from 'utils/urlUtils';
+import {
+    openModal,
+    openBLModal,
+    closeModal
+} from 'redux/services/modalServices'
 
 //upload new document
 
 import { authRequest, multipartRequest } from 'utils/requestUtils'
 import { getUserStatisticById } from "./authServices";
+import { get_ADocumentStatisticFailure, get_ADocumentStatisticReset, get_ADocumentStatisticSuccess } from "redux/actions/documentCommentAction";
 
 export function getManagementDocuments(searchParamObject) {
     return dispatch => {
@@ -91,22 +99,32 @@ export function getManagementDocuments(searchParamObject) {
                 let IDarr = '';
                 response.data.docSummaryWithStateDTOs.map(item => IDarr += item.docSummary.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
-                    .then(result_2 => {
+                    .then(response_2 => {
                         //merge summary array and statistic array
-                        let finalResult = [];
+                        let result_2 = [];
+
                         for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
-                            finalResult.push({
+                            result_2.push({
                                 docState: result_1.docSummaryWithStateDTOs[i].docState,
                                 ...result_1.docSummaryWithStateDTOs[i].docSummary,
-                                ...(result_2.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
                             });
                         }
-                        console.log(finalResult);
-                        dispatch(get_ManagementDocumentsSuccess({
-                            docSummaryWithStateDTOs: finalResult,
-                            totalPages: result_1.totalPages,
-                            totalElements: result_1.totalElements
-                        }))
+
+                        authRequest.get(`/documents/actionAvailable?docIDs=${IDarr}`).then(response_3 => {
+                            let finalResult = [];
+                            for (let i = 0; i < result_2.length; i++) {
+                                finalResult.push({
+                                    ...result_2[i],
+                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                });
+                            }
+                            dispatch(get_ManagementDocumentsSuccess({
+                                docSummaryWithStateDTOs: finalResult,
+                                totalPages: result_1.totalPages,
+                                totalElements: result_1.totalElements
+                            }))
+                        }).catch(() => get_ManagementDocumentsFailure())
                     }).catch(() => get_ManagementDocumentsFailure())
             })
             .catch(error => {
@@ -185,6 +203,7 @@ export function getReportedDocuments(searchParamObject) {
                 response.data.docReportDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
+
                         //merge summary array and statistic array
                         let finalResult = [];
                         for (let i = 0; i < result_1.docReportDTOs.length; i++) {
@@ -215,16 +234,26 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                     .then(result => {
                         //merge summary array and statistic array
-                        let finalResult = [];
+                        let result_2 = [];
                         for (let i = 0; i < result_1.docSummaryWithStateAndFeedbackDTOs.length; i++) {
-                            finalResult.push({
+                            result_2.push({
                                 ...result_1.docSummaryWithStateAndFeedbackDTOs[i],
                                 ...(result.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateAndFeedbackDTOs[i].id)),
 
                             });
                         }
-                        console.log(finalResult);
-                        dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                        authRequest.get(`/documents/actionAvailable?docIDs=${IDarr}`).then(response_3 => {
+                            let finalResult = [];
+                            for (let i = 0; i < result_2.length; i++) {
+                                finalResult.push({
+                                    ...result_2[i],
+                                    ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
+                                });
+                            }
+
+                            dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+                        })
+                        console.log(result_2);
                     }).catch(() => get_MyDocumentsFailure())
             })
             .catch(error => {
@@ -335,7 +364,15 @@ export function reactionADocument(docID, reactionType) {
             })
     }
 }
-
+export function getADocumentStatisticByID(id) {
+    return dispatch => {
+        dispatch(get_ADocumentStatisticReset())
+        authRequest.get(`/documents/statistics?docIDs=${id}`)
+            .then(response_1 => {
+                dispatch(get_ADocumentStatisticSuccess(response_1.data[0]))
+            }).catch(error => dispatch(get_ADocumentStatisticFailure(error)))
+    }
+}
 export function getDocumentById(id) {
     return dispatch => {
         dispatch(get_DocumentByIDReset())
@@ -352,12 +389,11 @@ export function getDocumentById(id) {
 
                 authRequest.get(`/documents/statistics?docIDs=${result_1.id}`)
                     .then(response_2 => {
-
-                        console.log({ ...result_1, ...response_2.data[0] });
-                        dispatch(get_DocumentByIDSuccess({
-                            ...result_1, ...response_2.data[0],
-                        })
-                        ).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
+                        authRequest.get(`/documents/actionAvailable?docIDs=${result_1.id}`).then(response_3 => {
+                            dispatch(get_DocumentByIDSuccess({
+                                ...result_1, ...response_2.data[0], ...response_3.data[0]
+                            }));
+                        }).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
                     }).catch(error => { dispatch(get_DocumentByIDFailure(error)) })
             })
     }

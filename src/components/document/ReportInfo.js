@@ -19,11 +19,26 @@ export default class ReportInfo extends React.PureComponent {
             isShowMore: false
         }
     }
+
     componentDidMount() {
         const DOMPurify = createDOMPurify(window);
         const clean = DOMPurify.sanitize(this.props.description);
         if (document.querySelector(`#rprt-dcmnt-ctnt-${this.props.documentID}`))
             document.querySelector(`#rprt-dcmnt-ctnt-${this.props.documentID}`).innerHTML = clean;
+    }
+
+    onFileCollapseIconClick = (fileId) => {
+        let ele = document.getElementById("dcm-file-preview-" + fileId);
+        let btnEle = document.getElementById("dcm-file-preview-btn-" + fileId);
+        if (ele.style.display === "none") {
+            ele.style.display = "block";
+            btnEle.innerText = "Ẩn xem trước";
+        }
+        else
+            if (ele.style.display === "block") {
+                ele.style.display = "none";
+                btnEle.innerText = "Xem trước";
+            }
     }
 
     render() {
@@ -115,7 +130,7 @@ export default class ReportInfo extends React.PureComponent {
                         })}
                     </div>
 
-                    {/* {this.props.feedbacks.length > 0 ? <div>
+                    {this.props.feedbacks && this.props.feedbacks.length > 0 ? <div>
                         <div className="d-flex mg-top-10px">
                             <div>Nội dung báo cáo:</div>
                         </div>
@@ -126,52 +141,50 @@ export default class ReportInfo extends React.PureComponent {
                         </div>
                     </div>
                         : <></>
-                    } */}
+                    }
                 </div>
 
                 <label className="form-label mg-top-10px" >Nội dung tài liệu:</label>
-                {/*post-summary-show class to show post detail in summary, show-less: show less content */}
-                {
-                    this.state.isShowMore ?
-                        <div className="post-summary-show show-more">
-                            {
-                                this.props.imageURL ?
-                                    <div >
-                                        <div className="decoration-line mg-top-10px" />
-                                        <img className="image" src={this.props.imageURL} alt="" />
-                                        <div className="ck-editor-output" id={"rprt-dcmnt-ctnt-" + this.props.documentID} />
-                                    </div>
-                                    :
-                                    <div className="summary-text">
-                                        <div className="ck-editor-output" id={"rprt-dcmnt-ctnt-" + this.props.documentID} />
-                                    </div>
-                            }
+
+                <div className="post-summary-show">
+                    {
+                        this.props.imageURL ?
+                            <div >
+                                <div className="decoration-line mg-top-10px" />
+                                <img className="image" src={this.props.imageURL} alt="" />
+                                <div className="ck-editor-output" id={"rprt-dcmnt-ctnt-" + this.props.documentID} />
+                            </div>
+                            :
+                            <div className="summary-text">
+                                <div className="ck-editor-output" id={"rprt-dcmnt-ctnt-" + this.props.documentID} />
+                            </div>
+                    }
+                </div>
+                {this.props.docFileUploadDTOs.map(file => {
+                    return <div key={file.id}>
+                        <div className="file-name-container">
+                            <div className="d-flex" style={{ lineHeight: "24px" }}>
+                                <strong style={{ marginRight: "5px" }}>{file.fileName ? file.fileName : "Tài liệu giải thuật nâng cao.pdf"}</strong> -
+                                <div style={{ marginLeft: "5px" }}> {Math.round(file.fileSize / 1048576 * 100) / 100 + "MB"}
+                                </div>
+                            </div>
+                            <div>
+                                {/* <button className="blue-button" onClick={() => this.onDownloadButtonClick(file.id)}>Tải xuống</button> */}
+                                <button className="white-button mg-left-5px" id={"dcm-file-preview-btn-" + file.id} onClick={() => this.onFileCollapseIconClick(file.id)}>Xem trước</button>
+                            </div>
                         </div>
-                        :
-                        <div className="post-summary-show show-less">
-                            {
-                                this.props.imageURL ?
-                                    <div >
-                                        <div className="decoration-line mg-top-10px" />
-                                        <img className="image" src={this.props.imageURL} alt="" />
-                                        <div className="ck-editor-output" id={"rprt-dcmnt-ctnt-" + this.props.documentID} />
-                                    </div>
-                                    :
-                                    <div className="summary-text">
-                                        <div className="ck-editor-output" id={"rprt-dcmnt-ctnt-" + this.props.documentID} />
-                                    </div>
 
-                            }
+                        <div style={{ display: "none" }} id={"dcm-file-preview-" + file.id}>
+                            <div className="d-flex">
+                                <iframe className="if-container"
+                                    src={file.previewURL}
+                                    title={`doc-if-${file.id}`}
+                                    sandbox="allow-scripts allow-same-origin"
+                                ></iframe>
+                            </div>
                         </div>
-                }
-
-                {
-                    this.state.isShowMore ?
-                        <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = false; this.setState({ isShowMore: false }) }}>Ẩn bớt</div>
-                        :
-                        <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = true; this.setState({ isShowMore: true }) }}>Xem thêm</div>
-                }
-
+                    </div>
+                })}
             </div >
 
         );

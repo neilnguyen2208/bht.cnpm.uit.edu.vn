@@ -50,7 +50,20 @@ export const PostAction = {
     StickToTop: "sticktotop",
 }
 
-export const PostCommentAction = {
+export const DocumentAction = {
+    Read: "read",
+    Save: "save",
+    React: "react",
+    Update: "update",
+    Delete: "delete",
+    Report: "report",
+    Comment: "comment",
+    Highlight: "highlight",
+    Unhighlight: "unhighlight",
+    StickToTop: "sticktotop",
+}
+
+export const CommentAction = {
     Read: "read",
     Save: "save",
     Like: "like",

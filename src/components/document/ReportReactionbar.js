@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import { resolveADocument } from 'redux/services/documentServices';
+import { resolveADocument } from 'redux/services/documentServices';
 
 //styles
 import 'components/styles/Reactionbar.scss'
@@ -17,7 +17,7 @@ class ReportReactionbar extends React.Component {
   handleResolve = () => {
     openModal("form", {
       id: `rsadcm-form-modal`,//resolve a document
-      title: `XỬ LÝ BÀI VIẾT`,
+      title: `XỬ LÝ TÀI LIỆU`,
       formId: `rsadcm-form`,
       inputs:
         [
@@ -29,7 +29,7 @@ class ReportReactionbar extends React.Component {
             options: [{ id: 1, name: "Giữ lại", value: "KEEP" }, { id: 2, name: "Xoá", value: "DELETE" }],
             selectedOptionID: 1,
             validation: true,
-            key: "documentReportActionType",
+            key: "docReportActionType",
             onOptionChanged: (option) => {
               return option.value;
             }
@@ -44,7 +44,7 @@ class ReportReactionbar extends React.Component {
             key: "resolvedNote"
           },
         ],
-      
+
       validationCondition: {
         form: `#rsadcm-form`,
         rules: [
@@ -68,6 +68,8 @@ class ReportReactionbar extends React.Component {
   }
 
   onConfirmResolve = (resolveDTO) => {
+    if (!resolveDTO.docReportActionType)
+      resolveDTO.docReportActionType = "KEEP";
     this.props.resolveADocument(this.props.documentID, resolveDTO)
   }
 
@@ -87,7 +89,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  // resolveADocument
+  resolveADocument
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportReactionbar));

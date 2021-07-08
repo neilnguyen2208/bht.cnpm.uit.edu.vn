@@ -1,7 +1,7 @@
 import trash_icon from 'assets/icons/24x24/trash_icon_24x24.png'
 import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
-import { Post, PostCommentAction } from 'authentication/permission.config'
+import { Post, CommentAction } from 'authentication/permission.config'
 
 const commentMenu = [
   {
@@ -11,7 +11,7 @@ const commentMenu = [
     value: "REPORT_COMMENT",
     permissions: [Post.Comment.Report], //base on permission
     showOnPermission: false,
-    requiredAction: PostCommentAction.Report
+    requiredAction: CommentAction.Report
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const commentMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostCommentAction.Delete
+    requiredAction: CommentAction.Delete
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const commentMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostCommentAction.Update
+    requiredAction: CommentAction.Update
   },
 ]
 

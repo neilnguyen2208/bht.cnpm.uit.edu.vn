@@ -149,7 +149,7 @@ class PostSummary extends React.Component {
               {this.props.authorDisplayName}
             </Link>
 
-            {this.props.type === itemType.mySelf || this.props.type === itemType.approval ?
+            {this.props.type === itemType.mySelf || this.props.type === itemType.approval || this.props.type === itemType.management ?
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>

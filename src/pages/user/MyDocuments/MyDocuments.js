@@ -191,8 +191,9 @@ class MyDocuments extends React.Component {
                             categoryID={item.categoryID}
                             subjectName={item.subjectName}
                             subjectID={item.subjectID}
-
+                            availableActions={item.availableActions}
                             title={item.title}
+                            useAction
                             feedback={item.feedback}
                             description={item.description}
                             imageURL={item.imageURL}
@@ -200,11 +201,12 @@ class MyDocuments extends React.Component {
                             approveState={item.docState}
                             popUpMenuPrefix="mdpu"   //stand for my doc popup 
                             authorAvatarURL={item.authorAvatarURL}
-                            //
                             reloadList={() => this.reloadList()}
                         />
                         <DocumentNormalReactionbar
                             documentID={item.id}
+                            availableActions={item.availableActions}
+                            useAction
                             likeCount={item.likeCount ? item.likeCount : 0}
                             dislikeCount={item.dislikeCount ? item.dislikeCount : 0}
                             docReactionType={item.docReactionType ? item.docReactionType : "NONE"}

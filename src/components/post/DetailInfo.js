@@ -144,7 +144,12 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
+          <PopupMenu
+            onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
+            availableActions={this.props.availableActions}
+            useAction
+            items={basicMenu}
+             id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
         </div>
 
         {cover}

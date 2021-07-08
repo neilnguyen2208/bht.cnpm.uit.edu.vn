@@ -14,9 +14,9 @@ class FormFileUploader extends React.Component {
         this.state = { haveChoosenFiles: false }
 
         this.clientFiles = [
-            { rank: 1, file: null },
-            { rank: 2, file: null },
-            { rank: 3, file: null }
+            { rank: 1, file: null, isNew: true, name: "", id: "", },
+            { rank: 2, file: null, isNew: true, name: "", id: "" },
+            { rank: 3, file: null, isNew: true, name: "", id: "" }
         ];
 
         this.uploadResponses = [
@@ -26,6 +26,16 @@ class FormFileUploader extends React.Component {
         ];
 
         this.clientFileItems = <></>;
+        this.isFirstTimeLoaded = false;
+    }
+
+    componentDidMount() {
+        this.isFirstTimeLoaded = false;
+        this.clientFiles = [
+            { rank: 1, file: null, isNew: true, name: "", id: "", size: 0 },
+            { rank: 2, file: null, isNew: true, name: "", id: "", size: 0 },
+            { rank: 3, file: null, isNew: true, name: "", id: "", size: 0 }
+        ];
     }
 
     //add a file
@@ -57,7 +67,7 @@ class FormFileUploader extends React.Component {
 
         this.clientFileItems = this.clientFiles.map(fileItem => {
             if (fileItem.file !== null)
-                return this.renderAFile(fileItem.file, fileItem.rank)
+                return this.renderAFile(fileItem.file.name, fileItem.rank, fileItem.file.type, fileItem.file.size)
             return <></>;
         })
 
@@ -74,28 +84,28 @@ class FormFileUploader extends React.Component {
 
     }
 
-    uploadFile = (filesList) => {
-        //response for appending to current array
-        for (let i = 0; i < filesList.length; i++) {
+    // uploadFile = (filesList) => {
+    //     //response for appending to current array
+    //     for (let i = 0; i < filesList.length; i++) {
 
-            let fileData = new FormData();
-            fileData.append('file', filesList[i]);
+    //         let fileData = new FormData();
+    //         fileData.append('file', filesList[i]);
 
-            multipartRequest.post(`/documents/upload`, fileData)
-                .then(response => {
-                    this.uploadResponses[i] = { ...this.uploadResponses[i], success: true, haveLoaded: true };
-                    this.uploadResponses = [
-                        ...this.uploadResponses
-                    ];
-                })
-                .catch(error => {
-                    this.uploadResponses[i] = { ...this.uploadResponses[i], success: false, haveLoaded: true };
-                    this.uploadResponses = [
-                        ...this.uploadResponses
-                    ];
-                })
-        }
-    }
+    //         multipartRequest.post(`/documents/upload`, fileData)
+    //             .then(response => {
+    //                 this.uploadResponses[i] = { ...this.uploadResponses[i], success: true, haveLoaded: true };
+    //                 this.uploadResponses = [
+    //                     ...this.uploadResponses
+    //                 ];
+    //             })
+    //             .catch(error => {
+    //                 this.uploadResponses[i] = { ...this.uploadResponses[i], success: false, haveLoaded: true };
+    //                 this.uploadResponses = [
+    //                     ...this.uploadResponses
+    //                 ];
+    //             })
+    //     }
+    // }
 
     handleOverMaxSize = () => {
         //xu ly sau
@@ -113,11 +123,11 @@ class FormFileUploader extends React.Component {
 
     }
 
-    renderAFile = (fileItem, fileRank) => {
+    renderAFile = (fileName, fileRank, fileType, fileSize) => {
         return <div className="file-list-item" key={fileRank}>
             <div className='form-tip-label'>
-                Tên file: <strong>{fileItem.name}</strong>
-                <br />Kích thước: <strong>  {Math.round(fileItem.size / 1048576 * 100) / 100 + "MB"}</strong>, loại file: {fileItem.type}
+                Tên file: <strong>{fileName}</strong>
+                <br />Kích thước: <strong>  {Math.round(fileSize / 1048576 * 100) / 100 + "MB"}</strong>, loại file: {fileType}
             </div>
             <div style={{
                 display: "flex",
@@ -131,11 +141,12 @@ class FormFileUploader extends React.Component {
     deleteAFile = (fileRank) => {
         //update array
         this.clientFiles[fileRank - 1].file = null;
-
+        this.clientFiles[fileRank - 1].isNew = true;
+        
         //update UI
         this.clientFileItems = this.clientFiles.map(fileItem => {
             if (fileItem.file !== null)
-                return this.renderAFile(fileItem.file, fileItem.rank)
+                return this.renderAFile(fileItem.file, fileItem.rank);
             return <></>;
         })
 
@@ -177,8 +188,25 @@ class FormFileUploader extends React.Component {
         //reset choosen state if has choosen a file
         if (this.state.haveChoosenFiles) { this.resetUploadState() }
 
-        //check all file and responses id done
-        // if (this.checkUploadDone()) { console.log("All file uploaded") };
+        //initial UI 
+        if (this.props.data && this.props.data.length > 0 && !this.isFirstTimeLoaded) {
+            for (let i = 0; i < this.props.data.length; i++) {
+                this.clientFiles[i].isNew = false;
+                this.clientFiles[i].name = this.props.data[i].fileName;
+                this.clientFiles[i].id = this.props.data[i].id;
+                this.clientFiles[i].size = this.props.data[i].fileSize;
+                this.clientFiles[i].type = "pdf";
+            }
+
+            this.clientFileItems = this.clientFiles.map(fileItem => {
+                if (fileItem.id !== "")
+                    return this.renderAFile(fileItem.name, fileItem.rank, fileItem.type, fileItem.size)
+                return <></>;
+            })
+
+            this.isFirstTimeLoaded = true;
+            this.setState({})
+        }
 
         return (
             <div>

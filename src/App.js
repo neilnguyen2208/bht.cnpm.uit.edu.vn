@@ -102,24 +102,19 @@ const App = () => {
                         <RequireLoginRoute exact path="/admin/post-management/report" component={PostReportManagement} permissions={[Access.Admin]} />
                         <RequireLoginRoute exact path="/admin/post-management/approval" component={PostApproving} permissions={[Access.Admin]} />
 
-                        <Route exact path="/admin/document-management/approval" component={DocumentApproving} />
-                        <Route exact path="/admin/document-management" component={DocumentManagement} />
-                        <Route exact path="/admin/document-management/report" component={DocumentReportManagement} />
+                        <RequireLoginRoute exact path="/admin/document-management/approval" component={DocumentApproving} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/document-management" component={DocumentManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/document-management/report" component={DocumentReportManagement} permissions={[Access.Admin]} />
 
-                        <Route exact path="/admin/page-notification" component={NotificationManagement} />
-                        <Route exact path="/admin/category-management" component={CategoryManagement} />
-                        <Route exact path="/admin/activity-management" component={ActivityManagement} />
-                        <Route exact path="/admin/user-management/:id" component={AdminLayout} />
-                        <Route exact path="/admin/statistic" component={Statistic} />
-                        <Route exact path="/admin/courses-management" component={CoursesManagement} />
-                        <Route exact path="/admin/courses-management/report" component={ExerciseReportManagement} />
-                        <Route exact path="/admin/post-management/comment-report" component={PostCommentReport} />
-                        <Route exact path="/admin/document-management/comment-report" component={DocumentCommentReport} />
-
-
-                        {/* verify email url */}
-                        {/* <Route exact path="/demo-detail-loader" component={DocPostDetailLoader} /> */}
-                        {/* <Route exact path="/demo-comment" component={CommentModal} /> */}
+                        <RequireLoginRoute exact path="/admin/page-notification" component={NotificationManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/category-management" component={CategoryManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/activity-management" component={ActivityManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/user-management/:id" component={AdminLayout} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/statistic" component={Statistic} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/courses-management" component={CoursesManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/courses-management/report" component={ExerciseReportManagement} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/post-management/comment-report" component={PostCommentReport} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/document-management/comment-report" component={DocumentCommentReport} permissions={[Access.Admin]} />
 
                     </Switch>
                     <Footer />

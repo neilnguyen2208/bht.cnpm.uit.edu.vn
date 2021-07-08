@@ -98,6 +98,20 @@ class DocumentApproving extends React.Component {
         this.setState({});
     }
 
+    onFileCollapseIconClick = (fileId) => {
+        let ele = document.getElementById("dcm-file-preview-" + fileId);
+        let btnEle = document.getElementById("dcm-file-preview-btn-" + fileId);
+        if (ele.style.display === "none") {
+            ele.style.display = "block";
+            btnEle.innerText = "Ẩn xem trước";
+        }
+        else
+            if (ele.style.display === "block") {
+                ele.style.display = "none";
+                btnEle.innerText = "Xem trước";
+            }
+    }
+
     render() {
         //combobox
 
@@ -159,6 +173,8 @@ class DocumentApproving extends React.Component {
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
+                        useAction
+                        availableActions={["update", "delete"]}
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
                         subjectName={item.subjectName}
@@ -168,12 +184,35 @@ class DocumentApproving extends React.Component {
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.docState}
-                        popUpMenuPrefix="mdpu"   //stand for my doc popup 
+                        popUpMenuPrefix="dapu"   //stand for document approving popup 
                         authorAvatarURL={item.authorAvatarURL}
-                        //
+                        docFileUploadDTOs={item.docFileUploadDTOs}
                         reloadList={() => this.reloadList()}
                     />
+                    {item.docFileUploadDTOs.map(file => {
+                        return <div key={file.id}>
+                            <div className="file-name-container">
+                                <div className="d-flex" style={{ lineHeight: "24px" }}>
+                                    <strong style={{ marginRight: "5px" }}>{file.fileName ? file.fileName : "Tài liệu giải thuật nâng cao.pdf"}</strong> -
+                                    <div style={{ marginLeft: "5px" }}> {Math.round(file.fileSize / 1048576 * 100) / 100 + "MB"}
+                                    </div>
+                                </div>
+                                <div>
+                                    <button className="white-button mg-left-5px" id={"dcm-file-preview-btn-" + file.id} onClick={() => this.onFileCollapseIconClick(file.id)}>Xem trước</button>
+                                </div>
+                            </div>
 
+                            <div style={{ display: "none" }} id={"dcm-file-preview-" + file.id}>
+                                <div className="d-flex">
+                                    <iframe className="if-container"
+                                        src={file.previewURL}
+                                        title={`doc-if-${file.id}`}
+                                        sandbox="allow-scripts allow-same-origin"
+                                    ></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    })}
                     <RequestReactionbar
                         documentID={item.id}
                     />

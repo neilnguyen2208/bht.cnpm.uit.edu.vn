@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //services
-import { getAPostComments } from "redux/services/postCommentServices"
+import { getADocumentComments } from "redux/services/documentCommentServices"
 
 //styles
 import 'components/styles/Label.scss'
@@ -21,26 +21,26 @@ import CommentLoader from 'components/common/Loader/CommentLoader';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 import store from 'redux/store';
 import { openBLModal } from 'redux/services/modalServices';
-import { delete_APostCommentReset, post_ReportAPostCommentReset, put_EditAPostCommentReset } from 'redux/actions/postCommentAction';
-import { getAPostStatisticByID } from 'redux/services/postServices'
-import { PostAction, PostCommentAction } from 'authentication/permission.config';
+import { delete_ADocumentCommentReset, post_ReportADocumentCommentReset, put_EditADocumentCommentReset } from 'redux/actions/documentCommentAction';
+import { getADocumentStatisticByID } from 'redux/services/documentServices'
+import { DocumentAction, CommentAction } from 'authentication/permission.config';
 
 class CommentSection extends React.Component {
 
   componentDidMount() {
-    this.props.getAPostComments(this.props.match.params.id, 0);
+    this.props.getADocumentComments(this.props.match.params.id, 0);
   }
 
   handleEditorChange = () => { }
 
   onPageChange = (pageNumber) => {
     this.pageNumber = pageNumber;
-    this.props.getAPostComments(this.props.match.params.id, pageNumber - 1);
+    this.props.getADocumentComments(this.props.match.params.id, pageNumber - 1);
     this.setState({})
   }
 
   reloadList = () => {
-    this.props.getAPostComments(this.props.match.params.id, this.pageNumber - 1);
+    this.props.getADocumentComments(this.props.match.params.id, this.pageNumber - 1);
   }
 
   render() {
@@ -48,20 +48,20 @@ class CommentSection extends React.Component {
     let commentsList = <></>;
     if (this.props.isHaveDeleted) {
       this.reloadList()
-      this.props.getAPostStatisticByID(this.props.id);
+      this.props.getADocumentStatisticByID(this.props.id);
       openBLModal({ type: "success", text: "Xoá bình luận thành công!" });
-      store.dispatch(delete_APostCommentReset())
+      store.dispatch(delete_ADocumentCommentReset())
     }
 
     if (this.props.isHaveEdited) {
       this.reloadList();
       openBLModal({ type: "success", text: "Chỉnh sửa bình luận thành công!" });
-      store.dispatch(put_EditAPostCommentReset())
+      store.dispatch(put_EditADocumentCommentReset())
     }
 
     if (this.props.isHaveReported) {
       openBLModal({ type: "success", text: "báo cáo bình luận thành công!" });
-      store.dispatch(post_ReportAPostCommentReset())
+      store.dispatch(post_ReportADocumentCommentReset())
     }
 
     if (!this.props.isLoading && this.props.commentsList)
@@ -98,15 +98,15 @@ class CommentSection extends React.Component {
     return (
       // cst:comment section title
       <div className="comments-container">
-        {this.props.postData && !this.props.isPostLoading ?
+        {this.props.documentData && !this.props.isDocumentLoading ?
           <div>
-            <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.postData.commentCount}   Bình luận
+            <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.documentData.commentCount}   Bình luận
             </div>
           </div>
           : <></>
         }
-        {this.props.postAvailableActions.includes(PostAction.Comment) &&
-          <CreateComment postID={this.props.id} />}
+        {this.props.docAvailableActions.includes(DocumentAction.Comment) &&
+          <CreateComment documentID={this.props.id} />}
         {!this.props.isLoading && this.props.commentsList ?
           <div>
             {commentsList}
@@ -125,23 +125,23 @@ class CommentSection extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    totalPages: state.postComment.currentPostComments.totalPages,
-    totalElements: state.postComment.currentPostComments.totalElements,
-    commentsList: state.postComment.currentPostComments.data,
-    isLoadDone: state.postComment.currentPostComments.isLoadDone,
-    isLoading: state.postComment.currentPostComments.isLoading,
-    isPostLoading: state.post.currentPost.isLoading,
-    postData: state.post.currentPost.data,
-    isHaveDeleted: state.postComment.isHaveDeleted,
-    isHaveEdited: state.postComment.isHaveEdited,
-    isHaveReported: state.postComment.isHaveReported,
+    totalPages: state.documentComment.currentDocumentComments.totalPages,
+    totalElements: state.documentComment.currentDocumentComments.totalElements,
+    commentsList: state.documentComment.currentDocumentComments.data,
+    isLoadDone: state.documentComment.currentDocumentComments.isLoadDone,
+    isLoading: state.documentComment.currentDocumentComments.isLoading,
+    isDocumentLoading: state.document.currentDocument.isLoading,
+    documentData: state.document.currentDocument.data,
+    isHaveDeleted: state.documentComment.isHaveDeleted,
+    isHaveEdited: state.documentComment.isHaveEdited,
+    isHaveReported: state.documentComment.isHaveReported,
 
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getAPostComments,
-  getAPostStatisticByID
+  getADocumentComments,
+  getADocumentStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentSection));

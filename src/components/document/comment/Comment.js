@@ -27,7 +27,7 @@ import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration.js';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils.js';
 import { authRequest } from 'utils/requestUtils.js';
-import { deleteAPostComment, editAPostComment } from 'redux/services/postCommentServices'
+import { deleteADocumentComment, editADocumentComment } from 'redux/services/documentCommentServices'
 
 // const validationCondition = {
 //   form: '#create-comment-form',
@@ -89,7 +89,7 @@ class Comment extends React.Component {
           text: "Hành động này không cần phê duyệt và không thể hoàn tác.",
           confirmText: "Xác nhận",
           cancelText: "Huỷ",
-          onConfirm: () => { this.props.deleteAPostComment(this.props.commentId); closeModal(); }
+          onConfirm: () => { this.props.deleteADocumentComment(this.props.commentId); closeModal(); }
         })
     }
   }
@@ -110,7 +110,7 @@ class Comment extends React.Component {
 
   onSubmitCommentClick = () => {
     // if (styleFormSubmit(validationCondition)) {
-    this.props.editAPostComment(this.props.commentId, { content: getCKEInstance("edit-comment-" + this.props.commentId).getData() });
+    this.props.editADocumentComment(this.props.commentId, { content: getCKEInstance("edit-comment-" + this.props.commentId).getData() });
     // }
   }
 
@@ -144,12 +144,12 @@ class Comment extends React.Component {
 
   loadAllReply = (createdReplyId) => {  //not use redux in this case
     this.isReplyLoadDone = false;
-    authRequest.get(`/posts/comments/${this.props.commentId}/children`)
+    authRequest.get(`/documents/comments/${this.props.commentId}/children`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
         result_1.map(item => IDarr += item.id + ",") //tao ra mang id moi
-        authRequest.get(`/posts/comments/statistics?commentIDs=${IDarr}`)
+        authRequest.get(`/documents/comments/statistics?commentIDs=${IDarr}`)
           .then(response_2 => {
             //merge summary array and statistic array
             let result_2 = [];
@@ -168,7 +168,7 @@ class Comment extends React.Component {
               this.createdReplyId = createdReplyId;
             }
 
-            authRequest.get(`/posts/comments/actionAvailable?postCommentIDs=${IDarr}`).then(response_3 => {
+            authRequest.get(`/documents/comments/actionAvailable?docCommentIDs=${IDarr}`).then(response_3 => {
               let finalResult = [];
               for (let i = 0; i < result_2.length; i++) {
                 finalResult.push({
@@ -507,7 +507,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPostComment, editAPostComment
+  deleteADocumentComment, editADocumentComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comment));

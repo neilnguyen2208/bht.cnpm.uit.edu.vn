@@ -58,7 +58,10 @@ import {
     GET_DOCUMENTS_BY_FILTER_FAILURE,
     GET_DOCUMENT_BY_ID_FOR_EDIT_RESET,
     GET_DOCUMENT_BY_ID_FOR_EDIT_FAILURE,
-    GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS
+    GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS,
+    GET_A_DOCUMENT_STATISTIC_RESET,
+    GET_A_DOCUMENT_STATISTIC_SUCCESS,
+    GET_A_DOCUMENT_STATISTIC_FAILURE
 
 } from '../constants.js'
 
@@ -86,7 +89,11 @@ const initialState = {
     currentDocumentForEdit: {
         isLoading: false, data: {}, isLoadDone: false,
     },
-
+    documentStatistic: {
+        isLoadDone: false,
+        data: {},
+        error: ''
+    },
     pendingDocuments: {
         isLoading: false,
         data: [],
@@ -430,7 +437,27 @@ function DocReducer(state = initialState, action) {
             }
         }
 
+        case GET_A_DOCUMENT_STATISTIC_RESET: return {
+            ...state, documentStatistic: {
+                ...state.documentStatistic,
+                isLoadDone: false
+            }
+        }
 
+        case GET_A_DOCUMENT_STATISTIC_SUCCESS: return {
+            ...state, documentStatistic: {
+                data: action.payload.data,
+                isLoadDone: true
+            }
+        }
+
+        case GET_A_DOCUMENT_STATISTIC_FAILURE: return {
+            ...state, documentStatistic: {
+                ...state.documentStatistic,
+                isLoadDone: false,
+                error: action.payload
+            }
+        }
 
         default:
             return state;

@@ -18,7 +18,7 @@ import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
-import { Post, PostCommentAction } from 'authentication/permission.config';
+import { Post, CommentAction } from 'authentication/permission.config';
 import { formatNumber, timeAgo } from 'utils/miscUtils';
 
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -229,7 +229,7 @@ class Reply extends React.Component {
                   <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage}
                     availableActions={this.props.availableActions}
-                    requiredAction={PostCommentAction.Like}
+                    requiredAction={CommentAction.Like}
                     useAction={true}
                   >
                     <div className="like-btn-container"  >
@@ -240,7 +240,7 @@ class Reply extends React.Component {
                   <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}
                     availableActions={this.props.availableActions}
-                    requiredAction={PostCommentAction.Reply}
+                    requiredAction={CommentAction.Reply}
                     useAction={true}
                   >
                     <div className="comment-count-container">

@@ -40,6 +40,7 @@ import {
 } from 'utils/validationUtils'
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { SimpleCKEToolbarConfiguration } from "components/common/CustomCKE/CKEditorConfiguration";
+import FormFileUploader from "components/common/FormFileUploader/FormFileUploader";
 
 const validationCondition = {
     form: '#edit-document-form',
@@ -50,9 +51,9 @@ const validationCondition = {
         validation.isRequired('ed-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
         validation.isRequired('ed-document-cke', 'ckeditor', 'Nội dung tài liệu không được để trống'),
         validation.isRequired('ed-document-subject-combobox', 'combobox', 'Môn học không được để trống'),
-        validation.isRequired('cr-document-file-input', 'file-input', 'Tài liệu không được để trống!'),
-        validation.maxFileCount('cr-document-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
-        validation.maxFileSize('cr-document-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
+        // validation.isRequired('cr-document-file-input', 'file-input', 'Tài liệu không được để trống!'),
+        // validation.maxFileCount('cr-document-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
+        // validation.maxFileSize('cr-document-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
     ],
 }
 
@@ -123,6 +124,7 @@ class EditDocumentModal extends React.Component {
         this.isFirstLoad = false;
         this.isInstanceReady = false;
         this.tagQuickQueryResult = <></>;
+        this.filesList = [];
     }
 
     componentDidMount() {
@@ -162,26 +164,15 @@ class EditDocumentModal extends React.Component {
     }
 
     handleUploadBtnClick = () => {
-        let dom = document.createElement("DIV");
-        dom.innerHTML = this.state.EDIT_DOCUMENT_DTO.content;
-        let plain_text = (dom.textContent || dom.innerText);
-        let tmpSummary = '';
-        if (this.state.EDIT_DOCUMENT_DTO.content.length < 160) {
-            tmpSummary = plain_text;
-        }
-        else {
-            tmpSummary = plain_text.substring(0, 160);
-        }
-
         if (styleFormSubmit(validationCondition)) {
             openModal("confirmation",
                 {
-                    title: "Thay đổi tài liệu",
+                    title: "Cập nhật tài liệu",
                     text: "Hành động này cần phê duyệt và không thể hoàn tác.",
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editADocument(this.props.id, { ...this.state.EDIT_DOCUMENT_DTO, summary: tmpSummary + "" });
+                        this.props.editADocument(this.props.id, this.UPDATE_DOCUMENT_DTO);
                         closeModal(); //close confimation popup
                         this.closeModal(); //close edit document popup
                     }
@@ -391,6 +382,11 @@ class EditDocumentModal extends React.Component {
         store.dispatch(closeBigModal())
     }
 
+    onFileChange = (files) => {
+        this.filesList = files;
+        this.setState({});
+    }
+
     render() {
 
         if (!this.props.isCategoryLoading && this.props.categories) {
@@ -440,18 +436,23 @@ class EditDocumentModal extends React.Component {
             }
 
         //load lan dau tien hoac moi load xong thi gan data cho DTO
-        if (!this.props.isCurrentDocumentLoading && Object.keys(this.props.currentDocument).length > 0 && !this.isFirstLoad && this.isInstanceReady) {
+        if (!this.props.isCurrentDocumentLoading
+            && Object.keys(this.props.currentDocument).length > 0
+            && !this.isFirstLoad
+            && this.isInstanceReady) {
+
             this.isFirstLoad = true;
             this.props.currentDocument.tags.forEach((item, index) => {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
-            getCKEInstance('ed-document-cke').setData(this.props.currentDocument.content)
+
+            getCKEInstance('ed-document-cke').setData(this.props.currentDocument.description)
             this.setState({
                 EDIT_DOCUMENT_DTO: {
                     title: this.props.currentDocument.title,
                     tags: this.props.currentDocument.tags ? this.props.currentDocument.tags : [],
-                    content: this.props.currentDocument.content,
+                    description: this.props.currentDocument.description,
                     imageURL: this.props.currentDocument.imageURL,
                     categoryID: this.props.currentDocument.categoryID,
                     categoryName: this.props.currentDocument.categoryName,
@@ -461,15 +462,34 @@ class EditDocumentModal extends React.Component {
                     authorAvatarURL: this.props.currentDocument.authorAvatarURL,
                     id: this.props.currentDocument.id,
                     subjectID: this.props.currentDocument.subjectID,
-                    subjectName: this.props.currentDocument.subject
+                    subjectName: this.props.currentDocument.subject,
+                    docFileUploadDTOs: this.props.currentDocument.docFileUploadDTOs
+                },
 
-                }
-            })
+            });
+
+            let initFilesData = [];
+            for (let i = 0; i < this.props.currentDocument.docFileUploadDTOs.length; i++) {
+                this.filesList[i] = { rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id }
+                initFilesData.push({ rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id });
+            }
+
+            this.UPDATE_DOCUMENT_DTO = {
+                categoryID: this.props.currentDocument.categoryID,
+                subjectID: this.props.currentDocument.subjectID,
+                title: this.props.currentDocument.title,
+                description: this.props.currentDocument.description,
+                imageURL: this.props.currentDocument.imageURL,
+                publishDtm: "2021-07-08T00:24:38.794Z",
+                docFileUploadRequestDTOs: initFilesData,
+                tags: this.props.currentDocument.tags
+            }
         }
 
         //load xong thi cho hien thi body
-        if (this.props.currentDocument && !this.props.isCurrentDocumentLoading && document.getElementById('edit-document-body')) {
-
+        if (this.props.postDetailForEdit && !this.props.isCurrentDocumentLoading && document.getElementById('edit-post-body')) {
+            document.getElementById('edit-document-body').classList.add("d-block");
+            document.getElementById('edit-document-body').classList.remove("d-none");
         }
 
         return (
@@ -506,7 +526,7 @@ class EditDocumentModal extends React.Component {
                                                     editorId="ed-document-cke"
                                                     placeholder='Start typing here...'
                                                     onChange={this.handleEditorChange}
-                                                    data="<p>Nhập nội dung tài liệu ...</p>"
+                                                    onInstanceReady={this.onCKEInstanceReady}
                                                     height={200}
                                                     autoGrow_maxHeight={300}
                                                     autoGrow_minHeight={200}
@@ -521,7 +541,7 @@ class EditDocumentModal extends React.Component {
                                             <div className="form-group" >
                                                 <label className="form-label-required">Danh mục:</label>
                                                 <Combobox comboboxId="ed-document-category-combobox"
-                                                    selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.categoryID : 0}
+                                                    selectedOptionID={!this.props.isCurrentDocumentLoading && !this.props.isCategoryLoading ? this.state.EDIT_DOCUMENT_DTO.categoryID : 0}
                                                     options={this.categoryList}
                                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                                     placeHolder="Chọn danh mục"
@@ -537,7 +557,7 @@ class EditDocumentModal extends React.Component {
                                             <div className="form-group" >
                                                 <label className="form-label-required">Môn học:</label>
                                                 <Combobox comboboxId="ed-document-subject-combobox"
-                                                    selectedOptionID={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.subjectID : 0}
+                                                    selectedOptionID={!this.props.isCurrentDocumentLoading && !this.props.isSubjectLoading ? this.state.EDIT_DOCUMENT_DTO.subjectID : 0}
                                                     options={this.subjectList}
                                                     onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
                                                     placeHolder="Chọn môn học"
@@ -569,6 +589,7 @@ class EditDocumentModal extends React.Component {
 
                                                 </ClickAwayListener>
 
+                                                {/* Tag */}
                                                 <div className="form-tip-label-container">
                                                     <div className="form-tip-label">Có thể nhập tối đa 5 tag.</div>
                                                 </div>
@@ -579,6 +600,19 @@ class EditDocumentModal extends React.Component {
                                                 </div>
                                                 <div className="form-line" />
 
+                                                {/* Form file uploader */}
+                                                <div className="form-group" style={{ marginTop: "20px" }}>
+                                                    <label className="form-label-required">Tài liệu:</label>
+                                                    <FormFileUploader
+                                                        id='cr-document-file-input'
+                                                        onFileChange={(file) => this.onFileChange(file)}
+                                                        maxSize={26214400} //byte
+                                                        fileType={".pdf"} //n
+                                                        multiple
+                                                        maxFileCount={3}
+                                                        data={!this.props.isCurrentDocumentLoading ? this.state.EDIT_DOCUMENT_DTO.docFileUploadDTOs : []}
+                                                    />
+                                                </div>
                                             </div>
 
                                             {/* Button */}
@@ -602,6 +636,7 @@ class EditDocumentModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+
     return {
         categories: state.documentCategory.categories.data,
         isCategoryLoading: state.documentCategory.categories.isLoading,

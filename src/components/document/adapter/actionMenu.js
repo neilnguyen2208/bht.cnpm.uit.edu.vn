@@ -4,7 +4,7 @@ import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import pin_icon from 'assets/icons/24x24/pinned_icon_24x24.png'
 import unpin_icon from 'assets/icons/24x24/unpinned_icon_24x24.png'
 import stick_to_top from 'assets/icons/24x24/stick_to_top_icon_24x24.png'
-import { Post, PostAction } from 'authentication/permission.config'
+import { Post, DocumentAction } from 'authentication/permission.config'
 
 export const guestMenu = [{
   id: 1,
@@ -13,7 +13,7 @@ export const guestMenu = [{
   value: "REPORT_DOCUMENT",
   permissions: [Post.Comment.Report], //base on permission
   showOnPermission: false,
-  requiredAction: PostAction.Report
+  requiredAction: DocumentAction.Report
 }]
 
 export const basicMenu = [
@@ -24,7 +24,7 @@ export const basicMenu = [
     value: "REPORT_DOCUMENT",
     permissions: [Post.Comment.Report], //base on permission
     showOnPermission: false,
-    requiredAction: PostAction.Report
+    requiredAction: DocumentAction.Report
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ export const basicMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Delete
+    requiredAction: DocumentAction.Delete
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ export const basicMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Update
+    requiredAction: DocumentAction.Update
   },
 
 ]
@@ -61,32 +61,32 @@ export const adminMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Highlight
+    requiredAction: DocumentAction.Highlight
   },
-  {
-    id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_DOCUMENT", icon: unpin_icon,
-    style: {
-      height: "26px",
-      paddingTop: "1px",
-      paddingBottom: "5px"
-    },
-    showOnAction: true,
-    permissions: [],
-    showOnPermission: false,
-    requiredAction: PostAction.Unhighlight
-  },
-  {
-    id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_DOCUMENT", icon: stick_to_top,
-    style: {
-      height: "26px",
-      paddingTop: "1px",
-      paddingBottom: "5px"
-    },
-    showOnAction: true,
-    showOnPermission: false,
-    permissions: [],
-    requiredAction: PostAction.StickToTop
-  },
+  // {
+  //   id: 5, text: "Bỏ ghim", value: "UNHIGHLIGHT_DOCUMENT", icon: unpin_icon,
+  //   style: {
+  //     height: "26px",
+  //     paddingTop: "1px",
+  //     paddingBottom: "5px"
+  //   },
+  //   showOnAction: true,
+  //   permissions: [],
+  //   showOnPermission: false,
+  //   requiredAction: DocumentAction.Unhighlight
+  // },
+  // {
+  //   id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_DOCUMENT", icon: stick_to_top,
+  //   style: {
+  //     height: "26px",
+  //     paddingTop: "1px",
+  //     paddingBottom: "5px"
+  //   },
+  //   showOnAction: true,
+  //   showOnPermission: false,
+  //   permissions: [],
+  //   requiredAction: DocumentAction.StickToTop
+  // },
 ]
 
 export const wallpageMenu = [
@@ -96,7 +96,7 @@ export const wallpageMenu = [
     icon: report_icon,
     value: "REPORT_DOCUMENT",
     permissions: [Post.Comment.Report], //base on permission
-    requiredAction: PostAction.Report,
+    requiredAction: DocumentAction.Report,
 
   },
   {
@@ -109,7 +109,7 @@ export const wallpageMenu = [
     showOnAction: true,
     permissions: [],
     showOnPermission: false,
-    requiredAction: PostAction.Unhighlight
+    requiredAction: DocumentAction.Unhighlight
   },
   {
     id: 6, text: "Ghim lên đầu", value: "STICK_TO_TOP_DOCUMENT", icon: stick_to_top,
@@ -121,5 +121,5 @@ export const wallpageMenu = [
     showOnAction: true,
     showOnPermission: false,
     permissions: [],
-    requiredAction: PostAction.StickToTop
+    requiredAction: DocumentAction.StickToTop
   },]

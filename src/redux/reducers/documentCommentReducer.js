@@ -1,47 +1,47 @@
 
 import {
-  GET_A_POST_COMMENTS_SUCCESS,
-  GET_A_POST_COMMENTS_REQUEST,
-  GET_A_POST_COMMENTS_FAILURE,
-  EDIT_A_POST_COMMENT_RESET,
-  EDIT_A_POST_COMMENT_SUCCESS,
-  EDIT_A_POST_COMMENT_FAILURE,
-  CREATE_A_POST_COMMENT_SUCCESS,
-  CREATE_A_POST_COMMENT_RESET,
-  CREATE_A_POST_COMMENT_FAILURE,
-  LIKE_A_POST_COMMENT_REQUEST,
-  LIKE_A_POST_COMMENT_SUCCESS,
-  LIKE_A_POST_COMMENT_FAILURE,
-  UNLIKE_A_POST_COMMENT_REQUEST,
-  UNLIKE_A_POST_COMMENT_SUCCESS,
-  UNLIKE_A_POST_COMMENT_FAILURE,
-  DELETE_A_POST_COMMENT_RESET,
-  DELETE_A_POST_COMMENT_SUCCESS,
-  DELETE_A_POST_COMMENT_FAILURE,
-  REPORT_A_POST_COMMENT_SUCCESS,
-  REPORT_A_POST_COMMENT_RESET,
-  REPORT_A_POST_COMMENT_FAILURE,
-  RESOLVE_A_POST_COMMENT_RESET,
-  RESOLVE_A_POST_COMMENT_FAILURE,
-  RESOLVE_A_POST_COMMENT_SUCCESS,
-  CREATE_A_POST_COMMENT_REPLY_FAILURE,
-  CREATE_A_POST_COMMENT_REPLY_SUCCESS,
-  CREATE_A_POST_COMMENT_REPLY_RESET,
+  GET_A_DOCUMENT_COMMENTS_SUCCESS,
+  GET_A_DOCUMENT_COMMENTS_REQUEST,
+  GET_A_DOCUMENT_COMMENTS_FAILURE,
+  EDIT_A_DOCUMENT_COMMENT_RESET,
+  EDIT_A_DOCUMENT_COMMENT_SUCCESS,
+  EDIT_A_DOCUMENT_COMMENT_FAILURE,
+  CREATE_A_DOCUMENT_COMMENT_SUCCESS,
+  CREATE_A_DOCUMENT_COMMENT_RESET,
+  CREATE_A_DOCUMENT_COMMENT_FAILURE,
+  LIKE_A_DOCUMENT_COMMENT_REQUEST,
+  LIKE_A_DOCUMENT_COMMENT_SUCCESS,
+  LIKE_A_DOCUMENT_COMMENT_FAILURE,
+  UNLIKE_A_DOCUMENT_COMMENT_REQUEST,
+  UNLIKE_A_DOCUMENT_COMMENT_SUCCESS,
+  UNLIKE_A_DOCUMENT_COMMENT_FAILURE,
+  DELETE_A_DOCUMENT_COMMENT_RESET,
+  DELETE_A_DOCUMENT_COMMENT_SUCCESS,
+  DELETE_A_DOCUMENT_COMMENT_FAILURE,
+  REPORT_A_DOCUMENT_COMMENT_SUCCESS,
+  REPORT_A_DOCUMENT_COMMENT_RESET,
+  REPORT_A_DOCUMENT_COMMENT_FAILURE,
+  RESOLVE_A_DOCUMENT_COMMENT_RESET,
+  RESOLVE_A_DOCUMENT_COMMENT_FAILURE,
+  RESOLVE_A_DOCUMENT_COMMENT_SUCCESS,
+  CREATE_A_DOCUMENT_COMMENT_REPLY_FAILURE,
+  CREATE_A_DOCUMENT_COMMENT_REPLY_SUCCESS,
+  CREATE_A_DOCUMENT_COMMENT_REPLY_RESET,
 
-  GET_REPORTED_POST_COMMENTS_REQUEST,
-  GET_REPORTED_POST_COMMENTS_SUCCESS,
-  GET_REPORTED_POST_COMMENTS_FAILURE,
+  GET_REPORTED_DOCUMENT_COMMENTS_REQUEST,
+  GET_REPORTED_DOCUMENT_COMMENTS_SUCCESS,
+  GET_REPORTED_DOCUMENT_COMMENTS_FAILURE,
 } from "../constants.js"
 
 const initialState = {
-  currentPostComments: {
+  currentDocumentComments: {
     isLoading: false,
     isLoadDone: false,
     data: [],
     totalPages: 5,
     totalElements: 23,
   },
-  reportedPostComments: {
+  reportedDocumentComments: {
     isLoading: false,
     isLoadDone: false,
     data: [],
@@ -65,141 +65,133 @@ const initialState = {
 
 function CommentReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_A_POST_COMMENTS_REQUEST:
+    case GET_A_DOCUMENT_COMMENTS_REQUEST:
       return {
         ...state,
-        currentPostComments: {
-          ...state.currentPostComments,
+        currentDocumentComments: {
+          ...state.currentDocumentComments,
           isLoading: true
         }
       }
-    case GET_A_POST_COMMENTS_SUCCESS:
+    case GET_A_DOCUMENT_COMMENTS_SUCCESS:
       return {
-        ...state, currentPostComments: {
+        ...state, currentDocumentComments: {
           isLoading: false,
-          data: action.payload.postCommentDTOs,
+          data: action.payload.documentCommentDTOs,
           totalPages: action.payload.totalPages,
           totalElements: action.payload.totalElements
         }
       };
 
-    case GET_A_POST_COMMENTS_FAILURE: return {
+    case GET_A_DOCUMENT_COMMENTS_FAILURE: return {
       ...state
     }
 
-    case CREATE_A_POST_COMMENT_RESET: return {
+    case CREATE_A_DOCUMENT_COMMENT_RESET: return {
       ...state, isHaveCreated: false,
     }
 
-    case CREATE_A_POST_COMMENT_SUCCESS:
+    case CREATE_A_DOCUMENT_COMMENT_SUCCESS:
       return {
         ...state, isHaveCreated: true,
         createdCommentId: action.payload,
       }
 
     // maybe use internal state to handle
-    case CREATE_A_POST_COMMENT_FAILURE: return {
+    case CREATE_A_DOCUMENT_COMMENT_FAILURE: return {
       ...state, isHaveCreated: false,
       createdCommentId: null,
     }
 
-    case CREATE_A_POST_COMMENT_REPLY_RESET: return {
+    case CREATE_A_DOCUMENT_COMMENT_REPLY_RESET: return {
       ...state,
       isHaveCreated: false,
     }
 
-    case CREATE_A_POST_COMMENT_REPLY_SUCCESS:
+    case CREATE_A_DOCUMENT_COMMENT_REPLY_SUCCESS:
       return {
         ...state,
         isHaveCreated: true,
         createdCommentId: action.payload,
       }
 
-    case CREATE_A_POST_COMMENT_REPLY_FAILURE: return {
+    case CREATE_A_DOCUMENT_COMMENT_REPLY_FAILURE: return {
       ...state, isHaveCreated: false,
       createdCommentId: null,
     }
 
-    //like post comment
-    case LIKE_A_POST_COMMENT_REQUEST:
-      return { ...state, likePost: { isLoading: true } }//use for all post item
-    case LIKE_A_POST_COMMENT_SUCCESS:
-      return { ...state, likePost: { isLoading: false } }
-    case LIKE_A_POST_COMMENT_FAILURE:
-      return { ...state, likePost: { isLoading: false } }
-
-    //unlike post
-    case UNLIKE_A_POST_COMMENT_REQUEST:
-      return { ...state, unLikePost: { isLoading: true } } //true when any post is in the like request
-    case UNLIKE_A_POST_COMMENT_SUCCESS:
-      return { ...state, unLikePost: { isLoading: false } } //sau nay xu ly sau
-    case UNLIKE_A_POST_COMMENT_FAILURE:
-      return { ...state, unLikePost: { isLoading: false } };
+    //like Document comment
+    case LIKE_A_DOCUMENT_COMMENT_REQUEST:
+      return { ...state, likeDocument: { isLoading: true } }//use for all Document item
+    case LIKE_A_DOCUMENT_COMMENT_SUCCESS:
+      return { ...state, likeDocument: { isLoading: false } }
+    case LIKE_A_DOCUMENT_COMMENT_FAILURE:
+      return { ...state, likeDocument: { isLoading: false } }
 
     //delete
-    case DELETE_A_POST_COMMENT_RESET:
+    case DELETE_A_DOCUMENT_COMMENT_RESET:
       return {
         ...state, isHaveDeleted: false
       };
-    case DELETE_A_POST_COMMENT_SUCCESS:
+    case DELETE_A_DOCUMENT_COMMENT_SUCCESS:
       return {
         ...state, isHaveDeleted: true
       };
-    case DELETE_A_POST_COMMENT_FAILURE:
+    case DELETE_A_DOCUMENT_COMMENT_FAILURE:
       return {
         ...state, isHaveDeleted: false
       };
 
-    //edit post
-    case EDIT_A_POST_COMMENT_RESET:
+    //edit Document
+    case EDIT_A_DOCUMENT_COMMENT_RESET:
       return {
         ...state, isHaveEdited: false
       };
-    case EDIT_A_POST_COMMENT_SUCCESS:
+    case EDIT_A_DOCUMENT_COMMENT_SUCCESS:
       return {
         ...state, isHaveEdited: true
       };
-    case EDIT_A_POST_COMMENT_FAILURE:
+    case EDIT_A_DOCUMENT_COMMENT_FAILURE:
       return {
         ...state, isHaveEdited: false
       };
 
     //report
-    case REPORT_A_POST_COMMENT_RESET:
+    case REPORT_A_DOCUMENT_COMMENT_RESET:
       return { ...state, isHaveReported: false };
-    case REPORT_A_POST_COMMENT_SUCCESS:
+    case REPORT_A_DOCUMENT_COMMENT_SUCCESS:
       return { ...state, isHaveReported: true };
-    case REPORT_A_POST_COMMENT_FAILURE:
+    case REPORT_A_DOCUMENT_COMMENT_FAILURE:
       return { ...state, isHaveReported: false };
 
     //resolve    
-    case RESOLVE_A_POST_COMMENT_RESET:
+    case RESOLVE_A_DOCUMENT_COMMENT_RESET:
       return { ...state, isHaveResolved: false };
-    case RESOLVE_A_POST_COMMENT_SUCCESS:
+    case RESOLVE_A_DOCUMENT_COMMENT_SUCCESS:
       return { ...state, isHaveResolved: true };
-    case RESOLVE_A_POST_COMMENT_FAILURE:
+    case RESOLVE_A_DOCUMENT_COMMENT_FAILURE:
       return { ...state, isHaveResolved: false };
 
     //resolve    
-    case GET_REPORTED_POST_COMMENTS_REQUEST:
+    case GET_REPORTED_DOCUMENT_COMMENTS_REQUEST:
       return {
-        ...state, reportedPostComments: {
-          ...state.postReportedCommentWithStateDTOs,
+        ...state, reportedDocumentComments: {
+          ...state.documentReportedCommentWithStateDTOs,
           isLoading: true
         }
       };
-    case GET_REPORTED_POST_COMMENTS_SUCCESS:
+    case GET_REPORTED_DOCUMENT_COMMENTS_SUCCESS:
       return {
-        ...state, reportedPostComments: {
+        ...state, reportedDocumentComments: {
           isLoading: false,
-          data: action.payload.postReportedCommentWithStateDTOs,
+          data: action.payload.documentReportedCommentWithStateDTOs,
           totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
           totalElements: action.payload.totalElements ? action.payload.totalElements : 0
         }
       };
-    case GET_REPORTED_POST_COMMENTS_FAILURE:
+    case GET_REPORTED_DOCUMENT_COMMENTS_FAILURE:
       return {
-        ...state, reportedPostComments: {
+        ...state, reportedDocumentComments: {
           isLoading: false,
           data: [],
           totalPages: 1,

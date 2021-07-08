@@ -20,10 +20,10 @@ import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import store from 'redux/store';
-import { create_APostCommentReset } from 'redux/actions/postCommentAction'
-import { createAPostComment, getAPostComments } from 'redux/services/postCommentServices'
+import { create_ADocumentCommentReset } from 'redux/actions/documentCommentAction'
+import { createADocumentComment, getADocumentComments } from 'redux/services/documentCommentServices'
 import { openBLModal } from 'redux/services/modalServices';
-import { getAPostStatisticByID } from 'redux/services/postServices';
+import { getADocumentStatisticByID } from 'redux/services/documentServices';
 
 const validationCondition = {
   form: '#create-comment-form',
@@ -49,11 +49,11 @@ class CreateComment extends React.Component {
 
   createComment = () => {
     if (styleFormSubmit(validationCondition))
-      this.props.createAPostComment(this.props.postID, { content: getCKEInstance("crt-cmmnt-cke").getData() })
+      this.props.createADocumentComment(this.props.documentID, { content: getCKEInstance("crt-cmmnt-cke").getData() })
   }
 
   componentWillUnmount() {
-    store.dispatch(create_APostCommentReset());
+    store.dispatch(create_ADocumentCommentReset());
     if (getCKEInstance('crt-cmmnt-cke'))
       getCKEInstance('crt-cmmnt-cke').destroy();
 
@@ -62,15 +62,15 @@ class CreateComment extends React.Component {
   reloadList = () => {
     openBLModal({ type: "success", text: "Tạo bình luận thành công!" });
     getCKEInstance("crt-cmmnt-cke").setData("");
-    this.props.getAPostComments(this.props.postID);
-    store.dispatch(create_APostCommentReset())
+    this.props.getADocumentComments(this.props.documentID);
+    store.dispatch(create_ADocumentCommentReset())
     this.setState({});
   }
 
   render() {
 
     if (this.props.isHaveCreated) {
-      this.props.getAPostStatisticByID(this.props.postID)
+      this.props.getADocumentStatisticByID(this.props.documentID)
       this.reloadList()
     }
     console.log(this.props.userSummaryData)
@@ -110,14 +110,14 @@ class CreateComment extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isHaveCreated: state.postComment.isHaveCreated,
+    isHaveCreated: state.documentComment.isHaveCreated,
     userSummaryData: state.auth.currentUserSummary.data,
     isSummaryLoaded: state.auth.currentUserSummary.isLoadDone
   };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createAPostComment, getAPostComments, getAPostStatisticByID
+  createADocumentComment, getADocumentComments, getADocumentStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateComment));

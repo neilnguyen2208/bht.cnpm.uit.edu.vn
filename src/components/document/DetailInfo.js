@@ -41,7 +41,7 @@ import {
 import Tag from './Tag';
 import { imageExists } from 'utils/urlUtils';
 
-class PostDetail extends React.Component {
+class DocumentDetail extends React.Component {
 
   constructor(props) {
     super(props);
@@ -116,7 +116,6 @@ class PostDetail extends React.Component {
     ) {
       imageExists(this.props.imageURL, this.setImageURL)
     }
-
     return (
       <div className="metadata">
 
@@ -157,7 +156,13 @@ class PostDetail extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorAvatarURL={this.props.authorAvatarURL} authorID={this.props.authorID} />
-          <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.documentID}`} />
+          <PopupMenu
+            onMenuItemClick={this.onPopupMenuItemClick}
+            items={basicMenu}
+            useAction
+            availableActions={this.props.availableActions}
+            id={`${this.props.popUpMenuPrefix}-pipm-${this.props.documentID}`}
+          />
         </div>
 
         <div style={{ width: "100%", marginTop: "20px", maxWidth: "600px", margin: "auto", marginBottom: "20px" }}>
@@ -202,5 +207,5 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteADocument, editADocument, reportADocument
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentDetail));
 

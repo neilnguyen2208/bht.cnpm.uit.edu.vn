@@ -15,7 +15,7 @@ import AdminSidebar from 'layouts/AdminSidebar'
 import PostCommentReportReactionbar from 'components/post/comment/PostReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
-import { post_ResolveAPostCommentReset } from 'redux/actions/postCommentAction';
+import { post_ResolveAPostCommentReset } from 'redux/actions/documentCommentAction';
 import PostReportedCommentInfo from 'components/post/comment/PostReportedCommentInfo'
 import PostManagementNavBar from './ExerciseManagementNavbar';
 import Combobox from 'components/common/Combobox/Combobox';

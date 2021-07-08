@@ -20,7 +20,7 @@ import 'components/styles/Comment.scss'
 import Editor from 'components/common/CustomCKE/CKEditor.js'
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import ShowOnPermission from 'components/base_components/ShowOnPermission';
-import { Post, PostCommentAction } from 'authentication/permission.config';
+import { Post, CommentAction } from 'authentication/permission.config';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { authRequest, request } from 'utils/requestUtils';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
@@ -61,7 +61,7 @@ class CreateReply extends React.Component {
 
   render() {
     return (
-      < RequireLogin availableActions={this.props.availableActions} requiredAction={PostCommentAction.Reply} showOnAction={true} >
+      < RequireLogin availableActions={this.props.availableActions} requiredAction={CommentAction.Reply} showOnAction={true} >
         {/* check xem la reply hay comment */}
         {/* <div style={this.isShow ? { display: "block" } : { display: "none" }}> */}
         <div style={{ width: '100%', marginTop: "10px" }} className="reply-item cr">

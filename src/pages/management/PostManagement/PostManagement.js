@@ -227,7 +227,6 @@ class PostManagement extends React.Component {
                         isHighlighted={item.isHighlighted}
                         availableActions={item.availableActions}
                         useAction={true}
-                        //
                         reloadList={() => this.reloadList()}
                     />
                     <PostNormalReactionbar

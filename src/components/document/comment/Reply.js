@@ -18,7 +18,7 @@ import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
-import { Post, PostCommentAction } from 'authentication/permission.config';
+import { Document, CommentAction } from 'authentication/permission.config';
 import { formatNumber, timeAgo } from 'utils/miscUtils';
 
 import liked_icon from 'assets/icons/24x24/liked_icon_24x24.png'
@@ -29,7 +29,7 @@ import { validation } from 'utils/validationUtils';
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { CommentCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
 import { formatMathemicalFormulas, getCKEInstance, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
-import { likeAPostComment, unLikeAPostComment } from 'redux/services/postCommentServices'
+import { likeADocumentComment, unLikeADocumentComment } from 'redux/services/documentCommentServices'
 
 //NOTE: reply relative components only use internal state, not use redux for handle any event, reply redux code will be delete in the future
 class Reply extends React.Component {
@@ -68,19 +68,19 @@ class Reply extends React.Component {
     if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPostComment(this.props.replyId);
+        this.props.unLikeADocumentComment(this.props.replyId);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPostComment(this.props.replyId);
+        this.props.likeADocumentComment(this.props.replyId);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1
-        this.props.likeAPostComment(this.props.replyId);
+        this.props.likeADocumentComment(this.props.replyId);
       } else {
-        this.props.unLikeAPostComment(this.props.replyId);
+        this.props.unLikeADocumentComment(this.props.replyId);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -112,7 +112,7 @@ class Reply extends React.Component {
 
   deleteAReply = () => {
     this.isHaveDeleted = false;
-    authRequest.delete(`/posts/comments/${this.props.replyId}`).then(response => {
+    authRequest.delete(`/documents/comments/${this.props.replyId}`).then(response => {
       this.props.reloadList();
       openBLModal({ text: "Xoá bình luận thành công!", type: "success" });
       this.isHaveDeleted = true;
@@ -130,7 +130,7 @@ class Reply extends React.Component {
 
   onSubmitReplyClick = () => {
     this.isHaveEdited = false;
-    authRequest.put(`/posts/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
+    authRequest.put(`/documents/comments/${this.props.replyId}`, { "content": getCKEInstance("edit-comment-" + this.props.replyId).getData() })
       .then(response => {
         this.props.reloadList(this.props.replyId);
         openBLModal({ text: "Cập nhật bình luận thành công!", type: "success" });
@@ -230,7 +230,7 @@ class Reply extends React.Component {
                   <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage}
                     availableActions={this.props.availableActions}
-                    requiredAction={PostCommentAction.Like}
+                    requiredAction={CommentAction.Like}
                     useAction={true}
                   >
                     <div className="like-btn-container"  >
@@ -241,7 +241,7 @@ class Reply extends React.Component {
                   <RequireLogin permissions={[]}
                     expectedEvent={this.props.type !== "PREVIEW" && this.createReplyReply}
                     availableActions={this.props.availableActions}
-                    requiredAction={PostCommentAction.Reply}
+                    requiredAction={CommentAction.Reply}
                     useAction={true}
                   >
                     <div className="comment-count-container">
@@ -273,7 +273,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  likeAPostComment, unLikeAPostComment
+  likeADocumentComment, unLikeADocumentComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Reply));

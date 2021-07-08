@@ -33,33 +33,33 @@ import {
   get_ReportedDocumentCommentsSuccess,
   get_ReportedDocumentCommentsFailure
 
-} from "redux/actions/postCommentAction.js";
+} from "redux/actions/documentCommentAction.js";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { openBLModal } from "./modalServices";
 
-export function getADocumentComments(postID, page) {
+export function getADocumentComments(documentID, page) {
   return dispatch => {
     dispatch(get_ADocumentCommentsRequest());
-    authRequest.get(`/documents/${postID}/comments?page=${page}&sort=submitDtm,desc`)
+    authRequest.get(`/documents/${documentID}/comments?page=${page}&sort=submitDtm,desc`)
       .then(response_1 => {
         let result_1 = response_1.data;
         let IDarr = '';
-        result_1.postCommentDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
+        result_1.docCommentDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
         authRequest.get(`/documents/comments/statistics?commentIDs=${IDarr}`)
           .then(response_2 => {
             //merge summary array and statistic array
             let result_2 = [];
 
-            for (let i = 0; i < result_1.postCommentDTOs.length; i++) {
+            for (let i = 0; i < result_1.docCommentDTOs.length; i++) {
               result_2.push({
-                ...result_1.postCommentDTOs[i],
-                ...(response_2.data.find((itmInner) => itmInner.id === result_1.postCommentDTOs[i].id)),
+                ...result_1.docCommentDTOs[i],
+                ...(response_2.data.find((itmInner) => itmInner.id === result_1.docCommentDTOs[i].id)),
               });
             }
             let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
 
-            authRequest.get(`/documents/comments/actionAvailable?postCommentIDs=${actionIDarr}`).then(response_3 => {
+            authRequest.get(`/documents/comments/actionAvailable?docCommentIDs=${actionIDarr}`).then(response_3 => {
               let finalResult = [];
               for (let i = 0; i < result_2.length; i++) {
                 finalResult.push({
@@ -67,7 +67,7 @@ export function getADocumentComments(postID, page) {
                   ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
                 });
               }
-              dispatch(get_ADocumentCommentsSuccess({ postCommentDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+              dispatch(get_ADocumentCommentsSuccess({ documentCommentDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
             }).catch((error) => get_ADocumentCommentFailure(error))
           }).catch((error) => get_ADocumentCommentFailure(error))
       }).catch(error => {
@@ -109,10 +109,10 @@ export function reportADocumentComment(id, reason) { //
   }
 }
 
-export function createADocumentComment(postID, content) {
+export function createADocumentComment(documentID, content) {
   return dispatch => {
     dispatch(create_ADocumentCommentReset());
-    authRequest.post(`/documents/` + postID + `/comments`, JSON.stringify(content))
+    authRequest.post(`/documents/` + documentID + `/comments`, JSON.stringify(content))
       .then(response => {
         dispatch(create_ADocumentCommentSuccess(response.data.id));
       })
@@ -187,7 +187,7 @@ export function getReportedDocumentComments(searchParamObject) {
     authRequest.get(`/documents/comments/report?${generateSearchParam(searchParamObject)}`)
       .then(response => {
         let result_1 = response.data;
-        dispatch(get_ReportedDocumentCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.postCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+        dispatch(get_ReportedDocumentCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.documentCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
       })
       .catch(error => { get_ReportedDocumentCommentsFailure(error) })
   }

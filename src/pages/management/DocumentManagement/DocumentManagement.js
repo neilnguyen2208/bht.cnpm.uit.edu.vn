@@ -226,7 +226,7 @@ class DocumentManagement extends React.Component {
             this.documentsList = this.props.documentsList.map((item) => {
                 return <div className="item-container" key={item.id}>
                     <DocumentSummaryMetadata
-                        type={itemType.mySelf}
+                        type={itemType.management}
                         documentID={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
@@ -235,7 +235,7 @@ class DocumentManagement extends React.Component {
                         categoryID={item.categoryID}
                         subjectName={item.subjectName}
                         subjectID={item.subjectID}
-
+                        useAction
                         title={item.title}
                         description={item.description}
                         imageURL={item.imageURL}
@@ -243,7 +243,7 @@ class DocumentManagement extends React.Component {
                         approveState={item.docState}
                         popUpMenuPrefix="mdpu"   //stand for my doc popup 
                         authorAvatarURL={item.authorAvatarURL}
-                        //
+                        availableActions={item.availableActions}
                         reloadList={() => this.reloadList()}
                     />
                     <DocumentNormalReactionbar
@@ -254,6 +254,8 @@ class DocumentManagement extends React.Component {
                         commentCount={item.commentCount ? item.commentCount : 0}
                         downloadCount={item.downloadCount ? item.downloadCount : 0}
                         viewCount={item.viewCount ? item.viewCount : 0}
+                        availableActions={item.availableActions ? item.availableActions : []}
+                        useAction
                     />
                 </div >
             })

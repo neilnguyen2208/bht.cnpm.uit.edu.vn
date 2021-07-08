@@ -31,7 +31,7 @@ import { itemType, mySelfMenuItemList } from 'constants.js'
 
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
-import { basicMenu, guestMenu } from 'components/document/adapter/actionMenu';
+import { basicMenu, guestMenu, adminMenu } from 'components/document/adapter/actionMenu';
 
 class DocumentSummary extends React.Component {
 
@@ -136,16 +136,28 @@ class DocumentSummary extends React.Component {
               <></>
             }
           </div>
-          {this.props.type === itemType.mySelf &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={mySelfMenuItemList} id={`${this.props.popUpMenuPrefix}-dipm-${this.props.documentID}`} /> //stand for document item poupup menu
+          {this.props.type !== itemType.management && this.props.type !== itemType.normal &&
+            < PopupMenu
+              onMenuItemClick={this.onPopupMenuItemClick}
+              useAction={this.props.useAction}
+              availableActions={this.props.availableActions}
+              items={basicMenu}
+              id={`${this.props.popUpMenuPrefix}-dipm-${this.props.documentID}`} /> //stand for document item poupup menu
           }
-          {(this.props.type === itemType.normal || !this.props.type) &&
-
-            //create adapter later
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick}
+          {(this.props.type === itemType.normal || !this.props.type) && //normal => only report
+            <PopupMenu
+              onMenuItemClick={this.onPopupMenuItemClick}
               items={guestMenu}
               useAction={this.props.useAction}
-              id={`${this.props.popUpMenuPrefix}-pipm-${this.props.documentID}`} />
+              id={`${this.props.popUpMenuPrefix}-dipm-${this.props.documentID}`} />
+          }
+          {(this.props.type === itemType.management) &&
+            <PopupMenu
+              onMenuItemClick={this.onPopupMenuItemClick}
+              useAction={this.props.useAction}
+              availableActions={this.props.availableActions}
+              items={adminMenu}
+              id={`${this.props.popUpMenuPrefix}-dipm-${this.props.documentID}`} />
           }
         </div>
 

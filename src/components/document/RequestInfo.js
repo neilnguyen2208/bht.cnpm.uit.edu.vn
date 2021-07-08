@@ -37,6 +37,7 @@ export default class RequestedSummary extends React.PureComponent {
                         </div>
                     </div>
                 </div>
+                
             </div>
         );
     }

@@ -120,7 +120,8 @@ class PostApproving extends React.Component {
                         title={item.title}
                     />
                     <SummaryInfo
-                        // useAction={true}
+                        useAction={true}
+                        availableActions={["update", "delete"]}
                         type={itemType.approval}
                         postID={item.id}
                         authorDisplayName={item.authorDisplayName}
@@ -129,13 +130,12 @@ class PostApproving extends React.Component {
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
                         title={item.title}
-                        // summary={item.summary}
+                        summary={item.summary}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.postState}
                         popUpMenuPrefix="papu"   //stand for post approval popup 
                         authorAvatarURL={item.authorAvatarURL}
-                        //
                         reloadList={() => this.reloadList()}
                         content={item.content}
                     />

@@ -21,6 +21,8 @@ import 'components/styles/Button.scss'
 import { formatNumber } from 'utils/miscUtils.js'
 import { docReactionType } from 'constants.js'
 import { reactionADocument } from 'redux/services/documentServices'
+import { RequireLogin } from 'components/base_components/RequireLoginComponent';
+import { DocumentAction } from 'authentication/permission.config';
 
 class NormalReactionbar extends React.Component {
 
@@ -136,14 +138,25 @@ class NormalReactionbar extends React.Component {
         <div className="d-flex mg-top-5px">
           <div className="like-dislike-rate-bar">
             <div className="d-flex">
-              <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-                <div className="d-flex"> {likeBtn}</div>
-                <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0}</div>
-              </div>
-              <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleDislikeImage} >
-                {dislikeBtn}
-                <div className="document-like-count">{this.dislikeCount ? formatNumber(this.dislikeCount) : 0}</div>
-              </div>
+              <RequireLogin permissions={[]}
+                availableActions={this.props.availableActions}
+                requiredAction={DocumentAction.React}
+                useAction={this.props.useAction}>
+                <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+                  <div className="d-flex"> {likeBtn}</div>
+                  <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0}</div>
+                </div>
+              </RequireLogin>
+              <RequireLogin permissions={[]}
+                availableActions={this.props.availableActions}
+                requiredAction={DocumentAction.React}
+                useAction={this.props.useAction}>
+                <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleDislikeImage} >
+                  {dislikeBtn}
+                  <div className="document-like-count">{this.dislikeCount ? formatNumber(this.dislikeCount) : 0}</div>
+                </div>
+              </RequireLogin>
+
             </div>
 
             <div className="rate-percent-bar" />
@@ -153,14 +166,19 @@ class NormalReactionbar extends React.Component {
 
           </div>
           <div className="vertical-line" />
-          <div className="document-comment-count-container">
-            <div className="comment-btn-text">
-              Bình luận
+          <RequireLogin permissions={[]}
+            availableActions={this.props.availableActions}
+            requiredAction={DocumentAction.Comment}
+            useAction={this.props.useAction}>
+            <div className="document-comment-count-container">
+              <div className="comment-btn-text">
+                Bình luận
+              </div>
+              <div className="comment-btn-number">
+                {this.props.commentCount ? formatNumber(this.props.commentCount) : 0}
+              </div>
             </div>
-            <div className="comment-btn-number">
-              {this.props.commentCount ? formatNumber(this.props.commentCount) : 0}
-            </div>
-          </div>
+          </RequireLogin>
         </div>
 
         <div className="d-flex">
@@ -205,7 +223,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  // saveAPost, unSaveAPost, likeAPost, unLikeAPost
   reactionADocument
 }, dispatch);
 

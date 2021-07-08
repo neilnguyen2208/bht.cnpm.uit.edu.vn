@@ -95,7 +95,7 @@ class DocumentDetail extends React.Component {
                                         categoryID={this.props.currentDocument.categoryID}
                                         subjectName={this.props.currentDocument.subjectName ? this.props.currentDocument.subjectName : "Cấu trúc dữ liệu & giải thuật"}
                                         subjectID={this.props.currentDocument.subjectID}
-
+                                        availableActions={this.props.currentDocument.availableActions}
                                         title={this.props.currentDocument.title}
                                         docFileUploadDTOs={this.props.currentDocument.docFileUploadDTOs}
                                         description={this.props.currentDocument.description}
@@ -103,7 +103,6 @@ class DocumentDetail extends React.Component {
                                         readingTime={this.props.currentDocument.readingTime}
                                         approveState={this.props.currentDocument.docState}
                                         popUpMenuPrefix="ddpu"   //stand for document detail popup 
-                                        //
                                         reloadList={() => this.reloadList()}
                                         tags={this.props.currentDocument.tags}
                                     />
@@ -144,16 +143,15 @@ class DocumentDetail extends React.Component {
                                         commentCount={this.props.currentDocument.commentCount ? this.props.currentDocument.commentCount : 0}
                                         downloadCount={this.props.currentDocument.downloadCount ? this.props.currentDocument.downloadCount : 0}
                                         viewCount={this.props.currentDocument.viewCount ? this.props.currentDocument.viewCount : 0}
+                                        availableActions={this.props.currentDocument.availableActions}
+                                        useAction
                                     />
                                     <div id="cr-cmt" />
                                     <CommentSection
                                         useAction={true}
                                         // create comment will show if you have action create comment
-                                        postAvailableActions={['comment']}
-                                        // postAvailableActions={this.props.currentPost.availableActions}
-
-                                        // id={this.props.currentPost.id}
-                                        id={2}
+                                        docAvailableActions={this.props.currentDocument.availableActions}
+                                        id={this.props.match.params.id}
                                         commentCount={this.props.currentDocument.commentCount}
                                     />
                                 </div>

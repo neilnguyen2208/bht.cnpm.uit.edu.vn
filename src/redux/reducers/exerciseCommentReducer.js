@@ -184,7 +184,7 @@ function ExerciseCommentReducer(state = initialState, action) {
     case GET_REPORTED_EXERCISE_COMMENTS_REQUEST:
       return {
         ...state, reportedExerciseComments: {
-          ...state.postReportedCommentWithStateDTOs,
+          ...state.exerciseReportedCommentWithStateDTOs,
           isLoading: true
         }
       };
@@ -192,7 +192,7 @@ function ExerciseCommentReducer(state = initialState, action) {
       return {
         ...state, reportedExerciseComments: {
           isLoading: false,
-          data: action.payload.postReportedCommentWithStateDTOs,
+          data: action.payload.exerciseReportedCommentWithStateDTOs,
           totalPages: action.payload.totalPages ? action.payload.totalPages : 1,
           totalElements: action.payload.totalElements ? action.payload.totalElements : 0
         }

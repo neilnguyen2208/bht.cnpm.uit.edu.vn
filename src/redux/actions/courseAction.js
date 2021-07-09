@@ -61,6 +61,9 @@ import {
     RESOLVE_AN_EXERCISE_RESET,
     RESOLVE_AN_EXERCISE_FAILURE,
     RESOLVE_AN_EXERCISE_SUCCESS,
+    CREATE_AN_EXERCISE_RESET,
+    CREATE_AN_EXERCISE_FAILURE,
+    CREATE_AN_EXERCISE_SUCCESS,
     GET_REPORTED_EXERCISES_REQUEST,
     GET_REPORTED_EXERCISES_SUCCESS,
     GET_REPORTED_EXERCISES_FAILURE,
@@ -438,6 +441,25 @@ export function post_ResolveAnExerciseSuccess() {
 export function post_ResolveAnExerciseFailure() {
     return {
         type: RESOLVE_AN_EXERCISE_FAILURE
+    }
+}
+
+export function post_CreateAnExerciseReset() {
+    return {
+        type: CREATE_AN_EXERCISE_RESET
+    }
+}
+
+export function post_CreateAnExerciseSuccess(data) {
+    return {
+        type: CREATE_AN_EXERCISE_SUCCESS,
+        payload: data
+    }
+}
+
+export function post_CreateAnExerciseFailure() {
+    return {
+        type: CREATE_AN_EXERCISE_FAILURE
     }
 }
 

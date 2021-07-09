@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { resolveAPostComment } from 'redux/services/postCommentServices';
+import { resolveADocumentComment } from 'redux/services/documentCommentServices';
 
 //styles
 import 'components/styles/Reactionbar.scss'
@@ -28,7 +28,7 @@ class ReportReactionbar extends React.Component {
             options: [{ id: 1, name: "Giữ lại", value: "KEEP" }, { id: 2, name: "Xoá", value: "DELETE" }],
             selectedOptionID: 1,
             validation: true,
-            key: "postCommentReportActionType",
+            key: "docCommentReportActionType",
             onOptionChanged: (option) => {
               return option.value;
             }
@@ -66,7 +66,7 @@ class ReportReactionbar extends React.Component {
   }
 
   onConfirmResolve = (resolveDTO) => {
-    this.props.resolveAPostComment(this.props.id, resolveDTO)
+    this.props.resolveADocumentComment(this.props.id, resolveDTO)
   }
 
   render() {
@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  resolveAPostComment
+  resolveADocumentComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportReactionbar));

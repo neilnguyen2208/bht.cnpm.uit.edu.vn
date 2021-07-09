@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { resolveAPostComment } from 'redux/services/postCommentServices';
+import { resolveAnExerciseComment } from 'redux/services/postCommentServices';
 
 //styles
 import 'components/styles/Reactionbar.scss'
@@ -66,7 +66,7 @@ class ReportReactionbar extends React.Component {
   }
 
   onConfirmResolve = (resolveDTO) => {
-    this.props.resolveAPostComment(this.props.id, resolveDTO)
+    this.props.resolveAnExerciseComment(this.props.id, resolveDTO)
   }
 
   render() {
@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  resolveAPostComment
+  resolveAnExerciseComment
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportReactionbar));

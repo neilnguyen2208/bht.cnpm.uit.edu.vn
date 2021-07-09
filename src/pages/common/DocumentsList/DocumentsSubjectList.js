@@ -12,7 +12,7 @@ import { itemType } from 'constants.js'
 
 //services
 import { getCoursesList, getCSNNCoursesList, getDCCoursesList } from "redux/services/courseServices"
-import { getCourseFaculties } from "redux/services/courseCategoryServices"
+import { getCourseFaculties } from "redux/services/courseFacultyServices"
 
 //components
 import ComboBox from 'components/common/Combobox/Combobox';
@@ -186,11 +186,11 @@ const mapStateToProps = (state) => {
         dcCoursesList: state.course.dcCoursesList.data,
         csnnCoursesList: state.course.csnnCoursesList.data,
         allCoursesList: state.course.coursesList.data,
-        falcutyCategories: state.courseCategory.falcutyCategories.data,
+        falcutyCategories: state.courseFaculty.falcutyCategories.data,
 
         //Cac thong tin loading
         isDCLoading: state.course.dcCoursesList.isLoading,
-        isFalcutyLoading: state.courseCategory.falcutyCategories.isLoading,
+        isFalcutyLoading: state.courseFaculty.falcutyCategories.isLoading,
         isCSNNLoading: state.course.csnnCoursesList.isLoading,
         isCoursesLoading: state.course.coursesList.isLoading,
     };

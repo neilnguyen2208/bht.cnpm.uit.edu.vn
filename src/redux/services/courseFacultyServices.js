@@ -2,7 +2,7 @@ import {
     get_CourseFacultiesSuccess,
     get_CourseFacultiesRequest,
     get_CourseFacultiesFailure
-} from "redux/actions/courseCategoryAction.js";
+} from "redux/actions/courseFacultyAction.js";
 import { authRequest } from "utils/requestUtils";
 
 export function getCourseFaculties() {

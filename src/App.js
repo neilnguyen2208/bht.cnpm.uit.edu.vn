@@ -45,6 +45,8 @@ import Exercise from 'pages/common/Exercise/Exercise';
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
 import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';
 import CreateExercise from 'pages/user/CreateExercise/CreateExercise';
+import EditQuestions from 'pages/user/CreateExercise/EditQuestions';
+import ExerciseCommentReport from 'pages/management/ExerciseManagement/ExerciseCommentReport';
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager';
@@ -97,6 +99,7 @@ const App = () => {
                         <Route exact path="/user/notification" component={MyNotification} />
                         <RequireLoginRoute exact path="/upload-document" component={UploadDocument} permissions={[Document.DOC_PENDING_SELF_CREATE, Document.DOC_PENDING_SELF_UPLOAD]} />
                         <RequireLoginRoute exact path="/create-exercise" component={CreateExercise} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/edit-questions/:id" component={EditQuestions} permissions={[Access.Admin]} />
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />
@@ -117,6 +120,7 @@ const App = () => {
                         <RequireLoginRoute exact path="/admin/courses-management/report" component={ExerciseReportManagement} permissions={[Access.Admin]} />
                         <RequireLoginRoute exact path="/admin/post-management/comment-report" component={PostCommentReport} permissions={[Access.Admin]} />
                         <RequireLoginRoute exact path="/admin/document-management/comment-report" component={DocumentCommentReport} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/admin/courses-management/comment-report" component={ExerciseCommentReport} permissions={[Access.Admin]} />
 
                     </Switch>
                     <Footer />

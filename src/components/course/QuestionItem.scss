@@ -65,6 +65,15 @@
   background: var(--blue);
   border: 1px solid var(--blue);
 }
+.question-item-container {
+  box-shadow: 0px 0px 2px 0px var(--gray);
+}
+.question-item-top-bar {
+  border: 1px solid var(--gray);
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
 
 .grid-question-items-container {
   padding: 5px;

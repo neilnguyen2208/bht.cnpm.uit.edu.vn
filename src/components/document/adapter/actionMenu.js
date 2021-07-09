@@ -11,7 +11,7 @@ export const guestMenu = [{
   text: "Report",
   icon: report_icon,
   value: "REPORT_DOCUMENT",
-  permissions: [Post.Comment.Report], //base on permission
+  permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
   showOnPermission: false,
   requiredAction: DocumentAction.Report
 }]
@@ -22,7 +22,7 @@ export const basicMenu = [
     text: "Report",
     icon: report_icon,
     value: "REPORT_DOCUMENT",
-    permissions: [Post.Comment.Report], //base on permission
+    permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
     showOnPermission: false,
     requiredAction: DocumentAction.Report
   },
@@ -95,7 +95,7 @@ export const wallpageMenu = [
     text: "Report",
     icon: report_icon,
     value: "REPORT_DOCUMENT",
-    permissions: [Post.Comment.Report], //base on permission
+    permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
     requiredAction: DocumentAction.Report,
 
   },

@@ -48,7 +48,7 @@ class AdminSidebar extends React.Component {
                 <div className="fake-left-sidebar" />
                 {/* Left Sidebar */}
                 <div className="left sidebar" id="admin-left-sidebar">
-                    <div className="user-info-layout" >
+                    {/* <div className="user-info-layout" >
                         <img alt="avatar" className="side-bar-avatar" src={avatarURL} />
                         <div className="achivement-layout">
                             <div className="score">Scrore: {score}</div>
@@ -64,7 +64,7 @@ class AdminSidebar extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div >
+                    </div > */}
                     <div className="user-role">
                         Admin
                     </div>
@@ -108,7 +108,7 @@ class AdminSidebar extends React.Component {
                                 <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                     to={"/admin/courses-management/report"}    >
                                     <div className="text">
-                                        Báo cáo bài tập
+                                        Quản lý bài tập
                                     </div>
                                 </NavLink>
 

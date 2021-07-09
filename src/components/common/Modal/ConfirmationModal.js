@@ -6,7 +6,7 @@ import { closeModal } from "redux/services/modalServices";
 import question_icon from 'assets/icons/24x24/question_icon_24x24.png'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class ConfirmationModal extends React.Component {
 
@@ -27,7 +27,7 @@ class ConfirmationModal extends React.Component {
 
     render() {
 
-        let { confirmText, cancelText, showIcon } = this.props;
+        let { confirmText, cancelText, showIcon, confirmLink, cancelLink } = this.props;
 
         return (
             <div>
@@ -45,9 +45,24 @@ class ConfirmationModal extends React.Component {
                                     {this.props.text}
                                 </div>
                                 <div className="simple-modal-footer">
+                                    {!confirmLink ?
+                                        <div className="blue-button mg-0px"
+                                            onClick={() => this.onConfirmClick()} >
+                                            {confirmText ? confirmText : "Xác nhận"}</div>
+                                        : <Link to={confirmLink}
+                                            className="mg-left-5px blue-button"
+                                            onClick={() => this.onConfirmClick()} >
+                                            {confirmText ? confirmText : "Xác nhận"}</Link>}
 
-                                    <div className="blue-button mg-0px" onClick={() => this.onConfirmClick()} >{confirmText ? confirmText : "Xác nhận"}</div>
-                                    <div className="mg-left-5px white-button" onClick={() => this.onCancelClick()} >{cancelText ? cancelText : "Huỷ"}</div>
+                                    {!cancelLink ?
+                                        <div className="mg-left-5px white-button"
+                                            onClick={() => this.onCancelClick()} >
+                                            {cancelText ? cancelText : "Huỷ"}</div>
+                                        : <Link to={cancelLink}
+                                            className="mg-left-5px white-button"
+                                            onClick={() => this.onCancelClick()} >
+                                            {cancelText ? cancelText : "Huỷ"}</Link>
+                                    }
                                 </div>
                             </div>
                         </div>

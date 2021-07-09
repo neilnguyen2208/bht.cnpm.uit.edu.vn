@@ -11,7 +11,6 @@ export class RequireLogin extends React.Component {
   handleClick = () => {
 
     if ((!this.props.useAction && (!this.props.permissions || this.props.permissions.length === 0))) {
-      console.log("A")
       if (this.props.expectedEvent)
         this.props.expectedEvent();
       return;
@@ -20,7 +19,6 @@ export class RequireLogin extends React.Component {
     if ((!this.props.useAction && ((this.props.isAny && authService.isGrantedAny(this.props.permissions)) || authService.isGrantedAll(this.props.permissions)))
       || (this.props.useAction && this.props.availableActions.includes(this.props.requiredAction))) {
       //granted action
-      console.log("B")
       if (this.props.expectedEvent)
         this.props.expectedEvent();
       return;

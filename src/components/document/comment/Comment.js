@@ -501,7 +501,7 @@ class Comment extends React.Component {
 const mapStateToProps = (state) => {
   return {
     //report
-    createdCommentId: state.postComment.createdCommentId,
+    createdCommentId: state.documentComment.createdCommentId,
 
   };
 }

@@ -14,9 +14,9 @@ export default class PostManagementNavBar extends React.PureComponent {
                 <NavLink exact to="/admin/courses-management/report" className="h-menu-item " activeClassName='h-menu-item active'>
                     Xử lý bài tập
                 </NavLink>
-                {/* <NavLink exact to="/admin/courses-management/comment-report" className="h-menu-item " activeClassName='h-menu-item active'> */}
-                {/* Xử lý bình luận */}
-                {/* </NavLink> */}
+                <NavLink exact to="/admin/courses-management/comment-report" className="h-menu-item " activeClassName='h-menu-item active'>
+                    Xử lý bình luận
+                </NavLink>
             </div>);
     }
 }

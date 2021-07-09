@@ -133,7 +133,7 @@ class NormalReactionbar extends React.Component {
         <div className="reaction-bar" style={this.props.type === "DETAIL" ? { borderTop: "none", borderBottom: "1px var(--grayish) solid" } : {}}>
           <div className="d-flex mg-top-5px">
 
-            <RequireLogin permissions={[]}
+            <RequireLogin permissions={[Post.POST_PUBLIC_ALL_LIKE]}
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Like}
               useAction={this.props.useAction}
@@ -146,7 +146,7 @@ class NormalReactionbar extends React.Component {
 
             <div className="vertical-line" />
 
-            <RequireLogin permissions={[]}
+            <RequireLogin permissions={[Post.POST_PUBLIC_ALL_SAVE]}
               availableActions={this.props.availableActions}
               requiredAction={PostAction.Save}
               expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}
@@ -159,7 +159,7 @@ class NormalReactionbar extends React.Component {
             <div className="vertical-line" />
 
             {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
-              <RequireLogin permissions={[]}
+              <RequireLogin permissions={[Post.POSTCOMMENT_PUBLIC_SELF_CREATE]}
                 availableActions={this.props.availableActions}
                 requiredAction={PostAction.Comment}
                 isLink={true}
@@ -176,7 +176,7 @@ class NormalReactionbar extends React.Component {
                 </div>
               </RequireLogin>
               :
-              <RequireLogin permissions={[Post.Comment.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+              <RequireLogin permissions={[Post.POSTCOMMENT_PUBLIC_SELF_CREATE]}
                 availableActions={this.props.availableActions}
                 requiredAction={PostAction.Comment}
                 useAction={this.props.useAction}

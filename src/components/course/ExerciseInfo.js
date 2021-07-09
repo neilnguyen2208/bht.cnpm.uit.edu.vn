@@ -75,7 +75,7 @@ class ExerciseInfo extends React.Component {
           <div className="title" >
             {this.props.title}
           </div>
-        </Link> 
+        </Link>
 
         <div className="d-flex mg-top-5px  j-c-space-between"  >
           <div className="d-flex">
@@ -104,9 +104,10 @@ class ExerciseInfo extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
-          <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
+          {this.props.EDIT_MODE && <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
             availableActions={this.props.availableActions} items={guestMenu}
             id={`${this.props.popUpMenuPrefix}-pxrcsi-pm-${this.props.exerciseId}`} />
+          }
         </div>
         {cover}
 

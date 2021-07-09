@@ -19,6 +19,8 @@ import 'components/styles/Button.scss'
 
 //utils
 import { formatNumber } from 'utils/miscUtils.js'
+import { Post, PostAction } from 'authentication/permission.config';
+import { RequireLogin } from 'components/base_components/RequireLoginComponent';
 
 class HomeReactionbar extends React.Component {
 
@@ -120,23 +122,66 @@ class HomeReactionbar extends React.Component {
         </Link>
         <div className="reaction-bar">
           <div className="d-flex">
-            <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
-              <div> {likeBtn}</div>
-              <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
-            </div>
-            <div className="vertical-line" />
-            <div className="save-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleSaveImage} >
-              <div className="d-flex"> {saveBtn}</div>
-            </div>
-            <div className="vertical-line" />
-            <div className="comment-count-container">
-              <div className="comment-btn-text">
-                Bình luận
+
+            <RequireLogin permissions={[Post.POST_PUBLIC_ALL_LIKE]}
+              availableActions={this.props.availableActions}
+              requiredAction={PostAction.Like}
+              useAction={this.props.useAction}
+              expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
+              <div className="like-btn-container"  >
+                <div> {likeBtn}</div>
+                <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
               </div>
-              <div className="comment-btn-number">
-                {formatNumber(this.props.commentCount)}
+            </RequireLogin>
+
+            <div className="vertical-line" />
+            <RequireLogin permissions={[Post.POST_PUBLIC_ALL_SAVE]}
+              availableActions={this.props.availableActions}
+              requiredAction={PostAction.Save}
+              expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleSaveImage() : () => { }}
+              useAction={this.props.useAction}     >
+              <div className="save-btn-container"  >
+                {saveBtn}
               </div>
-            </div>
+            </RequireLogin>
+
+            <div className="vertical-line" />
+            {window.location.pathname.substring(0, 13) === "/post-content" || window.location.pathname === "/create-post" ?
+              <RequireLogin permissions={[Post.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+                availableActions={this.props.availableActions}
+                requiredAction={PostAction.Comment}
+                isLink={true}
+                useAction={this.props.useAction}
+                to={"/post-content/" + this.props.postID + "#cr-cmt"}
+                expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
+                <div className="comment-count-container">
+                  <div className="comment-btn-text">
+                    Bình luận
+                  </div>
+                  <div className="comment-btn-number">
+                    {formatNumber(this.props.commentCount)}
+                  </div>
+                </div>
+              </RequireLogin>
+              :
+              <RequireLogin permissions={[Post.POSTCOMMENT_PUBLIC_SELF_CREATE]}
+                availableActions={this.props.availableActions}
+                requiredAction={PostAction.Comment}
+                useAction={this.props.useAction}
+                isLink={true}
+                to={"/post-content/" + this.props.postID + "#cr-cmt"}
+                expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
+                <div className="comment-count-container">
+                  <div className="comment-btn-text">
+                    Bình luận
+                  </div>
+                  <div className="comment-btn-number">
+                    {formatNumber(this.props.commentCount)}
+                  </div>
+                </div>
+              </RequireLogin>
+            }
+
           </div>
           <div className="view-count-container">
             <div className="view-count" style={{ fontSize: "1rem", lineHeight: "0.9rem", marginTop: "-4px" }}  >{formatNumber(this.props.viewCount)} lượt xem</div>

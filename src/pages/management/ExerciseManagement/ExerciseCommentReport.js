@@ -4,23 +4,23 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { itemType, resolveStateOptions } from 'constants.js';
 import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
-import { getReportedPostComments } from 'redux/services/postCommentServices'
+import { getReportedExerciseComments } from 'redux/services/exerciseCommentServices'
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
-// import PostManagementNavbar from './PostManagementNavbar'
+// import ExerciseManagementNavbar from './ExerciseManagementNavbar'
 import ReportedCommentReactionbar from 'components/post/comment/ReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
-import { post_ResolveAPostCommentReset } from 'redux/actions/documentCommentAction';
+import { post_ResolveAnExerciseCommentReset } from 'redux/actions/exerciseCommentAction';
 import ReportedCommentInfo from 'components/post/comment/ReportedCommentInfo'
-import PostManagementNavBar from './ExerciseManagementNavbar';
+import ExerciseManagementNavBar from './ExerciseManagementNavbar';
 import Combobox from 'components/common/Combobox/Combobox';
 
-class PostCommentReport extends React.Component {
+class ExerciseCommentReport extends React.Component {
     constructor(props) {
         super();
     }
@@ -35,7 +35,7 @@ class PostCommentReport extends React.Component {
             page: getQueryParamByName('page')
         }
 
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedExerciseComments(this.searchParamObject);
     }
 
     //server paginator
@@ -45,7 +45,7 @@ class PostCommentReport extends React.Component {
             ...this.searchParamObject,
             page: getQueryParamByName('page'),
         }
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedExerciseComments(this.searchParamObject);
         this.setState({});
     }
 
@@ -58,7 +58,7 @@ class PostCommentReport extends React.Component {
             }
         setQueryParam(this.queryParamObject);
 
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedExerciseComments(this.searchParamObject);
     }
 
     onStateOptionChange = (selectedOption) => {
@@ -85,7 +85,7 @@ class PostCommentReport extends React.Component {
                     page: "1"
                 }
         }
-        this.props.getReportedPostComments(this.searchParamObject);
+        this.props.getReportedExerciseComments(this.searchParamObject);
         this.setState({});
     }
 
@@ -95,7 +95,7 @@ class PostCommentReport extends React.Component {
             closeModal();
             closeModal();
             this.reloadList();
-            store.dispatch(post_ResolveAPostCommentReset());
+            store.dispatch(post_ResolveAnExerciseCommentReset());
             openBLModal({ type: "success", text: "Xử lý bình luận thành công!" });
         }
         if (!this.props.isListLoading && this.props.reportedCommentsList) {
@@ -133,7 +133,7 @@ class PostCommentReport extends React.Component {
                 <div className="content-layout">
                     <Titlebar title="QUẢN LÝ BÀI TẬP" />
                     <div className="content-container">
-                        <PostManagementNavBar />
+                        <ExerciseManagementNavBar />
 
                         <div />
                         <div className="filter-container j-c-space-between">
@@ -185,10 +185,10 @@ class PostCommentReport extends React.Component {
 const mapStateToProps = (state) => {
     return {
         //pending posts list
-        reportedCommentsList: state.exerciseComment.reportedPostComments.data,
-        isListLoading: state.exerciseComment.reportedPostComments.isLoading,
-        totalPages: state.exerciseComment.reportedPostComments.totalPages,
-        totalElements: state.exerciseComment.reportedPostComments.totalElements,
+        reportedCommentsList: state.exerciseComment.reportedExerciseComments.data,
+        isListLoading: state.exerciseComment.reportedExerciseComments.isLoading,
+        totalPages: state.exerciseComment.reportedExerciseComments.totalPages,
+        totalElements: state.exerciseComment.reportedExerciseComments.totalElements,
 
         //handle action resolve a report
         isHaveResolved: state.exerciseComment.isHaveResolved
@@ -196,7 +196,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getReportedPostComments
+    getReportedExerciseComments
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostCommentReport));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseCommentReport));

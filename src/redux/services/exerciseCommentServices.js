@@ -176,7 +176,7 @@ export function getReportedExerciseComments(searchParamObject) {
     authRequest.get(`/exercises/comments/report?${generateSearchParam(searchParamObject)}`)
       .then(response => {
         let result_1 = response.data;
-        dispatch(get_ReportedExerciseCommentsSuccess({ postReportedCommentWithStateDTOs: response.data.postCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
+        dispatch(get_ReportedExerciseCommentsSuccess({ exerciseReportedCommentWithStateDTOs: response.data.exerciseCommentReportDTOs, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
       })
       .catch(error => { get_ReportedExerciseCommentsFailure(error) })
   }

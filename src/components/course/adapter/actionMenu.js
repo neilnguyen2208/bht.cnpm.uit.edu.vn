@@ -22,7 +22,7 @@ export const basicMenu = [
     text: "Report",
     icon: report_icon,
     value: "REPORT_EXERCISE",
-    permissions: [Post.Comment.Report], //base on permission
+    permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
     showOnPermission: false,
     requiredAction: PostAction.Report
   },
@@ -95,7 +95,7 @@ export const wallpageMenu = [
     text: "Report",
     icon: report_icon,
     value: "REPORT_EXERCISE",
-    permissions: [Post.Comment.Report], //base on permission
+    permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
     requiredAction: PostAction.Report,
 
   },

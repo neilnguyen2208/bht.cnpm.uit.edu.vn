@@ -9,7 +9,7 @@ const commentMenu = [
     text: "Report",
     icon: report_icon,
     value: "REPORT_COMMENT",
-    permissions: [Post.Comment.Report], //base on permission
+    permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
     showOnPermission: false,
     requiredAction: CommentAction.Report
   },

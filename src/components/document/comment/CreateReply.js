@@ -6,9 +6,6 @@ import { bindActionCreators } from 'redux';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-//services
-import { getAPostComments } from "redux/services/postCommentServices"
-
 // import store from 'redux/store/index'
 // import { validation } from 'utils/validationUtils'
 

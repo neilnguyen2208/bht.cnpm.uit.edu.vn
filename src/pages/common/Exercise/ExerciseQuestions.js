@@ -28,7 +28,6 @@ import {
     update_QuestionsToCSucess,
     update_QuestionsToCReset,
     update_ExerciseNoteReset,
-    check_ExerciseQuestionsRequest
 } from 'redux/actions/courseAction';
 import authService from 'authentication/authenticationServices';
 import Countdown from 'components/course/Countdown';
@@ -36,7 +35,7 @@ import {
     closeModal,
     openModal
 } from 'redux/services/modalServices';
-class PostDetail extends React.Component {
+class ExerciseQuestions extends React.Component {
     constructor(props) {
         super(props);
         this.ANSWERS_DTO = [
@@ -342,4 +341,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseQuestions));

@@ -61,6 +61,9 @@ import {
     get_ReportedExercisesFailure,
     set_TimeStart,
     set_TimeStop,
+    post_CreateAnExerciseReset,
+    post_CreateAnExerciseSuccess,
+    post_CreateAnExerciseFailure,
 } from "redux/actions/courseAction.js";
 import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
@@ -260,6 +263,18 @@ export function resolveAnExercise(id, resolveDTO) {
                 dispatch(post_ResolveAnExerciseSuccess());
             })
             .catch(error => post_ResolveAnExerciseFailure())
+    }
+}
+
+export function createAnExercise(exerciseDTO) {
+    console.log(exerciseDTO)
+    return dispatch => {
+        dispatch(post_CreateAnExerciseReset());
+        authRequest.post(`/exercises`, JSON.stringify(exerciseDTO))
+            .then(result => {
+                dispatch(post_CreateAnExerciseSuccess(result.data));
+            })
+            .catch(error => post_CreateAnExerciseFailure())
     }
 }
 

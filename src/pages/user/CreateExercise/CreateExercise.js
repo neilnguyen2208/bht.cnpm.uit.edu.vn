@@ -3,10 +3,13 @@ import React from "react";
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getPostCategories } from "redux/services/postCategoryServices";
+import { getExerciseCategories } from "redux/services/exerciseCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
-import { createAPost } from "redux/services/postServices"
-import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from "redux/actions/tagAction"
+import { createAnExercise } from "redux/services/courseServices"
+import {
+    get_tagQuickQueryResultRequest,
+    get_tagQuickQueryResultReset
+} from "redux/actions/tagAction"
 import { DELAY_TIME } from 'constants.js'
 import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
@@ -19,12 +22,14 @@ import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
 import store from 'redux/store/index'
 import SmallLoader from 'components/common/Loader/Loader_S'
-import { post_CreateAPostReset } from "redux/actions/postAction";
+import { post_CreateAnExerciseReset } from "redux/actions/courseAction";
 import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import { getSubjectsList } from 'redux/services/subjectServices';
 import { request } from "utils/requestUtils";
+import { Link } from 'react-router-dom';
+import { closeModal, openModal } from "redux/services/modalServices";
 
 const validationCondition = {
     form: '#create-exercise-form',
@@ -69,21 +74,16 @@ class CreateExercise extends React.Component {
             isSearchingTag: false,
 
             CREATE_EXERCISE_DTO: {
-                tags: [],
-                title: "Nhan đề bài tập",//
-                content: ``,
-                summary: `null`,
-                categoryID: "",
-                imageURL: '',
-                publishDtm: (new Date()).toISOString(),
-                readingTime: 10
-            },
+                "title": "string",
+                "description": "string",
+                "categoryID": 0,
+                "topicID": 0,
+                // "suggestedDuration": 0,
+                "publishDtm": "2021-07-09T16:24:21.026Z",
+                "rank": -1,
+                "tags": []
+            }
 
-            author: {
-                avatarURL: "https://i.imgur.com/SZJgL6C.png",
-                displayName: "Nguyễn Văn Đông",
-                username: "dongnsince1999"
-            },
         };
         this.shownTag = [
             { dmID: 1, id: '', content: '' },
@@ -115,7 +115,7 @@ class CreateExercise extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getPostCategories();
+        this.props.getExerciseCategories();
         this.props.getSubjectsList();
         document.querySelector(".cr-exercise-form-container.edit").classList.remove("d-none");
         document.querySelector(".cr-exercise-form-container.edit").classList.add("d-block");
@@ -127,7 +127,7 @@ class CreateExercise extends React.Component {
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
-        store.dispatch(post_CreateAPostReset());
+        store.dispatch(post_CreateAnExerciseReset());
         if (getCKEInstance('cr-exercise-cke'))
             getCKEInstance('cr-exercise-cke').destroy();
     }
@@ -140,19 +140,8 @@ class CreateExercise extends React.Component {
     }
 
     handleUploadBtnClick = () => {
-        let dom = document.createElement("DIV");
-        dom.innerHTML = this.state.CREATE_EXERCISE_DTO.content;
-        let plain_text = (dom.textContent || dom.innerText);
-        let tmpSummary = '';
-        if (this.state.CREATE_EXERCISE_DTO.content.length < 160) {
-            tmpSummary = plain_text;
-        }
-        else {
-            tmpSummary = plain_text.substring(0, 160);
-        }
-
         if (styleFormSubmit(validationCondition)) {
-            this.props.createAPost({ ...this.state.CREATE_EXERCISE_DTO, summary: tmpSummary + "" }, this.imageFile);
+            this.props.createAnExercise(this.state.CREATE_EXERCISE_DTO);
         }
     }
 
@@ -335,11 +324,10 @@ class CreateExercise extends React.Component {
         });
         this.forceUpdate();
     }
-
     //#endregion
 
     handleEditorChange = (value) => {
-        this.setState({ CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, content: value } });
+        this.setState({ CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, description: value } });
         return;
     };
 
@@ -364,13 +352,7 @@ class CreateExercise extends React.Component {
         })
     }
 
-    handleImageFileChange = (file) => {
-        this.imageFile = file;
-        // this.setState({
-        //     CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO }
-        // })
-    }
-
+    //request list of a subject topics 
     onSubjectOptionChanged = (selectedOption) => {
         document.getElementById("cr-exercise-topic-combobox").classList.remove("d-none");
         //get list of topic
@@ -381,12 +363,14 @@ class CreateExercise extends React.Component {
     }
 
     onTopicOptionChanged = (selectedOption) => {
-
+        console.log(selectedOption);
+        this.setState({ CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, topicID: selectedOption.id } })
     }
 
     render() {
         styleCodeSnippet();
 
+        //assign data aftet loading category and subject list 
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
         }
@@ -395,12 +379,12 @@ class CreateExercise extends React.Component {
             this.subjectsList = this.props.subjects;
         }
 
+        //handle tag search
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
             document.getElementById("cr-exercise-tag-container-tip-label").innerText = "";
         }
-
         else
             if (this.props.isTagQuickQueryLoadDone) {
                 if (this.state.isSearchingTag) {
@@ -433,184 +417,152 @@ class CreateExercise extends React.Component {
                 }
             }
 
-        let body =
-            <div>
-                {/* Preview region */}
-                {/* <div className="cr-exercise-form-container post-detail-container preview" >
+        //body
+        let body = <div>
+            {/* Edit region */}
+            <div className="cr-exercise-form-container edit">
+                <div id="create-exercise-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
+                    <div className="mg-top-10px" />
 
-                    {this.props.userSummaryLoaded && this.props.userSummaryData ?
-                        <Metadata title={this.state.CREATE_EXERCISE_DTO.title}
-                            categoryName={this.state.currentCategory}
-                            categoryID={this.state.CREATE_EXERCISE_DTO.categoryID}
-                            readingTime={this.state.CREATE_EXERCISE_DTO.readingTime}
-                            authorDisplayName={this.state.author.displayName}
-                            authorAvatarURL={this.props.userSummaryData.avatarURL}
-                            publishDtm={this.state.publishDtm}
-                            type={detailType.preview}
-                            imageURL={this.imageFile ? URL.createObjectURL(this.imageFile) : ''}
-                            authorID={this.props.userSummaryData.id}
-                        /> : <></>}
-
-                    <div className="ck-editor-output" dangerouslySetInnerHTML={{
-                        __html:
-                            this.state.CREATE_EXERCISE_DTO.content
-                    }} />
-
-                    <div className="mg-top-10px mg-bottom-10px" >
-                        {this.shownTag.map(item =>
-                            <Tag isReadOnly={true} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
-                        )}
+                    <div className="form-group">
+                        <label className="form-label-required">Tiêu đề:</label>
+                        <input className="text-input" id="cr-exercise-title"
+                            placeholder="Nhập tiêu đề bài tập " onChange={e => this.handleTitleChange(e)}
+                            type="text" ></input>
+                        <div className="form-error-label-container">
+                            <span className="form-error-label" ></span>
+                        </div>
                     </div>
-                    <PostNormalReactionbar
-                        postID={"-1"}
-                        likeCount={0}
-                        commentCount={0}
-                        viewCount={0}
-                        likedStatus={false}
-                        savedStatus={false}
-                        type="PREVIEW"
-                    />
 
-                    {formatMathemicalFormulas()}
-                </div> */}
-
-                {/* Edit region */}
-                <div className="cr-exercise-form-container edit">
-                    <div id="create-exercise-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
-                        <div className="mg-top-10px" />
-
-                        <div className="form-group">
-                            <label className="form-label-required">Tiêu đề:</label>
-                            <input className="text-input" id="cr-exercise-title"
-                                placeholder="Nhập tiêu đề bài tập " onChange={e => this.handleTitleChange(e)}
-                                type="text" ></input>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
+                    {/* CKEditor */}
+                    <div className="form-group">
+                        <div className="form-label-required">Mô tả:</div>
+                        <Editor
+                            config={SimpleCKEToolbarConfiguration}
+                            editorId="cr-exercise-description"
+                            placeholder='Start typing here...'
+                            onChange={this.handleEditorChange}
+                            data="<p>Nhập nội dung bài tập ...</p>"
+                            height={200}
+                            autoGrow_maxHeight={300}
+                            autoGrow_minHeight={200}
+                            validation
+                        />
+                        <div className="form-error-label-container">
+                            <span className="form-error-label" ></span>
                         </div>
+                    </div>
 
-                        {/* CKEditor */}
-                        <div className="form-group">
-                            <div className="form-label-required">Mô tả:</div>
-                            <Editor
-                                config={SimpleCKEToolbarConfiguration}
-                                editorId="cr-exercise-description"
-                                placeholder='Start typing here...'
-                                onChange={this.handleEditorChange}
-                                data="<p>Nhập nội dung bài tập ...</p>"
-                                height={200}
-                                autoGrow_maxHeight={300}
-                                autoGrow_minHeight={200}
-                                validation
-                            />
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div>
-
-                        {/* Subject */}
-                        <div className="form-group" >
-                            <label className="form-label-required">Môn học:</label>
-                            <Combobox comboboxId="cr-exercise-subject-combobox"
-                                options={this.subjectsList}
-                                onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
-                                placeHolder="Chọn môn học"
-                                validation>
-                            </Combobox>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div >
-
-                        {/* Topic */}
-                        <div className="form-group d-none" id="cr-exercise-topic-combobox" >
-                            <label className="form-label-required">Chủ đề:</label>
-                            <Combobox comboboxId="cr-exercise-topic-combobox"
-                                options={this.topicsList}
-                                onOptionChanged={(selectedOption) => this.onTopicOptionChanged(selectedOption)}
-                                placeHolder="Chọn chủ đề"
-                                validation>
-                            </Combobox>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div >
-
-                        {/* Category */}
-                        <div className="form-group" >
-                            <label className="form-label-required">Danh mục:</label>
-                            <Combobox comboboxId="cr-exercise-category-combobox"
-                                options={this.categoryList}
-                                onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
-                                placeHolder="Chọn danh mục"
-                                validation>
-                            </Combobox>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div >
-
-
-                        {/* Tag */}
-                        <div className='form-group'>
-                            <label className="form-label">Tags:</label>
-
-                            <input onChange={(e) => this.quickSearchTags(e)} id="cr-exercise-tag-input"
-                                onKeyPress={(this.state.CREATE_EXERCISE_DTO.tags.length < 5) && this.keyHandler}
-                                className="text-input"
-                                placeholder="Nhập tag " />
-
-                            <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
-                                {/* khi load xong thi ntn */}
-                                <div id="cr-exercise-qs-tag-result-container" className="text-input-dropdown-container hidden">
-                                    <div className="text-input-dropdown">
-                                        {this.tagSearchResult}
-                                        <div className="form-tip-label" id="cr-exercise-tag-container-tip-label" />
-                                    </div>
-                                </div>
-                            </ClickAwayListener>
-
-                            <div className="form-tip-label-container">
-                                <div className="form-tip-label">Có thể nhập tối đa 5 tag.</div>
-                            </div>
-
-                            <div className="mg-top-10px" >
-                                {this.shownTag.map(item =>
-                                    <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
-                                )}
-                            </div>
-                            <div className="form-line" />
-
-                        </div>
-
-                        {/* Button */}
-                        <div className="form-group d-flex">
-                            <button className="blue-button mg-auto form-submit-btn" onClick={() => this.handleUploadBtnClick()}>Lưu</button>
+                    {/* Subject */}
+                    <div className="form-group" >
+                        <label className="form-label-required">Môn học:</label>
+                        <Combobox comboboxId="cr-exercise-subject-combobox"
+                            options={this.subjectsList}
+                            onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
+                            placeHolder="Chọn môn học"
+                            validation>
+                        </Combobox>
+                        <div className="form-error-label-container">
+                            <span className="form-error-label" ></span>
                         </div>
                     </div >
+
+                    {/* Topic */}
+                    <div className="form-group d-none" id="cr-exercise-topic-combobox" >
+                        <label className="form-label-required">Chủ đề:</label>
+                        <Combobox comboboxId="cr-exercise-topic-combobox"
+                            options={this.topicsList}
+                            onOptionChanged={(selectedOption) => this.onTopicOptionChanged(selectedOption)}
+                            placeHolder="Chọn chủ đề"
+                            validation>
+                        </Combobox>
+                        <div className="form-error-label-container">
+                            <span className="form-error-label" ></span>
+                        </div>
+                    </div >
+
+                    {/* Category */}
+                    <div className="form-group" >
+                        <label className="form-label-required">Danh mục:</label>
+                        <Combobox comboboxId="cr-exercise-category-combobox"
+                            options={this.categoryList}
+                            onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
+                            placeHolder="Chọn danh mục"
+                            validation>
+                        </Combobox>
+                        <div className="form-error-label-container">
+                            <span className="form-error-label" ></span>
+                        </div>
+                    </div >
+
+
+                    {/* Tag */}
+                    <div className='form-group'>
+                        <label className="form-label">Tags:</label>
+
+                        <input onChange={(e) => this.quickSearchTags(e)} id="cr-exercise-tag-input"
+                            onKeyPress={(this.state.CREATE_EXERCISE_DTO.tags.length < 5) && this.keyHandler}
+                            className="text-input"
+                            placeholder="Nhập tag " />
+
+                        <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
+                            {/* khi load xong thi ntn */}
+                            <div id="cr-exercise-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                <div className="text-input-dropdown">
+                                    {this.tagSearchResult}
+                                    <div className="form-tip-label" id="cr-exercise-tag-container-tip-label" />
+                                </div>
+                            </div>
+                        </ClickAwayListener>
+
+                        <div className="form-tip-label-container">
+                            <div className="form-tip-label">Có thể nhập tối đa 5 tag.</div>
+                        </div>
+
+                        <div className="mg-top-10px" >
+                            {this.shownTag.map(item =>
+                                <Tag isReadOnly={false} onDeleteTag={(item) => this.deleteTag(item)} clickable={false} tag={item} />
+                            )}
+                        </div>
+                        <div className="form-line" />
+
+                    </div>
+
+                    {/* Button */}
+                    <div className="form-group d-flex">
+                        <div className="j-c-end">
+                            <button className="blue-button mg-auto form-submit-btn" onClick={() => this.handleUploadBtnClick()}>Lưu</button>
+                        </div>
+                    </div>
                 </div >
             </div >
+        </div >
+
+        //handle after created exercise 
+        if (this.props.isHaveCreated && this.props.newExerciseResponse.id) {
+            store.dispatch(post_CreateAnExerciseReset());
+            openModal("confirmation",
+                {
+                    title: "Tạo bài tập thành công",
+                    text: "Bạn có thể thực hiện thêm câu hỏi cho bài tập hoặc xem danh sách các bài tập.",
+                    confirmText: "Thêm câu hỏi",
+                    cancelText: "Xem danh sách",
+                    onConfirm: () => closeModal(),
+                    cancelLink: `/course-content/${this.props.newExerciseResponse.subjectID}`,
+                    confirmLink: `/edit-questions/${this.props.newExerciseResponse.id}`
+                })
+        }
 
         return (
-            <div className="">
+            <div className="" >
                 <div className="content-layout">
                     <Titlebar title="TẠO BÀI TẬP MỚI" />
                     <div className="content-container">
                         <div className="form-container">
-                            {/* <div className="j-c-end">
-                                <div className="j-c-end" >
-                                    <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Soạn bài tập</button>
-                                    <div className="mg-right-5px" />
-                                    <button className="white-button" disabled={this.state.isPreview} onClick={this.onPreviewBtnClick} >Preview</button>
-                                </div>
-                            </div> */}
-                            {/* <div className="mg-top-10px decoration-line" /> */}
                         </div>
                         {body}
                     </div>
                 </div>
-
-                {this.props.isHaveCreated ? <Redirect to="/user/my-posts" /> : <></>}
             </div>
         );
     }
@@ -630,13 +582,14 @@ class CreateExercise extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.postCategory.categories.data,
-        isCategoryLoading: state.postCategory.categories.isLoading,
+        categories: state.exerciseCategory.categories.data,
+        isCategoryLoading: state.exerciseCategory.categories.isLoading,
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
 
-        //for redirect after create a post
-        isHaveCreated: state.post.isHaveCreated,
+        //for redirect after create an exercise
+        isHaveCreated: state.course.isHaveCreatedExercise,
+        newExerciseResponse: state.course.newExerciseResponse,
 
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
@@ -650,9 +603,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostCategories,
+    getExerciseCategories,
     getTagQuickQueryResult,
-    createAPost,
+    createAnExercise,
     getSubjectsList
 
 }, dispatch);

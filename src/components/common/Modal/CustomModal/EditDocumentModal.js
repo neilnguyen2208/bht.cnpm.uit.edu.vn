@@ -6,7 +6,7 @@ import store from 'redux/store/index.js'
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { getDocumentSubjects } from "redux/services/documentSubjectServices";
+import { getSubjectsList } from "redux/services/subjectServices";
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import {
@@ -130,7 +130,7 @@ class EditDocumentModal extends React.Component {
     componentDidMount() {
         validation(validationCondition);
         this.props.getDocumentCategories();
-        this.props.getDocumentSubjects();
+        this.props.getSubjectsList();
 
         this.props.getDocumentByIdForEdit(this.props.id);
         this.isFirstLoad = false;
@@ -657,7 +657,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getDocumentCategories,
-    getDocumentSubjects,
+    getSubjectsList,
     getTagQuickQueryResult,
     getDocumentByIdForEdit,
     getDocumentById,

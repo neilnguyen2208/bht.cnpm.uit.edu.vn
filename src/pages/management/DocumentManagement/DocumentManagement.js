@@ -17,7 +17,7 @@ import { postAdminApproveStatusOptions, publishedTimeOptions } from 'constants.j
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import DocumentManagementNavbar from './DocumentManagementNavbar'
-import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
+import { getSubjectsListHaveAll } from "redux/services/subjectServices";
 
 import 'layouts/Layout.scss'
 import store from 'redux/store';
@@ -41,7 +41,7 @@ class DocumentManagement extends React.Component {
 
         setQueryParam(this.queryParamObject);
         this.props.getDocumentCategoriesHaveAll();
-        this.props.getDocumentSubjectsHaveAll();
+        this.props.getSubjectsListHaveAll();
 
         this.props.getManagementDocuments(this.searchParamObject);
     }
@@ -327,7 +327,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentSubjectsHaveAll,
+    getSubjectsListHaveAll,
     getManagementDocuments,
     getDocumentCategoriesHaveAll,
 }, dispatch);

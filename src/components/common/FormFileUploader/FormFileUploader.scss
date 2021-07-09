@@ -36,3 +36,45 @@
     background: var(--grayish);
     cursor: not-allowed;
 }
+
+.iid-container {
+    display: flex;
+    overflow: hidden;
+}
+
+.iid-container._avatar {
+    height: 175px;
+}
+
+.image-input-placeholder {
+    position: absolute;
+    object-fit: cover;
+    height: 170px;
+    outline: none;
+    border: 0;
+    border-width: 0px;
+    padding-top: "10px";
+    padding-bottom: "10px";
+    width: 100%;
+    outline-color: white;
+    margin: auto;
+    display: block;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.image-input-placeholder._avatar {
+    height: 180px;
+    width: 175px;
+}
+
+.image-input-decoration {
+    border-radius: 50%;
+    margin: auto;
+    background: white;
+    opacity: 70%;
+    height: 100px;
+    width: 100px;
+    padding-top: 17px;
+    // padding-bottom: 10px;
+}

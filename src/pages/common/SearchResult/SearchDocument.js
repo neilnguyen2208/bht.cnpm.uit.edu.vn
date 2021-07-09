@@ -7,7 +7,7 @@ import React from 'react'
 //services
 import { getDocumentSearch } from "redux/services/documentServices"
 import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices"
-import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices"
+import { getSubjectsListHaveAll } from "redux/services/subjectServices"
 
 //utils
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
@@ -43,7 +43,7 @@ class DocumentsList extends React.Component {
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
         this.props.getDocumentCategoriesHaveAll();
-        this.props.getDocumentSubjectsHaveAll();
+        this.props.getSubjectsListHaveAll();
         this.props.getDocumentSearch(this.searchParamObject);
     }
 
@@ -339,7 +339,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentSearch, getDocumentCategoriesHaveAll, getDocumentSubjectsHaveAll
+    getDocumentSearch, getDocumentCategoriesHaveAll, getSubjectsListHaveAll
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentsList));

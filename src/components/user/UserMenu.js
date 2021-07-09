@@ -164,6 +164,9 @@ class UserMenu extends React.Component {
                     <Link to={"/create-post"} className="d-flex">
                         <img className="header-image-button" src={write_icon} alt="" />
                     </Link>
+                    <Link to={"/create-exercise"} className="d-flex">
+                        <img className="header-image-button" src={write_icon} alt="" />
+                    </Link>
                     <div id="h-um-wrapper" className="user-menu">
                         <div className="d-flex">
                             <Link to={`/user/profile/${this.props.userSummaryData.id}`}>

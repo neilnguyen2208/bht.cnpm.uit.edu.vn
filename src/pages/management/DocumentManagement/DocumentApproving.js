@@ -17,7 +17,7 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
 import DocumentManagementNavbar from './DocumentManagementNavbar'
-import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
+import { getSubjectsListHaveAll } from "redux/services/subjectServices";
 
 import RequestReactionbar from 'components/document/RequestReactionbar'
 import { post_ApproveADocumentReset, delete_RejectADocumentReset, post_RejectAndFeedbackADocumentReset } from 'redux/actions/documentAction'
@@ -38,7 +38,7 @@ class DocumentApproving extends React.Component {
         }
 
         this.props.getDocumentCategoriesHaveAll();
-        this.props.getDocumentSubjectsHaveAll();
+        this.props.getSubjectsListHaveAll();
 
         setQueryParam(this.queryParamObject);
 
@@ -321,7 +321,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPendingDocuments,
     getDocumentCategoriesHaveAll,
-    getDocumentSubjectsHaveAll,
+    getSubjectsListHaveAll,
 
 }, dispatch);
 

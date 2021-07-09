@@ -109,20 +109,26 @@ import { openModal, openBLModal, closeModal } from 'redux/services/modalServices
 import { authRequest } from 'utils/requestUtils';
 import { generateSearchParam } from 'utils/urlUtils'
 
-export function createAPost(data) {
+export function createAPost(data, file) {
     return dispatch => {
         dispatch(post_CreateAPostReset());
         openModal("loader", { text: "Đang upload bài viết " });
-        authRequest.post('/posts', JSON.stringify(data))
-            .then(response => {
-                //handle success    
-                dispatch(closeModal());
-                openBLModal({ text: "Tạo bài viết thành công!", type: "success" });
-                dispatch(post_CreateAPostSuccess());
-            })
-            .catch(error => {
-                dispatch(post_CreateAPostReset())
-            })
+        let formData = new FormData();
+        formData.append('file', file);
+        authRequest.post('/posts/image', formData).then(response_1 => {
+            data.imageURL = response_1.data;
+            authRequest.post('/posts', JSON.stringify(data))
+                .then(response_2 => {
+                    //handle success    
+                    dispatch(closeModal());
+                    openBLModal({ text: "Tạo bài viết thành công!", type: "success" });
+                    dispatch(post_CreateAPostSuccess());
+                }).catch(error => {
+                    dispatch(post_CreateAPostReset())
+                })
+        }).catch(error => {
+            dispatch(post_CreateAPostReset())
+        })
     }
 }
 
@@ -393,6 +399,18 @@ export function getAPostStatisticByID(id) {
             .then(response_1 => {
                 dispatch(get_APostStatisticSuccess(response_1.data[0]))
             }).catch(error => dispatch(get_APostStatisticFailure(error)))
+    }
+}
+
+export function uploaPostImage(id) {
+    return dispatch => {
+        // dispatch(get_APostStatisticReset())
+        authRequest.get(`/posts/image`)
+            .then(response_1 => {
+                // dispatch(get_APostStatisticSuccess(response_1.data[0]))
+            }).catch(error => { }
+                // dispatch(get_APostStatisticFailure(error))
+            )
     }
 }
 

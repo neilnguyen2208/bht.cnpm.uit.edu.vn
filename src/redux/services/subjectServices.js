@@ -7,7 +7,7 @@ import {
 
 import { request } from 'utils/requestUtils';
 
-export function getDocumentSubjects() {
+export function getSubjectsList() {
     return dispatch => {
         dispatch(get_DocumentSubjectsRequest());
         request.get('/subjects')
@@ -17,7 +17,7 @@ export function getDocumentSubjects() {
             .catch(error => dispatch(get_DocumentSubjectsFailure(error)))
     }
 }
-export function getDocumentSubjectsHaveAll() {
+export function getSubjectsListHaveAll() {
     return dispatch => {
         dispatch(get_DocumentSubjectsRequest());
         request.get('/subjects')

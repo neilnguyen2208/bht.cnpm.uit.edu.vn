@@ -146,7 +146,7 @@ class FormFileUploader extends React.Component {
         //update UI
         this.clientFileItems = this.clientFiles.map(fileItem => {
             if (fileItem.file !== null)
-                return this.renderAFile(fileItem.file, fileItem.rank);
+                return this.renderAFile(fileItem.file.name, fileItem.rank);
             return <></>;
         })
 

@@ -65,15 +65,33 @@ export function getUserDetailByToken() {
   }
 }
 
-export function updateUserDetailByToken(data) {
+export function updateUserDetailByToken(data, imageFile, isNewAvatar) {
   return dispatch => {
-    dispatch(update_UserDetailByTokenReset())
-    authRequest.put(`/user/details`, JSON.stringify(data))
-      .then(response => {
-        dispatch(update_UserDetailByTokenSuccess(response.data))
+    dispatch(update_UserDetailByTokenReset());
+
+    if (isNewAvatar) {
+      let formData = new FormData();
+      formData.append('file', imageFile);
+      authRequest.put(`/user/avatarImage`, formData).then((response) => {
+        authRequest.put(`/user/details`, JSON.stringify(data))
+          .then(response => {
+            dispatch(update_UserDetailByTokenSuccess(response.data));
+            dispatch(getCurrentUserSummary());
+          }).catch(error => {
+            dispatch(update_UserDetailByTokenFailure(error));
+          })
       }).catch(error => {
         dispatch(update_UserDetailByTokenFailure(error));
       })
+    }
+    else
+      authRequest.put(`/user/details`, JSON.stringify(data))
+        .then(response => {
+          dispatch(update_UserDetailByTokenSuccess(response.data));
+          dispatch(getCurrentUserSummary());
+        }).catch(error => {
+          dispatch(update_UserDetailByTokenFailure(error));
+        })
   }
 }
 

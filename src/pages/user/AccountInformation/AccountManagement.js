@@ -7,11 +7,19 @@ import { withRouter } from "react-router-dom";
 import UserSidebar from "layouts/UserSidebar"
 import Editor from 'components/common/CustomCKE/CKEditor';
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration';
-import image_icon from 'assets/icons/svg/white_image_icon.svg';
-import { getUserDetailByToken, updateUserDetailByToken } from 'redux/services/authServices'
+import {
+    getUserDetailByToken,
+    updateUserDetailByToken
+} from 'redux/services/authServices'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { openBLModal } from 'redux/services/modalServices';
-import { styleFormSubmit, validation } from 'utils/validationUtils';
+import {
+    styleFormSubmit,
+    validation
+} from 'utils/validationUtils';
+import ImageUploader from 'components/common/FormFileUploader/FormImageUploader';
+import store from 'redux/store/index.js'
+import { update_UserDetailByTokenReset } from 'redux/actions/authAction';
 
 const validationCondition = {
     form: '#edit-profile-form',
@@ -37,11 +45,15 @@ class AccountManagement extends React.Component {
 
         //this var to prenvent infinite loop
         this.isTheFirstTimeLoaded = false;
+        this.activeSubmitButton = false;
+
     }
 
     componentDidMount() {
         //get current user detail by token.
         this.props.getUserDetailByToken();
+        this.isNewAvatar = false;
+        this.activeSubmitButton = false;
     }
 
     onSubmit = () => {
@@ -55,7 +67,12 @@ class AccountManagement extends React.Component {
             this.props.updateUserDetailByToken({
                 displayName: document.getElementById("edit-profile-displayname").value,
                 aboutMe: getCKEInstance("edit-profile-about-me").getData(),
-            })
+            }, this.imageFile, this.isNewAvatar);
+
+        this.isNewAvatar = false;
+        this.activeSubmitButton = false;
+        this.setState({});
+
     }
 
     handleDisplayNameChange = (value) => {
@@ -64,7 +81,17 @@ class AccountManagement extends React.Component {
                 ...this.state.EDIT_USER_DETAIL_DTO,
                 displayName: value
             }
-        })
+        });
+        this.activeSubmitButton = true;
+        this.setState({});
+
+    }
+
+    handleImageFileChange = (file) => {
+        this.imageFile = file;
+        this.isNewAvatar = true;
+        this.activeSubmitButton = true;
+        this.setState({});
     }
 
     render() {
@@ -81,6 +108,7 @@ class AccountManagement extends React.Component {
 
         if (this.props.isHaveUpdated) {
             openBLModal({ type: "success", text: "Cập nhật thông tin thành công!" });
+            store.dispatch(update_UserDetailByTokenReset());
         }
 
         return (
@@ -91,18 +119,18 @@ class AccountManagement extends React.Component {
                     <div className="content-container">
                         <div className="setting-title">Cập nhật thông tin</div>
                         <div style={{ marginTop: "2rem", marginLeft: "1rem", marginRight: "1rem", display: "flex" }} >
-                            <div className="edit-profile-avatar-container">
-                                <img className="edit-profile-avatar" src={this.props.currentUserDetail.avatarURL ? this.props.currentUserDetail.avatarURL : ""} alt="cover" />
-                                <div className="overlay">
-                                    <div className="mg-auto d-flex">
-                                        <img style={{ width: "1.25rem", height: "1.65rem", paddingTop: "0.4rem", marginRight: "0.3rem" }} src={image_icon} alt="" />
-                                        <div>
-                                            Cập nhật avatar
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
+                            {!this.props.isCurrentUserDetailLoading && this.props.currentUserDetail.avatarURL &&
+                                < ImageUploader
+                                    id="account-information-imgurl"
+                                    maxSize={512000}
+                                    AVATAR_TYPE
+                                    initialData={this.props.currentUserDetail.avatarURL ? this.props.currentUserDetail.avatarURL : null}
+                                    onImageChange={this.handleImageFileChange}
+                                    fileType={[".png, .jpg"]}
+                                />
+                            }
+
                             <form className="form-container" style={{ marginTop: "0px" }} id="edit-profile-form">
                                 <div className="form-group" >
                                     <label className="form-label">Tên hiển thị:</label>
@@ -128,6 +156,7 @@ class AccountManagement extends React.Component {
                                             config={SimpleCKEToolbarConfiguration}
                                             editorId={"edit-profile-about-me"}
                                             onInstanceReady={() => { getCKEInstance("edit-profile-about-me").setData(this.props.currentUserDetail.aboutMe) }}
+                                            onChange={() => { this.activeSubmitButton = true; this.setState({}); }}
                                             validation
                                             autoGrow_maxHeight={200}
                                         />
@@ -142,8 +171,10 @@ class AccountManagement extends React.Component {
                         <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
                             <div className="form-line pd-top-10px mg-bottom-10px" />
                             <div className="d-flex">
-                                <button className="blue-button" onClick={this.onSubmit}>Lưu</button>
-                                {/* <button className="white-button mg-left-10px" >Huỷ</button> */}
+                                {!this.activeSubmitButton ?
+                                    <button className="blue-button mg-auto " disabled={!this.activeSubmitButton} onClick={e => { e.preventDefault(); }}>Lưu</button>
+                                    : <button className="blue-button mg-auto" disabled={!this.activeSubmitButton} onClick={this.onSubmit}>Lưu</button>
+                                }
                             </div>
                         </div>
 
@@ -164,7 +195,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getUserDetailByToken, updateUserDetailByToken
+    getUserDetailByToken,
+    updateUserDetailByToken
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountManagement));

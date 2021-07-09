@@ -18,37 +18,45 @@ import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
 import store from 'redux/store/index'
-import Metadata from 'components/post/DetailInfo'
-import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
-import { detailType } from 'constants.js'
-import PostNormalReactionbar from "components/post/NormalReactionbar";
-import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
-import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
+import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
-import JQDateTimePicker from 'components/common/JQDateTimePicker/JQDateTimePicker'
-import ImageUploader from 'components/common/FormFileUploader/FormImageUploader'
+import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
+import { getSubjectsList } from 'redux/services/subjectServices';
+import { request } from "utils/requestUtils";
 
 const validationCondition = {
-    form: '#create-post-form',
+    form: '#create-exercise-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('cr-post-title', 'text-input', 'Tên bài viết không được để trống!'),
-        // validation.noSpecialChar('cr-post-title', 'text-input', 'Tên bài viết không được chứa ký tự đặc biệt!'),
-        validation.isRequired('cr-post-category-combobox', 'combobox', 'Danh mục không được để trống'),
-        validation.isRequired('cr-post-cke', 'ckeditor', 'Nội dung bài viết không được để trống'),
-        validation.isRequired('cr-post-imgurl', 'text-input', 'Link ảnh bìa không được để trống'),
+        validation.isRequired('cr-exercise-title', 'text-input', 'Tên bài tập không được để trống!'),
+        // validation.noSpecialChar('cr-exercise-title', 'text-input', 'Tên bài tập không được chứa ký tự đặc biệt!'),
+        validation.isRequired('cr-exercise-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('cr-exercise-cke', 'ckeditor', 'Nội dung bài tập không được để trống'),
+        validation.isRequired('cr-exercise-imgurl', 'text-input', 'Link ảnh bìa không được để trống'),
     ],
 }
 
-class CreatePost extends React.Component {
+class CreateExercise extends React.Component {
     constructor(props) {
         super(props);
         this.categoryList = [
             {
                 id: 1,
                 name: "Chọn danh mục"
+            }
+        ];
+        this.subjectsList = [
+            {
+                id: 1,
+                name: "Chọn môn học"
+            }
+        ];
+        this.topicsList = [
+            {
+                id: 1,
+                name: "Chọn chủ đề"
             }
         ];
         this.isNotifySuccessOpen = false;
@@ -60,9 +68,9 @@ class CreatePost extends React.Component {
             isPreview: false,
             isSearchingTag: false,
 
-            CREATE_POST_DTO: {
+            CREATE_EXERCISE_DTO: {
                 tags: [],
-                title: "Nhan đề bài viết",//
+                title: "Nhan đề bài tập",//
                 content: ``,
                 summary: `null`,
                 categoryID: "",
@@ -103,14 +111,14 @@ class CreatePost extends React.Component {
 
         this.timeOut = null;
         this.tagQuickQueryResult = <></>;
+
     }
 
     componentDidMount() {
         this.props.getPostCategories();
-        document.querySelector(".cr-post-form-container.preview").classList.remove("d-block");
-        document.querySelector(".cr-post-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-post-form-container.preview").classList.add("d-none");
-        document.querySelector(".cr-post-form-container.edit").classList.add("d-block");
+        this.props.getSubjectsList();
+        document.querySelector(".cr-exercise-form-container.edit").classList.remove("d-none");
+        document.querySelector(".cr-exercise-form-container.edit").classList.add("d-block");
 
         this.timeOut = null;
         validation(validationCondition);
@@ -120,23 +128,23 @@ class CreatePost extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(post_CreateAPostReset());
-        if (getCKEInstance('cr-post-cke'))
-            getCKEInstance('cr-post-cke').destroy();
+        if (getCKEInstance('cr-exercise-cke'))
+            getCKEInstance('cr-exercise-cke').destroy();
     }
 
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
-            CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, categoryID: selectedOption.id },
+            CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, categoryID: selectedOption.id },
             currentCategory: selectedOption.name
         })
     }
 
     handleUploadBtnClick = () => {
         let dom = document.createElement("DIV");
-        dom.innerHTML = this.state.CREATE_POST_DTO.content;
+        dom.innerHTML = this.state.CREATE_EXERCISE_DTO.content;
         let plain_text = (dom.textContent || dom.innerText);
         let tmpSummary = '';
-        if (this.state.CREATE_POST_DTO.content.length < 160) {
+        if (this.state.CREATE_EXERCISE_DTO.content.length < 160) {
             tmpSummary = plain_text;
         }
         else {
@@ -144,7 +152,7 @@ class CreatePost extends React.Component {
         }
 
         if (styleFormSubmit(validationCondition)) {
-            this.props.createAPost({ ...this.state.CREATE_POST_DTO, summary: tmpSummary + "" }, this.imageFile);
+            this.props.createAPost({ ...this.state.CREATE_EXERCISE_DTO, summary: tmpSummary + "" }, this.imageFile);
         }
     }
 
@@ -156,8 +164,8 @@ class CreatePost extends React.Component {
 
     //#region  tag region
     closeQuickSearchTag = () => {
-        document.getElementById("cr-post-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("cr-post-qs-tag-result-container").classList.remove('show');
+        document.getElementById("cr-exercise-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("cr-exercise-qs-tag-result-container").classList.remove('show');
     }
 
     quickSearchTags = (e) => {
@@ -176,13 +184,13 @@ class CreatePost extends React.Component {
 
         this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), DELAY_TIME);
 
-        document.getElementById("cr-post-qs-tag-result-container").classList.add('show');
-        document.getElementById("cr-post-qs-tag-result-container").classList.remove('hidden');
+        document.getElementById("cr-exercise-qs-tag-result-container").classList.add('show');
+        document.getElementById("cr-exercise-qs-tag-result-container").classList.remove('hidden');
     }
 
     keyHandler = (e) => {
         if (!e.target.value) return;
-        let tags = this.state.CREATE_POST_DTO.tags;
+        let tags = this.state.CREATE_EXERCISE_DTO.tags;
         let hasOldTag = -1; // khong cos => -1 neu co => id cua tag 
         if (e.charCode === 13) { //press Enter    
 
@@ -201,8 +209,8 @@ class CreatePost extends React.Component {
                 }
 
                 //dong search container
-                document.getElementById("cr-post-qs-tag-result-container").classList.add('hidden');
-                document.getElementById("cr-post-qs-tag-result-container").classList.remove('show');
+                document.getElementById("cr-exercise-qs-tag-result-container").classList.add('hidden');
+                document.getElementById("cr-exercise-qs-tag-result-container").classList.remove('show');
 
                 //tao moi hoac dung lai tag cu
                 let tmpShownTag = this.shownTag;
@@ -224,8 +232,8 @@ class CreatePost extends React.Component {
                 }
 
                 this.setState({
-                    CREATE_POST_DTO: {
-                        ...this.state.CREATE_POST_DTO,
+                    CREATE_EXERCISE_DTO: {
+                        ...this.state.CREATE_EXERCISE_DTO,
                         tags: tags
                     }
                 });
@@ -259,7 +267,7 @@ class CreatePost extends React.Component {
             return;
         }
 
-        let tmpTagDTO = this.state.CREATE_POST_DTO.tags;
+        let tmpTagDTO = this.state.CREATE_EXERCISE_DTO.tags;
         tmpTagDTO.push({ id: tag.id });
 
         //cap nhat lai shownTag theo tmpDTO
@@ -271,12 +279,12 @@ class CreatePost extends React.Component {
         }
 
         //cap nhat lai shown tag tu state
-        document.getElementById("cr-post-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("cr-post-qs-tag-result-container").classList.remove('show');
+        document.getElementById("cr-exercise-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("cr-exercise-qs-tag-result-container").classList.remove('show');
 
         this.setState({
-            CREATE_POST_DTO: {
-                ...this.state.CREATE_POST_DTO,
+            CREATE_EXERCISE_DTO: {
+                ...this.state.CREATE_EXERCISE_DTO,
                 tags: tmpTagDTO
             }
         });
@@ -320,8 +328,8 @@ class CreatePost extends React.Component {
 
         //cap nhat lai DTO theo tmpDTO
         this.setState({
-            CREATE_POST_DTO: {
-                ...this.state.CREATE_POST_DTO,
+            CREATE_EXERCISE_DTO: {
+                ...this.state.CREATE_EXERCISE_DTO,
                 tags: tempTagDTO,
             }
         });
@@ -329,8 +337,9 @@ class CreatePost extends React.Component {
     }
 
     //#endregion
+
     handleEditorChange = (value) => {
-        this.setState({ CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, content: value } });
+        this.setState({ CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, content: value } });
         return;
     };
 
@@ -344,22 +353,35 @@ class CreatePost extends React.Component {
 
     handleTitleChange = (e) => {
         this.setState({
-            CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, title: e.target.value }
+            CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, title: e.target.value }
         })
     }
 
     onPublishTimeChange = (date) => {
         console.log(date)
         this.setState({
-            CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, publishDtm: date }
+            CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, publishDtm: date }
         })
     }
 
     handleImageFileChange = (file) => {
         this.imageFile = file;
         // this.setState({
-        //     CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO }
+        //     CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO }
         // })
+    }
+
+    onSubjectOptionChanged = (selectedOption) => {
+        document.getElementById("cr-exercise-topic-combobox").classList.remove("d-none");
+        //get list of topic
+        request.get(`/exercises/topics?subject=${selectedOption.id}`).then(response => {
+            this.topicsList = response.data;
+            this.setState({});
+        })
+    }
+
+    onTopicOptionChanged = (selectedOption) => {
+
     }
 
     render() {
@@ -368,11 +390,17 @@ class CreatePost extends React.Component {
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoryList = this.props.categories;
         }
+
+        if (!this.props.isSubjectLoading && this.props.subjects) {
+            this.subjectsList = this.props.subjects;
+        }
+
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
-            document.getElementById("cr-post-tag-container-tip-label").innerText = "";
+            document.getElementById("cr-exercise-tag-container-tip-label").innerText = "";
         }
+
         else
             if (this.props.isTagQuickQueryLoadDone) {
                 if (this.state.isSearchingTag) {
@@ -381,20 +409,20 @@ class CreatePost extends React.Component {
                 if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
-                    if (this.state.CREATE_POST_DTO.tags.length < 5) {
+                    if (this.state.CREATE_EXERCISE_DTO.tags.length < 5) {
                         if (this.props.tagQuickQueryResult.length === 0)
-                            document.getElementById("cr-post-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
+                            document.getElementById("cr-exercise-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
-                            document.getElementById("cr-post-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
+                            document.getElementById("cr-exercise-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
                     }
                     else {
-                        document.getElementById("cr-post-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
+                        document.getElementById("cr-exercise-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
                             {this.props.tagQuickQueryResult.map(tag => {
                                 return <div className="tag-search-item"
-                                    onClick={() => { this.state.CREATE_POST_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                    onClick={() => { this.state.CREATE_EXERCISE_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
                                     <div className="tag-search-item-content">  {tag.content}</div>
                                 </div>
                             })}
@@ -408,13 +436,13 @@ class CreatePost extends React.Component {
         let body =
             <div>
                 {/* Preview region */}
-                <div className="cr-post-form-container post-detail-container preview" >
+                {/* <div className="cr-exercise-form-container post-detail-container preview" >
 
                     {this.props.userSummaryLoaded && this.props.userSummaryData ?
-                        <Metadata title={this.state.CREATE_POST_DTO.title}
+                        <Metadata title={this.state.CREATE_EXERCISE_DTO.title}
                             categoryName={this.state.currentCategory}
-                            categoryID={this.state.CREATE_POST_DTO.categoryID}
-                            readingTime={this.state.CREATE_POST_DTO.readingTime}
+                            categoryID={this.state.CREATE_EXERCISE_DTO.categoryID}
+                            readingTime={this.state.CREATE_EXERCISE_DTO.readingTime}
                             authorDisplayName={this.state.author.displayName}
                             authorAvatarURL={this.props.userSummaryData.avatarURL}
                             publishDtm={this.state.publishDtm}
@@ -423,10 +451,9 @@ class CreatePost extends React.Component {
                             authorID={this.props.userSummaryData.id}
                         /> : <></>}
 
-                    {/* content here */}
                     <div className="ck-editor-output" dangerouslySetInnerHTML={{
                         __html:
-                            this.state.CREATE_POST_DTO.content
+                            this.state.CREATE_EXERCISE_DTO.content
                     }} />
 
                     <div className="mg-top-10px mg-bottom-10px" >
@@ -445,31 +472,18 @@ class CreatePost extends React.Component {
                     />
 
                     {formatMathemicalFormulas()}
-                </div>
+                </div> */}
 
                 {/* Edit region */}
-                <div className="cr-post-form-container edit">
-                    <div id="create-post-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
+                <div className="cr-exercise-form-container edit">
+                    <div id="create-exercise-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
                         <div className="mg-top-10px" />
 
                         <div className="form-group">
                             <label className="form-label-required">Tiêu đề:</label>
-                            <input className="text-input" id="cr-post-title"
-                                placeholder="Nhập tiêu đề bài viết " onChange={e => this.handleTitleChange(e)}
+                            <input className="text-input" id="cr-exercise-title"
+                                placeholder="Nhập tiêu đề bài tập " onChange={e => this.handleTitleChange(e)}
                                 type="text" ></input>
-                            <div className="form-error-label-container">
-                                <span className="form-error-label" ></span>
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label className="form-label-required">Ảnh bìa:</label>
-                            <ImageUploader id="cr-post-imgurl"
-                                maxSize={512000}
-                                onImageChange={this.handleImageFileChange}
-                                fileType={[".png, .jpg"]}
-                                recommenedSize={"800x400"}
-                            ></ImageUploader>
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
                             </div>
@@ -477,17 +491,16 @@ class CreatePost extends React.Component {
 
                         {/* CKEditor */}
                         <div className="form-group">
-                            <div className="j-c-space-between">
-                                <label className="form-label-required">Nội dung:</label>
-                                <HoverHint message={`
-                                - Sử dụng các Format Header để tạo ra mục lục. 
-                                - Sử dụng Style Computer Code để style được tên biến, tên hàm.
-                                - Sử dụng Format Formatted để style một đoạn code`}
-                                />
-                            </div>
+                            <div className="form-label-required">Mô tả:</div>
                             <Editor
-                                editorId="cr-post-cke"
+                                config={SimpleCKEToolbarConfiguration}
+                                editorId="cr-exercise-description"
+                                placeholder='Start typing here...'
                                 onChange={this.handleEditorChange}
+                                data="<p>Nhập nội dung bài tập ...</p>"
+                                height={200}
+                                autoGrow_maxHeight={300}
+                                autoGrow_minHeight={200}
                                 validation
                             />
                             <div className="form-error-label-container">
@@ -495,10 +508,38 @@ class CreatePost extends React.Component {
                             </div>
                         </div>
 
+                        {/* Subject */}
+                        <div className="form-group" >
+                            <label className="form-label-required">Môn học:</label>
+                            <Combobox comboboxId="cr-exercise-subject-combobox"
+                                options={this.subjectsList}
+                                onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
+                                placeHolder="Chọn môn học"
+                                validation>
+                            </Combobox>
+                            <div className="form-error-label-container">
+                                <span className="form-error-label" ></span>
+                            </div>
+                        </div >
+
+                        {/* Topic */}
+                        <div className="form-group d-none" id="cr-exercise-topic-combobox" >
+                            <label className="form-label-required">Chủ đề:</label>
+                            <Combobox comboboxId="cr-exercise-topic-combobox"
+                                options={this.topicsList}
+                                onOptionChanged={(selectedOption) => this.onTopicOptionChanged(selectedOption)}
+                                placeHolder="Chọn chủ đề"
+                                validation>
+                            </Combobox>
+                            <div className="form-error-label-container">
+                                <span className="form-error-label" ></span>
+                            </div>
+                        </div >
+
                         {/* Category */}
                         <div className="form-group" >
                             <label className="form-label-required">Danh mục:</label>
-                            <Combobox comboboxId="cr-post-category-combobox"
+                            <Combobox comboboxId="cr-exercise-category-combobox"
                                 options={this.categoryList}
                                 onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
                                 placeHolder="Chọn danh mục"
@@ -509,26 +550,22 @@ class CreatePost extends React.Component {
                             </div>
                         </div >
 
-                        <div className="form-group" style={{ zIndex: "4" }}>
-                            <label className="form-label">Thời gian đăng:</label>
-                            <JQDateTimePicker dtPickerId="cr-post" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
-                        </div>
 
                         {/* Tag */}
                         <div className='form-group'>
                             <label className="form-label">Tags:</label>
 
-                            <input onChange={(e) => this.quickSearchTags(e)} id="cr-post-tag-input"
-                                onKeyPress={(this.state.CREATE_POST_DTO.tags.length < 5) && this.keyHandler}
+                            <input onChange={(e) => this.quickSearchTags(e)} id="cr-exercise-tag-input"
+                                onKeyPress={(this.state.CREATE_EXERCISE_DTO.tags.length < 5) && this.keyHandler}
                                 className="text-input"
                                 placeholder="Nhập tag " />
 
                             <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                 {/* khi load xong thi ntn */}
-                                <div id="cr-post-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                <div id="cr-exercise-qs-tag-result-container" className="text-input-dropdown-container hidden">
                                     <div className="text-input-dropdown">
                                         {this.tagSearchResult}
-                                        <div className="form-tip-label" id="cr-post-tag-container-tip-label" />
+                                        <div className="form-tip-label" id="cr-exercise-tag-container-tip-label" />
                                     </div>
                                 </div>
                             </ClickAwayListener>
@@ -548,27 +585,26 @@ class CreatePost extends React.Component {
 
                         {/* Button */}
                         <div className="form-group d-flex">
-                            <button className="blue-button mg-auto form-submit-btn" onClick={() => this.handleUploadBtnClick()}>Đăng bài</button>
+                            <button className="blue-button mg-auto form-submit-btn" onClick={() => this.handleUploadBtnClick()}>Lưu</button>
                         </div>
                     </div >
                 </div >
             </div >
 
         return (
-            <div className="left-sidebar-layout">
-                <UserSidebar />
+            <div className="">
                 <div className="content-layout">
-                    <Titlebar title="TẠO BÀI VIẾT MỚI" />
+                    <Titlebar title="TẠO BÀI TẬP MỚI" />
                     <div className="content-container">
                         <div className="form-container">
-                            <div className="j-c-end">
+                            {/* <div className="j-c-end">
                                 <div className="j-c-end" >
-                                    <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Soạn bài viết</button>
+                                    <button className="blue-button" disabled={!this.state.isPreview} onClick={this.onEditBtnClick} >Soạn bài tập</button>
                                     <div className="mg-right-5px" />
                                     <button className="white-button" disabled={this.state.isPreview} onClick={this.onPreviewBtnClick} >Preview</button>
                                 </div>
-                            </div>
-                            <div className="mg-top-10px decoration-line" />
+                            </div> */}
+                            {/* <div className="mg-top-10px decoration-line" /> */}
                         </div>
                         {body}
                     </div>
@@ -581,18 +617,14 @@ class CreatePost extends React.Component {
 
     onEditBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-post-form-container.preview").classList.remove("d-block");
-        document.querySelector(".cr-post-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-post-form-container.preview").classList.add("d-none");
-        document.querySelector(".cr-post-form-container.edit").classList.add("d-block");
+        document.querySelector(".cr-exercise-form-container.edit").classList.remove("d-none");
+        document.querySelector(".cr-exercise-form-container.edit").classList.add("d-block");
     }
 
     onPreviewBtnClick = () => {
         this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-post-form-container.preview").classList.add("d-block");
-        document.querySelector(".cr-post-form-container.edit").classList.add("d-none");
-        document.querySelector(".cr-post-form-container.preview").classList.remove("d-none");
-        document.querySelector(".cr-post-form-container.edit").classList.remove("d-block");
+        document.querySelector(".cr-exercise-form-container.edit").classList.add("d-none");
+        document.querySelector(".cr-exercise-form-container.edit").classList.remove("d-block");
     }
 }
 
@@ -611,6 +643,9 @@ const mapStateToProps = (state) => {
         userSummaryData: state.auth.currentUserSummary.data,
         userSummaryLoaded: state.auth.currentUserSummary.isLoadDone,
 
+        subjects: state.documentSubject.subjects.data,
+        isSubjectLoading: state.documentSubject.subjects.isLoading,
+
     };
 }
 
@@ -618,8 +653,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostCategories,
     getTagQuickQueryResult,
     createAPost,
+    getSubjectsList
 
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreatePost));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateExercise));
 

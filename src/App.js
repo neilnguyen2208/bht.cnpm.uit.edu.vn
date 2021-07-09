@@ -44,6 +44,7 @@ import DocumentCommentReport from 'pages/management/DocumentManagement/DocumentC
 import Exercise from 'pages/common/Exercise/Exercise';
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
 import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';
+import CreateExercise from 'pages/user/CreateExercise/CreateExercise';
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager';
@@ -95,6 +96,7 @@ const App = () => {
                         <RequireLoginRoute exact path="/create-post" component={CreatePost} permissions={[Post.POST_PENDING_SELF_CREATE]} />
                         <Route exact path="/user/notification" component={MyNotification} />
                         <RequireLoginRoute exact path="/upload-document" component={UploadDocument} permissions={[Document.DOC_PENDING_SELF_CREATE, Document.DOC_PENDING_SELF_UPLOAD]} />
+                        <RequireLoginRoute exact path="/create-exercise" component={CreateExercise} permissions={[Access.Admin]} />
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />

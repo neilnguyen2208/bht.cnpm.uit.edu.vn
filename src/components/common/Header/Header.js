@@ -117,6 +117,9 @@ class Header extends React.Component {
                 <Link to={"/create-post"} className="d-flex">
                     <img className="header-image-button" src={write_icon} alt="" />
                 </Link>
+                <Link to={"/create-exercise"} className="d-flex">
+                    <img className="header-image-button" src={write_icon} alt="" />
+                </Link>
                 <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
                     Đăng nhập
                 </button>
@@ -182,7 +185,7 @@ class Header extends React.Component {
                     {/*  */}
                     <div className="Header_End_Lv1">
                         {/* <div className="header-end-lv2" > */}
-                            {userMenu}
+                        {userMenu}
                         {/* </div> */}
                         <div className="header-end-lv2_Collapse"
                             onClick={this.state.isCollapsedUserMenuOpened ?

@@ -7,7 +7,7 @@ import Paginator from 'components/common/Paginator/ServerPaginator';
 //import for redux
 import { getMyDocuments } from "redux/services/documentServices";
 import { getDocumentCategoriesHaveAll } from "redux/services/documentCategoryServices";
-import { getDocumentSubjectsHaveAll } from "redux/services/documentSubjectServices";
+import { getSubjectsListHaveAll } from "redux/services/subjectServices";
 import "components/common/Loader/Loader.scss";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -41,7 +41,7 @@ class MyDocuments extends React.Component {
         //force default properties, can't access by querry param
         setQueryParam(this.queryParamObject);
         this.props.getDocumentCategoriesHaveAll();
-        this.props.getDocumentSubjectsHaveAll();
+        this.props.getSubjectsListHaveAll();
         this.props.getMyDocuments(this.searchParamObject);
     }
 
@@ -287,7 +287,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getMyDocuments,
     getDocumentCategoriesHaveAll,
-    getDocumentSubjectsHaveAll,
+    getSubjectsListHaveAll,
 
 }, dispatch);
 

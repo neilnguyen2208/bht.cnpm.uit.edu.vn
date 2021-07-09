@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
-import { getDocumentSubjects } from "redux/services/documentSubjectServices";
+import { getSubjectsList } from "redux/services/subjectServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import { uploadADocument } from "redux/services/documentServices"
 import "components/common/CustomCKE/CKEditorContent.scss";
@@ -26,8 +26,12 @@ import { today } from 'utils/miscUtils'
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import FormFileUploader from 'components/common/FormFileUploader/FormFileUploader'
 import store from "redux/store/index.js"
-import { get_tagQuickQueryResultRequest, get_tagQuickQueryResultReset } from 'redux/actions/tagAction'
+import {
+    get_tagQuickQueryResultRequest,
+    get_tagQuickQueryResultReset
+} from 'redux/actions/tagAction'
 import { DELAY_TIME } from 'constants.js';
+import ImageUploader from 'components/common/FormFileUploader/FormImageUploader'
 
 const validationCondition = {
     form: '#create-document-form',
@@ -95,7 +99,7 @@ class UploadDocument extends React.Component {
         this.isPopupOpen = false;
         this.message = "";
         this.filesList = [];
-
+        this.imageFile = null;
         this.tagQuickQueryResult =
             [
                 {
@@ -116,7 +120,7 @@ class UploadDocument extends React.Component {
 
     componentDidMount() {
         this.props.getDocumentCategories();
-        this.props.getDocumentSubjects();
+        this.props.getSubjectsList();
         validation(validationCondition);
     }
 
@@ -140,7 +144,7 @@ class UploadDocument extends React.Component {
 
     handleUploadBtnClick = () => {
         if (styleFormSubmit(validationCondition)) {
-            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.filesList);
+            this.props.uploadADocument(this.state.UPLOAD_DOCUMENT_DTO, this.filesList, this.imageFile);
         }
     }
 
@@ -339,6 +343,10 @@ class UploadDocument extends React.Component {
         this.setState({})
     }
 
+    handleImageFileChange = (file) => {
+        this.imageFile = file;
+    }
+
     render() {
         //load for category and subject 
         if (!this.props.isCategoryLoading && this.props.categories) {
@@ -403,6 +411,20 @@ class UploadDocument extends React.Component {
                                 <span className="form-error-label" ></span>
                             </div>
                         </div>
+
+                        <div className="form-group">
+                            <label className="form-label-required">Ảnh bìa:</label>
+                            <ImageUploader id="cr-document-imgurl"
+                                maxSize={512000}
+                                onImageChange={this.handleImageFileChange}
+                                fileType={[".png, .jpg"]}
+                                recommenedSize={"800x400"}
+                            ></ImageUploader>
+                            <div className="form-error-label-container">
+                                <span className="form-error-label" ></span>
+                            </div>
+                        </div>
+
 
                         {/* CKEditor */}
                         <div className="form-group">
@@ -541,7 +563,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getDocumentCategories,
-    getDocumentSubjects,
+    getSubjectsList,
     getTagQuickQueryResult,
     uploadADocument
 }, dispatch);

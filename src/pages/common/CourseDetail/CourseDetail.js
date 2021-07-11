@@ -10,6 +10,8 @@ import Titlebar from 'components/common/Titlebar/Titlebar';
 import { getCourseTopicsWithExercisesBySubjectId, getCourseDetailById } from 'redux/services/courseServices'
 import Loader from 'components/common/Loader/Loader_S';
 import homework_icon from 'assets/icons/24x24/homework_icon_gray_24x24.png'
+import { authRequest } from 'utils/requestUtils';
+import 'components/user/UserItem.scss';
 
 class PostsList extends React.Component {
     constructor(props) {
@@ -19,6 +21,30 @@ class PostsList extends React.Component {
     componentDidMount() {
         this.props.getCourseTopicsWithExercisesBySubjectId(this.props.match.params.id);
         this.props.getCourseDetailById(this.props.match.params.id);
+        authRequest.get(`/subjects/${this.props.match.params.id}/exerciseScoreBoard`).then(response => {
+            this.scoresList = response.data;
+            this.setState({});
+        }).catch(this.scoresList = {
+            "exerciseScoreboard": [],
+            "userRank": null
+        });
+    }
+
+    renderRankingItem = (item, index) => {
+        return <div className="j-c-space-between" style={{ padding: "10px", borderBottom: "1px solid var(--gray)" }} >
+            <div style={{ borderRight: "1px solid var(--gray)", width: "20px" }}>
+                <div style={{ fontSize: "16px", marginTop: "5px" }}> {index + 1}</div>
+            </div>
+            <Link to={`/user/profile/${item.userID}`}>
+                <img className="avatar ranking mg-right-5px" style={{ border: "none" }} src={item.userAvatarURL} alt="" />
+            </Link>
+            <Link className="displayname" style={{ fontSize: "18px", lineHeight: "24px" }} to={`/user/profile/${item.userID}`}>
+                {item.userDisplayName}
+            </Link>
+            <div >
+                <div style={{ fontSize: "16px", marginTop: "5px" }}> {item.totalScore}</div>
+            </div>
+        </div >
     }
 
     onTopicClick = (topicId) => {
@@ -105,9 +131,17 @@ class PostsList extends React.Component {
                             </div >
                             : <Loader />}
 
-                        <div className="main-content-text">NỘI DUNG CHÍNH:</div>
+                        {/* <div className="main-content-text">NỘI DUNG CHÍNH:</div> */}
                         <div className="course-detail-container">
-                            {topicsList}
+                            <div className="j-c-space-between">
+                                {topicsList}
+                                <div className="score-board">
+                                    <div style={{ width: "100%", textAlign: "center", fontSize: "18px", marginTop: "5px", fontWeight: "700", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>XẾP HẠNG</div>
+                                    {this.scoresList && this.scoresList.exerciseScoreboard.map((item, index) => {
+                                        return <div>{this.renderRankingItem(item, index)}</div>
+                                    })}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

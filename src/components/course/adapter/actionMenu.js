@@ -34,13 +34,26 @@ export const basicMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Delete
+    requiredAction: PostAction.Delete,
+    hasLine: true
   },
   {
     id: 3,
     text: "Chỉnh sửa",
     icon: edit_icon,
     value: "EDIT_EXERCISE",
+    permissions: [],
+    showOnPermission: false,
+    showOnAction: true,
+    requiredAction: PostAction.Update
+  },
+  {
+    id: 4,
+    text: "Cập nhật câu hỏi",
+    isLink: true,
+    to: "", //update later
+    icon: edit_icon,
+    value: "EDIT_EXERCISE_QUESTIONS",
     permissions: [],
     showOnPermission: false,
     showOnAction: true,

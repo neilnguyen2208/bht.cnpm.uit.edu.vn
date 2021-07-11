@@ -3,7 +3,7 @@ import React from 'react'
 import 'components/styles/Button.scss'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 import UserInfo from 'components/user/UserInfo'
@@ -17,7 +17,7 @@ import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/Cu
 import { getCurrentUserExerciseStatistic } from 'redux/services/courseServices'
 import authService from 'authentication/authenticationServices';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu';
-import { guestMenu } from './adapter/actionMenu';
+import { adminMenu, basicMenu, guestMenu } from './adapter/actionMenu';
 import { closeModal, openBigModal, openModal } from 'redux/services/modalServices';
 
 class ExerciseInfo extends React.Component {
@@ -45,13 +45,17 @@ class ExerciseInfo extends React.Component {
     }
 
     if (selectedItem.value === "EDIT_EXERCISE") {
-      openBigModal("edit-post", { id: this.props.exerciseId });
+      openBigModal("edit-exercise", { id: this.props.exerciseId });
     }
 
     if (selectedItem.value === "REPORT_EXERCISE") {
       openBigModal("report-exercise", {
         id: this.props.exerciseId
       })
+    }
+
+    if (selectedItem.value === "EDIT_EXERCISE_QUESTIONS") {
+      return <Redirect to={`/edit-exercise/questions/${this.props.match.params.id}`} />
     }
 
   }
@@ -71,13 +75,13 @@ class ExerciseInfo extends React.Component {
       <div className="metadata">
 
         {/* title */}
-        <Link to={"/post-content/" + this.props.exerciseId} onClick={this.props.type === "PREVIEW" && ((e) => { e.preventDefault() })}>
+        <Link to={"/courses/exercise/" + this.props.exerciseId} onClick={this.props.type === "PREVIEW" && ((e) => { e.preventDefault() })}>
           <div className="title" >
             {this.props.title}
           </div>
         </Link>
 
-        <div className="d-flex mg-top-5px  j-c-space-between"  >
+        <div className="d-flex mg-top-5px j-c-space-between"  >
           <div className="d-flex">
             <div className="category">
               {this.props.categoryName}
@@ -104,10 +108,15 @@ class ExerciseInfo extends React.Component {
         <div className="decoration-line mg-top-5px mg-bottom-5px" />
         <div className="d-flex mg-top-10px ">
           <UserInfo authorDisplayName={this.props.authorDisplayName} authorID={this.props.authorID} authorAvatarURL={this.props.authorAvatarURL} />
-          {this.props.EDIT_MODE && <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
+          {/* <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
             availableActions={this.props.availableActions} items={guestMenu}
-            id={`${this.props.popUpMenuPrefix}-pxrcsi-pm-${this.props.exerciseId}`} />
-          }
+            id={`${this.props.popUpMenuPrefix}-pxrcsi-pm-${this.props.exerciseId}`} /> */}
+          <PopupMenu
+            onMenuItemClick={this.onPopupMenuItemClick}
+            useAction={this.props.useAction}
+            availableActions={this.props.availableActions}
+            items={basicMenu}
+            id={`${this.props.popUpMenuPrefix}-cipm-${this.props.exerciseID}`} />
         </div>
         {cover}
 

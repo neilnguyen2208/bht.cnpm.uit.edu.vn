@@ -24,7 +24,7 @@ class UserInfo extends React.Component {
     return (
       <div className="user-info"  >
         <Link to={`/user/profile/${this.props.authorID}`}>
-          <img className="avatar mg-right-5px" style={{ borderRadius: "2px" }} src={this.props.authorAvatarURL} alt="" />
+          <img className="avatar mg-right-5px" style={{ borderRadius: "10%" }} src={this.props.authorAvatarURL} alt="" />
         </Link>
         <div className="ui-left-container">
           <Link className="displayname" style={{ fontSize: "20px" }} to={`/user/profile/${this.props.authorID}`}>

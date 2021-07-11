@@ -70,6 +70,9 @@ import {
     CREATE_AN_EXERCISE_RESET,
     CREATE_AN_EXERCISE_SUCCESS,
     CREATE_AN_EXERCISE_FAILURE,
+    GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST,
+    GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
+    GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -179,6 +182,11 @@ const initialState = {
         isLoading: false,
         totalPages: 1,
         totalElements: 0
+    },
+
+    difficultyTypes: {
+        data: [],
+        isLoading: false,
     },
 
     isHaveReported: false,
@@ -462,6 +470,18 @@ function CourseReducer(state = initialState, action) {
         case CREATE_AN_EXERCISE_FAILURE:
             return { ...state, isHaveCreatedExercise: false };
 
+        case GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST:
+            return {
+                ...state, difficultyTypes: { isLoading: true, data: [] }
+            };
+        case GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS:
+            return {
+                ...state, difficultyTypes: { isLoading: false, data: action.payload }
+            };
+        case GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE:
+            return {
+                ...state, difficultyTypes: { isLoading: false, data: [] }
+            }
         case UPDATE_TOC_SET:
             return {
                 ...state, questionsToC: { ...state.questionsToC, isSet: false }

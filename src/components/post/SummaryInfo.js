@@ -186,10 +186,19 @@ class PostSummary extends React.Component {
             < PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} /> //stand for post item poupup menu
           }
           {(this.props.type === itemType.normal || !this.props.type) && //normal => only report
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} items={guestMenu} useAction={this.props.useAction} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
+            <PopupMenu
+              onMenuItemClick={this.onPopupMenuItemClick}
+              items={guestMenu}
+              useAction={this.props.useAction}
+              id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
           }
           {(this.props.type === itemType.management) &&
-            <PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={adminMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
+            <PopupMenu
+              onMenuItemClick={this.onPopupMenuItemClick}
+              useAction={this.props.useAction}
+              availableActions={this.props.availableActions}
+              items={adminMenu}
+              id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
           }
         </div>
 

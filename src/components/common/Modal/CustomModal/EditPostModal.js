@@ -443,7 +443,6 @@ class EditPostModal extends React.Component {
                     authorID: this.props.postDetailForEdit.authorID,
                     authorAvatarURL: this.props.postDetailForEdit.authorAvatarURL,
                     id: this.props.postDetailForEdit.id
-
                 }
             })
         }
@@ -628,7 +627,6 @@ class EditPostModal extends React.Component {
         document.querySelector(".ed-post-form-container.edit").classList.remove("d-none");
         document.querySelector(".ed-post-form-container.preview-modal").classList.add("d-none");
         document.querySelector(".ed-post-form-container.edit").classList.add("d-block");
-
     }
 
     onPreviewBtnClick = () => {

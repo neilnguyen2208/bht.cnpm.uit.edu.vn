@@ -2,8 +2,6 @@ import {
 
     //my courses
     get_MyCoursesRequest,
-    get_MyCoursesSuccess,
-    get_MyCoursesFailure,
 
     //coursess list 
     get_CoursesListRequest,
@@ -18,8 +16,6 @@ import {
 
     //courses search result 
     get_CourseSearchResultRequest,
-    get_CourseSearchResultSuccess,
-    get_CourseSearchResultFailure,
     get_CSNNCoursesListSuccess,
     get_CSNNCoursesListFailure,
     get_CourseTopicsWithExercisesBySubjectIdRequest,
@@ -28,9 +24,9 @@ import {
     get_CourseDetailByIdRequest,
     get_CourseDetailByIdSuccess,
     get_CourseDetailByIdFailure,
-    get_ExerciseByIdFailure,
-    get_ExerciseByIdSuccess,
-    get_ExerciseByIdRequest,
+    get_AnExerciseInfoByIdFailure,
+    get_AnExerciseInfoByIdSuccess,
+    get_AnExerciseInfoByIdRequest,
     get_CourseTopicsWithExercisesByExerciseIdRequest,
     get_CourseTopicsWithExercisesByExerciseIdSuccess,
     get_CourseTopicsWithExercisesByExerciseFailure,
@@ -64,6 +60,15 @@ import {
     post_CreateAnExerciseReset,
     post_CreateAnExerciseSuccess,
     post_CreateAnExerciseFailure,
+    edit_AnExerciseQuestionsWithAnswersReset,
+    edit_AnExerciseQuestionsWithAnswersSuccess,
+    edit_AnExerciseQuestionsWithAnswersFailure,
+    get_AnExerciseQuestionsWithAnswersReset,
+    get_AnExerciseQuestionsWithAnswersSuccess,
+    get_AnExerciseQuestionsWithAnswersFailure,
+    get_ExerciseQuestionDifficultyTypesRequest,
+    get_ExerciseQuestionDifficultyTypesSuccess,
+    get_ExerciseQuestionDifficultyTypesFailure,
 } from "redux/actions/courseAction.js";
 import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
@@ -144,13 +149,13 @@ export function getCourseDetailById(subjectId) {
     }
 }
 
-export function getExerciseById(exerciseId) {
+export function getAnExerciseInfoById(exerciseId) {
     return dispatch => {
-        dispatch(get_ExerciseByIdRequest());
+        dispatch(get_AnExerciseInfoByIdRequest());
         authRequest.get(`/exercises/${exerciseId}`).then(response => {
             authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
-                dispatch(get_ExerciseByIdSuccess({ ...response.data, ...response_2.data[0] }))
-            }).catch(error => dispatch(get_ExerciseByIdFailure(error)))
+                dispatch(get_AnExerciseInfoByIdSuccess({ ...response.data, ...response_2.data[0] }))
+            }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))
         })
     }
 }
@@ -160,7 +165,7 @@ export function getCurrentUserExerciseStatistic(exerciseId) {
         dispatch(get_CurrentUserExerciseStatisticRequest());
         authRequest.get(`/exercises/statistics/user?exerciseIDs=${exerciseId}`).then(response => {
             dispatch(get_CurrentUserExerciseStatisticSuccess(...response.data))
-        }).catch(error => dispatch(get_ExerciseByIdFailure(error)))
+        }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))
     }
 }
 
@@ -267,7 +272,6 @@ export function resolveAnExercise(id, resolveDTO) {
 }
 
 export function createAnExercise(exerciseDTO) {
-    console.log(exerciseDTO)
     return dispatch => {
         dispatch(post_CreateAnExerciseReset());
         authRequest.post(`/exercises`, JSON.stringify(exerciseDTO))
@@ -275,6 +279,39 @@ export function createAnExercise(exerciseDTO) {
                 dispatch(post_CreateAnExerciseSuccess(result.data));
             })
             .catch(error => post_CreateAnExerciseFailure())
+    }
+}
+
+export function editAnExerciseQuestionWithAnswers(exerciseID, questionDTO) {
+    return dispatch => {
+        dispatch(edit_AnExerciseQuestionsWithAnswersReset());
+        authRequest.put(`/exercises/${exerciseID}/questionsWithAnswers`, JSON.stringify(questionDTO))
+            .then(result => {
+                dispatch(edit_AnExerciseQuestionsWithAnswersSuccess(result.data));
+            })
+            .catch(error => edit_AnExerciseQuestionsWithAnswersFailure())
+    }
+}
+
+export function getAnExerciseQuestionsWithAnswers(exerciseID) {
+    return dispatch => {
+        dispatch(get_AnExerciseQuestionsWithAnswersReset());
+        authRequest.get(`/exercises/${exerciseID}/questionsWithAnswers`)
+            .then(response => {
+                dispatch(get_AnExerciseQuestionsWithAnswersSuccess(response.data));
+            })
+            .catch(error => get_AnExerciseQuestionsWithAnswersFailure())
+    }
+}
+
+export function getExerciseQuestionDifficultyTypes(exerciseID) {
+    return dispatch => {
+        dispatch(get_ExerciseQuestionDifficultyTypesRequest());
+        authRequest.get(`/exercises/questions/difficulties`)
+            .then(response => {
+                dispatch(get_ExerciseQuestionDifficultyTypesSuccess(response.data));
+            })
+            .catch(error => get_ExerciseQuestionDifficultyTypesFailure())
     }
 }
 

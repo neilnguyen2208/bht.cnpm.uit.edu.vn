@@ -9,7 +9,7 @@ import CommentSection from "./ExcerciseComment/CommentSection";
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getExerciseById } from 'redux/services/courseServices'
+import { getAnExerciseInfoById } from 'redux/services/courseServices'
 
 class CommentModal extends React.Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class CommentModal extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.getExerciseById(2);
+        // this.props.getAnExerciseInfoById(2);
         document.querySelectorAll("comment-modal-container").forEach(item => item.classList.remove("close"));
         window.onresize = () => {
             document.querySelectorAll(".comment-modal-container").forEach(element => {
@@ -72,7 +72,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getExerciseById,
+    getAnExerciseInfoById,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentModal));

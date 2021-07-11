@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import Tag from 'components/post/Tag'
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import { getExerciseById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId } from 'redux/services/courseServices'
+import { getAnExerciseInfoById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId } from 'redux/services/courseServices'
 import RelativePosts from 'components/post/RelativePosts'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
@@ -17,7 +17,7 @@ import ExerciseReactionbar from 'components/course/ExerciseReactionbar'
 
 class PostDetail extends React.Component {
     componentDidMount() {
-        this.props.getExerciseById(this.props.match.params.id);
+        this.props.getAnExerciseInfoById(this.props.match.params.id);
         this.props.getRelativeDocumentsByExerciseId(this.props.match.params.id);
         this.props.getRelativePostsByExerciseId(this.props.match.params.id);
     }
@@ -115,7 +115,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getExerciseById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId
+    getAnExerciseInfoById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));

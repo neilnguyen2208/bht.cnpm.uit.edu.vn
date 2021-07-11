@@ -11,7 +11,7 @@ import 'components/styles/Label.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCourseTopicsWithExercisesByExerciseId, getExerciseById, getExerciseQuestions } from 'redux/services/courseServices'
+import { getCourseTopicsWithExercisesByExerciseId, getAnExerciseInfoById, getExerciseQuestions } from 'redux/services/courseServices'
 import homework_icon from 'assets/icons/24x24/homework_icon_gray_24x24.png'
 import { check_ExerciseQuestionsRequest, update_QuestionsToCReset, update_QuestionsToCSucess } from 'redux/actions/courseAction';
 import store from 'redux/store';
@@ -74,10 +74,10 @@ class ExerciseSidebar extends React.Component {
 
     //if not in exercise questions  
     if (window.location.pathname.substring(0, 26) !== "/courses/exercise-content/") {
-      this.props.getExerciseById(exerciseId);
+      this.props.getAnExerciseInfoById(exerciseId);
       return;
     }
-    this.props.getExerciseById(exerciseId);
+    this.props.getAnExerciseInfoById(exerciseId);
     this.props.getExerciseQuestions(exerciseId);
 
     //reset questions
@@ -143,7 +143,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getCourseTopicsWithExercisesByExerciseId,
-  getExerciseById,
+  getAnExerciseInfoById,
   getExerciseQuestions
 }, dispatch);
 

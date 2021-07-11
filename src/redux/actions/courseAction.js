@@ -69,6 +69,19 @@ import {
     GET_REPORTED_EXERCISES_FAILURE,
     SET_TIME_NORMAL,
     SET_TIME_STOP,
+    CREATE_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    CREATE_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    CREATE_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+
+    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+    GET_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    GET_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+    GET_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST,
+    GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
+    GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
 } from "../constants.js"
 
 
@@ -231,20 +244,20 @@ export function get_CourseDetailByIdFailure(error) {
     }
 }
 
-export function get_ExerciseByIdRequest() {
+export function get_AnExerciseInfoByIdRequest() {
     return {
         type: GET_EXERCISE_BY_ID_REQUEST
     }
 }
 
-export function get_ExerciseByIdSuccess(data) {
+export function get_AnExerciseInfoByIdSuccess(data) {
     return {
         type: GET_EXERCISE_BY_ID_SUCCESS,
         payload: data
     }
 }
 
-export function get_ExerciseByIdFailure(error) {
+export function get_AnExerciseInfoByIdFailure(error) {
     return {
         type: GET_EXERCISE_BY_ID_FAILURE,
         payload: error
@@ -474,6 +487,82 @@ export function update_QuestionsToCSucess(data) {
     return {
         type: UPDATE_TOC_SUCCESS,
         payload: data
+    }
+}
+
+export function create_AQuestionWithAnswersReset() {
+    return {
+        type: CREATE_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    }
+}
+
+export function create_AQuestionWithAnswersSuccess(data) {
+    return {
+        type: CREATE_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+        payload: data
+    }
+}
+
+export function create_AQuestionWithAnswersFailure() {
+    return {
+        type: CREATE_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    }
+}
+
+export function edit_AnExerciseQuestionsWithAnswersReset() {
+    return {
+        type: EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    }
+}
+
+export function edit_AnExerciseQuestionsWithAnswersSuccess(data) {
+    return {
+        type: EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+        payload: data
+    }
+}
+
+export function edit_AnExerciseQuestionsWithAnswersFailure() {
+    return {
+        type: EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    }
+}
+
+export function get_AnExerciseQuestionsWithAnswersReset() {
+    return {
+        type: GET_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    }
+}
+
+export function get_AnExerciseQuestionsWithAnswersSuccess(data) {
+    return {
+        type: GET_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_AnExerciseQuestionsWithAnswersFailure() {
+    return {
+        type: GET_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    }
+}
+
+export function get_ExerciseQuestionDifficultyTypesRequest() {
+    return {
+        type: GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST,
+    }
+}
+
+export function get_ExerciseQuestionDifficultyTypesSuccess(data) {
+    return {
+        type: GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ExerciseQuestionDifficultyTypesFailure() {
+    return {
+        type: GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
     }
 }
 

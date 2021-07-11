@@ -45,7 +45,7 @@ import Exercise from 'pages/common/Exercise/Exercise';
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
 import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';
 import CreateExercise from 'pages/user/CreateExercise/CreateExercise';
-import EditQuestions from 'pages/user/CreateExercise/EditQuestions';
+import EditExerciseQuestions from 'pages/user/CreateExercise/EditExerciseQuestions';
 import ExerciseCommentReport from 'pages/management/ExerciseManagement/ExerciseCommentReport';
 
 // modal
@@ -99,7 +99,8 @@ const App = () => {
                         <Route exact path="/user/notification" component={MyNotification} />
                         <RequireLoginRoute exact path="/upload-document" component={UploadDocument} permissions={[Document.DOC_PENDING_SELF_CREATE, Document.DOC_PENDING_SELF_UPLOAD]} />
                         <RequireLoginRoute exact path="/create-exercise" component={CreateExercise} permissions={[Access.Admin]} />
-                        <RequireLoginRoute exact path="/edit-questions/:id" component={EditQuestions} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/edit-exercises/questions/:id" component={EditExerciseQuestions} permissions={[Access.Admin]} />
+                        <RequireLoginRoute exact path="/edit-exercises/:id" component={EditExerciseQuestions} permissions={[Access.Admin]} />
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />

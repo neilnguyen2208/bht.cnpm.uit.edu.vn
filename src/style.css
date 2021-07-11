@@ -227,6 +227,12 @@ a:hover {
     justify-content: flex-end;
 }
 
+.j-c-start {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .mg-0px {
     margin: 0px;
 }

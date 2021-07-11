@@ -9,8 +9,7 @@
   font-family: "Raleway", sans-serif;
   line-height: 1.5rem;
   color: var(--black);
-  padding: 15px;
-  padding-left: 0px;
+  margin-bottom: 20px;
   font-size: 1rem;
   padding-top: 0px;
   box-sizing: border-box;
@@ -45,13 +44,30 @@
   box-sizing: border-box;
   height: fit-content;
   white-space: normal;
+  margin-bottom: 0px;
 }
 
 .ck-editor-output p {
   font-size: 1em;
-  font-weight: 500;
-  text-indent: 1em;
+  font-weight: 400;
   margin-bottom: 10px;
+}
+
+.ck-editor-output.question-content {
+  padding: 0px;
+  margin-top: 0px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.ck-editor-output.question-content pre code {
+  padding: 8px;
+}
+
+.ck-editor-output.question-content p {
+  text-indent: 0em;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .ck-editor-output.comment-content p {
@@ -86,20 +102,10 @@
 }
 
 .ck-editor-output pre {
-  margin: 5px;
   margin-top: 15px;
   margin-bottom: 10px;
-  margin-left: 15px;
-  border-radius: 5px;
-  border: 1px solid var(--gray);
-  background: var(--light-gray);
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
   font-weight: 600;
   white-space: pre;
-
   overflow-x: auto;
   word-wrap: normal;
 }

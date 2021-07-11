@@ -49,13 +49,13 @@
 .image-input-placeholder {
     position: absolute;
     object-fit: cover;
-    height: 170px;
+    height: 125px;
     outline: none;
     border: 0;
     border-width: 0px;
     padding-top: "10px";
     padding-bottom: "10px";
-    width: 100%;
+    width: 99.5%;
     outline-color: white;
     margin: auto;
     display: block;
@@ -64,7 +64,7 @@
 }
 
 .image-input-placeholder._avatar {
-    height: 180px;
+    height: 170px;
     width: 175px;
 }
 

@@ -547,7 +547,7 @@ class CreateExercise extends React.Component {
                     text: "Bạn có thể thực hiện thêm câu hỏi cho bài tập hoặc xem danh sách các bài tập.",
                     confirmText: "Thêm câu hỏi",
                     cancelText: "Xem danh sách",
-                    onConfirm: () => closeModal(),
+                    onConfirm: () => { closeModal(); closeModal() },
                     cancelLink: `/course-content/${this.props.newExerciseResponse.subjectID}`,
                     confirmLink: `/edit-questions/${this.props.newExerciseResponse.id}`
                 })
@@ -565,18 +565,6 @@ class CreateExercise extends React.Component {
                 </div>
             </div>
         );
-    }
-
-    onEditBtnClick = () => {
-        this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-exercise-form-container.edit").classList.remove("d-none");
-        document.querySelector(".cr-exercise-form-container.edit").classList.add("d-block");
-    }
-
-    onPreviewBtnClick = () => {
-        this.setState({ isPreview: !this.state.isPreview });
-        document.querySelector(".cr-exercise-form-container.edit").classList.add("d-none");
-        document.querySelector(".cr-exercise-form-container.edit").classList.remove("d-block");
     }
 }
 

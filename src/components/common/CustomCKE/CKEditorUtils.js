@@ -1,17 +1,13 @@
-
 export function getCKEInstance(id) {
   return window.CKEDITOR.instances['ck-editor-' + id];
 }
 
 //run after code snippet output loaded
 export function styleCodeSnippet() {
-  // console.log("Style Code called!");
-  setTimeout(
-    document.querySelectorAll('pre code').forEach((block) => {
-      console.log("a")
-      window.hljs.highlightBlock(block);
-    }),
-    1000)
+  document.querySelectorAll('pre code').forEach((block) => {
+    window.hljs.highlightBlock(block);
+  });
+
 }
 
 //run after code mathemical output loaded

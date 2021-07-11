@@ -21,6 +21,21 @@
   line-height: 1.5rem;
 }
 
+.score-board {
+  width: 300px;
+  margin-left: 10px;
+  border: 1px solid var(--gray);
+  border-top: 5px solid var(--blue);
+  height: fit-content;
+  padding: 5px;
+}
+
+.avatar.ranking {
+  width: 24px;
+  height: 24px;
+  border-top: 1px solid var(--gray);
+}
+
 .course-detail .description {
   margin-top: 10px;
   font-size: 1rem;
@@ -50,7 +65,7 @@
 .course-detail .course-detail-container {
   margin-top: 20px;
   padding-left: 1%;
-  max-width: 600px;
+  max-width: 100%;
 }
 
 .course-detail .topic-container {
@@ -58,6 +73,7 @@
   padding-left: 10px;
   display: block;
   width: 100%;
+  min-width: 550px;
   justify-content: space-between;
   height: fit-content;
   margin-bottom: 0px;

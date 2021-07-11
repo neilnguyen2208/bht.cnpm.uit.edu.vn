@@ -4,7 +4,7 @@ import clock_icon from "assets/icons/24x24/clock_icon_24x24.png"
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getExerciseById } from 'redux/services/courseServices'
+import { getAnExerciseInfoById } from 'redux/services/courseServices'
 import { closeModal, openModal } from 'redux/services/modalServices';
 class Countdown extends React.Component {
   componentDidMount() {
@@ -256,7 +256,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getExerciseById,
+  getAnExerciseInfoById,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Countdown));

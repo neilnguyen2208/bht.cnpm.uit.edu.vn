@@ -24,7 +24,7 @@ import NotificationManagement from 'pages/management/NotificationManagement/Noti
 import CategoryManagement from 'pages/management/NotificationManagement/NotificationManagement';
 import Statistic from 'pages/management/Statistic/Statistic';
 import PostManagement from 'pages/management/PostManagement/PostManagement';
-import SearchCourses from 'pages/common/SearchResult/SearchCourses';
+import SearchExercises from 'pages/common/SearchResult/SearchExercises';
 import UploadDocument from 'pages/user/UploadDocument/UploadDocument';
 import CreatePost from 'pages/user/CreatePost/CreatePost';
 import ActivityManagement from 'pages/management/ActivityManagement/ActivityManagement';
@@ -41,12 +41,14 @@ import SearchDocumentByTag from 'pages/common/SearchResult/SearchDocumentByTag';
 import AccountManagement from "pages/user/AccountInformation/AccountManagement";
 import PostCommentReport from 'pages/management/PostManagement/PostCommentReport';
 import DocumentCommentReport from 'pages/management/DocumentManagement/DocumentCommentReport';
+
 import Exercise from 'pages/common/Exercise/Exercise';
 import ExerciseQuestions from 'pages/common/Exercise/ExerciseQuestions';
 import ExerciseReportManagement from 'pages/management/ExerciseManagement/ExerciseReportManagement';
 import CreateExercise from 'pages/user/CreateExercise/CreateExercise';
 import EditExerciseQuestions from 'pages/user/CreateExercise/EditExerciseQuestions';
 import ExerciseCommentReport from 'pages/management/ExerciseManagement/ExerciseCommentReport';
+import SearchExercisesByTag from 'pages/common/SearchResult/SearchExercisesByTag';
 
 // modal
 import ModalManager from 'components/common/Modal/ModalManager';
@@ -54,6 +56,8 @@ import ModalBLManager from 'components/common/Modal/ModalBL/ModalBLManager'
 import ModalBigManager from 'components/common/Modal/ModalBigManager';
 import CommentModalManager from 'components/common/Modal/CommentModal/CommentModalManager';
 import DocumentsSubjectList from 'pages/common/DocumentsList/DocumentsSubjectList';
+
+//authen
 import RequireLoginRoute from 'components/base_components/RequireLoginRoute';
 import { Access, Post, Document } from "authentication/permission.config";
 
@@ -77,14 +81,14 @@ const App = () => {
                         <Route path="/search/posts" exact component={SearchPost} />
                         <Route path="/search/documents" exact component={SearchDocument} />
                         <Route path="/search/tags" exact component={SearchTag} />
-                        <Route path="/search/courses" exact component={SearchCourses} />
-                        <Route path="/search/courses" exact component={SearchCourses} />
+                        <Route path="/search/exercises" exact component={SearchExercises} />
                         <Route path="/courses/exercise/:id" exact component={Exercise} />
                         <Route path="/courses/exercise-content/:id" exact component={ExerciseQuestions} />
 
                         {/* Search Tag */}
                         <Route path="/tags/posts/" exact component={SearchPostByTag} />
                         <Route path="/tags/documents/" exact component={SearchDocumentByTag} />
+                        <Route path="/tags/exercises/" exact component={SearchExercisesByTag} />
 
                         {/* user layout */}
                         <Route exact path="/user/profile/:id" component={ProfilePost} />

@@ -1,0 +1,68 @@
+import React from 'react';
+import 'components/styles/Tag.scss';
+import { Link } from 'react-router-dom'
+import { setQueryParam } from 'utils/urlUtils';
+import { getExerciseSearch } from 'redux/services/courseServices';
+import { getTagByID, getRelativeTags } from 'redux/services/tagServices'
+import store from 'redux/store/index'
+
+//Set text props for this component
+//isReadOnly => can be delete or not
+//clickable => can be navigate to search post by tag on click
+export default class Tag extends React.Component {
+
+    //onDelete, tag: dmID, id, name/content
+
+    onDelete = (e) => {
+        e.preventDefault();
+        this.props.onDeleteTag(this.props.tag);
+    }
+
+    onTagClick = (e) => {
+
+        //if the location is tags/... => recall API 
+
+        //prevent search on create post
+        if (!this.props.clickable) {
+            e.preventDefault();
+            return;
+        }
+
+        //handle search
+        if (window.location.pathname.substring(0, 5) === "/tags") {
+
+            let queryParamObject = {
+                "page": 1,
+                tag: this.props.tag.id
+            }
+
+            let searchParamObject = {
+                "page": 1,
+                tags: this.props.tag.id,
+                searchTerm: ''
+            }
+
+            setQueryParam(queryParamObject);
+            store.dispatch(getExerciseSearch(searchParamObject));
+            store.dispatch(getTagByID(this.props.tag.id));
+            store.dispatch(getRelativeTags(this.props.tag.id));
+        }
+
+        if (this.props.onTagClick)
+            this.props.onTagClick(this.props.tag.id);
+    }
+    
+    render() {
+        if (!this.props.tag.id && !this.props.tag.name && !this.props.tag.content) return <></>;
+        return (
+            <Link to={`/tags/exercises?page=1&tag=${this.props.tag.id}`}
+                className="simple-tag" onClick={e => this.onTagClick(e)} >
+                <div className="d-flex">
+                    {!this.props.isReadOnly && <div onClick={e => this.onDelete(e)} className="tag-delete-btn"><div className="close_8x8" /> </div>}
+                    <div className="mg-left-5px"> {this.props.tag.content} </div>
+                </div>
+            </Link >
+        )
+    }
+}
+

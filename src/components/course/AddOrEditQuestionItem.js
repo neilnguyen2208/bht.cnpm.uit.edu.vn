@@ -93,12 +93,18 @@ class QuestionItem extends React.Component {
     this.setState({});
   }
 
-  onAnswerChecked = (answerItem, index) => {
-    //set value of this answer is true in parent component
+  onAnswerChecked = (index) => {
+    //set value of this answer is true in parent component, set new correct anser
+    this.QUESTION_DTO.exerciseAnswerRequestDTOs.forEach((item, _index) => {
+      item.isCorrect = false;
+      console.log(index, _index);
+      if (_index === index) item.isCorrect = true;
+    })
+    this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
+    this.setState({});
   }
 
   onDeleteAnswerClick = (answerItem, index) => {
-    // if (answerItem.id === null) {
     this.QUESTION_DTO.exerciseAnswerRequestDTOs.splice(index, 1);
     this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
     this.setState({});
@@ -121,7 +127,7 @@ class QuestionItem extends React.Component {
   }
   //#endregion
 
-  //#region retive to explaination 
+  //#region relative to explaination 
   onExplainationEditorChange = () => {
     this.QUESTION_DTO.explanation = getCKEInstance("explaination-cke-" + this.props.index).getData();
     this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
@@ -143,8 +149,16 @@ class QuestionItem extends React.Component {
   }
   //#endregion
 
+  //for update difficulty ID 
   onDifficultyOptionChanged = (selectedOption) => {
+    this.QUESTION_DTO.difficultyID = selectedOption.id;
+    this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
+  }
 
+  //for update suggested duration
+  onTimeDurationChange = (e) => {
+    this.QUESTION_DTO.suggestedDuration = e.target.value * 60;
+    this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
   }
 
   render() {
@@ -202,7 +216,7 @@ class QuestionItem extends React.Component {
               />
 
               <div className="j-c-end mg-top-10px">
-                <button className="white-button " onClick={() => { this.onQuestionPreviewBtnClick() }}>Xem trước</button>
+                <button className="white-button " onClick={() => { this.onQuestionPreviewBtnClick() }}>Xong</button>
               </div>
             </div>
 
@@ -211,53 +225,45 @@ class QuestionItem extends React.Component {
           {/* answer items */}
           {
             this.QUESTION_DTO.exerciseAnswerRequestDTOs.map((answer, index) => {
-              if (this.editingAnswerIndex !== index)
-                return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
-                  <div className="j-c-space-between">
-                    <label className="container">
-                      <input type="radio" checked={answer.isCorrect}
-                        onClick={() => this.onAnswerChecked()}
-                        name={"fieldset" + this.props.questionId} />
+              return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
+                <div className="j-c-space-between">
+                  <label className="container">
+                    <input type="radio" checked={answer.isCorrect}
+                      onClick={() => this.onAnswerChecked(index)}
+                      name={"fieldset-" + this.props.index} />
 
+                    {this.editingAnswerIndex !== index ?
                       <div className="d-flex">
                         <div className="question-content ck-editor-output" style={{ fontSize: "15px" }}
                           dangerouslySetInnerHTML={{
                             __html: answer.content
                           }} />
-                      </div>
-                      <span className="checkmark"></span>
+                      </div> :
 
-                    </label>
+                      <div>
+                        <Editor editorId={"answer-content-cke-" + this.props.index + "-" + index}
+                          onChange={() => this.onAnswerEditorChange(answer, index)}
+                          onInstanceReady={() => this.onAnswerEditorReady(answer, index)}
+                          height={120}
+                          autoGrow_maxHeight={200}
+                          autoGrow_minHeight={120}
+                          config={CommentCKEToolbarConfiguration}
+                        />
+                        <div className="j-c-end mg-top-10px" style={{ marginBottom: "15px" }}>
+                          <button className="white-button " onClick={() => { this.onAnswerPreviewClick(index) }}>Xong</button>
+                        </div>
+                      </div>}
 
+                    <span className="checkmark"></span>
+                  </label>
+
+                  {this.editingAnswerIndex !== index &&
                     <div className="d-flex">
                       <img src={edit_btn} alt="" className="question-item-btn" onClick={() => this.onEditAnswerClick(answer, index)} />
                       <img src={delete_btn} alt="" className="question-item-btn mg-left-5px" onClick={() => this.onDeleteAnswerClick(answer, index)} />
                     </div>
+                  }
 
-                  </div>
-                </div>
-              else return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
-                <div className="j-c-space-between">
-                  <label className="container">
-                    <input type="radio" checked={answer.isCorrect}
-                      onClick={() => this.onAnswerChecked(index)}
-                      name={"fieldset" + this.props.questionId} />
-
-                    <Editor editorId={"answer-content-cke-" + this.props.index + "-" + index}
-                      onChange={() => this.onAnswerEditorChange(answer, index)}
-                      onInstanceReady={() => this.onAnswerEditorReady(answer, index)}
-                      height={120}
-                      autoGrow_maxHeight={200}
-                      autoGrow_minHeight={120}
-                      config={CommentCKEToolbarConfiguration}
-                    />
-
-                    <div className="j-c-end mg-top-10px" style={{ marginBottom: "15px" }}>
-                      <button className="white-button " onClick={() => { this.onAnswerPreviewClick(index) }}>Xem trước</button>
-                    </div>
-                    <span className="checkmark"></span>
-
-                  </label>
                 </div>
               </div>
             })
@@ -292,7 +298,7 @@ class QuestionItem extends React.Component {
                   config={CommentCKEToolbarConfiguration}
                 />
                 <div className="j-c-end mg-top-10px">
-                  <button className="white-button " onClick={() => { this.onPreviewExplainationClick() }}>Xem trước</button>
+                  <button className="white-button " onClick={() => { this.onPreviewExplainationClick() }}>Xong</button>
                 </div>
               </div>
             </div>
@@ -300,29 +306,30 @@ class QuestionItem extends React.Component {
 
           {/* difficulty and duration time */}
 
-          <div className="form-group">
-            <label className="form-label">Độ khó:</label>
-
-            <Combobox comboboxId={"ed-question-difficulty-combobox" + this.props.index}
-              // selectedOptionID={!this.props.isDifficultyTypesLoading ? null : 0}
-              options={this.difficultyTypesList}
-              onOptionChanged={(selectedOption) => this.onDifficultyOptionChanged(selectedOption)}
-              placeHolder="Chọn độ khó"
-            >
-            </Combobox>
-            <div className="form-error-label-container">
-              <span className="form-error-label" ></span>
+          <div className="j-c-start">
+            <div className="form-group" style={{ width: "300px" }}>
+              <label className="form-label">Độ khó:</label>
+              <Combobox comboboxId={"ed-question-difficulty-combobox" + this.props.index}
+                selectedOptionID={!this.props.isDifficultyTypesLoading ? this.QUESTION_DTO.difficultyID : 0}
+                options={this.difficultyTypesList}
+                onOptionChanged={(selectedOption) => this.onDifficultyOptionChanged(selectedOption)}
+                placeHolder="Chọn độ khó" >
+              </Combobox>
+              <div className="form-error-label-container">
+                <span className="form-error-label" ></span>
+              </div>
+            </div>
+            <div className="form-group" style={{ width: "fit-content" }}>
+              <label className="form-label">Thời gian đề xuất:</label>
+              <div className="j-c-start">
+                <input type="number" className="text-input"
+                  style={{ width: "50px", minWidth: "50px", marginLeft: "0px", marginRight: "5px" }}
+                  defaultValue={this.QUESTION_DTO.suggestedDuration ? this.QUESTION_DTO.suggestedDuration / 60 : 1}
+                  onChange={(e) => this.onTimeDurationChange(e)} />
+                <div style={{ marginTop: "3px" }}>phút</div>
+              </div>
             </div>
           </div>
-
-          <div className="form-group">
-            <label className="form-label">Thời gian đề xuất:</label>
-            <div className="j-c-start">
-              <input type="number" className="text-input" style={{ width: "120px", marginLeft: "0px", marginRight: "5px" }} defaultValue={this.QUESTION_DTO.suggestedDuration ? this.QUESTION_DTO.suggestedDuration : 1} />
-              <div style={{ marginTop: "3px" }}>phút</div>
-            </div>
-          </div>
-
         </div >
       </div >
     );

@@ -73,6 +73,12 @@ import {
     GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST,
     GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
     GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
+    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    GET_EXERCISE_SEARCH_REQUEST,
+    GET_EXERCISE_SEARCH_SUCCESS,
+    GET_EXERCISE_SEARCH_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -189,6 +195,15 @@ const initialState = {
         isLoading: false,
     },
 
+    exercisesList: {
+        isLoading: false,
+        data: [],
+        error: "",
+        totalPages: 0,
+        totalElements: 0
+    },
+
+    isHaveEdited: false,
     isHaveReported: false,
     isHaveResolved: false,
     isHaveCreatedExercise: false,
@@ -482,6 +497,43 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, difficultyTypes: { isLoading: false, data: [] }
             }
+
+        case EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET:
+            return {
+                ...state, isHaveEdited: false
+            }
+        case EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS:
+            return {
+                ...state, isHaveEdited: true
+            }
+
+        case EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE:
+            return {
+                ...state, isHaveEdited: false
+            }
+
+        case GET_EXERCISE_SEARCH_REQUEST:
+            return {
+                ...state, exercisesList: { isLoading: true }
+            };
+        case GET_EXERCISE_SEARCH_SUCCESS:
+            {
+
+                return {
+                    ...state, exercisesList: {
+                        isLoading: false,
+                        data: action.payload.exerciseSearchResultDTOs,
+                        totalElements: action.payload.totalElements,
+                        totalPages: action.payload.totalPages,
+                        error: ''
+                    }
+                }
+            }
+        case GET_EXERCISE_SEARCH_FAILURE:
+            {
+                return { ...state, exercisesList: { isLoading: false, error: action.payload, data: [] } }
+            }
+
         case UPDATE_TOC_SET:
             return {
                 ...state, questionsToC: { ...state.questionsToC, isSet: false }
@@ -490,7 +542,6 @@ function CourseReducer(state = initialState, action) {
             return {
                 ...state, questionsToC: { isSet: true, data: action.payload }
             }
-
 
         case SET_TIME_NORMAL:
             return { ...state, isTimeNormal: true }

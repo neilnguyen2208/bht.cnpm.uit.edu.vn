@@ -82,6 +82,9 @@ import {
     GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST,
     GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
     GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
+    GET_EXERCISE_SEARCH_REQUEST,
+    GET_EXERCISE_SEARCH_SUCCESS,
+    GET_EXERCISE_SEARCH_FAILURE,
 } from "../constants.js"
 
 
@@ -563,6 +566,25 @@ export function get_ExerciseQuestionDifficultyTypesSuccess(data) {
 export function get_ExerciseQuestionDifficultyTypesFailure() {
     return {
         type: GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
+    }
+}
+
+export function get_ExerciseSearchRequest() {
+    return {
+        type: GET_EXERCISE_SEARCH_REQUEST,
+    }
+}
+
+export function get_ExerciseSearchSuccess(data) {
+    return {
+        type: GET_EXERCISE_SEARCH_SUCCESS,
+        payload: data
+    }
+}
+
+export function get_ExerciseSearchFailure() {
+    return {
+        type: GET_EXERCISE_SEARCH_FAILURE,
     }
 }
 

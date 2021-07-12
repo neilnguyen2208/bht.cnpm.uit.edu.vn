@@ -13,7 +13,7 @@ export default class SearchHorizontalMenubar extends React.Component {
           <NavLink to="/tags/documents" className="h-menu-item " activeClassName='h-menu-item active'>
             Tài liệu
           </NavLink>
-          <NavLink to="/tags/courses" className="h-menu-item " activeClassName='h-menu-item active'>
+          <NavLink to="/tags/exercises" className="h-menu-item " activeClassName='h-menu-item active'>
             Bài tập
           </NavLink>
         </div>

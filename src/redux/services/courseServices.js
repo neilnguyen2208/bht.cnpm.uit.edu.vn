@@ -69,6 +69,9 @@ import {
     get_ExerciseQuestionDifficultyTypesRequest,
     get_ExerciseQuestionDifficultyTypesSuccess,
     get_ExerciseQuestionDifficultyTypesFailure,
+    get_ExerciseSearchRequest,
+    get_ExerciseSearchSuccess,
+    get_ExerciseSearchFailure,
 } from "redux/actions/courseAction.js";
 import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
@@ -312,6 +315,25 @@ export function getExerciseQuestionDifficultyTypes(exerciseID) {
                 dispatch(get_ExerciseQuestionDifficultyTypesSuccess(response.data));
             })
             .catch(error => get_ExerciseQuestionDifficultyTypesFailure())
+    }
+}
+
+export function getExerciseSearch(searchParamObject) {
+    return dispatch => {
+        dispatch(get_ExerciseSearchRequest());
+        authRequest.get(`/exercises/searchFilter?${generateSearchParam(searchParamObject)}`)
+            .then(response => {
+                //statistic
+                let result_1 = response.data;
+                dispatch(get_ExerciseSearchSuccess({
+                    exerciseSearchResultDTOs: result_1.exerciseSearchResultDTOs,
+                    totalPages: result_1.totalPages,
+                    totalElements: result_1.totalElements
+                }))
+            })
+            .catch(error => {
+                dispatch(get_ExerciseSearchFailure(error))
+            })
     }
 }
 

@@ -549,7 +549,7 @@ class CreateExercise extends React.Component {
                     cancelText: "Xem danh sách",
                     onConfirm: () => { closeModal(); closeModal() },
                     cancelLink: `/course-content/${this.props.newExerciseResponse.subjectID}`,
-                    confirmLink: `/edit-questions/${this.props.newExerciseResponse.id}`
+                    confirmLink: `/edit-exercises/questions/${this.props.newExerciseResponse.id}`
                 })
         }
 

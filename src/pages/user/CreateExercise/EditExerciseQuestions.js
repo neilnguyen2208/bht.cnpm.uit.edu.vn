@@ -18,6 +18,9 @@ import {
     getExerciseQuestionDifficultyTypes
 } from 'redux/services/courseServices';
 import { authRequest } from "utils/requestUtils";
+import store from "redux/store";
+import { edit_AnExerciseQuestionsWithAnswersReset } from "redux/actions/courseAction";
+import { closeModal, openBLModal, openModal } from "redux/services/modalServices";
 
 class CreateExercise extends React.Component {
 
@@ -35,51 +38,55 @@ class CreateExercise extends React.Component {
                 {
                     id: null,
                     "content": "<p>Đáp án 1</p>",
-                    "rank": 0,
+                    "rank": 1,
                     "isCorrect": true
                 },
                 {
                     id: null,
                     "content": "<p>Đáp án 2</p>",
-                    "rank": 0,
+                    "rank": 2,
                     "isCorrect": false
                 }
             ]
         }
 
-        this.EXERCISE_QUESTIONS_DTO = [
-            this.defaultQuestion
-        ];
+        this.EXERCISE_QUESTIONS_DTO = [];
+
         this.isFirstTimeLoaded = false;
     }
 
     componentDidMount() {
         //get data
         this.props.getAnExerciseInfoById(this.props.match.params.id);
-        // this.props.getAnExerciseQuestionsWithAnswers(this.props.match.params.id);
         this.props.getExerciseQuestionDifficultyTypes();
 
         //this API is using for update an questions
         authRequest.get(`/exercises/${this.props.match.params.id}/questions`)
             .then(response => {
-                this.EXERCISE_QUESTIONS_DTO = response.data;
-                this.EXERCISE_QUESTIONS_DTO.forEach((question, index) => {
-                    // question.exerciseAnswerRequestDTOs = response.data[index].exerciseAnswerDTOs ? response.data[index].exerciseAnswerDTOs : [];
-                    question.exerciseAnswerRequestDTOs = response.data[index].answers ? response.data[index].answers : [];
-                    question.explanation = "Giải thích";
-                    question.difficultyID = question.difficultyType.id;
-                    delete question.exerciseAnswerDTOs;
-                    delete question.difficultyType;
-                })
+                if (response.data.length > 0) {
+                    this.EXERCISE_QUESTIONS_DTO = response.data;
+                    this.EXERCISE_QUESTIONS_DTO.forEach((question, index) => {
+                        // question.exerciseAnswerRequestDTOs = response.data[index].exerciseAnswerDTOs ? response.data[index].exerciseAnswerDTOs : [];
+                        question.exerciseAnswerRequestDTOs = response.data[index].answers ? response.data[index].answers : [];
+                        question.difficultyID = question.difficultyType.id;
+                        question.rank = index;
+                        delete question.exerciseAnswerDTOs;
+                        delete question.difficultyType;
+                    })
+                }
+                else {
+                    this.EXERCISE_QUESTIONS_DTO = [this.defaultQuestion];
+                }
             })
     }
 
     componentWillUnmount() {
-
+        store.dispatch(edit_AnExerciseQuestionsWithAnswersReset());
     }
 
     addQuestion = () => {
-        this.EXERCISE_QUESTIONS_DTO.push(this.defaultQuestion);
+        console.log("a");
+        this.EXERCISE_QUESTIONS_DTO.push({ ...this.defaultQuestion, rank: this.EXERCISE_QUESTIONS_DTO.length });
         this.setState({});
     }
 
@@ -123,7 +130,15 @@ class CreateExercise extends React.Component {
     }
 
     onSaveQuestionsClick = () => {
-        this.props.editAnExerciseQuestionWithAnswers(this.props.match.params.id, this.EXERCISE_QUESTIONS_DTO);
+        openModal("confirmation", {
+            title: "Cập nhật bài tập",
+            text: "Xác nhận cập nhật bài tập này",
+            showIcon: true,
+            onConfirm: () => {
+                this.props.editAnExerciseQuestionWithAnswers(this.props.match.params.id, this.EXERCISE_QUESTIONS_DTO);
+                closeModal()
+            }
+        })
     }
 
     render() {
@@ -132,6 +147,28 @@ class CreateExercise extends React.Component {
             this.EXERCISE_QUESTIONS_DTO.exerciseAnswerRequestDTOs = this.props.questionsData.exerciseAnswerDTOs;
             this.isFirstTimeLoaded = true;
             this.setState({});
+        }
+
+        if (this.props.isHaveEdited) {
+            store.dispatch(edit_AnExerciseQuestionsWithAnswersReset());
+            authRequest.get(`/exercises/${this.props.match.params.id}/questions`)
+                .then(response => {
+                    if (response.data.length > 0) {
+                        this.EXERCISE_QUESTIONS_DTO = response.data;
+                        this.EXERCISE_QUESTIONS_DTO.forEach((question, index) => {
+                            question.exerciseAnswerRequestDTOs = response.data[index].answers ? response.data[index].answers : [];
+                            question.difficultyID = question.difficultyType.id;
+                            delete question.exerciseAnswerDTOs;
+                            delete question.difficultyType;
+                        })
+                        this.setState({})
+                    }
+                    else {
+                        // this.EXERCISE_QUESTIONS_DTO = [...this.defaultQuestion];
+                    }
+                })
+            openBLModal({ type: "success", text: "Cập nhật thành công" });
+
         }
 
         return (
@@ -203,7 +240,8 @@ const mapStateToProps = (state) => {
         isExerciseLoading: state.course.currentExercise.isLoading,
         questionsData: state.course.exerciseQuestions.data,
         isQuestionsLoading: state.course.exerciseQuestions.isLoading,
-        isDifficultyTypesLoading: state.course.difficultyTypes.isLoading
+        isDifficultyTypesLoading: state.course.difficultyTypes.isLoading,
+        isHaveEdited: state.course.isHaveEdited
     };
 }
 

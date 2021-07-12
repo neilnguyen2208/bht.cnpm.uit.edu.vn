@@ -17,6 +17,7 @@ import { withRouter } from "react-router-dom";
 import { getRelativeTags } from 'redux/services/tagServices'
 import PostTag from 'components/post/Tag'
 import DocumentTag from 'components/document/Tag'
+import ExerciseTag from 'components/course/Tag'
 import "components/common/Titlebar/Titlebar.scss"
 import "layouts/Layout.scss"
 import "layouts/Search.scss"
@@ -40,6 +41,11 @@ class RelativeTagSidebar extends React.Component {
         if (window.location.pathname === "/tags/documents") {
             return this.props.relativeTags.map(item =>
                 <DocumentTag isReadOnly={true} tag={item} />
+            )
+        }
+        if (window.location.pathname === "/tags/exercises") {
+            return this.props.relativeTags.map(item =>
+                <ExerciseTag isReadOnly={true} tag={item} />
             )
         }
     }

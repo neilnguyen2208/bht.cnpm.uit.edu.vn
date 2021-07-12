@@ -317,8 +317,8 @@ const mapStateToProps = (state) => {
         totalElements: state.course.exercisesList.totalElements,
 
         //subject
-        isSubjectLoading: state.documentSubject.subjects.isLoading,
-        subjects: state.documentSubject.subjects.searchData
+        isSubjectLoading: state.subject.subjects.isLoading,
+        subjects: state.subject.subjects.searchData
 
     };
 }

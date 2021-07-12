@@ -400,10 +400,9 @@ export function put_EditAPostReset(data) {
     }
 }
 
-export function put_EditAPostSuccess(data) {
+export function put_EditAPostSuccess() {
     return {
         type: EDIT_A_POST_SUCCESS,
-        payload: data
     }
 }
 

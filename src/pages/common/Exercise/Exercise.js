@@ -15,7 +15,7 @@ import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/Cu
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 import ExerciseReactionbar from 'components/course/ExerciseReactionbar'
 
-class PostDetail extends React.Component {
+class ExerciseDetail extends React.Component {
     componentDidMount() {
         this.props.getAnExerciseInfoById(this.props.match.params.id);
         this.props.getRelativeDocumentsByExerciseId(this.props.match.params.id);
@@ -118,4 +118,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getAnExerciseInfoById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseDetail));

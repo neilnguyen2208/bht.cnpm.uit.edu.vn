@@ -312,8 +312,8 @@ const mapStateToProps = (state) => {
         totalElements: state.document.managementDocuments.totalElements,
 
         //subject
-        subjects: state.documentSubject.subjects.searchData,
-        isSubjectLoading: state.documentSubject.subjects.isLoading,
+        subjects: state.subject.subjects.searchData,
+        isSubjectLoading: state.subject.subjects.isLoading,
 
         //category
         documentCategories: state.documentCategory.categories.searchData,

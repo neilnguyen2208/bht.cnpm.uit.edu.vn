@@ -60,9 +60,9 @@ import {
     post_CreateAnExerciseReset,
     post_CreateAnExerciseSuccess,
     post_CreateAnExerciseFailure,
-    edit_AnExerciseQuestionsWithAnswersReset,
-    edit_AnExerciseQuestionsWithAnswersSuccess,
-    edit_AnExerciseQuestionsWithAnswersFailure,
+    edit_ExerciseQuestionsWithAnswersReset,
+    edit_ExerciseQuestionsWithAnswersSuccess,
+    edit_ExerciseQuestionsWithAnswersFailure,
     get_AnExerciseQuestionsWithAnswersReset,
     get_AnExerciseQuestionsWithAnswersSuccess,
     get_AnExerciseQuestionsWithAnswersFailure,
@@ -72,10 +72,17 @@ import {
     get_ExerciseSearchRequest,
     get_ExerciseSearchSuccess,
     get_ExerciseSearchFailure,
+    put_EditAnExerciseInfoReset,
+    put_EditAnExerciseInfoSuccess,
+    put_EditAnExerciseInfoFailure,
+    get_AnExerciseInfoForEditByIdRequest,
+    get_AnExerciseInfoForEditByIdSuccess,
+    get_AnExerciseInfoForEditByIdFailure,
 } from "redux/actions/courseAction.js";
 import { post_ReportAnExerciseFailure, post_ReportAnExerciseReset, post_ReportAnExerciseSuccess } from "redux/actions/courseAction";
 import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
+import { closeModal, openBLModal, openModal } from "./modalServices";
 
 export function uploadCourse(courses) {
     return dispatch => {
@@ -159,6 +166,17 @@ export function getAnExerciseInfoById(exerciseId) {
             authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
                 dispatch(get_AnExerciseInfoByIdSuccess({ ...response.data, ...response_2.data[0] }))
             }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))
+        })
+    }
+}
+
+export function getAnExerciseInfoByIdForEdit(exerciseId) {
+    return dispatch => {
+        dispatch(get_AnExerciseInfoForEditByIdRequest());
+        authRequest.get(`/exercises/${exerciseId}`).then(response => {
+            authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
+                dispatch(get_AnExerciseInfoForEditByIdSuccess({ ...response.data, ...response_2.data[0] }))
+            }).catch(error => dispatch(get_AnExerciseInfoForEditByIdFailure(error)))
         })
     }
 }
@@ -287,12 +305,12 @@ export function createAnExercise(exerciseDTO) {
 
 export function editAnExerciseQuestionWithAnswers(exerciseID, questionDTO) {
     return dispatch => {
-        dispatch(edit_AnExerciseQuestionsWithAnswersReset());
+        dispatch(edit_ExerciseQuestionsWithAnswersReset());
         authRequest.put(`/exercises/${exerciseID}/questionsWithAnswers`, JSON.stringify(questionDTO))
             .then(result => {
-                dispatch(edit_AnExerciseQuestionsWithAnswersSuccess(result.data));
+                dispatch(edit_ExerciseQuestionsWithAnswersSuccess(result.data));
             })
-            .catch(error => edit_AnExerciseQuestionsWithAnswersFailure())
+            .catch(error => edit_ExerciseQuestionsWithAnswersFailure())
     }
 }
 
@@ -334,6 +352,20 @@ export function getExerciseSearch(searchParamObject) {
             .catch(error => {
                 dispatch(get_ExerciseSearchFailure(error))
             })
+    }
+}
+
+export function editAnExerciseInfo(id, newExerciseInfo) { //
+    return dispatch => {
+        dispatch(put_EditAnExerciseInfoReset())
+        openModal("loader", { text: "Đang xử lý" });
+        authRequest.put(`/exercises/${id}`, JSON.stringify(newExerciseInfo))
+            .then(response => {
+                dispatch(closeModal());
+                openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
+                dispatch(put_EditAnExerciseInfoSuccess(id, newExerciseInfo));
+            }
+            ).catch(() => dispatch(put_EditAnExerciseInfoFailure()))
     }
 }
 

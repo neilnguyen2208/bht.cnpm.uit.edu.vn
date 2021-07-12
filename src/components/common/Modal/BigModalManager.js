@@ -2,12 +2,13 @@ import React from "react"
 
 import EditPostModal from './CustomModal/EditPostModal'
 import EditDocumentModal from './CustomModal/EditDocumentModal'
+import EditExerciseModal from './CustomModal/EditExerciseModal'
 import ReportModal from './CustomModal/ReportModal'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-class ModalBigManager extends React.Component {
+class BigModalManager extends React.Component {
     render() {
 
         // props gom co modalType va modalProps
@@ -25,6 +26,8 @@ class ModalBigManager extends React.Component {
                     return <EditPostModal {...modalProps} key={modalType + index} />
                 case "edit-document":
                     return <EditDocumentModal {...modalProps} key={modalType + index} />
+                case "edit-exercise":
+                    return <EditExerciseModal {...modalProps} key={modalType + index} />
                 case "report-post":
                     return <ReportModal {...modalProps} type="POST" key={modalType + index} />
                 case "report-document":
@@ -56,5 +59,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModalBigManager));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BigModalManager));
 

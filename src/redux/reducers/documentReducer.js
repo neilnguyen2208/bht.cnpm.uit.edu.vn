@@ -89,6 +89,7 @@ const initialState = {
     currentDocumentForEdit: {
         isLoading: false, data: {}, isLoadDone: false,
     },
+    
     documentStatistic: {
         isLoadDone: false,
         data: {},

@@ -3,7 +3,7 @@ import {
     get_DocumentSubjectsHaveAllSuccess,
     get_DocumentSubjectsRequest,
     get_DocumentSubjectsFailure
-} from "redux/actions/documentSubjectAction.js";
+} from "redux/actions/subjectAction.js";
 
 import { request } from 'utils/requestUtils';
 

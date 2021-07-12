@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { deleteAPost, editAPost, reportAPost } from 'redux/services/postServices'
+import { deleteAPost,  reportAPost } from 'redux/services/postServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { highlightAPost, deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
 import { post_ReportAPostReset } from 'redux/actions/postAction'
@@ -263,7 +263,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteAPost,
-  editAPost,
   reportAPost,
   highlightAPost,
   deleteHighlightAPost,

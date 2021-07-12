@@ -11,7 +11,7 @@ import CourseFacultyReducer from "redux/reducers/courseFacultyReducer"
 import ExerciseCategoryReducer from "redux/reducers/exerciseCategoryReducer"
 import CommonReducer from "redux/reducers/commonReducer"
 import ModalReducer from "redux/reducers/modalReducer"
-import DocumentSubjectReducer from "redux/reducers/documentSubjectReducer"
+import SubjectReducer from "redux/reducers/subjectReducer"
 import AuthenticationReducer from "redux/reducers/authReducer"
 import RoleReducer from "redux/reducers/roleReducer"
 import postCommentReducer from "redux/reducers/postCommentReducer"
@@ -27,7 +27,7 @@ var RootReducer = combineReducers({
     document: DocumentReducer,
     postCategory: PostCategoryReducer,
     documentCategory: DocumentCategoryReducer,
-    documentSubject: DocumentSubjectReducer,
+    subject: SubjectReducer,
     tag: TagReducer,
     course: CourseReducer,
     courseFaculty: CourseFacultyReducer,

@@ -57,9 +57,9 @@ import {
     GET_MANAGEMENT_DOCUMENTS_FAILURE,
     GET_MANAGEMENT_DOCUMENTS_SUCCESS,
     GET_MANAGEMENT_DOCUMENTS_REQUEST,
-    GET_DOCUMENT_SUBJECTS_LIST_REQUEST,
-    GET_DOCUMENT_SUBJECTS_LIST_SUCCESS,
-    GET_DOCUMENT_SUBJECTS_LIST_FAILURE,
+    GET_SUBJECTS_LIST_REQUEST,
+    GET_SUBJECTS_LIST_SUCCESS,
+    GET_SUBJECTS_LIST_FAILURE,
     GET_DC_DOCUMENT_SUBJECTS_LIST_REQUEST,
     GET_DC_DOCUMENT_SUBJECTS_LIST_SUCCESS,
     GET_DC_DOCUMENT_SUBJECTS_LIST_FAILURE,
@@ -429,19 +429,19 @@ export function get_DocumentByIDForEditReset() {
 
 export function get_DocumentSubjectsListRequest() {
     return {
-        type: GET_DOCUMENT_SUBJECTS_LIST_REQUEST
+        type: GET_SUBJECTS_LIST_REQUEST
     }
 }
 
 export function get_DocumentSubjectsListSuccess() {
     return {
-        type: GET_DOCUMENT_SUBJECTS_LIST_SUCCESS,
+        type: GET_SUBJECTS_LIST_SUCCESS,
     }
 }
 
 export function get_DocumentSubjectsListFailure() {
     return {
-        type: GET_DOCUMENT_SUBJECTS_LIST_FAILURE
+        type: GET_SUBJECTS_LIST_FAILURE
     }
 }
 

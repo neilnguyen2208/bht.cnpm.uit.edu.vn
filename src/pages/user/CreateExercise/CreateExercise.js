@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getExerciseCategories } from "redux/services/exerciseCategoryServices";
@@ -28,7 +28,6 @@ import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 import { SimpleCKEToolbarConfiguration } from 'components/common/CustomCKE/CKEditorConfiguration'
 import { getSubjectsList } from 'redux/services/subjectServices';
 import { request } from "utils/requestUtils";
-import { Link } from 'react-router-dom';
 import { closeModal, openModal } from "redux/services/modalServices";
 
 const validationCondition = {
@@ -363,7 +362,6 @@ class CreateExercise extends React.Component {
     }
 
     onTopicOptionChanged = (selectedOption) => {
-        console.log(selectedOption);
         this.setState({ CREATE_EXERCISE_DTO: { ...this.state.CREATE_EXERCISE_DTO, topicID: selectedOption.id } })
     }
 
@@ -438,7 +436,7 @@ class CreateExercise extends React.Component {
                     <div className="form-group">
                         <div className="form-label-required">Mô tả:</div>
                         <Editor
-                            config={SimpleCKEToolbarConfiguration}
+                            // config={SimpleCKEToolbarConfiguration}
                             editorId="cr-exercise-description"
                             placeholder='Start typing here...'
                             onChange={this.handleEditorChange}
@@ -584,8 +582,8 @@ const mapStateToProps = (state) => {
         userSummaryData: state.auth.currentUserSummary.data,
         userSummaryLoaded: state.auth.currentUserSummary.isLoadDone,
 
-        subjects: state.documentSubject.subjects.data,
-        isSubjectLoading: state.documentSubject.subjects.isLoading,
+        subjects: state.subject.subjects.data,
+        isSubjectLoading: state.subject.subjects.isLoading,
 
     };
 }

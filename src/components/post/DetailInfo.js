@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   deleteAPost,
-  editAPost,
   reportAPost
 } from 'redux/services/postServices'
 import {
@@ -39,14 +38,6 @@ import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 
 class PostDetail extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.id = this.props.postID;
-    this.title = this.props.title;
-    this.image = this.props.image;
-
-  }
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_POST") {
@@ -149,7 +140,7 @@ class PostDetail extends React.Component {
             availableActions={this.props.availableActions}
             useAction
             items={basicMenu}
-             id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
+            id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
         </div>
 
         {cover}
@@ -177,7 +168,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteAPost, editAPost, reportAPost
+  deleteAPost, reportAPost
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));

@@ -53,7 +53,7 @@ import SearchExercisesByTag from 'pages/common/SearchResult/SearchExercisesByTag
 // modal
 import ModalManager from 'components/common/Modal/ModalManager';
 import ModalBLManager from 'components/common/Modal/ModalBL/ModalBLManager'
-import ModalBigManager from 'components/common/Modal/ModalBigManager';
+import BigModalManager from 'components/common/Modal/BigModalManager';
 import CommentModalManager from 'components/common/Modal/CommentModal/CommentModalManager';
 import DocumentsSubjectList from 'pages/common/DocumentsList/DocumentsSubjectList';
 
@@ -133,7 +133,7 @@ const App = () => {
                 <Header />
                 <div>
                     <CommentModalManager />
-                    <ModalBigManager />
+                    <BigModalManager />
                     <ModalManager />
                     <ModalBLManager />
 

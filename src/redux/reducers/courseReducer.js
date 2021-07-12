@@ -26,9 +26,9 @@ import {
     GET_COURSE_DETAIL_BY_ID_REQUEST,
     GET_COURSE_DETAIL_BY_ID_FAILURE,
     GET_COURSE_DETAIL_BY_ID_SUCCESS,
-    GET_EXERCISE_BY_ID_FAILURE,
-    GET_EXERCISE_BY_ID_SUCCESS,
-    GET_EXERCISE_BY_ID_REQUEST,
+    GET_EXERCISE_INFO_BY_ID_FAILURE,
+    GET_EXERCISE_INFO_BY_ID_SUCCESS,
+    GET_EXERCISE_INFO_BY_ID_REQUEST,
     GET_EXERCISE_QUESTIONS_REQUEST,
     GET_EXERCISE_QUESTIONS_SUCCESS,
     GET_EXERCISE_QUESTIONS_FAILURE,
@@ -70,15 +70,18 @@ import {
     CREATE_AN_EXERCISE_RESET,
     CREATE_AN_EXERCISE_SUCCESS,
     CREATE_AN_EXERCISE_FAILURE,
-    GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST,
-    GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
-    GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE,
-    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
-    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
-    EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
+    GET_EXERCISE_DIFFICULTY_TYPES_REQUEST,
+    GET_EXERCISE_DIFFICULTY_TYPES_SUCCESS,
+    GET_EXERCISE_DIFFICULTY_TYPES_FAILURE,
+    EDIT_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET,
+    EDIT_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS,
+    EDIT_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE,
     GET_EXERCISE_SEARCH_REQUEST,
     GET_EXERCISE_SEARCH_SUCCESS,
     GET_EXERCISE_SEARCH_FAILURE,
+    GET_EXERCISE_INFO_FOR_EDIT_BY_ID_REQUEST,
+    GET_EXERCISE_INFO_FOR_EDIT_BY_ID_SUCCESS,
+    GET_EXERCISE_INFO_FOR_EDIT_BY_ID_FAILURE,
 } from '../constants.js'
 
 const initialState = {
@@ -203,6 +206,10 @@ const initialState = {
         totalElements: 0
     },
 
+    currentExerciseForEdit: {
+        isLoading: false, data: {}, isLoadDone: false,
+    },
+
     isHaveEdited: false,
     isHaveReported: false,
     isHaveResolved: false,
@@ -299,17 +306,30 @@ function CourseReducer(state = initialState, action) {
             }
 
         //get course detail
-        case GET_EXERCISE_BY_ID_REQUEST:
+        case GET_EXERCISE_INFO_BY_ID_REQUEST:
             return {
                 ...state, currentExercise: { isLoading: true, isLoadDone: false }
             };
-        case GET_EXERCISE_BY_ID_SUCCESS:
+        case GET_EXERCISE_INFO_BY_ID_SUCCESS:
             {
                 return { ...state, currentExercise: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
             }
-        case GET_EXERCISE_BY_ID_FAILURE:
+        case GET_EXERCISE_INFO_BY_ID_FAILURE:
             {
                 return { ...state, currentExercise: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+            }
+
+        case GET_EXERCISE_INFO_FOR_EDIT_BY_ID_REQUEST:
+            return {
+                ...state, currentExerciseForEdit: { isLoading: true, isLoadDone: false }
+            };
+        case GET_EXERCISE_INFO_FOR_EDIT_BY_ID_SUCCESS:
+            {
+                return { ...state, currentExerciseForEdit: { isLoading: false, isLoadDone: true, data: action.payload, error: '' } }
+            }
+        case GET_EXERCISE_INFO_FOR_EDIT_BY_ID_FAILURE:
+            {
+                return { ...state, currentExerciseForEdit: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
             }
 
         case GET_EXERCISE_QUESTIONS_REQUEST:
@@ -320,7 +340,6 @@ function CourseReducer(state = initialState, action) {
             //sort data by rank
 
             let currentData = action.payload;
-            currentData[2].rank = 20;
             currentData.sort(function (question_1, question_2) {
                 let keyA = question_1.rank,
                     keyB = question_2.rank;
@@ -485,29 +504,29 @@ function CourseReducer(state = initialState, action) {
         case CREATE_AN_EXERCISE_FAILURE:
             return { ...state, isHaveCreatedExercise: false };
 
-        case GET_AN_EXERCISE_DIFFICULTY_TYPES_REQUEST:
+        case GET_EXERCISE_DIFFICULTY_TYPES_REQUEST:
             return {
                 ...state, difficultyTypes: { isLoading: true, data: [] }
             };
-        case GET_AN_EXERCISE_DIFFICULTY_TYPES_SUCCESS:
+        case GET_EXERCISE_DIFFICULTY_TYPES_SUCCESS:
             return {
                 ...state, difficultyTypes: { isLoading: false, data: action.payload }
             };
-        case GET_AN_EXERCISE_DIFFICULTY_TYPES_FAILURE:
+        case GET_EXERCISE_DIFFICULTY_TYPES_FAILURE:
             return {
                 ...state, difficultyTypes: { isLoading: false, data: [] }
             }
 
-        case EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET:
+        case EDIT_EXERCISE_QUESTIONS_WITH_ANSWERS_RESET:
             return {
                 ...state, isHaveEdited: false
             }
-        case EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS:
+        case EDIT_EXERCISE_QUESTIONS_WITH_ANSWERS_SUCCESS:
             return {
                 ...state, isHaveEdited: true
             }
 
-        case EDIT_AN_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE:
+        case EDIT_EXERCISE_QUESTIONS_WITH_ANSWERS_FAILURE:
             return {
                 ...state, isHaveEdited: false
             }

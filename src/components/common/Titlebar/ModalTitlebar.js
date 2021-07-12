@@ -10,8 +10,6 @@ class ModalTitlebar extends React.Component {
         if (this.props.form)
             closeModal()
         else {
-            //     if (window.location.pathname.substring(0, 13) === "/post-content")
-            //         window.location.reload();
             store.dispatch(closeBigModal());
         }
     }

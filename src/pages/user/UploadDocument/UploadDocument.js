@@ -547,8 +547,8 @@ const mapStateToProps = (state) => {
         //category and subject
         categories: state.documentCategory.categories.data,
         isCategoryLoading: state.documentCategory.categories.isLoading,
-        subjects: state.documentSubject.subjects.data,
-        isSubjectLoading: state.documentSubject.subjects.isLoading,
+        subjects: state.subject.subjects.data,
+        isSubjectLoading: state.subject.subjects.isLoading,
 
         //tah
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,

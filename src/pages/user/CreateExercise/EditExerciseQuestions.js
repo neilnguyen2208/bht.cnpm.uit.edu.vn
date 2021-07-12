@@ -19,7 +19,7 @@ import {
 } from 'redux/services/courseServices';
 import { authRequest } from "utils/requestUtils";
 import store from "redux/store";
-import { edit_AnExerciseQuestionsWithAnswersReset } from "redux/actions/courseAction";
+import { edit_ExerciseQuestionsWithAnswersReset } from "redux/actions/courseAction";
 import { closeModal, openBLModal, openModal } from "redux/services/modalServices";
 
 class CreateExercise extends React.Component {
@@ -81,7 +81,7 @@ class CreateExercise extends React.Component {
     }
 
     componentWillUnmount() {
-        store.dispatch(edit_AnExerciseQuestionsWithAnswersReset());
+        store.dispatch(edit_ExerciseQuestionsWithAnswersReset());
     }
 
     addQuestion = () => {
@@ -150,7 +150,7 @@ class CreateExercise extends React.Component {
         }
 
         if (this.props.isHaveEdited) {
-            store.dispatch(edit_AnExerciseQuestionsWithAnswersReset());
+            store.dispatch(edit_ExerciseQuestionsWithAnswersReset());
             authRequest.get(`/exercises/${this.props.match.params.id}/questions`)
                 .then(response => {
                     if (response.data.length > 0) {

@@ -356,7 +356,7 @@ export function rejectAPost(id) {
     }
 }
 
-export function getPostByID(id) {
+export function getAPostByID(id) {
     return dispatch => {
         dispatch(get_PostByIDReset())
         authRequest.get(`/posts/${id}`)
@@ -380,7 +380,7 @@ export function getPostByID(id) {
     }
 }
 
-export function getPostByIDForEdit(id) {
+export function getAPostByIDForEdit(id) {
     return dispatch => {
         dispatch(get_PostByIDForEditReset())
         authRequest.get(`/posts/${id}`)
@@ -474,7 +474,7 @@ export function deleteAPost(id) { //maybe use modal later
     }
 }
 
-export function editAPost(id, newPostContent, reloadList) { //
+export function editAPost(id, newPostContent) { //
     return dispatch => {
         dispatch(put_EditAPostReset())
         openModal("loader", { text: "Đang xử lý" });
@@ -482,9 +482,8 @@ export function editAPost(id, newPostContent, reloadList) { //
             .then(response => {
                 dispatch(closeModal());
                 openBLModal({ text: "Chỉnh sửa bài viết thành công!", type: "success" });
-                dispatch(put_EditAPostSuccess(id, newPostContent));
-            }
-            ).catch(() => dispatch(put_EditAPostFailure()))
+                dispatch(put_EditAPostSuccess());
+            }).catch(() => dispatch(put_EditAPostFailure()))
     }
 }
 

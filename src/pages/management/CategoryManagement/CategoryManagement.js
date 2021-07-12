@@ -83,7 +83,7 @@ class CategoryManagement extends React.Component {
         ) {
 
             this.documentCategoriesList = this.props.categoryList;
-            this.documentSubjectList = this.props.subjectList;
+            this.subjectList = this.props.subjectList;
             this.documentSemesterList = this.props.semesterList;
 
             return (

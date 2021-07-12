@@ -178,7 +178,7 @@ class DocumentApproving extends React.Component {
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
                         subjectName={item.subjectName}
-                        subjectID={item.documentSubjectID}
+                        subjectID={item.subjectID}
                         title={item.title}
                         description={item.description}
                         imageURL={item.imageURL}
@@ -303,8 +303,8 @@ const mapStateToProps = (state) => {
         totalElements: state.document.pendingDocuments.totalElements,
 
         //subject
-        subjects: state.documentSubject.subjects.searchData,
-        isSubjectLoading: state.documentSubject.subjects.isLoading,
+        subjects: state.subject.subjects.searchData,
+        isSubjectLoading: state.subject.subjects.isLoading,
 
         //category
         documentCategories: state.documentCategory.categories.searchData,

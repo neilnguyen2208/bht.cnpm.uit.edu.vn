@@ -2,7 +2,7 @@ import React from 'react'
 
 import 'components/styles/Metadata.scss'
 import 'components/styles/Detail.scss'
-import { getPostByID, getAPostStatisticByID } from "redux/services/postServices"
+import { getAPostByID, getAPostStatisticByID } from "redux/services/postServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -15,7 +15,8 @@ import store from 'redux/store/index.js';
 import {
     get_PostByIDReset,
     get_RelativeSameAuthorPostsReset,
-    get_RelativeSameCategoryPostsReset
+    get_RelativeSameCategoryPostsReset,
+    put_EditAPostReset
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import RelativePosts from 'components/post/RelativePosts'
@@ -26,7 +27,7 @@ import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 class PostDetail extends React.Component {
     componentDidMount() {
         this.props.getAPostStatisticByID(this.props.match.params.id);
-        this.props.getPostByID(this.props.match.params.id);
+        this.props.getAPostByID(this.props.match.params.id);
     }
 
     componentWillUnmount() {
@@ -51,6 +52,10 @@ class PostDetail extends React.Component {
     }
 
     render() {
+        if (this.props.isHaveEdited) {
+            store.dispatch(put_EditAPostReset());
+            this.props.getAPostByID(this.props.match.params.id);
+        }
 
         return (
             <div>
@@ -183,12 +188,13 @@ const mapStateToProps = (state) => {
         sameAuthor: state.post.sameAuthor.data,
         isSameAuthorLoadDone: state.post.sameCategory.isLoadDone,
         postStatistic: state.post.postStatistic.data,
-        isPostStatisticLoadDone: state.post.postStatistic.isLoadDone
+        isPostStatisticLoadDone: state.post.postStatistic.isLoadDone,
+        isHaveEdited: state.post.isHaveEdited,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostByID, getAPostStatisticByID
+    getAPostByID, getAPostStatisticByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail));

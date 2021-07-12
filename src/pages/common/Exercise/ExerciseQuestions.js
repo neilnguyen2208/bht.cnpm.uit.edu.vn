@@ -253,7 +253,7 @@ class ExerciseQuestions extends React.Component {
                                         questionId={question.id}
                                         content={question.content}
                                         rank={question.rank}
-                                        answers={question.exerciseAnswerDTOs}
+                                        answers={question.answers}
                                         exerciseTitle={this.props.exerciseContent.title}
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}
@@ -276,7 +276,7 @@ class ExerciseQuestions extends React.Component {
                                         questionId={question.id}
                                         content={question.content}
                                         rank={question.rank}
-                                        answers={question.exerciseAnswerDTOs}
+                                        answers={question.answers}
                                         correctAnswers={question.correctAnswers}
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}

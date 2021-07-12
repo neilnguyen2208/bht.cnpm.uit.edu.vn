@@ -7,14 +7,14 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getSubjectsList } from "redux/services/subjectServices";
-import { getDocumentCategories } from "redux/services/documentCategoryServices";
+import { getExerciseCategories } from "redux/services/exerciseCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import {
-    getDocumentByIdForEdit,
-    getDocumentById,
-    editADocument
-} from "redux/services/documentServices"
-import { put_EditADocumentReset } from "redux/actions/documentAction"
+    getAnExerciseInfoByIdForEdit,
+    getAnExerciseInfoById,
+    editAnExerciseInfo
+} from "redux/services/courseServices"
+import { put_EditAnExerciseInfoReset } from "redux/actions/courseAction"
 
 import {
     get_tagQuickQueryResultRequest,
@@ -25,7 +25,7 @@ import "components/common/CustomCKE/CKEditorContent.scss";
 import 'components/styles/Detail.scss'
 
 //components
-import Tag from "components/document/Tag";
+import Tag from "components/course/Tag";
 import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
@@ -40,24 +40,21 @@ import {
 } from 'utils/validationUtils'
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { SimpleCKEToolbarConfiguration } from "components/common/CustomCKE/CKEditorConfiguration";
-import FormFileUploader from "components/common/FormFileUploader/FormFileUploader";
+import { request } from "utils/requestUtils";
 
 const validationCondition = {
-    form: '#edit-document-form',
+    form: '#edit-exercise-form',
     rules: [
         //truyen vao id, loai component, message
-        validation.isRequired('ed-document-title', 'text-input', 'Tên tài liệu không được để trống!'),
-        validation.noSpecialChar('ed-document-title', 'text-input', 'Tên tài liệu không được chứa ký tự đặc biệt!'),
-        validation.isRequired('ed-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
-        validation.isRequired('ed-document-cke', 'ckeditor', 'Nội dung tài liệu không được để trống'),
-        validation.isRequired('ed-document-subject-combobox', 'combobox', 'Môn học không được để trống'),
-        // validation.isRequired('cr-document-file-input', 'file-input', 'Tài liệu không được để trống!'),
-        // validation.maxFileCount('cr-document-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
-        // validation.maxFileSize('cr-document-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
+        validation.isRequired('ed-exercise-title', 'text-input', 'Tên bài tập không được để trống!'),
+        validation.noSpecialChar('ed-exercise-title', 'text-input', 'Tên bài tập không được chứa ký tự đặc biệt!'),
+        validation.isRequired('ed-exercise-category-combobox', 'combobox', 'Danh mục không được để trống'),
+        validation.isRequired('ed-exercise-cke', 'ckeditor', 'Nội dung bài tập không được để trống'),
+        validation.isRequired('ed-exercise-subject-combobox', 'combobox', 'Môn học không được để trống')
     ],
 }
 
-class EditDocumentModal extends React.Component {
+class EditExerciseModal extends React.Component {
     constructor(props) {
         super(props);
         this.categoryList = [
@@ -66,9 +63,18 @@ class EditDocumentModal extends React.Component {
                 name: "Chọn danh mục"
             }
         ];
+
         this.subjectList = [
             { id: 0, name: "Chọn danh mục" }
-        ]
+        ];
+
+        this.topicsList = [
+            {
+                id: 1,
+                name: "Chọn chủ đề"
+            }
+        ];
+
         this.isNotifySuccessOpen = false;
         this.state = {
 
@@ -79,24 +85,18 @@ class EditDocumentModal extends React.Component {
             isUploading: false,
             isSearchingTag: false,
 
-            DOCUMENT_DTO: {
+            EXERCISE_DTO: {
                 tags: [],
-                title: '',
-                description: ``,
+                title: '',//
+                content: ``,
                 summary: `null`,
                 categoryID: "",
+                topicID: "",
                 imageURL: "null",
-                subjectID: ""
+                readingTime: 10
             },
-
-            author: {
-                avatarURL: "https://i.imgur.com/SZJgL6C.png",
-                displayName: "Nguyễn Văn Đông",
-                username: "dongnsince1999"
-            },
-
-
         };
+
         this.shownTag = [
             { dmID: 1, id: '', content: '' },
             { dmID: 2, id: '', content: '' },
@@ -104,6 +104,7 @@ class EditDocumentModal extends React.Component {
             { dmID: 4, id: '', content: '' },
             { dmID: 5, id: '', content: '' },
         ]
+
         this.tagQuickQueryResult =
             [
                 {
@@ -124,15 +125,14 @@ class EditDocumentModal extends React.Component {
         this.isFirstLoad = false;
         this.isInstanceReady = false;
         this.tagQuickQueryResult = <></>;
-        this.filesList = [];
     }
 
     componentDidMount() {
         validation(validationCondition);
-        this.props.getDocumentCategories();
+        this.props.getExerciseCategories();
         this.props.getSubjectsList();
 
-        this.props.getDocumentByIdForEdit(this.props.id);
+        this.props.getAnExerciseInfoByIdForEdit(this.props.id);
         this.isFirstLoad = false;
 
         this.timeOut = null;
@@ -143,23 +143,39 @@ class EditDocumentModal extends React.Component {
     componentWillUnmount() {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
-        store.dispatch(put_EditADocumentReset());
-        this.props.getDocumentById(this.props.id)
-        if (getCKEInstance('ed-document-cke'))
-            getCKEInstance('ed-document-cke').destroy();
+        store.dispatch(put_EditAnExerciseInfoReset());
+        this.props.getAnExerciseInfoById(this.props.id)
+        if (getCKEInstance('ed-exercise-cke'))
+            getCKEInstance('ed-exercise-cke').destroy();
     }
 
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
-            DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, categoryID: selectedOption.id },
+            EXERCISE_DTO: { ...this.state.EXERCISE_DTO, categoryID: selectedOption.id },
             currentCategory: selectedOption.name
         })
     }
 
     onSubjectOptionChanged = (selectedOption) => {
+        //get list of topic
+        request.get(`/exercises/topics?subject=${selectedOption.id}`).then(response => {
+            this.topicsList = response.data;
+            this.setState({});
+        });
+
         this.setState({
-            DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, subjectID: selectedOption.id },
+            EXERCISE_DTO: { ...this.state.EXERCISE_DTO, subjectID: selectedOption.id },
+            
+            //for preview
             currentSubject: selectedOption.name
+        })
+    }
+
+    onTopicOptionChanged = (selectedOption) => {
+        //get list of topic
+        this.setState({
+            EXERCISE_DTO: { ...this.state.EXERCISE_DTO, topicID: selectedOption.id },
+            currentTopic: selectedOption.name
         })
     }
 
@@ -167,17 +183,14 @@ class EditDocumentModal extends React.Component {
         if (styleFormSubmit(validationCondition)) {
             openModal("confirmation",
                 {
-                    title: "Cập nhật tài liệu",
+                    title: "Cập nhật bài tập",
                     text: "Hành động này cần phê duyệt và không thể hoàn tác.",
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editADocument(this.props.id, this.state.DOCUMENT_DTO);
+                        this.props.editAnExerciseInfo(this.props.id, this.EDIT_EXERCISE_DTO);
                         closeModal(); //close confimation popup
-                        closeModal();
-                        closeBigModal();
-
-                        //close edit document popup
+                        this.closeModal(); //close edit exercise popup
                     }
                 })
         }
@@ -185,8 +198,8 @@ class EditDocumentModal extends React.Component {
 
     //#region  tag region
     closeQuickSearchTag = () => {
-        document.getElementById("ed-document-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("ed-document-qs-tag-result-container").classList.remove('show');
+        document.getElementById("ed-exercise-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("ed-exercise-qs-tag-result-container").classList.remove('show');
     }
 
     quickSearchTags = (e) => {
@@ -205,8 +218,8 @@ class EditDocumentModal extends React.Component {
 
         this.timeOut = setTimeout(() => this.props.getTagQuickQueryResult(value), DELAY_TIME);
 
-        document.getElementById("ed-document-qs-tag-result-container").classList.add('show');
-        document.getElementById("ed-document-qs-tag-result-container").classList.remove('hidden');
+        document.getElementById("ed-exercise-qs-tag-result-container").classList.add('show');
+        document.getElementById("ed-exercise-qs-tag-result-container").classList.remove('hidden');
     }
 
     onCKEInstanceReady = () => {
@@ -216,7 +229,7 @@ class EditDocumentModal extends React.Component {
 
     keyHandler = (e) => {
         if (!e.target.value) return;
-        let tags = this.state.DOCUMENT_DTO.tags;
+        let tags = this.state.EXERCISE_DTO.tags;
         let hasOldTag = -1; // khong cos => -1 neu co => id cua tag 
         if (e.charCode === 13) { //press Enter    
 
@@ -235,8 +248,8 @@ class EditDocumentModal extends React.Component {
                 }
 
                 //dong search container
-                document.getElementById("ed-document-qs-tag-result-container").classList.add('hidden');
-                document.getElementById("ed-document-qs-tag-result-container").classList.remove('show');
+                document.getElementById("ed-exercise-qs-tag-result-container").classList.add('hidden');
+                document.getElementById("ed-exercise-qs-tag-result-container").classList.remove('show');
 
                 //tao moi hoac dung lai tag cu
                 let tmpShownTag = this.shownTag;
@@ -258,8 +271,8 @@ class EditDocumentModal extends React.Component {
                 }
 
                 this.setState({
-                    DOCUMENT_DTO: {
-                        ...this.state.DOCUMENT_DTO,
+                    EXERCISE_DTO: {
+                        ...this.state.EXERCISE_DTO,
                         tags: tags
                     }
                 });
@@ -293,7 +306,7 @@ class EditDocumentModal extends React.Component {
             return;
         }
 
-        let tmpTagDTO = this.state.DOCUMENT_DTO.tags;
+        let tmpTagDTO = this.state.EXERCISE_DTO.tags;
         tmpTagDTO.push({ id: tag.id });
 
         //cap nhat lai shownTag theo tmpDTO
@@ -305,12 +318,12 @@ class EditDocumentModal extends React.Component {
         }
 
         //cap nhat lai shown tag tu state
-        document.getElementById("ed-document-qs-tag-result-container").classList.add('hidden');
-        document.getElementById("ed-document-qs-tag-result-container").classList.remove('show');
+        document.getElementById("ed-exercise-qs-tag-result-container").classList.add('hidden');
+        document.getElementById("ed-exercise-qs-tag-result-container").classList.remove('show');
 
         this.setState({
-            DOCUMENT_DTO: {
-                ...this.state.DOCUMENT_DTO,
+            EXERCISE_DTO: {
+                ...this.state.EXERCISE_DTO,
                 tags: tmpTagDTO
             }
         });
@@ -355,8 +368,8 @@ class EditDocumentModal extends React.Component {
 
         //cap nhat lai DTO theo tmpDTO
         this.setState({
-            DOCUMENT_DTO: {
-                ...this.state.DOCUMENT_DTO,
+            EXERCISE_DTO: {
+                ...this.state.EXERCISE_DTO,
                 tags: tempTagDTO,
             }
         });
@@ -364,26 +377,26 @@ class EditDocumentModal extends React.Component {
     }
 
     //#endregion
+
     handleEditorChange = (value) => {
         if (value.length < 160) {
-            this.setState({ DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, content: value } })
+            this.setState({ EXERCISE_DTO: { ...this.state.EXERCISE_DTO, content: value } })
             return;
         }
         else {
-            this.setState({ DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, content: value } });
+            this.setState({ EXERCISE_DTO: { ...this.state.EXERCISE_DTO, content: value } });
             return;
         }
     };
 
     handleTitleChange = (e) => {
         this.setState({
-            DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, title: e.target.value }
+            EXERCISE_DTO: { ...this.state.EXERCISE_DTO, title: e.target.value }
         })
     }
 
-    onFileChange = (files) => {
-        this.filesList = files;
-        this.setState({});
+    closeModal = () => {
+        store.dispatch(closeBigModal())
     }
 
     render() {
@@ -399,7 +412,7 @@ class EditDocumentModal extends React.Component {
         this.tagSearchResult = <></>;
         if (this.props.isTagQuickQueryLoading) {
             this.tagSearchResult = <SmallLoader text="Đang tìm kiếm kết quả phù hợp" />;
-            document.getElementById("ed-document-tag-container-tip-label").innerText = "";
+            document.getElementById("ed-exercise-tag-container-tip-label").innerText = "";
         }
 
         else
@@ -410,20 +423,20 @@ class EditDocumentModal extends React.Component {
                 if (this.props.tagQuickQueryResult && !this.isCategoryLoading) {
 
                     //truong hop khong co tag nao thoa man va chua du 5 tag
-                    if (this.state.DOCUMENT_DTO.tags.length < 5) {
+                    if (this.state.EXERCISE_DTO.tags.length < 5) {
                         if (this.props.tagQuickQueryResult.length === 0)
-                            document.getElementById("ed-document-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
+                            document.getElementById("ed-exercise-tag-container-tip-label").innerText = "Không có kết quả tìm kiếm phù hợp! Bấm Enter để thêm tag mới."
                         else
-                            document.getElementById("ed-document-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
+                            document.getElementById("ed-exercise-tag-container-tip-label").innerText = "Chọn tag phù hợp, hoặc bấm enter để thêm tag!";
                     }
                     else {
-                        document.getElementById("ed-document-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
+                        document.getElementById("ed-exercise-tag-container-tip-label").innerText = "Không thể nhập quá 5 tag."
                     }
                     this.tagSearchResult = <div>
                         <div className="d-flex">
                             {this.props.tagQuickQueryResult.map(tag => {
                                 return <div className="tag-search-item"
-                                    onClick={() => { this.state.DOCUMENT_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
+                                    onClick={() => { this.state.EXERCISE_DTO.tags.length < 5 && this.onTagSearchResultClick(tag) }}>
                                     <div className="tag-search-item-content">  {tag.content}</div>
                                 </div>
                             })}
@@ -435,49 +448,59 @@ class EditDocumentModal extends React.Component {
             }
 
         //load lan dau tien hoac moi load xong thi gan data cho DTO
-        if (!this.props.isCurrentDocumentLoading
-            && Object.keys(this.props.currentDocument).length > 0
+        if (!this.props.isCurrentExerciseLoading
+            && Object.keys(this.props.currentExercise).length > 0
             && !this.isFirstLoad
             && this.isInstanceReady) {
 
             this.isFirstLoad = true;
-            this.props.currentDocument.tags.forEach((item, index) => {
+            this.props.currentExercise.tags.forEach((item, index) => {
                 this.shownTag[index].id = item.id;
                 this.shownTag[index].content = item.content;
             })
 
-            getCKEInstance('ed-document-cke').setData(this.props.currentDocument.description)
+            getCKEInstance('ed-exercise-cke').setData(this.props.currentExercise.description)
+
             this.setState({
-                DOCUMENT_DTO: {
-                    title: this.props.currentDocument.title,
-                    tags: this.props.currentDocument.tags ? this.props.currentDocument.tags : [],
-                    description: this.props.currentDocument.description,
-                    imageURL: this.props.currentDocument.imageURL,
-                    categoryID: this.props.currentDocument.categoryID,
-                    categoryName: this.props.currentDocument.categoryName,
-                    readingTime: this.props.currentDocument.readingTime,
-                    authorDisplayName: this.props.currentDocument.authorDisplayName,
-                    authorID: this.props.currentDocument.authorID,
-                    authorAvatarURL: this.props.currentDocument.authorAvatarURL,
-                    id: this.props.currentDocument.id,
-                    subjectID: this.props.currentDocument.subjectID,
-                    subjectName: this.props.currentDocument.subject,
-                    docFileUploadDTOs: this.props.currentDocument.docFileUploadDTOs
+                EXERCISE_DTO: {
+                    title: this.props.currentExercise.title,
+                    tags: this.props.currentExercise.tags ? this.props.currentExercise.tags : [],
+                    description: this.props.currentExercise.description,
+                    imageURL: this.props.currentExercise.imageURL,
+                    categoryID: this.props.currentExercise.categoryID,
+                    categoryName: this.props.currentExercise.categoryName,
+                    authorDisplayName: this.props.currentExercise.authorDisplayName,
+                    authorID: this.props.currentExercise.authorID,
+                    authorAvatarURL: this.props.currentExercise.authorAvatarURL,
+                    id: this.props.currentExercise.id,
+                    subjectID: this.props.currentExercise.subjectID,
+                    subjectName: this.props.currentExercise.subject,
                 },
 
             });
 
-            let initFilesData = [];
-            for (let i = 0; i < this.props.currentDocument.docFileUploadDTOs.length; i++) {
-                this.filesList[i] = { rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id }
-                initFilesData.push({ rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id });
+            this.EDIT_EXERCISE_DTO = {
+                categoryID: this.props.currentExercise.categoryID,
+                subjectID: this.props.currentExercise.subjectID,
+                topicID: this.props.currentExercise.topicID,
+                title: this.props.currentExercise.title,
+                description: this.props.currentExercise.description,
+                imageURL: this.props.currentExercise.imageURL,
+                publishDtm: "2021-07-08T00:24:38.794Z",
+                tags: this.props.currentExercise.tags
             }
+
+            request.get(`/exercises/topics?subject=${this.props.currentExercise.subjectID}`).then(response => {
+                this.topicsList = response.data;
+                this.setState({});
+            });
+
         }
 
         //load xong thi cho hien thi body
-        if (this.props.postDetailForEdit && !this.props.isCurrentDocumentLoading && document.getElementById('edit-post-body')) {
-            document.getElementById('edit-document-body').classList.add("d-block");
-            document.getElementById('edit-document-body').classList.remove("d-none");
+        if (this.props.postDetailForEdit && !this.props.isCurrentExerciseLoading && document.getElementById('edit-post-body')) {
+            document.getElementById('edit-exercise-body').classList.add("d-block");
+            document.getElementById('edit-exercise-body').classList.remove("d-none");
         }
 
         return (
@@ -485,22 +508,22 @@ class EditDocumentModal extends React.Component {
                 <div className="modal-overlay-shadow" />
                 <div className="modal-fixed-layout">
                     <div className="modal-wrapper big o-f-hidden pd-top-5px">
-                        <ModalTitlebar title="CHỈNH SỬA TÀI LIỆU" />
+                        <ModalTitlebar title="CHỈNH SỬA BÀI TẬP" />
                         <div className="scroller-container mg-bottom-10px">
                             <div className="form-container">
-                                <div id="edit-document-body">
+                                <div id="edit-exercise-body">
                                     {/* Edit region */}
-                                    <div className="ed-document-form-container edit">
-                                        <div id="edit-document-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
+                                    <div className="ed-exercise-form-container edit">
+                                        <div id="edit-exercise-form" className="form-container" onSubmit={this.handleUpload} tabIndex="1">
                                             <div className="mg-top-10px" />
 
                                             <div className="form-group">
                                                 <label className="form-label-required">Tiêu đề:</label>
-                                                <input className="text-input" id="ed-document-title"
-                                                    placeholder="Nhập tiêu đề tài liệu "
+                                                <input className="text-input" id="ed-exercise-title"
+                                                    placeholder="Nhập tiêu đề bài tập"
                                                     onChange={e => this.handleTitleChange(e)}
                                                     type="text" defaultValue={
-                                                        !this.props.isCurrentDocumentLoading ? this.state.DOCUMENT_DTO.title : ''} ></input>
+                                                        !this.props.isCurrentExerciseLoading ? this.state.EXERCISE_DTO.title : ''} ></input>
                                                 <div className="form-error-label-container">
                                                     <span className="form-error-label" ></span>
                                                 </div>
@@ -508,10 +531,9 @@ class EditDocumentModal extends React.Component {
 
                                             {/* CKEditor */}
                                             <div className="form-group">
-                                                <div className="form-label-required">Mô tả tài liệu:</div>
+                                                <div className="form-label-required">Mô tả bài tập:</div>
                                                 <Editor
-                                                    config={SimpleCKEToolbarConfiguration}
-                                                    editorId="ed-document-cke"
+                                                    editorId="ed-exercise-cke"
                                                     placeholder='Start typing here...'
                                                     onChange={this.handleEditorChange}
                                                     onInstanceReady={this.onCKEInstanceReady}
@@ -525,14 +547,30 @@ class EditDocumentModal extends React.Component {
                                                 </div>
                                             </div>
 
-                                            {/* Category */}
+                                            {/* Subject */}
                                             <div className="form-group" >
-                                                <label className="form-label-required">Danh mục:</label>
-                                                <Combobox comboboxId="ed-document-category-combobox"
-                                                    selectedOptionID={!this.props.isCurrentDocumentLoading && !this.props.isCategoryLoading ? this.state.DOCUMENT_DTO.categoryID : 0}
-                                                    options={this.categoryList}
-                                                    onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
-                                                    placeHolder="Chọn danh mục"
+                                                <label className="form-label-required">Môn học:</label>
+                                                <Combobox comboboxId="ed-exercise-subject-combobox"
+                                                    selectedOptionID={!this.props.isCurrentExerciseLoading && !this.props.isSubjectLoading ? this.state.EXERCISE_DTO.subjectID : 0}
+                                                    options={this.subjectList}
+                                                    onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
+                                                    placeHolder="Chọn môn học"
+                                                    validation
+                                                >
+                                                </Combobox>
+                                                <div className="form-error-label-container">
+                                                    <span className="form-error-label" ></span>
+                                                </div>
+                                            </div >
+
+                                            {/* Topic */}
+                                            <div className="form-group" >
+                                                <label className="form-label-required">Chủ đề:</label>
+                                                <Combobox comboboxId="ed-exercise-topic-combobox"
+                                                    selectedOptionID={!this.props.isCurrentExerciseLoading && this.state.EXERCISE_DTO.topicID ? this.state.EXERCISE_DTO.topicID : 0}
+                                                    options={this.topicsList}
+                                                    onOptionChanged={(selectedOption) => this.onTopicOptionChanged(selectedOption)}
+                                                    placeHolder="Chọn chủ đề"
                                                     validation
                                                 >
                                                 </Combobox>
@@ -543,12 +581,12 @@ class EditDocumentModal extends React.Component {
 
                                             {/* Category */}
                                             <div className="form-group" >
-                                                <label className="form-label-required">Môn học:</label>
-                                                <Combobox comboboxId="ed-document-subject-combobox"
-                                                    selectedOptionID={!this.props.isCurrentDocumentLoading && !this.props.isSubjectLoading ? this.state.DOCUMENT_DTO.subjectID : 0}
-                                                    options={this.subjectList}
-                                                    onOptionChanged={(selectedOption) => this.onSubjectOptionChanged(selectedOption)}
-                                                    placeHolder="Chọn môn học"
+                                                <label className="form-label-required">Danh mục:</label>
+                                                <Combobox comboboxId="ed-exercise-category-combobox"
+                                                    selectedOptionID={!this.props.isCurrentExerciseLoading && !this.props.isCategoryLoading ? this.state.EXERCISE_DTO.categoryID : 0}
+                                                    options={this.categoryList}
+                                                    onOptionChanged={(selectedOption) => this.onCategoryOptionChanged(selectedOption)}
+                                                    placeHolder="Chọn danh mục"
                                                     validation
                                                 >
                                                 </Combobox>
@@ -561,17 +599,17 @@ class EditDocumentModal extends React.Component {
                                             <div className='form-group mg-bottom-10px'>
                                                 <label className="form-label">Tags:</label>
 
-                                                <input onChange={(e) => this.quickSearchTags(e)} id="ed-document-tag-input"
-                                                    onKeyPress={(this.state.DOCUMENT_DTO.tags.length < 5) && this.keyHandler}
+                                                <input onChange={(e) => this.quickSearchTags(e)} id="ed-exercise-tag-input"
+                                                    onKeyPress={(this.state.EXERCISE_DTO.tags.length < 5) && this.keyHandler}
                                                     className="text-input"
                                                     placeholder="Nhập tag " />
 
                                                 <ClickAwayListener onClickAway={() => this.closeQuickSearchTag()}>
                                                     {/* khi load xong thi ntn */}
-                                                    <div id="ed-document-qs-tag-result-container" className="text-input-dropdown-container hidden">
+                                                    <div id="ed-exercise-qs-tag-result-container" className="text-input-dropdown-container hidden">
                                                         <div className="text-input-dropdown">
                                                             {this.tagSearchResult}
-                                                            <div className="form-tip-label" id="ed-document-tag-container-tip-label" />
+                                                            <div className="form-tip-label" id="ed-exercise-tag-container-tip-label" />
                                                         </div>
                                                     </div>
 
@@ -588,19 +626,6 @@ class EditDocumentModal extends React.Component {
                                                 </div>
                                                 <div className="form-line" />
 
-                                                {/* Form file uploader */}
-                                                <div className="form-group" style={{ marginTop: "20px" }}>
-                                                    <label className="form-label-required">Tài liệu:</label>
-                                                    <FormFileUploader
-                                                        id='cr-document-file-input'
-                                                        onFileChange={(file) => this.onFileChange(file)}
-                                                        maxSize={26214400} //byte
-                                                        fileType={".pdf"} //n
-                                                        multiple
-                                                        maxFileCount={3}
-                                                        data={!this.props.isCurrentDocumentLoading ? this.state.DOCUMENT_DTO.docFileUploadDTOs : []}
-                                                    />
-                                                </div>
                                             </div>
 
                                             {/* Button */}
@@ -611,7 +636,7 @@ class EditDocumentModal extends React.Component {
                                         </div >
                                     </div >
                                 </div >
-                                {(this.props.isCurrentDocumentLoading || !this.props.currentDocument) ?
+                                {(this.props.isCurrentExerciseLoading || !this.props.currentExercise) ?
                                     <Loader /> :
                                     <></>}
                             </div>
@@ -624,33 +649,32 @@ class EditDocumentModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
+    console.log(state.course.currentExerciseForEdit.data);
     return {
-        categories: state.documentCategory.categories.data,
-        isCategoryLoading: state.documentCategory.categories.isLoading,
+        categories: state.exerciseCategory.categories.data,
+        isCategoryLoading: state.exerciseCategory.categories.isLoading,
 
         subjects: state.subject.subjects.data,
         isSubjectLoading: state.subject.subjects.isLoading,
 
-        isCurrentDocumentLoading: state.document.currentDocumentForEdit.isLoading,
-        currentDocument: state.document.currentDocumentForEdit.data,
-        isCurrentDocumentLoadDone: state.document.currentDocumentForEdit.isLoadDone,
+        isCurrentExerciseLoading: state.course.currentExerciseForEdit.isLoading,
+        currentExercise: state.course.currentExerciseForEdit.data,
+        isCurrentExerciseLoadDone: state.course.currentExerciseForEdit.isLoadDone,
 
         tagQuickQueryResult: state.tag.tagQuickQueryResult.data,
         isTagQuickQueryLoading: state.tag.tagQuickQueryResult.isLoading,
-        //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
     };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentCategories,
+    getExerciseCategories,
     getSubjectsList,
     getTagQuickQueryResult,
-    getDocumentByIdForEdit,
-    getDocumentById,
-    editADocument
+    getAnExerciseInfoByIdForEdit,
+    getAnExerciseInfoById,
+    editAnExerciseInfo
 
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditDocumentModal));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditExerciseModal));

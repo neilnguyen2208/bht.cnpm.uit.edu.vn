@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 //styles
 import 'components/styles/Label.scss'
 import 'components/styles/Button.scss'
-import { getPostByID } from 'redux/services/postServices'
+import { getAPostByID } from 'redux/services/postServices'
 //constants
 
 //components
@@ -24,7 +24,7 @@ class RelativePosts extends React.Component {
           </div>
           <div style={{ padding: "5px" }}>
             {this.props.items.map(item =>
-              <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getPostByID(item.id)} >
+              <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
                 <div className="relative-item-icon" />
                 <div className="relative-item-title">{item.title}</div>
               </Link>
@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPostByID
+  getAPostByID
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RelativePosts));

@@ -10,7 +10,7 @@ import Tag from "components/post/Tag";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
-import { getPostByID } from 'redux/services/postServices'
+import { getAPostByID } from 'redux/services/postServices'
 
 class QuickSearchResult extends React.PureComponent {
 
@@ -25,7 +25,7 @@ class QuickSearchResult extends React.PureComponent {
                         {this.props.quickSearchResultData.postQuickSearchResults.map(result =>
                             <Link to={`/post-content/${result.id}`} onClick={() => {
                                 if (window.location.pathname.substring(0, 13) === "/post-content") {
-                                    this.props.getPostByID(result.id)
+                                    this.props.getAPostByID(result.id)
                                 }
                             }}
                             >
@@ -78,7 +78,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostByID
+    getAPostByID
 }, dispatch);
 
 export default withRouter(

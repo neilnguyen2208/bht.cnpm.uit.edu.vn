@@ -80,6 +80,7 @@ class DocumentsList extends React.Component {
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
+            searchTerm: getQueryParamByName('q') ? getQueryParamByName('q') : '',
             "subjectID": selectedOption.id, // => change subject
             page: 1
         }

@@ -36,7 +36,7 @@ import ModalTitlebar from 'components/common/Titlebar/ModalTitlebar';
 import Combobox from 'components/common/Combobox/Combobox';
 import Editor from 'components/common/CustomCKE/CKEditor.js';
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
-
+import ImageUploader from 'components/common/FormFileUploader/FormImageUploader';
 import Loader from 'components/common/Loader/Loader'
 
 //utils
@@ -133,6 +133,7 @@ class EditPostModal extends React.Component {
 
         this.timeOut = null;
         this.isInstanceReady = false;
+        this.isNewFile = false;
     }
 
     componentWillUnmount() {
@@ -143,6 +144,7 @@ class EditPostModal extends React.Component {
         if (getCKEInstance('ed-post-cke'))
             getCKEInstance('ed-post-cke').destroy();
     }
+
     onCategoryOptionChanged = (selectedOption) => {
         this.setState({
             POST_DTO: { ...this.state.POST_DTO, categoryID: selectedOption.id },
@@ -170,7 +172,7 @@ class EditPostModal extends React.Component {
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editAPost(this.props.id, { ...this.state.POST_DTO, summary: tmpSummary + "" });
+                        this.props.editAPost(this.props.id, { ...this.state.POST_DTO, summary: tmpSummary + "" }, this.imageFile, this.isNewFile);
                         closeModal(); //close confimation popup
                         this.closeModal(); //close edit post popup
                     }
@@ -381,10 +383,10 @@ class EditPostModal extends React.Component {
         closeModal();
     }
 
-    handleImageURLChange = (e) => {
-        this.setState({
-            POST_DTO: { ...this.state.POST_DTO, imageURL: e.target.value }
-        })
+    handleImageFileChange = (imageFile) => {
+        this.isNewFile = true;
+        this.imageFile = imageFile;
+        this.setState({});
     }
 
     render() {
@@ -440,7 +442,8 @@ class EditPostModal extends React.Component {
             })
 
             getCKEInstance('ed-post-cke').setData(this.props.postDetailForEdit.content);
-
+            document.getElementById("image-input-placeholder-edit-post-imgurl").src = this.props.postDetailForEdit.imageURL;
+            document.getElementById("image-input-placeholder-edit-post-imgurl").classList.remove("d-none");
             this.setState({
                 POST_DTO: {
                     title: this.props.postDetailForEdit.title,
@@ -455,7 +458,7 @@ class EditPostModal extends React.Component {
                     authorAvatarURL: this.props.postDetailForEdit.authorAvatarURL,
                     id: this.props.postDetailForEdit.id
                 }
-            })
+            });
         }
         //load xong thi cho hien thi body
         if (this.props.postDetailForEdit && !this.props.isCurrentPostLoading && document.getElementById('edit-post-body')) {
@@ -519,7 +522,7 @@ class EditPostModal extends React.Component {
 
                                     {/* Edit region */}
                                     <div className="ed-post-form-container edit d-none">
-                                        <div id="edit-post-form" className="form-container" onSubmit={this.handleUpload}>
+                                        <div id="edit-post-form" className="form-container" >
                                             <div className="mg-top-10px" />
 
                                             <div className="form-group">
@@ -528,23 +531,21 @@ class EditPostModal extends React.Component {
                                                     placeholder="Nhập tiêu đề bài viết "
                                                     onChange={e => this.handleTitleChange(e)}
                                                     type="text" defaultValue={
-                                                        !this.props.isCurrentPostLoading ? this.state.POST_DTO.title : ''} ></input>
+                                                        this.state.POST_DTO.title ? this.state.POST_DTO.title : ''} ></input>
                                                 <div className="form-error-label-container">
                                                     <span className="form-error-label" ></span>
                                                 </div>
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="form-label-required">Link ảnh bìa:</label>
-                                                <input className="text-input" id="ed-post-imgurl"
-                                                    placeholder="Nhập link hình ảnh: "
-                                                    defaultValue={
-                                                        !this.props.isCurrentPostLoading ? this.state.POST_DTO.imageURL : ''}
-                                                    onChange={e => this.handleImageURLChange(e)}
-                                                    type="text" ></input>
-                                                <div className="form-error-label-container">
-                                                    <span className="form-error-label" ></span>
-                                                </div>
+                                                <label className="form-label-required">Ánh bìa:</label>
+                                                < ImageUploader
+                                                    id="edit-post-imgurl"
+                                                    maxSize={512000}
+                                                    // initialData={this.props.postDetailForEdit.imageURL ? this.props.postDetailForEdit.imageURL : ''}
+                                                    onImageChange={this.handleImageFileChange}
+                                                    fileType={[".png, .jpg"]}
+                                                />
                                             </div>
 
                                             {/* CKEditor */}

@@ -73,7 +73,6 @@ class CreateComment extends React.Component {
       this.props.getADocumentStatisticByID(this.props.documentID)
       this.reloadList()
     }
-    console.log(this.props.userSummaryData)
     return (
       <div style={{ width: '100%', marginTop: "10px" }} className="comments-list cr">
         <div className="comment-main-level">

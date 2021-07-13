@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.scss';
+import logo from 'assets/images/logo.png';
 
 export default class Footer extends React.Component {
     render() {
@@ -8,15 +9,12 @@ export default class Footer extends React.Component {
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-lg-4">
-                            <div class="widget1">
+                            <div class="widget1" style={{ background: "rgba(255,255,255, 1)", padding: "10px" }}>
                                 <div class="logo">
-                                    <img src="https://i.ibb.co/vLDyPtM/ak-logo-yellow.png" class="img-fluid" alt="" />
+                                    <img src={logo} class="img-fluid" alt="" />
                                 </div>
-                                <p>
-                                    In eu libero ligula. Fusce eget metus lorem, ac viverra
-                                    leo. Nullam convallis, arcu vel pellentesque sodales,
-                                    nisi est varius diam, ac ultrices sem ante quis sem.
-                                    Proin ultricies volutpat sapien.
+                                <p style={{ color: "var(--black)" }}>
+                                    Kênh thông tin Sinh viên của BHT khoa CNPM - Trường ĐH CNTT - ĐHQG-HCM. Website do Ban học tập CNPM thực hiện và quản lý.
                                 </p>
                                 <div class="socialLinks">
                                     <ul>
@@ -55,11 +53,11 @@ export default class Footer extends React.Component {
                                         <div class="content">
                                             <a href="#">
                                                 <p>
-                                                    Did son unreserved themselves indulgence its
+                                                    Hoạt động training ngày 21/3/2021
                                                 </p>
                                             </a>
                                             <span>
-                                                Aug 17, 2019
+                                                20/02/2021
                                             </span>
                                         </div>
                                     </div>
@@ -70,11 +68,11 @@ export default class Footer extends React.Component {
                                         <div class="content">
                                             <a href="#">
                                                 <p>
-                                                    Rapturous am eagerness it as resolving household
+                                                    Tổng kết hoạt động cuối năm
                                                 </p>
                                             </a>
                                             <span>
-                                                Aug 17, 2019
+                                                20/12/2020
                                             </span>
                                         </div>
                                     </div>
@@ -84,78 +82,51 @@ export default class Footer extends React.Component {
                         <div class="col-sm-6 col-lg-2">
                             <div class="widget3">
                                 <h5>
-                                    Quick Links
+                                    Liên hệ
                                 </h5>
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            Home
+                                            Email: bht.cnpm.uit@gmail.com
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            about
+                                            Hotline: 0366272703
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            contact
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            privecy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            skills
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            career
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-2">
                             <div class="widget4">
                                 <h5>
-                                    Other Links
+                                    Chính sách
                                 </h5>
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            themeforest
                                         </a>
                                     </li>
+
+
+                                </ul>
+                                <h5>
+                                    Chịu trách nhiệm
+                                </h5>
+                                <ul>
                                     <li>
                                         <a href="#">
-                                            graphicriver
+                                            Lưu Biêu Nghị
                                         </a>
-                                    </li>
-                                    <li>
+
                                         <a href="#">
-                                            codecanyon
+                                            Nguyễn Văn Đông
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            videohive
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            redpen
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            codepen
-                                        </a>
-                                    </li>
+
+
                                 </ul>
                             </div>
                         </div>
@@ -165,12 +136,12 @@ export default class Footer extends React.Component {
                     <div class="container">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <p>&copy; Copyright All rights reserved 2019.</p>
+                                <p>&copy; Copyright All rights reserved 2021.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer >
         );
     }
 }

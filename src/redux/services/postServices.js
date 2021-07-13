@@ -474,16 +474,33 @@ export function deleteAPost(id) { //maybe use modal later
     }
 }
 
-export function editAPost(id, newPostContent) { //
+export function editAPost(id, newPostContent, imageFile, isNewFile) { //
     return dispatch => {
-        dispatch(put_EditAPostReset())
-        openModal("loader", { text: "Đang xử lý" });
-        authRequest.put(`/posts/${id}`, JSON.stringify(newPostContent))
-            .then(response => {
-                dispatch(closeModal());
-                openBLModal({ text: "Chỉnh sửa bài viết thành công!", type: "success" });
-                dispatch(put_EditAPostSuccess());
-            }).catch(() => dispatch(put_EditAPostFailure()))
+        dispatch(put_EditAPostReset());
+        if (isNewFile) {
+            let formData = new FormData();
+            formData.append('file', imageFile);
+            authRequest.post(`/posts/image`, formData).then((response) => {
+                newPostContent.imageURL = response.data;
+                authRequest.put(`/posts/${id}`, JSON.stringify(newPostContent))
+                    .then(response => {
+                        closeModal();
+                        openBLModal({ text: "Chỉnh sửa bài viết thành công!", type: "success" });
+                        dispatch(put_EditAPostSuccess());
+                    }).catch(error => {
+                        dispatch(put_EditAPostFailure())
+                    })
+            }).catch(error => {
+                dispatch(put_EditAPostFailure())
+            })
+        }
+        else
+            authRequest.put(`/posts/${id}`, JSON.stringify(newPostContent))
+                .then(response => {
+                    closeModal();
+                    openBLModal({ text: "Chỉnh sửa bài viết thành công!", type: "success" });
+                    dispatch(put_EditAPostSuccess());
+                }).catch(() => dispatch(put_EditAPostFailure()))
     }
 }
 

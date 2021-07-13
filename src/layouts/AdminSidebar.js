@@ -112,12 +112,12 @@ class AdminSidebar extends React.Component {
                                     </div>
                                 </NavLink>
 
-                                <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
+                                {/* <NavLink activeClassName="main-interactive-menu-item-active vertical-sub-m-i" className="vertical-sub-m-i"
                                     to={"/admin/category-management"}>
                                     <div className="text">
                                         Quản lý danh mục
                                     </div>
-                                </NavLink>
+                                </NavLink> */}
                                 <div className="mg-bottom-5px" />
                                 <div className="decoration-underline " />
                                 <div className="mg-bottom-5px" />
@@ -167,7 +167,7 @@ class AdminSidebar extends React.Component {
                         </NavLink >
 
                         {/* Thong ke */}
-                        <NavLink className="vertical-m-i"
+                        {/* <NavLink className="vertical-m-i"
                             activeClassName="main-interactive-menu-item-active"
                             to={"/admin/statistic"}
                         >
@@ -176,7 +176,7 @@ class AdminSidebar extends React.Component {
                             <div className="sd-br-lvl1-mi-text"  >
                                 Thống kê
                             </div>
-                        </NavLink >
+                        </NavLink > */}
                     </div >
                 </div >
             </div >

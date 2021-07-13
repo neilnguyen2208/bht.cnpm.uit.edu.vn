@@ -1,6 +1,6 @@
 {
   "realm": "BHTCNPM",
-  "auth-server-url": "http://localhost:8180/auth/",
+  "auth-server-url": "https://auth.uitstudy.space:8443/auth/",
   "ssl-required": "external",
   "resource":"bhtcnpm-react-dev",
   "public-client": true,

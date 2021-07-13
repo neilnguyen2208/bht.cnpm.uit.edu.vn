@@ -6,12 +6,15 @@ import "./UserMenu.scss";
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
 import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
 import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
+
 import { ClickAwayListener } from "@material-ui/core";
 import authService from "authentication/authenticationServices.js";
 import { formatNumber } from 'utils/miscUtils'
 
 import upload_icon from 'assets/icons/48x48/blue_upload_icon_48x48.png';
 import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
+import add_exercise_btn from 'assets/icons/24x24/add_exercise_btn.png'
+
 import store from "redux/store";
 import { getUserDetailById } from "redux/services/authServices";
 import { getPostsByFilter } from "redux/services/postServices";
@@ -165,7 +168,7 @@ class UserMenu extends React.Component {
                         <img className="header-image-button" src={write_icon} alt="" />
                     </Link>
                     <Link to={"/create-exercise"} className="d-flex">
-                        <img className="header-image-button" src={write_icon} alt="" />
+                        <img className="header-image-button" src={add_exercise_btn} alt="" />
                     </Link>
                     <div id="h-um-wrapper" className="user-menu">
                         <div className="d-flex">

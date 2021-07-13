@@ -11,7 +11,6 @@ import { getDocumentCategories } from "redux/services/documentCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import {
     getDocumentByIdForEdit,
-    getDocumentById,
     editADocument
 } from "redux/services/documentServices"
 import { put_EditADocumentReset } from "redux/actions/documentAction"
@@ -41,6 +40,7 @@ import {
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { SimpleCKEToolbarConfiguration } from "components/common/CustomCKE/CKEditorConfiguration";
 import FormFileUploader from "components/common/FormFileUploader/FormFileUploader";
+import ImageUploader from 'components/common/FormFileUploader/FormImageUploader';
 
 const validationCondition = {
     form: '#edit-document-form',
@@ -51,9 +51,6 @@ const validationCondition = {
         validation.isRequired('ed-document-category-combobox', 'combobox', 'Danh mục không được để trống'),
         validation.isRequired('ed-document-cke', 'ckeditor', 'Nội dung tài liệu không được để trống'),
         validation.isRequired('ed-document-subject-combobox', 'combobox', 'Môn học không được để trống'),
-        // validation.isRequired('cr-document-file-input', 'file-input', 'Tài liệu không được để trống!'),
-        // validation.maxFileCount('cr-document-file-input', 'file-input', 3, 'Không được vượt quá 3 tài liệu!'),
-        // validation.maxFileSize('cr-document-file-input', 'file-input', 26214400, 'Không được vượt quá 25MB!'),
     ],
 }
 
@@ -88,15 +85,8 @@ class EditDocumentModal extends React.Component {
                 imageURL: "null",
                 subjectID: ""
             },
-
-            author: {
-                avatarURL: "https://i.imgur.com/SZJgL6C.png",
-                displayName: "Nguyễn Văn Đông",
-                username: "dongnsince1999"
-            },
-
-
         };
+
         this.shownTag = [
             { dmID: 1, id: '', content: '' },
             { dmID: 2, id: '', content: '' },
@@ -125,6 +115,7 @@ class EditDocumentModal extends React.Component {
         this.isInstanceReady = false;
         this.tagQuickQueryResult = <></>;
         this.filesList = [];
+        this.initFilesData = [];
     }
 
     componentDidMount() {
@@ -144,7 +135,6 @@ class EditDocumentModal extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(put_EditADocumentReset());
-        this.props.getDocumentById(this.props.id)
         if (getCKEInstance('ed-document-cke'))
             getCKEInstance('ed-document-cke').destroy();
     }
@@ -164,6 +154,17 @@ class EditDocumentModal extends React.Component {
     }
 
     handleUploadBtnClick = () => {
+        this.UPLOAD_DOCUMENT_DTO = {
+            "categoryID": this.state.DOCUMENT_DTO.categoryID,
+            "subjectID": this.state.DOCUMENT_DTO.subjectID,
+            "title": this.state.DOCUMENT_DTO.title,
+            "description": this.state.DOCUMENT_DTO.description,
+            "imageURL": this.state.DOCUMENT_DTO.imageURL,
+            "publishDtm": "2021-07-12T16:41:23.566Z",
+            "docFileUploadRequestDTOs": this.initFilesData,
+            "tags": this.state.DOCUMENT_DTO.tags
+        }
+
         if (styleFormSubmit(validationCondition)) {
             openModal("confirmation",
                 {
@@ -172,12 +173,10 @@ class EditDocumentModal extends React.Component {
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editADocument(this.props.id, this.state.DOCUMENT_DTO);
+                        this.props.editADocument(this.props.id, this.UPLOAD_DOCUMENT_DTO, [], this.imageFile, this.isNewImageFile);
                         closeModal(); //close confimation popup
                         closeModal();
                         closeBigModal();
-
-                        //close edit document popup
                     }
                 })
         }
@@ -366,11 +365,11 @@ class EditDocumentModal extends React.Component {
     //#endregion
     handleEditorChange = (value) => {
         if (value.length < 160) {
-            this.setState({ DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, content: value } })
+            this.setState({ DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, description: value } })
             return;
         }
         else {
-            this.setState({ DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, content: value } });
+            this.setState({ DOCUMENT_DTO: { ...this.state.DOCUMENT_DTO, description: value } });
             return;
         }
     };
@@ -382,7 +381,14 @@ class EditDocumentModal extends React.Component {
     }
 
     onFileChange = (files) => {
+        console.log(files);
         this.filesList = files;
+        this.setState({});
+    }
+
+    handleImageFileChange = (imageFile) => {
+        this.isNewImageFile = true;
+        this.imageFile = imageFile;
         this.setState({});
     }
 
@@ -446,7 +452,9 @@ class EditDocumentModal extends React.Component {
                 this.shownTag[index].content = item.content;
             })
 
-            getCKEInstance('ed-document-cke').setData(this.props.currentDocument.description)
+            getCKEInstance('ed-document-cke').setData(this.props.currentDocument.description);
+            document.getElementById("image-input-placeholder-edit-document-imgurl").src = this.props.currentDocument.imageURL;
+            document.getElementById("image-input-placeholder-edit-document-imgurl").classList.remove("d-none");
             this.setState({
                 DOCUMENT_DTO: {
                     title: this.props.currentDocument.title,
@@ -467,11 +475,22 @@ class EditDocumentModal extends React.Component {
 
             });
 
-            let initFilesData = [];
             for (let i = 0; i < this.props.currentDocument.docFileUploadDTOs.length; i++) {
                 this.filesList[i] = { rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id }
-                initFilesData.push({ rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id });
+                this.initFilesData.push({ rank: i, id: this.props.currentDocument.docFileUploadDTOs[i].id });
             }
+
+            this.UPDATE_DOCUMENT_DTO = {
+                categoryID: this.props.currentDocument.categoryID,
+                subjectID: this.props.currentDocument.subjectID,
+                title: this.props.currentDocument.title,
+                description: this.props.currentDocument.description,
+                imageURL: this.props.currentDocument.imageURL,
+                publishDtm: "2021-07-08T00:24:38.794Z",
+                docFileUploadRequestDTOs: this.initFilesData,
+                tags: this.props.currentDocument.tags
+            }
+
         }
 
         //load xong thi cho hien thi body
@@ -504,6 +523,17 @@ class EditDocumentModal extends React.Component {
                                                 <div className="form-error-label-container">
                                                     <span className="form-error-label" ></span>
                                                 </div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label className="form-label-required">Ánh bìa:</label>
+                                                < ImageUploader
+                                                    id="edit-document-imgurl"
+                                                    maxSize={512000}
+                                                    // initialData={this.props.postDetailForEdit.imageURL ? this.props.postDetailForEdit.imageURL : ''}
+                                                    onImageChange={this.handleImageFileChange}
+                                                    fileType={[".png, .jpg"]}
+                                                />
                                             </div>
 
                                             {/* CKEditor */}
@@ -648,7 +678,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getSubjectsList,
     getTagQuickQueryResult,
     getDocumentByIdForEdit,
-    getDocumentById,
     editADocument
 
 }, dispatch);

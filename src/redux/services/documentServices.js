@@ -480,17 +480,33 @@ export function deleteADocument(id) { //maybe use modal later
     }
 }
 
-export function editADocument(id, newDocumentContent, reloadList) { //
+export function editADocument(id, newDocumentContent, documentFiles, imageFile, isNewImageFile) { //
     return dispatch => {
         dispatch(put_EditADocumentReset())
-        openModal("loader", { text: "Đang xử lý" });
-        authRequest.put(`/documents/${id}`, JSON.stringify(newDocumentContent))
-            .then(response => {
-                dispatch(closeModal());
-                openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
-                dispatch(put_EditADocumentSuccess(id, newDocumentContent));
-            }
-            ).catch(() => dispatch(put_EditADocumentFailure()))
+        if (isNewImageFile) {
+            let formData = new FormData();
+            formData.append('file', imageFile);
+            authRequest.post(`/documents/image`, formData).then((response) => {
+                newDocumentContent.imageURL = response.data;
+                authRequest.put(`/documents/${id}`, JSON.stringify(newDocumentContent))
+                    .then(response => {
+                        closeModal();
+                        openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
+                        dispatch(put_EditADocumentSuccess());
+                    }).catch(error => {
+                        dispatch(put_EditADocumentFailure())
+                    })
+            }).catch(error => {
+                dispatch(put_EditADocumentFailure())
+            })
+        }
+        else
+            authRequest.put(`/documents/${id}`, JSON.stringify(newDocumentContent))
+                .then(response => {
+                    closeModal();
+                    openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
+                    dispatch(put_EditADocumentSuccess());
+                }).catch(() => dispatch(put_EditADocumentFailure()))
     }
 }
 

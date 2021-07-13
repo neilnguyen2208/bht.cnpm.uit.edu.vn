@@ -9,13 +9,13 @@ class FormFileUploader extends React.Component {
     componentDidMount() {
         //assign initial data
         if (this.props.initialData) {
-            document.getElementById("image-input-placeholder" + this.props.id).src = this.props.initialData;
+            document.getElementById("image-input-placeholder-" + this.props.id).src = this.props.initialData;
         }
         if (this.props.AVATAR_TYPE) {
             if (this.props.initialData)
-                document.getElementById("image-input-placeholder" + this.props.id).classList.remove("d-none");
+                document.getElementById("image-input-placeholder-" + this.props.id).classList.remove("d-none");
             document.getElementById("iid-container" + this.props.id).classList.add("_avatar");
-            document.getElementById("image-input-placeholder" + this.props.id).classList.add("_avatar");
+            document.getElementById("image-input-placeholder-" + this.props.id).classList.add("_avatar");
         }
     }
 
@@ -23,8 +23,8 @@ class FormFileUploader extends React.Component {
     onImageChange = () => {
         //get file input element
         let fileInput = document.getElementById('image-input-' + this.props.id);
-        document.getElementById("image-input-placeholder" + this.props.id).src = URL.createObjectURL(fileInput.files[0]);
-        document.getElementById("image-input-placeholder" + this.props.id).classList.remove("d-none");
+        document.getElementById("image-input-placeholder-" + this.props.id).src = URL.createObjectURL(fileInput.files[0]);
+        document.getElementById("image-input-placeholder-" + this.props.id).classList.remove("d-none");
         document.getElementById("iid-container" + this.props.id).style.borderRadius = "50%";
 
         //pass current files list to parrent
@@ -47,7 +47,7 @@ class FormFileUploader extends React.Component {
                     <label className="file-input-label" id={'file-input-label-' + this.props.id} for={'image-input-' + this.props.id}>
 
                         {/* image placeholder */}
-                        <img src="" alt="" className="image-input-placeholder d-none" id={"image-input-placeholder" + this.props.id} />
+                        <img src="" alt="" className="image-input-placeholder d-none" id={"image-input-placeholder-" + this.props.id} />
 
                         {/* decoration */}
                         <div src="" alt="" className="iid-container" id={"iid-container" + this.props.id} style={{ padding: "10px" }}>

@@ -33,7 +33,6 @@ class SearchPost extends React.Component {
             "postCategoryID": getQueryParamByName('category'),
             "sortByPublishDtm": "desc",
             "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ''
-
         }
 
         setQueryParam(this.queryParamObject);
@@ -67,10 +66,16 @@ class SearchPost extends React.Component {
     }
 
     onCategoryOptionChange = (selectedOption) => {
-        setQueryParam({ ...this.queryParamObject, "page": 1, "category": selectedOption.id });
+        setQueryParam({
+            ...this.queryParamObject,
+            "q": getQueryParamByName("q"),
+            "page": 1,
+            "category": selectedOption.id
+        });
         this.searchParamObject = {
             ...this.searchParamObject,
             "postCategoryID": selectedOption.id,
+            "searchTerm": getQueryParamByName("q"),
             "page": 1
         }
         this.props.getPostSearch(this.searchParamObject);
@@ -89,6 +94,7 @@ class SearchPost extends React.Component {
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
                     "page": 1,
+                    "searchTerm": getQueryParamByName("q"),
                     "author": this.props.match.params.id,
                     "sort": "publishDtm,desc",
                     "mostLiked": true

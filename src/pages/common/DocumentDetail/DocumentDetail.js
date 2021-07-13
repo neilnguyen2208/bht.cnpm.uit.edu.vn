@@ -60,16 +60,20 @@ class DocumentDetail extends React.Component {
         this.props.getDownloadURL(documentId);
     }
 
-    render() {
+    compoenentDidUpdate = () => {
         styleCodeSnippet();
+    }
+
+    render() {
+
+        if (this.props.isHaveEdited) {
+            store.dispatch(put_EditADocumentReset());
+            this.props.getDocumentById(this.props.match.params.id);
+        }
 
         //reload the list when any item has been deleted or edited:
         if (this.props.isHaveDeleted) {
             store.dispatch(delete_ADocumentReset())
-        }
-
-        if (this.props.isHaveEdited) {
-            store.dispatch(put_EditADocumentReset())
         }
 
         if (this.props.isHaveReported) {
@@ -184,6 +188,7 @@ class DocumentDetail extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
+        isHaveEdited: state.document.isHaveEdited,
         currentDocument: state.document.currentDocument.data,
         isLoadDone: state.document.currentDocument.isLoadDone,
         sameSubjectDocument: state.document.sameSubjectDocuments.data,

@@ -7,6 +7,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import "./Header.scss";
 import "components/styles/Button.scss";
 import red_delete_icon from 'assets/icons/24x24/red_delete_icon_24x24.png';
+import search_icon from 'assets/icons/24x24/search_icon_24x24.png';
 import logo from 'assets/images/logo.png';
 import upload_icon from 'assets/icons/48x48/blue_upload_icon_48x48.png';
 import write_icon from 'assets/icons/48x48/blue_write_icon_48x48.png';
@@ -15,13 +16,15 @@ import SmallLoader from "components/common/Loader/Loader_S"
 import { logoRouter, headerMenuRouters } from "components/base_components/router.config.js"
 import store from 'redux/store/index'
 import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
-import { getPostSearch } from 'redux/services/postServices'
+import { getPostSearch } from 'redux/services/postServices';
+import { getDocumentSearch } from 'redux/services/documentServices';
 import { DELAY_TIME } from 'constants.js';
 import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
 import UserMenu from '../../user/UserMenu'
 import authService from 'authentication/authenticationServices.js';
 import ShowOnPermission from "components/base_components/ShowOnPermission";
+import add_exercise_btn from 'assets/icons/24x24/add_exercise_btn.png';
 
 class Header extends React.Component {
     constructor(props) {
@@ -35,6 +38,13 @@ class Header extends React.Component {
         this.quickSearchResultView = <></>;
         this.timeOut = null;
         this.redirect = <></>;
+        this.searchLink = "/search/posts/";
+        this.searchParamObject = {
+            "page": 1,
+            "postCategoryID": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+            "sortByPublishDtm": "desc",
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ''
+        }
     }
 
     componentDidMount() {
@@ -42,7 +52,8 @@ class Header extends React.Component {
         if (this.props.location.pathname.substring(0, 7) === '/search')
             this.setState({ isHaveOut: false })
         else
-            this.setState({ isHaveOut: true })
+            this.setState({ isHaveOut: true });
+        this.searchLink = "/search/posts/";
     }
 
     componentWillUnmount() {
@@ -59,13 +70,19 @@ class Header extends React.Component {
     }
 
     onSearchTextFieldChange = (e) => {
-        let query = e.target.value;
-        this.showQuickSearchBigContainer();
-        store.dispatch(get_QuickSearchResultRequest());
+        this.query = e.target.value;
+        this.searchParamObject = { ...this.searchParamObject, searchTerm: getQueryParamByName('q') ? getQueryParamByName('q') : e.target.value };
         clearTimeout(this.timeOut);
-        this.timeOut = setTimeout(() => this.props.getQuickSearchResult(query), DELAY_TIME);
+
+        if (this.query.length > 0) {
+            this.showQuickSearchBigContainer();
+            store.dispatch(get_QuickSearchResultRequest());
+            this.timeOut = setTimeout(() => this.props.getQuickSearchResult(this.query), DELAY_TIME);
+        }
+
         document.getElementById("qssr-container").style.display = "block";
         document.getElementById("qsr-container-big").style.display = "block";
+        this.setState({});
     }
 
     keyHandler = (e) => {
@@ -88,7 +105,6 @@ class Header extends React.Component {
             //re-render
         }
     }
-
 
     render() {
 
@@ -118,7 +134,7 @@ class Header extends React.Component {
                     <img className="header-image-button" src={write_icon} alt="" />
                 </Link>
                 <Link to={"/create-exercise"} className="d-flex">
-                    <img className="header-image-button" src={write_icon} alt="" />
+                    <img className="header-image-button" src={add_exercise_btn} alt="" />
                 </Link>
                 <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
                     Đăng nhập
@@ -160,8 +176,40 @@ class Header extends React.Component {
                                             id="sb-text-field-big"
                                             type="text" placeholder="Search"
                                             onChange={(e) => this.onSearchTextFieldChange(e)}
-                                            onKeyPress={(e) => { this.keyHandler(e) }}
+                                        // onKeyPress={(e) => { this.keyHandler(e) }}
                                         />
+
+                                        {this.query ?
+                                            //not in search
+                                            window.location.pathname.substring(0, 8) !== "/search/" || window.location.pathname === "/search/posts" ?
+                                                < Link to={`/search/posts?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&tab=hot`}
+                                                    onClick={() => {
+                                                        this.searchParamObject.searchTerm = this.query;
+                                                        this.searchParamObject.postCategoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
+                                                        this.props.getPostSearch(this.searchParamObject);
+                                                        this.setState({})
+                                                    }}  >
+                                                    <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
+                                                </Link> :
+                                                window.location.pathname === "/search/documents" ?
+                                                    < Link to={`/search/documents?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&subject=${getQueryParamByName('subject') ? getQueryParamByName('subject') : 0}&tab=hot`}
+                                                        onClick={() => {
+                                                            delete this.searchParamObject.postCategoryID;
+                                                            this.searchParamObject.searchTerm = this.query;
+                                                            this.searchParamObject.sortByPublishDtm = "DESC";
+                                                            this.searchParamObject.categoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
+                                                            this.searchParamObject.subjectID = getQueryParamByName('subject') ? getQueryParamByName('subject') : 0;
+                                                            this.props.getDocumentSearch(this.searchParamObject);
+                                                            this.setState({});
+                                                        }}  >
+                                                        <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
+                                                    </Link> : <></>
+
+
+
+                                            :
+                                            <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
+                                        }
                                     </div>
                                 </div>
                                 {!this.state.isHaveOut &&
@@ -288,7 +336,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getQuickSearchResult
+    getQuickSearchResult,
+    getPostSearch,
+    getDocumentSearch,
 }, dispatch);
 
 export default withRouter(

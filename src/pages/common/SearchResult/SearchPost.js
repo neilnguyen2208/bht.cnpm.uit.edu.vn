@@ -90,7 +90,9 @@ class SearchPost extends React.Component {
                     ...this.queryParamObject,
                     "page": 1,
                     tab: "HOT",
-                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
@@ -108,7 +110,9 @@ class SearchPost extends React.Component {
                     ...this.queryParamObject,
                     "page": 1,
                     category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
-                    tab: "BEST"
+                    tab: "BEST",
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
@@ -126,7 +130,9 @@ class SearchPost extends React.Component {
                     ...this.queryParamObject,
                     "page": 1,
                     category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
-                    tab: "NEWEST"
+                    tab: "NEWEST",
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
@@ -144,7 +150,9 @@ class SearchPost extends React.Component {
                     ...this.queryParamObject,
                     page: 1,
                     tab: "TOP",
-                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
@@ -160,12 +168,13 @@ class SearchPost extends React.Component {
             default: {
                 this.queryParamObject = {
                     ...this.queryParamObject,
-                    page: "1",
+                    page: 1,
+                    q: getQueryParamByName("q") ? getQueryParamByName("q") : '',
                     tab: "REVELANT",
                     category: getQueryParamByName('category') ? getQueryParamByName('category') : 0
                 }
-                this.queryParamObject = {
-                    ...this.queryParamObject,
+                this.searchParamObject = {
+                    ...this.searchParamObject,
                     "advancedSort": null,
                     "searchTerm": getQueryParamByName("q"),
                     "postCategoryID": getQueryParamByName('category') ? getQueryParamByName('category') : 0,

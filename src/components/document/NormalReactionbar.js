@@ -138,16 +138,18 @@ class NormalReactionbar extends React.Component {
         <div className="d-flex mg-top-5px">
           <div className="like-dislike-rate-bar">
             <div className="d-flex">
-              <RequireLogin permissions={[]}
+              <RequireLogin permissions={[Document.DOC_PUBLIC_ALL_REACT]}
                 availableActions={this.props.availableActions}
                 requiredAction={DocumentAction.React}
-                useAction={this.props.useAction}>
+                useAction={this.props.useAction}
+                
+                >
                 <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
                   <div className="d-flex"> {likeBtn}</div>
                   <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0}</div>
                 </div>
               </RequireLogin>
-              <RequireLogin permissions={[]}
+              <RequireLogin permissions={[Document.DOC_PUBLIC_ALL_REACT]}
                 availableActions={this.props.availableActions}
                 requiredAction={DocumentAction.React}
                 useAction={this.props.useAction}>
@@ -166,7 +168,7 @@ class NormalReactionbar extends React.Component {
 
           </div>
           <div className="vertical-line" />
-          <RequireLogin permissions={[]}
+          <RequireLogin permissions={[Document.DOCCOMMENT_PUBLIC_SELF_CREATE]}
             availableActions={this.props.availableActions}
             requiredAction={DocumentAction.Comment}
             useAction={this.props.useAction}>

@@ -18,7 +18,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import { validation, styleFormSubmit } from 'utils/validationUtils'
 import { today } from 'utils/miscUtils'
 import store from 'redux/store/index'
-import Metadata from 'components/post/DetailInfo'
+import DetailInfo from 'components/post/DetailInfo'
 import UserSidebar from 'layouts/UserSidebar'
 import SmallLoader from 'components/common/Loader/Loader_S'
 import { detailType } from 'constants.js'
@@ -411,7 +411,7 @@ class CreatePost extends React.Component {
                 <div className="cr-post-form-container post-detail-container preview" >
 
                     {this.props.userSummaryLoaded && this.props.userSummaryData ?
-                        <Metadata title={this.state.CREATE_POST_DTO.title}
+                        <DetailInfo title={this.state.CREATE_POST_DTO.title}
                             categoryName={this.state.currentCategory}
                             categoryID={this.state.CREATE_POST_DTO.categoryID}
                             readingTime={this.state.CREATE_POST_DTO.readingTime}
@@ -419,7 +419,7 @@ class CreatePost extends React.Component {
                             authorAvatarURL={this.props.userSummaryData.avatarURL}
                             publishDtm={this.state.publishDtm}
                             type={detailType.preview}
-                            imageURL={this.imageFile ? URL.createObjectURL(this.imageFile) : ''}
+                            imageFile  = {this.imageFile}
                             authorID={this.props.userSummaryData.id}
                         /> : <></>}
 

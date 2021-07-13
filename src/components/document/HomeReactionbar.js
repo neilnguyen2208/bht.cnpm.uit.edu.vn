@@ -78,8 +78,6 @@ class NormalReactionbar extends React.Component {
     this.likeCount = this.likeCount - 1;
     this.setState({ isDisliked: 0, isLiked: 0 });
     this.calculateBar();
-
-
   }
 
   toggleDislikeImage = () => {
@@ -103,9 +101,6 @@ class NormalReactionbar extends React.Component {
     this.dislikeCount = this.dislikeCount - 1;
     this.setState({ isDisliked: 0, isLiked: 0 });
     this.calculateBar();
-
-
-
   }
 
   render() {

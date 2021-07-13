@@ -65,7 +65,7 @@ class PostsList extends React.Component {
                 <HomeFirstInfo
                     authorAvatarURL={items[0].authorAvatarURL}
                     key={items[0].id}
-                    id={items[0].id}
+                    postID={items[0].id}
                     authorDisplayName={items[0].authorDisplayName}
                     authorID={items[0].authorID}
                     publishDtm={items[0].publishDtm}
@@ -89,7 +89,7 @@ class PostsList extends React.Component {
                     <HomeTextInfo
                         authorAvatarURL={items[1].authorAvatarURL}
                         key={items[1].id}
-                        id={items[1].id}
+                        postID={items[1].id}
                         authorDisplayName={items[1].authorDisplayName}
                         authorID={items[1].authorID}
                         publishDtm={items[1].publishDtm}
@@ -111,7 +111,7 @@ class PostsList extends React.Component {
                     <HomeTextInfo
                         authorAvatarURL={items[2].authorAvatarURL}
                         key={items[2].id}
-                        id={items[2].id}
+                        postID={items[2].id}
                         authorDisplayName={items[2].authorDisplayName}
                         authorID={items[2].authorID}
                         publishDtm={items[2].publishDtm}
@@ -139,7 +139,7 @@ class PostsList extends React.Component {
                 <HomeInfo
                     authorAvatarURL={items[0].authorAvatarURL}
                     key={items[0].id}
-                    id={items[0].id}
+                    postID={items[0].id}
                     authorDisplayName={items[0].authorDisplayName}
                     authorID={items[0].authorID}
                     publishDtm={items[0].publishDtm}
@@ -160,7 +160,7 @@ class PostsList extends React.Component {
                 <HomeInfo
                     authorAvatarURL={items[1].authorAvatarURL}
                     key={items[1].id}
-                    id={items[1].id}
+                    postID={items[1].id}
                     authorDisplayName={items[1].authorDisplayName}
                     authorID={items[1].authorID}
                     publishDtm={items[1].publishDtm}
@@ -181,7 +181,7 @@ class PostsList extends React.Component {
                 <HomeInfo
                     authorAvatarURL={items[2].authorAvatarURL}
                     key={items[2].id}
-                    id={items[2].id}
+                    postID={items[2].id}
                     authorDisplayName={items[2].authorDisplayName}
                     authorID={items[2].authorID}
                     publishDtm={items[2].publishDtm}

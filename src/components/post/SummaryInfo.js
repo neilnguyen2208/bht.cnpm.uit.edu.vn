@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //resources
 
-import { deleteAPost,  reportAPost } from 'redux/services/postServices'
+import { deleteAPost, reportAPost } from 'redux/services/postServices'
 import { openBigModal, openModal, closeModal, openBLModal } from 'redux/services/modalServices'
 import { highlightAPost, deleteHighlightAPost, stickAPostToTop } from 'redux/services/homeServices';
 import { post_ReportAPostReset } from 'redux/actions/postAction'
@@ -26,15 +26,22 @@ import { itemType } from 'constants.js'
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
+import createDOMPurify from 'dompurify';
 
 class PostSummary extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.id = this.props.postID;
-    this.title = this.props.title;
-    this.image = this.props.image;
+    this.state = {
+      isShowMore: false
+    }
+  }
+  
+  componentDidMount() {
+    const DOMPurify = createDOMPurify(window);
+    const clean = DOMPurify.sanitize(this.props.content);
+    if (document.querySelector(`#rprt-pst-ctnt-${this.props.postID}`))
+      document.querySelector(`#rprt-pst-ctnt-${this.props.postID}`).innerHTML = clean;
   }
 
   onPopupMenuItemClick = (selectedItem) => {
@@ -113,26 +120,66 @@ class PostSummary extends React.Component {
     }
 
     let summary = <></>;
-    if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
+
+    //image + summary
+    if (!this.props.content && this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
       summary = <div>
         <div className="decoration-line mg-top-10px" />
         <img className="image" src={this.props.imageURL} alt="" />
         <div className="summary-text mg-bottom-10px">
-          {this.props.summary}
+          {this.props.summary + "..."}
         </div>
 
       </div>
     }
+
+    //summary only
     else
-      if (this.props.summary && this.props.summary !== "null")
+      if (!this.props.content && this.props.summary && this.props.summary !== "null" && this.props.summary !== "undefined")
         summary = <div className="summary-text" >
-          {this.props.summary}
+          {this.props.summary + "..."}
         </div >
-      else
-        summary = <div className="ck-editor-output" dangerouslySetInnerHTML={{
-          __html:
-            this.props.content
-        }} />
+      else summary = <div> {
+        this.state.isShowMore ?
+          <div className="post-summary-show show-more">
+            {
+              this.props.imageURL ?
+                <div >
+                  <div className="decoration-line mg-top-10px" />
+                  <img className="image" src={this.props.imageURL} alt="" />
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
+                </div>
+                :
+                <div className="summary-text">
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
+                </div>
+            }
+          </div>
+          :
+          <div className="post-summary-show show-less">
+            {
+              this.props.imageURL ?
+                <div >
+                  <div className="decoration-line mg-top-10px" />
+                  <img className="image" src={this.props.imageURL} alt="" />
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
+                </div>
+                :
+                <div className="summary-text">
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.postID} />
+                </div>
+
+            }
+          </div>
+      }
+
+        {
+          this.state.isShowMore ?
+            <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = false; this.setState({ isShowMore: false }) }}>Ẩn bớt</div>
+            :
+            <div className="link-label-s j-c-end mg-bottom-10px" onClick={() => { this.isShowMore = true; this.setState({ isShowMore: true }) }}>Xem thêm</div>
+        }
+      </div>
 
     return (
 

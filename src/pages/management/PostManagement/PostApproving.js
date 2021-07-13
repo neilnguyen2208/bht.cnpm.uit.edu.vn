@@ -130,7 +130,6 @@ class PostApproving extends React.Component {
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
                         title={item.title}
-                        summary={item.summary}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
                         approveState={item.postState}

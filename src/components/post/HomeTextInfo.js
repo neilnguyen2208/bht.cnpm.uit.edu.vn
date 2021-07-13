@@ -30,7 +30,7 @@ class HomeTextInfo extends React.Component {
             <img className="avatar" src={this.props.authorAvatarURL} alt="" />
           </Link>
           <div style={{ marginLeft: "10px" }}>
-            <Link to={"/post-content/" + this.props.id} >
+            <Link to={"/post-content/" + this.props.postID} >
               <div className="title title-hv" style={{ marginTop: "-2px" }}>
                 {this.props.title}
               </div>
@@ -56,12 +56,12 @@ class HomeTextInfo extends React.Component {
         </div>
 
         <div className="summary-text">
-          {this.props.summary}
+          {this.props.summary + "..."}
         </div >
         
         <div className="reaction-padding-by-wrapper">
           <HomeReactionbar
-            id={this.props.id}
+            postID={this.props.postID}
             likeStatus={this.props.likeStatus}
             savedStatus={this.props.savedStatus}
             readingTime={this.props.readingTime}

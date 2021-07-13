@@ -70,6 +70,21 @@ class PostDetail extends React.Component {
     this.props.reportAPost(DTO.id, { "reasonIds": [1], "feedback": DTO.reason });
   }
 
+  //local file
+  componentDidUpdate() {
+    this.previewImage();
+  }
+  
+  previewImage = () => {
+    if (this.props.imageFile) {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(this.props.imageFile);
+      oFReader.onload = (oFREvent) => {
+        document.getElementById("preview-post-imgsrc").src = oFREvent.target.result;
+      };
+    }
+  };
+
   render() {
     styleCodeSnippet();
 
@@ -87,11 +102,21 @@ class PostDetail extends React.Component {
       store.dispatch(post_ReportAPostReset())
     }
 
-    let cover = <></>;
+    let tmpCover = <></>;
+
+    //existed url
     if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
-      cover = <div>
+      tmpCover = <div>
         <div className="mg-top-20px" />
         <img className="image" src={this.props.imageURL} alt="" />
+      </div>
+    }
+
+    //preview local file
+    if (this.props.type === "PREVIEW" && this.props.imageFile) {
+      tmpCover = <div>
+        <div className="mg-top-20px" />
+        <img className="image" id="preview-post-imgsrc" alt="" />
       </div>
     }
 
@@ -143,7 +168,7 @@ class PostDetail extends React.Component {
             id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} />
         </div>
 
-        {cover}
+        {tmpCover}
 
         {formatMathemicalFormulas()}
         {styleCodeSnippet()}

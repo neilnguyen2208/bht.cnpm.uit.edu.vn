@@ -28,7 +28,7 @@ class ExercisesList extends React.Component {
         this.queryParamObject = {
             "category": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
             "page": 1,
-            // "tab": 'hot',
+            "tab": 'REVELANT',
             "q": getQueryParamByName('q') ? getQueryParamByName('q') : '',
             'subject': getQueryParamByName('subject') ? getQueryParamByName('subject') : 0
         }
@@ -69,6 +69,7 @@ class ExercisesList extends React.Component {
         this.searchParamObject = {
             ...this.searchParamObject,
             "categoryID": selectedOption.id,
+            searchTerm: getQueryParamByName('q'),
             page: 1
         }
         this.props.getExerciseSearch(this.searchParamObject);
@@ -76,10 +77,16 @@ class ExercisesList extends React.Component {
     }
 
     onSubjectOptionChange = (selectedOption) => {
-        this.queryParamObject = { ...this.queryParamObject, subject: selectedOption.id, page: 1 }
+        this.queryParamObject = {
+            ...this.queryParamObject,
+            subject: selectedOption.id,
+            page: 1,
+            q: getQueryParamByName("q")
+        }
         setQueryParam(this.queryParamObject);
         this.searchParamObject = {
             ...this.searchParamObject,
+            searchTerm: getQueryParamByName('q'),
             "subjectID": selectedOption.id, // => change subject
             page: 1
         }
@@ -90,87 +97,156 @@ class ExercisesList extends React.Component {
 
     onFilterClick = (filter) => {
         switch (filter) {
-            case "hot": {
+            case "HOT": {
                 this.queryParamObject = {
                     ...this.queryParamObject,
-                    tab: "hot"
+                    "page": 1,
+                    tab: "HOT",
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subject: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
-                    ...this.searchParamObject,
                     "page": 1,
-                    "sort": "publishDtm,desc",
-                    "mostLiked": true
+                    "searchTerm": getQueryParamByName("q"),
+                    "advancedSort": "HOT",
+                    categoryID: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subjectID: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+
                 }
                 this.props.getExerciseSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }
-            case "best": {
+            case "BEST": {
                 this.queryParamObject = {
                     ...this.queryParamObject,
-                    tab: "best"
+                    "page": 1,
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subject: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+                    tab: "BEST",
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
-                    ...this.searchParamObject,
                     "page": 1,
-                    "sort": "publishDtm,desc",
-                    "mostViewed": true
+                    "searchTerm": getQueryParamByName("q"),
+                    "advancedSort": "BEST",
+                    categoryID: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subjectID: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+
                 }
                 this.props.getExerciseSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }
-            case "newest": {
+            case "NEWEST": {
                 this.queryParamObject = {
                     ...this.queryParamObject,
-                    tab: "newest"
+                    "page": 1,
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subject: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+                    tab: "NEWEST",
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
-                    ...this.searchParamObject,
                     "page": 1,
-                    "sort": "publishDtm,desc",
-                    "mostViewed": false,
-                    "mostLiked": false
+                    "searchTerm": getQueryParamByName("q"),
+                    sortByAttempts: null,
+                    sortByPublishDtm: "DESC",
+                    categoryID: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subjectID: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+
                 }
                 this.props.getExerciseSearch(this.searchParamObject)
                 this.setState({});
                 return;
             }
-            case "top": {
+            case "TOP": {
                 this.queryParamObject = {
                     ...this.queryParamObject,
-                    tab: "top"
+                    page: 1,
+                    tab: "TOP",
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subject: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+                    q: getQueryParamByName("q"),
+
                 }
                 setQueryParam(this.queryParamObject);
                 this.searchParamObject = {
-                    ...this.searchParamObject,
                     "page": 1,
-                    "sort": "publishDtm,desc",
-                    "mostViewed": true
+                    "searchTerm": getQueryParamByName("q"),
+                    sortByAttempts: "DESC",
+                    sortByPublishDtm: null,
+                    categoryID: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subjectID: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+
                 }
-                this.props.getExerciseSearch(this.searchParamObject)
+                this.props.getExerciseSearch(this.searchParamObject);
                 this.setState({});
                 return;
             }
             default: {
                 this.queryParamObject = {
                     ...this.queryParamObject,
-                    tab: "hot"
+                    page: 1,
+                    q: getQueryParamByName("q") ? getQueryParamByName("q") : '',
+                    tab: "REVELANT",
+                    category: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subject: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+                }
+                this.searchParamObject = {
+                    ...this.searchParamObject,
+                    sortByAttempts: null,
+                    sortByPublishDtm: null,
+                    "searchTerm": getQueryParamByName("q"),
+                    categoryID: getQueryParamByName('category') ? getQueryParamByName('category') : 0,
+                    subjectID: getQueryParamByName('subject') ? getQueryParamByName('subject') : 0,
+                    "page": 1,
                 }
                 setQueryParam(this.queryParamObject);
+                this.props.getExerciseSearch(this.searchParamObject);
                 this.setState({});
                 return;
             }
         }
     }
+
     render() {
 
         if (!this.props.isCategoryLoading && this.props.categories.length > 1 && !this.props.isSubjectLoading && this.props.subjects.length > 1) {
-            this.comboboxGroup = <div className="j-c-space-between" style={{ marginTop: "20px" }}>
-                <div className="d-flex">
+            this.comboboxGroup = <div style={{ marginTop: "20px" }}>
+                <div className="j-c-space-between">
+                    <div></div>
+                    <div className="r-h-filter-c" style={{ marginTop: "-33px" }}>
+                        <div className="h-filter">
+                            <div className={!getQueryParamByName("tab") ||
+                                (getQueryParamByName("tab") !== "TOP"
+                                    && getQueryParamByName("tab") !== "NEWEST"
+                                )
+                                ? "h-filter-item active first" : "h-filter-item first"}
+                                onClick={() => this.onFilterClick("REVELANT")}
+                            > Liên quan</div>
+
+                            <div className={getQueryParamByName("tab") === "NEWEST"
+                                ? "h-filter-item active" : "h-filter-item"}
+                                onClick={() => this.onFilterClick("NEWEST")}
+                            >Mới nhất</div>
+
+                            <div className={getQueryParamByName("tab") === "TOP"
+                                ? "h-filter-item last active" : "h-filter-item last"}
+                                onClick={() => this.onFilterClick("TOP")}
+                            >Lượt giải</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="d-flex" style={{ marginTop: "30px" }}>
                     <div className="d-flex">
                         <div className="filter-label t-a-right mg-right-5px">Danh mục:</div>
                         <div className="mg-left-5px">
@@ -195,35 +271,7 @@ class ExercisesList extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div>
-                    {/* <div className="r-h-filter-c" style={{ marginTop: "-63px" }}>
-                        <div className="h-filter">
-                            <div className={!getQueryParamByName("tab") ||
-                                (getQueryParamByName("tab") !== "top"
-                                    && getQueryParamByName("tab") !== "best"
-                                    && getQueryParamByName("tab") !== "newest"
-                                )
-                                ? "h-filter-item active first" : "h-filter-item first"}
-                                onClick={() => this.onFilterClick("hot")}
-                            > Đang hot</div>
 
-                            <div className={getQueryParamByName("tab") === "best"
-                                ? "h-filter-item active" : "h-filter-item"}
-                                onClick={() => this.onFilterClick("best")}
-                            >Tốt nhất</div>
-
-                            <div className={getQueryParamByName("tab") === "newest"
-                                ? "h-filter-item active" : "h-filter-item"}
-                                onClick={() => this.onFilterClick("newest")}
-                            >Mới nhất</div>
-
-                            <div className={getQueryParamByName("tab") === "top"
-                                ? "h-filter-item last active" : "h-filter-item last"}
-                                onClick={() => this.onFilterClick("top")}
-                            >Lượt thích</div>
-                        </div>
-                    </div> */}
-                </div>
             </div >
 
         }

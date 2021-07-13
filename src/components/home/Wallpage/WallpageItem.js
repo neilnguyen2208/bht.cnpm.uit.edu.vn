@@ -133,7 +133,7 @@ class WallpageItem extends React.Component {
                         </div>
 
                         <div className="summary-text">
-                            {this.props.summary}
+                            {this.props.summary + "..."}
                         </div>
                     </div >
                     <div >

@@ -35,7 +35,7 @@ class HomeFirstInfo extends React.Component {
           </div>
 
           {/* title */}
-          <Link to={"/post-content/" + this.props.id}>
+          <Link to={"/post-content/" + this.props.postID}>
             <div className="title title-hv">
               {this.props.title}
             </div>
@@ -56,11 +56,11 @@ class HomeFirstInfo extends React.Component {
           </div>
 
           <div className="summary-text">
-            {this.props.summary}
+            {this.props.summary + "..."}
           </div>
 
           <HomeReactionbar
-            id={this.props.id}
+            postID={this.props.postID}
             likeStatus={this.props.likeStatus}
             savedStatus={this.props.savedStatus}
             readingTime={this.props.readingTime}

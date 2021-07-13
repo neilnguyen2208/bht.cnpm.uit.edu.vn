@@ -43,19 +43,19 @@ class HomeReactionbar extends React.Component {
     if (this.props.likeStatus) {
       if ((tmpLike === -1)) {
         this.likeCount = this.props.likeCount - 1;
-        this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPost(this.props.postID);
       }
       else {
         this.likeCount = this.props.likeCount;
-        this.props.likeAPost(this.props.id);
+        this.props.likeAPost(this.props.postID);
       }
     }
     else {
       if (tmpLike === 1) {
         this.likeCount = this.props.likeCount + 1;
-        this.props.likeAPost(this.props.id);
+        this.props.likeAPost(this.props.postID);
       } else {
-        this.props.unLikeAPost(this.props.id);
+        this.props.unLikeAPost(this.props.postID);
         this.likeCount = this.props.likeCount;
       }
     }
@@ -68,17 +68,17 @@ class HomeReactionbar extends React.Component {
     if (tmp === 0) //neu la lan dau load component
       if (this.props.savedStatus) {
         tmp = 1;
-        this.props.unSaveAPost(this.props.id)
+        this.props.unSaveAPost(this.props.postID)
       }
       else {
         tmp = -1;
-        this.props.saveAPost(this.props.id)
+        this.props.saveAPost(this.props.postID)
       }
     else {
       if (tmp === 1)
-        this.props.unSaveAPost(this.props.id)
+        this.props.unSaveAPost(this.props.postID)
       else
-        this.props.saveAPost(this.props.id)
+        this.props.saveAPost(this.props.postID)
     }
 
     tmp = -tmp;
@@ -117,7 +117,7 @@ class HomeReactionbar extends React.Component {
 
     return (
       <div>
-        <Link to={`/post-content/${this.props.id}`} className="continue-read" >
+        <Link to={`/post-content/${this.props.postID}`} className="continue-read" >
           Đọc tiếp ...
         </Link>
         <div className="reaction-bar">

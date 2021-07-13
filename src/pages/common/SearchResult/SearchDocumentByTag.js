@@ -52,7 +52,7 @@ class SearchDocumentByTag extends React.Component {
                 return < div className="item-container" >
                     <DocumentSummaryMetadata
                         type={itemType.normal}
-                        id={item.id}
+                        documentID={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         publishDtm={item.publishDtm}
@@ -74,13 +74,13 @@ class SearchDocumentByTag extends React.Component {
                         reloadList={() => this.reloadList()}
                     />
                     <DocumentNormalReactionbar
-                        id={item.id}
-                        likeCount={item.likeCount ? item.likeCount : 2}
-                        dislikeCount={item.dislikeCount ? item.dislikeCount : 3}
+                        documentID={item.id}
+                        likeCount={item.likeCount }
+                        dislikeCount={item.dislikeCount }
                         docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
-                        commentCount={item.commentCount ? item.commentCount : 10}
-                        downloadCount={item.downloadCount ? item.downloadCount : 21}
-                        viewCount={item.viewCount ? item.viewCount : 1200}
+                        commentCount={item.commentCount }
+                        downloadCount={item.downloadCount}
+                        viewCount={item.viewCount }
                     />
                 </div >
             })

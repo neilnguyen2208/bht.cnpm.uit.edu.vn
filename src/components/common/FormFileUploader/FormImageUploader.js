@@ -19,11 +19,19 @@ class FormFileUploader extends React.Component {
         }
     }
 
+    previewImage = () => {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById('image-input-' + this.props.id).files[0]);
+        oFReader.onload = (oFREvent) => {
+            document.getElementById("image-input-placeholder-" + this.props.id).src = oFREvent.target.result;
+        };
+    };
+
     //handle file client, will append new file to current client files list
     onImageChange = () => {
         //get file input element
         let fileInput = document.getElementById('image-input-' + this.props.id);
-        document.getElementById("image-input-placeholder-" + this.props.id).src = URL.createObjectURL(fileInput.files[0]);
+        this.previewImage();
         document.getElementById("image-input-placeholder-" + this.props.id).classList.remove("d-none");
         document.getElementById("iid-container" + this.props.id).style.borderRadius = "50%";
 
@@ -87,7 +95,7 @@ class FormFileUploader extends React.Component {
             </div >
         )
     }
-
 }
+
 
 export default FormFileUploader;

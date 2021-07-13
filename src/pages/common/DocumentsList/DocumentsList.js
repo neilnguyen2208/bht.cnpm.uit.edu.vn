@@ -24,7 +24,7 @@ class PostsList extends React.Component {
         this.renderByCategory();
 
     }
-    
+
     renderByCategory = () => {
 
         this.allResult = [];
@@ -46,7 +46,7 @@ class PostsList extends React.Component {
                                     ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryDTOs[j].id)),
                                 });
                             }
-
+                            console.log(finalResult);
                             this.allResult = [...this.allResult, { id: response.data[i].id, categoryName: response.data[i].name, documents: finalResult }];
                             this.setState({});
                         })
@@ -56,6 +56,10 @@ class PostsList extends React.Component {
     }
 
     renderGridThreeItems = (items) => {
+        console.log(items[0].commentCount);
+        console.log(items[1].commentCount);
+        console.log(items[0].viewCount);
+        console.log(items[1].viewCount);
         return <div className="d-flex">
             {/* //item 0 */}
             {items[0] && <div className="home-item-container  grid" style={{ marginRight: "10px" }} >
@@ -76,6 +80,7 @@ class PostsList extends React.Component {
                     viewCount={items[0].viewCount}
                     subjectName={items[0].subjectName}
                     subjectID={items[0].subjectID}
+                    commentCount={items[0].commentCount}
                 />
             </div >
             }
@@ -99,6 +104,7 @@ class PostsList extends React.Component {
                         viewCount={items[1].viewCount}
                         subjectName={items[1].subjectName}
                         subjectID={items[1].subjectID}
+                        commentCount={items[1].commentCount}
                     />
                 </div >}
 
@@ -120,13 +126,20 @@ class PostsList extends React.Component {
                         viewCount={items[2].viewCount}
                         subjectName={items[2].subjectName}
                         subjectID={items[2].subjectID}
+                        commentCount={items[2].commentCount}
                     ></HomeTextInfo>
                 </div >
                 }
             </div >
         </div>
     }
+
     renderRowThreeItems = (items) => {
+        console.log(items[0].commentCount);
+        console.log(items[1].commentCount);
+        console.log(items[0].viewCount);
+        console.log(items[1].viewCount);
+
         return <div className="d-flex">
             {/* //item 0 */}
             {items[0] && <div className="home-item-container _row"  >
@@ -147,6 +160,7 @@ class PostsList extends React.Component {
                     viewCount={items[0].viewCount}
                     subjectName={items[0].subjectName}
                     subjectID={items[0].subjectID}
+                    commentCount={items[0].commentCount}
                 ></HomeInfo>
             </div >}
 
@@ -168,6 +182,7 @@ class PostsList extends React.Component {
                     viewCount={items[1].viewCount}
                     subjectName={items[1].subjectName}
                     subjectID={items[1].subjectID}
+                    commentCount={items[1].commentCount}
                 />
             </div >}
 
@@ -182,6 +197,7 @@ class PostsList extends React.Component {
                     imageURL={items[2].imageURL}
                     publishDtm={items[2].publishDtm}
                     description={items[2].description}
+                    commentCount={items[2].commentCount}
                     title={items[2].title}
                     likeCount={items[2].likeCount}
                     dislikeCount={items[2].dislikeCount}

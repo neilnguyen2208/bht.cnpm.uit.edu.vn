@@ -499,6 +499,7 @@ class EditPostModal extends React.Component {
                                                     authorID={this.state.POST_DTO.authorID}
                                                     publishDtm={this.state.POST_DTO.publishDtm}
                                                     imageURL={this.state.POST_DTO.imageURL}
+                                                    imageFile={this.imageFile}
                                                     type="PREVIEW"
                                                     popUpMenuPrefix="edpmd-"
                                                 /> : <></>}

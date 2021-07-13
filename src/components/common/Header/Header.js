@@ -15,9 +15,11 @@ import { getQuickSearchResult } from 'redux/services/commonServices';
 import SmallLoader from "components/common/Loader/Loader_S"
 import { logoRouter, headerMenuRouters } from "components/base_components/router.config.js"
 import store from 'redux/store/index'
-import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction'
+import { get_QuickSearchResultRequest, get_QuickSearchResultReset } from 'redux/actions/commonAction';
 import { getPostSearch } from 'redux/services/postServices';
 import { getDocumentSearch } from 'redux/services/documentServices';
+import { getExerciseSearch } from 'redux/services/courseServices';
+
 import { DELAY_TIME } from 'constants.js';
 import QuickSearchResult from './QuickSearchResult'
 import { getQueryParamByName } from 'utils/urlUtils'
@@ -43,7 +45,7 @@ class Header extends React.Component {
             "page": 1,
             "postCategoryID": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
             "sortByPublishDtm": "desc",
-            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : '', 
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : '',
             "advancedSort": "HOT",
         }
     }
@@ -183,33 +185,50 @@ class Header extends React.Component {
                                         {this.query ?
                                             //not in search
                                             window.location.pathname.substring(0, 8) !== "/search/" || window.location.pathname === "/search/posts" ?
-                                                < Link to={`/search/posts?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&tab=hot`}
+                                                < Link to={`/search/posts?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&tab=REVELANT`}
                                                     onClick={() => {
+                                                        delete this.searchParamObject.sortByPublishDtm;
+                                                        delete this.searchParamObject.sortByAttempts;
                                                         this.searchParamObject.searchTerm = this.query;
                                                         this.searchParamObject.postCategoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
-                                                        this.searchParamObject.advancedSort = getQueryParamByName('sort') ? getQueryParamByName('sort') : "REVELANT";
-
+                                                        this.searchParamObject.advancedSort = getQueryParamByName('sort') ? getQueryParamByName('sort') : null;
                                                         this.props.getPostSearch(this.searchParamObject);
                                                         this.setState({})
                                                     }}  >
                                                     <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
                                                 </Link> :
                                                 window.location.pathname === "/search/documents" ?
-                                                    < Link to={`/search/documents?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&subject=${getQueryParamByName('subject') ? getQueryParamByName('subject') : 0}&tab=hot`}
+                                                    < Link to={`/search/documents?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&subject=${getQueryParamByName('subject') ? getQueryParamByName('subject') : 0}&tab=REVELANT`}
                                                         onClick={() => {
                                                             delete this.searchParamObject.postCategoryID;
+                                                            delete this.searchParamObject.sortByPublishDtm;
+                                                            delete this.searchParamObject.sortByAttempts;
                                                             this.searchParamObject.searchTerm = this.query;
                                                             this.searchParamObject.sortByPublishDtm = "DESC";
                                                             this.searchParamObject.categoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
                                                             this.searchParamObject.subjectID = getQueryParamByName('subject') ? getQueryParamByName('subject') : 0;
+                                                            this.searchParamObject.advancedSort = getQueryParamByName('sort') ? getQueryParamByName('sort') : null;
                                                             this.props.getDocumentSearch(this.searchParamObject);
                                                             this.setState({});
                                                         }}  >
                                                         <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
-                                                    </Link> : <></>
-
-
-
+                                                    </Link> :
+                                                    window.location.pathname === "/search/exercises" ?
+                                                        < Link to={`/search/exercises?page=1&q=${this.query ? this.query : getQueryParamByName('q')}&category=${getQueryParamByName('category') ? getQueryParamByName('category') : 0}&subject=${getQueryParamByName('subject') ? getQueryParamByName('subject') : 0}&tab=REVELANT`}
+                                                            onClick={() => {
+                                                                delete this.searchParamObject.postCategoryID;
+                                                                delete this.searchParamObject.advancedSort;
+                                                                this.searchParamObject.searchTerm = this.query;
+                                                                this.searchParamObject.sortByPublishDtm = "DESC";
+                                                                this.searchParamObject.categoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
+                                                                
+                                                                this.searchParamObject.subjectID = getQueryParamByName('subject') ? getQueryParamByName('subject') : 0;
+                                                                this.searchParamObject.advancedSort = getQueryParamByName('sort') ? getQueryParamByName('sort') : null;
+                                                                this.props.getExerciseSearch(this.searchParamObject);
+                                                                this.setState({});
+                                                            }}  >
+                                                            <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
+                                                        </Link> : <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
                                             :
                                             <img src={search_icon} alt="" style={{ position: "absolute", right: "10px", top: "3px" }} />
                                         }
@@ -342,6 +361,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getQuickSearchResult,
     getPostSearch,
     getDocumentSearch,
+    getExerciseSearch,
 }, dispatch);
 
 export default withRouter(

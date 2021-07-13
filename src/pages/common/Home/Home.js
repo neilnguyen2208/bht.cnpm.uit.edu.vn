@@ -71,7 +71,7 @@ class Home extends React.Component {
                 return <HomePostItem
                     authorAvatarURL={postItem.authorAvatarURL}
                     key={postItem.id}
-                    id={postItem.id}
+                    postID={postItem.id}
                     authorDisplayName={postItem.authorDisplayName}
                     authorID={postItem.authorID}
                     publishDtm={postItem.publishDtm}
@@ -123,7 +123,7 @@ class Home extends React.Component {
             newestActivitiesList = this.props.newActivities.map(postItem => {
                 return <HomePostItem
                     key={postItem.id}
-                    id={postItem.id}
+                    postID={postItem.id}
                     authorDisplayName={postItem.authorDisplayName}
                     authorID={postItem.authorID}
                     authorAvatarURL={postItem.authorAvatarURL}

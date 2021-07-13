@@ -129,7 +129,7 @@ class PostsList extends React.Component {
     renderRowThreeItems = (items) => {
         return <div className="d-flex">
             {/* //item 0 */}
-            {items[0] && <div className="home-item-container row"  >
+            {items[0] && <div className="home-item-container _row"  >
                 <HomeInfo
                     key={items[0].id}
                     documentID={items[0].id}
@@ -150,7 +150,7 @@ class PostsList extends React.Component {
                 ></HomeInfo>
             </div >}
 
-            {items[1] && < div className="home-item-container row"  >
+            {items[1] && < div className="home-item-container _row"  >
                 <HomeInfo
                     key={items[1].id}
                     documentID={items[1].id}
@@ -171,7 +171,7 @@ class PostsList extends React.Component {
                 />
             </div >}
 
-            {items[2] && < div className="home-item-container row" key={items[2].id} >
+            {items[2] && < div className="home-item-container _row" key={items[2].id} >
                 <HomeInfo
                     key={items[2].id}
                     documentID={items[2].id}

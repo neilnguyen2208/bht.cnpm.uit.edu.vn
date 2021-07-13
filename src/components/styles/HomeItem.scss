@@ -16,16 +16,16 @@
   box-shadow: 0px 0px 2px 0px var(--grayish);
 }
 
-.home-item-container.row .home-item {
+.home-item-container._row .home-item {
   min-width: 320px;
   width: 320px;
 }
 
-.home-item-container.row + .home-item-container.row {
+.home-item-container._row + .home-item-container._row {
   margin-left: 20px;
 }
 
-.home-item-container.row {
+.home-item-container._row {
   box-shadow: none;
 }
 
@@ -63,7 +63,7 @@
   padding: 10px;
 }
 
-.posts-list-container.row .home-item-container:first-child {
+.posts-list-container._row .home-item-container:first-child {
   padding-right: 10px;
 }
 

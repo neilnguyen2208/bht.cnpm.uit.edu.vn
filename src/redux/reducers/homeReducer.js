@@ -32,6 +32,9 @@ import {
     HIGHLIGHT_A_POST_RESET,
     HIGHLIGHT_A_POST_SUCCESS,
     HIGHLIGHT_A_POST_FAILURE,
+    GET_NEWEST_EXERCISES_LIST_REQUEST,
+    GET_NEWEST_EXERCISES_LIST_SUCCESS,
+    GET_NEWEST_EXERCISES_LIST_FAILURE,
 
 } from "../constants.js"
 
@@ -60,6 +63,11 @@ const initialState = {
         error: ""
     },
     newActivities: {
+        isLoading: false,
+        data: [],
+        error: ""
+    },
+    newExercises: {
         isLoading: false,
         data: [],
         error: ""
@@ -177,6 +185,16 @@ function HomeReducer(state = initialState, action) {
             return { ...state, newActivities: { isLoading: false, data: action.payload, error: '' } }
         case GET_NEWEST_ACTIVITIES_LIST_FAILURE:
             return { ...state, newActivities: { isLoading: false, error: action.payload, data: [] } }
+
+
+        case GET_NEWEST_EXERCISES_LIST_REQUEST:
+            return { ...state, newExercises: { isLoading: true } };
+        case GET_NEWEST_EXERCISES_LIST_SUCCESS:
+            console.log(action.payload)
+            return { ...state, newExercises: { isLoading: false, data: action.payload, error: '' } }
+        case GET_NEWEST_EXERCISES_LIST_FAILURE:
+            return { ...state, newExercises: { isLoading: false, error: action.payload, data: [] } }
+
         default:
             return state;
     }

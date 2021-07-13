@@ -25,7 +25,10 @@ import {
 
     stick_APostToTopReset,
     stick_APostToTopSuccess,
-    stick_APostToTopFailure
+    stick_APostToTopFailure,
+    get_NewestExcercisesRequest,
+    get_NewestExcercisesSuccess,
+    get_NewestExcercisesFailure
 
 } from "redux/actions/homeAction.js";
 import { authRequest } from 'utils/requestUtils'
@@ -124,6 +127,8 @@ export function getHighlightPosts() {
     }
 }
 
+
+//use after
 export function getNewestActivities() {
     return dispatch => {
         dispatch(get_NewestActivitiesRequest());
@@ -156,6 +161,18 @@ export function getNewestActivities() {
                     }).catch(error => dispatch(get_NewestActivitiesFailure(error)))
             }).catch(error => {
                 dispatch(get_NewestActivitiesFailure(error)); //
+            })
+    }
+}
+
+export function getNewestExercises() {
+    return dispatch => {
+        dispatch(get_NewestExcercisesRequest());
+        authRequest.get(`/exercises/searchFilter?sortByPublishDtm=DESC&page=0`)
+            .then(response_1 => {
+                dispatch(get_NewestExcercisesSuccess(response_1.data.exerciseSearchResultDTOs));
+            }).catch(error => {
+                dispatch(get_NewestExcercisesFailure(error)); //
             })
     }
 }

@@ -30,7 +30,11 @@ import {
 
   GET_NEWEST_ACTIVITIES_LIST_REQUEST,
   GET_NEWEST_ACTIVITIES_LIST_SUCCESS,
-  GET_NEWEST_ACTIVITIES_LIST_FAILURE
+  GET_NEWEST_ACTIVITIES_LIST_FAILURE,
+
+  GET_NEWEST_EXERCISES_LIST_REQUEST,
+  GET_NEWEST_EXERCISES_LIST_SUCCESS,
+  GET_NEWEST_EXERCISES_LIST_FAILURE
 
 } from "../constants.js"
 
@@ -119,6 +123,26 @@ export function get_NewestActivitiesFailure(error) {
   }
 }
 
+export function get_NewestExcercisesRequest() {
+  return {
+    type: GET_NEWEST_EXERCISES_LIST_REQUEST,
+  }
+}
+
+export function get_NewestExcercisesSuccess(data) {
+  return {
+    type: GET_NEWEST_EXERCISES_LIST_SUCCESS,
+    payload: data
+  }
+}
+
+export function get_NewestExcercisesFailure(error) {
+  return {
+    type: GET_NEWEST_EXERCISES_LIST_FAILURE,
+    payload: error
+  }
+}
+
 export function highlight_APostReset() {
   return {
     type: HIGHLIGHT_A_POST_RESET
@@ -138,7 +162,6 @@ export function highlight_APostFailure(data) {
 
   }
 }
-
 
 export function delete_HighlightAPostReset() {
   return {

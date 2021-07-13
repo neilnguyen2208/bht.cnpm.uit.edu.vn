@@ -1,8 +1,8 @@
 {
   "realm": "BHTCNPM",
-  "auth-server-url": "https://auth.uitstudy.space:8443/auth/",
+  "auth-server-url": "https://auth.uitstudy.space:8443/auth",
   "ssl-required": "external",
-  "resource":"bhtcnpm-react-dev",
+  "resource": "bhtcnpm-react-dev",
   "public-client": true,
   "confidential-port": 0,
   "enable-cors": true

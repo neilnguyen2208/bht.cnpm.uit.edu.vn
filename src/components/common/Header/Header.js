@@ -43,7 +43,8 @@ class Header extends React.Component {
             "page": 1,
             "postCategoryID": getQueryParamByName('category') ? getQueryParamByName('category') : 0,
             "sortByPublishDtm": "desc",
-            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : ''
+            "searchTerm": getQueryParamByName('q') ? getQueryParamByName('q') : '', 
+            "advancedSort": "HOT",
         }
     }
 
@@ -186,6 +187,8 @@ class Header extends React.Component {
                                                     onClick={() => {
                                                         this.searchParamObject.searchTerm = this.query;
                                                         this.searchParamObject.postCategoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
+                                                        this.searchParamObject.advancedSort = getQueryParamByName('sort') ? getQueryParamByName('sort') : "REVELANT";
+
                                                         this.props.getPostSearch(this.searchParamObject);
                                                         this.setState({})
                                                     }}  >

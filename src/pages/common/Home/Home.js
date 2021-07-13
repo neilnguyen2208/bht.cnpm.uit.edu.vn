@@ -11,6 +11,8 @@ import './Home.scss'
 //utils
 import { setQueryParam } from 'utils/urlUtils'
 import HomePostItem from 'components/post/HomeInfo'
+import HomeExerciseItem from 'components/course/HomeInfo'
+
 import HomeDocumentItem from 'components/document/HomeInfo'
 
 import Wallpage from 'components/home/Wallpage/Wallpage'
@@ -20,7 +22,9 @@ import {
     getTrendingDocuments,
     getNewestPosts,
     getHighlightPosts,
-    getNewestActivities
+    getNewestActivities,
+    getNewestExercises
+
 }
     from 'redux/services/homeServices'
 
@@ -41,6 +45,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
+        this.props.getNewestExercises();
         this.props.getNewestActivities();
         this.props.getNewestPosts();
         this.props.getTrendingDocuments();
@@ -58,6 +63,8 @@ class Home extends React.Component {
         let newestPosts = <></>;
         let TrendingDocuments = <></>;
         let newestActivitiesList = <></>;
+        let newestExercisesList = <></>;
+
 
         if (!this.props.isNewPostsLoading) {
             newestPosts = this.props.newPosts.map(postItem => {
@@ -88,7 +95,7 @@ class Home extends React.Component {
 
         if (!this.props.isTrendingDocumentLoading)
             TrendingDocuments = this.props.trendingDocuments.map(item => {
-               
+
                 return <HomeDocumentItem
                     key={item.id}
                     documentID={item.id}
@@ -139,6 +146,29 @@ class Home extends React.Component {
             newestActivitiesList = <Loader />
         }
 
+        if (!this.props.isNewExercisesLoading) {
+            newestExercisesList = this.props.newExercises.map(exerciseItem => {
+                return <HomeExerciseItem
+                    key={exerciseItem.id}
+                    id={exerciseItem.id}
+                    authorDisplayName={exerciseItem.author.displayName}
+                    authorID={exerciseItem.author.id}
+                    authorAvatarURL={exerciseItem.author.avatarURL}
+                    publishDtm={exerciseItem.publishDtm}
+                    categoryName={exerciseItem.category.name}
+                    categoryID={exerciseItem.category.id}
+                    title={exerciseItem.title}
+                    description={exerciseItem.description}
+                    summary={exerciseItem.summary}
+                    subjectName={exerciseItem.subject.name}
+                    subjectID={exerciseItem.subject.id}
+                ></HomeExerciseItem>
+            })
+        }
+        else {
+            newestActivitiesList = <Loader />
+        }
+
         return (
 
             <div className="pr-layout">
@@ -146,45 +176,44 @@ class Home extends React.Component {
                 <Wallpage sliderWidth="1000" sliderHeight="250" />
                 <div className="home-layout" >
 
-                    {/* bài viết mới nhất */}
+                    <div className="part-title">
+                        BÀI TẬP MỚI:
+                    </div>
+                    <div className="mg-top-5px" />
+                    <div className="flipped-container flipped home-item-container-wrapper">
+                        <div className="flipped-content">
+                            <div className="home-item-container _row">
+                                {newestExercisesList}
+                            </div >
+                        </div >
+                    </div >
+                    <div className="mg-top-10px" />
+
                     <div className="part-title" >
                         BÀI VIẾT MỚI NHẤT
                     </div>
                     <div className="mg-top-5px" />
                     <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            <div className="home-item-container row">
+                            <div className="home-item-container _row">
                                 {newestPosts}
                             </div>
                         </div>
                     </div>
 
-                    {/* Cơ sở nhóm ngành */}
                     <div className="part-title">
                         TÀI LIỆU HAY:
                     </div>
                     <div className="mg-top-5px" />
                     <div className="flipped-container flipped home-item-container-wrapper">
                         <div className="flipped-content">
-                            <div className="home-item-container row">
+                            <div className="home-item-container _row">
                                 {TrendingDocuments}
                             </div>
                         </div>
                     </div>
 
-                    {/* Danh sách môn học */}
-                    <div className="part-title">
-                        HOẠT ĐỘNG MỚI:
-                    </div>
-                    <div className="mg-top-5px" />
-                    <div className="flipped-container flipped home-item-container-wrapper">
-                        <div className="flipped-content">
-                            <div className="home-item-container row">
-                                {newestActivitiesList}
-                            </div >
-                        </div >
-                    </div >
-                    <div className="mg-top-10px" />
+
                 </div >
             </div >
         );
@@ -201,6 +230,8 @@ const mapStateToProps = (state) => {
         isNewPostsLoading: state.home.newPosts.isLoading,
         newActivities: state.home.newActivities.data,
         isNewActivitiesLoading: state.home.newActivities.isLoading,
+        newExercises: state.home.newExercises.data,
+        isNewExercisesLoading: state.home.newExercises.isLoading,
 
     };
 }
@@ -209,7 +240,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getTrendingDocuments,
     getNewestPosts,
     getHighlightPosts,
-    getNewestActivities
+    getNewestActivities,
+    getNewestExercises
+
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

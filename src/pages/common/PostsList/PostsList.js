@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import HomeFirstInfo from 'components/post/HomeFirstInfo';
 import HomeTextInfo from 'components/post/HomeTextInfo';
 import HomeInfo from 'components/post/HomeInfo';
-import bg from 'assets/images/BG1_White.jpg'
+import bg from 'assets/images/white_bg.jpg'
 import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
 import { request } from 'utils/requestUtils';
 
@@ -135,7 +135,7 @@ class PostsList extends React.Component {
 
     renderRowThreeItems = (items) => {
         return <div className="d-flex">
-            {items[0] && <div className="home-item-container row" key={items[0].id} >
+            {items[0] && <div className="home-item-container _row" key={items[0].id} >
                 <HomeInfo
                     authorAvatarURL={items[0].authorAvatarURL}
                     key={items[0].id}
@@ -156,7 +156,7 @@ class PostsList extends React.Component {
                     commentCount={items[0].commentCount}
                 ></HomeInfo>
             </div >}
-            {items[1] && <div className="home-item-container row" key={items[1].id} >
+            {items[1] && <div className="home-item-container _row" key={items[1].id} >
                 <HomeInfo
                     authorAvatarURL={items[1].authorAvatarURL}
                     key={items[1].id}
@@ -177,7 +177,7 @@ class PostsList extends React.Component {
                     commentCount={items[1].commentCount}
                 ></HomeInfo>
             </div >}
-            {items[2] && <div className="home-item-container row" key={items[2].id} >
+            {items[2] && <div className="home-item-container _row" key={items[2].id} >
                 <HomeInfo
                     authorAvatarURL={items[2].authorAvatarURL}
                     key={items[2].id}

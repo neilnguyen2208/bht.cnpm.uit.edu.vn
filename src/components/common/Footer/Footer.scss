@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@500&display=swap");
+
 a,
 a:hover,
 a:focus,
@@ -38,9 +40,10 @@ section {
 }
 .footer {
     margin-top: 20px;
-    padding: 50px 0px 0px;
-    background-color: var(--blue);
-    border-top: 5px solid var(--gray);
+    padding: 10px 0px 0px;
+    box-shadow: 0px 0px 4px 0px;
+    background-image: url("../../../assets/images/white_bg.jpg");
+    border-top: 5px solid var(--blue);
 }
 
 .footer .widget1 p {
@@ -55,6 +58,14 @@ section {
 
 .socialLinks ul li {
     display: inline-block;
+}
+
+.row {
+    margin-top: 10px;
+    background: white;
+    border-left: 3px solid var(--blue);
+    padding: 0px;
+    box-shadow: 0px 0px 3px 0px #c4c4c4;
 }
 
 .socialLinks ul li a i {
@@ -108,6 +119,7 @@ section {
 .socialLinks ul li a:hover .fa-linkedin-in {
     background: #0177b5;
 }
+
 footer .logo {
     max-width: 200px;
 }
@@ -115,9 +127,8 @@ footer .logo {
 .footer h5 {
     font-weight: 500;
     margin-bottom: 28px;
-    text-transform: capitalize;
     font-weight: 600;
-    color: #fff;
+    color: var(--black);
     font-size: 21px;
 }
 
@@ -125,9 +136,11 @@ footer .logo {
     margin-right: 20px;
     max-width: 100px;
 }
+
 .footer .widget2 .media p {
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--black);
+
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
@@ -137,7 +150,8 @@ footer .logo {
 
 .footer .widget2 .media span {
     font-size: 12px;
-    color: #ffb606;
+    color: var(--black);
+
     text-transform: uppercase;
     margin-top: 15px;
     display: block;
@@ -148,41 +162,91 @@ footer .logo {
 }
 
 .footer .widget3 ul li a,
-.footer .widget4 ul li a {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: capitalize;
-    margin-bottom: 13px;
+.footer .widget4 ul li a,
+.footer .widget5 ul li a {
+    font-size: 15px;
+    color: var(--black);
+    margin-bottom: 5px;
+    margin-left: 10px;
     display: block;
 }
 
 .footer .widget3 ul li a:hover,
 .footer .widget4 ul li a:hover,
 .footer .widget2 a:hover p {
-    color: #ffb606;
+    color: var(--black);
 }
 
-.footer .widget3 h5 {
-    margin-bottom: 22px;
-    font-weight: 600;
-    color: #fff;
-    font-size: 21px;
-    line-height: 32px;
+.web-intro {
+    position: relative;
+    color: var(--black);
+    margin-top: 4px;
+    margin: auto;
+    border-left: 3px solid var(--gray);
+    margin-left: 10px;
+    line-height: 20px;
+    font-family: "Arial";
 }
 
-.footer .widget4 h5 {
-    margin-bottom: 22px;
+.footer .widget4 h5,
+.footer .widget3 h5,
+.footer .widget5 h5 {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 3px;
     font-weight: 600;
-    color: #fff;
-    font-size: 21px;
+    margin-top: 10px;
+    color: var(--blue);
+    font-size: 17px;
 }
 
 .copyRightArea {
-    margin-top: 83px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 25px 0px 28px;
+    padding: 5px 0px 5x;
 }
 
 .copyRightArea p {
     color: rgba(255, 255, 255, 0.6);
+}
+
+ul.footer-social {
+    float: right;
+}
+
+ul.footer-social li {
+    display: inline;
+    margin-right: 16px;
+}
+
+ul.footer-social i {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    font-weight: 800;
+}
+
+ul.footer-social i.fa-facebook-f {
+    background: var(--blue);
+}
+
+ul.footer-social i.fa-envelope {
+    background: var(--red);
+}
+
+ul.footer-social li:last-child {
+    margin-right: 0px;
+}
+
+ul.footer-social i:hover {
+    background: var(--gray);
+    color: #fff;
 }

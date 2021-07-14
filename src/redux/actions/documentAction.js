@@ -84,6 +84,15 @@ import {
     GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS,
     GET_DOCUMENT_BY_ID_FOR_EDIT_FAILURE,
     GET_DOCUMENT_BY_ID_FOR_EDIT_RESET,
+    GET_RELATIVE_POSTS_TO_A_DOCUMENT_RESET,
+    GET_RELATIVE_POSTS_TO_A_DOCUMENT_SUCCESS,
+    GET_RELATIVE_POSTS_TO_A_DOCUMENT_FAILURE,
+    GET_RELATIVE_EXERCISES_TO_A_POST_RESET,
+    GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS,
+    GET_RELATIVE_EXERCISES_TO_A_POST_FAILURE,
+    GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_RESET,
+    GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_SUCCESS,
+    GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_FAILURE
 } from "../constants.js"
 
 //my documents
@@ -561,4 +570,32 @@ export function setProgressUploadFileSuccess(data) {
 
 export function setProgressUploadFileFailure(error) {
     return { type: SET_PROGRESS_UPLOAD_FILE_FAILURE, payload: error }
+}
+
+export function get_RelativePostsToADocumentReset() {
+    return { type: GET_RELATIVE_POSTS_TO_A_DOCUMENT_RESET }
+}
+
+export function get_RelativePostsToADocumentSuccess(data) {
+    return { type: GET_RELATIVE_POSTS_TO_A_DOCUMENT_SUCCESS, payload: data }
+}
+
+export function get_RelativePostsToADocumentFailure() {
+    return { type: GET_RELATIVE_POSTS_TO_A_DOCUMENT_FAILURE
+     }
+}
+
+export function get_RelativeExercisesToADocumentReset() {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_RESET
+     }
+}
+
+export function get_RelativeExercisesToADocumentSuccess(data) {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_SUCCESS
+        , payload: data }
+}
+
+export function get_RelativeExercisesToADocumentFailure() {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_FAILURE
+     }
 }

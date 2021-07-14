@@ -580,8 +580,8 @@ export function get_RelativeDocumentsToAPostReset() {
     return { type: GET_RELATIVE_DOCUMENTS_TO_A_POST_RESET }
 }
 
-export function get_RelativeDocumentsToAPostSuccess() {
-    return { type: GET_RELATIVE_DOCUMENTS_TO_A_POST_SUCCESS }
+export function get_RelativeDocumentsToAPostSuccess(data) {
+    return { type: GET_RELATIVE_DOCUMENTS_TO_A_POST_SUCCESS, payload: data }
 }
 
 export function get_RelativeDocumentsToAPostFailure() {
@@ -592,8 +592,8 @@ export function get_RelativeExercisesToAPostReset() {
     return { type: GET_RELATIVE_EXERCISES_TO_A_POST_RESET }
 }
 
-export function get_RelativeExercisesToAPostSuccess() {
-    return { type: GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS }
+export function get_RelativeExercisesToAPostSuccess(data) {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS, payload: data }
 }
 
 export function get_RelativeExercisesToAPostFailure() {

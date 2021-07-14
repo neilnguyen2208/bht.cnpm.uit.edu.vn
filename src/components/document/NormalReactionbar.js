@@ -23,6 +23,7 @@ import { docReactionType } from 'constants.js'
 import { reactionADocument } from 'redux/services/documentServices'
 import { RequireLogin } from 'components/base_components/RequireLoginComponent';
 import { DocumentAction } from 'authentication/permission.config';
+import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
 
 class NormalReactionbar extends React.Component {
 
@@ -107,6 +108,14 @@ class NormalReactionbar extends React.Component {
     this.calculateBar();
   }
 
+  onCommentBtnClick = () => {
+    document.getElementById("cr-cmt") &&
+      document.getElementById("cr-cmt").scrollIntoView()
+    if (getCKEInstance('crt-cmmnt-cke')) {
+      getCKEInstance('crt-cmmnt-cke').focus()
+    }
+  }
+  
   render() {
     // 
     //#region like, unlike buttons
@@ -142,8 +151,8 @@ class NormalReactionbar extends React.Component {
                 availableActions={this.props.availableActions}
                 requiredAction={DocumentAction.React}
                 useAction={this.props.useAction}
-                
-                >
+
+              >
                 <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
                   <div className="d-flex"> {likeBtn}</div>
                   <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0}</div>
@@ -168,19 +177,41 @@ class NormalReactionbar extends React.Component {
 
           </div>
           <div className="vertical-line" />
-          <RequireLogin permissions={[Document.DOCCOMMENT_PUBLIC_SELF_CREATE]}
-            availableActions={this.props.availableActions}
-            requiredAction={DocumentAction.Comment}
-            useAction={this.props.useAction}>
-            <div className="document-comment-count-container">
-              <div className="comment-btn-text">
-                Bình luận
+          {window.location.pathname.substring(0, 18) === "/document-content" || window.location.pathname === "/upload-document" ?
+            <RequireLogin permissions={[Document.DOCCOMMENT_PUBLIC_SELF_CREATE]}
+              availableActions={this.props.availableActions}
+              requiredAction={DocumentAction.Comment}
+              isLink={true}
+              useAction={this.props.useAction}
+              to={"/document-content/" + this.props.documentID + "#cr-cmt"}
+              expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}>
+              <div className="comment-count-container">
+                <div className="comment-btn-text">
+                  Bình luận
+                </div>
+                <div className="comment-btn-number">
+                  {formatNumber(this.props.commentCount)}
+                </div>
               </div>
-              <div className="comment-btn-number">
-                {this.props.commentCount ? formatNumber(this.props.commentCount) : 0}
+            </RequireLogin>
+            :
+            <RequireLogin permissions={[Document.DOCCOMMENT_PUBLIC_SELF_CREATE]}
+              availableActions={this.props.availableActions}
+              requiredAction={DocumentAction.Comment}
+              useAction={this.props.useAction}
+              isLink={true}
+              to={"/post-content/" + this.props.documentID + "#cr-cmt"}
+              expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
+              <div className="comment-count-container">
+                <div className="comment-btn-text">
+                  Bình luận
+                </div>
+                <div className="comment-btn-number">
+                  {this.props.commentCount ? formatNumber(this.props.commentCount) : 0}
+                </div>
               </div>
-            </div>
-          </RequireLogin>
+            </RequireLogin>
+          }
         </div>
 
         <div className="d-flex">

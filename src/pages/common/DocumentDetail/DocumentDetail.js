@@ -9,8 +9,9 @@ import { connect } from "react-redux";
 import 'components/styles/Detail.scss'
 import DetailInfo from "components/document/DetailInfo"
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
-import RelativeLoader from 'components/common/Loader/RelativeLoader'
+import RelativeLoader from 'components/common/Loader/RelativeLoader';
 
+import RelativeToDocument from 'components/document/RelativeToDocument';
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import store from 'redux/store/index.js';
 import 'components/common/CustomCKE/CKEditorContent.scss';
@@ -150,6 +151,17 @@ class DocumentDetail extends React.Component {
                                         availableActions={this.props.currentDocument.availableActions}
                                         useAction
                                     />
+                                    <div className="d-flex" >
+                                        {!this.props.isRelativePostsLoading && this.props.relativePosts ?
+                                            <RelativeToDocument title={"BÀI VIẾT LIÊN QUAN"} items={
+                                                this.props.relativePosts} type="POST" />
+                                            : <DocPostDetailLoader />
+                                        }
+                                        {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
+                                            <RelativeToDocument title={"BÀI TẬP LIÊN QUAN"}
+                                                items={this.props.relativeExercises} type="EXERCISE" /> : <DocPostDetailLoader />
+                                        }
+                                    </div>
                                     <div id="cr-cmt" />
                                     <CommentSection
                                         useAction={true}
@@ -195,6 +207,10 @@ const mapStateToProps = (state) => {
         isSameSubjectLoadDone: state.document.sameSubjectDocuments.isLoadDone,
         relativeDocuments: state.document.relativeDocuments.data,
         isRelativeDocLoadDone: state.document.relativeDocuments.isLoadDone,
+        relativePosts: state.document.relativePosts.data,
+        isRelativePostsLoading: state.document.relativePosts.isLoading,
+        relativeExercises: state.document.relativeExercises.data,
+        isRelativeExercisesLoading: state.document.relativeExercises.isLoading,
     };
 }
 

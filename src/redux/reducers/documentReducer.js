@@ -61,7 +61,13 @@ import {
     GET_DOCUMENT_BY_ID_FOR_EDIT_SUCCESS,
     GET_A_DOCUMENT_STATISTIC_RESET,
     GET_A_DOCUMENT_STATISTIC_SUCCESS,
-    GET_A_DOCUMENT_STATISTIC_FAILURE
+    GET_A_DOCUMENT_STATISTIC_FAILURE,
+    GET_RELATIVE_POSTS_TO_A_DOCUMENT_RESET,
+    GET_RELATIVE_POSTS_TO_A_DOCUMENT_SUCCESS,
+    GET_RELATIVE_POSTS_TO_A_DOCUMENT_FAILURE,
+    GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_RESET,
+    GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_SUCCESS,
+    GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_FAILURE
 
 } from '../constants.js'
 
@@ -89,7 +95,7 @@ const initialState = {
     currentDocumentForEdit: {
         isLoading: false, data: {}, isLoadDone: false,
     },
-    
+
     documentStatistic: {
         isLoadDone: false,
         data: {},
@@ -148,6 +154,17 @@ const initialState = {
         totalElements: 0
     },
 
+    relativePosts: {
+        isLoading: false,
+        data: [],
+        error: ''
+    },
+
+    relativeExercises: {
+        isLoading: false,
+        data: [],
+        error: ''
+    }
 
 }
 
@@ -459,6 +476,42 @@ function DocReducer(state = initialState, action) {
                 error: action.payload
             }
         }
+
+        case GET_RELATIVE_POSTS_TO_A_DOCUMENT_RESET:
+            return { ...state, relativePosts: { isLoading: true } };
+        case GET_RELATIVE_POSTS_TO_A_DOCUMENT_SUCCESS:
+            return {
+                ...state, relativePosts: {
+                    isLoading: false,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_POSTS_TO_A_DOCUMENT_FAILURE:
+            return {
+                ...state, relativePosts: {
+                    error: action.payload,
+                    isLoading: false, data: []
+                }
+            }
+
+        case GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_RESET:
+            return { ...state, relativeExercises: { isLoading: true } };
+        case GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_SUCCESS:
+            return {
+                ...state, relativeExercises: {
+                    isLoading: false,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_EXERCISES_TO_A_DOCUMENT_FAILURE:
+            return {
+                ...state, relativeExercises: {
+                    error: action.payload,
+                    isLoading: false, data: []
+                }
+            }
 
         default:
             return state;

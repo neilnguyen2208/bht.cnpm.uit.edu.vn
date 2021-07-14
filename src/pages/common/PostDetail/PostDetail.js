@@ -130,11 +130,11 @@ class PostDetail extends React.Component {
                                                     viewCount={this.props.currentPost.viewCount}
                                                 />
                                                 <div className="d-flex" >
-                                                    {this.props.isRelativeDocumentsLoading && this.props.relativeDocuments ?
+                                                    {!this.props.isRelativeDocumentsLoading && this.props.relativeDocuments ?
                                                         <RelativeToPost title={"TÀI LIỆU LIÊN QUAN"} items={
                                                             this.props.relativeDocuments} type="DOCUMENT" />
                                                         : <Loader />}
-                                                    {this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
+                                                    {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
                                                         <RelativeToPost title={"BÀI TẬP LIÊN QUAN"}
                                                             items={this.props.relativeExercises} /> : <Loader />
                                                     }
@@ -192,6 +192,8 @@ class PostDetail extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.post.relativeDocuments.data);
+
     return {
         currentPost: state.post.currentPost.data,
         isLoadDone: state.post.currentPost.isLoadDone,

@@ -71,6 +71,11 @@ import {
     get_DocumentByIDForEditFailure,
     get_DocumentByIDForEditSuccess,
     get_DocumentByIDForEditReset,
+    get_RelativePostsToADocumentReset,
+    get_RelativePostsToADocumentSuccess,
+    get_RelativePostsToADocumentFailure,
+    get_RelativeExercisesToADocumentReset,
+    get_RelativeExercisesToADocumentSuccess,
 } from "redux/actions/documentAction.js";
 import FormData from 'form-data';
 import {
@@ -88,6 +93,7 @@ import {
 import { authRequest, multipartRequest } from 'utils/requestUtils'
 import { getUserStatisticById } from "./authServices";
 import { get_ADocumentStatisticFailure, get_ADocumentStatisticReset, get_ADocumentStatisticSuccess } from "redux/actions/documentCommentAction";
+import { get_RelativeExercisesToAPostFailure } from "redux/actions/postAction";
 
 export function getManagementDocuments(searchParamObject) {
     return dispatch => {
@@ -388,7 +394,9 @@ export function getDocumentById(id) {
                 //get relative documents
                 dispatch(getRelativeDocuments(result_1.id, result_1.authorID));
                 dispatch(getSameSubjectDocuments(result_1.id, result_1.subjectID));
-
+                dispatch(getRelativePostsToADocument(result_1.id));
+                dispatch(getRelativeExercisesToADocument(result_1.id));
+                
                 //get user statistic
                 dispatch(getUserStatisticById(result_1.authorID));
 
@@ -605,3 +613,24 @@ export function getDocumentsByFilter(searchParamObject) { //this API to get all 
     }
 }
 
+export function getRelativePostsToADocument(documentID) {
+    return dispatch => {
+        dispatch(get_RelativePostsToADocumentReset())
+        authRequest.get(`/posts/related?docID=${documentID}`)
+            .then(response => {
+                dispatch(get_RelativePostsToADocumentSuccess(response.data))
+            })
+            .catch(error => { dispatch(get_RelativePostsToADocumentFailure(error)) })
+    }
+}
+
+export function getRelativeExercisesToADocument(documentID) {
+    return dispatch => {
+        dispatch(get_RelativeExercisesToADocumentReset())
+        authRequest.get(`/exercises/related?docID=${documentID}`)
+            .then(response => {
+                dispatch(get_RelativeExercisesToADocumentSuccess(response.data))
+            })
+            .catch(error => { dispatch(get_RelativeExercisesToAPostFailure(error)) })
+    }
+}

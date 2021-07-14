@@ -144,7 +144,7 @@ class DocumentDetail extends React.Component {
                                         documentID={this.props.currentDocument.id}
                                         likeCount={this.props.currentDocument.likeCount ? this.props.currentDocument.likeCount : 0}
                                         dislikeCount={this.props.currentDocument.dislikeCount ? this.props.currentDocument.dislikeCount : 0}
-                                        docReactionType={this.props.currentDocument.docReactionType ? this.props.currentDocument.docReactionType : "NONE"}
+                                        docReactionType={this.props.currentDocument.docReactionType}
                                         commentCount={this.props.currentDocument.commentCount ? this.props.currentDocument.commentCount : 0}
                                         downloadCount={this.props.currentDocument.downloadCount ? this.props.currentDocument.downloadCount : 0}
                                         viewCount={this.props.currentDocument.viewCount ? this.props.currentDocument.viewCount : 0}

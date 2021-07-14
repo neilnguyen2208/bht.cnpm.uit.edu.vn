@@ -74,7 +74,7 @@ class HomeTextInfo extends React.Component {
           documentID={this.props.documentID}
           likeCount={this.props.likeCount}
           dislikeCount={this.props.dislikeCount}
-          docReactionType={this.props.docReactionType ? this.props.docReactionType : "NONE"}
+          docReactionType={this.props.docReactionType}
           commentCount={this.props.commentCount}
           downloadCount={this.props.downloadCount}
           viewCount={this.props.viewCount}

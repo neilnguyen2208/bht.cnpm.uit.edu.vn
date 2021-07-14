@@ -126,7 +126,7 @@ class ProfileDocument extends React.Component {
                             documentID={item.id}
                             likeCount={item.likeCount}
                             dislikeCount={item.dislikeCount}
-                            docReactionType={item.docReactionType ? item.docReactionType : "NONE"}
+                            docReactionType={item.docReactionType }
                             commentCount={item.commentCount}
                             downloadCount={item.downloadCount}
                             viewCount={item.viewCount}

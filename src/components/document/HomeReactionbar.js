@@ -40,12 +40,12 @@ class NormalReactionbar extends React.Component {
     this.likeCount = this.props.likeCount;
     this.dislikeCount = this.props.dislikeCount;
     switch (this.props.docReactionType) {
-      case docReactionType.like:
+      case docReactionType.like.value:
         this.setState({
           isLiked: 1, isDisliked: 0
         });
         break;
-      case docReactionType.dislike:
+      case docReactionType.dislike.value:
         this.setState({
           isLiked: 0, isDisliked: 1
         })
@@ -62,14 +62,14 @@ class NormalReactionbar extends React.Component {
 
     if (this.state.isLiked === 0) { //neu bam like ma chua like
 
-      if (this.props.docReactionType === docReactionType.like) //neu trc khi load da like
+      if (this.props.docReactionType === docReactionType.like.value) //neu trc khi load da like
         this.likeCount = this.props.likeCount;
       else this.likeCount = this.props.likeCount + 1; //chua dislike va chua like
       if (this.state.isDisliked === 1) { //da dislike va chua like
         this.dislikeCount = this.dislikeCount - 1;
       }
       //call API like
-      this.props.reactionADocument(this.props.documentID, docReactionType.like)
+      this.props.reactionADocument(this.props.documentID, docReactionType.like.name)
       this.setState({ isLiked: 1, isDisliked: 0 })
       this.calculateBar();
       return;
@@ -77,7 +77,7 @@ class NormalReactionbar extends React.Component {
 
     //neu da like 
     //call API none
-    this.props.reactionADocument(this.props.documentID, docReactionType.none)
+    this.props.reactionADocument(this.props.documentID, docReactionType.none.name)
     this.likeCount = this.likeCount - 1;
     this.setState({ isDisliked: 0, isLiked: 0 });
     this.calculateBar();
@@ -86,21 +86,21 @@ class NormalReactionbar extends React.Component {
   toggleDislikeImage = () => {
 
     if (this.state.isDisliked === 0) { //neu bam dislike ma chua dislike
-      if (this.props.docReactionType === docReactionType.dislike) //neu trc khi load da dislike
+      if (this.props.docReactionType === docReactionType.dislike.value) //neu trc khi load da dislike
         this.dislikeCount = this.props.dislikeCount;
       else this.dislikeCount = this.props.dislikeCount + 1; //chua dislike va chua like
       if (this.state.isLiked === 1) { //neu bam dislike va da like
         this.likeCount = this.likeCount - 1;
       }
       //call API dislike
-      this.props.reactionADocument(this.props.documentID, docReactionType.dislike)
+      this.props.reactionADocument(this.props.documentID, docReactionType.dislike.name)
       this.setState({ isDisliked: 1, isLiked: 0 })
       this.calculateBar();
       return;
     }
 
     //neu da dislike 
-    this.props.reactionADocument(this.props.documentID, docReactionType.none)
+    this.props.reactionADocument(this.props.documentID, docReactionType.none.name)
     this.dislikeCount = this.dislikeCount - 1;
     this.setState({ isDisliked: 0, isLiked: 0 });
     this.calculateBar();

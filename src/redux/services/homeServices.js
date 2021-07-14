@@ -80,13 +80,11 @@ export function getNewestPosts() {
                             finalResult.push({
                                 ...result_1[i],
                                 ...(result.data.find((itmInner) => itmInner.id === result_1[i].id)),
-                            }
-                            );
+                            });
                         }
                         dispatch(get_NewestPostsSuccess(finalResult))
                     }).catch(error => dispatch(get_NewestPostsFailure(error)))
-            }
-        )
+            })
             .catch(error => {
                 dispatch(get_NewestPostsFailure(error)); //
             })

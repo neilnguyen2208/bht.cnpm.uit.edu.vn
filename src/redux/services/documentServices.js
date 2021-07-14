@@ -149,15 +149,17 @@ export function getDocumentSearch(searchParamObject) {
                 let IDarr = '';
                 response.data.docSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
                 authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
-                    .then(result => {
+                    .then(response_2 => {
                         //merge summary array and statistic array
                         let finalResult = [];
                         for (let i = 0; i < result_1.docSummaryDTOs.length; i++) {
                             finalResult.push({
                                 ...result_1.docSummaryDTOs[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docSummaryDTOs[i].id)),
+                                ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryDTOs[i].id)),
                             });
                         }
+
+                        console.log(finalResult);
                         dispatch(get_DocumentSearchSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                     }).catch(() => get_DocumentSearchFailure())
             })
@@ -215,7 +217,7 @@ export function getReportedDocuments(searchParamObject) {
                         for (let i = 0; i < result_1.docReportDTOs.length; i++) {
                             finalResult.push({
                                 ...result_1.docReportDTOs[i],
-                                ...(result.data.find((itmInner) => itmInner.docID === result_1.docReportDTOs[i].id)),
+                                ...(result.data.find((itmInner) => itmInner.id === result_1.docReportDTOs[i].id)),
                             });
                         }
 
@@ -259,7 +261,6 @@ export function getMyDocuments(searchParamObject) { //this API to get all approv
 
                             dispatch(get_MyDocumentsSuccess({ docSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                         })
-                        console.log(result_2);
                     }).catch(() => get_MyDocumentsFailure())
             })
             .catch(error => {
@@ -396,7 +397,7 @@ export function getDocumentById(id) {
                 dispatch(getSameSubjectDocuments(result_1.id, result_1.subjectID));
                 dispatch(getRelativePostsToADocument(result_1.id));
                 dispatch(getRelativeExercisesToADocument(result_1.id));
-                
+
                 //get user statistic
                 dispatch(getUserStatisticById(result_1.authorID));
 

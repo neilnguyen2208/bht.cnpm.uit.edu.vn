@@ -78,6 +78,7 @@ class PostsList extends React.Component {
                     subjectID={items[0].subjectID}
                     commentCount={items[0].commentCount}
                     authorAvatarURL={items[0].authorAvatarURL}
+                    docReactionType={items[0].docReactionType}
 
                 />
             </div >
@@ -104,6 +105,8 @@ class PostsList extends React.Component {
                         subjectName={items[1].subjectName}
                         subjectID={items[1].subjectID}
                         commentCount={items[1].commentCount}
+                        docReactionType={items[1].docReactionType}
+
                     />
                 </div >}
 
@@ -127,6 +130,8 @@ class PostsList extends React.Component {
                         subjectName={items[2].subjectName}
                         subjectID={items[2].subjectID}
                         commentCount={items[2].commentCount}
+                        docReactionType={items[2].docReactionType}
+
                     ></HomeTextInfo>
                 </div >
                 }
@@ -158,6 +163,8 @@ class PostsList extends React.Component {
                     subjectName={items[0].subjectName}
                     subjectID={items[0].subjectID}
                     commentCount={items[0].commentCount}
+                    docReactionType = {items[0].docReactionType}
+
                 ></HomeInfo>
             </div >}
 
@@ -181,6 +188,8 @@ class PostsList extends React.Component {
                     subjectName={items[1].subjectName}
                     subjectID={items[1].subjectID}
                     commentCount={items[1].commentCount}
+                    docReactionType = {items[1].docReactionType}
+
                 />
             </div >}
 
@@ -204,6 +213,8 @@ class PostsList extends React.Component {
                     viewCount={items[2].viewCount}
                     subjectName={items[2].subjectName}
                     subjectID={items[2].subjectID}
+                    docReactionType = {items[2].docReactionType}
+
                 />
             </div >}
         </div >

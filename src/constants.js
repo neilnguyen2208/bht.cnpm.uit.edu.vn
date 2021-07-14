@@ -12,7 +12,11 @@ export const exerciseResolveStatus = { fixed: "FIXED", inProgress: "IN_PROGRESS"
 
 export const courseContentType = { video: "VIDEO", artical: "ARTICAL", exercise: "EXERCISE" };
 export const detailType = { preview: "PREVIEW", normal: "NORMAL" }
-export const docReactionType = { like: "LIKE", dislike: "DISLIKE", none: "NONE" }
+export const docReactionType = {
+  like: { value: 0, name: "LIKE" },
+  dislike: { value: 1, name: "DISLIKE" },
+  none: { value: null, name: "NONE" }
+}
 
 export const RECAPTCHA_CLIENT_SIDE_KEY = "6LcENcUaAAAAACyhhPZ8CXHOOMJ-c-TL5LrDxzcc";
 

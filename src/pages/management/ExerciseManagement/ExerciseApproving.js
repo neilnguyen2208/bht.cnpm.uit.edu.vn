@@ -115,8 +115,8 @@ class PostApproving extends React.Component {
                         authorID={item.authorID}
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
-                        requestedTime={"20:20:20"}
-                        requestedDate={"1/3/2021"}
+                        submitDtm={item.submitDtm}
+                        publishDtm={item.publishDtm}
                         title={item.title}
                     />
                     <SummaryInfo

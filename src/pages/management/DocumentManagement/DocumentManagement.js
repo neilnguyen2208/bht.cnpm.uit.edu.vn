@@ -35,10 +35,16 @@ class DocumentManagement extends React.Component {
         this.searchParamObject = {
             "page": 1,
             "categoryID": null,
-            // "documentState": '',
-            // "searchTerm": '',
         }
-
+        this.categoryList = [
+            {
+                id: 0,
+                name: "Chọn danh mục"
+            }
+        ];
+        this.subjectList = [
+            { id: 0, name: "Chọn danh mục" }
+        ]
         setQueryParam(this.queryParamObject);
         this.props.getDocumentCategoriesHaveAll();
         this.props.getSubjectsListHaveAll();
@@ -139,6 +145,8 @@ class DocumentManagement extends React.Component {
         }
         //combobox
         if (!this.props.isCategoryLoading && this.props.documentCategories.length !== 0) {
+
+            this.categoryList = this.props.documentCategories;
             this.comboboxGroup =
                 <div>
                     <div className="p-searchbar-container">
@@ -161,7 +169,7 @@ class DocumentManagement extends React.Component {
                             <div className="mg-left-5px">
                                 <ComboBox
                                     selectedOptionID={getQueryParamByName('category') ? getQueryParamByName('category') : 0}
-                                    options={this.props.documentCategories}
+                                    options={this.categoryList}
                                     onOptionChanged={(selectedOption) => this.onCategoryOptionChange(selectedOption)}
                                     comboboxId="dmcf-combobox" //document management category filter
                                 ></ComboBox>

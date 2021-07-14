@@ -108,15 +108,14 @@ class PostApproving extends React.Component {
         if (!this.props.isListLoading && this.props.postsList) {
             this.postsList = this.props.postsList.map((item) => (
                 <div className="item-container" key={item.id}>
-                    {console.log(item)}
                     <RequestInfo
                         postID={item.id}
                         authorDisplayName={item.authorDisplayName}
                         authorID={item.authorID}
                         categoryName={item.categoryName}
                         categoryID={item.categoryID}
-                        requestedTime={"20:20:20"}
-                        requestedDate={"1/3/2021"}
+                        submitDtm={item.submitDtm}
+                        publishDtm={item.publishDtm}
                         title={item.title}
                     />
                     <SummaryInfo

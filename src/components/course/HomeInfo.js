@@ -2,9 +2,17 @@ import React from 'react'
 import 'components/styles/Button.scss'
 import 'components/styles/HomeItem.scss'
 import { Link } from 'react-router-dom'
-import HomeReactionbar from 'components/post/HomeReactionbar'
+import createDOMPurify from 'dompurify';
 
 class HomeFirstInfo extends React.Component {
+
+  componentDidMount() {
+    const DOMPurify = createDOMPurify(window);
+    const clean = DOMPurify.sanitize(this.props.description);
+    if (document.querySelector(`#rprt-pst-ctnt-${this.props.id}`))
+      document.querySelector(`#rprt-pst-ctnt-${this.props.id}`).innerHTML = clean;
+  }
+
   render() {
 
     return (
@@ -34,7 +42,7 @@ class HomeFirstInfo extends React.Component {
         </div>
 
         {/* title */}
-        <Link to={"/post-content/" + this.props.id}>
+        <Link to={"/courses/exercise/" + this.props.id}>
           <div className="title title-hv">
             {this.props.title}
           </div>
@@ -54,8 +62,8 @@ class HomeFirstInfo extends React.Component {
           </Link>
         </div>
 
-        <div className="summary-text">
-          {this.props.description}
+        <div className="summary-text" style={{ height: "48px", }}>
+          <div className="ck-editor-output" style={{ marginTop: "10px" }} id={"rprt-pst-ctnt-" + this.props.id} />
         </div>
 
       </div>

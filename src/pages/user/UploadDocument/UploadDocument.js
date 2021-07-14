@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { getDocumentCategories } from "redux/services/documentCategoryServices";
@@ -32,6 +32,8 @@ import {
 } from 'redux/actions/tagAction'
 import { DELAY_TIME } from 'constants.js';
 import ImageUploader from 'components/common/FormFileUploader/FormImageUploader'
+import DatePicker from "react-datepicker";
+import { post_UploadDocumentRequest } from 'redux/actions/documentAction';
 
 const validationCondition = {
     form: '#create-document-form',
@@ -83,11 +85,15 @@ class UploadDocument extends React.Component {
                 imageURL: "null",
                 docFileUploadRequestDTOs: [],
             },
-            author: {
-                avatarURL: "https://i.imgur.com/SZJgL6C.png",
-                displayName: "Nguyễn Văn Đông",
-                username: "dongnsince1999"
-            },
+
+            shownDate: new Date(new Date().getTime() + 60 * 60 * 1000).toLocaleDateString('en-US', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            }),
+
         };
         this.shownTag = [
             { dmID: 1, id: '', content: '' },
@@ -126,6 +132,7 @@ class UploadDocument extends React.Component {
 
     componentWillUnmount() {
         store.dispatch(get_tagQuickQueryResultReset());
+        store.dispatch(post_UploadDocumentRequest());
     }
 
     onCategoryOptionChanged = (selectedOption) => {
@@ -347,7 +354,21 @@ class UploadDocument extends React.Component {
         this.imageFile = file;
     }
 
+    setStartDate = (date, time) => {
+        let shownDate = new Date(date).toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+        this.setState({ shownDate: shownDate, selectedDate: date, UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, publishDtm: date } });
+    }
+
     render() {
+
+        if (this.props.isHaveUploaded) { return <Redirect to = "/user/my-documents" />
+        }
         //load for category and subject 
         if (!this.props.isCategoryLoading && this.props.categories) {
             this.categoriesList = this.props.categories;
@@ -429,6 +450,7 @@ class UploadDocument extends React.Component {
                         {/* CKEditor */}
                         <div className="form-group">
                             <div className="form-label-required">Mô tả tài liệu:</div>
+                            <div className="form-tip-label mg-bottom-10px">Tối đa 255 ký tự.</div>
                             <Editor
                                 config={SimpleCKEToolbarConfiguration}
                                 editorId="cr-document-description"
@@ -472,6 +494,24 @@ class UploadDocument extends React.Component {
                             </Combobox>
                             <div className="form-error-label-container">
                                 <span className="form-error-label" ></span>
+                            </div>
+                        </div >
+
+                        {/* Publish date */}
+                        <div className="form-group" >
+                            <label className="form-label">Thời gian đăng:</label>
+                            <div>
+                                <DatePicker
+                                    selected={this.state.selectedDate}
+                                    onChange={(date) => this.setStartDate(date)}
+                                    dateFormat='dd/MM/yyyy'
+                                    value={this.state.shownDate}
+                                    showTimeSelect
+                                    startDate={new Date(new Date().getTime() + 60 * 60 * 1000)}
+                                    minDate={new Date(new Date().getTime() + 60 * 60 * 1000)}
+                                    minTime={new Date(new Date().getTime() + 60 * 60 * 1000)}
+                                    maxTime={new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000)}
+                                />
                             </div>
                         </div >
 
@@ -557,6 +597,7 @@ const mapStateToProps = (state) => {
         //sau nay su dung loading de tranh cac truong hop ma 2 bien isSearching va isLoadDone khong xu ly duoc
         isTagQuickQueryLoadDone: state.tag.tagQuickQueryResult.isLoadDone,
         //upload thanh cong hay khong
+        isHaveUploaded: state.document.isHaveUploaded
 
     };
 }

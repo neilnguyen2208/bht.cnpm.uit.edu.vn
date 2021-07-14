@@ -622,7 +622,7 @@ export function getPostsByCategoryId(categoryID) {
 export function getTrendingPosts(categoryID) {
     return dispatch => {
         dispatch(get_TrendingPostsRequest());
-        authRequest.get(`/posts/trending`)
+        authRequest.get(`/posts/newest`) //=>trendings after
             .then(response => {
                 let result_1 = response.data;
                 let IDarr = '';

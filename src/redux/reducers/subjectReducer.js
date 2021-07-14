@@ -12,7 +12,7 @@ const initialState = {
         searchData: [{ id: 0, name: "Tất cả" }],
         error: ''
     },
-}   
+}
 
 function DocumentSubjectReducer(state = initialState, action) {
     switch (action.type) {
@@ -20,9 +20,25 @@ function DocumentSubjectReducer(state = initialState, action) {
         case GET_SUBJECTS_REQUEST:
             return { ...state, subjects: { isLoading: true } }
         case GET_SUBJECTS_SUCCESS:
-            return { ...state, subjects: { isLoading: false, data: action.payload, error: '' } }
+            return {
+                ...state, subjects: {
+                    ...state.subjects,
+                    isLoading: false,
+                    data: action.payload,
+                    searchData: [{ id: 0, name: "Tất cả" }, ...action.payload],
+                    error: ''
+                }
+            }
         case GET_SUBJECTS_HAVE_ALL_SUCCESS: {
-            return { ...state, subjects: { isLoading: false, searchData: [{ id: 0, name: "Tất cả" }, ...action.payload], error: '' } }
+            return {
+                ...state, subjects: {
+                    ...state.subjects,
+                    isLoading: false,
+                    data: action.payload,
+                    searchData: [{ id: 0, name: "Tất cả" }, ...action.payload],
+                    error: ''
+                }
+            }
         }
         case GET_SUBJECTS_FAILURE:
             return { ...state, subjects: { isLoading: false, error: action.payload } }

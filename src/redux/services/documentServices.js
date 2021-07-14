@@ -285,7 +285,6 @@ export function uploadADocument(data, filesList, imageFile) {
                                 dispatch(post_UploadDocumentSuccess(response));
                                 dispatch(closeModal());
                                 openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
-                                window.location.pathname = "/user/my-documents";
                             })
                         })
                         .catch(error => post_UploadDocumentFailure(error));
@@ -309,7 +308,6 @@ export function uploadADocument(data, filesList, imageFile) {
                                         dispatch(post_UploadDocumentSuccess(response));
                                         dispatch(closeModal());
                                         openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
-                                        window.location.pathname = "/user/my-documents";
                                     }).catch(error => post_UploadDocumentFailure(error));
                                 })
                                 .catch(error => post_UploadDocumentFailure(error));
@@ -343,7 +341,6 @@ export function uploadADocument(data, filesList, imageFile) {
                                                 dispatch(post_UploadDocumentSuccess(response));
                                                 dispatch(closeModal());
                                                 openBLModal({ type: "success", text: "Tạo tài liệu thành công!" });
-                                                window.location.pathname = "/user/my-documents";
                                             }).catch(error => post_UploadDocumentFailure(error));
 
                                         })

@@ -304,7 +304,7 @@ class ExercisesList extends React.Component {
                             title={item.title}
                             description={item.description}
                             popUpMenuPrefix="sepu"   //stand for search exercises popup 
-                            authorAvatarURL={item.author.authorAvatarURL}
+                            authorAvatarURL={item.author.avatarURL}
                             reloadList={() => this.reloadList()}
                         />
                     </div >

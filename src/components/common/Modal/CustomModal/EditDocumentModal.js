@@ -392,6 +392,11 @@ class EditDocumentModal extends React.Component {
         this.setState({});
     }
 
+    closeModal = () => {
+        closeBigModal();
+        closeModal();
+    }
+
     render() {
 
         if (!this.props.isCategoryLoading && this.props.categories) {

@@ -16,6 +16,10 @@
     min-height: 100%;
 }
 
+.post-detail-container.preview-modal {
+    min-width: 600px;
+}
+
 .exercise-detail-container {
     @extend .post-detail-container;
     margin-top: 0px;

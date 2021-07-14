@@ -31,13 +31,21 @@ class FormFileUploader extends React.Component {
     onImageChange = () => {
         //get file input element
         let fileInput = document.getElementById('image-input-' + this.props.id);
-        this.previewImage();
-        document.getElementById("image-input-placeholder-" + this.props.id).classList.remove("d-none");
-        document.getElementById("iid-container" + this.props.id).style.borderRadius = "50%";
+        if (fileInput.files[0].size < 512000) {
+            this.previewImage();
+            document.getElementById("image-input-placeholder-" + this.props.id).classList.remove("d-none");
+            document.getElementById("iid-container" + this.props.id).style.borderRadius = "50%";
 
-        //pass current files list to parrent
-        if (this.props.onImageChange) {
-            this.props.onImageChange(fileInput.files[0]);
+            //pass current files list to parrent
+            if (this.props.onImageChange) {
+                this.props.onImageChange(fileInput.files[0]);
+            }
+
+            document.getElementById('file-input-label-' + this.props.id).style.border = '1px solid var(--gray)';
+
+        }
+        else {
+            document.getElementById('file-input-label-' + this.props.id).style.border = '1px solid red';
         }
 
     }

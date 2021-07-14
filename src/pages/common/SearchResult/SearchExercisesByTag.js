@@ -63,7 +63,7 @@ class SearchPostByTag extends React.Component {
                         imageURL={item.imageURL}
                         approveState={item.postState}
                         popUpMenuPrefix="pmpu"   //stand for my post popup 
-                        authorAvatarURL={item.authorAvatarURL}
+                        authorAvatarURL={item.author.avatarURL}
                         //
                         reloadList={() => this.reloadList()}
                     />

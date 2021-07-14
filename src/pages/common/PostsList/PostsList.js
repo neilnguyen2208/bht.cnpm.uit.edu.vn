@@ -211,8 +211,11 @@ class PostsList extends React.Component {
                                 <div>
                                     <div className="trending-title" >
                                         <img className="trending-icon" src={highlight_icon} alt="*" />
-                                        TRENDING
+                                        <div style={{ paddingTop: "2px" }}>
+                                            MỚI NHẤT
+                                        </div>
                                     </div>
+
                                     <div style={{ height: "3px", background: "var(--blue)", marginBottom: "5px" }} />
                                     <div className="d-flex">
                                         {this.renderGridThreeItems(this.props.trendingPosts)}

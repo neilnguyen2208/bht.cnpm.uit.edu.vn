@@ -104,6 +104,7 @@ class Home extends React.Component {
                     categoryID={item.categoryID}
                     categoryName={item.categoryName}
                     imageURL={item.imageURL}
+                    authorAvatarURL={item.authorAvatarURL}
                     publishDtm={item.publishDtm}
                     description={item.description}
                     title={item.title}

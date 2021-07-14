@@ -27,7 +27,8 @@ import HoverHint from "components/common/HoverHint/HoverHint"
 import { post_CreateAPostReset } from "redux/actions/postAction";
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils'
 import { getCKEInstance } from 'components/common/CustomCKE/CKEditorUtils';
-import JQDateTimePicker from 'components/common/JQDateTimePicker/JQDateTimePicker'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import ImageUploader from 'components/common/FormFileUploader/FormImageUploader'
 
 const validationCondition = {
@@ -67,9 +68,17 @@ class CreatePost extends React.Component {
                 summary: `null`,
                 categoryID: "",
                 imageURL: '',
-                publishDtm: (new Date()).toISOString(),
+                publishDtm: null,
                 readingTime: 10
             },
+
+            shownDate: new Date(new Date().getTime() + 60 * 60 * 1000).toLocaleDateString('en-US', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            }),
 
             author: {
                 avatarURL: "https://i.imgur.com/SZJgL6C.png",
@@ -362,6 +371,17 @@ class CreatePost extends React.Component {
         // })
     }
 
+    setStartDate = (date, time) => {
+        let shownDate = new Date(date).toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+        this.setState({ shownDate: shownDate, selectedDate: date, CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, publishDtm: date } });
+    }
+
     render() {
         styleCodeSnippet();
 
@@ -419,7 +439,7 @@ class CreatePost extends React.Component {
                             authorAvatarURL={this.props.userSummaryData.avatarURL}
                             publishDtm={this.state.publishDtm}
                             type={detailType.preview}
-                            imageFile  = {this.imageFile}
+                            imageFile={this.imageFile}
                             authorID={this.props.userSummaryData.id}
                         /> : <></>}
 
@@ -509,10 +529,23 @@ class CreatePost extends React.Component {
                             </div>
                         </div >
 
-                        <div className="form-group" style={{ zIndex: "4" }}>
+                        {/* Publish date */}
+                        <div className="form-group" >
                             <label className="form-label">Thời gian đăng:</label>
-                            <JQDateTimePicker dtPickerId="cr-post" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
-                        </div>
+                            <div>
+                                <DatePicker
+                                    selected={this.state.selectedDate}
+                                    onChange={(date) => this.setStartDate(date)}
+                                    dateFormat='dd/MM/yyyy'
+                                    value={this.state.shownDate}
+                                    showTimeSelect
+                                    startDate={new Date(new Date().getTime() + 60 * 60 * 1000)}
+                                    minDate={new Date(new Date().getTime() + 60 * 60 * 1000)}
+                                    minTime={new Date(new Date().getTime() + 60 * 60 * 1000)}
+                                    maxTime={new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000)}
+                                />
+                            </div>
+                        </div >
 
                         {/* Tag */}
                         <div className='form-group'>

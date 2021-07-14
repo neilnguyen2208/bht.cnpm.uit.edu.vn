@@ -32,8 +32,23 @@ import { itemType, mySelfMenuItemList } from 'constants.js'
 //components
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import { basicMenu, guestMenu, adminMenu } from 'components/document/adapter/actionMenu';
+import createDOMPurify from 'dompurify';
 
 class DocumentSummary extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowMore: false
+    }
+  }
+
+  componentDidMount() {
+    const DOMPurify = createDOMPurify(window);
+    const clean = DOMPurify.sanitize(this.props.description);
+    if (document.querySelector(`#rprt-pst-ctnt-${this.props.documentID}`))
+      document.querySelector(`#rprt-pst-ctnt-${this.props.documentID}`).innerHTML = clean;
+  }
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_DOCUMENT") {
@@ -68,25 +83,60 @@ class DocumentSummary extends React.Component {
     }
 
     let summary = <></>;
-    if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
+    //image + summary
+    if (!this.props.description && this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
       summary = <div>
-        <div className="decoration-line mg-top-5px" />
+        <div className="decoration-line mg-top-10px" />
         <img className="image" src={this.props.imageURL} alt="" />
-        <div className="summary-text mg-bottom-5px">
-          {this.props.description}
+        <div className="summary-text mg-bottom-10px">
+          {this.props.summary + "..."}
         </div>
+
       </div>
     }
+
+    //summary only
     else
-      if (this.props.summary && this.props.summary !== "null")
+      if (!this.props.description && this.props.summary && this.props.summary !== "null" && this.props.summary !== "undefined")
         summary = <div className="summary-text" >
-          {this.props.description}
+          {this.props.summary + "..."}
         </div >
-      else
-        summary = <div className="ck-editor-output" dangerouslySetInnerHTML={{
-          __html:
-            this.props.description
-        }} />
+      else summary = <div> {
+        this.state.isShowMore ?
+          <div className="post-summary-show show-more">
+            {
+              this.props.imageURL ?
+                <div >
+                  <div className="decoration-line mg-top-10px" />
+                  <img className="image" src={this.props.imageURL} alt="" />
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.documentID} />
+                </div>
+                :
+                <div className="summary-text">
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.documentID} />
+                </div>
+            }
+          </div>
+          :
+          <div className="post-summary-show show-less">
+            {
+              this.props.imageURL ?
+                <div >
+                  <div className="decoration-line mg-top-10px" />
+                  <img className="image" src={this.props.imageURL} alt="" />
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.documentID} />
+                </div>
+                :
+                <div className="summary-text">
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.documentID} />
+                </div>
+
+            }
+          </div>
+      }
+
+      </div>
+
 
 
     return (
@@ -103,7 +153,7 @@ class DocumentSummary extends React.Component {
               {this.props.authorDisplayName}
             </Link>
 
-            {this.props.type === itemType.mySelf || this.props.type === itemType.approval ?
+            {this.props.type === itemType.mySelf || this.props.type === itemType.approval || this.props.type === itemType.management ?
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>
@@ -205,9 +255,11 @@ class DocumentSummary extends React.Component {
           : <></>}
         {summary}
         <div className="j-c-end">
-          <Link to={`/document-content/${this.props.documentID}`} className="continue-read mg-bottom-5px" >
+          {this.props.approveState !== "PENDING_APPROVAL" &&
+            <Link to={`/document-content/${this.props.documentID}`} className="continue-read mg-bottom-5px" >
             Xem tài liệu >>
-          </Link>
+            </Link>
+          }
         </div>
       </div >
     );

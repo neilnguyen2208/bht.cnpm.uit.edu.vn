@@ -3,8 +3,16 @@ import 'components/styles/Button.scss'
 import 'components/styles/HomeItem.scss'
 import { Link } from 'react-router-dom'
 import HomeReactionbar from 'components/document/HomeReactionbar'
+import createDOMPurify from 'dompurify';
 
 class HomeTextInfo extends React.Component {
+
+  componentDidMount() {
+    const DOMPurify = createDOMPurify(window);
+    const clean = DOMPurify.sanitize(this.props.description);
+    if (document.querySelector(`#rprt-pst-ctnt-${this.props.documentID}`))
+      document.querySelector(`#rprt-pst-ctnt-${this.props.documentID}`).innerHTML = clean;
+  }
 
   render() {
 
@@ -58,8 +66,8 @@ class HomeTextInfo extends React.Component {
           </div>
         </div>
 
-        <div className="summary-text">
-          {this.props.description}
+        <div className="summary-text" style={{ height: "48px", }}>
+          <div className="ck-editor-output" style={{ marginTop: "10px" }} id={"rprt-pst-ctnt-" + this.props.documentID} />
         </div>
 
         <HomeReactionbar

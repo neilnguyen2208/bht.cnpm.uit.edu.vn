@@ -169,7 +169,8 @@
   opacity: 90%;
 }
 
-.home-item .summary-text {
+.home-item .summary-text,
+.wallpage-item .summary-text {
   font-family: "Raleway", sans-serif;
   font-size: 15px;
   line-height: 20px;
@@ -183,6 +184,11 @@
   color: var(--black);
   margin-top: 5px;
   user-select: text;
+}
+
+.wallpage-item .summary-text {
+  margin-top: 20px;
+  font-size: 16px;
 }
 
 .home-item .avatar {
@@ -208,7 +214,7 @@
   border: 1px solid var(--gray);
   border-bottom: 3px solid var(--gray);
   object-fit: cover;
-  background-image:url('https://imgur.com/a/I08Meib');
+  background-image: url("https://imgur.com/a/I08Meib");
 }
 
 .home-item.first-item .cover-image {

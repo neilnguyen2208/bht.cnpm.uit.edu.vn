@@ -56,10 +56,6 @@ class PostsList extends React.Component {
     }
 
     renderGridThreeItems = (items) => {
-        console.log(items[0].commentCount);
-        console.log(items[1].commentCount);
-        console.log(items[0].viewCount);
-        console.log(items[1].viewCount);
         return <div className="d-flex">
             {/* //item 0 */}
             {items[0] && <div className="home-item-container  grid" style={{ marginRight: "10px" }} >
@@ -81,6 +77,8 @@ class PostsList extends React.Component {
                     subjectName={items[0].subjectName}
                     subjectID={items[0].subjectID}
                     commentCount={items[0].commentCount}
+                    authorAvatarURL={items[0].authorAvatarURL}
+
                 />
             </div >
             }
@@ -96,6 +94,7 @@ class PostsList extends React.Component {
                         categoryName={items[1].categoryName}
                         imageURL={items[1].imageURL}
                         publishDtm={items[1].publishDtm}
+                        authorAvatarURL={items[0].authorAvatarURL}
                         description={items[1].description}
                         title={items[1].title}
                         likeCount={items[1].likeCount}
@@ -111,6 +110,7 @@ class PostsList extends React.Component {
                 {items[2] && < div className="home-item-container grid" key={items[2].id} style={{ marginTop: "20px", paddingRight: "0px" }}>
                     <HomeTextInfo
                         key={items[2].id}
+                        authorAvatarURL={items[0].authorAvatarURL}
                         documentID={items[2].id}
                         authorID={items[2].authorID}
                         authorDisplayName={items[2].authorDisplayName}
@@ -135,10 +135,6 @@ class PostsList extends React.Component {
     }
 
     renderRowThreeItems = (items) => {
-        console.log(items[0].commentCount);
-        console.log(items[1].commentCount);
-        console.log(items[0].viewCount);
-        console.log(items[1].viewCount);
 
         return <div className="d-flex">
             {/* //item 0 */}
@@ -147,6 +143,7 @@ class PostsList extends React.Component {
                     key={items[0].id}
                     documentID={items[0].id}
                     authorID={items[0].authorID}
+                    authorAvatarURL={items[0].authorAvatarURL}
                     authorDisplayName={items[0].authorDisplayName}
                     categoryID={items[0].categoryID}
                     categoryName={items[0].categoryName}
@@ -169,6 +166,7 @@ class PostsList extends React.Component {
                     key={items[1].id}
                     documentID={items[1].id}
                     authorID={items[1].authorID}
+                    authorAvatarURL={items[1].authorAvatarURL}
                     authorDisplayName={items[1].authorDisplayName}
                     categoryID={items[1].categoryID}
                     categoryName={items[1].categoryName}
@@ -195,6 +193,7 @@ class PostsList extends React.Component {
                     categoryID={items[2].categoryID}
                     categoryName={items[2].categoryName}
                     imageURL={items[2].imageURL}
+                    authorAvatarURL={items[2].authorAvatarURL}
                     publishDtm={items[2].publishDtm}
                     description={items[2].description}
                     commentCount={items[2].commentCount}

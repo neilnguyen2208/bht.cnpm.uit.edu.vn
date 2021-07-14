@@ -49,54 +49,6 @@
     object-fit: cover;
 }
 
-.Highlight_Transitionbar {
-    margin-top: 10px;
-    position: relative;
-    background: white;
-    width: 25%;
-    left: 5px;
-    display: flex;
-    margin-left: 28%;
-}
-
-.Highlight_Title {
-    margin-top: 5px;
-    position: relative;
-    font-family: "BarlowSemiCondensed-BoldItalic";
-    font-size: 20px;
-    // padding-left: 10px;
-    padding-right: 5px;
-    text-align: center;
-    color: var(--blue);
-    min-width: fit-content;
-    line-height: 17px;
-}
-
-.Highlight_Title_Underline {
-    align-self: end;
-    height: 3px;
-    position: relative;
-    background: var(--blue);
-    width: 100%;
-}
-
-.Highlight_Transitionbar_Item {
-    height: 5px;
-    width: 10px;
-    background: var(--blue);
-}
-
-.Wallpage_Right_Content {
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-    margin-left: 5px;
-    background: white;
-    height: auto;
-    width: 72%;
-    padding: 5px;
-    box-shadow: 0px 0px 10px var(--gray);
-}
-
 //For reaction bar
 .highlight-item-container {
     position: relative;

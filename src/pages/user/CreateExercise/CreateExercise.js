@@ -436,7 +436,7 @@ class CreateExercise extends React.Component {
                     <div className="form-group">
                         <div className="form-label-required">Mô tả:</div>
                         <Editor
-                            // config={SimpleCKEToolbarConfiguration}
+                            config={SimpleCKEToolbarConfiguration}
                             editorId="cr-exercise-description"
                             placeholder='Start typing here...'
                             onChange={this.handleEditorChange}

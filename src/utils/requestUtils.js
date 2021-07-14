@@ -34,7 +34,7 @@ request.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
+      // openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
       // setTimeout(window.location.reload(), 500);
     }
     return Promise.reject(error);
@@ -77,7 +77,7 @@ multipartRequest.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
+      // openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
     }
     return Promise.reject(error);
   }
@@ -118,7 +118,7 @@ authRequest.interceptors.response.use(
   },
   error => {
     if (error.status !== 200) {
-      openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
+      // openBLModal({ type: "error", text: "Có lỗi xảy ra!" });
     }
     return Promise.reject(error);
   }

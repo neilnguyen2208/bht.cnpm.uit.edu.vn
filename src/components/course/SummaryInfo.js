@@ -26,8 +26,22 @@ import { itemType } from 'constants.js'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import { post_ReportAnExerciseReset } from 'redux/actions/courseAction';
+import createDOMPurify from 'dompurify';
 
-class PostSummary extends React.Component {
+class ExerciseSummary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowMore: false
+    }
+  }
+
+  componentDidMount() {
+    const DOMPurify = createDOMPurify(window);
+    const clean = DOMPurify.sanitize(this.props.description);
+    if (document.querySelector(`#rprt-pst-ctnt-${this.props.exerciseID}`))
+      document.querySelector(`#rprt-pst-ctnt-${this.props.exerciseID}`).innerHTML = clean;
+  }
 
   onPopupMenuItemClick = (selectedItem) => {
     if (selectedItem.value === "DELETE_EXERCISE") {
@@ -73,25 +87,55 @@ class PostSummary extends React.Component {
     }
 
     let summary = <></>;
-    if (this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
+    //image + summary
+    if (!this.props.description && this.props.imageURL && this.props.imageURL !== "null" && this.props.imageURL !== null && this.props.imageURL !== undefined) {
       summary = <div>
-        <div className="decoration-line mg-top-5px" />
+        <div className="decoration-line mg-top-10px" />
         <img className="image" src={this.props.imageURL} alt="" />
-        <div className="summary-text mg-bottom-5px">
-          {this.props.description}
+        <div className="summary-text mg-bottom-10px">
+          {this.props.summary + "..."}
         </div>
+
       </div>
     }
+
+    //summary only
     else
-      if (this.props.summary && this.props.summary !== "null")
+      if (!this.props.description && this.props.summary && this.props.summary !== "null" && this.props.summary !== "undefined")
         summary = <div className="summary-text" >
-          {this.props.description}
+          {this.props.summary + "..."}
         </div >
-      else
-        summary = <div className="ck-editor-output" dangerouslySetInnerHTML={{
-          __html:
-            this.props.description
-        }} />
+      else summary = <div> {
+        this.state.isShowMore ?
+          <div className="post-summary-show show-more">
+            {
+              this.props.imageURL ?
+                <div >
+                  <div className="decoration-line mg-top-10px" />
+                  <img className="image" src={this.props.imageURL} alt="" />
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.exerciseID} />
+                </div>
+                :
+                <div className="summary-text">
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.exerciseID} />
+                </div>
+            }
+          </div>
+          :
+          <div className="post-summary-show show-less">
+            {
+              this.props.imageURL ?
+                <div >
+                  <div className="decoration-line mg-top-10px" />
+                  <img className="image" src={this.props.imageURL} alt="" />
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.exerciseID} />
+                </div>
+                :
+                <div className="summary-text">
+                  <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.exerciseID} />
+                </div>
+            }</div>
+      }</div>
 
     return (
 
@@ -223,5 +267,5 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   stickAPostToTop
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostSummary));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseSummary));
 

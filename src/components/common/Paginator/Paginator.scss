@@ -27,7 +27,7 @@
 
 .deactivated-page:hover {
     background: var(--gray);
-    opacity: 60%;
+    opacity: 0.6;
     color: white;
     box-shadow: 0px 0px 1px 1px white;
     cursor: pointer;
@@ -69,12 +69,12 @@
     font-size: 18px;
     color: var(--black);
     cursor:not-allowed;
-    opacity: 60%;
+    opacity: 0.6;
 }
 
 .activated-page:hover {
     background: var(--blue);
-    opacity: 60%;
+    opacity: 0.6;
     color: white;
     box-shadow: 0px 0px 1px 1px white;
     cursor: pointer;
@@ -82,7 +82,7 @@
 
 .activated-page:active {
     background: var(--blue);
-    opacity: 60%;
+    opacity: 0.6;
     color: white;
     box-shadow: 0px 0px 1px 1px white;
     cursor: pointer;
@@ -124,7 +124,7 @@
 .prev-page:hover,
 .last-page:hover {
     background: var(--blue);
-    opacity: 60%;
+    opacity: 0.6;
     color: white;
     box-shadow: 0px 0px 1px 1px white;
     cursor: pointer;

@@ -27,19 +27,19 @@
 .white-button:focus {
     box-shadow: 0px 0px 2px 0px var(--blue);
     border: var(--blue) 1px solid;
-    opacity: 80%;
+    opacity: 0.8;
 }
 
 .white-button:active {
     background: var(--gray);
     border: white 1px solid;
-    opacity: 60%;
+    opacity: 0.6;
 }
 
 .white-button:disabled {
     background: var(--gray);
     color: white;
-    opacity: 90%;
+    opacity: 0.9;
 }
 
 .red-button {
@@ -52,19 +52,19 @@
 .red-button:hover {
     background: var(--red);
     box-shadow: 0px 0px 2px 0px var(--red);
-    opacity: 80%;
+    opacity: 0.8;
     color: white;
 }
 
 .red-button:active {
     background: var(--gray);
     border: white 1px solid;
-    opacity: 80%;
+    opacity: 0.8;
 }
 
 .red-button:disabled {
     background: var(--gray);
-    opacity: 90%;
+    opacity: 0.9;
     border: var(--gray) solid 1px;
 }
 
@@ -77,13 +77,13 @@
 .blue-button:hover {
     background: var(--blue);
     box-shadow: 0px 0px 2px 0px var(--blue);
-    opacity: 80%;
+    opacity: 0.8;
 }
 
 .blue-button:active {
     background: var(--gray);
     border: white 1px solid;
-    opacity: 80%;
+    opacity: 0.8;
 }
 
 .blue-button:disabled {

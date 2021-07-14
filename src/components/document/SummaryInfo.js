@@ -130,14 +130,8 @@ class DocumentSummary extends React.Component {
                 <div className="summary-text">
                   <div className="ck-editor-output" id={"rprt-pst-ctnt-" + this.props.documentID} />
                 </div>
-
-            }
-          </div>
-      }
-
-      </div>
-
-
+            }</div>
+      }</div>
 
     return (
       <div className="metadata" >

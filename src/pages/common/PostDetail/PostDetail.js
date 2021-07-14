@@ -19,7 +19,8 @@ import {
     put_EditAPostReset
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import RelativePosts from 'components/post/RelativePosts'
+import RelativePosts from 'components/post/RelativePosts';
+import RelativeToPost from 'components/post/RelativeToPost';
 import CommentSection from 'components/post/comment/CommentSection'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
@@ -128,6 +129,16 @@ class PostDetail extends React.Component {
                                                     savedStatus={this.props.currentPost.savedStatus}
                                                     viewCount={this.props.currentPost.viewCount}
                                                 />
+                                                <div className="d-flex" >
+                                                    {this.props.isRelativeDocumentsLoading && this.props.relativeDocuments ?
+                                                        <RelativeToPost title={"TÀI LIỆU LIÊN QUAN"} items={
+                                                            this.props.relativeDocuments} type="DOCUMENT" />
+                                                        : <Loader />}
+                                                    {this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
+                                                        <RelativeToPost title={"BÀI TẬP LIÊN QUAN"}
+                                                            items={this.props.relativeExercises} /> : <Loader />
+                                                    }
+                                                </div>
                                                 <div id="cr-cmt" />
                                                 <CommentSection
                                                     useAction={true}
@@ -169,6 +180,7 @@ class PostDetail extends React.Component {
                                             items={this.props.sameCategory} /> : <Loader />
                                     }
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -190,6 +202,10 @@ const mapStateToProps = (state) => {
         postStatistic: state.post.postStatistic.data,
         isPostStatisticLoadDone: state.post.postStatistic.isLoadDone,
         isHaveEdited: state.post.isHaveEdited,
+        relativeDocuments: state.post.relativeDocuments.data,
+        isRelativeDocumentsLoading: state.post.relativeDocuments.isLoading,
+        relativeExercises: state.post.relativeExercises.data,
+        isRelativeExercisesLoading: state.post.relativeExercises.isLoading,
     };
 }
 

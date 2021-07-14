@@ -95,7 +95,13 @@ import {    //highlight posts
     get_PostByIDForEditReset,
     get_PostByIDForEditSuccess,
     get_PostByIDForEditEFailure,
-    get_PostByIDForEditFailure
+    get_PostByIDForEditFailure,
+    get_RelativeDocumentsToAPostReset,
+    get_RelativeDocumentsToAPostSuccess,
+    get_RelativeDocumentsToAPostFailure,
+    get_RelativeExercisesToAPostReset,
+    get_RelativeExercisesToAPostSuccess,
+    get_RelativeExercisesToAPostFailure
 } from "redux/actions/postAction.js";
 
 import {
@@ -366,6 +372,8 @@ export function getAPostByID(id) {
                 //get relative posts
                 dispatch(getSameAuthorPosts(result_1.id, result_1.authorID));
                 dispatch(getSameCategoryPosts(result_1.id, result_1.categoryID));
+                dispatch(getRelativeDocumentsToAPost(result_1.id));
+                dispatch(getRelativeExercisesToAPost(result_1.id));
 
                 //get user statistic
                 // dispatch(getUserStatisticById(result_1.authorID));
@@ -552,6 +560,28 @@ export function getSameAuthorPosts(postID, authorID) {
                 dispatch(get_RelativeSameAuthorPostsSuccess(response.data))
             })
             .catch(error => { dispatch(get_RelativeSameAuthorPostsFailure(error)) })
+    }
+}
+
+export function getRelativeDocumentsToAPost(postID) {
+    return dispatch => {
+        dispatch(get_RelativeDocumentsToAPostReset())
+        authRequest.get(`/documents/related?postID=${postID}`)
+            .then(response => {
+                dispatch(get_RelativeDocumentsToAPostSuccess(response.data))
+            })
+            .catch(error => { dispatch(get_RelativeDocumentsToAPostFailure(error)) })
+    }
+}
+
+export function getRelativeExercisesToAPost(postID) {
+    return dispatch => {
+        dispatch(get_RelativeExercisesToAPostReset())
+        authRequest.get(`/documents/related?postID=${postID}`)
+            .then(response => {
+                dispatch(get_RelativeExercisesToAPostSuccess(response.data))
+            })
+            .catch(error => { dispatch(get_RelativeExercisesToAPostFailure(error)) })
     }
 }
 

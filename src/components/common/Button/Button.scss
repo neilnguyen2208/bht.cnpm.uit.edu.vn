@@ -18,18 +18,18 @@
 
 .custom-button:hover {
     cursor: pointer;
-    opacity: 80%;
+    opacity: 0.8;
 }
 
 .custom-button:active {
     background: var(--gray);
     cursor: pointer;
-    opacity: 90%;
+    opacity: 0.9;
 }
 
 .custom-button:disabled {
     background: var(--gray);
     color: white;
     cursor: pointer;
-    opacity: 90%;
+    opacity: 0.9;
 }

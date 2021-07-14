@@ -96,6 +96,12 @@ import {
     GET_POST_BY_ID_FOR_EDIT_FAILURE,
     GET_POST_BY_ID_FOR_EDIT_REQUEST,
     GET_POST_BY_ID_FOR_EDIT_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_TO_A_POST_RESET,
+    GET_RELATIVE_DOCUMENTS_TO_A_POST_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_TO_A_POST_FAILURE,
+    GET_RELATIVE_EXERCISES_TO_A_POST_RESET,
+    GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS,
+    GET_RELATIVE_EXERCISES_TO_A_POST_FAILURE,
 
 } from '../constants.js'
 
@@ -211,7 +217,17 @@ const initialState = {
         data: []
     },
 
+    relativeDocuments: {
+        isLoading: false,
+        data: [],
+        error: ''
+    },
 
+    relativeExercises: {
+        isLoading: false,
+        data: [],
+        error: ''
+    }
 };
 
 function PostReducer(state = initialState, action) {
@@ -593,6 +609,45 @@ function PostReducer(state = initialState, action) {
                 ...state,
                 postDetailForEdit: { ...state.postDetailForEdit, isLoadDone: false }
             };
+
+        case GET_RELATIVE_DOCUMENTS_TO_A_POST_RESET:
+            return { ...state, relativeDocuments: { isLoading: true } };
+        case GET_RELATIVE_DOCUMENTS_TO_A_POST_SUCCESS:
+            return {
+                ...state, relativeDocuments: {
+                    isLoading: false,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_DOCUMENTS_TO_A_POST_FAILURE:
+            return {
+                ...state, relativeDocuments: {
+                    error: action.payload,
+                    isLoading: false, data: []
+                }
+            }
+
+        case GET_RELATIVE_EXERCISES_TO_A_POST_RESET:
+            return { ...state, relativeExercises: { isLoading: true } };
+        case GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS:
+            return {
+                ...state, relativeExercises: {
+                    isLoading: false,
+                    data: action.payload,
+                    error: ''
+                }
+            };
+        case GET_RELATIVE_EXERCISES_TO_A_POST_FAILURE:
+            return {
+                ...state, relativeExercises: {
+                    error: action.payload,
+                    isLoading: false, data: []
+                }
+            }
+
+
+
         default:
             return state;
     }

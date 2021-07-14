@@ -64,7 +64,7 @@
 
 .reaction-bar .like-btn:hover {
   cursor: pointer;
-  opacity: 80%;
+  opacity: 0.8;
 }
 
 .reaction-bar .like-count {
@@ -170,7 +170,7 @@
 
 .document-like-btn:hover,
 .document-dislike-btn:hover {
-  opacity: 80%;
+  opacity: 0.8;
 }
 
 .document-like-count {
@@ -258,5 +258,5 @@
 }
 
 .comment-count-container:hover {
-  opacity: 80%;
+  opacity: 0.8;
 }

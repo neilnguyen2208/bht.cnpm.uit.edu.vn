@@ -4,7 +4,7 @@
     background: var(--gray);
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
     transition: all 0.8s;
-    opacity: 60%;
+    opacity: 0.6;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -88,7 +88,7 @@
 .modal-close-icon {
     height: 1.2rem;
     width: auto;
-    opacity: 60%;
+    opacity: 0.6;
 }
 
 .modal-close-icon:hover {
@@ -96,7 +96,7 @@
 }
 
 .modal-close-icon:active {
-    opacity: 80%;
+    opacity: 0.8;
     border-radius: 5px;
 }
 

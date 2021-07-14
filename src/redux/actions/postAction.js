@@ -97,7 +97,13 @@ import {
     GET_TRENDING_POSTS_FAILURE,
     GET_POST_BY_ID_FOR_EDIT_REQUEST,
     GET_POST_BY_ID_FOR_EDIT_FAILURE,
-    GET_POST_BY_ID_FOR_EDIT_SUCCESS
+    GET_POST_BY_ID_FOR_EDIT_SUCCESS,
+    GET_RELATIVE_DOCUMENTS_TO_A_POST_RESET,
+    GET_RELATIVE_DOCUMENTS_TO_A_POST_FAILURE,
+    GET_RELATIVE_DOCUMENTS_TO_A_POST_SUCCESS,
+    GET_RELATIVE_EXERCISES_TO_A_POST_RESET,
+    GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS,
+    GET_RELATIVE_EXERCISES_TO_A_POST_FAILURE
 
 
 } from "../constants.js"
@@ -412,7 +418,6 @@ export function put_EditAPostFailure() {
     }
 }
 
-
 export function post_ReportAPostReset() {
     return {
         type: REPORT_A_POST_RESET
@@ -569,4 +574,28 @@ export function get_TrendingPostsSuccess(data) {
 
 export function get_TrendingPostsFailure(error) {
     return { type: GET_TRENDING_POSTS_FAILURE, payload: error }
+}
+
+export function get_RelativeDocumentsToAPostReset() {
+    return { type: GET_RELATIVE_DOCUMENTS_TO_A_POST_RESET }
+}
+
+export function get_RelativeDocumentsToAPostSuccess() {
+    return { type: GET_RELATIVE_DOCUMENTS_TO_A_POST_SUCCESS }
+}
+
+export function get_RelativeDocumentsToAPostFailure() {
+    return { type: GET_RELATIVE_DOCUMENTS_TO_A_POST_FAILURE }
+}
+
+export function get_RelativeExercisesToAPostReset() {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_POST_RESET }
+}
+
+export function get_RelativeExercisesToAPostSuccess() {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_POST_SUCCESS }
+}
+
+export function get_RelativeExercisesToAPostFailure() {
+    return { type: GET_RELATIVE_EXERCISES_TO_A_POST_FAILURE }
 }

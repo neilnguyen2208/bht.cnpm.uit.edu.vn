@@ -133,7 +133,7 @@
 
 .user-profile .avatar:hover {
     box-shadow: none;
-    opacity: 100%;
+    opacity: 80;
 }
 
 .avatar-container .avatar-overlay {
@@ -159,7 +159,7 @@
 }
 
 .avatar-container.edit:hover .avatar-overlay {
-    opacity: 80%;
+    opacity: 0.8;
 }
 
 .user-profile .display-name {

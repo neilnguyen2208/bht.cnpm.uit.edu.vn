@@ -169,6 +169,7 @@
   opacity: 0.9;
 }
 
+.relative-item-container .summary-text,
 .home-item .summary-text,
 .wallpage-item .summary-text {
   font-family: "Raleway", sans-serif;
@@ -184,6 +185,17 @@
   color: var(--black);
   margin-top: 5px;
   user-select: text;
+}
+
+.relative-item-container .summary-text {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.relative-item-container {
+  display: block;
+  margin-bottom: 10px;
+  // border-bottom: 1px solid var(--gray);
 }
 
 .wallpage-item .summary-text {

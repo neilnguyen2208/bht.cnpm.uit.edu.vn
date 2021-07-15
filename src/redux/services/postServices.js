@@ -577,7 +577,7 @@ export function getRelativeDocumentsToAPost(postID) {
 export function getRelativeExercisesToAPost(postID) {
     return dispatch => {
         dispatch(get_RelativeExercisesToAPostReset())
-        authRequest.get(`/documents/related?postID=${postID}`)
+        authRequest.get(`/exercises/related?postID=${postID}`)
             .then(response => {
                 dispatch(get_RelativeExercisesToAPostSuccess(response.data))
             })

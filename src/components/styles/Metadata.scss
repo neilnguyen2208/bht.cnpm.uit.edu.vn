@@ -291,3 +291,21 @@
   font-size: 0.9rem;
   height: fit-content;
 }
+
+.avatar._30x30 {
+  width: 30px;
+  height: 30px;
+}
+
+.avatar._35x35 {
+  width: 35px;
+  height: 35px;
+}
+
+.avatar.corner {
+  border-radius: 10%;
+}
+
+.avatar.border {
+  border: 1px solid var(--gray);
+}

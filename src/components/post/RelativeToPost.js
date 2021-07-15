@@ -24,10 +24,17 @@ class RelativeToPost extends React.Component {
           </div>
           <div style={{ padding: "5px" }}>
             {this.props.items.map(item =>
-              <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
-                <div className="relative-item-icon" />
-                <div className="relative-item-title">{item.title}</div>
-              </Link>
+              <div className="relative-item-container">
+                <div className="d-flex">
+                  {/* <img className="avatar _35x35 corner border mg-top-5px mg-right-5px" src={item.author.avatarURL} alt="" /> */}
+                  <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
+                    <div className="relative-item-icon" />
+                    <div className="relative-item-title">{item.title}</div>
+                  </Link>
+                </div>
+                {/* <div className="relative-item-icon" /> */}
+                {/* <div className="summary-text">{item.summary}</div> */}
+              </div>
             )
             }
           </div >

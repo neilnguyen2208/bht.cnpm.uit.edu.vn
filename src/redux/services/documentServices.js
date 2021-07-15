@@ -112,6 +112,8 @@ export function getManagementDocuments(searchParamObject) {
                         for (let i = 0; i < result_1.docSummaryWithStateDTOs.length; i++) {
                             result_2.push({
                                 docState: result_1.docSummaryWithStateDTOs[i].docState,
+                                feedback: result_1.docSummaryWithStateDTOs[i].feedback,
+                                docBusinessState: result_1.docSummaryWithStateDTOs[i].docBusinessState,
                                 ...result_1.docSummaryWithStateDTOs[i].docSummary,
                                 ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryWithStateDTOs[i].docSummary.id)),
                             });

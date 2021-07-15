@@ -15,6 +15,9 @@ import store from 'redux/store/index'
 import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 
 import { basicMenu, adminMenu, guestMenu } from './adapter/actionMenu'
+import published_icon from 'assets/icons/24x24/published_icon.png';
+import not_published_icon from 'assets/icons/24x24/not_published_icon.png';
+
 
 //styles
 import 'components/styles/Label.scss'
@@ -36,7 +39,7 @@ class PostSummary extends React.Component {
       isShowMore: false
     }
   }
-  
+
   componentDidMount() {
     const DOMPurify = createDOMPurify(window);
     const clean = DOMPurify.sanitize(this.props.content);
@@ -228,6 +231,42 @@ class PostSummary extends React.Component {
               :
               <></>
             }
+
+            {(this.props.type === itemType.mySelf || this.props.type === itemType.approval || this.props.type === itemType.management) && this.props.postBusinessState === "PUBLIC" ?
+              <div className="publish-status d-flex" style={{
+                width: "88px",
+                height: "20px",
+                lineHeight: "16px",
+                fontSize: "16px",
+                border: "1px solid var(--blue)",
+                borderRadius: "3px",
+                marginLeft: "5px",
+                padding: "1px",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+              }} >
+                <img src={published_icon} alt="" style={{ marginRight: "3px " }} />
+                <div className="d-flex" > Published </div>
+              </div> : <></>
+            }
+
+            {(this.props.type === itemType.mySelf || this.props.type === itemType.approval || this.props.type === itemType.management) && this.props.postBusinessState === "UNLISTED" ?
+              <div className="publish-status d-flex" style={{
+                width: "110px",
+                height: "20px",
+                lineHeight: "16px",
+                fontSize: "16px",
+                border: "1px solid var(--black)",
+                borderRadius: "3px",
+                marginLeft: "5px",
+                padding: "1px",
+                color: "var(--black)",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+              }} >
+                <img src={not_published_icon} alt="" style={{ marginRight: "3px " }} />
+                <div className="d-flex" > Not published </div>
+              </div> : <></>}
           </div>
           {this.props.type !== itemType.management && this.props.type !== itemType.normal &&
             < PopupMenu onMenuItemClick={this.onPopupMenuItemClick} useAction={this.props.useAction} availableActions={this.props.availableActions} items={basicMenu} id={`${this.props.popUpMenuPrefix}-pipm-${this.props.postID}`} /> //stand for post item poupup menu
@@ -280,17 +319,19 @@ class PostSummary extends React.Component {
             </div>
           </div>
         </div>
-        {this.props.approveState === "PENDING_FIX" ?
-          <div className="feedback-container">
-            <div className="d-flex">
-              <img className="danger-icon" src={danger_icon} alt="!" />
-              <div>Feedback:</div>
+        {
+          this.props.approveState === "PENDING_FIX" ?
+            <div className="feedback-container">
+              <div className="d-flex">
+                <img className="danger-icon" src={danger_icon} alt="!" />
+                <div>Feedback:</div>
+              </div>
+              <div className="feedback-reason">
+                {this.props.feedback}
+              </div>
             </div>
-            <div className="feedback-reason">
-              {this.props.feedback}
-            </div>
-          </div>
-          : <></>}
+            : <></>
+        }
 
         {summary}
         {formatMathemicalFormulas()}

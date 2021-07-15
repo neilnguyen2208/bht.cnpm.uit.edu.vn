@@ -171,6 +171,7 @@ class MyPosts extends React.Component {
                             feedback={item.feedback}
                             reloadList={() => this.reloadList()}
                             useAction={true}
+                            postBusinessState={item.postBusinessState}
                         />
                         <PostNormalReactionbar
                             postID={item.id}

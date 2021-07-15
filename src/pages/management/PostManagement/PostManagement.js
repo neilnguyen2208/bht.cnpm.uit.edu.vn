@@ -228,6 +228,7 @@ class PostManagement extends React.Component {
                         availableActions={item.availableActions}
                         useAction={true}
                         reloadList={() => this.reloadList()}
+                        postBusinessState={item.postBusinessState}
                     />
                     <PostNormalReactionbar
                         postID={item.id}
@@ -237,7 +238,7 @@ class PostManagement extends React.Component {
                         savedStatus={item.savedStatus}
                         availableActions={item.availableActions}
                         useAction={true}
-                        viewCount = {item.viewCount}
+                        viewCount={item.viewCount}
 
                     />
                 </div >

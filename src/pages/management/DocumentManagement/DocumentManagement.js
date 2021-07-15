@@ -232,6 +232,7 @@ class DocumentManagement extends React.Component {
 
         if (!this.props.isListLoading && this.props.documentsList) {
             this.documentsList = this.props.documentsList.map((item) => {
+                console.log(item)
                 return <div className="item-container" key={item.id}>
                     <DocumentSummaryMetadata
                         type={itemType.management}
@@ -253,6 +254,7 @@ class DocumentManagement extends React.Component {
                         authorAvatarURL={item.authorAvatarURL}
                         availableActions={item.availableActions}
                         reloadList={() => this.reloadList()}
+                        docBusinessState={item.docBusinessState}
                     />
                     <DocumentNormalReactionbar
                         documentID={item.id}

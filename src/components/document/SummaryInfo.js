@@ -26,6 +26,8 @@ import danger_icon from 'assets/icons/24x24/nb_orange_danger_icon_24x24.png'
 import 'components/styles/Label.scss'
 import 'components/styles/Metadata.scss'
 
+import published_icon from 'assets/icons/24x24/published_icon.png';
+import not_published_icon from 'assets/icons/24x24/not_published_icon.png';
 //constants
 import { itemType, mySelfMenuItemList } from 'constants.js'
 
@@ -179,6 +181,42 @@ class DocumentSummary extends React.Component {
               :
               <></>
             }
+
+            {(this.props.type === itemType.mySelf || this.props.type === itemType.approval || this.props.type === itemType.management) && this.props.docBusinessState === "PUBLIC" ?
+              <div className="publish-status d-flex" style={{
+                width: "88px",
+                height: "20px",
+                lineHeight: "16px",
+                fontSize: "16px",
+                border: "1px solid var(--blue)",
+                borderRadius: "3px",
+                marginLeft: "5px",
+                padding: "1px",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+              }} >
+                <img src={published_icon} alt="" style={{ marginRight: "3px " }} />
+                <div className="d-flex" > Published </div>
+              </div> : <></>
+            }
+
+            {(this.props.type === itemType.mySelf || this.props.type === itemType.approval || this.props.type === itemType.management) && this.props.docBusinessState === "UNLISTED" ?
+              <div className="publish-status d-flex" style={{
+                width: "110px",
+                height: "20px",
+                lineHeight: "16px",
+                fontSize: "16px",
+                border: "1px solid var(--black)",
+                borderRadius: "3px",
+                marginLeft: "5px",
+                padding: "1px",
+                color: "var(--black)",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+              }} >
+                <img src={not_published_icon} alt="" style={{ marginRight: "3px " }} />
+                <div className="d-flex" > Not published </div>
+              </div> : <></>}
           </div>
           {this.props.type !== itemType.management && this.props.type !== itemType.normal &&
             < PopupMenu

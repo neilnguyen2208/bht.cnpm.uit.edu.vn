@@ -18,8 +18,6 @@ import ExerciseReactionbar from 'components/course/ExerciseReactionbar'
 class ExerciseDetail extends React.Component {
     componentDidMount() {
         this.props.getAnExerciseInfoById(this.props.match.params.id);
-        this.props.getRelativeDocumentsByExerciseId(this.props.match.params.id);
-        this.props.getRelativePostsByExerciseId(this.props.match.params.id);
     }
 
     componentWillUnmount() {

@@ -202,6 +202,7 @@ class MyDocuments extends React.Component {
                             popUpMenuPrefix="mdpu"   //stand for my doc popup 
                             authorAvatarURL={item.authorAvatarURL}
                             reloadList={() => this.reloadList()}
+                            docBusinessState={item.docBusinessState}
                         />
                         <DocumentNormalReactionbar
                             documentID={item.id}
@@ -209,7 +210,7 @@ class MyDocuments extends React.Component {
                             useAction
                             likeCount={item.likeCount ? item.likeCount : 0}
                             dislikeCount={item.dislikeCount ? item.dislikeCount : 0}
-                            docReactionType={item.docReactionType }
+                            docReactionType={item.docReactionType}
                             commentCount={item.commentCount ? item.commentCount : 0}
                             downloadCount={item.downloadCount ? item.downloadCount : 0}
                             viewCount={item.viewCount ? item.viewCount : 0}

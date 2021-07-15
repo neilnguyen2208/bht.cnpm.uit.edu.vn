@@ -34,7 +34,7 @@ class QuestionItem extends React.Component {
       "rank": 0,
       "isCorrect": false
     };
-    this.editingAnswerID = null;
+    this.editingAnswerIndex = -1;
     this.isEditExplaination = false;
     this.isEditDuration = false
     this.isEditDifficulty = false;
@@ -81,7 +81,12 @@ class QuestionItem extends React.Component {
 
   //#region relative to answer item
   onAddAnswerClick = () => {
-    this.QUESTION_DTO.exerciseAnswerRequestDTOs.push(this.defaultAnswer);
+    this.QUESTION_DTO.exerciseAnswerRequestDTOs.push({
+      id: "null-answer",
+      "content": "<p>Đáp án</p>",
+      "rank": 0,
+      "isCorrect": false
+    });
     this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
     this.setState({});
   }
@@ -97,7 +102,6 @@ class QuestionItem extends React.Component {
     //set value of this answer is true in parent component, set new correct anser
     this.QUESTION_DTO.exerciseAnswerRequestDTOs.forEach((item, _index) => {
       item.isCorrect = false;
-      console.log(index)
       if (_index === index) item.isCorrect = true;
     })
     this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
@@ -122,7 +126,10 @@ class QuestionItem extends React.Component {
   }
 
   onAnswerPreviewClick = (index) => {
-    this.editingAnswerIndex = null;
+    this.editingAnswerIndex = -1;
+    if (getCKEInstance("answer-content-cke-" + this.props.index + "-" + index)) {
+      getCKEInstance("answer-content-cke-" + this.props.index + "-" + index).destroy();
+    }
     this.setState({});
   }
   //#endregion
@@ -175,7 +182,7 @@ class QuestionItem extends React.Component {
       this.isFirstTimeDifficultyListLoaded = true;
       this.setState({});
     }
-    console.log(this.props.index)
+
     return (
       //add id for navigation
       <div className="question-item-container">
@@ -188,7 +195,7 @@ class QuestionItem extends React.Component {
             <div className="j-c-space-between w-100-percents">
               <div className="d-flex">
                 <div className="question-index">
-                  Câu {this.props.index}:
+                  Câu {this.props.index + 1}:
                 </div>
               </div>
             </div>
@@ -225,7 +232,7 @@ class QuestionItem extends React.Component {
           {/* answer items */}
           {
             this.QUESTION_DTO.exerciseAnswerRequestDTOs.map((answer, index) => {
-              return <div className="answer-item" key={answer.id + index} style={{ fontSize: "15px" }}  >
+              return <div className="answer-item" key={this.props.index + index} style={{ fontSize: "15px" }}  >
                 <div className="j-c-space-between">
                   <label className="container">
                     <input type="radio" checked={answer.isCorrect}
@@ -277,7 +284,7 @@ class QuestionItem extends React.Component {
           {/* explanation */}
           {!this.isEditExplaination ?
             this.QUESTION_DTO.explanation && <div className="mg-bottom-10px">
-              <div className="exercise-explanation j-c-space-between" id={"xrcs-xplntn" + this.QUESTION_DTO.id}>
+              <div className="exercise-explanation j-c-space-between" id={"xrcs-xplntn" + this.props.index}>
                 <div className="question-content ck-editor-output" style={{ fontSize: "15px" }}
                   dangerouslySetInnerHTML={{
                     __html: this.QUESTION_DTO.explanation
@@ -289,7 +296,7 @@ class QuestionItem extends React.Component {
 
             </div> :
             this.QUESTION_DTO.explanation && <div className="mg-bottom-10px">
-              <div className="exercise-explanation" id={"xrcs-xplntn" + this.QUESTION_DTO.id}>
+              <div className="exercise-explanation" id={"xrcs-xplntn" + this.props.index}>
                 <Editor editorId={"explanation-cke-" + this.props.index}
                   onChange={() => this.onExplainationEditorChange()}
                   onInstanceReady={() => this.onExplainationEditorReady()}

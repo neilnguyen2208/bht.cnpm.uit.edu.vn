@@ -104,17 +104,23 @@ class CreateExercise extends React.Component {
         }
         else {
 
-            //remove by id, call API
         }
     }
 
     onSaveQuestionsClick = () => {
+        let tmp = this.EXERCISE_QUESTIONS_DTO;
+        tmp.forEach((question => {
+            question.exerciseAnswerRequestDTOs.forEach(answer => {
+                if (answer.id === "null-answer") { answer.id = null }
+            })
+        }
+        ))
         openModal("confirmation", {
             title: "Cập nhật bài tập",
             text: "Xác nhận cập nhật bài tập này",
             showIcon: true,
             onConfirm: () => {
-                this.props.editAnExerciseQuestionWithAnswers(this.props.match.params.id, this.EXERCISE_QUESTIONS_DTO);
+                this.props.editAnExerciseQuestionWithAnswers(this.props.match.params.id, tmp);
                 closeModal()
             }
         })
@@ -190,7 +196,7 @@ class CreateExercise extends React.Component {
                         <AddOrEditQuestionItem
                             questionData={questionItem}
                             key={index}
-                            index={index + 1}
+                            index={index}
                             deleteQuestion={this.deleteQuestion}
                             setQuestionContent={this.setQuestionContent}
                         />)

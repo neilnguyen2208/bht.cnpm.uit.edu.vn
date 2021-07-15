@@ -26,15 +26,26 @@ class RelativeRight extends React.Component {
             {this.props.items.map(item => <div className="relative-item-container">
               <div className="d-flex">
                 <img className="avatar _35x35 corner border mg-top-5px mg-right-5px" src={item.author.avatarURL} alt="" />
-                <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
-                  <div className="relative-item-title">{item.title}</div>
-                </Link>
+                {this.props.type === "DOCUMENT" &&
+                  <Link to={"/document-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getADocumentByID(item.id)} >
+                    <div className="relative-item-title">{item.title}</div>
+                  </Link>
+                }
+
+                {this.props.type === "EXERCISE" &&
+                  <Link to={"/courses/exercise/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAnExerciseInfoByID(item.id)} >
+                    <div className="relative-item-title">{item.title}</div>
+                  </Link>
+                }
+
+                {this.props.type === "POST" &&
+                  <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
+                    <div className="relative-item-title">{item.title}</div>
+                  </Link>
+                }
+
               </div>
-              {/* <div className="relative-item-icon" /> */}
-              {/* <div className="summary-text">{item.summary}</div> */}
-            </div>
-            )
-            }
+            </div>)}
           </div >
         </div >);
     return <div>

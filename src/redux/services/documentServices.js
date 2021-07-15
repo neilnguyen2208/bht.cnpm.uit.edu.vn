@@ -387,7 +387,7 @@ export function getADocumentStatisticByID(id) {
             }).catch(error => dispatch(get_ADocumentStatisticFailure(error)))
     }
 }
-export function getDocumentById(id) {
+export function getADocumentByID(id) {
     return dispatch => {
         dispatch(get_DocumentByIDReset())
         authRequest.get(`/documents/${id}`)
@@ -415,7 +415,7 @@ export function getDocumentById(id) {
     }
 }
 
-export function getDocumentByIdForEdit(id) {
+export function getADocumentByIDForEdit(id) {
     return dispatch => {
         dispatch(get_DocumentByIDForEditReset())
         authRequest.get(`/documents/${id}`)

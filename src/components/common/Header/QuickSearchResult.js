@@ -11,8 +11,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { getAPostByID } from 'redux/services/postServices';
-import { getDocumentById } from 'redux/services/documentServices';
-import { getAnExerciseInfoById } from 'redux/services/courseServices';
+import { getADocumentByID } from 'redux/services/documentServices';
+import { getAnExerciseInfoByID } from 'redux/services/courseServices';
 
 class QuickSearchResult extends React.PureComponent {
 
@@ -48,7 +48,7 @@ class QuickSearchResult extends React.PureComponent {
                             <Link to={`/document-content/${result.id}`}
                                 onClick={() => {
                                     if (window.location.pathname.substring(0, 17) === "/document-content") {
-                                        this.props.getDocumentById(result.id)
+                                        this.props.getADocumentByID(result.id)
                                     }
                                 }}
                             >
@@ -80,7 +80,7 @@ class QuickSearchResult extends React.PureComponent {
                             <Link to={`/courses/exercise/${result.id}`}
                                 onClick={() => {
                                     if (window.location.pathname.substring(0, 17) === "/courses/exercise") {
-                                        this.props.getAnExerciseInfoById(result.id)
+                                        this.props.getAnExerciseInfoByID(result.id)
                                     }
                                 }}
                             >
@@ -107,8 +107,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getAPostByID,
-    getDocumentById,
-    getAnExerciseInfoById,
+    getADocumentByID,
+    getAnExerciseInfoByID,
 }, dispatch);
 
 export default withRouter(

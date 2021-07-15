@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import {
-    getAnExerciseInfoById,
+    getAnExerciseInfoByID,
     getExerciseQuestions,
     checkExerciseAnswers,
     getExerciseNote,
@@ -53,7 +53,7 @@ class ExerciseQuestions extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getAnExerciseInfoById(this.props.match.params.id);
+        this.props.getAnExerciseInfoByID(this.props.match.params.id);
         this.props.getExerciseQuestions(this.props.match.params.id);
         authService.isLoggedIn() && this.props.getExerciseNote(this.props.match.params.id);
     }
@@ -332,7 +332,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getAnExerciseInfoById,
+    getAnExerciseInfoByID,
     getExerciseQuestions,
     checkExerciseAnswers,
     getExerciseNote,

@@ -19,8 +19,8 @@ import {
     put_EditAPostReset
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import RightRelativeItems from 'components/post/RightRelativeItems';
-import BottomRelativeItems from 'components/post/BottomRelativeItems';
+import RightRelativeItems from 'layouts/RightRelativeItems';
+import BottomRelativeItems from 'layouts/BottomRelativeItems';
 import CommentSection from 'components/post/comment/CommentSection'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'

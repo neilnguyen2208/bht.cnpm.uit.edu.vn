@@ -10,8 +10,8 @@ import { getSubjectsList } from "redux/services/subjectServices";
 import { getExerciseCategories } from "redux/services/exerciseCategoryServices";
 import { getTagQuickQueryResult } from "redux/services/tagServices"
 import {
-    getAnExerciseInfoByIdForEdit,
-    getAnExerciseInfoById,
+    getAnExerciseInfoByIDForEdit,
+    getAnExerciseInfoByID,
     editAnExerciseInfo
 } from "redux/services/courseServices"
 import { put_EditAnExerciseInfoReset } from "redux/actions/courseAction"
@@ -132,7 +132,7 @@ class EditExerciseModal extends React.Component {
         this.props.getExerciseCategories();
         this.props.getSubjectsList();
 
-        this.props.getAnExerciseInfoByIdForEdit(this.props.id);
+        this.props.getAnExerciseInfoByIDForEdit(this.props.id);
         this.isFirstLoad = false;
 
         this.timeOut = null;
@@ -144,7 +144,7 @@ class EditExerciseModal extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(put_EditAnExerciseInfoReset());
-        this.props.getAnExerciseInfoById(this.props.id)
+        this.props.getAnExerciseInfoByID(this.props.id)
         if (getCKEInstance('ed-exercise-cke'))
             getCKEInstance('ed-exercise-cke').destroy();
     }
@@ -671,8 +671,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getExerciseCategories,
     getSubjectsList,
     getTagQuickQueryResult,
-    getAnExerciseInfoByIdForEdit,
-    getAnExerciseInfoById,
+    getAnExerciseInfoByIDForEdit,
+    getAnExerciseInfoByID,
     editAnExerciseInfo
 
 }, dispatch);

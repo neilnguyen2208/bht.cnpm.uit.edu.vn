@@ -12,7 +12,7 @@ import {
     styleCodeSnippet
 } from "components/common/CustomCKE/CKEditorUtils";
 import {
-    getAnExerciseInfoById,
+    getAnExerciseInfoByID,
     getAnExerciseQuestionsWithAnswers,
     editAnExerciseQuestionWithAnswers,
     getExerciseQuestionDifficultyTypes
@@ -51,7 +51,7 @@ class CreateExercise extends React.Component {
 
     componentDidMount() {
         //get data
-        this.props.getAnExerciseInfoById(this.props.match.params.id);
+        this.props.getAnExerciseInfoByID(this.props.match.params.id);
         this.props.getExerciseQuestionDifficultyTypes();
 
         //this API is using for update an questions
@@ -240,7 +240,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getAnExerciseInfoById,
+    getAnExerciseInfoByID,
     getAnExerciseQuestionsWithAnswers,
     editAnExerciseQuestionWithAnswers,
     getExerciseQuestionDifficultyTypes

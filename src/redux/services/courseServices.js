@@ -147,7 +147,7 @@ export function getCourseDetailById(subjectId) {
     }
 }
 
-export function getAnExerciseInfoById(exerciseId) {
+export function getAnExerciseInfoByID(exerciseId) {
     return dispatch => {
         dispatch(get_AnExerciseInfoByIdRequest());
         dispatch(getRelativePostsByExerciseId(exerciseId));
@@ -163,7 +163,7 @@ export function getAnExerciseInfoById(exerciseId) {
     }
 }
 
-export function getAnExerciseInfoByIdForEdit(exerciseId) {
+export function getAnExerciseInfoByIDForEdit(exerciseId) {
     return dispatch => {
         dispatch(get_AnExerciseInfoForEditByIdRequest());
         authRequest.get(`/exercises/${exerciseId}`).then(response => {

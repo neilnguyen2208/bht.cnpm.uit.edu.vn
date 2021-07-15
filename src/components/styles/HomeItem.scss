@@ -205,6 +205,7 @@
 .relative-item-container.bottom {
   border: 1px solid var(--gray);
   width: calc(50% - 5px);
+  border-left: 3px var(--gray) solid;
   padding: 5px;
 }
 

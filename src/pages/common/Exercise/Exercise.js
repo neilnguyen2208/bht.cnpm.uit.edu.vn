@@ -9,15 +9,15 @@ import { connect } from "react-redux";
 import Tag from 'components/post/Tag'
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import { getAnExerciseInfoById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId } from 'redux/services/courseServices'
-import RelativePosts from 'components/post/RightRelativeItems'
+import { getAnExerciseInfoByID, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId } from 'redux/services/courseServices'
+import RightRelativeItems from 'layouts/RightRelativeItems'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 import ExerciseReactionbar from 'components/course/ExerciseReactionbar'
 
 class ExerciseDetail extends React.Component {
     componentDidMount() {
-        this.props.getAnExerciseInfoById(this.props.match.params.id);
+        this.props.getAnExerciseInfoByID(this.props.match.params.id);
     }
 
     componentWillUnmount() {
@@ -90,11 +90,11 @@ class ExerciseDetail extends React.Component {
                         <div className="fake-relative-sidebar exercise"></div>
                         <div style={{ position: "fixed" }}>
                             {!this.props.isRelativePostsLoading && this.props.relativePosts &&
-                                <RelativePosts title={"BÀI VIẾT LIÊN QUAN"} items={
+                                <RightRelativeItems type="POST" title={"BÀI VIẾT LIÊN QUAN"} items={
                                     this.props.relativePosts} />
                             }
                             {!this.props.isRelativeDocumentsLoading && this.props.relativeDocuments &&
-                                <RelativePosts title={"TÀI LIỆU LIÊN QUAN"} items={
+                                <RightRelativeItems type="DOCUMENT" title={"TÀI LIỆU LIÊN QUAN"} items={
                                     this.props.relativeDocuments} />
                             }
                         </div>
@@ -118,7 +118,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getAnExerciseInfoById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId
+    getAnExerciseInfoByID, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExerciseDetail));

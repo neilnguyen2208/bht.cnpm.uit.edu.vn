@@ -1,7 +1,7 @@
 import React from 'react'
 
 import 'components/styles/Metadata.scss'
-import { getDocumentById, getDownloadURL } from "redux/services/documentServices"
+import { getADocumentByID, getDownloadURL } from "redux/services/documentServices"
 
 import { bindActionCreators } from 'redux';
 import { withRouter } from "react-router-dom";
@@ -11,11 +11,12 @@ import DetailInfo from "components/document/DetailInfo"
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 import RelativeLoader from 'components/common/Loader/RelativeLoader';
 
-import RelativeToDocument from 'components/document/RelativeToDocument';
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import store from 'redux/store/index.js';
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import RelativeDocuments from 'components/document/RelativeDocuments'
+import RightRelativeItems from 'layouts/RightRelativeItems';
+import BottomRelativeItems from 'layouts/BottomRelativeItems';
+
 import { itemType } from 'constants.js';
 import {
     delete_ADocumentReset,
@@ -33,7 +34,7 @@ import CommentSection from 'components/document/comment/CommentSection';
 class DocumentDetail extends React.Component {
 
     componentDidMount() {
-        this.props.getDocumentById(this.props.match.params.id);
+        this.props.getADocumentByID(this.props.match.params.id);
     }
 
     componentWillUnmount() {
@@ -69,7 +70,7 @@ class DocumentDetail extends React.Component {
 
         if (this.props.isHaveEdited) {
             store.dispatch(put_EditADocumentReset());
-            this.props.getDocumentById(this.props.match.params.id);
+            this.props.getADocumentByID(this.props.match.params.id);
         }
 
         //reload the list when any item has been deleted or edited:
@@ -151,17 +152,15 @@ class DocumentDetail extends React.Component {
                                         availableActions={this.props.currentDocument.availableActions}
                                         useAction
                                     />
-                                    <div className="d-flex" >
-                                        {!this.props.isRelativePostsLoading && this.props.relativePosts ?
-                                            <RelativeToDocument title={"BÀI VIẾT LIÊN QUAN"} items={
-                                                this.props.relativePosts} type="POST" />
-                                            : <DocPostDetailLoader />
-                                        }
-                                        {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
-                                            <RelativeToDocument title={"BÀI TẬP LIÊN QUAN"}
-                                                items={this.props.relativeExercises} type="EXERCISE" /> : <DocPostDetailLoader />
-                                        }
-                                    </div>
+                                    {!this.props.isRelativePostsLoading && this.props.relativePosts ?
+                                        <BottomRelativeItems title={"BÀI VIẾT LIÊN QUAN"} items={
+                                            this.props.relativePosts} type="POST" />
+                                        : <DocPostDetailLoader />
+                                    }
+                                    {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
+                                        <BottomRelativeItems title={"BÀI TẬP LIÊN QUAN"}
+                                            items={this.props.relativeExercises} type="EXERCISE" /> : <DocPostDetailLoader />
+                                    }
                                     <div id="cr-cmt" />
                                     <CommentSection
                                         useAction={true}
@@ -180,12 +179,12 @@ class DocumentDetail extends React.Component {
                             <div className="fake-relative-sidebar"></div>
                             <div style={{ position: "fixed" }}>
                                 {this.props.isRelativeDocLoadDone && this.props.relativeDocuments ?
-                                    <RelativeDocuments title={"TÀI LIỆU LIÊN QUAN"} items={
+                                    <RightRelativeItems title={"TÀI LIỆU LIÊN QUAN"} type="DOCUMENT" items={
                                         this.props.relativeDocuments} />
                                     : <></>
                                 }
                                 {this.props.isSameSubjectLoadDone && this.props.sameSubjectDocument ?
-                                    <RelativeDocuments title={"CÙNG MÔN HỌC"}
+                                    <RightRelativeItems title={"CÙNG MÔN HỌC"} type="DOCUMENT"
                                         items={this.props.sameSubjectDocument} />
                                     : <></>
                                 }
@@ -215,7 +214,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getDocumentById, getDownloadURL
+    getADocumentByID, getDownloadURL
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentDetail));

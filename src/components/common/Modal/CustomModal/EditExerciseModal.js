@@ -88,12 +88,10 @@ class EditExerciseModal extends React.Component {
             EXERCISE_DTO: {
                 tags: [],
                 title: '',//
-                content: ``,
-                summary: `null`,
+                description: ``,
                 categoryID: "",
                 topicID: "",
-                imageURL: "null",
-                readingTime: 10
+                rank: -1,
             },
         };
 
@@ -144,7 +142,7 @@ class EditExerciseModal extends React.Component {
         //reset global state isLoadDone of tagSearchQuickQuerry 
         store.dispatch(get_tagQuickQueryResultReset());
         store.dispatch(put_EditAnExerciseInfoReset());
-        this.props.getAnExerciseInfoByID(this.props.id)
+        this.props.getAnExerciseInfoByID(this.props.id);
         if (getCKEInstance('ed-exercise-cke'))
             getCKEInstance('ed-exercise-cke').destroy();
     }
@@ -165,7 +163,7 @@ class EditExerciseModal extends React.Component {
 
         this.setState({
             EXERCISE_DTO: { ...this.state.EXERCISE_DTO, subjectID: selectedOption.id },
-            
+
             //for preview
             currentSubject: selectedOption.name
         })
@@ -180,6 +178,9 @@ class EditExerciseModal extends React.Component {
     }
 
     handleUploadBtnClick = () => {
+
+
+
         if (styleFormSubmit(validationCondition)) {
             openModal("confirmation",
                 {
@@ -188,7 +189,17 @@ class EditExerciseModal extends React.Component {
                     confirmText: "Xác nhận",
                     cancelText: "Huỷ",
                     onConfirm: () => {
-                        this.props.editAnExerciseInfo(this.props.id, this.EDIT_EXERCISE_DTO);
+                        this.props.editAnExerciseInfo(this.props.id,
+                            {
+                                ...this.EDIT_EXERCISE_DTO,
+                                title: this.state.EXERCISE_DTO.title,
+                                description: this.state.EXERCISE_DTO.description,
+                                "categoryID": this.state.EXERCISE_DTO.categoryID,
+                                "topicID": this.state.EXERCISE_DTO.topicID,
+                                "tags": this.state.EXERCISE_DTO.tags
+                            }
+
+                        );
                         closeModal(); //close confimation popup
                         this.closeModal(); //close edit exercise popup
                     }
@@ -379,14 +390,7 @@ class EditExerciseModal extends React.Component {
     //#endregion
 
     handleEditorChange = (value) => {
-        if (value.length < 160) {
-            this.setState({ EXERCISE_DTO: { ...this.state.EXERCISE_DTO, content: value } })
-            return;
-        }
-        else {
-            this.setState({ EXERCISE_DTO: { ...this.state.EXERCISE_DTO, content: value } });
-            return;
-        }
+        this.setState({ EXERCISE_DTO: { ...this.state.EXERCISE_DTO, description: value } });
     };
 
     handleTitleChange = (e) => {
@@ -460,7 +464,7 @@ class EditExerciseModal extends React.Component {
             })
 
             getCKEInstance('ed-exercise-cke').setData(this.props.currentExercise.description)
-
+            console.log(this.props.currentExercise)
             this.setState({
                 EXERCISE_DTO: {
                     title: this.props.currentExercise.title,
@@ -475,6 +479,7 @@ class EditExerciseModal extends React.Component {
                     id: this.props.currentExercise.id,
                     subjectID: this.props.currentExercise.subjectID,
                     subjectName: this.props.currentExercise.subject,
+                    topicID: this.props.currentExercise.topicID,
                 },
 
             });
@@ -567,7 +572,7 @@ class EditExerciseModal extends React.Component {
                                             <div className="form-group" >
                                                 <label className="form-label-required">Chủ đề:</label>
                                                 <Combobox comboboxId="ed-exercise-topic-combobox"
-                                                    selectedOptionID={!this.props.isCurrentExerciseLoading && this.state.EXERCISE_DTO.topicID ? this.state.EXERCISE_DTO.topicID : 0}
+                                                    selectedOptionID={!this.props.isCurrentExerciseLoading && this.props.topicsList && this.state.EXERCISE_DTO.topicID ? this.state.EXERCISE_DTO.topicID : 0}
                                                     options={this.topicsList}
                                                     onOptionChanged={(selectedOption) => this.onTopicOptionChanged(selectedOption)}
                                                     placeHolder="Chọn chủ đề"
@@ -649,7 +654,6 @@ class EditExerciseModal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.course.currentExerciseForEdit.data);
     return {
         categories: state.exerciseCategory.categories.data,
         isCategoryLoading: state.exerciseCategory.categories.isLoading,

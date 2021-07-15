@@ -14,6 +14,8 @@ import RightRelativeItems from 'layouts/RightRelativeItems'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 import ExerciseReactionbar from 'components/course/ExerciseReactionbar'
+import store from 'redux/store';
+import { put_EditAnExerciseInfoReset } from 'redux/actions/courseAction';
 
 class ExerciseDetail extends React.Component {
     componentDidMount() {
@@ -25,6 +27,13 @@ class ExerciseDetail extends React.Component {
     }
 
     render() {
+
+        if (this.props.isHaveEditedInfo) {
+            this.props.getAnExerciseInfoByID(this.props.match.params.id);
+            store.dispatch(put_EditAnExerciseInfoReset());
+
+        }
+
         return (
             <div className="left-sidebar-layout exercise">
                 <div className="j-c-space-between" style={{ width: "100%" }}>
@@ -114,6 +123,8 @@ const mapStateToProps = (state) => {
         isRelativePostsLoading: state.course.relativePosts.isLoading,
         relativeDocuments: state.course.relativeDocuments.data,
         isRelativeDocumentsLoading: state.course.relativeDocuments.isLoading,
+        isHaveEditedInfo: state.course.isHaveEditedInfo,
+
     };
 }
 

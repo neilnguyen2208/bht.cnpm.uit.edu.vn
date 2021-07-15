@@ -82,6 +82,9 @@ import {
     GET_EXERCISE_INFO_FOR_EDIT_BY_ID_REQUEST,
     GET_EXERCISE_INFO_FOR_EDIT_BY_ID_SUCCESS,
     GET_EXERCISE_INFO_FOR_EDIT_BY_ID_FAILURE,
+    PUT_EDIT_AN_EXERCISE_INFO_FAILURE,
+    PUT_EDIT_AN_EXERCISE_INFO_SUCCESS,
+    PUT_EDIT_AN_EXERCISE_INFO_RESET,
 } from '../constants.js'
 
 const initialState = {
@@ -130,7 +133,7 @@ const initialState = {
 
     currentExercise: {
         isLoading: false,
-        data: [],
+        data: {},
         error: '',
         isLoadDone: false
     },
@@ -211,6 +214,8 @@ const initialState = {
     },
 
     isHaveEdited: false,
+    isHaveEditedInfo: false,
+
     isHaveReported: false,
     isHaveResolved: false,
     isHaveCreatedExercise: false,
@@ -316,7 +321,7 @@ function CourseReducer(state = initialState, action) {
             }
         case GET_EXERCISE_INFO_BY_ID_FAILURE:
             {
-                return { ...state, currentExercise: { isLoading: false, isLoadDone: true, error: action.payload, data: [] } }
+                return { ...state, currentExercise: { isLoading: false, isLoadDone: true, error: action.payload, data: {} } }
             }
 
         case GET_EXERCISE_INFO_FOR_EDIT_BY_ID_REQUEST:
@@ -553,6 +558,14 @@ function CourseReducer(state = initialState, action) {
                 return { ...state, exercisesList: { isLoading: false, error: action.payload, data: [] } }
             }
 
+        case PUT_EDIT_AN_EXERCISE_INFO_RESET:
+            return { ...state, isHaveEditedInfo: false }
+
+        case PUT_EDIT_AN_EXERCISE_INFO_SUCCESS:
+            return { ...state, isHaveEditedInfo: true }
+
+        case PUT_EDIT_AN_EXERCISE_INFO_FAILURE:
+            return { ...state, isHaveEditedInfo: false }
         case UPDATE_TOC_SET:
             return {
                 ...state, questionsToC: { ...state.questionsToC, isSet: false }
@@ -567,6 +580,7 @@ function CourseReducer(state = initialState, action) {
 
         case SET_TIME_STOP:
             return { ...state, isTimeNormal: false }
+
         default:
             return state;
     }

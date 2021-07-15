@@ -187,9 +187,25 @@
   user-select: text;
 }
 
+.relative-item-container.bottom .relative-item-title {
+  font-family: "RobotoSlab-Medium";
+  margin-top: 3px;
+  font-size: 16px;
+}
+
+.relative-item-container.bottom .summary-text {
+  margin-top: 0px;
+}
+
 .relative-item-container .summary-text {
   margin-left: 5px;
   margin-bottom: 5px;
+}
+
+.relative-item-container.bottom {
+  border: 1px solid var(--gray);
+  width: calc(50% - 5px);
+  padding: 5px;
 }
 
 .relative-item-container {

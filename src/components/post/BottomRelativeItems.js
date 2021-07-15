@@ -22,21 +22,22 @@ class RelativeToPost extends React.Component {
           <div className="relative-title">
             {this.props.title}
           </div>
-          <div style={{ padding: "5px" }}>
+          <div style={{ flexWrap: "wrap", display: "flex", justifyContent: "space-between" }}>
             {this.props.items.map(item =>
-              <div className="relative-item-container">
+              <div className="relative-item-container bottom">
                 <div className="d-flex">
-                  {/* <img className="avatar _35x35 corner border mg-top-5px mg-right-5px" src={item.author.avatarURL} alt="" /> */}
-                  <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
-                    <div className="relative-item-icon" />
-                    <div className="relative-item-title">{item.title}</div>
-                  </Link>
+                  <img className="avatar _50x50 round border mg-top-5px mg-right-5px" src={item.author.avatarURL} alt="" />
+                  <div>
+                    <div className="d-flex">
+                      <Link to={"/post-content/" + item.id} className="relative-item" key={item.id} onClick={() => this.props.getAPostByID(item.id)} >
+                        <div className="relative-item-title">{item.title}</div>
+                      </Link>
+                    </div>
+                    <div className="summary-text">{item.description}</div>
+                  </div>
                 </div>
-                {/* <div className="relative-item-icon" /> */}
-                {/* <div className="summary-text">{item.summary}</div> */}
               </div>
-            )
-            }
+            )}
           </div >
         </div >);
     return <div>

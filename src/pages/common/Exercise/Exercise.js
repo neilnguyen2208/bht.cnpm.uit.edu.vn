@@ -10,7 +10,7 @@ import Tag from 'components/post/Tag'
 import ExerciseSidebar from 'components/course/ExcerciseSidebar'
 import 'components/common/CustomCKE/CKEditorContent.scss';
 import { getAnExerciseInfoById, getRelativePostsByExerciseId, getRelativeDocumentsByExerciseId } from 'redux/services/courseServices'
-import RelativePosts from 'components/post/RelativePosts'
+import RelativePosts from 'components/post/RightRelativeItems'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
 import ExerciseReactionbar from 'components/course/ExerciseReactionbar'

@@ -13,7 +13,7 @@ import { getAPostByID } from 'redux/services/postServices'
 //constants
 
 //components
-class RelativePosts extends React.Component {
+class RelativeRight extends React.Component {
   render() {
     if (this.props.items.length > 0)
 
@@ -51,5 +51,5 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   getAPostByID
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RelativePosts));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RelativeRight));
 

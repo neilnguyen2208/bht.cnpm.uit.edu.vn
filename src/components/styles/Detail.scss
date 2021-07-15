@@ -5,7 +5,6 @@
     height: fit-content;
     margin-bottom: 10px;
     background-repeat: no-repeat;
-    border: 1px var(--gray) solid;
     margin-top: 20px;
     box-shadow: 0px 0px 3px 0px var(--gray);
     border: 1px var(--gray) solid;
@@ -190,20 +189,22 @@ div div div .ndfHFb-c4YZDc-i5oIFb.ndfHFb-c4YZDc-e1YmVc .ndfHFb-c4YZDc-Wrql6b {
 }
 
 .relative-to-post {
-    border-top: 1px solid var(--gray);
     margin-top: 50px;
+    padding: 0px;
     width: 100%;
-    border: 1px solid var(--gray);
-    box-shadow: 0px 0px 3px 0px var(--gray);
-    border: 1px var(--gray) solid;
+}
+
+.relative-to-post .relative-title {
+    display: flex;
+    border-bottom: 2px solid var(--gray);
 }
 
 .relative-to-post:first-child {
-    margin-right: 5px;
+    // margin-right: 5px;
 }
 
 .relative-to-post + .relative-to-post {
-    margin-left: 5px;
+    // margin-left: 5px;
 }
 
 .relative-sidebar + .relative-sidebar {

@@ -261,7 +261,7 @@
 }
 
 .metadata .image {
-  max-height: 200px;
+  max-height: 400px;
   width: fit-content;
   max-width: 100%;
   object-fit: cover;
@@ -302,8 +302,22 @@
   height: 35px;
 }
 
+._50x50 {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+._50x50 {
+  width: 50px !important;
+  height: 50px !important;
+}
+
 .avatar.corner {
   border-radius: 10%;
+}
+
+.avatar.round {
+  border-radius: 50%;
 }
 
 .avatar.border {

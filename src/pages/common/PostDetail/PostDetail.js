@@ -19,8 +19,8 @@ import {
     put_EditAPostReset
 } from 'redux/actions/postAction';
 import 'components/common/CustomCKE/CKEditorContent.scss';
-import RelativePosts from 'components/post/RelativePosts';
-import RelativeToPost from 'components/post/RelativeToPost';
+import RightRelativeItems from 'components/post/RightRelativeItems';
+import BottomRelativeItems from 'components/post/BottomRelativeItems';
 import CommentSection from 'components/post/comment/CommentSection'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
@@ -165,16 +165,16 @@ class PostDetail extends React.Component {
                                                     savedStatus={this.props.currentPost.savedStatus}
                                                     viewCount={this.props.currentPost.viewCount}
                                                 />
-                                                <div className="d-flex" >
-                                                    {!this.props.isRelativeDocumentsLoading && this.props.relativeDocuments ?
-                                                        <RelativeToPost title={"TÀI LIỆU LIÊN QUAN"} items={
-                                                            this.props.relativeDocuments} type="DOCUMENT" />
-                                                        : <DocPostRelativeLoader />}
-                                                    {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
-                                                        <RelativeToPost title={"BÀI TẬP LIÊN QUAN"}
-                                                            items={this.props.relativeExercises} type="EXERCISE" /> : <DocPostRelativeLoader />
-                                                    }
-                                                </div>
+                                                {/* <div className="d-flex" > */}
+                                                {!this.props.isRelativeDocumentsLoading && this.props.relativeDocuments ?
+                                                    <BottomRelativeItems title={"TÀI LIỆU LIÊN QUAN"} items={
+                                                        this.props.relativeDocuments} type="DOCUMENT" />
+                                                    : <DocPostRelativeLoader />}
+                                                {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
+                                                    <BottomRelativeItems title={"BÀI TẬP LIÊN QUAN"}
+                                                        items={this.props.relativeExercises} type="EXERCISE" /> : <DocPostRelativeLoader />
+                                                }
+                                                {/* </div> */}
                                                 <div id="cr-cmt" />
                                                 <CommentSection
                                                     useAction={true}
@@ -208,11 +208,11 @@ class PostDetail extends React.Component {
                                 <div className="fake-relative-sidebar"></div>
                                 <div style={{ position: "fixed" }} id="post-relative-sidebar">
                                     {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
-                                        <RelativePosts title={"CÙNG TÁC GIẢ"} items={
+                                        <RightRelativeItems title={"CÙNG TÁC GIẢ"} items={
                                             this.props.sameAuthor} />
                                         : <DocPostRelativeLoader />}
                                     {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
-                                        <RelativePosts title={"CÙNG DANH MỤC"}
+                                        <RightRelativeItems title={"CÙNG DANH MỤC"}
                                             items={this.props.sameCategory} /> : <DocPostRelativeLoader />
                                     }
                                 </div>
@@ -222,7 +222,7 @@ class PostDetail extends React.Component {
                     </div>
                 </div>
                 {formatMathemicalFormulas()}
-            </div>
+            </div >
         );
     }
 }

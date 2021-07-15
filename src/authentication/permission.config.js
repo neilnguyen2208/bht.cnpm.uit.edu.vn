@@ -104,5 +104,10 @@ export const exerciseComment = {
 
 // export const 
 export const exerciseAction = {
-    Comment: "comment"
+    Comment: "comment",
+    Read: "read",
+    Update: "update",
+    Report: "report",
+    Delete: "delete"
+
 }

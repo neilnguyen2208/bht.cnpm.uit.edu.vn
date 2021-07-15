@@ -31,6 +31,7 @@ class ExerciseDetail extends React.Component {
                     <div className="d-flex">
                         <ExerciseSidebar />
                         <div className="exercise-detail-container" >
+                            {console.log(this.props.exerciseContent)}
                             {!this.props.isLoading && this.props.exerciseContent ?
                                 <div>
                                     <ExerciseInfo
@@ -47,6 +48,7 @@ class ExerciseDetail extends React.Component {
                                         subjectName={this.props.exerciseContent.subjectName}
                                         totalQuestions={this.props.exerciseContent.totalQuestions}
                                         attemptCount={this.props.exerciseContent.attemptCount}
+                                        useAction
 
                                     />
 

@@ -111,6 +111,7 @@ class ExerciseInfo extends React.Component {
           {/* <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
             availableActions={this.props.availableActions} items={guestMenu}
             id={`${this.props.popUpMenuPrefix}-pxrcsi-pm-${this.props.exerciseId}`} /> */}
+          {console.log(this.props.availableActions)}
           <PopupMenu
             onMenuItemClick={this.onPopupMenuItemClick}
             useAction={this.props.useAction}

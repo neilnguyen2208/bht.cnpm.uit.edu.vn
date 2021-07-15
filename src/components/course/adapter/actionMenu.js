@@ -4,7 +4,7 @@ import report_icon from 'assets/icons/24x24/report_icon_24x24.png'
 import pin_icon from 'assets/icons/24x24/pinned_icon_24x24.png'
 import unpin_icon from 'assets/icons/24x24/unpinned_icon_24x24.png'
 import stick_to_top from 'assets/icons/24x24/stick_to_top_icon_24x24.png'
-import { Post, PostAction } from 'authentication/permission.config'
+import { exerciseAction, Post, PostAction } from 'authentication/permission.config'
 
 export const guestMenu = [{
   id: 1,
@@ -24,7 +24,8 @@ export const basicMenu = [
     value: "REPORT_EXERCISE",
     permissions: [Post.POSTREPORT_PUBLIC_ALL_CREATE], //base on permission
     showOnPermission: false,
-    requiredAction: PostAction.Report
+    showOnAction: false,
+    requiredAction: exerciseAction.Report
   },
   {
     id: 2,
@@ -34,7 +35,7 @@ export const basicMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Delete,
+    requiredAction: exerciseAction.Delete,
     hasLine: true
   },
   {
@@ -45,7 +46,7 @@ export const basicMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Update
+    requiredAction: exerciseAction.Update
   },
   {
     id: 4,
@@ -57,7 +58,7 @@ export const basicMenu = [
     permissions: [],
     showOnPermission: false,
     showOnAction: true,
-    requiredAction: PostAction.Update
+    requiredAction: exerciseAction.Update
   },
 
 ]

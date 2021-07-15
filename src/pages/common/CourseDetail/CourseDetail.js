@@ -137,7 +137,7 @@ class PostsList extends React.Component {
                                 {topicsList}
                                 <div className="score-board">
                                     <div style={{ width: "100%", textAlign: "center", fontSize: "18px", marginTop: "5px", fontWeight: "700", borderBottom: "1px solid var(--gray)", paddingBottom: "5px" }}>XẾP HẠNG</div>
-                                    {this.scoresList && this.scoresList.exerciseScoreboard.length === 0 && <div style={{ margin: "auto" }}>Chưa có người dùng tham gia.</div>}
+                                    {this.scoresList && this.scoresList.exerciseScoreboard.length === 0 && <div style={{ margin: "auto", display: "block", height: "30px", width: "100%", paddingTop: "10px", textAlign: "center" }}>Chưa có người dùng tham gia.</div>}
                                     {
                                         this.scoresList && this.scoresList.exerciseScoreboard.map((item, index) => {
                                             return <div>{this.renderRankingItem(item, index)}</div>

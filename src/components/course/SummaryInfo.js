@@ -213,7 +213,7 @@ class ExerciseSummary extends React.Component {
           </Link>
 
           <div className="mg-left-5px j-c-space-between d-flex-vertical">
-            <Link to={"/course/exercise/" + this.props.exerciseID}>
+            <Link to={"/courses/exercise/" + this.props.exerciseID}>
               <div className="title">
                 {this.props.title}
               </div>

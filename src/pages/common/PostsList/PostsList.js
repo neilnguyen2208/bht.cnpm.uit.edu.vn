@@ -11,7 +11,7 @@ import HomeTextInfo from 'components/post/HomeTextInfo';
 import HomeInfo from 'components/post/HomeInfo';
 import bg from 'assets/images/white_bg.jpg'
 import highlight_icon from 'assets/icons/48x48/highlights_icon_48x48.png'
-import { request } from 'utils/requestUtils';
+import { authRequest, request } from 'utils/requestUtils';
 
 class PostsList extends React.Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class PostsList extends React.Component {
                     let IDarr = '';
                     response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-                    request.get(`/posts/statistics?postIDs=${IDarr}`)
+                    authRequest.get(`/posts/statistics?postIDs=${IDarr}`)
                         .then(response_2 => {
                             //merge summary array and statistic array
                             let finalResult = [];

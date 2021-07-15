@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import HomeFirstInfo from 'components/document/HomeFirstInfo';
 import HomeTextInfo from 'components/document/HomeTextInfo';
-import { request } from 'utils/requestUtils';
+import { authRequest, request } from 'utils/requestUtils';
 import { getCourseDetailById } from 'redux/services/courseServices';
 import HomeInfo from 'components/document/HomeInfo';
 class PostsList extends React.Component {
@@ -35,7 +35,7 @@ class PostsList extends React.Component {
                     let IDarr = '';
                     response_1.data.docSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
 
-                    request.get(`/documents/statistics?docIDs=${IDarr}`)
+                    authRequest.get(`/documents/statistics?docIDs=${IDarr}`)
                         .then(response_2 => {
                             //merge summary array and statistic array
                             let finalResult = [];
@@ -46,7 +46,6 @@ class PostsList extends React.Component {
                                     ...(response_2.data.find((itmInner) => itmInner.id === result_1.docSummaryDTOs[j].id)),
                                 });
                             }
-                            console.log(finalResult);
                             this.allResult = [...this.allResult, { id: response.data[i].id, categoryName: response.data[i].name, documents: finalResult }];
                             this.setState({});
                         })

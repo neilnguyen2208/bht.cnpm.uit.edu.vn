@@ -153,11 +153,13 @@ export function getAnExerciseInfoById(exerciseId) {
         dispatch(getRelativePostsByExerciseId(exerciseId));
         dispatch(getRelativeDocumentsByExerciseId(exerciseId));
         authRequest.get(`/exercises/${exerciseId}`).then(response => {
-
             authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
-                dispatch(get_AnExerciseInfoByIdSuccess({ ...response.data, ...response_2.data[0] }))
-            }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))
-        })
+                authRequest.get(`/exercises/actionAvailable?exerciseIDs=${exerciseId}`).then(response_3 => {
+                    console.log({ ...response.data, ...response_2.data[0], ...response_3.data[0] })
+                    dispatch(get_AnExerciseInfoByIdSuccess({ ...response.data, ...response_2.data[0], availableActions: response_3.data[0].availableActions }));
+                }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))
+            })
+        }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))
     }
 }
 

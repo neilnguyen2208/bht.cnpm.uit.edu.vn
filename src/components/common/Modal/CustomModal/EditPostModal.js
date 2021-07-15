@@ -579,11 +579,6 @@ class EditPostModal extends React.Component {
                                                     <span className="form-error-label" ></span>
                                                 </div>
                                             </div >
-                                            {/* 
-                                            <div className="form-group" style={{ zIndex: "4" }}>
-                                                <label className="form-label">Thời gian đăng:</label>
-                                                <JQDateTimePicker dtPickerId="cr-post" onDateTimeChange={(date) => this.onPublishTimeChange(date)} />
-                                            </div> */}
 
                                             {/* Tag */}
                                             <div className='form-group mg-bottom-10px'>

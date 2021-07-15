@@ -140,7 +140,9 @@ class NormalReactionbar extends React.Component {
               expectedEvent={this.props.type !== "PREVIEW" ? () => this.toggleLikeImage() : () => { }}>
               <div className="like-btn-container">
                 <div className="d-flex"> {likeBtn}</div>
-                <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>
+                {console.log(this.props.likeCount)}
+
+                {this.props.likeCount !== undefined && this.props.likeCount !== "undefined" && <div className="like-count">{formatNumber(this.likeCount === -1 ? this.props.likeCount : this.likeCount)}</div>}
               </div>
             </RequireLogin>
 

@@ -111,7 +111,7 @@ class UserMenu extends React.Component {
             return <div className="header-user-menu-item" style={menuItem.hasLine && { borderBottom: "1px solid var(--grayish)" }}
                 id={"header-user-menuItem-" + menuItem.id}
                 key={menuItem.id} >
-                <div className='d-flex'>
+                <div >
                     {menuItem.tip ?
                         <>{menuItem.isLink ?
                             <Link className='d-flex' to={menuItem.value !== "PROFILE" ? menuItem.to : `/user/profile/${this.props.userSummaryData.id}`} onClick={() => this.handleMenuItemClick(menuItem)} style={{ color: "var(--black)" }}>

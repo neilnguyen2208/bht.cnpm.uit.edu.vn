@@ -107,12 +107,16 @@ var ranges = [
 ];
 
 export function formatNumber(n) { //conver from 1000 to 1k, and more ...
-    for (var i = 0; i < ranges.length; i++) {
-        if (n >= ranges[i].divider) {
-            return (n / ranges[i].divider).toString() + ranges[i].suffix;
+    if (n || n === 0) {
+        for (var i = 0; i < ranges.length; i++) {
+            if (n >= ranges[i].divider) {
+                return (n / ranges[i].divider).toString() + ranges[i].suffix;
+            }
         }
+        return n.toString();
     }
-    return n.toString();
+    console.log("n is undefined");
+    return 0;
 }
 
 //#endregion

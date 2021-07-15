@@ -79,7 +79,7 @@ export default class ReportInfo extends React.PureComponent {
                                     <div className="blue-border-label">IN PROGRESS</div> :
                                     this.type === exerciseResolveStatus.rejected ?
                                         <div className="red-border-label">REJECTED</div> :
-                                        <div className="gray-border-label">PENDING</div>
+                                        <div className="black-border-label">PENDING</div>
                             }
                         </div>
 

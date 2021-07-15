@@ -231,8 +231,12 @@ class Countdown extends React.Component {
             <span id="cd_ms">00</span>
             <div className="d-flex mg-top-5px" >
               <div className="countdown-time-label" style={{ marginRight: "5px", marginLeft: "5px" }}>Thời gian đếm ngược: </div>
-              <input type="number" className="countdown-time-input" min="0" defaultValue="15" id="cd_minutes" onChange={() => this.onCountdownInputChange()} />
-              <div id="minutes" className="countdown-time-label">phút.</div>
+              {this.props.exerciseContent && !this.props.isExerciseLoading &&
+                <div className="d-flex">
+                  <input type="number" className="countdown-time-input" min="0" defaultValue={this.props.exerciseContent.suggestedDuration ? this.props.exerciseContent.suggestedDuration / 60 : 15} id="cd_minutes" onChange={() => this.onCountdownInputChange()} />
+                  <div id="minutes" className="countdown-time-label">phút.</div>
+                </div>
+              }
             </div>
           </div>
           <div className="j-c-space-between" style={{ paddingBottom: "10px", borderBottom: "1px solid var(--gray)", marginBottom: "10px" }}>

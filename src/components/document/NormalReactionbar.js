@@ -115,7 +115,6 @@ class NormalReactionbar extends React.Component {
   }
 
   render() {
-    console.log(this.props.docReactionType)
 
     // 
     //#region like, unlike buttons
@@ -151,9 +150,9 @@ class NormalReactionbar extends React.Component {
                 availableActions={this.props.availableActions}
                 requiredAction={DocumentAction.React}
                 useAction={this.props.useAction}
-
+                expectedEvent={this.props.type !== "PREVIEW" && this.toggleLikeImage}
               >
-                <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleLikeImage} >
+                <div className="like-btn-container" >
                   <div className="d-flex"> {likeBtn}</div>
                   <div className="document-like-count">{this.likeCount ? formatNumber(this.likeCount) : 0}</div>
                 </div>
@@ -161,8 +160,10 @@ class NormalReactionbar extends React.Component {
               <RequireLogin permissions={[Document.DOC_PUBLIC_ALL_REACT]}
                 availableActions={this.props.availableActions}
                 requiredAction={DocumentAction.React}
-                useAction={this.props.useAction}>
-                <div className="like-btn-container" onClick={this.props.type !== "PREVIEW" && this.toggleDislikeImage} >
+                useAction={this.props.useAction}
+                expectedEvent={this.props.type !== "PREVIEW" && this.toggleDislikeImage}
+              >
+                <div className="like-btn-container" >
                   {dislikeBtn}
                   <div className="document-like-count">{this.dislikeCount ? formatNumber(this.dislikeCount) : 0}</div>
                 </div>

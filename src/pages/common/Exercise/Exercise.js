@@ -34,6 +34,7 @@ class ExerciseDetail extends React.Component {
                             {console.log(this.props.exerciseContent)}
                             {!this.props.isLoading && this.props.exerciseContent ?
                                 <div>
+                                    {console.log(this.props.exerciseContent)}
                                     <ExerciseInfo
                                         exerciseId={this.props.exerciseContent.id}
                                         title={this.props.exerciseContent.title}
@@ -58,11 +59,13 @@ class ExerciseDetail extends React.Component {
                                             this.props.exerciseContent.description
                                     }} />
 
-                                    <div className="j-c-space-between" style={{ marginTop: "20px" }}>
+                                    <div className="" style={{ marginTop: "20px", border: "1px var(--gray) solid", background: "var(--light-gray)", padding: "5px", borderRadius: "5px" }}>
                                         <div className="metadata-label" style={{ marginLeft: "2px" }}>
                                             Tổng số câu hỏi: {this.props.exerciseContent.totalQuestions} </div>
                                         <div className="metadata-label" style={{ marginLeft: "2px" }}>
                                             Tổng số lượt giải: {this.props.exerciseContent.attemptCount} </div>
+                                        <div className="metadata-label" style={{ marginLeft: "2px" }}>
+                                            Thời gian đề xuất: {this.props.exerciseContent.suggestedDuration / 60} phút </div>
                                     </div>
                                     {this.props.exerciseContent.tags &&
                                         <div className="mg-top-10px mg-bottom-10px" >
@@ -98,7 +101,7 @@ class ExerciseDetail extends React.Component {
                     </div>
                 </div>
                 {formatMathemicalFormulas()}
-            </div>
+            </div >
         );
     }
 }

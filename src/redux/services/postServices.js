@@ -189,10 +189,10 @@ export function getMyPosts(searchParamObject) { //this API to get all approved d
                             result_2.push({
                                 ...result_1.postSummaryWithStateAndFeedbackDTOs[i],
                                 ...(response_2.data.find((itmInner) => itmInner.id === result_1.postSummaryWithStateAndFeedbackDTOs[i].id)),
-                            }
-                            );
-                            //delete redundant key - value  
+                            });
                         }
+
+                        console.log(result_2);
 
                         //get action available
                         let actionIDarr = IDarr.length > 1 ? IDarr.substring(0, IDarr.length - 1) : IDarr;
@@ -204,6 +204,7 @@ export function getMyPosts(searchParamObject) { //this API to get all approved d
                                     ...(response_3.data.find((itmInner) => itmInner.id === result_2[i].id)),
                                 });
                             }
+                            console.log(finalResult)
                             dispatch(get_MyPostsSuccess({ postSummaryWithStateDTOs: finalResult, totalPages: result_1.totalPages, totalElements: result_1.totalElements }))
                         }).catch(() => get_MyPostsFailure())
                     }).catch(() => get_MyPostsFailure())

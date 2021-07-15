@@ -37,15 +37,9 @@ class CreateExercise extends React.Component {
             "exerciseAnswerRequestDTOs": [
                 {
                     id: null,
-                    "content": "<p>Đáp án 1</p>",
+                    "content": "<p>Đáp án q</p>",
                     "rank": 1,
                     "isCorrect": true
-                },
-                {
-                    id: null,
-                    "content": "<p>Đáp án 2</p>",
-                    "rank": 2,
-                    "isCorrect": false
                 }
             ]
         }
@@ -75,7 +69,7 @@ class CreateExercise extends React.Component {
                     })
                 }
                 else {
-                    this.EXERCISE_QUESTIONS_DTO = [this.defaultQuestion];
+                    // this.EXERCISE_QUESTIONS_DTO = [this.defaultQuestion];
                 }
             })
     }

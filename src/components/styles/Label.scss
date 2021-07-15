@@ -95,10 +95,10 @@
     color: var(--green);
 }
 
-.gray-border-label {
+.black-border-label {
     @extend .color-border-label;
-    border: 1px solid var(--gray);
-    color: var(--gray);
+    border: 1px solid var(--black);
+    color: var(--black);
 }
 
 .green-border-label {

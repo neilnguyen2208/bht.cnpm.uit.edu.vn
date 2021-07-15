@@ -299,7 +299,7 @@ class ExerciseQuestions extends React.Component {
                                 <form id="cr-xcrs-note">
                                     <div className="form-group">
                                         <div className="form-label">Ghi chú:</div>
-                                        <textarea id="cr-xcrs-nt-txtr" className="text-area" style={{ height: "200px" }} defaultValue={authService.isLoggedIn() ? !this.props.isNoteLoading && this.props.noteData : ""}>
+                                        <textarea id="cr-xcrs-nt-txtr" className="text-area" style={{ height: "200px" }} defaultValue={authService.isLoggedIn() && !this.props.isNoteLoading ? this.props.noteData : ""}>
                                         </textarea>
                                     </div>
                                     <div className="d-flex j-c-end">

@@ -153,7 +153,7 @@ class DocumentSummary extends React.Component {
               <>{this.props.approveState === "PENDING_APPROVAL" ?
                 <div className="d-flex" >
                   <div className="light-black-label"> - </div>
-                  <div className="gray-border-label">PENDING</div>
+                  <div className="black-border-label">PENDING</div>
                 </div >
                 : <>
                   {this.props.approveState === "PENDING_FIX" ?

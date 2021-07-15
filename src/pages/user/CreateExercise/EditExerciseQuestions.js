@@ -79,30 +79,14 @@ class CreateExercise extends React.Component {
     }
 
     addQuestion = () => {
-        console.log("a");
         this.EXERCISE_QUESTIONS_DTO.push({ ...this.defaultQuestion, rank: this.EXERCISE_QUESTIONS_DTO.length });
         this.setState({});
     }
 
     //questionIdentify = questionID if old question, index if new question. 
-    deleteQuestion = (questionIdentify, isNewQuestion) => {
-        if (isNewQuestion) {
-            this.EXERCISE_QUESTIONS_DTO.splice(questionIdentify, 1);
-            this.setState({});
-        }
-        else {
-            //remove by id, call API
-        }
-    }
-
-    deleteQuestion = (questionIdentify, isNewQuestion) => {
-        if (isNewQuestion) {
-            this.EXERCISE_QUESTIONS_DTO.splice(questionIdentify, 1);
-            this.setState({});
-        }
-        else {
-            //remove by id, call API
-        }
+    deleteQuestion = (questionIdentify) => {
+        this.EXERCISE_QUESTIONS_DTO.splice(questionIdentify, 1);
+        this.setState({});
     }
 
     setQuestionContent = (questionIdentify, questionContent, isNewQuestion) => {
@@ -119,6 +103,7 @@ class CreateExercise extends React.Component {
             this.setState({});
         }
         else {
+
             //remove by id, call API
         }
     }
@@ -205,7 +190,7 @@ class CreateExercise extends React.Component {
                         <AddOrEditQuestionItem
                             questionData={questionItem}
                             key={index}
-                            index={index}
+                            index={index + 1}
                             deleteQuestion={this.deleteQuestion}
                             setQuestionContent={this.setQuestionContent}
                         />)

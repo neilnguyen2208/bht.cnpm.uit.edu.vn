@@ -252,6 +252,7 @@ class ExerciseQuestions extends React.Component {
                                         key={index}
                                         questionId={question.id}
                                         content={question.content}
+                                        difficultyType={question.difficultyType}
                                         rank={question.rank}
                                         answers={question.answers}
                                         exerciseTitle={this.props.exerciseContent.title}
@@ -264,11 +265,12 @@ class ExerciseQuestions extends React.Component {
                             {/* with result */}
                             {this.props.isAnswerChecked && !this.props.isAnswersLoading && this.finalResult &&
                                 this.finalResult.map((question, index) => {
+                                    console.log(question)
                                     return <QuestionItem
                                         isChecked
                                         isCorrect={question.isCorrect}
                                         isAnswered={question.isAnswered}
-                                        explaination={question.explanation}
+                                        explanation={question.explanation}
                                         answersSelected={question.answersSelected}
                                         index={index}
                                         key={index}
@@ -277,6 +279,7 @@ class ExerciseQuestions extends React.Component {
                                         content={question.content}
                                         rank={question.rank}
                                         answers={question.answers}
+                                        difficultyType={question.difficultyType}
                                         correctAnswers={question.correctAnswers}
                                         updateQuestionToC={this.updateQuestionToC}
                                         updateAnswerDTO={this.updateAnswerDTO}

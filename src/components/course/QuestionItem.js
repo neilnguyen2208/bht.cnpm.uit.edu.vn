@@ -42,14 +42,8 @@ class QuestionItem extends React.Component {
   }
 
   showOrHideExplaination = () => {
-    if (this.isExplainationShown)
-      document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "none";
-    else
-      document.getElementById("xrcs-xplntn" + this.props.questionId).style.display = "block";
-
     this.isExplainationShown = !this.isExplainationShown;
     this.setState({});
-
   }
 
   onPopupMenuItemClick = (selectedItem) => {
@@ -105,6 +99,8 @@ class QuestionItem extends React.Component {
         <div className="save-btn-text" style={{ marginLeft: "5px" }}>Đặt cờ</div>
       </div >
     }
+
+    console.log(this.props.explanation)
     return (
       //add id for navigation
       <div className="question-item-container">
@@ -123,6 +119,46 @@ class QuestionItem extends React.Component {
                       <img style={{ width: "auto", height: "20px", marginTop: "-2px", marginLeft: "5px" }} src={wrong_icon} alt="" />
                     </div>}
                   </div>
+
+
+
+                  {this.props.difficultyType.id === 1 &&
+                    <div style={{ marginLeft: "3px", color: "var(--black)" }}>{
+                      "(" + this.props.difficultyType.name + " - " + this.props.difficultyType.score + " điểm)"}
+
+                    </div>
+                  }
+
+                  {this.props.difficultyType.id === 2 &&
+                    <div style={{ marginLeft: "3px", color: "var(--gray)" }}>{
+                      "(" + this.props.difficultyType.name + ")"}
+
+                    </div>
+                  }
+                  {this.props.difficultyType.id === 3 &&
+                    <div style={{ marginLeft: "3px", color: "var(--green)" }}>{
+                      "(" + this.props.difficultyType.name + " - " + this.props.difficultyType.score + " điểm)"}
+
+                    </div>
+                  }
+                  {this.props.difficultyType.id === 4 &&
+                    <div style={{ marginLeft: "3px", color: "var(--blue)" }}>{
+                      "(" + this.props.difficultyType.name + " - " + this.props.difficultyType.score + " điểm)"}
+
+                    </div>
+                  }
+                  {this.props.difficultyType.id === 5 &&
+                    <div style={{ marginLeft: "3px", color: "var(--orange)" }}>{
+                      "(" + this.props.difficultyType.name + " - " + this.props.difficultyType.score + " điểm)"}
+
+                    </div>
+                  }
+                  {this.props.difficultyType.id === 6 &&
+                    <div style={{ marginLeft: "3px", color: "var(--red)" }}>{
+                      "(" + this.props.difficultyType.name + " - " + this.props.difficultyType.score + " điểm)"}
+
+                    </div>
+                  }
                 </div>
 
                 <div className="d-flex">
@@ -152,7 +188,7 @@ class QuestionItem extends React.Component {
                       name={"fieldset" + this.props.questionId} />
 
                     <div className="d-flex">
-                      <div className="answer-container ck-editor-output" style={{ fontSize: "15px" }}
+                      <div className="answer-container ck-editor-output" style={{ fontSize: "15px", marginBottom: "5px", lineHeight: "20px" }}
                         dangerouslySetInnerHTML={{
                           __html: answer.content
                         }} />
@@ -166,7 +202,6 @@ class QuestionItem extends React.Component {
                       {
                         this.props.isChecked
                         && !this.props.isCorrect
-                        // && this.props.answersSelected.length > 0
                         && this.props.correctAnswers.includes(answer.id)
                         && <img src={correct_f_icon} style={{ width: "auto", height: "16px", marginTop: "2px", marginLeft: "10px" }} alt="" ></img>
                       }
@@ -178,13 +213,14 @@ class QuestionItem extends React.Component {
             }
 
             {
-              this.props.explaination && <div className="mg-bottom-10px">
+              this.props.explanation && <div className="mg-bottom-10px">
                 <button className="white-button" onClick={() => this.showOrHideExplaination()}>
                   {this.isExplainationShown ? "Ẩn giải thích" : "Xem giải thích"}
                 </button>
-                <div className="exercise-explaination d-none" id={"xrcs-xplntn" + this.props.questionId}>
-                  {this.props.explaination}
-                </div>
+                {this.isExplainationShown ? <div className="exercise-explanation" id={"xrcs-xplntn" + this.props.questionId}>
+                  {this.props.explanation}
+                </div> : <></>
+                }
               </div>
             }
           </div>

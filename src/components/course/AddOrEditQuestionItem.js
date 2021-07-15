@@ -52,7 +52,7 @@ class QuestionItem extends React.Component {
   //#region relative to question region 
   deleteQuestion = (itemIndex, isNewQuestion) => {
     if (isNewQuestion) {
-      this.props.deleteQuestion(itemIndex, true);
+      this.props.deleteQuestion(itemIndex);
     }
   }
 
@@ -97,7 +97,7 @@ class QuestionItem extends React.Component {
     //set value of this answer is true in parent component, set new correct anser
     this.QUESTION_DTO.exerciseAnswerRequestDTOs.forEach((item, _index) => {
       item.isCorrect = false;
-      console.log(index, _index);
+      console.log(index)
       if (_index === index) item.isCorrect = true;
     })
     this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
@@ -127,15 +127,15 @@ class QuestionItem extends React.Component {
   }
   //#endregion
 
-  //#region relative to explaination 
+  //#region relative to explanation 
   onExplainationEditorChange = () => {
-    this.QUESTION_DTO.explanation = getCKEInstance("explaination-cke-" + this.props.index).getData();
+    this.QUESTION_DTO.explanation = getCKEInstance("explanation-cke-" + this.props.index).getData();
     this.props.setQuestionContent(this.props.index, this.QUESTION_DTO, true);
     this.setState({});
   }
 
   onExplainationEditorReady = () => {
-    getCKEInstance("explaination-cke-" + this.props.index).setData(this.QUESTION_DTO.explanation);
+    getCKEInstance("explanation-cke-" + this.props.index).setData(this.QUESTION_DTO.explanation);
   }
 
   onEditExplainationClick = () => {
@@ -175,7 +175,7 @@ class QuestionItem extends React.Component {
       this.isFirstTimeDifficultyListLoaded = true;
       this.setState({});
     }
-
+    console.log(this.props.index)
     return (
       //add id for navigation
       <div className="question-item-container">
@@ -183,12 +183,12 @@ class QuestionItem extends React.Component {
           {/* {!this.isNewQuestion && <button className="white-button ">Chỉnh sửa</button>} */}
           <img className="delete-imgbtn mg-left-5px" src={delete_btn} alt="x" onClick={() => { this.deleteQuestion(this.props.index, true) }} />
         </div>
-        <div className="question-item" id={"qsitm-" + this.props.id} style={{ scrollMarginTop: "80px" }}>
+        <div className="question-item" id={"qsitm-" + this.props.index} style={{ scrollMarginTop: "80px" }}>
           <div className="w-100-percents">
             <div className="j-c-space-between w-100-percents">
               <div className="d-flex">
                 <div className="question-index">
-                  Câu {this.props.index + 1}:
+                  Câu {this.props.index}:
                 </div>
               </div>
             </div>
@@ -225,16 +225,17 @@ class QuestionItem extends React.Component {
           {/* answer items */}
           {
             this.QUESTION_DTO.exerciseAnswerRequestDTOs.map((answer, index) => {
-              return <div className="answer-item" key={answer.id} style={{ fontSize: "15px" }}  >
+              return <div className="answer-item" key={answer.id + index} style={{ fontSize: "15px" }}  >
                 <div className="j-c-space-between">
                   <label className="container">
                     <input type="radio" checked={answer.isCorrect}
                       onClick={() => this.onAnswerChecked(index)}
                       name={"fieldset-" + this.props.index} />
 
+
                     {this.editingAnswerIndex !== index ?
                       <div className="d-flex">
-                        <div className="question-content ck-editor-output" style={{ fontSize: "15px" }}
+                        <div className="question-content ck-editor-output" style={{ fontSize: "15px", marginBottom: " 5px", lineHeight: "20px" }}
                           dangerouslySetInnerHTML={{
                             __html: answer.content
                           }} />
@@ -273,10 +274,10 @@ class QuestionItem extends React.Component {
             <button className="white-button " onClick={() => { this.onAddAnswerClick() }}>Thêm đáp án</button>
           </div>
 
-          {/* explaination */}
+          {/* explanation */}
           {!this.isEditExplaination ?
             this.QUESTION_DTO.explanation && <div className="mg-bottom-10px">
-              <div className="exercise-explaination j-c-space-between" id={"xrcs-xplntn" + this.QUESTION_DTO.id}>
+              <div className="exercise-explanation j-c-space-between" id={"xrcs-xplntn" + this.QUESTION_DTO.id}>
                 <div className="question-content ck-editor-output" style={{ fontSize: "15px" }}
                   dangerouslySetInnerHTML={{
                     __html: this.QUESTION_DTO.explanation
@@ -288,8 +289,8 @@ class QuestionItem extends React.Component {
 
             </div> :
             this.QUESTION_DTO.explanation && <div className="mg-bottom-10px">
-              <div className="exercise-explaination" id={"xrcs-xplntn" + this.QUESTION_DTO.id}>
-                <Editor editorId={"explaination-cke-" + this.props.index}
+              <div className="exercise-explanation" id={"xrcs-xplntn" + this.QUESTION_DTO.id}>
+                <Editor editorId={"explanation-cke-" + this.props.index}
                   onChange={() => this.onExplainationEditorChange()}
                   onInstanceReady={() => this.onExplainationEditorReady()}
                   height={120}

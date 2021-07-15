@@ -29,7 +29,7 @@ import 'layouts/LeftSidebarLayout.scss';
 
 class PostDetail extends React.Component {
     componentDidMount() {
-        window.onscroll = this.scrollFunction();
+        // window.onscroll = this.scrollFunction();
         this.props.getAPostStatisticByID(this.props.match.params.id);
         this.props.getAPostByID(this.props.match.params.id);
     }
@@ -56,36 +56,36 @@ class PostDetail extends React.Component {
     }
 
     //#region for handle on scroll
-    scrollFunction = () => {
-        if (!document.getElementById("post-relative-sidebar")) return;
-        let left_sidebar = document.getElementById("post-relative-sidebar");
-        let footer = document.getElementById("footer");
-        let header = document.getElementById("header");
+    // scrollFunction = () => {
+    //     if (!document.getElementById("post-relative-sidebar")) return;
+    //     let left_sidebar = document.getElementById("post-relative-sidebar");
+    //     let footer = document.getElementById("footer");
+    //     let header = document.getElementById("header");
 
-        function getRectTop(el) {
-            var rect = el.getBoundingClientRect();
-            return rect.top;
-        }
+    //     function getRectTop(el) {
+    //         var rect = el.getBoundingClientRect();
+    //         return rect.top;
+    //     }
 
-        function getRectBottom(el) {
-            var rect = el.getBoundingClientRect();
-            return rect.bottom;
-        }
+    //     function getRectBottom(el) {
+    //         var rect = el.getBoundingClientRect();
+    //         return rect.bottom;
+    //     }
 
-        if (getRectBottom(header) <= 0 - 21) {
-            left_sidebar.classList.add("left-sidebar-after-header");
-            left_sidebar.classList.remove("left-sidebar_Reach_Footer");
-        }
-        if (getRectBottom(header) > 0 - 21) {
-            left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Before_Header");
-            left_sidebar.classList.remove("left-sidebar_Reach_Footer");
-        }
+    //     if (getRectBottom(header) <= 0 - 21) {
+    //         left_sidebar.classList.add("left-sidebar-after-header");
+    //         left_sidebar.classList.remove("left-sidebar_Reach_Footer");
+    //     }
+    //     if (getRectBottom(header) > 0 - 21) {
+    //         left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Before_Header");
+    //         left_sidebar.classList.remove("left-sidebar_Reach_Footer");
+    //     }
 
-        //Handler for Footer
-        if ((getRectBottom(left_sidebar)) >= getRectTop(footer) - 45) {
-            left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Reach_Footer");
-        }
-    }
+    //     //Handler for Footer
+    //     if ((getRectBottom(left_sidebar)) >= getRectTop(footer) - 45) {
+    //         left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Reach_Footer");
+    //     }
+    // }
     //#endregion
     render() {
 
@@ -206,13 +206,14 @@ class PostDetail extends React.Component {
                             </div > */}
 
                                 <div className="fake-relative-sidebar"></div>
-                                <div style={{ position: "fixed" }} id="post-relative-sidebar">
+                                <div style={{ position: "fixed" }} >
                                     {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
-                                        <RightRelativeItems title={"CÙNG TÁC GIẢ"} items={
+                                        <RightRelativeItems title={"CÙNG TÁC GIẢ"} type="POST" items={
                                             this.props.sameAuthor} />
                                         : <DocPostRelativeLoader />}
                                     {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
                                         <RightRelativeItems title={"CÙNG DANH MỤC"}
+                                            type="POST"
                                             items={this.props.sameCategory} /> : <DocPostRelativeLoader />
                                     }
                                 </div>

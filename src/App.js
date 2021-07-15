@@ -104,7 +104,7 @@ const App = () => {
                         <RequireLoginRoute exact path="/upload-document" component={UploadDocument} permissions={[Document.DOC_PENDING_SELF_CREATE, Document.DOC_PENDING_SELF_UPLOAD]} />
                         <RequireLoginRoute exact path="/create-exercise" component={CreateExercise} permissions={[Access.Admin]} />
                         <RequireLoginRoute exact path="/edit-exercises/questions/:id" component={EditExerciseQuestions} permissions={[Access.Admin]} />
-                        <RequireLoginRoute exact path="/edit-exercises/:id" component={EditExerciseQuestions} permissions={[Access.Admin]} />
+                        {/* <RequireLoginRoute exact path="/edit-exercises/questions:id" component={EditExerciseQuestions} permissions={[Access.Admin]} /> */}
 
                         {/* for admin */}
                         <RequireLoginRoute exact path="/admin" component={PostManagement} permissions={[Access.Admin]} />

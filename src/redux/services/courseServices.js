@@ -355,7 +355,7 @@ export function editAnExerciseInfo(id, newExerciseInfo) { //
         authRequest.put(`/exercises/${id}`, JSON.stringify(newExerciseInfo))
             .then(response => {
                 dispatch(closeModal());
-                openBLModal({ text: "Chỉnh sửa tài liệu thành công!", type: "success" });
+                openBLModal({ text: "Chỉnh sửa bài tập thành công!", type: "success" });
                 dispatch(put_EditAnExerciseInfoSuccess(id, newExerciseInfo));
             }
             ).catch(() => dispatch(put_EditAnExerciseInfoFailure()))

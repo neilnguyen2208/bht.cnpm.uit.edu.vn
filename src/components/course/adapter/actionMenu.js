@@ -48,18 +48,7 @@ export const basicMenu = [
     showOnAction: true,
     requiredAction: exerciseAction.Update
   },
-  {
-    id: 4,
-    text: "Cập nhật câu hỏi",
-    isLink: true,
-    to: "", //update later
-    icon: edit_icon,
-    value: "EDIT_EXERCISE_QUESTIONS",
-    permissions: [],
-    showOnPermission: false,
-    showOnAction: true,
-    requiredAction: exerciseAction.Update
-  },
+ 
 
 ]
 

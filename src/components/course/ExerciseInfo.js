@@ -19,6 +19,8 @@ import authService from 'authentication/authenticationServices';
 import PopupMenu from 'components/common/PopupMenu/PopupMenu';
 import { adminMenu, basicMenu, guestMenu } from './adapter/actionMenu';
 import { closeModal, openBigModal, openModal } from 'redux/services/modalServices';
+import { exerciseAction } from 'authentication/permission.config';
+import edit_icon from 'assets/icons/24x24/nb_gray_write_icon_24x24.png'
 
 class ExerciseInfo extends React.Component {
 
@@ -111,12 +113,22 @@ class ExerciseInfo extends React.Component {
           {/* <PopupMenu onMenuItemClick={this.props.type !== "PREVIEW" ? (selectedItem) => this.onPopupMenuItemClick(selectedItem) : () => { }}
             availableActions={this.props.availableActions} items={guestMenu}
             id={`${this.props.popUpMenuPrefix}-pxrcsi-pm-${this.props.exerciseId}`} /> */}
-          {console.log(this.props.availableActions)}
           <PopupMenu
             onMenuItemClick={this.onPopupMenuItemClick}
             useAction={this.props.useAction}
             availableActions={this.props.availableActions}
-            items={basicMenu}
+            items={[...basicMenu, {
+              id: 4,
+              text: "Cập nhật câu hỏi",
+              isLink: true,
+              to: "/edit-exercises/questions/" + this.props.match.params.id, //update later
+              icon: edit_icon,
+              value: "EDIT_EXERCISE_QUESTIONS",
+              permissions: [],
+              showOnPermission: false,
+              showOnAction: true,
+              requiredAction: exerciseAction.Update
+            }]}
             id={`${this.props.popUpMenuPrefix}-cipm-${this.props.exerciseID}`} />
         </div>
         {cover}

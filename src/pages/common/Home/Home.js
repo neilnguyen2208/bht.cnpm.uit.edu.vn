@@ -113,6 +113,7 @@ class Home extends React.Component {
                     downloadCount={item.downloadCount}
                     viewCount={item.viewCount}
                     subjectName={item.subjectName}
+                    docReactionType={item.docReactionType}
                     subjectID={item.subjectID}
                 ></HomeDocumentItem>
             })

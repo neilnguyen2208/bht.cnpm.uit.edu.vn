@@ -24,9 +24,12 @@ import RelativeToPost from 'components/post/RelativeToPost';
 import CommentSection from 'components/post/comment/CommentSection'
 import { formatMathemicalFormulas, styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import DocPostDetailLoader from 'components/common/Loader/DocPostDetailLoader'
+import DocPostRelativeLoader from 'components/common/Loader/DocPostRelativeLoader'
+import 'layouts/LeftSidebarLayout.scss';
 
 class PostDetail extends React.Component {
     componentDidMount() {
+        window.onscroll = this.scrollFunction();
         this.props.getAPostStatisticByID(this.props.match.params.id);
         this.props.getAPostByID(this.props.match.params.id);
     }
@@ -52,7 +55,40 @@ class PostDetail extends React.Component {
         return ToC;
     }
 
+    //#region for handle on scroll
+    scrollFunction = () => {
+        if (!document.getElementById("post-relative-sidebar")) return;
+        let left_sidebar = document.getElementById("post-relative-sidebar");
+        let footer = document.getElementById("footer");
+        let header = document.getElementById("header");
+
+        function getRectTop(el) {
+            var rect = el.getBoundingClientRect();
+            return rect.top;
+        }
+
+        function getRectBottom(el) {
+            var rect = el.getBoundingClientRect();
+            return rect.bottom;
+        }
+
+        if (getRectBottom(header) <= 0 - 21) {
+            left_sidebar.classList.add("left-sidebar-after-header");
+            left_sidebar.classList.remove("left-sidebar_Reach_Footer");
+        }
+        if (getRectBottom(header) > 0 - 21) {
+            left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Before_Header");
+            left_sidebar.classList.remove("left-sidebar_Reach_Footer");
+        }
+
+        //Handler for Footer
+        if ((getRectBottom(left_sidebar)) >= getRectTop(footer) - 45) {
+            left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Reach_Footer");
+        }
+    }
+    //#endregion
     render() {
+
         if (this.props.isHaveEdited) {
             store.dispatch(put_EditAPostReset());
             this.props.getAPostByID(this.props.match.params.id);
@@ -133,10 +169,10 @@ class PostDetail extends React.Component {
                                                     {!this.props.isRelativeDocumentsLoading && this.props.relativeDocuments ?
                                                         <RelativeToPost title={"TÀI LIỆU LIÊN QUAN"} items={
                                                             this.props.relativeDocuments} type="DOCUMENT" />
-                                                        : <Loader />}
+                                                        : <DocPostRelativeLoader />}
                                                     {!this.props.isRelativeExercisesLoading && this.props.relativeExercises ?
                                                         <RelativeToPost title={"BÀI TẬP LIÊN QUAN"}
-                                                            items={this.props.relativeExercises} /> : <Loader />
+                                                            items={this.props.relativeExercises} type="EXERCISE" /> : <DocPostRelativeLoader />
                                                     }
                                                 </div>
                                                 <div id="cr-cmt" />
@@ -170,14 +206,14 @@ class PostDetail extends React.Component {
                             </div > */}
 
                                 <div className="fake-relative-sidebar"></div>
-                                <div style={{ position: "fixed" }}>
+                                <div style={{ position: "fixed" }} id="post-relative-sidebar">
                                     {this.props.isSameAuthorLoadDone && this.props.sameAuthor ?
                                         <RelativePosts title={"CÙNG TÁC GIẢ"} items={
                                             this.props.sameAuthor} />
-                                        : <Loader />}
+                                        : <DocPostRelativeLoader />}
                                     {this.props.isSameCategoryLoadDone && this.props.sameCategory ?
                                         <RelativePosts title={"CÙNG DANH MỤC"}
-                                            items={this.props.sameCategory} /> : <Loader />
+                                            items={this.props.sameCategory} /> : <DocPostRelativeLoader />
                                     }
                                 </div>
 
@@ -192,7 +228,6 @@ class PostDetail extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.post.relativeDocuments.data);
 
     return {
         currentPost: state.post.currentPost.data,

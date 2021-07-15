@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 
 // import resource image, icon
 import dropdown_btn from 'assets/icons/24x24/dropdown_icon_24x24.png'
-import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
-import gray_upload_icon from 'assets/icons/24x24/nb_gray_upload_icon_24x24.png'
 import content_management_icon from 'assets/icons/24x24/content_management_icon_24x24.png'
 import user_management_icon from 'assets/icons/24x24/user_management_icon_24x24.png'
 import activity_management_icon from 'assets/icons/24x24/account_management_icon_24x24.png'
@@ -22,7 +20,10 @@ import 'components/styles/Label.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { formatNumber } from 'utils/miscUtils';
 
+import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
+import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 class AdminSidebar extends React.Component {
     constructor(props) {
         super(props);
@@ -40,31 +41,30 @@ class AdminSidebar extends React.Component {
     }
 
     render() {
-        let { score, postCount, docCount, avatarURL } = this.accountInformation;
-        /* {window.onscroll = () => this.scrollFunction()} */
         return (
             <div className="left-sidebar-wrapper" >
                 {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
                 <div className="fake-left-sidebar" />
                 {/* Left Sidebar */}
                 <div className="left sidebar" id="admin-left-sidebar">
-                    {/* <div className="user-info-layout" >
-                        <img alt="avatar" className="side-bar-avatar" src={avatarURL} />
-                        <div className="achivement-layout">
-                            <div className="score">Scrore: {score}</div>
-                            <div className="d-flex j-c-space-between">
-                                <div className="d-flex w-50-percents">
-                                    <img alt="post count" src={gray_write_icon} className="user-item-icon" ></img>
-                                    <div className="mg-left-5px">{postCount}</div>
+                    {this.props.userSummaryData && this.props.isUserSummaryLoadDone ?
+                        <div className="user-info-layout" >
+                            <img alt="avatar" className="side-bar-avatar" src={this.props.userSummaryData.avatarURL} />
+                            <div className="achivement-layout">
+                                <div className="reputation-label" style={{marginTop: "2px"}}>Scrore:{" " + formatNumber(this.props.userSummaryData.reputationScore)}</div>
+                                <div className="d-flex mg-bottom-5px" style={{ marginTop: "5px" }} >
+                                    <div className="reputation-sub-container" >
+                                        <img alt="" src={gray_write_icon} className="user-menu-icon" />
+                                        <div className="reputation-label">  {formatNumber(this.props.userSummaryData.postCount)}</div>
+                                    </div>
+                                    <div className="reputation-sub-container">
+                                        <img alt="" src={gray_upload_icon} className="user-menu-icon" />
+                                        <div className="reputation-label">   {formatNumber(this.props.userSummaryData.docCount)}</div>
+                                    </div>
                                 </div>
 
-                                <div className="d-flex w-50-percents">
-                                    <img alt="upload count" src={gray_upload_icon} className="user-item-icon"></img>
-                                    <div className="mg-left-5px"> {docCount}</div>
-                                </div>
                             </div>
-                        </div>
-                    </div > */}
+                        </div > : <></>}
                     <div className="user-role">
                         Admin
                     </div>
@@ -231,17 +231,17 @@ class AdminSidebar extends React.Component {
         }
 
         if (getRectBottom(header) <= 0 - 21) {
-            left_sidebar.classList.add("left-sidebar_After_Header");
+            left_sidebar.classList.add("left-sidebar-after-header");
             left_sidebar.classList.remove("left-sidebar_Reach_Footer");
         }
         if (getRectBottom(header) > 0 - 21) {
-            left_sidebar.classList.replace("left-sidebar_After_Header", "left-sidebar_Before_Header");
+            left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Before_Header");
             left_sidebar.classList.remove("left-sidebar_Reach_Footer");
         }
 
         //Handler for Footer
         if ((getRectBottom(left_sidebar)) >= getRectTop(footer) - 45) {
-            left_sidebar.classList.replace("left-sidebar_After_Header", "left-sidebar_Reach_Footer");
+            left_sidebar.classList.replace("left-sidebar-after-header", "left-sidebar_Reach_Footer");
         }
     }
     //#endregion

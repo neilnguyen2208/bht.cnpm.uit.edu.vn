@@ -28,6 +28,11 @@
   font-size: 15px;
 }
 
+.summary-text .ck-editor-output{
+  line-height: 20px;
+  font-size: 15px;
+}
+
 .about-me-detail .ck-editor-output p {
   font-size: 1em;
   font-weight: 500;
@@ -107,6 +112,12 @@
   margin-left: 15px;
 }
 
+
+.ck-editor-output pre code{
+  background: #404040;
+  padding-left: 10px;
+}
+
 .ck-editor-output pre {
   margin-top: 15px;
   margin-bottom: 10px;
@@ -121,6 +132,7 @@
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
   font-family: monospace;
+  border-radius: 5px;
 }
 
 //except all style public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css
@@ -143,7 +155,7 @@
   font-size: 0.9em;
   font-weight: 400;
   // background: none;
-  padding: 0.15em 0.25em 0.15em;
+  padding: 0.15em 1em 0.15em;
   //same style of railcast in public/ckeditor/plugins/codesnippet/lib/highlight/styles/railscasts.css
 }
 

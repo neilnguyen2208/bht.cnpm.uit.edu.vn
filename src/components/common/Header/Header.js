@@ -27,6 +27,8 @@ import UserMenu from '../../user/UserMenu'
 import authService from 'authentication/authenticationServices.js';
 import ShowOnPermission from "components/base_components/ShowOnPermission";
 import add_exercise_btn from 'assets/icons/24x24/add_exercise_btn.png';
+import { RequireLogin } from "components/base_components/RequireLoginComponent";
+import { Access } from "authentication/permission.config";
 
 class Header extends React.Component {
     constructor(props) {
@@ -52,11 +54,6 @@ class Header extends React.Component {
 
     componentDidMount() {
 
-        if (this.props.location.pathname.substring(0, 7) === '/search')
-            this.setState({ isHaveOut: false })
-        else
-            this.setState({ isHaveOut: true });
-        this.searchLink = "/search/posts/";
     }
 
     componentWillUnmount() {
@@ -96,12 +93,10 @@ class Header extends React.Component {
                 if (this.props.location.pathname === "/search/posts") {
                     store.dispatch(getPostSearch({ page: 1, searchTerm: e.target.value, postCategoryID: getQueryParamByName('category') }))
                 }
-                // this.setState({ isHaveOut: false })
             }
             else {
                 this.redirect = <Redirect to={`/search/posts?page=1&q=${e.target.value}&category=0'`} />
                 store.dispatch(getPostSearch({ page: 1, searchTerm: e.target.value, postCategoryID: 0 }))
-                // this.setState({ isHaveOut: false })
             }
             document.getElementById("qssr-container").style.display = "none";
             document.getElementById("qsr-container-big").style.display = "none";
@@ -136,9 +131,11 @@ class Header extends React.Component {
                 <Link to={"/create-post"} className="d-flex">
                     <img className="header-image-button" src={write_icon} alt="" />
                 </Link>
-                <Link to={"/create-exercise"} className="d-flex">
-                    <img className="header-image-button" src={add_exercise_btn} alt="" />
-                </Link>
+                <ShowOnPermission permissions={[Access.Admin]}   >
+                    <Link className="d-flex" to={"/create-exercise"}>
+                        <img className="header-image-button" src={add_exercise_btn} alt="" />
+                    </Link>
+                </ShowOnPermission>
                 <button onClick={() => authService.doLogin()} className="blue-button mg-auto">
                     Đăng nhập
                 </button>
@@ -146,7 +143,7 @@ class Header extends React.Component {
         }
 
         return (
-            <div className="header-container" >
+            <div className="header-container" id="header" >
                 <div className="header"  >
 
                     {/* Begin lv1: contain logo and searchbar */}
@@ -221,7 +218,7 @@ class Header extends React.Component {
                                                                 this.searchParamObject.searchTerm = this.query;
                                                                 this.searchParamObject.sortByPublishDtm = "DESC";
                                                                 this.searchParamObject.categoryID = getQueryParamByName('category') ? getQueryParamByName('category') : 0;
-                                                                
+
                                                                 this.searchParamObject.subjectID = getQueryParamByName('subject') ? getQueryParamByName('subject') : 0;
                                                                 this.searchParamObject.advancedSort = getQueryParamByName('sort') ? getQueryParamByName('sort') : null;
                                                                 this.props.getExerciseSearch(this.searchParamObject);
@@ -234,9 +231,7 @@ class Header extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                {!this.state.isHaveOut &&
-                                    this.redirect
-                                }
+
                                 <ClickAwayListener onClickAway={() => this.handleClickAwayQuickSearchResult()}>
                                     <div className="qsr-container-big" id="qsr-container-big">
                                         <div className="qssr-container" id="qssr-container" >

@@ -18,6 +18,8 @@ import add_exercise_btn from 'assets/icons/24x24/add_exercise_btn.png'
 import store from "redux/store";
 import { getUserDetailById } from "redux/services/authServices";
 import { getPostsByFilter } from "redux/services/postServices";
+import ShowOnPermission from "components/base_components/ShowOnPermission";
+import { Access } from "authentication/permission.config";
 // authServices.
 
 const userMenuOptions = [
@@ -89,7 +91,6 @@ class UserMenu extends React.Component {
     }
 
     handleMenuItemClick = (menuItem) => {
-        console.log(menuItem)
         document.getElementById("h-um-wrapper").style.background = "white";
         this.setState({});
         if (menuItem.value === "PROFILE") {
@@ -167,9 +168,11 @@ class UserMenu extends React.Component {
                     <Link to={"/create-post"} className="d-flex">
                         <img className="header-image-button" src={write_icon} alt="" />
                     </Link>
-                    <Link to={"/create-exercise"} className="d-flex">
-                        <img className="header-image-button" src={add_exercise_btn} alt="" />
-                    </Link>
+                    <ShowOnPermission permissions={[Access.Admin]}   >
+                        <Link className="d-flex" to={"/create-exercise"}>
+                            <img className="header-image-button" src={add_exercise_btn} alt="" />
+                        </Link>
+                    </ShowOnPermission>
                     <div id="h-um-wrapper" className="user-menu">
                         <div className="d-flex">
                             <Link to={`/user/profile/${this.props.userSummaryData.id}`}>

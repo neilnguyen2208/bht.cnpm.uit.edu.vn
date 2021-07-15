@@ -100,7 +100,7 @@ class CommentSection extends React.Component {
       <div className="comments-container">
         {this.props.postData && !this.props.isPostLoading ?
           <div>
-            <div className="section-title" id={"cst-" + this.props.match.params.id}>{this.props.postData.commentCount}   Bình luận
+            <div className="section-title" id={"cst-" + this.props.match.params.id}>  Bình luận
             </div>
           </div>
           : <></>

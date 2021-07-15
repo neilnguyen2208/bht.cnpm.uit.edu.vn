@@ -42,6 +42,7 @@
 
 .side-bar-avatar {
     width: 80px;
+    min-width: 80px;
     height: 80px;
     overflow: hidden;
     object-fit: cover;
@@ -137,17 +138,17 @@
 }
 
 .achivement-layout {
-    padding-top: 5px;
     justify-content: space-between;
     font-family: "BarlowCondensed-Medium";
     font-size: 18px;
     line-height: 30px;
     width: 150px;
     color: var(--black);
+    padding-top: 2px;
     margin-left: 10px;
     height: 80px;
-    border-bottom: 3px var(--gray) solid;
-    border-top: 3px var(--gray) solid;
+    border-bottom: 2px var(--gray) solid;
+    border-top: 2px var(--gray) solid;
     padding-bottom: 5px;
 }
 
@@ -302,7 +303,7 @@
 }
 
 //for scrolling page
-.left-sidebar_After_Header {
+.left-sidebar-after-header {
     position: fixed !important;
     margin-top: 10px;
     top: 0px;

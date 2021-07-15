@@ -84,18 +84,6 @@ import { authRequest } from "utils/requestUtils";
 import { generateSearchParam } from "utils/urlUtils";
 import { closeModal, openBLModal, openModal } from "./modalServices";
 
-export function uploadCourse(courses) {
-    return dispatch => {
-
-    }
-}
-
-export function getCourseByID(uid, pid) {
-    return dispatch => {
-
-    }
-}
-
 // my courses
 export function getMyCourses() { //this API to get all approved document of a specific user.
     return dispatch => {
@@ -162,7 +150,10 @@ export function getCourseDetailById(subjectId) {
 export function getAnExerciseInfoById(exerciseId) {
     return dispatch => {
         dispatch(get_AnExerciseInfoByIdRequest());
+        dispatch(getRelativePostsByExerciseId(exerciseId));
+        dispatch(getRelativeDocumentsByExerciseId(exerciseId));
         authRequest.get(`/exercises/${exerciseId}`).then(response => {
+
             authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
                 dispatch(get_AnExerciseInfoByIdSuccess({ ...response.data, ...response_2.data[0] }))
             }).catch(error => dispatch(get_AnExerciseInfoByIdFailure(error)))

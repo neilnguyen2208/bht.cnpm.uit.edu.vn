@@ -13,7 +13,7 @@ import ComboBox from 'components/common/Combobox/Combobox';
 import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
-import { postAdminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
+import { documentAdminApproveStatusOptions, publishedTimeOptions } from 'constants.js';
 import DocumentNormalReactionbar from 'components/document/NormalReactionbar'
 import DocumentSummaryMetadata from 'components/document/SummaryInfo'
 import DocumentManagementNavbar from './DocumentManagementNavbar'
@@ -83,7 +83,7 @@ class DocumentManagement extends React.Component {
         });
         this.searchParamObject = {
             ...this.searchParamObject,
-            documentState: selectedOption.documentState,
+            docState: selectedOption.docState,
             "page": 1
         }
         this.props.getManagementDocuments(this.searchParamObject);
@@ -94,7 +94,7 @@ class DocumentManagement extends React.Component {
         setQueryParam({ ...this.queryParamObject, "page": 1 });
         this.searchParamObject = {
             ...this.searchParamObject,
-            sort: selectedOption.sort,
+            sortByPublishDtm: selectedOption.sort,
             "page": 1
         }
         this.props.getManagementDocuments(this.searchParamObject);
@@ -179,7 +179,7 @@ class DocumentManagement extends React.Component {
                             <div className="filter-label t-a-right mg-right-5px">Trạng thái duyệt:</div>
                             <div className="mg-left-5px">
                                 <ComboBox
-                                    options={postAdminApproveStatusOptions}
+                                    options={documentAdminApproveStatusOptions}
                                     placeHolder="Tất cả"
                                     onOptionChanged={(selectedOption) => this.onApproveOptionChange(selectedOption)}
                                     comboboxId="dmasf-combobox" //document management approval status filter 
@@ -258,7 +258,7 @@ class DocumentManagement extends React.Component {
                         documentID={item.id}
                         likeCount={item.likeCount ? item.likeCount : 0}
                         dislikeCount={item.dislikeCount ? item.dislikeCount : 0}
-                        docReactionType={item.docReactionType }
+                        docReactionType={item.docReactionType}
                         commentCount={item.commentCount ? item.commentCount : 0}
                         downloadCount={item.downloadCount ? item.downloadCount : 0}
                         viewCount={item.viewCount ? item.viewCount : 0}

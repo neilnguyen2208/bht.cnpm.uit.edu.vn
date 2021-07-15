@@ -6,7 +6,7 @@ import white_bg from 'assets/images/white_bg.jpg'
 export default class Footer extends React.Component {
     render() {
         return (
-            <footer class="footer" >
+            <footer class="footer" id="footer">
                 <div class="container">
                     <div class="row" >
                         <div class="col-md-12 col-lg-2">

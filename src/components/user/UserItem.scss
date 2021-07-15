@@ -74,6 +74,24 @@
     padding-left: 10px;
 }
 
+.achivement-layout .reputation-sub-container{
+    display: flex;
+    min-width: 55px;
+    width: fit-content;
+    cursor: pointer;
+    max-width: 5rem;
+    margin-right: 0.25rem;
+    margin-left: 0.15rem;
+}
+
+.achivement-layout .reputation-label {
+    margin-top: -0.2rem;
+    font-size: 1.125rem;
+    padding-left: 0.3rem;
+    color: var(--light-black);
+    font-family: "BarlowCondensed-SemiBold";
+}
+
 .user-info .reputation-sub-container {
     display: flex;
     min-width: 40px;

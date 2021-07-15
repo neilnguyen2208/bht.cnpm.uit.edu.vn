@@ -14,25 +14,23 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+import gray_write_icon from 'assets/icons/48x48/gray_write_icon_48x48.png'
+import gray_upload_icon from 'assets/icons/48x48/gray_upload_icon_48x48.png'
 //import for permission
 import {
   //suitable roles name 
 } from 'authentication/permission.config'
 
 import authServices from 'authentication/authenticationServices'
+import { formatNumber } from 'utils/miscUtils';
 
 class UserSidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.isTheFirstTimeLoaded = true;
-    //bind check permission in PermissionManagement.js file
-  }
 
   componentDidMount() {
-    // this.props.getCurrentUser();
     window.addEventListener('scroll', this.scrollFunction)
 
   }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.scrollFunction);
   }
@@ -41,15 +39,30 @@ class UserSidebar extends React.Component {
     return (
       <div className="left-sidebar-wrapper" >
         {/* Dung de gioi han lai khong gian cua cac component con khi scroll */}
-        {/* <div className="fake-left-sidebar" /> */}
-
-        {/* show on current profile id === profile id */}
 
         <div className="left sidebar" id="user-left-sidebar">
           <div>
-            <div className="user-role">
-              User
-            </div>
+
+            {
+              this.props.userSummaryData && this.props.userSummaryDataLoaded ?
+                <div className="user-info-layout" >
+                  <img alt="avatar" className="side-bar-avatar" src={this.props.userSummaryData.avatarURL} />
+                  <div className="achivement-layout">
+                    <div className="score" style={{}}>Scrore:{formatNumber(this.props.userSummaryData.reputationScore)}</div>
+                    <div className="d-flex mg-bottom-5px" style={{ marginTop: "10px" }} >
+                      <div className="reputation-sub-container" >
+                        <img alt="" src={gray_write_icon} className="user-menu-icon" />
+                        <div className="reputation-label">  {formatNumber(this.props.userSummaryData.postCount)}</div>
+                      </div>
+                      <div className="reputation-sub-container">
+                        <img alt="" src={gray_upload_icon} className="user-menu-icon" />
+                        <div className="reputation-label">   {formatNumber(this.props.userSummaryData.docCount)}</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div > : <></>
+            }
           </div>
 
           < div className="vertical-menu-container"  >
@@ -213,7 +226,7 @@ class UserSidebar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     userSummaryData: state.auth.currentUserSummary.data,
-    userSummaryDataLoaded: state.auth.currentUserSummary.isLoadDone
+    userSummaryDataLoaded: state.auth.currentUserSummary.isLoadDone,
   };
 }
 

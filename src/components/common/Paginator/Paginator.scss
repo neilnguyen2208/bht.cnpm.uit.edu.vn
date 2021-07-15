@@ -36,7 +36,6 @@
 .deactivated-page:active {
     border: 1px white solid;
     background: var(--gray);
-    opacity: 100%;
 }
 
 .activated-page {
@@ -139,7 +138,6 @@
     box-shadow: 0px 0px 1px 1px white;
     cursor: pointer;
     border: 1px white solid;
-    opacity: 100%;
 }
 
 .first-page:disabled,
@@ -151,5 +149,4 @@
     box-shadow: 0px 0px 1px 1px white;
     cursor: pointer;
     border: 1px white solid;
-    opacity: 100%;
 }

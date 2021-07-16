@@ -150,6 +150,7 @@ export function getCourseDetailById(subjectId) {
 export function getAnExerciseInfoByID(exerciseId) {
     return dispatch => {
         dispatch(get_AnExerciseInfoByIdRequest());
+        dispatch(getCourseTopicsWithExercisesByExerciseId(exerciseId));
         authRequest.get(`/exercises/${exerciseId}`).then(response => {
             authRequest.get(`/exercises/statistics?exerciseIDs=${exerciseId}`).then(response_2 => {
                 authRequest.get(`/exercises/actionAvailable?exerciseIDs=${exerciseId}`).then(response_3 => {

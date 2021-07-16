@@ -29,8 +29,6 @@ class MyDocuments extends React.Component {
         this.searchParamObject = {
             "page": 1,
             "categoryID": null,
-            // "docState": ''
-            sort: "Dtm,asc"
         }
 
         this.queryParamObject = {

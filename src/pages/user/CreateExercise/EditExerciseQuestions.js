@@ -31,7 +31,7 @@ class CreateExercise extends React.Component {
             "content": "<p>Nội dung câu hỏi</p>",
             "rank": -1,
             "explanation": "Giải thích",
-            "suggestedDuration": 0,
+            "suggestedDuration": 60,
             "publishDtm": "2021-07-09T21:49:20.062Z",
             "difficultyID": "1",
             "exerciseAnswerRequestDTOs": [
@@ -63,6 +63,7 @@ class CreateExercise extends React.Component {
                         // question.exerciseAnswerRequestDTOs = response.data[index].exerciseAnswerDTOs ? response.data[index].exerciseAnswerDTOs : [];
                         question.exerciseAnswerRequestDTOs = response.data[index].answers ? response.data[index].answers : [];
                         question.difficultyID = question.difficultyType.id;
+                        question.suggestedDuration = question.suggestedDuration === null ? 60 : question.suggestedDuration;
                         question.rank = index;
                         delete question.exerciseAnswerDTOs;
                         delete question.difficultyType;

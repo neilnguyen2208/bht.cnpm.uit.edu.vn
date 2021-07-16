@@ -78,7 +78,7 @@ class UploadDocument extends React.Component {
                 tags: [],
                 title: "Model View Presenter (MVP) in Android with a simple demo project.",//
                 description: ``,//
-                publishDtm: new Date(),
+                publishDtm: new Date(new Date().getTime() + 60 * 60 * 1000),
                 version: "0",
                 categoryID: "",//
                 subjectID: "",
@@ -355,6 +355,7 @@ class UploadDocument extends React.Component {
     }
 
     setStartDate = (date, time) => {
+        console.log(date)
         let shownDate = new Date(date).toLocaleDateString('en-US', {
             day: '2-digit',
             month: '2-digit',
@@ -367,7 +368,8 @@ class UploadDocument extends React.Component {
 
     render() {
 
-        if (this.props.isHaveUploaded) { return <Redirect to = "/user/my-documents" />
+        if (this.props.isHaveUploaded) {
+            return <Redirect to="/user/my-documents" />
         }
         //load for category and subject 
         if (!this.props.isCategoryLoading && this.props.categories) {
@@ -506,6 +508,7 @@ class UploadDocument extends React.Component {
                                     onChange={(date) => this.setStartDate(date)}
                                     dateFormat='dd/MM/yyyy'
                                     value={this.state.shownDate}
+                                    locale="vi_VN"
                                     showTimeSelect
                                     startDate={new Date(new Date().getTime() + 60 * 60 * 1000)}
                                     minDate={new Date(new Date().getTime() + 60 * 60 * 1000)}

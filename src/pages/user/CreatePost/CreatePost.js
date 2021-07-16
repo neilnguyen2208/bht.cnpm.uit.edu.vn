@@ -537,6 +537,7 @@ class CreatePost extends React.Component {
                                     selected={this.state.selectedDate}
                                     onChange={(date) => this.setStartDate(date)}
                                     dateFormat='dd/MM/yyyy'
+                                    locale = "vi_VN"
                                     value={this.state.shownDate}
                                     showTimeSelect
                                     startDate={new Date(new Date().getTime() + 60 * 60 * 1000)}

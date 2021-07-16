@@ -1582,7 +1582,7 @@ var toolbarPlainText = `
 			</div>
 		</div>
 		<div class="ppr-whn-ld-dn" id="nvd_EquationToolbar" style="border-bottom: 1px solid #c4c4c4;">
-			<div id="nvd-eqn-editor">
+			<div id="nvd-eqn-editor" >
 				<div id="hover">
 				</div>
 				<div id="bar1" class="top">

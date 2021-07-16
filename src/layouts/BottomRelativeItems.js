@@ -12,11 +12,25 @@ import 'components/styles/Button.scss'
 import { getAPostByID } from 'redux/services/postServices';
 import { getADocumentByID } from 'redux/services/documentServices';
 import { getAnExerciseInfoByID } from 'redux/services/courseServices';
+import createDOMPurify from 'dompurify';
 
 //constants
 
 //components
 class BottomRelativeItems extends React.Component {
+
+
+  componentDidMount() {
+    if (this.props.type === "DOCUMENT" || this.props.type === "EXERCISE") {
+      const DOMPurify = createDOMPurify(window);
+      this.props.items.forEach(item => {
+        const clean = DOMPurify.sanitize(item.description);
+        if (document.querySelector(`#rprt-pst-ctnt-${item.id}`))
+          document.querySelector(`#rprt-pst-ctnt-${item.id}`).innerHTML = clean;
+      })
+    }
+  }
+
   render() {
     if (this.props.items.length > 0)
 
@@ -51,7 +65,9 @@ class BottomRelativeItems extends React.Component {
                       }
 
                     </div>
-                    {item.description && <div className="summary-text">{item.description}</div>}
+                    {item.description && <div className="summary-text" style={{ height: "48px", }}>
+                      <div className="ck-editor-output" style={{ marginTop: "10px" }} id={"rprt-pst-ctnt-" + item.id} />
+                    </div>}
                     {item.summary && <div className="summary-text">{item.summary}</div>}
                   </div>
                 </div>

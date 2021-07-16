@@ -45,7 +45,7 @@ class CreateExercise extends React.Component {
         }
 
         this.EXERCISE_QUESTIONS_DTO = [];
-
+        this.isCloseAllCKEInstance = false;
         this.isFirstTimeLoaded = false;
     }
 
@@ -126,6 +126,10 @@ class CreateExercise extends React.Component {
         })
     }
 
+    closeAllCKEInstance = () => {
+        this.isCloseAllCKEInstance = true;
+    }
+
     render() {
         if (this.props.questionsData && !this.isQuestionsLoading && !this.isFirstTimeLoaded) {
             // this.EXERCISE_QUESTIONS_DTO = this.props.questionsData;
@@ -196,6 +200,8 @@ class CreateExercise extends React.Component {
                         <AddOrEditQuestionItem
                             questionData={questionItem}
                             key={index}
+                            // currentAnswerEditInstance = {this.currentAnswerEdit ||}
+                            closeAllCKEInstance={this.closeAllCKEInstance}
                             index={index}
                             deleteQuestion={this.deleteQuestion}
                             setQuestionContent={this.setQuestionContent}

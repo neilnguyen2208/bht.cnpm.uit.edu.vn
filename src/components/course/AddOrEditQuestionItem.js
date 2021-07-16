@@ -283,7 +283,7 @@ class QuestionItem extends React.Component {
 
           {/* explanation */}
           {!this.isEditExplaination ?
-            this.QUESTION_DTO.explanation && <div className="mg-bottom-10px">
+            <div className="mg-bottom-10px">
               <div className="exercise-explanation j-c-space-between" id={"xrcs-xplntn" + this.props.index}>
                 <div className="question-content ck-editor-output" style={{ fontSize: "15px" }}
                   dangerouslySetInnerHTML={{
@@ -295,7 +295,7 @@ class QuestionItem extends React.Component {
               </div>
 
             </div> :
-            this.QUESTION_DTO.explanation && <div className="mg-bottom-10px">
+            <div className="mg-bottom-10px">
               <div className="exercise-explanation" id={"xrcs-xplntn" + this.props.index}>
                 <Editor editorId={"explanation-cke-" + this.props.index}
                   onChange={() => this.onExplainationEditorChange()}

@@ -86,6 +86,7 @@ class NormalReactionbar extends React.Component {
   toggleDislikeImage = () => {
 
     if (this.state.isDisliked === 0) { //neu bam dislike ma chua dislike
+      console.log(docReactionType.dislike.value, this.props.docReactionType);
       if (this.props.docReactionType === docReactionType.dislike.value) //neu trc khi load da dislike
         this.dislikeCount = this.props.dislikeCount;
       else this.dislikeCount = this.props.dislikeCount + 1; //chua dislike va chua like
@@ -200,7 +201,7 @@ class NormalReactionbar extends React.Component {
               requiredAction={DocumentAction.Comment}
               useAction={this.props.useAction}
               isLink={true}
-              to={"/post-content/" + this.props.documentID + "#cr-cmt"}
+              to={"/document-content/" + this.props.documentID + "#cr-cmt"}
               expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
               <div className="comment-count-container">
                 <div className="comment-btn-text">

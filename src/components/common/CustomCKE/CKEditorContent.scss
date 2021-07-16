@@ -28,7 +28,7 @@
   font-size: 15px;
 }
 
-.summary-text .ck-editor-output{
+.summary-text .ck-editor-output {
   line-height: 20px;
   font-size: 15px;
 }
@@ -112,8 +112,7 @@
   margin-left: 15px;
 }
 
-
-.ck-editor-output pre code{
+.ck-editor-output pre code {
   background: #404040;
   padding-left: 10px;
 }
@@ -206,3 +205,6 @@
 }
 
 // ../assets/icons/16x16/math_type_icon_16x16.png
+.question-content.ck-editor-output.answer pre:first-child {
+  margin-top: 0px;
+}

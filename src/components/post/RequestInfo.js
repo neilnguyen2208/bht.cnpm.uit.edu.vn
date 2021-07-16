@@ -33,7 +33,7 @@ export default class RequestedSummary extends React.PureComponent {
                     <div className="d-flex mg-top-5px">
                         <img src={clock_icon} alt="" className="calendar-icon" />
                         <div className="black-label-m">
-                            {this.props.submitDtm.substring(12, this.props.submitDtm.length - 4)}
+                            {this.props.submitDtm.substring(11, this.props.submitDtm.length - 4)}
                         </div>
                     </div>
                 </div>

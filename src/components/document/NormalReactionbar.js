@@ -201,7 +201,7 @@ class NormalReactionbar extends React.Component {
               requiredAction={DocumentAction.Comment}
               useAction={this.props.useAction}
               isLink={true}
-              to={"/post-content/" + this.props.documentID + "#cr-cmt"}
+              to={"/document-content/" + this.props.documentID + "#cr-cmt"}
               expectedEvent={this.props.type !== "PREVIEW" && this.onCommentBtnClick}   >
               <div className="comment-count-container">
                 <div className="comment-btn-text">

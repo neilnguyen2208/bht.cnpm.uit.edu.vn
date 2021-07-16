@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { setQueryParam } from 'utils/urlUtils';
 import store from 'redux/store/index'
 import { getTagByID, getRelativeTags } from 'redux/services/tagServices'
+import { getDocumentSearch } from 'redux/services/documentServices';
 
 //Set text props for this component
 export default class Tag extends React.Component {
@@ -39,7 +40,7 @@ export default class Tag extends React.Component {
             }
 
             setQueryParam(queryParamObject);
-            // store.dispatch(getDocumentSearch(searchParamObject));
+            store.dispatch(getDocumentSearch(searchParamObject));
             store.dispatch(getTagByID(this.props.tag.id));
             store.dispatch(getRelativeTags(this.props.tag.id));
         }

@@ -176,7 +176,7 @@ class DocumentDetail extends React.Component {
 
           <div className="mg-top-10px mg-bottom-10px" >
             {this.props.tags.map(item =>
-              <Tag isReadOnly={true} tag={item} />
+              <Tag isReadOnly={true} clickable={this.props.type !== "PREVIEW"} tag={item} />
             )}
           </div>
         </div>

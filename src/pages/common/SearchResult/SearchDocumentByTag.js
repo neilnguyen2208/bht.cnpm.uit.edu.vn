@@ -19,13 +19,13 @@ class SearchDocumentByTag extends React.Component {
     componentDidMount() {
         this.queryParamObject = {
             "page": 1,
-            tag: getQueryParamByName('tag') !== "null" && getQueryParamByName('tag') ? getQueryParamByName('tag') : 1
+            tag: getQueryParamByName('tag') ? getQueryParamByName('tag') : 1
 
         }
 
         this.searchParamObject = {
             "page": 1,
-            // tags: getQueryParamByName('tag') !== "null" && getQueryParamByName('tag') ? getQueryParamByName('tag') : 1,
+            tags: getQueryParamByName('tag'),
             searchTerm: ''
         }
 
@@ -50,6 +50,7 @@ class SearchDocumentByTag extends React.Component {
         if (!this.props.isListLoading) {
             documentSearchResult = this.props.documentSearchResult.map((item) => {
                 return < div className="item-container" >
+                    {console.log(item.authorAvatarURL)}
                     <DocumentSummaryMetadata
                         type={itemType.normal}
                         documentID={item.id}
@@ -60,27 +61,24 @@ class SearchDocumentByTag extends React.Component {
                         categoryID={item.categoryID}
                         subjectName={item.subjectName}
                         subjectID={item.subjectID}
-
                         title={item.title}
-
+                        authorAvatarURL={item.authorAvatarURL}
                         description={item.description}
                         imageURL={item.imageURL}
                         readingTime={item.readingTime}
-                        // approveState={item.docState}
                         popUpMenuPrefix="mdpu"   //stand for my doc popup 
                         docFileUploadDTOs={item.docFileUploadDTOs}
-                        // authorAvatarURL={ }
                         //
                         reloadList={() => this.reloadList()}
                     />
                     <DocumentNormalReactionbar
                         documentID={item.id}
-                        likeCount={item.likeCount }
-                        dislikeCount={item.dislikeCount }
-                        docReactionType={item.docReactionType }
-                        commentCount={item.commentCount }
+                        likeCount={item.likeCount}
+                        dislikeCount={item.dislikeCount}
+                        docReactionType={item.docReactionType}
+                        commentCount={item.commentCount}
                         downloadCount={item.downloadCount}
-                        viewCount={item.viewCount }
+                        viewCount={item.viewCount}
                     />
                 </div >
             })

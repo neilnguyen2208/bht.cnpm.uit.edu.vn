@@ -29,6 +29,7 @@ import {
 import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 import { openBLModal } from 'redux/services/modalServices';
 import CommentSection from 'components/document/comment/CommentSection';
+import Tag from 'components/document/Tag';
 
 //lack services: userStatistic, related Document.
 class DocumentDetail extends React.Component {

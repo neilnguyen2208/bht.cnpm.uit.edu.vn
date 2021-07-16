@@ -40,12 +40,12 @@ class RelativeTagSidebar extends React.Component {
         }
         if (window.location.pathname === "/tags/documents") {
             return this.props.relativeTags.map(item =>
-                <DocumentTag isReadOnly={true} tag={item} />
+                <DocumentTag isReadOnly={true} clickable tag={item} />
             )
         }
         if (window.location.pathname === "/tags/exercises") {
             return this.props.relativeTags.map(item =>
-                <ExerciseTag isReadOnly={true} tag={item} />
+                <ExerciseTag isReadOnly={true} tag={item} clickable />
             )
         }
     }
@@ -55,7 +55,7 @@ class RelativeTagSidebar extends React.Component {
             <div className="d-flex">
                 <div className="search-tag-side-bar">
                     Tag liên quan:
-                            <div className="mg-top-10px">
+                    <div className="mg-top-10px">
                         {(!this.props.isLoading && this.props.relativeTags) && this.renderTag()}
                     </div>
                 </div>

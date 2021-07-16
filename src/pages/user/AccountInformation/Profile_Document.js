@@ -51,6 +51,12 @@ class ProfileDocument extends React.Component {
                     ...this.queryParamObject,
                     tab: "most-likes"
                 }
+                this.searchParamObject = {
+                    "paginator": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostLiked": true,
+                }
                 setQueryParam(this.queryParamObject);
                 this.setState({});
                 this.props.getDocumentsByFilter(this.searchParamObject)
@@ -61,6 +67,12 @@ class ProfileDocument extends React.Component {
                 this.queryParamObject = {
                     ...this.queryParamObject,
                     tab: "most-views"
+                }
+                this.searchParamObject = {
+                    "paginator": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostViewed": true,
                 }
                 setQueryParam(this.queryParamObject);
                 this.props.getDocumentsByFilter(this.searchParamObject)
@@ -73,6 +85,12 @@ class ProfileDocument extends React.Component {
                     ...this.queryParamObject,
                     tab: "most-downloads"
                 }
+                this.searchParamObject = {
+                    "paginator": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
+                    "mostDownloaded": true,
+                }
                 setQueryParam(this.queryParamObject);
                 this.props.getDocumentsByFilter(this.searchParamObject)
 
@@ -83,6 +101,11 @@ class ProfileDocument extends React.Component {
                 this.queryParamObject = {
                     ...this.queryParamObject,
                     tab: "newest"
+                }
+                this.searchParamObject = {
+                    "paginator": 1,
+                    "author": this.props.match.params.id,
+                    "sort": "publishDtm,desc",
                 }
                 setQueryParam(this.queryParamObject);
                 this.props.getDocumentsByFilter(this.searchParamObject)
@@ -126,7 +149,7 @@ class ProfileDocument extends React.Component {
                             documentID={item.id}
                             likeCount={item.likeCount}
                             dislikeCount={item.dislikeCount}
-                            docReactionType={item.docReactionType }
+                            docReactionType={item.docReactionType}
                             commentCount={item.commentCount}
                             downloadCount={item.downloadCount}
                             viewCount={item.viewCount}

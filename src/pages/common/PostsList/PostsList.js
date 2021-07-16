@@ -33,7 +33,7 @@ class PostsList extends React.Component {
         this.allResult = [];
         request.get(`/posts/categories`).then((response) => {
             for (let i = 0; i < response.data.length; i++) {
-                request.get(`/posts/searchFilter?searchTerm=&page=0&postCategoryID=${response.data[i].id}`).then(response_1 => {
+                request.get(`/posts/searchFilter?searchTerm=&sortByPublishDtm=DESC&page=0&postCategoryID=${response.data[i].id}`).then(response_1 => {
                     let result_1 = response_1.data;
                     let IDarr = '';
                     response_1.data.postSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi

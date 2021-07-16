@@ -30,7 +30,7 @@ class PostsList extends React.Component {
         this.allResult = [];
         request.get(`/documents/categories`).then((response) => {
             for (let i = 0; i < response.data.length; i++) {
-                request.get(`/documents/searchFilter?searchTerm=&page=0&categoryID=${response.data[i].id}&subjectID=${this.props.match.params.id}`).then(response_1 => {
+                request.get(`/documents/searchFilter?searchTerm=&sortByPublishDtm=DESC&page=0&categoryID=${response.data[i].id}&subjectID=${this.props.match.params.id}`).then(response_1 => {
                     let result_1 = response_1.data;
                     let IDarr = '';
                     response_1.data.docSummaryDTOs.map(item => IDarr += item.id + ",") //tao ra mang id moi
@@ -162,7 +162,7 @@ class PostsList extends React.Component {
                     subjectName={items[0].subjectName}
                     subjectID={items[0].subjectID}
                     commentCount={items[0].commentCount}
-                    docReactionType = {items[0].docReactionType}
+                    docReactionType={items[0].docReactionType}
 
                 ></HomeInfo>
             </div >}
@@ -187,7 +187,7 @@ class PostsList extends React.Component {
                     subjectName={items[1].subjectName}
                     subjectID={items[1].subjectID}
                     commentCount={items[1].commentCount}
-                    docReactionType = {items[1].docReactionType}
+                    docReactionType={items[1].docReactionType}
 
                 />
             </div >}
@@ -212,7 +212,7 @@ class PostsList extends React.Component {
                     viewCount={items[2].viewCount}
                     subjectName={items[2].subjectName}
                     subjectID={items[2].subjectID}
-                    docReactionType = {items[2].docReactionType}
+                    docReactionType={items[2].docReactionType}
 
                 />
             </div >}

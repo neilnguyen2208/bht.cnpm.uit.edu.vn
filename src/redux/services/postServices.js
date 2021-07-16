@@ -173,7 +173,7 @@ export function getPostsByFilter(searchParamObject) { //this API to get all appr
 export function getMyPosts(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyPostsRequest());
-        authRequest.get(`/posts/myPosts?${generateSearchParam(searchParamObject)}`).then(
+        authRequest.get(`/posts/myPosts?sort=publishDtm,desc&${generateSearchParam(searchParamObject)}`).then(
             response_1 => {
                 let result_1 = response_1.data;
                 let IDarr = '';

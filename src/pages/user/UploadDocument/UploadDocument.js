@@ -78,7 +78,7 @@ class UploadDocument extends React.Component {
                 tags: [],
                 title: "Model View Presenter (MVP) in Android with a simple demo project.",//
                 description: ``,//
-                publishDtm: "2021-03-20T11:02:45.622Z",
+                publishDtm: new Date(),
                 version: "0",
                 categoryID: "",//
                 subjectID: "",

@@ -67,7 +67,7 @@ class QuestionItem extends React.Component {
     }
 
     if (selectedItem.value === "REPORT_EXERCISE") {
-      openBigModal("report-exercise", {
+      openBigModal("report-exercise-question", {
         id: this.props.exerciseId,
         rank: this.props.rank,
         exerciseTitle: this.props.exerciseTitle

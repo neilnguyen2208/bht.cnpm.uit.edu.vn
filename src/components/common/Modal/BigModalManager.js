@@ -34,6 +34,8 @@ class BigModalManager extends React.Component {
                     return <ReportModal {...modalProps} type="DOCUMENT" key={modalType + index} />
                 case "report-exercise":
                     return <ReportModal {...modalProps} type="EXERCISE" key={modalType + index} />
+                case "report-exercise-question":
+                    return <ReportModal {...modalProps} type="EXERCISE_QUESTION" key={modalType + index} />
                 case "report-post-comment":
                     return <ReportModal {...modalProps} type="POST_COMMENT" key={modalType + index} />
                 case "report-document-comment":

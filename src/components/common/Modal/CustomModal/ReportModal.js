@@ -40,7 +40,8 @@ class ReportModal extends React.Component {
         this.reportService = this.props.reportADocument;
         break;
       }
-      case "EXERCISE": {
+      case "EXERCISE":
+      case "EXERCISE_QUESTION": {
         this.reportTitle = "Báo cáo bài tập";
         this.bigModalTitle = "BÁO CÁO BÀI TẬP";
         this.reportService = this.props.reportAnExercise;
@@ -118,7 +119,7 @@ class ReportModal extends React.Component {
 
             {/* exercise report */}
             <div className="form-container pd-10px" id="rpmd-rsns">
-              {this.props.type === "EXERCISE"
+              {this.props.type === "EXERCISE_QUESTION"
                 && <div style={{
                   marginBottom: "10px",
                   paddingBottom: "10px",
@@ -158,7 +159,7 @@ class ReportModal extends React.Component {
               <div className="form-group" style={{ marginTop: "3px" }}>
                 <label className="form-label">Bạn có thể làm rõ lý do báo cáo không?</label>
                 <textarea className="text-area"
-                  defaultValue={this.props.type === "EXERCISE" ? "Câu " + this.props.rank + ": " : ""}
+                  defaultValue={this.props.type === "EXERCISE_QUESTION" ? "Câu " + this.props.rank + ": " : ""}
                   onChange={() => { }}
                   id="rprtmdl-txtr"
                   placeholder="Thông tin thêm ... " />

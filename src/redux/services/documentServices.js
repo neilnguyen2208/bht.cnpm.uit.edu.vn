@@ -235,7 +235,7 @@ export function getReportedDocuments(searchParamObject) {
 export function getMyDocuments(searchParamObject) { //this API to get all approved document of a specific user.
     return dispatch => {
         dispatch(get_MyDocumentsRequest());
-        authRequest.get(`/documents/myDocuments?${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
+        authRequest.get(`/documents/myDocuments?sortByPublishDtm=DESC${generateSearchParam(searchParamObject)}`) //api chua dung, chua co API cho my Documents
             .then(response => {
                 //statistic
                 let result_1 = response.data;

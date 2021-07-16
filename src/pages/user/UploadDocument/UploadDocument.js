@@ -507,8 +507,8 @@ class UploadDocument extends React.Component {
                                     selected={this.state.selectedDate}
                                     onChange={(date) => this.setStartDate(date)}
                                     dateFormat='dd/MM/yyyy'
+                                    locale="vi-VN"
                                     value={this.state.shownDate}
-                                    locale="vi_VN"
                                     showTimeSelect
                                     startDate={new Date(new Date().getTime() + 60 * 60 * 1000)}
                                     minDate={new Date(new Date().getTime() + 60 * 60 * 1000)}

@@ -185,7 +185,7 @@ export function getReportedExerciseComments(searchParamObject) {
 export function resolveAnExerciseComment(id, resolveDTO) {
   return dispatch => {
     dispatch(post_ResolveAnExerciseCommentReset());
-    authRequest.post(`/exercises/comments/resolveReport/${id}`, JSON.stringify(resolveDTO))
+    authRequest.post(`/exercises/comments/resolvedReport/${id}`, JSON.stringify(resolveDTO))
       .then(result => {
         dispatch(post_ResolveAnExerciseCommentSuccess());
       })

@@ -29,7 +29,7 @@ class CreateExercise extends React.Component {
     constructor(props) {
         super(props);
         this.defaultQuestion = {
-            id: null,
+            id: "null-question",
             "content": "<p>Nội dung câu hỏi</p>",
             "rank": -1,
             "explanation": "Giải thích",
@@ -83,7 +83,19 @@ class CreateExercise extends React.Component {
     }
 
     addQuestion = () => {
-        this.EXERCISE_QUESTIONS_DTO.push({ ...this.defaultQuestion, rank: this.EXERCISE_QUESTIONS_DTO.length });
+        this.EXERCISE_QUESTIONS_DTO.push({
+            ...this.defaultQuestion,
+            "exerciseAnswerRequestDTOs": [
+                {
+                    id: "null-answer",
+                    "content": "<p>Đáp án </p>",
+                    "rank": 1,
+                    "isCorrect": false
+                }
+            ],
+            id: "null-question" + this.EXERCISE_QUESTIONS_DTO.length,
+            rank: this.EXERCISE_QUESTIONS_DTO.length
+        });
         this.setState({});
     }
 
@@ -114,11 +126,18 @@ class CreateExercise extends React.Component {
     onSaveQuestionsClick = () => {
         let tmp = this.EXERCISE_QUESTIONS_DTO;
         tmp.forEach((question => {
+
             question.exerciseAnswerRequestDTOs.forEach(answer => {
                 if (answer.id === "null-answer") { answer.id = null }
             })
-        }
-        ))
+
+            if (isNaN(question.id) && question.id.substring(0, 13) === "null-question") {
+                question.id = null;
+            }
+
+            console.log(question.id);
+        }))
+
         openModal("confirmation", {
             title: "Cập nhật bài tập",
             text: "Xác nhận cập nhật bài tập này",
@@ -195,7 +214,6 @@ class CreateExercise extends React.Component {
                             {formatMathemicalFormulas()}
                             {styleCodeSnippet()}
                         </div> : <div>
-
                         </div>
                     }
 
@@ -244,7 +262,7 @@ class CreateExercise extends React.Component {
             questionSheet[workbook.SheetNames[0]].forEach((row, index) => {
 
                 let newQuestion = {
-                    id: null,
+                    id: "null-question" + this.EXERCISE_QUESTIONS_DTO.length + index,
                     "content": "<p>Nội dung câu hỏi</p>",
                     "rank": -1,
                     "explanation": "Giải thích",

@@ -12,11 +12,11 @@ import { getQueryParamByName, setQueryParam } from 'utils/urlUtils'
 import { DocPostSummaryLoader } from 'components/common/Loader/DocPostSummaryLoader'
 import AdminSidebar from 'layouts/AdminSidebar'
 // import ExerciseManagementNavbar from './ExerciseManagementNavbar'
-import ReportedCommentReactionbar from 'components/post/comment/ReportedCommentReactionbar'
+import ReportedCommentReactionbar from 'components/course/ReportedCommentReactionbar'
 import store from 'redux/store/index'
 import { closeModal, openBLModal } from 'redux/services/modalServices.js';
 import { post_ResolveAnExerciseCommentReset } from 'redux/actions/exerciseCommentAction';
-import ReportedCommentInfo from 'components/post/comment/ReportedCommentInfo'
+import ReportedCommentInfo from 'components/course/ReportedCommentInfo'
 import ExerciseManagementNavBar from './ExerciseManagementNavbar';
 import Combobox from 'components/common/Combobox/Combobox';
 
@@ -116,9 +116,9 @@ class ExerciseCommentReport extends React.Component {
                         resolvedNote={reportedComment.resolvedTime}
                         resolvedBy={reportedComment.resolvedTime}
                         actionTaken={reportedComment.actionTaken}
-                        authorAvatarURL={"https://ziclife.com/wp-content/uploads/2020/08/cute-profile-picture-32.jpg"}
-                        authorID={""}
-                        authorDisplayName={"Nguyễn Văn Đông"}
+                        authorAvatarURL={reportedComment.author.avatarURL}
+                        authorID={reportedComment.author.id}
+                        authorDisplayName={reportedComment.author.displayName}
 
                     />
 

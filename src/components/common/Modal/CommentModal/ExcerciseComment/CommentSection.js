@@ -82,7 +82,6 @@ class CommentSection extends React.Component {
             isContentAuthor={comment.isContentAuthor}
             submitDtm={comment.submitDtm}
             lastEditedDtm={comment.lastEditedDtm}
-            authorID={comment.authorID}
             likeCount={comment.likeCount}
             likeStatus={comment.likeStatus}
             replyCount={comment.childCommentCount}

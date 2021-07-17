@@ -66,7 +66,7 @@ class ReportReactionbar extends React.Component {
   }
 
   onConfirmResolve = (resolveDTO) => {
-    this.props.resolveAnExerciseComment(this.props.id, resolveDTO)
+    this.props.resolveAnExerciseComment(this.props.id, resolveDTO);
   }
 
   render() {

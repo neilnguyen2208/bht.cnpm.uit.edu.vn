@@ -190,7 +190,6 @@ function HomeReducer(state = initialState, action) {
         case GET_NEWEST_EXERCISES_LIST_REQUEST:
             return { ...state, newExercises: { isLoading: true } };
         case GET_NEWEST_EXERCISES_LIST_SUCCESS:
-            console.log(action.payload)
             return { ...state, newExercises: { isLoading: false, data: action.payload, error: '' } }
         case GET_NEWEST_EXERCISES_LIST_FAILURE:
             return { ...state, newExercises: { isLoading: false, error: action.payload, data: [] } }

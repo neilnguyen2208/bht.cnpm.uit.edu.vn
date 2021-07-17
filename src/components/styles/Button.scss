@@ -94,3 +94,9 @@
 button:focus {
     outline: none !important;
 }
+
+.file-input-button {
+    @extend .white-button;
+    padding: 0px 10px 0px 7px;
+    display: flex;
+}

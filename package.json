@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.15.0",
     "axios": "^0.21.1",
+    "convert-excel-to-json": "^1.7.0",
     "dateformat": "^4.5.1",
     "dompurify": "^2.2.8",
     "install": "^0.13.0",
@@ -29,7 +30,9 @@
     "react-script": "^2.0.5",
     "react-scripts": "^3.4.3",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "xlsx": "^0.12.13",
+    "xlsx-browserify-shim": "^0.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

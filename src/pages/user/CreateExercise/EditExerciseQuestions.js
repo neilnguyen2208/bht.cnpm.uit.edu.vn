@@ -21,6 +21,8 @@ import { authRequest } from "utils/requestUtils";
 import store from "redux/store";
 import { edit_ExerciseQuestionsWithAnswersReset } from "redux/actions/courseAction";
 import { closeModal, openBLModal, openModal } from "redux/services/modalServices";
+import ButtonFileUploader from "components/common/FormFileUploader/ButtonFileUploader";
+import XLSX from 'xlsx';
 
 class CreateExercise extends React.Component {
 
@@ -47,6 +49,7 @@ class CreateExercise extends React.Component {
         this.EXERCISE_QUESTIONS_DTO = [];
         this.isCloseAllCKEInstance = false;
         this.isFirstTimeLoaded = false;
+        this.excelFile = null;
     }
 
     componentDidMount() {
@@ -201,8 +204,6 @@ class CreateExercise extends React.Component {
                         <AddOrEditQuestionItem
                             questionData={questionItem}
                             key={index}
-                            // currentAnswerEditInstance = {this.currentAnswerEdit ||}
-                            closeAllCKEInstance={this.closeAllCKEInstance}
                             index={index}
                             deleteQuestion={this.deleteQuestion}
                             setQuestionContent={this.setQuestionContent}
@@ -213,8 +214,8 @@ class CreateExercise extends React.Component {
 
                     <div className="j-c-space-between mg-top-10px" >
                         <div className="d-flex">
-                            <button className="white-button " onClick={() => this.addQuestion()}>Thêm câu hỏi</button>
-                            <button className="white-button mg-left-10px">Thêm file</button>
+                            <button className="white-button mg-right-5px" onClick={() => this.addQuestion()}>Thêm câu hỏi</button>
+                            <ButtonFileUploader id="ed-ex-question" onFileChange={this.onFileChange} fileType=".xlsx" />
                         </div>
                         <button className="blue-button mg-left-10px" onClick={() => this.onSaveQuestionsClick()}>Lưu</button>
                     </div>
@@ -223,6 +224,100 @@ class CreateExercise extends React.Component {
             </div>
 
         );
+    }
+
+    onFileChange = (file) => {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            var data = e.target.result;
+            data = new Uint8Array(data);
+            var workbook = XLSX.read(data, { type: 'array' });
+            var questionSheet = {};
+            let newQuestionsList = [];
+
+            var roa = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
+            if (roa.length) questionSheet[workbook.SheetNames[0]] = roa;
+
+            console.log(questionSheet);
+            // see the result, caution: it works after reader event is done.
+
+            questionSheet[workbook.SheetNames[0]].forEach((row, index) => {
+
+                let newQuestion = {
+                    id: null,
+                    "content": "<p>Nội dung câu hỏi</p>",
+                    "rank": -1,
+                    "explanation": "Giải thích",
+                    "suggestedDuration": 60,
+                    "publishDtm": "2021-07-09T21:49:20.062Z",
+                    "difficultyID": "1",
+                    "exerciseAnswerRequestDTOs": [
+
+                    ]
+                }
+
+                newQuestion.rank = this.EXERCISE_QUESTIONS_DTO.length + index;
+
+                //question content 
+                if (row[0] && row[0].substring(0, 3) === "Câu") {
+                    newQuestion.content = "<p>" + row[1] + "</p>";
+
+                    //difficult type
+                    if ((row[2])) {
+                        newQuestion.difficultyID = row[2];
+                    }
+
+                    //duration
+                    if ((row[3])) {
+                        console.log(row[3] * 60)
+                        newQuestion.suggestedDuration = row[3] * 60;
+                        console.log("A");
+
+                    }
+
+                    //browser on next rows until reach Giaỉ thích or undefine
+                    for (let j = index; j <= index + 6; j++) {
+
+                        if (questionSheet[workbook.SheetNames[0]][j] && questionSheet[workbook.SheetNames[0]][j][0] && questionSheet[workbook.SheetNames[0]][j][0].length === 1) {
+                            //
+                            let newAnswer = {
+                                id: "null-answer",
+                                "content": "<p>Đáp án q</p>",
+                                "rank": newQuestion.exerciseAnswerRequestDTOs.length,
+                                "isCorrect": false
+                            }
+
+                            //content
+                            if (questionSheet[workbook.SheetNames[0]][j][1])
+                                newAnswer.content = "<p>" + questionSheet[workbook.SheetNames[0]][j][1] + "</p>";
+
+                            if (questionSheet[workbook.SheetNames[0]][j][2])
+                                newAnswer.isCorrect = true;
+
+                            newQuestion.exerciseAnswerRequestDTOs.push(newAnswer);
+                        }
+
+                        //explanation
+                        if (questionSheet[workbook.SheetNames[0]][j]
+                            && questionSheet[workbook.SheetNames[0]][j][0]
+                            && (questionSheet[workbook.SheetNames[0]][j][0] === "Giải thích:"
+                                || questionSheet[workbook.SheetNames[0]][j][0] === "Giải thích")) {
+                            //content
+                            if (questionSheet[workbook.SheetNames[0]][j][1])
+                                newQuestion.explanation = "<p>" + questionSheet[workbook.SheetNames[0]][j][1] + "</p>";
+
+                            newQuestionsList.push(newQuestion);
+                        }
+                    }
+                }
+            })
+
+            this.EXERCISE_QUESTIONS_DTO = this.EXERCISE_QUESTIONS_DTO.concat(newQuestionsList);
+            console.log(this.EXERCISE_QUESTIONS_DTO)
+            this.setState({});
+        };
+
+        reader.readAsArrayBuffer(file);
     }
 }
 

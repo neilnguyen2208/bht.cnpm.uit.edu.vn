@@ -40,10 +40,8 @@ class ExerciseDetail extends React.Component {
                     <div className="d-flex">
                         <ExerciseSidebar />
                         <div className="exercise-detail-container" >
-                            {console.log(this.props.exerciseContent)}
                             {!this.props.isLoading && this.props.exerciseContent ?
                                 <div>
-                                    {console.log(this.props.exerciseContent)}
                                     <ExerciseInfo
                                         exerciseId={this.props.exerciseContent.id}
                                         title={this.props.exerciseContent.title}

@@ -29,7 +29,7 @@ class QuestionItem extends React.Component {
     this.isNewQuestion = true;
     this.QUESTION_DTO = {};
     this.defaultAnswer = {
-      id: null,
+      id: "null-answer",
       "content": "<p>Đáp án</p>",
       "rank": 0,
       "isCorrect": false

@@ -38,8 +38,8 @@ class CreateExercise extends React.Component {
             "difficultyID": "1",
             "exerciseAnswerRequestDTOs": [
                 {
-                    id: null,
-                    "content": "<p>Đáp án q</p>",
+                    id: "null-answer",
+                    "content": "<p>Đáp án </p>",
                     "rank": 1,
                     "isCorrect": true
                 }
@@ -271,7 +271,6 @@ class CreateExercise extends React.Component {
                     if ((row[3])) {
                         console.log(row[3] * 60)
                         newQuestion.suggestedDuration = row[3] * 60;
-                        console.log("A");
 
                     }
 
@@ -282,7 +281,7 @@ class CreateExercise extends React.Component {
                             //
                             let newAnswer = {
                                 id: "null-answer",
-                                "content": "<p>Đáp án q</p>",
+                                "content": "<p>Đáp án </p>",
                                 "rank": newQuestion.exerciseAnswerRequestDTOs.length,
                                 "isCorrect": false
                             }

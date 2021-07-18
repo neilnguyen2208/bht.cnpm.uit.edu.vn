@@ -26,7 +26,7 @@ class PostsList extends React.Component {
         //fake for trending
         this.props.getTrendingPosts();
         this.renderByCategory();
-
+   
     }
 
     renderByCategory = () => {

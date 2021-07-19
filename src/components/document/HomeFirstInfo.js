@@ -67,7 +67,11 @@ class HomeFistInfo extends React.Component {
           <div className="summary-text" style={{ height: "48px", }}>
             <div className="ck-editor-output" style={{ marginTop: "10px" }} id={"rprt-pst-ctnt-" + this.props.documentID} />
           </div>
-
+          
+          <Link to={`/document-content/${this.props.postID}`} className="continue-read" >
+            Xem tiếp ...
+          </Link>
+          
           <HomeReactionbar
             documentID={this.props.documentID}
             likeCount={this.props.likeCount}

@@ -55,9 +55,10 @@ class HomeFirstInfo extends React.Component {
           </Link>
         </div>
 
-        <div className="summary-text">
+        <div className="summary-text" style = {{marginBottom: "2px" }}>
           {this.props.summary + "..."}
         </div>
+
         <HomeReactionbar
           postID={this.props.postID}
           likeStatus={this.props.likeStatus}

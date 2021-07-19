@@ -188,7 +188,7 @@ class QuestionItem extends React.Component {
                       name={"fieldset" + this.props.questionId} />
 
                     <div className="d-flex">
-                      <div className="answer-container ck-editor-output" style={{ fontSize: "15px", marginBottom: "5px", lineHeight: "20px" }}
+                      <div className="question-content ck-editor-output answer" style={{ fontSize: "15px", marginBottom: "5px", lineHeight: "20px" }}
                         dangerouslySetInnerHTML={{
                           __html: answer.content
                         }} />

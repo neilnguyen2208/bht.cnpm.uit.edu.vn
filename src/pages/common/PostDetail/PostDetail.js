@@ -40,6 +40,10 @@ class PostDetail extends React.Component {
         store.dispatch(get_RelativeSameCategoryPostsReset());
     }
 
+    componentDidUpdate() {
+        styleCodeSnippet();
+    }
+
     renderTableOfContent = () => {
         let ToC = "<div>";
         document.querySelectorAll(".ck-editor-output h1, .ck-editor-output h2, .ck-editor-output h3  ").forEach((item) => {

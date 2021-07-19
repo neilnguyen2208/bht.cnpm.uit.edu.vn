@@ -80,6 +80,9 @@ class QuestionItem extends React.Component {
     openCommentModal({ exerciseId: this.props.match.params.id });
   }
 
+  componentDidUpdate() {
+    styleCodeSnippet();
+  }
 
   render() {
     // 
@@ -218,8 +221,12 @@ class QuestionItem extends React.Component {
                   {this.isExplainationShown ? "Ẩn giải thích" : "Xem giải thích"}
                 </button>
                 {this.isExplainationShown ? <div className="exercise-explanation" id={"xrcs-xplntn" + this.props.questionId}>
-                  {this.props.explanation}
-                </div> : <></>
+                  <div className="question-content ck-editor-output answer" style={{ fontSize: "15px", marginBottom: "5px", lineHeight: "20px" }}
+                    dangerouslySetInnerHTML={{
+                      __html: this.props.explanation
+                    }} />
+                </div>
+                  : <></>
                 }
               </div>
             }

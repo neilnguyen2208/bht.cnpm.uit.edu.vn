@@ -55,7 +55,7 @@ class HomeFirstInfo extends React.Component {
           </Link>
         </div>
 
-        <div className="summary-text" style = {{marginBottom: "2px" }}>
+        <div className="summary-text" >
           {this.props.summary + "..."}
         </div>
 

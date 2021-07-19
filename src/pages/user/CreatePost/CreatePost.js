@@ -55,7 +55,6 @@ class CreatePost extends React.Component {
         this.isNotifySuccessOpen = false;
         this.state = {
             currentCategory: "",
-            publishDtm: today.getDateDMY(),
 
             isUploading: false,
             isPreview: false,
@@ -68,7 +67,7 @@ class CreatePost extends React.Component {
                 summary: `null`,
                 categoryID: "",
                 imageURL: '',
-                publishDtm: null,
+                publishDtm: new Date(new Date().getTime() + 8 * 60 * 60 * 1000),
                 readingTime: 10
             },
 
@@ -344,11 +343,11 @@ class CreatePost extends React.Component {
     };
 
     handleDateChange = (data) => {
-        console.log(data);
+        // console.log(data);
     }
 
     handleDateSelect = (data) => {
-        console.log(data);
+        // console.log(data);
     }
 
     handleTitleChange = (e) => {
@@ -372,7 +371,6 @@ class CreatePost extends React.Component {
     }
 
     setStartDate = (date, time) => {
-        console.log(date)
         let shownDate = new Date(date).toLocaleDateString('en-US', {
             day: '2-digit',
             month: '2-digit',
@@ -380,7 +378,7 @@ class CreatePost extends React.Component {
             hour: '2-digit',
             minute: '2-digit',
         })
-        this.setState({ shownDate: shownDate, selectedDate: date, CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, publishDtm: date } });
+        this.setState({ shownDate: shownDate, selectedDate: date, CREATE_POST_DTO: { ...this.state.CREATE_POST_DTO, publishDtm: new Date(new Date(date).getTime() + 7 * 60 * 60 * 1000) } });
     }
 
     render() {
@@ -538,7 +536,7 @@ class CreatePost extends React.Component {
                                     selected={this.state.selectedDate}
                                     onChange={(date) => this.setStartDate(date)}
                                     dateFormat='dd/MM/yyyy'
-                                    locale = "vi-VN"
+                                    locale="vi-VN"
                                     value={this.state.shownDate}
                                     showTimeSelect
                                     startDate={new Date(new Date().getTime() + 60 * 60 * 1000)}

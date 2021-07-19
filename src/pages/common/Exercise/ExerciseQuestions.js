@@ -35,6 +35,7 @@ import {
     closeModal,
     openModal
 } from 'redux/services/modalServices';
+
 class ExerciseQuestions extends React.Component {
     constructor(props) {
         super(props);
@@ -66,6 +67,10 @@ class ExerciseQuestions extends React.Component {
 
     updateQuestionToC = (questionId, answerId, state) => {
 
+    }
+
+    componentDidUpdate(){
+        styleCodeSnippet();
     }
 
     componentWillUnmount() {

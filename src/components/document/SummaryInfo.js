@@ -35,6 +35,7 @@ import { itemType, mySelfMenuItemList } from 'constants.js'
 import PopupMenu from 'components/common/PopupMenu/PopupMenu'
 import { basicMenu, guestMenu, adminMenu } from 'components/document/adapter/actionMenu';
 import createDOMPurify from 'dompurify';
+import { styleCodeSnippet } from 'components/common/CustomCKE/CKEditorUtils';
 
 class DocumentSummary extends React.Component {
 
@@ -50,6 +51,10 @@ class DocumentSummary extends React.Component {
     const clean = DOMPurify.sanitize(this.props.description);
     if (document.querySelector(`#rprt-pst-ctnt-${this.props.documentID}`))
       document.querySelector(`#rprt-pst-ctnt-${this.props.documentID}`).innerHTML = clean;
+  }
+
+  componentDidUpdate() {
+    styleCodeSnippet();
   }
 
   onPopupMenuItemClick = (selectedItem) => {
@@ -293,7 +298,9 @@ class DocumentSummary extends React.Component {
             </Link>
           }
         </div>
+        {styleCodeSnippet()}
       </div >
+
     );
   }
 }

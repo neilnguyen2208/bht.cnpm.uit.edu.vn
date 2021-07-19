@@ -76,9 +76,9 @@ class UploadDocument extends React.Component {
 
             UPLOAD_DOCUMENT_DTO: {
                 tags: [],
-                title: "Model View Presenter (MVP) in Android with a simple demo project.",//
+                title: "Model View Presenter (MVP) in Android with a simplUe demo project.",//
                 description: ``,//
-                publishDtm: new Date(new Date().getTime() + 60 * 60 * 1000),
+                publishDtm: new Date(new Date().getTime() + 8 * 60 * 60 * 1000),
                 version: "0",
                 categoryID: "",//
                 subjectID: "",
@@ -355,7 +355,6 @@ class UploadDocument extends React.Component {
     }
 
     setStartDate = (date, time) => {
-        console.log(date)
         let shownDate = new Date(date).toLocaleDateString('en-US', {
             day: '2-digit',
             month: '2-digit',
@@ -363,7 +362,7 @@ class UploadDocument extends React.Component {
             hour: '2-digit',
             minute: '2-digit',
         })
-        this.setState({ shownDate: shownDate, selectedDate: date, UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, publishDtm: date } });
+        this.setState({ shownDate: shownDate, selectedDate: date, UPLOAD_DOCUMENT_DTO: { ...this.state.UPLOAD_DOCUMENT_DTO, publishDtm: new Date(new Date(date).getTime() + 7 * 60 * 60 * 1000) } });
     }
 
     render() {

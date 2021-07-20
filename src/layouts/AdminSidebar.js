@@ -51,7 +51,7 @@ class AdminSidebar extends React.Component {
                         <div className="user-info-layout" >
                             <img alt="avatar" className="side-bar-avatar" src={this.props.userSummaryData.avatarURL} />
                             <div className="achivement-layout">
-                                <div className="reputation-label" style={{marginTop: "2px"}}>Scrore:{" " + formatNumber(this.props.userSummaryData.reputationScore)}</div>
+                                <div className="reputation-label" style={{ marginTop: "2px" }}>Scrore:{" " + formatNumber(this.props.userSummaryData.reputationScore)}</div>
                                 <div className="d-flex mg-bottom-5px" style={{ marginTop: "5px" }} >
                                     <div className="reputation-sub-container" >
                                         <img alt="" src={gray_write_icon} className="user-menu-icon" />
@@ -126,19 +126,16 @@ class AdminSidebar extends React.Component {
                         </div >
 
                         {/* Quan ly nguoi dung */}
-                        <NavLink
-                            className="vertical-m-i"
-                            activeClassName="main-interactive-menu-item-active"
-                            to={"/admin/user-management"}
-                        >
-                            <img alt="*"
-                                className="vertical-m-i-icon"
-                                src={user_management_icon}
-                                id="user-managent-btn-element" />
+                        <button className="vertical-m-i" onClick={() => window.location.href = "https://auth.uitstudy.space:8443/auth/admin/master/console/#/realms/BHTCNPM/users"}>
+
+                            <img alt="*" className="vertical-m-i-icon"
+                                src={user_role_management_icon}
+                            />
                             <div className="sd-br-lvl1-mi-text"  >
                                 Quản lý người dùng
                             </div>
-                        </NavLink>
+
+                        </button>
 
                         {/* Quan ly hoat dong: các báo cáo người dùng  */}
                         {/* <NavLink className="vertical-m-i"
@@ -154,18 +151,16 @@ class AdminSidebar extends React.Component {
                         </NavLink> */}
 
                         {/* Quan lý quyền truy cập: role */}
-                        <NavLink className="vertical-m-i"
-                            activeClassName="main-interactive-menu-item-active"
-                            to={"/admin/user-role-management"}
-                        >
+                        <button className="vertical-m-i" onClick={() => window.location.href = "https://auth.uitstudy.space:8443/auth/admin/master/console/#/realms/BHTCNPM/groups"}>
+
                             <img alt="*" className="vertical-m-i-icon"
                                 src={user_role_management_icon}
                             />
                             <div className="sd-br-lvl1-mi-text"  >
                                 Quản lý quyền truy cập
                             </div>
-                        </NavLink >
 
+                        </button>
                         {/* Thong ke */}
                         {/* <NavLink className="vertical-m-i"
                             activeClassName="main-interactive-menu-item-active"
